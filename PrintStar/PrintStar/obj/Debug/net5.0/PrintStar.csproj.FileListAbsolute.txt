@@ -1,0 +1,16 @@
+C:\Users\sec\source\repos\PrintStar\PrintStar\bin\Debug\net5.0\PrintStar.exe
+C:\Users\sec\source\repos\PrintStar\PrintStar\bin\Debug\net5.0\PrintStar.deps.json
+C:\Users\sec\source\repos\PrintStar\PrintStar\bin\Debug\net5.0\PrintStar.runtimeconfig.json
+C:\Users\sec\source\repos\PrintStar\PrintStar\bin\Debug\net5.0\PrintStar.runtimeconfig.dev.json
+C:\Users\sec\source\repos\PrintStar\PrintStar\bin\Debug\net5.0\PrintStar.dll
+C:\Users\sec\source\repos\PrintStar\PrintStar\bin\Debug\net5.0\ref\PrintStar.dll
+C:\Users\sec\source\repos\PrintStar\PrintStar\bin\Debug\net5.0\PrintStar.pdb
+C:\Users\sec\source\repos\PrintStar\PrintStar\obj\Debug\net5.0\PrintStar.csprojAssemblyReference.cache
+C:\Users\sec\source\repos\PrintStar\PrintStar\obj\Debug\net5.0\PrintStar.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\sec\source\repos\PrintStar\PrintStar\obj\Debug\net5.0\PrintStar.AssemblyInfoInputs.cache
+C:\Users\sec\source\repos\PrintStar\PrintStar\obj\Debug\net5.0\PrintStar.AssemblyInfo.cs
+C:\Users\sec\source\repos\PrintStar\PrintStar\obj\Debug\net5.0\PrintStar.csproj.CoreCompileInputs.cache
+C:\Users\sec\source\repos\PrintStar\PrintStar\obj\Debug\net5.0\PrintStar.dll
+C:\Users\sec\source\repos\PrintStar\PrintStar\obj\Debug\net5.0\ref\PrintStar.dll
+C:\Users\sec\source\repos\PrintStar\PrintStar\obj\Debug\net5.0\PrintStar.pdb
+C:\Users\sec\source\repos\PrintStar\PrintStar\obj\Debug\net5.0\PrintStar.genruntimeconfig.cache
