@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\sec\\source\\repos\\PrintStar\\PrintStar\\PrintStar.csproj",
+      "projectUniqueName": "C:\\Users\\sec\\OneDrive\\바탕 화면\\En#\\PrintStar\\PrintStar\\PrintStar.csproj",
       "projectName": "PrintStar",
-      "projectPath": "C:\\Users\\sec\\source\\repos\\PrintStar\\PrintStar\\PrintStar.csproj",
+      "projectPath": "C:\\Users\\sec\\OneDrive\\바탕 화면\\En#\\PrintStar\\PrintStar\\PrintStar.csproj",
       "packagesPath": "C:\\Users\\sec\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\sec\\source\\repos\\PrintStar\\PrintStar\\obj\\",
+      "outputPath": "C:\\Users\\sec\\OneDrive\\바탕 화면\\En#\\PrintStar\\PrintStar\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\sec\\AppData\\Roaming\\NuGet\\NuGet.Config",
