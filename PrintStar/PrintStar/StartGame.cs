@@ -10,13 +10,28 @@ namespace PrintStar
         int option;
         int line;
 
+        public void ShowMenu()
+        {
+            Console.WriteLine(">>>>>>>>>>>>>>>>>>>>별찍기 프로그램<<<<<<<<<<<<<<<<<<<<<\n\n");
+            Console.WriteLine("                *                       ***");
+            Console.WriteLine("               ***                       *\n");
+            Console.WriteLine("          1. 정삼각형              2. 역삼각형\n\n");
+            Console.WriteLine("               ***                       *");
+            Console.WriteLine("                *                       ***");
+            Console.WriteLine("               ***                       *\n");
+            Console.WriteLine("          3. 모래시계              4.  다이아\n\n");
+            Console.WriteLine(">>>>>>>>>>>>>>>>0번을 입력하면 종료됩니다<<<<<<<<<<<<<<<<\n");
+
+        }
+
         public void PlayGame()
         {
             PrintingStar printingStar = new PrintingStar();
 
+            ShowMenu();
+
             while (true)
             {
-                Console.WriteLine("---------------------------------------------------");
                 Console.Write("Select Option : ");             //찍으려는 별 모양 고르기
                 option = Convert.ToInt32(Console.ReadLine());
                 if (option == 0)                               //0번이 입력되면 종료
