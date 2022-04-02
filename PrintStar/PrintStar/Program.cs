@@ -6,7 +6,7 @@ namespace PrintStar
     {
         static void Main(string[] args)
         {
-            new StartGame().Run();
+            new StartGame().PlayGame();
 
         }
     }

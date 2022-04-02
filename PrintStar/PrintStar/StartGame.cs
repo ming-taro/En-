@@ -10,7 +10,7 @@ namespace PrintStar
         int option;
         int line;
 
-        public void Run()
+        public void PlayGame()
         {
             PrintingStar printingStar = new PrintingStar();
 
