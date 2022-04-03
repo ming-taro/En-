@@ -11,8 +11,12 @@ namespace TicTacToe
         public void StartGame()
         {
             PrintScreen printScreen = new PrintScreen();
-
             printScreen.PrintMainScreen();
+
+            Player player1 = new Player();
+            Player player2 = new Player();
+
+
 
 
         }
