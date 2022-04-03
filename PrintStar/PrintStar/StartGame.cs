@@ -18,7 +18,7 @@ namespace PrintStar
             Console.WriteLine("                *                       ***");
             Console.WriteLine("               ***                       *\n");
             Console.WriteLine("          3. 모래시계              4.  다이아\n\n");
-            Console.WriteLine(">>>>>>>>>>>>>>>>0번을 입력하면 종료됩니다<<<<<<<<<<<<<<<<\n");
+            Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<\n");
 
         }
 
@@ -26,8 +26,7 @@ namespace PrintStar
         {
             PrintingStar printingStar = new PrintingStar();
 
-            if (menu == 0) return;
-            else if (menu == 1) printingStar.PrintTriangle(line);             //1번 : 정삼각형
+            if (menu == 1) printingStar.PrintTriangle(line);             //1번 : 정삼각형
             else if (menu == 2) printingStar.PrintInversedTriangle(line);     //2번 : 역삼각형
             else if (menu == 3) printingStar.PrintSandglass(line);            //3번 : 모래시계
             else if (menu == 4) printingStar.PrintDiamond(line);              //4번 : 다이아
@@ -35,7 +34,7 @@ namespace PrintStar
 
         public bool isRetry()
         {
-            Console.Write("다시 하시겠습니까?(0.종료      1.처음화면으로) : ");
+            Console.Write(">>>다시 하시겠습니까?(0.종료      1.처음화면으로) : ");
             int retry = Convert.ToInt32(Console.ReadLine());
 
             if (retry == 0) return false;
@@ -46,14 +45,15 @@ namespace PrintStar
         {
             int menu;
             int line;
+            Console.SetWindowSize(100, 30);
 
             while (true)
             {
                 ShowMenu();    //메뉴화면을 보여줌
-                Console.Write("번호를 입력해주세요 : ");             //찍으려는 별 모양 고르기
+                Console.Write(">>>번호를 입력해주세요 : ");             //찍으려는 별 모양 고르기
                 menu = Convert.ToInt32(Console.ReadLine());
 
-                Console.Write("줄 수를 입력해주세요 : ");   //찍으려는 별의 줄 수 입력
+                Console.Write(">>>줄 수를 입력해주세요 : ");   //찍으려는 별의 줄 수 입력
                 line = Convert.ToInt32(Console.ReadLine());
 
                 SelectMenu(menu, line); //메뉴선택 후 화면에 해당 메뉴를 보여줌
