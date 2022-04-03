@@ -13,7 +13,8 @@ namespace TicTacToe
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>>TicTacToe 게임<<<<<<<<<<<<<<<<<<<<");
             Console.WriteLine("======================모드 선택=======================\n");
             Console.WriteLine("              1. User    vs    Computer               \n");
-            Console.WriteLine("              2. User1   vs    User2                  \n\n");
+            Console.WriteLine("              2. User1   vs    User2                  \n");
+            Console.WriteLine("======================================================\n");
             Console.Write(">모드를 입력해주세요 : "); 
         }
 
@@ -30,15 +31,15 @@ namespace TicTacToe
             }
         }
 
-        public void PrintScoreBoard(int mode, int player1, int player2)
+        public void PrintScoreBoard(int mode, int player1Score, int player2Score)
         {
             switch (mode)
             {
                 case 1:
-                    Console.WriteLine("Computer : " + player1 + "   vs   User : " + player2);
+                    Console.WriteLine("\n         Computer : " + player1Score + "   vs   User : " + player2Score + "\n");
                     break;
                 case 2:
-                    Console.WriteLine("User1 : " + player1 + "   vs   User2 : " + player2);
+                    Console.WriteLine("\n              User1 : " + player1Score + "   vs   User2 : " + player2Score + "\n");
                     break;
             }
         }

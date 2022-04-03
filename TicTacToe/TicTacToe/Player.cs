@@ -11,6 +11,11 @@ namespace TicTacToe
         private int score;
         private char drawType;
 
+        public Player()
+        {
+            score = 0;
+        }
+
         public int Score
         {
             get { return score; }

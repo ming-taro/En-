@@ -16,8 +16,10 @@ namespace TicTacToe
             Player player1 = new Player();
             Player player2 = new Player();
 
-
-
+            int mode = Convert.ToInt32(Console.ReadLine());
+            Console.Clear();
+            printScreen.PrintModeScreen(mode);
+            printScreen.PrintScoreBoard(mode, 0, 0);
 
         }
 
