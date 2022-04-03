@@ -9,6 +9,7 @@ namespace TicTacToe
     class Board
     {
         private char[,] board = new char[3,3];
+        private List<int> spaceNumber = new List<int>();
 
         public Board()
         {
@@ -34,29 +35,37 @@ namespace TicTacToe
             return board[row, column];
         }
 
-        public int GetSpaceNumber(int row, int column)
+        public void AddSpaceNumberList(int row, int column)
         {
             switch(row, column)
             {
                 case (0, 0):
-                    return 1;
+                    spaceNumber.Add(1);
+                    break;
                 case (0, 1):
-                    return 2;
+                    spaceNumber.Add(2);
+                    break;
                 case (0, 2):
-                    return 3;
+                    spaceNumber.Add(3);
+                    break;
                 case (1, 0):
-                    return 4;
+                    spaceNumber.Add(4);
+                    break;
                 case (1, 1):
-                    return 5;
+                    spaceNumber.Add(5);
+                    break;
                 case (1, 2):
-                    return 6;
+                    spaceNumber.Add(6);
+                    break;
                 case (1, 3):
-                    return 7;
+                    spaceNumber.Add(7);
+                    break;
                 case (2, 0):
-                    return 8;
+                    spaceNumber.Add(8);
+                    break;
                 default:
-                    return 9;
-
+                    spaceNumber.Add(9);
+                    break;
             }
         }
     }
