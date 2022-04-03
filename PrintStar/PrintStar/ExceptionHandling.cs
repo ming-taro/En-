@@ -32,7 +32,7 @@ namespace PrintStar
             else return false;
         }
 
-        public bool IsStartNaturalNumber(String str)  //첫글자가 숫자로 시작하는지 판별(ex 'z'처럼 영문자 하나 입력시 예외판별)
+        public bool IsStartNaturalNumber(String str)  //첫글자가 0이 아닌 숫자로 시작하는지 판별(ex 'z'처럼 영문자 하나 입력시 예외판별)
         {
             if (str[0] >= '1' && str[0] <= '9') return true;
             else return false;
@@ -46,6 +46,19 @@ namespace PrintStar
             }
 
             return true;
+        }
+
+        public bool IsInteger(String str)       //정수를 입력받았는지 판별하는 함수
+        {
+            if (IsNullOrEmpty(str) || IsStartSpace(str) || IsLengthLessThanTen(str) == false || IsContainOnlyNumbers(str) == false || IsStartNaturalNumber(str) == false)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
         }
     }
 }
