@@ -7,9 +7,6 @@ namespace PrintStar
 {
     public class StartGame
     {
-        int option;
-        int line;
-
         public void ShowMenu()
         {
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>>별찍기 프로그램<<<<<<<<<<<<<<<<<<<<<\n\n");
@@ -24,23 +21,35 @@ namespace PrintStar
 
         }
 
-        public void PlayGame()
+        public void SelectMenu(int menu, int line)
         {
             PrintingStar printingStar = new PrintingStar();
 
-            ShowMenu();
+            if (menu == 0) return;
+            else if (menu == 1) printingStar.PrintTriangle(line);             //1번 : 정삼각형
+            else if (menu == 2) printingStar.PrintInversedTriangle(line);     //2번 : 역삼각형
+            else if (menu == 3) printingStar.PrintSandglass(line);            //3번 : 모래시계
+            else if (menu == 4) printingStar.PrintDiamond(line);              //4번 : 다이아
+        }
+
+        public void PlayGame()
+        {
+            ShowMenu();    //메뉴화면을 보여줌
+
+            int menu;
+            int line;
 
             while (true)
             {
-                Console.Write("Select Option : ");             //찍으려는 별 모양 고르기
-                option = Convert.ToInt32(Console.ReadLine());
-                if (option == 0)                               //0번이 입력되면 종료
+                Console.Write("번호를 입력해주세요 : ");             //찍으려는 별 모양 고르기
+                menu = Convert.ToInt32(Console.ReadLine());
+                if (menu == 0)                               //0번이 입력되면 종료
                 {
                     Console.WriteLine();
                     Console.WriteLine("Game is over...");
                     break;
                 }
-                else if(option < 0 || option > 4)              //0~4번 이외의 옵션을 고를 경우 : 메세지 출력 + 다시 입력
+                else if(menu < 0 || menu > 4)              //0~4번 이외의 옵션을 고를 경우 : 메세지 출력 + 다시 입력
                 {
                     Console.WriteLine("You entered an incorrect option. Please re-enter. ");
                     continue;
@@ -53,13 +62,8 @@ namespace PrintStar
                     if (line <= 0) Console.WriteLine("\nPlease enter only natural numbers.");   //음수가 입력되는 경우 : 메세지 출력 + 다시 입력
                     else break;
                 }
-                Console.WriteLine();
 
-                if (option == 1) printingStar.PrintTriangle(line);                  //1번 : 정삼각형
-                else if (option == 2) printingStar.PrintInversedTriangle(line);     //2번 : 역삼각형
-                else if (option == 3) printingStar.PrintSandglass(line);            //3번 : 모래시계
-                else if (option == 4) printingStar.PrintDiamond(line);              //4번 : 다이아
-                Console.WriteLine();
+                SelectMenu(menu, line);
             }
 
 
