@@ -30,7 +30,7 @@ namespace PrintStar
                     printingStar.PrintTriangle(line);             //1번 : 정삼각형
                     break;
                 case 2:
-                    printingStar.PrintInversedTriangle(line);     //2번 : 역삼각형
+                    printingStar.PrintInversedTriangle(line, 0);     //2번 : 역삼각형
                     break;
                 case 3:
                     printingStar.PrintSandglass(line);            //3번 : 모래시계
@@ -112,7 +112,7 @@ namespace PrintStar
                 line = InputLine();
                 if(line == -1)                               //예외상황 발생시 게임 종료
                 { 
-                    Console.WriteLine(">>>>>>>>>잘못된 입력입니다. 게임을 종료합니다.<<<<<<<<<<\n");
+                    Console.WriteLine("\n---------잘못된 입력입니다. 게임을 종료합니다.-----------\n");
                 }
                 else
                 {
@@ -127,7 +127,7 @@ namespace PrintStar
                 ShowMenu();    //메뉴화면을 보여줌
             }
 
-            Console.WriteLine(">>>>>>>>>>>>>>>>별찍기 게임을 종료합니다<<<<<<<<<<<<<<<<");
+            Console.WriteLine("\n>>>>>>>>>>>>>>>>별찍기 게임을 종료합니다<<<<<<<<<<<<<<<<");
         }
     }
 }
