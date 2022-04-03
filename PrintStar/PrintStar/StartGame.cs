@@ -21,9 +21,7 @@ namespace PrintStar
 
         }
 
-        
-
-        public void SelectMenu(int menu, int line)
+        public void SelectMenu(int menu, int line)  //메뉴에 따른 별모양 출력 함수
         {
             PrintingStar printingStar = new PrintingStar();
 
@@ -40,6 +38,21 @@ namespace PrintStar
                 case 4:
                     printingStar.PrintDiamond(line);              //4번 : 다이아
                     break;
+            }
+        }
+
+        public int InputMenu()   //메뉴 입력 함수
+        {
+            String str = Console.ReadLine();
+            ExceptionHandling exception = new ExceptionHandling();
+
+            if (exception.IsNaturalNumber(str) && exception.IsBetween1To4(Convert.ToInt32(str)))
+            {
+                return Convert.ToInt32(str);
+            }
+            else
+            {
+                return -1;
             }
         }
 
@@ -65,13 +78,14 @@ namespace PrintStar
             while (loop)
             {
                 Console.Write(">번호를 입력해주세요 : ");             //찍으려는 별 모양 고르기
-                str = Console.ReadLine();
-                /*if (IsInteger(str) == false)
+                menu = InputMenu();
+                if (menu == -1)                                       //예외상황 발생시 처음으로 다시
                 {
+                    Console.Clear();
+                    ShowMenu();
                     Console.WriteLine(">>>>>잘못된 입력입니다. 1~4 중 하나를 입력해주세요.<<<<<\n");
-                    continue;                             //예외상황 발생시 처음으로 다시
-                }*/
-                menu = Convert.ToInt32(str);
+                    continue;                                
+                }
 
                 Console.Write(">줄 수를 입력해주세요 : ");   //찍으려는 별의 줄 수 입력
                 line = Convert.ToInt32(Console.ReadLine());

@@ -48,7 +48,7 @@ namespace PrintStar
             return true;
         }
 
-        public bool IsInteger(String str)       //정수를 입력받았는지 판별하는 함수
+        public bool IsNaturalNumber(String str)       //정수를 입력받았는지 판별하는 함수
         {
             if (IsNullOrEmpty(str) || IsStartSpace(str) || IsLengthLessThanTen(str) == false || IsContainOnlyNumbers(str) == false || IsStartNaturalNumber(str) == false)
             {
