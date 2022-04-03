@@ -31,5 +31,11 @@ namespace PrintStar
             if (str == "\n") return true;
             else return false;
         }
+
+        public bool IsNaturalNumber(String str)  //'z'처럼 한 글자만 입력했을때도 숫자인지 아닌지 판별
+        {
+            if (str[0] >= '1' && str[0] <= '9') return true;
+            else return false;
+        }
     }
 }
