@@ -26,15 +26,15 @@ namespace PrintStar
             else return false;
         }
 
-        public bool IsEnter(String str)          //enter만 누르는 경우 판별
+        public bool IsNullOrEmpty(String str)          //enter만 누르는 경우 판별
         {
-            if (str == "") return true;
+            if (String.IsNullOrEmpty(str)) return true;
             else return false;
         }
 
         public bool IsNaturalNumber(String str)  //'z'처럼 한 글자만 입력했을때도 숫자인지 아닌지 판별
         {
-            if (str[0] >= '1' && str[0] <= '9') return true;
+            if (Convert.ToInt32(str[0]) >= 49 && Convert.ToInt32(str[0]) <= 57) return true;
             else return false;
         }
     }
