@@ -56,11 +56,11 @@ namespace PrintStar
             }
         }
 
-        public void PrintIfSelectWrongMenu()     //메뉴를 잘못 선택했을 때 보여주는 화면
+        public void PrintSelectMenu(String wrongMenuMessage)     //메뉴입력 후 보여주는 화면
         {
             Console.Clear();
             ShowMenu();  //초기화면
-            Console.WriteLine(">>>>>잘못된 입력입니다. 1~4 중 하나를 입력해주세요.<<<<<\n");
+            if(wrongMenuMessage != null) Console.WriteLine(wrongMenuMessage);
         }
 
         public int InputLine()
@@ -93,6 +93,7 @@ namespace PrintStar
             int menu;
             int line;
             bool loop = true;
+            String wrongMenuMessage;
 
             ShowMenu();    //메뉴화면을 보여줌
 
@@ -102,18 +103,22 @@ namespace PrintStar
                 menu = InputMenu();
                 if (menu == -1)                                       //예외상황 발생시 처음으로 다시
                 {
-                    PrintIfSelectWrongMenu();                         //초기메뉴화면과 오류메세지 출력
+                    wrongMenuMessage = ">>>>>잘못된 입력입니다. 1~4 중 하나를 입력해주세요.<<<<<\n";
+                    PrintSelectMenu(wrongMenuMessage);                         //초기메뉴화면과 오류메세지 출력
                     continue;                                
                 }
 
                 Console.Write(">줄 수를 입력해주세요 : ");   //찍으려는 별의 줄 수 입력
                 line = InputLine();
-                if(line == -1)
-                {
-                    Console.Clear();
+                if(line == -1)                               //예외상황 발생시 게임 종료
+                { 
+                    Console.WriteLine(">>>>>>>>>잘못된 입력입니다. 게임을 종료합니다.<<<<<<<<<<\n");
                 }
-
-                SelectMenu(menu, line); //메뉴선택 후 화면에 해당 메뉴를 보여줌
+                else
+                {
+                    Console.WriteLine();
+                    SelectMenu(menu, line); //메뉴선택 후 화면에 해당 메뉴를 보여줌
+                }
 
                 Console.Write("\n>다시 하시겠습니까?(0.종료      1.처음화면으로) : ");
                 if (isRetry() == false) break;       //게임종료
@@ -122,7 +127,7 @@ namespace PrintStar
                 ShowMenu();    //메뉴화면을 보여줌
             }
 
-            Console.WriteLine("게임을 종료합니다...");
+            Console.WriteLine(">>>>>>>>>>>>>>>>별찍기 게임을 종료합니다<<<<<<<<<<<<<<<<");
         }
     }
 }
