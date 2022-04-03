@@ -9,6 +9,7 @@ namespace PrintStar
     {
         public void ShowMenu()
         {
+            Console.Clear();
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>>별찍기 프로그램<<<<<<<<<<<<<<<<<<<<<\n\n");
             Console.WriteLine("                *                       ***");
             Console.WriteLine("               ***                       *\n");
@@ -32,6 +33,15 @@ namespace PrintStar
             else if (menu == 4) printingStar.PrintDiamond(line);              //4번 : 다이아
         }
 
+        public bool isRetry()
+        {
+            Console.Write("다시 하시겠습니까?(0.종료      1.처음화면으로) : ");
+            int retry = Convert.ToInt32(Console.ReadLine());
+
+            if (retry == 0) return false;
+            else return true;
+        }
+
         public void PlayGame()
         {
             int menu;
@@ -46,10 +56,13 @@ namespace PrintStar
                 Console.Write("줄 수를 입력해주세요 : ");   //찍으려는 별의 줄 수 입력
                 line = Convert.ToInt32(Console.ReadLine());
 
-                SelectMenu(menu, line);
+                SelectMenu(menu, line); //메뉴선택 후 화면에 해당 메뉴를 보여줌
+
+                if (isRetry()) continue;  //게임 다시 시작
+                else break;  //
             }
 
-
+            Console.WriteLine("게임을 종료합니다...");
         }
     }
 }
