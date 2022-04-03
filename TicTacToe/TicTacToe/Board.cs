@@ -9,7 +9,6 @@ namespace TicTacToe
     class Board
     {
         private char[,] board = new char[3,3];
-        List<string> boardValue;
 
         public Board()
         {
@@ -33,6 +32,32 @@ namespace TicTacToe
         public char GetOneSpace(int row, int column)
         {
             return board[row, column];
+        }
+
+        public int GetSpaceNumber(int row, int column)
+        {
+            switch(row, column)
+            {
+                case (0, 0):
+                    return 1;
+                case (0, 1):
+                    return 2;
+                case (0, 2):
+                    return 3;
+                case (1, 0):
+                    return 4;
+                case (1, 1):
+                    return 5;
+                case (1, 2):
+                    return 6;
+                case (1, 3):
+                    return 7;
+                case (2, 0):
+                    return 8;
+                default:
+                    return 9;
+
+            }
         }
     }
 }

@@ -25,7 +25,10 @@ namespace TicTacToe
             board.SetOneSpace(row, column, drawType);
         }
 
-        
+        public void InputComputerPoint(char drawType)
+        {
+            
+        }
         public void UserVersusComputer()
         {
             bool loop = true;
@@ -36,6 +39,7 @@ namespace TicTacToe
             while (loop)
             {
                 InputUserPoint(player1.DrawType);   //유저 입력
+                InputComputerPoint(player2.DrawType);
             }
 
 
