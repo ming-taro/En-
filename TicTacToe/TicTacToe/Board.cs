@@ -68,5 +68,43 @@ namespace TicTacToe
                     break;
             }
         }
+
+        public int FindSpaceNumber(int row, int column)
+        {
+            switch (row, column)
+            {
+                case (0, 0):
+                    return 1;
+                case (0, 1):
+                    return 2;
+                case (0, 2):
+                    return 3;
+                case (1, 0):
+                    return 4;
+                case (1, 1):
+                    return 5;
+                case (1, 2):
+                    return 6;
+                case (1, 3):
+                    return 7;
+                case (2, 0):
+                    return 8;
+                default:
+                    return 9;
+            }
+        }
+
+        public void FindRandomValidSpace()
+        {
+            Random randomNumber = new Random();
+            int spaceNumber = randomNumber.Next(1, 10);
+
+            while (!this.spaceNumber.Contains(spaceNumber))
+            {
+                spaceNumber = randomNumber.Next(1, 10);
+            }
+
+            this.spaceNumber.Add(spaceNumber);
+        }
     }
 }
