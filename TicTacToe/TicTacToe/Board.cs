@@ -35,38 +35,9 @@ namespace TicTacToe
             return board[row, column];
         }
 
-        public void AddSpaceNumberList(int row, int column)
+        public void AddSpaceNumberList(int spaceNumber)
         {
-            switch(row, column)
-            {
-                case (0, 0):
-                    spaceNumber.Add(1);
-                    break;
-                case (0, 1):
-                    spaceNumber.Add(2);
-                    break;
-                case (0, 2):
-                    spaceNumber.Add(3);
-                    break;
-                case (1, 0):
-                    spaceNumber.Add(4);
-                    break;
-                case (1, 1):
-                    spaceNumber.Add(5);
-                    break;
-                case (1, 2):
-                    spaceNumber.Add(6);
-                    break;
-                case (1, 3):
-                    spaceNumber.Add(7);
-                    break;
-                case (2, 0):
-                    spaceNumber.Add(8);
-                    break;
-                default:
-                    spaceNumber.Add(9);
-                    break;
-            }
+            this.spaceNumber.Add(spaceNumber);
         }
 
         public int FindSpaceNumber(int row, int column)
