@@ -25,5 +25,11 @@ namespace PrintStar
             if (str[0] == ' ') return true;
             else return false;
         }
+
+        public bool IsEnter(String str)
+        {
+            if (str == "\n") return true;
+            else return false;
+        }
     }
 }
