@@ -43,5 +43,16 @@ namespace TicTacToe
                     break;
             }
         }
+
+        public void PrintBoardScreen()
+        {
+            Console.WriteLine("                  ┏━━━┳━━━┳━━━┓");
+            Console.WriteLine("                  ┃   ┃   ┃   ┃");
+            Console.WriteLine("                  ┣━━━╋━━━╋━━━┫ ");
+            Console.WriteLine("                  ┃   ┃   ┃   ┃");
+            Console.WriteLine("                  ┣━━━╋━━━╋━━━┫ ");
+            Console.WriteLine("                  ┃   ┃   ┃   ┃");
+            Console.WriteLine("                  ┗━━━┻━━━┻━━━┛");
+        }
     }
 }
