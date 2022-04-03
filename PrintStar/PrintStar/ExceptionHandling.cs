@@ -8,9 +8,9 @@ namespace PrintStar
 {
     class ExceptionHandling
     {
-        public bool IsStringLengthOne(String str)    //문자열 길이가 1인지 이상인지 판별
+        public bool IsLengthLessThanTen(String str)    //문자열 길이가 10이하인지 판별
         {
-            if (str.Length == 1) return true;
+            if (str.Length <= 10) return true;
             else return false;
         }
 
@@ -32,9 +32,9 @@ namespace PrintStar
             else return false;
         }
 
-        public bool IsNaturalNumber(String str)  //'z'처럼 한 글자만 입력했을때도 숫자인지 아닌지 판별
+        public bool IsStartNaturalNumber(String str)  //첫글자가 숫자로 시작하는지 판별(ex 'z'처럼 영문자 하나 입력시 예외판별)
         {
-            if (Convert.ToInt32(str[0]) >= 49 && Convert.ToInt32(str[0]) <= 57) return true;
+            if (str[0] >= '1' && str[0] <= '9') return true;
             else return false;
         }
     }
