@@ -26,7 +26,7 @@ namespace PrintStar
             else return false;
         }
 
-        public bool IsEnter(String str)
+        public bool IsEnter(String str)          //enter만 누르는 경우 판별
         {
             if (str == "\n") return true;
             else return false;

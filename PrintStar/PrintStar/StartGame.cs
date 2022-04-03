@@ -26,10 +26,20 @@ namespace PrintStar
         {
             PrintingStar printingStar = new PrintingStar();
 
-            if (menu == 1) printingStar.PrintTriangle(line);             //1번 : 정삼각형
-            else if (menu == 2) printingStar.PrintInversedTriangle(line);     //2번 : 역삼각형
-            else if (menu == 3) printingStar.PrintSandglass(line);            //3번 : 모래시계
-            else if (menu == 4) printingStar.PrintDiamond(line);              //4번 : 다이아
+            switch(menu){
+                case 1:
+                    printingStar.PrintTriangle(line);             //1번 : 정삼각형
+                    break;
+                case 2:
+                    printingStar.PrintInversedTriangle(line);     //2번 : 역삼각형
+                    break;
+                case 3:
+                    printingStar.PrintSandglass(line);            //3번 : 모래시계
+                    break;
+                case 4:
+                    printingStar.PrintDiamond(line);              //4번 : 다이아
+                    break;
+            }
         }
 
         public bool isRetry()
@@ -45,7 +55,8 @@ namespace PrintStar
         {
             int menu;
             int line;
-            Console.SetWindowSize(100, 30);
+
+            Console.SetWindowSize(100, 45);
 
             while (true)
             {
