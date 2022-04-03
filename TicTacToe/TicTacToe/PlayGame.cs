@@ -8,7 +8,14 @@ namespace TicTacToe
 {
     class PlayGame
     {
+        public void StartGame()
+        {
+            PrintScreen printScreen = new PrintScreen();
 
+            printScreen.PrintMainScreen();
+
+
+        }
 
 
     }
