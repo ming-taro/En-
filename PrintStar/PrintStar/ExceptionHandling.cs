@@ -19,5 +19,11 @@ namespace PrintStar
             if (number >= 1 && number <= 4) return true;
             else return false;
         }
+
+        public bool IsStartSpace(String str)     //공백으로 시작하는지 판별
+        {
+            if (str[0] == ' ') return true;
+            else return false;
+        }
     }
 }
