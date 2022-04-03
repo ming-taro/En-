@@ -8,34 +8,30 @@ namespace TicTacToe
 {
     class Board
     {
-        private char[,] board = new char[3,3];
+        //private char[,] board = new char[3,3];
+        private List<char> spaceDrawType = new List<char>();
         private List<int> spaceNumber = new List<int>();
 
         public Board()
         {
             InitBoard();
         }
-        public void InitBoard()
+        public void InitBoard()  
         {
-            for(int i=0; i<3; i++)
-            {
-                board[i, 0] = ' ';
-                board[i, 1] = ' ';
-                board[i, 2] = ' ';
-            }
+            spaceDrawType.Clear();
         }
 
-        public void SetOneSpace(int row, int column, char drawType)
+        public void SetOneSpace(int row, int column, char drawType)  //해당 칸에 x or o 그리기
         {
-            board[row, column] = drawType;
+            spaceDrawType.Insert(FindSpaceNumber(row, column), drawType);
         }
 
-        public char GetOneSpace(int row, int column)
+        public char GetSpaceDrawType(int row, int column)  //해당 칸에 그려진 값 얻기
         {
-            return board[row, column];
+            return spaceDrawType[FindSpaceNumber(row, column)];
         }
 
-        public void AddSpaceNumberList(int spaceNumber)
+        public void AddSpaceNumberList(int spaceNumber)    
         {
             this.spaceNumber.Add(spaceNumber);
         }
@@ -45,23 +41,23 @@ namespace TicTacToe
             switch (row, column)
             {
                 case (0, 0):
-                    return 1;
+                    return 0;
                 case (0, 1):
-                    return 2;
+                    return 1;
                 case (0, 2):
-                    return 3;
+                    return 2;
                 case (1, 0):
-                    return 4;
+                    return 3;
                 case (1, 1):
-                    return 5;
+                    return 4;
                 case (1, 2):
-                    return 6;
+                    return 5;
                 case (1, 3):
-                    return 7;
+                    return 6;
                 case (2, 0):
-                    return 8;
+                    return 7;
                 default:
-                    return 9;
+                    return 8;
             }
         }
 
