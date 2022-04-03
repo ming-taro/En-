@@ -37,5 +37,15 @@ namespace PrintStar
             if (str[0] >= '1' && str[0] <= '9') return true;
             else return false;
         }
+
+        public bool IsContainOnlyNumbers(String str)  //입력값이 숫자로만 이루어져 있는지 판별
+        {
+            foreach(char word in str)
+            {
+                if (!(word >= '0' && word <= '9')) return false;      //숫자가 아닌 값이 포함되어 있다면 false
+            }
+
+            return true;
+        }
     }
 }
