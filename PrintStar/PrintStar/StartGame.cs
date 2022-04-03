@@ -34,34 +34,17 @@ namespace PrintStar
 
         public void PlayGame()
         {
-            ShowMenu();    //메뉴화면을 보여줌
-
             int menu;
             int line;
 
             while (true)
             {
+                ShowMenu();    //메뉴화면을 보여줌
                 Console.Write("번호를 입력해주세요 : ");             //찍으려는 별 모양 고르기
                 menu = Convert.ToInt32(Console.ReadLine());
-                if (menu == 0)                               //0번이 입력되면 종료
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("Game is over...");
-                    break;
-                }
-                else if(menu < 0 || menu > 4)              //0~4번 이외의 옵션을 고를 경우 : 메세지 출력 + 다시 입력
-                {
-                    Console.WriteLine("You entered an incorrect option. Please re-enter. ");
-                    continue;
-                }
 
-                while(true)                                    //음수가 아닌 자연수를 입력받을때까지 반복
-                {
-                    Console.Write("The number of lines : ");   //찍으려는 별의 줄 수 입력
-                    line = Convert.ToInt32(Console.ReadLine());
-                    if (line <= 0) Console.WriteLine("\nPlease enter only natural numbers.");   //음수가 입력되는 경우 : 메세지 출력 + 다시 입력
-                    else break;
-                }
+                Console.Write("줄 수를 입력해주세요 : ");   //찍으려는 별의 줄 수 입력
+                line = Convert.ToInt32(Console.ReadLine());
 
                 SelectMenu(menu, line);
             }
