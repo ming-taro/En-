@@ -17,15 +17,13 @@ namespace TicTacToe
         public Board()    //생성자
         {
             InitBoard();
+            score.Add(0); //점수는 모두 0으로 초기화
+            score.Add(0);
         }
-        public void InitBoard()             //보드판 초기화 함수
+        public void InitBoard()            //보드판 초기화 함수
         {
             spaceDrawType.Clear();
             spaceNumber.Clear();
-            score.Clear();
-
-            score.Add(0);
-            score.Add(0);
 
             for (int i = 0; i < 9; i++)
             {

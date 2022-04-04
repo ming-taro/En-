@@ -36,7 +36,7 @@ namespace TicTacToe
             switch (mode)
             {
                 case 1:
-                    Console.WriteLine("\n         Computer : " + player1Score + "   vs   User : " + player2Score + "\n");
+                    Console.WriteLine("\n             User : " + player1Score + "   vs   Computer : " + player2Score + "\n");
                     break;
                 case 2:
                     Console.WriteLine("\n              User1 : " + player1Score + "   vs   User2 : " + player2Score + "\n");
@@ -57,8 +57,9 @@ namespace TicTacToe
 
         public void PrintPlayScreen(int mode, Board board)     //게임진행화면을 출력하는 함수
         {
+            Console.Clear();
             PrintModeScreen(mode);                               //모드 출력
-            PrintScoreBoard(mode, 0, 0);             //스코어보드 출력
+            PrintScoreBoard(mode, board.GetScore(0), board.GetScore(1));             //스코어보드 출력
             PrintBoardScreen(board);                 //보드판 출력
 
         }
