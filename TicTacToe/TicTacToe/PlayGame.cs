@@ -16,19 +16,16 @@ namespace TicTacToe
         {
             Console.WriteLine(">>>>>>>>좌표를 입력해주세요<<<<<<<<");
             Console.Write(">행 : ");
-            string input = Console.ReadLine();
+            string input = Console.ReadLine();      //행 입력
             int row = Convert.ToInt32(input);
             Console.Write(">열 : ");
-            input = Console.ReadLine();
+            input = Console.ReadLine();             //열 입력
             int column = Convert.ToInt32(input);
 
-            board.SetOneSpace(row, column, drawType);
+            board.SetOneSpace(row, column, drawType);                       //보드객체에 입력받은 칸 정보 저장
+            player1.AddSpaceNumber(board.FindSpaceNumber(row, column));     //player객체의 칸 번호 리스트에 입력한 칸 번호 저장
         }
 
-        public void InputComputerPoint(char drawType)
-        {
-            
-        }
         public void UserVersusComputer()
         {
             bool loop = true;
@@ -48,21 +45,17 @@ namespace TicTacToe
         public void StartGame()
         {
             PrintScreen printScreen = new PrintScreen();
-            printScreen.PrintMainScreen();
+            printScreen.PrintMainScreen();                       //게임 메인 화면 출력
 
-            int mode = Convert.ToInt32(Console.ReadLine());
+            int mode = Convert.ToInt32(Console.ReadLine());      //모드를 입력받으면 메인화면을 지움 -> 모드화면 출력
             Console.Clear();
-            printScreen.PrintModeScreen(mode);
-            printScreen.PrintScoreBoard(mode, 0, 0);
-            printScreen.PrintBoardScreen(board);
+            printScreen.PrintModeScreen(mode);                   //모드화면 출력
+            printScreen.PrintScoreBoard(mode, 0, 0);             //스코어보드 출력
+            printScreen.PrintBoardScreen(board);                 //보드판 출력
 
             bool loop = true;
 
-            while (loop)
-            {
-
-
-            }
+            UserVersusComputer();      //유저 vs 컴퓨터 게임모드 실행
         }
 
 

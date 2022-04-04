@@ -10,8 +10,8 @@ namespace TicTacToe
     class Board
     {
         
-        private List<char> spaceDrawType = new List<char>();    //보드판에 그려진 (X or O)표시 저장
-        private List<int> spaceNumber = new List<int>();        //X or O표시가 있는 칸 번호를 저장하는 리스트
+        private List<char> spaceDrawType = new List<char>();    //보드판에 그려진 (X or O)'표시' 저장
+        private List<int> spaceNumber = new List<int>();        //X or O표시가 있는 '칸 번호'를 저장하는 리스트
         public const bool CHECK_WIN = true;
 
         public Board()    //생성자
@@ -32,6 +32,7 @@ namespace TicTacToe
         public void SetOneSpace(int row, int column, char drawType)   //해당 칸에 x or o를 그리는 함수
         {
             spaceDrawType[FindSpaceNumber(row, column)] = drawType;   //입력받은 행, 열에 대한 칸 번호를 찾아 X or O를 저장
+            AddSpaceNumberList(FindSpaceNumber(row, column));         //칸리스트에 칸번호 추가
         }
         
 
@@ -89,6 +90,7 @@ namespace TicTacToe
             if (spaceDrawType[spaceNumber1] == spaceDrawType[spaceNumber2] && spaceDrawType[spaceNumber2] == spaceDrawType[spaceNumber3]) return CHECK_WIN;
             else return !CHECK_WIN;
         }
+
         public bool CheckDiagonal(int spaceNumber)   //대각선상 연달아 3개가 그려져있는지 체크하는 함수
         {
             switch (spaceNumber)   //보드판에서 0, 2, 4, 6, 8번에 그려져있을때만 대각선을 검사한다
