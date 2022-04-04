@@ -44,14 +44,14 @@ namespace TicTacToe
             }
         }
 
-        public void PrintBoardScreen()
+        public void PrintBoardScreen(Board board)
         {
             Console.WriteLine("                  ┏━━━┳━━━┳━━━┓");
-            Console.WriteLine("                  ┃   ┃   ┃   ┃");
+            Console.WriteLine("                  ┃ " + board.GetSpaceDrawType(0) + " ┃ " + board.GetSpaceDrawType(1) + " ┃ " + board.GetSpaceDrawType(2) + " ┃");
             Console.WriteLine("                  ┣━━━╋━━━╋━━━┫ ");
-            Console.WriteLine("                  ┃   ┃   ┃   ┃");
+            Console.WriteLine("                  ┃ " + board.GetSpaceDrawType(3) + " ┃ " + board.GetSpaceDrawType(4) + " ┃ " + board.GetSpaceDrawType(5) + " ┃");
             Console.WriteLine("                  ┣━━━╋━━━╋━━━┫ ");
-            Console.WriteLine("                  ┃   ┃   ┃   ┃");
+            Console.WriteLine("                  ┃ " + board.GetSpaceDrawType(6) + " ┃ " + board.GetSpaceDrawType(7) + " ┃ " + board.GetSpaceDrawType(8) + " ┃");
             Console.WriteLine("                  ┗━━━┻━━━┻━━━┛");
         }
     }

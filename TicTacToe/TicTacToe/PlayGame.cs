@@ -54,7 +54,7 @@ namespace TicTacToe
             Console.Clear();
             printScreen.PrintModeScreen(mode);
             printScreen.PrintScoreBoard(mode, 0, 0);
-            printScreen.PrintBoardScreen();
+            printScreen.PrintBoardScreen(board);
 
             bool loop = true;
 

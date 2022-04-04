@@ -12,11 +12,11 @@ namespace TicTacToe
         private List<char> spaceDrawType = new List<char>();    //보드판에 그려진 (X or O)표시 저장
         private List<int> spaceNumber = new List<int>();        //X or O표시가 있는 칸 번호를 저장하는 리스트
 
-        public Board()
+        public Board()    //생성자
         {
             InitBoard();
         }
-        public void InitBoard()  
+        public void InitBoard()             //보드판 초기화 함수
         {
             spaceDrawType.Clear();     
             spaceNumber.Clear();
@@ -33,9 +33,9 @@ namespace TicTacToe
         }
         
 
-        public char GetSpaceDrawType(int row, int column)  //해당 칸에 그려진 값 얻기
+        public char GetSpaceDrawType(int spaceNumber)  //해당 칸에 그려진 값 얻기
         {
-            return spaceDrawType[FindSpaceNumber(row, column)];   //입력받은 행, 열에 대한 칸 번호를 찾아 그려진 값 반환
+            return spaceDrawType[spaceNumber];   //입력받은 행, 열에 대한 칸 번호를 찾아 그려진 값 반환
         }
 
         public void AddSpaceNumberList(int spaceNumber)  //그림이 그려진 칸 번호를 리스트에 추가하는 함수
