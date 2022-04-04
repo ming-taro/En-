@@ -57,6 +57,20 @@ namespace TicTacToe
             Console.WriteLine("                  ┗━━━┻━━━┻━━━┛");
         }
 
+        public void PrintWinner(string name)
+        {
+            Console.WriteLine("======================================================");
+            Console.WriteLine("                 [" + name + " is the winner!]");
+            Console.WriteLine("======================================================");
+        }
+
+        public void PrintDraw()
+        {
+            Console.WriteLine("======================================================");
+            Console.WriteLine("                        [Draw]");
+            Console.WriteLine("======================================================");
+        }
+
         public void PrintPlayScreen(int mode, Board board)     //게임진행화면을 출력하는 함수
         {
             Console.Clear();
@@ -65,5 +79,7 @@ namespace TicTacToe
             PrintBoardScreen(board);                                      //보드판 출력
 
         }
+
+        
     }
 }
