@@ -15,8 +15,10 @@ namespace TicTacToe
             else return false;                     //한 글자이지만 숫자가 아니라면 false
         }
 
-        public bool IsBetween0To2(int number)      //숫자가 0~2범위인지 판별(좌표입력시 사용할 예외처리)
+        public bool IsBetween0To2(string str)      //숫자가 0~2범위인지 판별(좌표입력시 사용할 예외처리)
         {
+            int number = Convert.ToInt32(str);
+
             if (number >= 0 && number <= 2) return true;
             else return false;
         }
@@ -39,6 +41,15 @@ namespace TicTacToe
 
             if (number == 1 || number == 2) return true;
             else return false;
+        }
+
+        public bool IsValidSpace(Board board, int row, int column)
+        {
+            int spaceNumber = board.FindSpaceNumber(row, column);
+
+            if (board.IsValidSpace(spaceNumber)) return true;
+            else return false;
+
         }
 
         public bool IsValidValue(string str)     //숫자범위를 검사할만한 유효한 입력인가를 확인하는 함수

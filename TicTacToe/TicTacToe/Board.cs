@@ -82,7 +82,14 @@ namespace TicTacToe
                     return 8;
             }
         }
-
+        public bool IsValidSpace(int spaceNumber)    //해당 칸번호가 비어있는(유효한) 칸번호인지 확인하는 함수
+        {
+            foreach(int number in validSpaceNumber)
+            {
+                if (number == spaceNumber) return true;   //비어있는 칸번호 리스트에 해당 칸번호가 있다면 true
+            }
+            return false;                            //이미 그림이 그려진 칸번호인 경우 false
+        }
         public void FindRandomValidSpace(Player player)   //빈 칸(유효한) 중 랜덤한 칸 번호를 찾아 그리는 함수(컴퓨터가 사용)
         {
             Random randomNumber = new Random();

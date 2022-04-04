@@ -59,17 +59,19 @@ namespace TicTacToe
         public void PrintWinner(string name)
         {
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>게임을 종료합니다<<<<<<<<<<<<<<<<<<");
-            Console.WriteLine("======================================================\n");
-            Console.WriteLine("                 [" + name + " is the winner!]\n");
+            Console.WriteLine("======================================================\n\n");
+            Console.WriteLine("                 [" + name + " is the winner!]\n\n");
             Console.WriteLine("======================================================");
+            Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<\n");
         }
 
         public void PrintDraw()
         {
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>게임을 종료합니다<<<<<<<<<<<<<<<<<<");
-            Console.WriteLine("======================================================\n");
-            Console.WriteLine("                        [Draw]\n");
+            Console.WriteLine("======================================================\n\n");
+            Console.WriteLine("                        [Draw]\n\n");
             Console.WriteLine("======================================================");
+            Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<\n");
         }
 
         public void PrnitRetry(string name)
@@ -87,7 +89,7 @@ namespace TicTacToe
             PrintModeScreen(mode);                                        //모드 출력
             PrintScoreBoard(mode, board.GetScore(0), board.GetScore(1));  //스코어보드 출력
             PrintBoardScreen(board);                                      //보드판 출력
-
+            Console.WriteLine("\n>>>>>>>>>>>>>>>>>>좌표를 입력해주세요<<<<<<<<<<<<<<<<<");
         }
 
         
