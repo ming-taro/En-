@@ -52,6 +52,7 @@ namespace TicTacToe
             while (loop)
             {
                 printScreen.PrintPlayScreen(1, board);          //게임 플레이 화면 출력
+
                 InputUserPoint(player1);                        //유저입력
                 if (board.CheckWin(player1))                    //유저가 승리하는 경우
                 {                  
@@ -60,8 +61,7 @@ namespace TicTacToe
                     if (IsRetry("User")) board.InitBoard();     //다시 시작한다면 보드판 초기화
                     else return;                                //게임 종료
                 }
-                //printScreen.PrintPlayScreen(1, board);          //유저입력을 반영한 게임화면 출력
-                
+
                 board.FindRandomValidSpace(player2);            //컴퓨터 입력
                 if (board.CheckWin(player2))                    //컴퓨터가 승리하는 경우
                 {
@@ -71,8 +71,44 @@ namespace TicTacToe
                     else return;                                //게임종료
                 }
             }
+        }
+        public void User1VersusUser2(PrintScreen printScreen)
+        {
+            bool loop = true;
 
-            
+            player1.DrawType = 'X';    //user1
+            player2.DrawType = 'O';    //user2
+
+            while (loop)
+            {
+                printScreen.PrintPlayScreen(2, board);          //게임 플레이 화면 출력
+
+                InputUserPoint(player1);                        //유저1입력
+                if (board.CheckWin(player1))                    //유저1이 승리하는 경우
+                {
+                    board.SetScore(0);                          //유저1의 승리 체크(유저 스코어 +1)
+                    printScreen.PrintPlayScreen(2, board);      //유저1의 입력을 반영한 게임화면 출력
+                    if (IsRetry("User1"))
+                    {
+                        board.InitBoard();                      //다시 시작한다면 보드판 초기화
+                        printScreen.PrintPlayScreen(2, board);  //게임 플레이 화면 출력
+                    }
+                    else return;                                //게임 종료
+                }
+                else
+                {
+                    printScreen.PrintPlayScreen(2, board);      //게임 플레이 화면 출력
+                }
+
+                InputUserPoint(player2);                        //유저2입력
+                if (board.CheckWin(player2))                    //유저2가 승리하는 경우
+                {
+                    board.SetScore(1);                          //유저2 승리 체크(유저 스코어 +1)
+                    printScreen.PrintPlayScreen(2, board);      //유저2 입력을 반영한 게임화면 출력
+                    if (IsRetry("User2")) board.InitBoard();    //다시 시작한다면 보드판 초기화
+                    else return;                                //게임 종료
+                }
+            }
 
         }
 
@@ -82,8 +118,9 @@ namespace TicTacToe
             printScreen.PrintMainScreen();                       //게임 메인 화면 출력
 
             int mode = Convert.ToInt32(Console.ReadLine());      //모드를 입력받으면 메인화면을 지움 -> 모드화면 출력
-            
-            if(mode == 1) UserVersusComputer(printScreen);      //유저 vs 컴퓨터 게임모드 실행
+
+            if (mode == 1) UserVersusComputer(printScreen);      //유저  vs 컴퓨터 게임모드 실행
+            else if (mode == 2) User1VersusUser2(printScreen);   //유저1 vs 유저2 게임모드 실행
 
             Console.WriteLine("\n>>>>>>>>>>>>>>>>>>>게임을 종료합니다<<<<<<<<<<<<<<<<<<");
         }
