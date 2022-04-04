@@ -10,7 +10,7 @@ namespace TicTacToe
     class Board
     {
         private List<char> spaceDrawType = new List<char>();    //보드판에 그려진 (X or O)'표시' 저장
-        private List<int> spaceNumber = new List<int>();        //X or O표시가 있는 '칸 번호'를 저장하는 리스트
+        private List<int> spaceNumber = new List<int>();        //비어있는 '칸 번호'를 저장하는 리스트
         private List<int> score = new List<int>();              //점수 리스트
         public const bool CHECK_WIN = true;
 
@@ -28,6 +28,7 @@ namespace TicTacToe
             for (int i = 0; i < 9; i++)
             {
                 spaceDrawType.Add(' ');    //초기 보드판에는 각 칸마다 공백을 저장한다
+                spaceNumber.Add(i);        //비어있는 칸번호 리스트(0~8번 : 총 9칸)
             }
         }
 
@@ -43,7 +44,7 @@ namespace TicTacToe
         public void SetOneSpace(int row, int column, char drawType)   //해당 칸에 x or o를 그리는 함수
         {
             spaceDrawType[FindSpaceNumber(row, column)] = drawType;   //입력받은 행, 열에 대한 칸 번호를 찾아 X or O를 저장
-            AddSpaceNumberList(FindSpaceNumber(row, column));         //칸리스트에 칸번호 추가
+            RemoveSpaceNumberList(FindSpaceNumber(row, column));      //칸리스트에서 해당 칸번호 삭제
         }
         
 
@@ -52,9 +53,9 @@ namespace TicTacToe
             return spaceDrawType[spaceNumber];   //입력받은 행, 열에 대한 칸 번호를 찾아 그려진 값 반환
         }
 
-        public void AddSpaceNumberList(int spaceNumber)  //그림이 그려진 칸 번호를 리스트에 추가하는 함수
+        public void RemoveSpaceNumberList(int spaceNumber)  //그림이 그려진 칸 번호를 리스트에서 삭제하는 함수
         {
-            this.spaceNumber.Add(spaceNumber);   //해당 칸 번호를 리스트에 추가
+            this.spaceNumber.Remove(spaceNumber);   //해당 칸 번호를 리스트에서 삭제
         }
 
         public int FindSpaceNumber(int row, int column)  //행, 열값에 따른 칸 번호를 찾아 반환해주는 함수
@@ -103,7 +104,7 @@ namespace TicTacToe
             else return !CHECK_WIN;
         }
 
-        public bool CheckDiagonal(int spaceNumber)   //대각선상 연달아 3개가 그려져있는지 체크하는 함수
+        public bool CheckDiagonal(int spaceNumber)   //대각선방향을 검사해 승리를 확인하는 함수
         {
             switch (spaceNumber)   //보드판에서 0, 2, 4, 6, 8번에 그려져있을때만 대각선을 검사한다
             {
@@ -121,7 +122,7 @@ namespace TicTacToe
             }
         }
 
-        public bool CheckRow(int spaceNumber)
+        public bool CheckRow(int spaceNumber)    //가로방향을 검사해 승리를 확인하는 함수
         {
             switch (spaceNumber)
             {
@@ -137,7 +138,7 @@ namespace TicTacToe
             }
         }
 
-        public bool CheckColumn(int spaceNumber)
+        public bool CheckColumn(int spaceNumber)  //세로방향을 검사해 승리를 확인하는 함수
         {
             switch(spaceNumber){
                 case 0: case 3: case 6:
