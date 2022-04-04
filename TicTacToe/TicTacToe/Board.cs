@@ -27,9 +27,9 @@ namespace TicTacToe
             }
         }
 
-        public void SetOneSpace(int row, int column, char drawType)  //해당 칸에 x or o 그리기
+        public void SetOneSpace(int row, int column, char drawType)   //해당 칸에 x or o를 그리는 함수
         {
-            spaceDrawType.Insert(FindSpaceNumber(row, column), drawType);
+            spaceDrawType[FindSpaceNumber(row, column)] = drawType;   //입력받은 행, 열에 대한 칸 번호를 찾아 X or O를 저장
         }
         
 
