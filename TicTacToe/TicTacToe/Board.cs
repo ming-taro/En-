@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace TicTacToe
 {
+
     class Board
     {
-        //private char[,] board = new char[3,3];
+        
         private List<char> spaceDrawType = new List<char>();    //보드판에 그려진 (X or O)표시 저장
         private List<int> spaceNumber = new List<int>();        //X or O표시가 있는 칸 번호를 저장하는 리스트
+        public const bool CHECK_WIN = true;
 
         public Board()    //생성자
         {
@@ -80,6 +82,37 @@ namespace TicTacToe
 
             this.spaceNumber.Add(spaceNumber);    //찾은 칸번호를 칸번호 리스트에 저장
             spaceDrawType[spaceNumber] = 'O';     //해당 칸번호에 그림 저장(user : X, computer : O)
+        }
+
+        /*public int CountSameType(int spaceNumber1, int spaceNumber2, int spaceNumber3) //나란한 세 칸에 같은 타입이 몇 개 있는지 반환하는 함수
+        {
+            int count = 0;
+
+            if(spaceNumber1 != spaceNumber2)
+        }*/
+        public bool CheckDiagonal(int spaceNumber)   //대각선상 연달아 3개가 그려져있는지 체크하는 함수
+        {
+            switch (spaceNumber)   //보드판에서 0, 2, 4, 6, 8번에 그려져있을때만 대각선을 검사한다
+            {
+                case 0: case 8:
+                    if (spaceDrawType[0] == spaceDrawType[4] && spaceDrawType[4] == spaceDrawType[8]) return CHECK_WIN;
+                    else return !CHECK_WIN;
+                case 2: case 7:
+                    if (spaceDrawType[2] == spaceDrawType[4] && spaceDrawType[4] == spaceDrawType[7]) return CHECK_WIN;
+                    else return !CHECK_WIN;
+                case 4:
+                    if (spaceDrawType[0] == spaceDrawType[4] && spaceDrawType[4] == spaceDrawType[8] || spaceDrawType[2] == spaceDrawType[4] && spaceDrawType[4] == spaceDrawType[7]) return CHECK_WIN;
+                    else return !CHECK_WIN;
+                default:            //대각선상에 그림을 그린적이 없는 경우 false 반환
+                    return !CHECK_WIN;
+            }
+        }
+        public bool CheckWin(Player player)
+        {
+            foreach (int spaceNumber in player.mySpaceNumber)
+            {
+                if (CheckDiagonal(spaceNumber)) return CHECK_WIN;
+            }
         }
     }
 }
