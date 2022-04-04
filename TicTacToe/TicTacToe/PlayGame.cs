@@ -12,6 +12,7 @@ namespace TicTacToe
         Player player2 = new Player();
         Board board = new Board();
         PrintScreen printScreen = new PrintScreen();
+        ExceptionHandling exception = new ExceptionHandling();
 
         public void InputUserPoint(Player player)       //player(=user)의 좌표입력을 받고 리스트에 저장하는 함수
         {
