@@ -75,16 +75,16 @@ namespace TicTacToe
                     return 4;
                 case (1, 2):
                     return 5;
-                case (1, 3):
-                    return 6;
                 case (2, 0):
+                    return 6;
+                case (2, 1):
                     return 7;
-                default:
+                default:         //case (2,2)
                     return 8;
             }
         }
 
-        public void FindRandomValidSpace()   //빈 칸(유효한) 중 랜덤한 칸 번호를 찾아 그리는 함수(컴퓨터가 사용)
+        public void FindRandomValidSpace(Player player)   //빈 칸(유효한) 중 랜덤한 칸 번호를 찾아 그리는 함수(컴퓨터가 사용)
         {
             Random randomNumber = new Random();
             int spaceNumber = randomNumber.Next(0, 9);      //0~8(칸번호)사이의 랜덤한 수 
@@ -96,6 +96,7 @@ namespace TicTacToe
 
             this.spaceNumber.Add(spaceNumber);    //찾은 칸번호를 칸번호 리스트에 저장
             spaceDrawType[spaceNumber] = 'O';     //해당 칸번호에 그림 저장(user : X, computer : O)
+            player.AddSpaceNumber(spaceNumber);   //컴퓨터객체에서 나의 칸번호 리스트에 칸번호 추가
         }
 
         public bool IsSameType(int spaceNumber1, int spaceNumber2, int spaceNumber3) //나란한 세 칸이 같은 타입인지 확인하는 함수

@@ -14,7 +14,7 @@ namespace TicTacToe
 
         public void InputUserPoint(Player player)       //player(=user)의 좌표입력을 받고 리스트에 저장하는 함수
         {
-            Console.WriteLine(">>>>>>>>좌표를 입력해주세요<<<<<<<<");
+            Console.WriteLine("\n>>>>>>>>>>>>>>>>>좌표를 입력해주세요<<<<<<<<<<<<<<<<<");
             Console.Write(">행 : ");
             string input = Console.ReadLine();      //행 입력
             int row = Convert.ToInt32(input);
@@ -26,7 +26,7 @@ namespace TicTacToe
             player.AddSpaceNumber(board.FindSpaceNumber(row, column));      //player객체의 칸 번호 리스트에 입력한 칸 번호 저장
         }
 
-        public void UserVersusComputer()
+        public void UserVersusComputer(PrintScreen printScreen)
         {
             bool loop = true;
             
@@ -36,12 +36,20 @@ namespace TicTacToe
             while (loop)
             {
                 InputUserPoint(player1);            //유저 입력
-                if (board.CheckWin(player1))
+                Console.Clear();
+                printScreen.PrintPlayScreen(1, board);
+                /*if (board.CheckWin(player1))
                 {
-                    board.SetScore(0);     //유저 승리 체크(유저 스코어 +1)
+                    board.SetScore(0);              //유저 승리 체크(유저 스코어 +1)
+                    Console.WriteLine(board.GetSpaceDrawType(0));
                 }
-                board.FindRandomValidSpace();       //컴퓨터 입력
-                
+
+                board.FindRandomValidSpace(player2);//컴퓨터 입력
+                if (board.CheckWin(player2))
+                {
+                    board.SetScore(1);              //컴퓨터 승리 체크(컴퓨터 스코어 +1)
+                }*/
+
             }
 
 
@@ -54,13 +62,11 @@ namespace TicTacToe
 
             int mode = Convert.ToInt32(Console.ReadLine());      //모드를 입력받으면 메인화면을 지움 -> 모드화면 출력
             Console.Clear();
-            printScreen.PrintModeScreen(mode);                   //모드화면 출력
-            printScreen.PrintScoreBoard(mode, 0, 0);             //스코어보드 출력
-            printScreen.PrintBoardScreen(board);                 //보드판 출력
+            printScreen.PrintPlayScreen(mode, board);
 
-            bool loop = true;
+            //bool loop = true;
 
-            UserVersusComputer();      //유저 vs 컴퓨터 게임모드 실행
+            UserVersusComputer(printScreen);      //유저 vs 컴퓨터 게임모드 실행
         }
 
 
