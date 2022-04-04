@@ -14,7 +14,7 @@ namespace TicTacToe
 
         public void InputUserPoint(Player player)       //player(=user)의 좌표입력을 받고 리스트에 저장하는 함수
         {
-            Console.WriteLine("\n>>>>>>>>>>>>>>>>>좌표를 입력해주세요<<<<<<<<<<<<<<<<<");
+            Console.WriteLine("\n>>>>>>>>>>>>>>>>>>좌표를 입력해주세요<<<<<<<<<<<<<<<<<");
             Console.Write(">행 : ");
             string input = Console.ReadLine();      //행 입력
             int row = Convert.ToInt32(input);
@@ -28,7 +28,11 @@ namespace TicTacToe
         
         public bool IsRetry(string name)     //게임을 다시 할지 확인하는 함수
         {
-            Console.WriteLine("\n========" + name + "의 승리입니다. 다시하시겠습니까?=========");
+            Console.WriteLine("\n======================================================");
+            if (name.Equals("Computer")) Console.WriteLine("=======Computer의 승리입니다. 다시하시겠습니까?=======");
+            else if (name.Equals("User")) Console.WriteLine("=========User의 승리입니다. 다시하시겠습니까?=========");
+            else Console.WriteLine("=========" + name + "의 승리입니다. 다시하시겠습니까?========");
+            Console.WriteLine("======================================================\n");
             Console.Write("(1. 다시 시작      2. 종료) : ");
             int retry = Convert.ToInt32(Console.ReadLine());          //게임을 다시 할지 입력받음
 
@@ -81,7 +85,7 @@ namespace TicTacToe
             
             if(mode == 1) UserVersusComputer(printScreen);      //유저 vs 컴퓨터 게임모드 실행
 
-            Console.WriteLine(">>>>>>>>>>게임을 종료합니다<<<<<<<<<<");
+            Console.WriteLine("\n>>>>>>>>>>>>>>>>>>>게임을 종료합니다<<<<<<<<<<<<<<<<<<");
         }
 
 
