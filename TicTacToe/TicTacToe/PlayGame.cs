@@ -12,7 +12,7 @@ namespace TicTacToe
         Player player2 = new Player();
         Board board = new Board();
 
-        public void InputUserPoint(char drawType)
+        public void InputUserPoint(Player player)       //player(=user)의 좌표입력을 받고 리스트에 저장하는 함수
         {
             Console.WriteLine(">>>>>>>>좌표를 입력해주세요<<<<<<<<");
             Console.Write(">행 : ");
@@ -22,8 +22,8 @@ namespace TicTacToe
             input = Console.ReadLine();             //열 입력
             int column = Convert.ToInt32(input);
 
-            board.SetOneSpace(row, column, drawType);                       //보드객체에 입력받은 칸 정보 저장
-            player1.AddSpaceNumber(board.FindSpaceNumber(row, column));     //player객체의 칸 번호 리스트에 입력한 칸 번호 저장
+            board.SetOneSpace(row, column, player.DrawType);                       //보드객체에 입력받은 칸 정보 저장
+            player.AddSpaceNumber(board.FindSpaceNumber(row, column));      //player객체의 칸 번호 리스트에 입력한 칸 번호 저장
         }
 
         public void UserVersusComputer()
@@ -35,8 +35,13 @@ namespace TicTacToe
 
             while (loop)
             {
-                InputUserPoint(player1.DrawType);   //유저 입력
+                InputUserPoint(player1);            //유저 입력
+                if (board.CheckWin(player1))
+                {
+                    board.SetScore(0);     //유저 승리 체크(유저 스코어 +1)
+                }
                 board.FindRandomValidSpace();       //컴퓨터 입력
+                
             }
 
 

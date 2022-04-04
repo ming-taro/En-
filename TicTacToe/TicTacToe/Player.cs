@@ -10,7 +10,7 @@ namespace TicTacToe
     {
         private int score;
         private char drawType;
-        private List<int> mySpaceNumber = new List<int>();
+        public List<int> mySpaceNumber = new List<int>();
 
         public Player()
         {
