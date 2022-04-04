@@ -11,9 +11,9 @@ namespace TicTacToe
         public void PrintMainScreen()
         {
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>>TicTacToe 게임<<<<<<<<<<<<<<<<<<<<");
-            Console.WriteLine("======================모드 선택=======================\n\n");
+            Console.WriteLine("======================모드 선택=======================\n\n\n\n");
             Console.WriteLine("              1. User    vs    Computer               \n");
-            Console.WriteLine("              2. User1   vs    User2                  \n\n");
+            Console.WriteLine("              2. User1   vs    User2                  \n\n\n\n");
             Console.WriteLine("======================================================");
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<\n");
         }
@@ -59,8 +59,8 @@ namespace TicTacToe
         public void PrintWinner(string name)
         {
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>게임을 종료합니다<<<<<<<<<<<<<<<<<<");
-            Console.WriteLine("======================================================\n\n");
-            Console.WriteLine("                 [" + name + " is the winner!]\n\n");
+            Console.WriteLine("======================================================\n\n\n\n\n");
+            Console.WriteLine("                 [" + name + " is the winner!]\n\n\n\n\n");
             Console.WriteLine("======================================================");
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<\n");
         }
@@ -68,8 +68,8 @@ namespace TicTacToe
         public void PrintDraw()
         {
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>게임을 종료합니다<<<<<<<<<<<<<<<<<<");
-            Console.WriteLine("======================================================\n\n");
-            Console.WriteLine("                        [Draw]\n\n");
+            Console.WriteLine("======================================================\n\n\n\n\n\n");
+            Console.WriteLine("                        [Draw]\n\n\n\n\n\n");
             Console.WriteLine("======================================================");
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<\n");
         }
