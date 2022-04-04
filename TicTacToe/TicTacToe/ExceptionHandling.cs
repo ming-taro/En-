@@ -43,7 +43,7 @@ namespace TicTacToe
 
         public bool IsValidValue(string str)     //숫자범위를 검사할만한 유효한 입력인가를 확인하는 함수
         {
-            if (IsStartSpace(str) || IsNullOrEmpty(str) || !IsSingleDigit(str)) return false;   //한자리 숫자가 아닌 잘못된 입력
+            if (IsNullOrEmpty(str) || IsStartSpace(str) || !IsSingleDigit(str)) return false;   //한자리 숫자가 아닌 잘못된 입력
             else return true;
         }
     }
