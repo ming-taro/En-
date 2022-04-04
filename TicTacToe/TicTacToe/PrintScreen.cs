@@ -44,7 +44,7 @@ namespace TicTacToe
             }
         }
 
-        public void PrintBoardScreen(Board board)
+        public void PrintBoardScreen(Board board)   //보드판을 출력하는 함수
         {
             Console.WriteLine("                  ┏━━━┳━━━┳━━━┓");
             Console.WriteLine("                  ┃ " + board.GetSpaceDrawType(0) + " ┃ " + board.GetSpaceDrawType(1) + " ┃ " + board.GetSpaceDrawType(2) + " ┃");

@@ -10,6 +10,7 @@ namespace TicTacToe
     {
         private int score;
         private char drawType;
+        private List<int> mySpaceNumber = new List<int>();
 
         public Player()
         {
@@ -26,6 +27,15 @@ namespace TicTacToe
         {
             get { return drawType; }
             set { drawType = value; }
+        }
+
+        public void AddSpaceNumber(int spaceNumber)
+        {
+            mySpaceNumber.Add(spaceNumber);
+        }
+        public void InitMySpaceNumber()
+        {
+            mySpaceNumber.Clear();
         }
     }
 }
