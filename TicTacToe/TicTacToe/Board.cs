@@ -10,7 +10,7 @@ namespace TicTacToe
     class Board
     {
         private List<char> spaceDrawType = new List<char>();    //보드판에 그려진 (X or O)'표시' 저장
-        private List<int> spaceNumber = new List<int>();        //비어있는 '칸 번호'를 저장하는 리스트
+        private List<int> validSpaceNumber = new List<int>();        //비어있는 '칸 번호'를 저장하는 리스트
         private List<int> score = new List<int>();              //점수 리스트
         public const bool CHECK_WIN = true;
 
@@ -23,12 +23,12 @@ namespace TicTacToe
         public void InitBoard()            //보드판 초기화 함수
         {
             spaceDrawType.Clear();
-            spaceNumber.Clear();
+            validSpaceNumber.Clear();
 
             for (int i = 0; i < 9; i++)
             {
                 spaceDrawType.Add(' ');    //초기 보드판에는 각 칸마다 공백을 저장한다
-                spaceNumber.Add(i);        //비어있는 칸번호 리스트(0~8번 : 총 9칸)
+                validSpaceNumber.Add(i);        //비어있는 칸번호 리스트(0~8번 : 총 9칸)
             }
         }
 
@@ -55,7 +55,7 @@ namespace TicTacToe
 
         public void RemoveSpaceNumberList(int spaceNumber)  //그림이 그려진 칸 번호를 리스트에서 삭제하는 함수
         {
-            this.spaceNumber.Remove(spaceNumber);   //해당 칸 번호를 리스트에서 삭제
+            validSpaceNumber.Remove(spaceNumber);   //해당 칸 번호를 리스트에서 삭제
         }
 
         public int FindSpaceNumber(int row, int column)  //행, 열값에 따른 칸 번호를 찾아 반환해주는 함수
@@ -86,14 +86,10 @@ namespace TicTacToe
         public void FindRandomValidSpace(Player player)   //빈 칸(유효한) 중 랜덤한 칸 번호를 찾아 그리는 함수(컴퓨터가 사용)
         {
             Random randomNumber = new Random();
-            int spaceNumber = randomNumber.Next(0, 9);      //0~8(칸번호)사이의 랜덤한 수 
-
-            while (!this.spaceNumber.Contains(spaceNumber)) //칸번호 리스트에 없는 번호를 찾음
-            {
-                spaceNumber = randomNumber.Next(1, 10);    
-            }
-
-            this.spaceNumber.Add(spaceNumber);    //찾은 칸번호를 칸번호 리스트에 저장
+            int spaceNumberIndex = randomNumber.Next(0, validSpaceNumber.Count);  //빈칸번호를 저장한 리스트의 랜덤한 인덱스 번호 추출 
+            validSpaceNumber.RemoveAt(spaceNumberIndex); //컴퓨터가 입력할 칸번호를 빈칸번호 리스트에서 삭제
+            
+            int spaceNumber = validSpaceNumber[spaceNumberIndex];    //빈칸번호 리스트에서 삭제한 인덱스번호에 해당하는 빈칸번호
             spaceDrawType[spaceNumber] = 'O';     //해당 칸번호에 그림 저장(user : X, computer : O)
             player.AddSpaceNumber(spaceNumber);   //컴퓨터객체에서 나의 칸번호 리스트에 칸번호 추가
         }

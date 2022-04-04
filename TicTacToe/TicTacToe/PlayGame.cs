@@ -59,13 +59,13 @@ namespace TicTacToe
                 printScreen.PrintPlayScreen(1, board);          //유저입력을 반영한 게임화면 출력
                 
                 board.FindRandomValidSpace(player2);            //컴퓨터 입력
-                /*if (board.CheckWin(player2))                    //컴퓨터가 승리하는 경우
+                if (board.CheckWin(player2))                    //컴퓨터가 승리하는 경우
                 {
                     board.SetScore(1);                          //컴퓨터 승리 체크(컴퓨터 스코어 +1)
                     printScreen.PrintPlayScreen(1, board);      //컴퓨터입력을 반영한 게임화면 출력
                     if (IsRetry("Computer")) board.InitBoard(); //다시 시작한다면 보드판 초기화
                     else return;                                //게임종료
-                }*/
+                }
             }
 
             
