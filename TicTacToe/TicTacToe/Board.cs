@@ -35,22 +35,22 @@ namespace TicTacToe
 
         public char GetSpaceDrawType(int row, int column)  //해당 칸에 그려진 값 얻기
         {
-            return spaceDrawType[FindSpaceNumber(row, column)];
+            return spaceDrawType[FindSpaceNumber(row, column)];   //입력받은 행, 열에 대한 칸 번호를 찾아 그려진 값 반환
         }
 
-        public void AddSpaceNumberList(int spaceNumber)    
+        public void AddSpaceNumberList(int spaceNumber)  //그림이 그려진 칸 번호를 리스트에 추가하는 함수
         {
-            this.spaceNumber.Add(spaceNumber);
+            this.spaceNumber.Add(spaceNumber);   //해당 칸 번호를 리스트에 추가
         }
 
-        public int FindSpaceNumber(int row, int column)
+        public int FindSpaceNumber(int row, int column)  //행, 열값에 따른 칸 번호를 찾아 반환해주는 함수
         {
             switch (row, column)
             {
                 case (0, 0):
                     return 0;
                 case (0, 1):
-                    return 1;
+                    return 1; 
                 case (0, 2):
                     return 2;
                 case (1, 0):
@@ -68,17 +68,18 @@ namespace TicTacToe
             }
         }
 
-        public void FindRandomValidSpace()
+        public void FindRandomValidSpace()   //빈 칸(유효한) 중 랜덤한 칸 번호를 찾아 그리는 함수(컴퓨터가 사용)
         {
             Random randomNumber = new Random();
-            int spaceNumber = randomNumber.Next(1, 10);
+            int spaceNumber = randomNumber.Next(0, 9);      //0~8(칸번호)사이의 랜덤한 수 
 
-            while (!this.spaceNumber.Contains(spaceNumber))
+            while (!this.spaceNumber.Contains(spaceNumber)) //칸번호 리스트에 없는 번호를 찾음
             {
-                spaceNumber = randomNumber.Next(1, 10);
+                spaceNumber = randomNumber.Next(1, 10);    
             }
 
-            this.spaceNumber.Add(spaceNumber);
+            this.spaceNumber.Add(spaceNumber);    //찾은 칸번호를 칸번호 리스트에 저장
+            spaceDrawType[spaceNumber] = 'O';     //해당 칸번호에 그림 저장(user : X, computer : O)
         }
     }
 }
