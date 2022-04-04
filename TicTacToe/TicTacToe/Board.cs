@@ -84,34 +84,50 @@ namespace TicTacToe
             spaceDrawType[spaceNumber] = 'O';     //해당 칸번호에 그림 저장(user : X, computer : O)
         }
 
-        /*public int CountSameType(int spaceNumber1, int spaceNumber2, int spaceNumber3) //나란한 세 칸에 같은 타입이 몇 개 있는지 반환하는 함수
+        public bool IsSameType(int spaceNumber1, int spaceNumber2, int spaceNumber3) //나란한 세 칸이 같은 타입인지 확인하는 함수
         {
-            int count = 0;
-
-            if(spaceNumber1 != spaceNumber2)
-        }*/
+            if (spaceDrawType[spaceNumber1] == spaceDrawType[spaceNumber2] && spaceDrawType[spaceNumber2] == spaceDrawType[spaceNumber3]) return CHECK_WIN;
+            else return !CHECK_WIN;
+        }
         public bool CheckDiagonal(int spaceNumber)   //대각선상 연달아 3개가 그려져있는지 체크하는 함수
         {
             switch (spaceNumber)   //보드판에서 0, 2, 4, 6, 8번에 그려져있을때만 대각선을 검사한다
             {
                 case 0: case 8:
-                    if (spaceDrawType[0] == spaceDrawType[4] && spaceDrawType[4] == spaceDrawType[8]) return CHECK_WIN;
+                    if (IsSameType(0, 4, 8)) return CHECK_WIN;
                     else return !CHECK_WIN;
-                case 2: case 7:
-                    if (spaceDrawType[2] == spaceDrawType[4] && spaceDrawType[4] == spaceDrawType[7]) return CHECK_WIN;
+                case 2: case 6:
+                    if (IsSameType(2, 4, 6)) return CHECK_WIN;
                     else return !CHECK_WIN;
                 case 4:
-                    if (spaceDrawType[0] == spaceDrawType[4] && spaceDrawType[4] == spaceDrawType[8] || spaceDrawType[2] == spaceDrawType[4] && spaceDrawType[4] == spaceDrawType[7]) return CHECK_WIN;
+                    if (IsSameType(0, 4, 8) || IsSameType(2, 4, 6)) return CHECK_WIN;
                     else return !CHECK_WIN;
                 default:            //대각선상에 그림을 그린적이 없는 경우 false 반환
                     return !CHECK_WIN;
+            }
+        }
+
+        public bool CheckRow(int spaceNumber)
+        {
+            switch (spaceNumber)
+            {
+                case 0: case 1: case 2:
+                    if (IsSameType(0, 1, 2)) return CHECK_WIN;
+                    else return !CHECK_WIN;
+                case 3: case 4: case 5:
+                    if (IsSameType(3, 4, 5)) return CHECK_WIN;
+                    else return !CHECK_WIN;
+                default:   //case 6, 7, 8
+                    if (IsSameType(6, 7, 8)) return CHECK_WIN;
+                    else return !CHECK_WIN;
             }
         }
         public bool CheckWin(Player player)
         {
             foreach (int spaceNumber in player.mySpaceNumber)
             {
-                if (CheckDiagonal(spaceNumber)) return CHECK_WIN;
+                if (CheckDiagonal(spaceNumber)) return CHECK_WIN;    //대각선 승리 확인
+                else if (CheckRow(spaceNumber)) return CHECK_WIN;    //가로 승리 확인
             }
         }
     }
