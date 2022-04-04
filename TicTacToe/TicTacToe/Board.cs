@@ -122,13 +122,31 @@ namespace TicTacToe
                     else return !CHECK_WIN;
             }
         }
-        public bool CheckWin(Player player)
+
+        public bool CheckColumn(int spaceNumber)
         {
-            foreach (int spaceNumber in player.mySpaceNumber)
+            switch(spaceNumber){
+                case 0: case 3: case 6:
+                    if (IsSameType(0, 3, 6)) return CHECK_WIN;
+                    else return !CHECK_WIN;
+                case 1: case 4: case 7:
+                    if (IsSameType(1, 4, 7)) return CHECK_WIN;
+                    else return !CHECK_WIN;
+                default:   //case 2, 5, 8
+                    if (IsSameType(2, 5, 8)) return CHECK_WIN;
+                    else return !CHECK_WIN;
+            }
+        }
+        public bool CheckWin(Player player)    //player의 칸 리스트를 순회하며 대각선, 가로, 세로의 승리여부를 확인하는 함수
+        {
+            foreach (int spaceNumber in player.mySpaceNumber)        
             {
                 if (CheckDiagonal(spaceNumber)) return CHECK_WIN;    //대각선 승리 확인
                 else if (CheckRow(spaceNumber)) return CHECK_WIN;    //가로 승리 확인
+                else if (CheckColumn(spaceNumber)) return CHECK_WIN; //세로 승리 확인
             }
+
+            return !CHECK_WIN;          //연달아 3개가 그려지지 않았으므로 false 반환
         }
     }
 }
