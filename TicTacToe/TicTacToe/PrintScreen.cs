@@ -16,7 +16,6 @@ namespace TicTacToe
             Console.WriteLine("              2. User1   vs    User2                  \n\n");
             Console.WriteLine("======================================================");
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<\n");
-            Console.Write(">모드를 입력해주세요 : "); 
         }
 
         public void PrintModeScreen(int mode)

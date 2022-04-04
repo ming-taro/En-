@@ -120,12 +120,33 @@ namespace TicTacToe
             else printScreen.PrintDraw();
 
         }
+
+        public int InputMode()
+        {
+            bool loop = true;
+            string Input = "";
+
+            while (loop)
+            {
+                Input = Console.ReadLine();                   //모드를 입력받음
+                if(!exception.IsValidValue(Input) || !exception.IsNumber1Or2(Input))    //유효하지 않은 입력 or 1,2가 아닌 경우
+                {
+                    Console.Clear();
+                    printScreen.PrintMainScreen();            //게임 메인 화면 출력
+                    Console.WriteLine("-------------1과 2중 하나를 입력해주세요--------------\n");  //경고메세지 출력
+                    Console.Write(">모드를 입력해주세요 : ");
+                    continue;     //처음으로 돌아가서 다시 입력받음
+                }
+                else loop = false;
+            }
+
+            return Convert.ToInt32(Input);
+        }
         public void StartGame()
         {
-            PrintScreen printScreen = new PrintScreen();
             printScreen.PrintMainScreen();                       //게임 메인 화면 출력
-
-            int mode = Convert.ToInt32(Console.ReadLine());      //모드를 입력받으면 메인화면을 지움 -> 모드화면 출력
+            Console.Write(">모드를 입력해주세요 : ");
+            int mode = InputMode();                   //모드를 입력받으면 메인화면을 지움 -> 모드화면 출력
 
             if (mode == 1) UserVersusComputer();      //유저  vs 컴퓨터 게임모드 실행
             else if (mode == 2) User1VersusUser2();   //유저1 vs 유저2 게임모드 실행
