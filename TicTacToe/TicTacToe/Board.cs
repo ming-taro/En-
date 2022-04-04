@@ -9,8 +9,8 @@ namespace TicTacToe
     class Board
     {
         //private char[,] board = new char[3,3];
-        private List<char> spaceDrawType = new List<char>();
-        private List<int> spaceNumber = new List<int>();
+        private List<char> spaceDrawType = new List<char>();    //보드판에 그려진 (X or O)표시 저장
+        private List<int> spaceNumber = new List<int>();        //X or O표시가 있는 칸 번호를 저장하는 리스트
 
         public Board()
         {
@@ -18,13 +18,20 @@ namespace TicTacToe
         }
         public void InitBoard()  
         {
-            spaceDrawType.Clear();
+            spaceDrawType.Clear();     
+            spaceNumber.Clear();
+
+            for(int i=0; i<9; i++)
+            {
+                spaceDrawType.Add(' ');    //초기 보드판에는 각 칸마다 공백을 저장한다
+            }
         }
 
         public void SetOneSpace(int row, int column, char drawType)  //해당 칸에 x or o 그리기
         {
             spaceDrawType.Insert(FindSpaceNumber(row, column), drawType);
         }
+        
 
         public char GetSpaceDrawType(int row, int column)  //해당 칸에 그려진 값 얻기
         {
