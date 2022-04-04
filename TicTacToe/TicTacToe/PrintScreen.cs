@@ -59,16 +59,27 @@ namespace TicTacToe
 
         public void PrintWinner(string name)
         {
-            Console.WriteLine("======================================================");
-            Console.WriteLine("                 [" + name + " is the winner!]");
+            Console.WriteLine(">>>>>>>>>>>>>>>>>>>게임을 종료합니다<<<<<<<<<<<<<<<<<<");
+            Console.WriteLine("======================================================\n");
+            Console.WriteLine("                 [" + name + " is the winner!]\n");
             Console.WriteLine("======================================================");
         }
 
         public void PrintDraw()
         {
+            Console.WriteLine(">>>>>>>>>>>>>>>>>>>게임을 종료합니다<<<<<<<<<<<<<<<<<<");
+            Console.WriteLine("======================================================\n");
+            Console.WriteLine("                        [Draw]\n");
             Console.WriteLine("======================================================");
-            Console.WriteLine("                        [Draw]");
-            Console.WriteLine("======================================================");
+        }
+
+        public void PrnitRetry(string name)
+        {
+            if (name.Equals("Computer")) Console.WriteLine("\n-------Computer의 승리입니다. 다시하시겠습니까?-------");
+            else if (name.Equals("User")) Console.WriteLine("\n---------User의 승리입니다. 다시하시겠습니까?---------");
+            else Console.WriteLine("\n---------" + name + "의 승리입니다. 다시하시겠습니까?--------");
+            Console.WriteLine("\n              1. 다시 시작        2. 종료             ");
+            Console.WriteLine("------------------------------------------------------");
         }
 
         public void PrintPlayScreen(int mode, Board board)     //게임진행화면을 출력하는 함수

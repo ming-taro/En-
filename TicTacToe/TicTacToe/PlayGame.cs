@@ -11,6 +11,7 @@ namespace TicTacToe
         Player player1 = new Player();
         Player player2 = new Player();
         Board board = new Board();
+        PrintScreen printScreen = new PrintScreen();
 
         public void InputUserPoint(Player player)       //player(=user)의 좌표입력을 받고 리스트에 저장하는 함수
         {
@@ -28,12 +29,8 @@ namespace TicTacToe
         
         public bool IsRetry(string name)     //게임을 다시 할지 확인하는 함수
         {
-            Console.WriteLine("\n------------------------------------------------------");
-            if (name.Equals("Computer")) Console.WriteLine("-------Computer의 승리입니다. 다시하시겠습니까?-------");
-            else if (name.Equals("User")) Console.WriteLine("---------User의 승리입니다. 다시하시겠습니까?---------");
-            else Console.WriteLine("---------" + name + "의 승리입니다. 다시하시겠습니까?--------");
-            Console.WriteLine("------------------------------------------------------");
-            Console.Write("(1. 다시 시작      2. 종료) : ");
+            printScreen.PrnitRetry(name);                             //다시 묻는 화면 출력
+            Console.Write(">입력 : ");
             int retry = Convert.ToInt32(Console.ReadLine());          //게임을 다시 할지 입력받음
 
             player1.InitMySpaceNumber();     //player들의 칸번호 리스트 초기화
@@ -42,7 +39,7 @@ namespace TicTacToe
             if (retry == 1) return true;
             else return false;
         }
-        public void UserVersusComputer(PrintScreen printScreen)
+        public void UserVersusComputer()
         {
             bool loop = true;
 
@@ -72,7 +69,7 @@ namespace TicTacToe
                 }
             }
         }
-        public void User1VersusUser2(PrintScreen printScreen)
+        public void User1VersusUser2()
         {
             bool loop = true;
 
@@ -112,7 +109,7 @@ namespace TicTacToe
 
         }
 
-        public void PrintWinner(PrintScreen printScreen)
+        public void PrintWinner()
         {
             int player1Score = board.GetScore(0);
             int player2Score = board.GetScore(1);
@@ -129,11 +126,10 @@ namespace TicTacToe
 
             int mode = Convert.ToInt32(Console.ReadLine());      //모드를 입력받으면 메인화면을 지움 -> 모드화면 출력
 
-            if (mode == 1) UserVersusComputer(printScreen);      //유저  vs 컴퓨터 게임모드 실행
-            else if (mode == 2) User1VersusUser2(printScreen);   //유저1 vs 유저2 게임모드 실행
+            if (mode == 1) UserVersusComputer();      //유저  vs 컴퓨터 게임모드 실행
+            else if (mode == 2) User1VersusUser2();   //유저1 vs 유저2 게임모드 실행
 
-            Console.WriteLine("\n>>>>>>>>>>>>>>>>>>>게임을 종료합니다<<<<<<<<<<<<<<<<<<");
-            PrintWinner(printScreen);
+            PrintWinner();
         }
 
 
