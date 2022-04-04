@@ -57,7 +57,7 @@ namespace TicTacToe
 
         public void PrintPlayScreen(int mode, Board board)     //게임진행화면을 출력하는 함수
         {
-            Console.Clear();
+            //Console.Clear();
             PrintModeScreen(mode);                               //모드 출력
             PrintScoreBoard(mode, board.GetScore(0), board.GetScore(1));             //스코어보드 출력
             PrintBoardScreen(board);                 //보드판 출력

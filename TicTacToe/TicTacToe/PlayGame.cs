@@ -22,7 +22,7 @@ namespace TicTacToe
             input = Console.ReadLine();             //열 입력
             int column = Convert.ToInt32(input);
 
-            board.SetOneSpace(row, column, player.DrawType);                       //보드객체에 입력받은 칸 정보 저장
+            board.SetOneSpace(row, column, player.DrawType);                //보드객체에 입력받은 칸 정보 저장
             player.AddSpaceNumber(board.FindSpaceNumber(row, column));      //player객체의 칸 번호 리스트에 입력한 칸 번호 저장
         }
         
@@ -56,7 +56,7 @@ namespace TicTacToe
                     if (IsRetry("User")) board.InitBoard();     //다시 시작한다면 보드판 초기화
                     else return;                                //게임 종료
                 }
-                printScreen.PrintPlayScreen(1, board);          //유저입력을 반영한 게임화면 출력
+                //printScreen.PrintPlayScreen(1, board);          //유저입력을 반영한 게임화면 출력
                 
                 board.FindRandomValidSpace(player2);            //컴퓨터 입력
                 if (board.CheckWin(player2))                    //컴퓨터가 승리하는 경우
