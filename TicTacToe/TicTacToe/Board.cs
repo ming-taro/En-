@@ -13,6 +13,7 @@ namespace TicTacToe
         private List<int> validSpaceNumber = new List<int>();   //비어있는 '칸 번호'를 저장하는 리스트
         private List<int> score = new List<int>();              //점수 리스트
         public const bool CHECK_WIN = true;
+        public const int WRONG_VALUE = -1;
 
         public Board()    //생성자
         {
@@ -94,13 +95,49 @@ namespace TicTacToe
             return false;                            //이미 그림이 그려진 칸번호인 경우 false
         }
 
-        public void InputComputerPoint()
+        /*public int FindEmptySpace(int space1, int space2, int space3)
         {
-            if (spaceDrawType[6] == ' ') spaceDrawType[6] = 'O';    //컴퓨터의 첫 입력
+            if (spaceDrawType[space1] == ' ' && spaceDrawType[space2] == spaceDrawType[space3]) return space1;
+            else if (spaceDrawType[space2] == ' ' && spaceDrawType[space1] == spaceDrawType[space3]) return space2;
+            else if (spaceDrawType[space3] == ' ' && spaceDrawType[space1] == spaceDrawType[space2]) return space3;
+            else return WRONG_VALUE;
+        }*/
+        public int FindSpaceToWin()                 //승리할 수 있는 칸의 위치를 찾는 함수
+        {
+            if (spaceDrawType[2] == ' ') return 2;  //컴퓨터가 입력 세번만에 이길 수 있음
+            else if (spaceDrawType[3] == ' ' && spaceDrawType[0] == ' ') return 0;    //컴퓨터의 세번째 입력값 : 이길 수 있는 경우
+            else if (spaceDrawType[7] == ' ' && spaceDrawType[8] == ' ') return 8;    //컴퓨터의 세번째 입력값 : 이길 수 있는 경우
+            else if (spaceDrawType[3] == ' ') return 3;   //컴퓨터의 네번째 입력값 : 0,3,6 승리
+            else if (spaceDrawType[8] == ' ') return 8;   //컴퓨터의 네번째 입력값 : 
+            else if (spaceDrawType[0] == ' ') return 0;
+            else if (spaceDrawType[7] == ' ') return 7;
+            else return WRONG_VALUE;
 
-
-
-
+        }
+        public void InputComputerPoint(Player player)
+        {
+            if (spaceDrawType[6] == ' ')
+            {
+                spaceDrawType[6] = 'O';        //컴퓨터의 첫 번째 입력
+                player.AddSpaceNumber(6);
+                RemoveSpaceNumber(6);
+                return;
+            }
+            else if (spaceDrawType[4] == ' ')
+            {
+                spaceDrawType[4] = '0';        //컴퓨터의 두 번째 입력
+                player.AddSpaceNumber(4);
+                RemoveSpaceNumber(4);
+                return;
+            }
+            else                               //컴퓨터의 세 번째 입력~
+            {
+                int spaceNumber = FindSpaceToWin();
+                spaceDrawType[spaceNumber] = 'O';
+                player.AddSpaceNumber(spaceNumber);
+                RemoveSpaceNumber(spaceNumber);
+                return;
+            }
         }
 
         public bool IsSameType(int spaceNumber1, int spaceNumber2, int spaceNumber3) //나란한 세 칸이 같은 타입인지 확인하는 함수

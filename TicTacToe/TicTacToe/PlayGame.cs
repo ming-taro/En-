@@ -14,30 +14,7 @@ namespace TicTacToe
         PrintScreen printScreen = new PrintScreen();
         ExceptionHandling exception = new ExceptionHandling();
 
-        public int InputRowValue(int mode, string name)
-        {
-            bool loop = true;
-            string Input = "";
-
-            while (loop)
-            {
-                Input = Console.ReadLine();             //좌표값을 입력받음
-                if (!exception.IsValidValue(Input) || !exception.IsBetween0To2(Input))  //유효하지 않은 입력 or 0~2가 아닌 경우
-                {
-                    Console.Clear();
-                    printScreen.PrintPlayScreen(mode, board);                                     //게임플레이화면 출력
-                    Console.WriteLine("-------------0 ~ 4 중 하나를 입력해주세요-------------");  //경고메세지 출력
-                    Console.Write(name + ">행 : ");
-                    continue;                           //처음으로 돌아가서 다시 입력받음
-                }
-                else
-                {
-                    loop = false;
-                }
-            }
-
-            return Convert.ToInt32(Input);           //올바르게 입력받은 좌표값 반환
-        }
+        
         public void InputUserPoint(Player player, int mode)       //player(=user)의 좌표입력을 받고 리스트에 저장하는 함수
         {
             bool loop = true;
@@ -46,11 +23,7 @@ namespace TicTacToe
 
             while (loop)
             {
-                Console.Write(player.Name + ">행 : ");
-                row = InputRowValue(mode, player.Name);           //행 입력(0~4사이의 값을 입력하는지 검사)
-
-                Console.Write(player.Name + ">열 : ");
-                str = Console.ReadLine();                         //열 입력(유효한 입력인지 먼저 검사)
+                
                 if (!exception.IsValidValue(str))                 //숫자가 아닌 입력 or 0~2범위가 아닌 경우
                 {
                     Console.Clear();
@@ -109,6 +82,7 @@ namespace TicTacToe
             if (retry == 1) return true;
             else return false;
         }
+        
         public void UserVersusComputer()     //모드 : 1번
         {
             bool loop = true;
@@ -118,7 +92,7 @@ namespace TicTacToe
 
             while (loop)
             {
-                board.FindRandomValidSpace(player2);            //컴퓨터 입력
+                board.InputComputerPoint(player2);              //컴퓨터 입력
                 if (board.CheckWin(player2))                    //컴퓨터가 승리하는 경우
                 {
                     board.SetScore(1);                          //컴퓨터 승리 체크(컴퓨터 스코어 +1)
@@ -213,7 +187,7 @@ namespace TicTacToe
                 }
                 else  //1 or 2중 하나가 입력되는 경우(올바른 입력)
                 {
-                    loop = false;
+                    loop = false;                                                                                                                                                                                       
                 }
             }
 
