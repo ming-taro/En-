@@ -93,15 +93,14 @@ namespace TicTacToe
             }
             return false;                            //이미 그림이 그려진 칸번호인 경우 false
         }
-        public void FindRandomValidSpace(Player player)   //빈 칸(유효한) 중 랜덤한 칸 번호를 찾아 그리는 함수(컴퓨터가 사용)
-        {
-            Random randomNumber = new Random();
-            int spaceNumberIndex = randomNumber.Next(0, validSpaceNumber.Count);  //빈칸번호를 저장한 리스트의 랜덤한 인덱스 번호 추출 
-            int spaceNumber = validSpaceNumber[spaceNumberIndex];    //빈칸번호 리스트에서 삭제한 인덱스번호에 해당하는 빈칸번호
 
-            player.AddSpaceNumber(spaceNumber);          //컴퓨터객체에서 나의 칸번호 리스트에 칸번호 추가
-            spaceDrawType[spaceNumber] = 'O';            //해당 칸번호에 그림 저장(user : X, computer : O)
-            validSpaceNumber.RemoveAt(spaceNumberIndex); //해당 칸번호를 빈칸번호 리스트에서 삭제
+        public void InputComputerPoint()
+        {
+            if (spaceDrawType[6] == ' ') spaceDrawType[6] = 'O';    //컴퓨터의 첫 입력
+
+
+
+
         }
 
         public bool IsSameType(int spaceNumber1, int spaceNumber2, int spaceNumber3) //나란한 세 칸이 같은 타입인지 확인하는 함수

@@ -118,17 +118,6 @@ namespace TicTacToe
 
             while (loop)
             {
-                printScreen.PrintPlayScreen(1, board);          //게임 플레이 화면 출력
-
-                InputUserPoint(player1, 1);                     //유저입력
-                if (board.CheckWin(player1))                    //유저가 승리하는 경우
-                {                  
-                    board.SetScore(0);                          //유저 승리 체크(유저 스코어 +1)
-                    printScreen.PrintPlayScreen(1, board);      //유저입력을 반영한 게임화면 출력
-                    if (IsRetry("User", 1)) board.InitBoard();     //다시 시작한다면 보드판 초기화
-                    else return;                                //게임 종료
-                }
-
                 board.FindRandomValidSpace(player2);            //컴퓨터 입력
                 if (board.CheckWin(player2))                    //컴퓨터가 승리하는 경우
                 {
@@ -136,6 +125,16 @@ namespace TicTacToe
                     printScreen.PrintPlayScreen(1, board);      //컴퓨터입력을 반영한 게임화면 출력
                     if (IsRetry("Computer", 1)) board.InitBoard(); //다시 시작한다면 보드판 초기화
                     else return;                                //게임종료
+                }
+                printScreen.PrintPlayScreen(1, board);          //게임 플레이 화면 출력
+
+                InputUserPoint(player1, 1);                     //유저입력
+                if (board.CheckWin(player1))                    //유저가 승리하는 경우
+                {
+                    board.SetScore(0);                          //유저 승리 체크(유저 스코어 +1)
+                    printScreen.PrintPlayScreen(1, board);      //유저입력을 반영한 게임화면 출력
+                    if (IsRetry("User", 1)) board.InitBoard();     //다시 시작한다면 보드판 초기화
+                    else return;                                //게임 종료
                 }
             }
         }
