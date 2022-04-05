@@ -10,7 +10,6 @@ namespace TicTacToe
     class Board
     {
         private List<char> spaceDrawType = new List<char>();    //보드판에 그려진 (X or O)'표시' 저장
-        private List<int> validSpaceNumber = new List<int>();   //비어있는 '칸 번호'를 저장하는 리스트
         private List<int> score = new List<int>();              //점수 리스트
         public const bool CHECK_WIN = true;
         public const int WRONG_VALUE = -1;
@@ -24,18 +23,13 @@ namespace TicTacToe
         public void InitBoard()            //보드판 초기화 함수
         {
             spaceDrawType.Clear();
-            validSpaceNumber.Clear();
 
             for (int i = 0; i < 9; i++)
             {
                 spaceDrawType.Add(' ');    //초기 보드판에는 각 칸마다 공백을 저장한다
-                validSpaceNumber.Add(i);   //비어있는 칸번호 리스트(0~8번 : 총 9칸)
             }
         }
-        /*public int GetValidSpaceNumberCount()
-        {
-            return validSpaceNumber.Count;
-        }*/
+
         public void SetScore(int scoreIndex)
         {
             score[scoreIndex]++;
@@ -45,21 +39,15 @@ namespace TicTacToe
             return score[scoreIndex];
         }
 
-        public void SetOneSpace(int row, int column, char drawType)   //해당 칸에 x or o를 그리는 함수
+        public void SetOneSpace(int spaceNumber, char drawType)   //해당 칸에 x or o를 그리는 함수
         {
-            spaceDrawType[FindSpaceNumber(row, column)] = drawType;   //입력받은 행, 열에 대한 칸 번호를 찾아 X or O를 저장
-            RemoveSpaceNumber(FindSpaceNumber(row, column));      //칸리스트에서 해당 칸번호 삭제
+            spaceDrawType[spaceNumber] = drawType;                //입력받은 칸 번호에 X or O를 저장
         }
         
 
         public char GetSpaceDrawType(int spaceNumber)  //해당 칸에 그려진 값 얻기
         {
             return spaceDrawType[spaceNumber];   //입력받은 행, 열에 대한 칸 번호를 찾아 그려진 값 반환
-        }
-
-        public void RemoveSpaceNumber(int spaceNumber)  //그림이 그려진 칸 번호를 리스트에서 삭제하는 함수
-        {
-            validSpaceNumber.Remove(spaceNumber);   //해당 칸 번호를 리스트에서 삭제
         }
 
         public int FindSpaceNumber(int row, int column)  //행, 열값에 따른 칸 번호를 찾아 반환해주는 함수
@@ -86,13 +74,13 @@ namespace TicTacToe
                     return 8;
             }
         }
-        public bool IsValidSpace(int spaceNumber)    //해당 칸번호가 비어있는(유효한) 칸번호인지 확인하는 함수
+        public bool IsValidSpace(string Input)    //해당 칸번호가 비어있는(유효한) 칸번호인지 확인하는 함수
         {
-            foreach(int number in validSpaceNumber)
-            {
-                if (number == spaceNumber) return true;   //비어있는 칸번호 리스트에 해당 칸번호가 있다면 true
-            }
-            return false;                            //이미 그림이 그려진 칸번호인 경우 false
+            int spaceNumber = Convert.ToInt32(Input);   //입력받은 칸 번호
+
+            if (spaceDrawType[spaceNumber] == ' ') return true;     //비어있다면 true
+            else return false;                                      //X or O 표시가 있다면 false
+
         }
 
         /*public int FindEmptySpace(int space1, int space2, int space3)
@@ -120,14 +108,12 @@ namespace TicTacToe
             {
                 spaceDrawType[6] = 'O';        //컴퓨터의 첫 번째 입력
                 player.AddSpaceNumber(6);
-                RemoveSpaceNumber(6);
                 return;
             }
             else if (spaceDrawType[4] == ' ')
             {
                 spaceDrawType[4] = '0';        //컴퓨터의 두 번째 입력
                 player.AddSpaceNumber(4);
-                RemoveSpaceNumber(4);
                 return;
             }
             else                               //컴퓨터의 세 번째 입력~
@@ -135,7 +121,6 @@ namespace TicTacToe
                 int spaceNumber = FindSpaceToWin();
                 spaceDrawType[spaceNumber] = 'O';
                 player.AddSpaceNumber(spaceNumber);
-                RemoveSpaceNumber(spaceNumber);
                 return;
             }
         }
