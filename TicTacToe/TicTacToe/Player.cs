@@ -35,7 +35,7 @@ namespace TicTacToe
             this.drawType = drawType;
             this.name = name;
         }
-        public void AddSpaceNumber(int spaceNumber)
+        public void AddMySpaceNumber(int spaceNumber)
         {
             mySpaceNumber.Add(spaceNumber);
         }

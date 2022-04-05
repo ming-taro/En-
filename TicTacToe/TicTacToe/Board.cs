@@ -64,7 +64,7 @@ namespace TicTacToe
         }
         public bool IsValidSpace(string Input)    //해당 칸번호가 비어있는(유효한) 칸번호인지 확인하는 함수
         {
-            int spaceNumber = Convert.ToInt32(Input);   //입력받은 칸 번호
+            int spaceNumber = Convert.ToInt32(Input) - 1;   //입력받은 칸 번호
 
             if (spaceDrawType[spaceNumber] == ' ') return true;     //비어있다면 true
             else return false;                                      //X or O 표시가 있다면 false
@@ -95,20 +95,20 @@ namespace TicTacToe
             if (spaceDrawType[6] == ' ')
             {
                 spaceDrawType[6] = 'O';        //컴퓨터의 첫 번째 입력
-                player.AddSpaceNumber(6);
+                player.AddMySpaceNumber(6);
                 return;
             }
             else if (spaceDrawType[4] == ' ')
             {
                 spaceDrawType[4] = '0';        //컴퓨터의 두 번째 입력
-                player.AddSpaceNumber(4);
+                player.AddMySpaceNumber(4);
                 return;
             }
             else                               //컴퓨터의 세 번째 입력~
             {
                 int spaceNumber = FindSpaceToWin();
                 spaceDrawType[spaceNumber] = 'O';
-                player.AddSpaceNumber(spaceNumber);
+                player.AddMySpaceNumber(spaceNumber);
                 return;
             }
         }

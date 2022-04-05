@@ -23,6 +23,14 @@ namespace TicTacToe
             else return false;
         }
 
+        public bool IsBetween1To9(string str)
+        {
+            int number = Convert.ToInt32(str);
+
+            if (number >= 1 && number <= 9) return true;
+            else return false;
+        }
+
         public bool IsStartSpace(string str)      //공백으로 시작하는지 판별
         {
             if (str[0] == ' ') return true;

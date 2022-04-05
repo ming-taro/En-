@@ -44,12 +44,12 @@ namespace TicTacToe
             {
                 spaceNumber = Console.ReadLine();     //번호를 입력받음(1~9)
                 
-                if (!exception.IsValidValue(spaceNumber))                 //숫자가 아닌 입력
+                if (!exception.IsValidValue(spaceNumber) || !exception.IsBetween1To9(spaceNumber))   //숫자가 아님 or 1~9가 아닌 입력
                 {
                     PrintInputScreen(playerNumber, "-------------1 ~ 9 중 하나를 입력해주세요.------------");  //잘못입력시 게임플레이화면과 함께 경고 메세지 출력
                     continue;                                      //처음으로 돌아가서 칸 번호를 다시 입력받는다
                 }
-                else if(!board.IsValidSpace(spaceNumber))                //유효한 입력이지만 해당 칸이 빈 칸이 아닌 경우
+                else if(!board.IsValidSpace(spaceNumber))          //유효한 입력이지만 해당 칸이 빈 칸이 아닌 경우
                 {
                     PrintInputScreen(playerNumber, "----------빈칸이 아닙니다. 다시 입력해주세요.---------");  //잘못입력시 게임플레이화면과 함께 경고 메세지 출력
                     continue;                                      //처음으로 돌아가서 칸 번호를 다시 입력받는다
@@ -60,7 +60,8 @@ namespace TicTacToe
                 }
             }
             
-            board.SetOneSpace(Convert.ToInt32(spaceNumber) - 1, player[playerNumber].DrawType);     //보드객체에 입력받은 칸 정보 저장
+            board.SetOneSpace(Convert.ToInt32(spaceNumber) - 1, player[playerNumber].DrawType);   //보드객체에 입력받은 칸 정보 저장
+            player[playerNumber].AddMySpaceNumber(Convert.ToInt32(spaceNumber) - 1);              //나의 칸번호 리스트에 입력한 칸번호 추가
         }
         
         public bool IsRetry(int winPlayer, int losePlayer)     //게임을 다시 할지 확인하는 함수
