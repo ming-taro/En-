@@ -44,7 +44,7 @@ namespace TicTacToe
         public void SetOneSpace(int row, int column, char drawType)   //해당 칸에 x or o를 그리는 함수
         {
             spaceDrawType[FindSpaceNumber(row, column)] = drawType;   //입력받은 행, 열에 대한 칸 번호를 찾아 X or O를 저장
-            RemoveSpaceNumberList(FindSpaceNumber(row, column));      //칸리스트에서 해당 칸번호 삭제
+            RemoveSpaceNumber(FindSpaceNumber(row, column));      //칸리스트에서 해당 칸번호 삭제
         }
         
 
@@ -53,7 +53,7 @@ namespace TicTacToe
             return spaceDrawType[spaceNumber];   //입력받은 행, 열에 대한 칸 번호를 찾아 그려진 값 반환
         }
 
-        public void RemoveSpaceNumberList(int spaceNumber)  //그림이 그려진 칸 번호를 리스트에서 삭제하는 함수
+        public void RemoveSpaceNumber(int spaceNumber)  //그림이 그려진 칸 번호를 리스트에서 삭제하는 함수
         {
             validSpaceNumber.Remove(spaceNumber);   //해당 칸 번호를 리스트에서 삭제
         }
