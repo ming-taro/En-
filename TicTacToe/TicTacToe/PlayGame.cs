@@ -180,11 +180,11 @@ namespace TicTacToe
             {
                 Console.Write(">모드를 입력해주세요 : ");
                 input = Console.ReadLine();                   //모드를 입력받음
-                if (!exception.IsValidValue(input) || !exception.IsNumber1Or2(input))    //유효하지 않은 입력 or 1,2가 아닌 경우
+                if (!exception.IsValidValue(input) || !exception.IsNumber1To4(input))    //유효하지 않은 입력 or 1,2가 아닌 경우
                 {
                     Console.Clear();
                     printScreen.PrintMainScreen();            //게임 메인 화면 출력
-                    Console.WriteLine("-------------1과 2중 하나를 입력해주세요--------------\n");  //경고메세지 출력
+                    Console.WriteLine("-------------1 ~ 4중 하나를 입력해주세요--------------\n");  //경고메세지 출력
                     continue;                                 //처음으로 돌아가서 다시 입력받음
                 }
                 else  //1 or 2중 하나가 입력되는 경우(올바른 입력)
@@ -200,11 +200,8 @@ namespace TicTacToe
             printScreen.PrintMainScreen();            //게임 메인 화면 출력
             int mode = InputMode();                   //모드를 입력받음
 
-            if(mode == 0)    //게임 종료
-            {
-                return;
-            }
-            else if (mode == 1)
+            
+            if (mode == 1)
             {
                 UserVersusComputer();      //유저  vs 컴퓨터 게임모드 실행
                 Console.Clear();
@@ -216,11 +213,14 @@ namespace TicTacToe
                 Console.Clear();
                 printScreen.PrintEndingScreen(player[2], player[3]);            //게임 종료화면 출력
             }
-            else    //mode == 3
+            else if(mode == 3)
             {
-
+                printScreen.PrintScoreBoardScreen(player);
             }
-
+            else
+            {
+                return;
+            }
             
         }
     }

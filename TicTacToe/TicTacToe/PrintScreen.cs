@@ -11,9 +11,11 @@ namespace TicTacToe
         public void PrintMainScreen()     //게임 시작화면을 출력하는 함수
         {
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>>TicTacToe 게임<<<<<<<<<<<<<<<<<<<<");
-            Console.WriteLine("======================모드 선택=======================\n\n\n\n");
+            Console.WriteLine("======================모드 선택=======================\n\n");
             Console.WriteLine("              1. User    vs    Computer               \n");
-            Console.WriteLine("              2. User1   vs    User2                  \n\n\n\n");
+            Console.WriteLine("              2. User1   vs    User2                  \n");
+            Console.WriteLine("              3.     ScoreBoard\n");
+            Console.WriteLine("              4.        종료\n\n\n");
             Console.WriteLine("======================================================");
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<\n");
         }
@@ -36,10 +38,10 @@ namespace TicTacToe
             switch (player1.Name)
             {
                 case "User" :
-                    Console.WriteLine("\n           "+ player1.Name + "(X): " + player1.Score + "   vs   Computer(O): " + player2.Score + "\n");
+                    Console.WriteLine("\n            "+ player1.Name + "(X): " + player1.Score + "   vs   Computer(O): " + player2.Score + "\n");
                     break;
                 default:
-                    Console.WriteLine("\n            " + player2.Name + "(X): " + player1.Score + "   vs   User2(O): " + player2.Score + "\n");
+                    Console.WriteLine("\n           " + player2.Name + "(X): " + player1.Score + "   vs   User2(O): " + player2.Score + "\n");
                     break;
             }
         }
@@ -101,6 +103,17 @@ namespace TicTacToe
             if (player1Score > player2Score) PrintWinner(player1.Name);           //player1이 승리하는 경우
             else if (player1Score < player2Score) PrintWinner(player2.Name);      //player2가 승리하는 경우
             else PrintDraw();                                                     //비기는 경우
+
+        }
+
+        public void PrintScoreBoardScreen(Player[] player)
+        {
+            Console.Clear();
+            Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>ScoreBoard<<<<<<<<<<<<<<<<<<<<<<\n\n\n");
+            PrintScoreBoard(player[0], player[1]);
+            Console.WriteLine("\n");
+            PrintScoreBoard(player[2], player[3]);
+            Console.WriteLine("\n\n\n>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<");
 
         }
     }

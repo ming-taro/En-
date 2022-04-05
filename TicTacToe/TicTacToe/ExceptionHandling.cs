@@ -43,7 +43,15 @@ namespace TicTacToe
             else return false;
         }
 
-        public bool IsNumber1Or2(string str)      //1 or 2 입력인지 확인하는 함수(한 자리 숫자가 입력되었을 때를 가정하고 사용)
+        public bool IsNumber1To4(string str)      //1 or 2 입력인지 확인하는 함수(한 자리 숫자가 입력되었을 때를 가정하고 사용)
+        {
+            int number = Convert.ToInt32(str);
+
+            if (number >= 1 && number <= 4) return true;
+            else return false;
+        }
+
+        public bool IsNumber1Or2(string str)
         {
             int number = Convert.ToInt32(str);
 
