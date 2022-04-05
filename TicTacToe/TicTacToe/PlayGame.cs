@@ -14,7 +14,7 @@ namespace TicTacToe
         PrintScreen printScreen = new PrintScreen();
         ExceptionHandling exception = new ExceptionHandling();
 
-        public void PrintInputScreen(int mode, string message)
+        public void PrintInputScreen(int mode, string message)    //유저가 칸번호를 입력했을 때 오류가 생기면 출력하는 화면
         {
             Console.Clear();
             printScreen.PrintPlayScreen(mode, board);   //게임플레이화면 출력
@@ -102,7 +102,7 @@ namespace TicTacToe
                 }
                 printScreen.PrintPlayScreen(1, board);          //게임 플레이 화면 출력
 
-                InputUserPoint(player1, 1);                     //유저입력
+                InputUserSpaceNumber(1, player2.DrawType);      //유저입력
                 if (board.CheckWin(player1))                    //유저가 승리하는 경우
                 {
                     board.SetScore(0);                          //유저 승리 체크(유저 스코어 +1)
