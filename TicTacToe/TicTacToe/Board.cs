@@ -10,15 +10,12 @@ namespace TicTacToe
     class Board
     {
         private List<char> spaceDrawType = new List<char>();    //보드판에 그려진 (X or O)'표시' 저장
-        private List<int> score = new List<int>();              //점수 리스트
         public const bool CHECK_WIN = true;
         public const int WRONG_VALUE = -1;
 
         public Board()    //생성자
         {
             InitBoard();
-            score.Add(0); //점수는 모두 0으로 초기화
-            score.Add(0);
         }
         public void InitBoard()            //보드판 초기화 함수
         {
@@ -28,15 +25,6 @@ namespace TicTacToe
             {
                 spaceDrawType.Add(' ');    //초기 보드판에는 각 칸마다 공백을 저장한다
             }
-        }
-
-        public void SetScore(int scoreIndex)
-        {
-            score[scoreIndex]++;
-        }
-        public int GetScore(int scoreIndex)
-        {
-            return score[scoreIndex];
         }
 
         public void SetOneSpace(int spaceNumber, char drawType)   //해당 칸에 x or o를 그리는 함수

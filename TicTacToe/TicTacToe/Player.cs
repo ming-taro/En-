@@ -8,10 +8,16 @@ namespace TicTacToe
 {
     class Player
     {
+        private int score;
         private char drawType;
         private string name;
         public List<int> mySpaceNumber = new List<int>();
 
+        public int Score
+        {
+            get { return score; }
+            set { score = value; }
+        }
         public char DrawType
         {
             get { return drawType; }

@@ -31,15 +31,15 @@ namespace TicTacToe
             }
         }
          
-        public void PrintScoreBoard(int mode, int player1Score, int player2Score)    //스코어보드를 출력하는 함수
+        public void PrintScoreBoard(Player player1, Player player2)    //스코어보드를 출력하는 함수
         {
-            switch (mode)
+            switch (player1.Name)
             {
-                case 1:
-                    Console.WriteLine("\n           User(X): " + player1Score + "   vs   Computer(O): " + player2Score + "\n");
+                case "User" :
+                    Console.WriteLine("\n           "+ player1.Name + "(X): " + player1.Score + "   vs   Computer(O): " + player2.Score + "\n");
                     break;
-                case 2:
-                    Console.WriteLine("\n            User1(X): " + player1Score + "   vs   User2(O): " + player2Score + "\n");
+                default:
+                    Console.WriteLine("\n            " + player2.Name + "(X): " + player1.Score + "   vs   User2(O): " + player2.Score + "\n");
                     break;
             }
         }
@@ -83,15 +83,14 @@ namespace TicTacToe
             Console.WriteLine("------------------------------------------------------");
         }
 
-        public void PrintPlayScreen(int mode, Board board)     //게임진행화면을 출력하는 함수
+        public void PrintPlayScreen(Player player1, Player player2, Board board)       //게임진행화면을 출력하는 함수
         {
             Console.Clear();
-            PrintModeScreen(mode);                                        //모드 출력
-            PrintScoreBoard(mode, board.GetScore(0), board.GetScore(1));  //스코어보드 출력
+            if (player1.Name.Equals("User")) PrintModeScreen(1);          //모드 출력
+            else PrintModeScreen(2);
+            PrintScoreBoard(player1, player2);                            //스코어보드 출력
             PrintBoardScreen(board);                                      //보드판 출력
-            Console.WriteLine("\n>>>>>>>>>>>>>>>>>>좌표를 입력해주세요<<<<<<<<<<<<<<<<<");
+            Console.WriteLine("\n>>>>>>>>>>>>>>>>>>번호를 입력해주세요<<<<<<<<<<<<<<<<<");
         }
-
-        
     }
 }
