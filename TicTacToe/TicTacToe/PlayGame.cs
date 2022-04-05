@@ -14,38 +14,38 @@ namespace TicTacToe
         PrintScreen printScreen = new PrintScreen();
         ExceptionHandling exception = new ExceptionHandling();
 
-        
-        public void InputUserSpaceNumber(Player player, int mode)  //player(=user)의 좌표입력을 받고 리스트에 저장하는 함수
+        public void PrintInputScreen(int mode, string message)
         {
-            bool loop = true;
-            string Input = "";
+            Console.Clear();
+            printScreen.PrintPlayScreen(mode, board);   //게임플레이화면 출력
+            Console.WriteLine(message);                 //경고메세지 출력
+        }
+        public void InputUserSpaceNumber(int mode, char drawType)  //player(=user)의 좌표입력을 받고 리스트에 저장하는 함수
+        {
+            bool isValidSpaceNumber = false; //빈칸(유효한)인지 판단하는 변수
+            string spaceNumber = "";        //칸번호 입력 변수
 
-            while (loop)
+            while (!isValidSpaceNumber)
             {
-                Input = Console.ReadLine();     //번호를 입력받음
+                spaceNumber = Console.ReadLine();     //번호를 입력받음(1~9)
                 
-                if (!exception.IsValidValue(Input))                 //숫자가 아닌 입력
+                if (!exception.IsValidValue(spaceNumber))                 //숫자가 아닌 입력
                 {
-                    Console.Clear();
-                    printScreen.PrintPlayScreen(mode, board);                                     //게임플레이화면 출력
-                    Console.WriteLine("-------------1 ~ 9 중 하나를 입력해주세요.------------");  //경고메세지 출력
-                    continue;                                     //처음으로 돌아가서 행, 열을 다시 입력받는다
+                    PrintInputScreen(mode, "-------------1 ~ 9 중 하나를 입력해주세요.------------");  //잘못입력시 게임플레이화면과 함께 경고 메세지 출력
+                    continue;                                      //처음으로 돌아가서 칸 번호를 다시 입력받는다
                 }
-                else if(!board.IsValidSpace(Input))              //유효한 입력이지만 해당 칸이 빈 칸이 아닌 경우
+                else if(!board.IsValidSpace(spaceNumber))                //유효한 입력이지만 해당 칸이 빈 칸이 아닌 경우
                 {
-                    Console.Clear();
-                    printScreen.PrintPlayScreen(mode, board);                                     //게임플레이화면 출력
-                    Console.WriteLine("----------빈칸이 아닙니다. 다시 입력해주세요.---------"); //경고메세지 출력
-                    continue;                                     //처음으로 돌아가서 행, 열을 다시 입력받는다
+                    PrintInputScreen(mode, "----------빈칸이 아닙니다. 다시 입력해주세요.---------");  //잘못입력시 게임플레이화면과 함께 경고 메세지 출력
+                    continue;                                      //처음으로 돌아가서 칸 번호를 다시 입력받는다
                 }
                 else   //올바른 좌표를 입력받으면 while문 탈출
                 {
-                    loop = false;
+                    isValidSpaceNumber = true;     //유효한 칸번호를 입력받았다고 판단
                 }
             }
             
-            board.SetOneSpace(Convert.ToInt32(Input), player.DrawType);     //보드객체에 입력받은 칸 정보 저장
-            player.AddSpaceNumber(board.FindSpaceNumber(row, column));      //player객체의 칸 번호 리스트에 입력한 칸 번호 저장
+            board.SetOneSpace(Convert.ToInt32(spaceNumber), drawType);     //보드객체에 입력받은 칸 정보 저장
         }
         
         public bool IsRetry(string name, int mode)     //게임을 다시 할지 확인하는 함수

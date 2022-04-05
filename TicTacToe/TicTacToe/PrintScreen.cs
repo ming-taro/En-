@@ -46,13 +46,13 @@ namespace TicTacToe
 
         public void PrintBoardScreen(Board board)   //보드판을 출력하는 함수
         {
-            Console.WriteLine("\n                    0   1   2");
+            Console.WriteLine("\n                             ");
             Console.WriteLine("                  ┏━━━┳━━━┳━━━┓");
-            Console.WriteLine("                 0┃ " + board.GetSpaceDrawType(0) + " ┃ " + board.GetSpaceDrawType(1) + " ┃ " + board.GetSpaceDrawType(2) + " ┃");
+            Console.WriteLine("                  ┃ " + board.GetSpaceDrawType(0) + " ┃ " + board.GetSpaceDrawType(1) + " ┃ " + board.GetSpaceDrawType(2) + " ┃");
             Console.WriteLine("                  ┣━━━╋━━━╋━━━┫ ");
-            Console.WriteLine("                 1┃ " + board.GetSpaceDrawType(3) + " ┃ " + board.GetSpaceDrawType(4) + " ┃ " + board.GetSpaceDrawType(5) + " ┃");
+            Console.WriteLine("                  ┃ " + board.GetSpaceDrawType(3) + " ┃ " + board.GetSpaceDrawType(4) + " ┃ " + board.GetSpaceDrawType(5) + " ┃");
             Console.WriteLine("                  ┣━━━╋━━━╋━━━┫ ");
-            Console.WriteLine("                 2┃ " + board.GetSpaceDrawType(6) + " ┃ " + board.GetSpaceDrawType(7) + " ┃ " + board.GetSpaceDrawType(8) + " ┃");
+            Console.WriteLine("                  ┃ " + board.GetSpaceDrawType(6) + " ┃ " + board.GetSpaceDrawType(7) + " ┃ " + board.GetSpaceDrawType(8) + " ┃");
             Console.WriteLine("                  ┗━━━┻━━━┻━━━┛");
         }
 
