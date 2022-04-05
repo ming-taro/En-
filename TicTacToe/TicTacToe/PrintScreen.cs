@@ -8,7 +8,7 @@ namespace TicTacToe
 {
     class PrintScreen
     {
-        public void PrintMainScreen()
+        public void PrintMainScreen()     //게임 시작화면을 출력하는 함수
         {
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>>TicTacToe 게임<<<<<<<<<<<<<<<<<<<<");
             Console.WriteLine("======================모드 선택=======================\n\n\n\n");
@@ -18,7 +18,7 @@ namespace TicTacToe
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<\n");
         }
 
-        public void PrintModeScreen(int mode)
+        public void PrintModeScreen(int mode)   //모드 화면을 출력하는 함수
         {
             switch (mode)
             {
@@ -30,8 +30,8 @@ namespace TicTacToe
                     break;
             }
         }
-
-        public void PrintScoreBoard(int mode, int player1Score, int player2Score)
+         
+        public void PrintScoreBoard(int mode, int player1Score, int player2Score)    //스코어보드를 출력하는 함수
         {
             switch (mode)
             {
@@ -56,7 +56,7 @@ namespace TicTacToe
             Console.WriteLine("                  ┗━━━┻━━━┻━━━┛");
         }
 
-        public void PrintWinner(string name)
+        public void PrintWinner(string name)       //엔딩화면을 출력하는 함수 - 1
         {
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>게임을 종료합니다<<<<<<<<<<<<<<<<<<");
             Console.WriteLine("======================================================\n\n\n\n\n");
@@ -65,7 +65,7 @@ namespace TicTacToe
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<\n");
         }
 
-        public void PrintDraw()
+        public void PrintDraw()                    //엔딩화면을 출력하는 함수 - 2
         {
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>게임을 종료합니다<<<<<<<<<<<<<<<<<<");
             Console.WriteLine("======================================================\n\n\n\n\n\n");
@@ -74,7 +74,7 @@ namespace TicTacToe
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<\n");
         }
 
-        public void PrnitRetry(string name)
+        public void PrnitRetry(string name)        //재시도 화면을 출력하는 함수
         {
             if (name.Equals("Computer")) Console.WriteLine("\n-------Computer의 승리입니다. 다시하시겠습니까?-------");
             else if (name.Equals("User")) Console.WriteLine("\n---------User의 승리입니다. 다시하시겠습니까?---------");

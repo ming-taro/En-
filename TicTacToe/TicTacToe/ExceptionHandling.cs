@@ -35,7 +35,7 @@ namespace TicTacToe
             else return false;
         }
 
-        public bool IsNumber1Or2(string str)
+        public bool IsNumber1Or2(string str)      //1 or 2 입력인지 확인하는 함수(한 자리 숫자가 입력되었을 때를 가정하고 사용)
         {
             int number = Convert.ToInt32(str);
 
@@ -43,7 +43,7 @@ namespace TicTacToe
             else return false;
         }
 
-        public bool IsValidSpace(Board board, int row, int column)
+        public bool IsValidSpace(Board board, int row, int column)    //입력받은 행,열이 빈칸(유효한)인지 판별하는 함수
         {
             int spaceNumber = board.FindSpaceNumber(row, column);
 

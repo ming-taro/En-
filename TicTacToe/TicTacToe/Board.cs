@@ -28,10 +28,13 @@ namespace TicTacToe
             for (int i = 0; i < 9; i++)
             {
                 spaceDrawType.Add(' ');    //초기 보드판에는 각 칸마다 공백을 저장한다
-                validSpaceNumber.Add(i);        //비어있는 칸번호 리스트(0~8번 : 총 9칸)
+                validSpaceNumber.Add(i);   //비어있는 칸번호 리스트(0~8번 : 총 9칸)
             }
         }
-
+        /*public int GetValidSpaceNumberCount()
+        {
+            return validSpaceNumber.Count;
+        }*/
         public void SetScore(int scoreIndex)
         {
             score[scoreIndex]++;
