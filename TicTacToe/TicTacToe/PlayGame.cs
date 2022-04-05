@@ -12,6 +12,10 @@ namespace TicTacToe
         Board board = new Board();
         PrintScreen printScreen = new PrintScreen();
         ExceptionHandling exception = new ExceptionHandling();
+        public const int WIN = 1;
+        public const int WIN_AND_RETRY = 2;
+        public const int WIN_AND_CLOSE = 3;
+        public const int CONTINUE = 4;
 
         public PlayGame()
         {
@@ -63,11 +67,17 @@ namespace TicTacToe
             board.SetOneSpace(Convert.ToInt32(spaceNumber) - 1, player[playerNumber].DrawType);   //보드객체에 입력받은 칸 정보 저장
             player[playerNumber].AddMySpaceNumber(Convert.ToInt32(spaceNumber) - 1);              //나의 칸번호 리스트에 입력한 칸번호 추가
         }
-        
-        public bool IsRetry(int winPlayer, int losePlayer)     //게임을 다시 할지 확인하는 함수
+        public int LosePlayer(int winPlayer)
+        {
+            if (winPlayer == 0) return 1;
+            else if (winPlayer == 1) return 0;
+            else if (winPlayer == 2) return 3;
+            else return 2;
+        }
+        public bool IsRetry(int winPlayer)     //게임을 다시 할지 확인하는 함수
         {
             string input = "";
-            int retry = 0;
+            int losePlayer = LosePlayer(winPlayer);
             bool loop = true;
 
             printScreen.PrnitRetry(player[winPlayer].Name);                             //다시 묻는 화면 출력
@@ -90,101 +100,74 @@ namespace TicTacToe
                 }
             }
 
-            retry = Convert.ToInt32(input);  //게임을 다시 할지를 저장한 변수
-
-            player[winPlayer].InitMySpaceNumber();     //player들의 칸번호 리스트 초기화
+            player[winPlayer].InitMySpaceNumber();           //player들의 칸번호 리스트 초기화
             player[losePlayer].InitMySpaceNumber();
 
-            if (retry == 1) return true;
+            if (Convert.ToInt32(input) == 1) return true;    //다시 시작
             else return false;
         }
         
         public void UserVersusComputer()     //모드 : 1번
         {
             bool loop = true;
-
-            player[0].SetPlayer('X', "User");
-            player[1].SetPlayer('O', "Computer");
+            int isWinAndRetry = 0;
 
             while (loop)
             {
                 board.InputComputerPoint(player[1]);              //컴퓨터 입력
-                if (board.CheckWin(player[1]))                    //컴퓨터가 승리하는 경우
-                {
-                    player[1].Score++;                            //컴퓨터 승리 체크(컴퓨터 스코어 +1)
-                    printScreen.PrintPlayScreen(player[0], player[1], board);      //컴퓨터입력을 반영한 게임화면 출력
-                    if (IsRetry(1, 0)) board.InitBoard(); //다시 시작한다면 보드판 초기화
-                    else return;                                //게임종료
-                }
-                printScreen.PrintPlayScreen(player[0], player[1], board);          //게임 플레이 화면 출력
+                isWinAndRetry = IsWinAndRetry(1, 0, 1);
+                if (isWinAndRetry == WIN_AND_RETRY) continue;//컴퓨터 승리 + 다시시작
+                else if (isWinAndRetry == WIN_AND_CLOSE) return;//컴퓨터 승리 + 종료
 
-                InputUserSpaceNumber(0);      //유저입력
-                if (board.CheckWin(player[0]))                    //유저가 승리하는 경우
-                {
-                    player[0].Score++;                            //유저 승리 체크(유저 스코어 +1)
-                    printScreen.PrintPlayScreen(player[0], player[1], board);      //유저입력을 반영한 게임화면 출력
-                    if (IsRetry(0, 1)) board.InitBoard();       //다시 시작한다면 보드판 초기화
-                    else return;                                //게임 종료
-                }
+                InputUserSpaceNumber(0);                         //유저입력
+                isWinAndRetry = IsWinAndRetry(1, 0, 1);
+                if (isWinAndRetry == WIN_AND_RETRY) continue;//유저 승리 + 다시시작
+                else if (isWinAndRetry == WIN_AND_CLOSE) return;//유저 승리 + 종료
             }
         }
-        /*public bool IsWinAndRetry(Player player, int mode, int scoreNumber)    //player가 승리하는 경우
+        public int IsWinAndRetry(int winPlayer, int player1, int player2)      //player가 승리하는 경우
         {
-            board.SetScore(scoreNumber);               //player 승리 체크(player 스코어 +1)
-            printScreen.PrintPlayScreen(mode, board);  //player입력을 반영한 게임화면 출력
-            if (IsRetry(player.Name, mode))            //
+            if (!board.CheckWin(player[winPlayer]))
             {
-                board.InitBoard();                     //다시 시작한다면 보드판 초기화
-                return true;
+                printScreen.PrintPlayScreen(player[2], player[3], board);      //입력을 반영한 게임 플레이 화면 출력
+                return CONTINUE;           //승부가 나지X -> 게임 재개
             }
-            else return false;                         //게임은 이겼지만 다시 시작X
 
-        }*/
+            player[winPlayer].Score++;                         //승리 체크(스코어 +1)
+            printScreen.PrintPlayScreen(player[player1], player[player2], board); //승자의 입력을 반영한 게임화면 출력
+
+            if (IsRetry(winPlayer))                    //player가 승리 + 다시시작
+            {
+                board.InitBoard();                            //다시 시작한다면 보드판 초기화
+                return WIN_AND_RETRY;
+            }
+            else                                              //player 승리 + 종료
+            {
+                return WIN_AND_CLOSE;
+            }
+        }
         public void User1VersusUser2()        //모드 : 2번
         {
             bool loop = true;
-
-            player[2].SetPlayer('X', "User1");
-            player[3].SetPlayer('O', "User2");
+            int isWinAndRetry = 0;
 
             while (loop)
             {
                 printScreen.PrintPlayScreen(player[2], player[3], board);          //게임 플레이 화면 출력
 
                 InputUserSpaceNumber(2);                     //유저1입력
-                if (board.CheckWin(player[2]))                    //유저1이 승리하는 경우
-                {
-                    player[2].Score++;                          //유저1의 승리 체크(유저 스코어 +1)
-                    printScreen.PrintPlayScreen(player[2], player[3], board);      //유저1의 입력을 반영한 게임화면 출력
-                    if (IsRetry(2, 3))
-                    {
-                        board.InitBoard();                      //다시 시작한다면 보드판 초기화
-                    }
-                    else return;                                //게임 종료
-                }
-                printScreen.PrintPlayScreen(player[2], player[3], board);          //게임 플레이 화면 출력
+                isWinAndRetry = IsWinAndRetry(2, 2, 3);
+                if (isWinAndRetry == WIN_AND_RETRY) continue;//유저1 승리 + 다시시작
+                else if (isWinAndRetry == WIN_AND_CLOSE) return;//유저1 승리 + 종료
 
                 InputUserSpaceNumber(3);                     //유저2입력
-                if (board.CheckWin(player[3]))                    //유저2가 승리하는 경우
-                {
-                    player[3].Score++;                          //유저2 승리 체크(유저 스코어 +1)
-                    printScreen.PrintPlayScreen(player[2], player[3], board);      //유저2 입력을 반영한 게임화면 출력
-                    if (IsRetry(3, 2)) board.InitBoard(); //다시 시작한다면 보드판 초기화
-                    else return;                                //게임 종료
-                }
+                isWinAndRetry = IsWinAndRetry(3, 2, 3);
+                if (isWinAndRetry == WIN_AND_RETRY) continue;//유저2 승리 + 다시시작
+                else if (isWinAndRetry == WIN_AND_CLOSE) return;//유저2 승리 + 종료
             }
 
         }
-        public void PrintWinner(int player1, int player2)       //최종스코어를 기준으로 승자를 출력하는 함수
-        {
-            int player1Score = player[player1].Score;
-            int player2Score = player[player2].Score;
-
-            if (player1Score > player2Score) printScreen.PrintWinner(player[player1].Name);           //player1이 승리하는 경우
-            else if (player1Score < player2Score) printScreen.PrintWinner(player[player2].Name);      //player2가 승리하는 경우
-            else printScreen.PrintDraw();                                                     //비기는 경우
-
-        }
+        
         public int InputMode() //모드를 입력받는 함수
         {
             bool loop = true;
@@ -218,13 +201,13 @@ namespace TicTacToe
             {
                 UserVersusComputer();      //유저  vs 컴퓨터 게임모드 실행
                 Console.Clear();
-                PrintWinner(0, 1);         //게임 종료화면 출력
+                printScreen.PrintEndingScreen(player[0], player[1]);         //게임 종료화면 출력
             }
             else if (mode == 2)
             {
                 User1VersusUser2();        //유저1 vs 유저2 게임모드 실행
                 Console.Clear();
-                PrintWinner(2, 3);             //게임 종료화면 출력
+                printScreen.PrintEndingScreen(player[2], player[3]);            //게임 종료화면 출력
             }
 
             
