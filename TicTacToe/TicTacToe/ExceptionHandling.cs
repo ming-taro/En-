@@ -43,10 +43,8 @@ namespace TicTacToe
             else return false;
         }
 
-        public bool IsValidSpace(Board board, int row, int column)    //입력받은 행,열이 빈칸(유효한)인지 판별하는 함수
+        public bool IsValidSpace(Board board, string spaceNumber)    //입력받은 행,열이 빈칸(유효한)인지 판별하는 함수
         {
-            int spaceNumber = board.FindSpaceNumber(row, column);
-
             if (board.IsValidSpace(spaceNumber)) return true;
             else return false;
 
