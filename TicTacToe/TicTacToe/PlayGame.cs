@@ -15,20 +15,20 @@ namespace TicTacToe
         ExceptionHandling exception = new ExceptionHandling();
 
         
-        public void InputUserPoint(Player player, int mode)       //player(=user)의 좌표입력을 받고 리스트에 저장하는 함수
+        public void InputUserSpaceNumber(Player player, int mode)  //player(=user)의 좌표입력을 받고 리스트에 저장하는 함수
         {
             bool loop = true;
-            int row = 0, column = 0;
-            string str = "";
+            string Input = "";
 
             while (loop)
             {
+                Input = Console.ReadLine();     //번호를 입력받음
                 
-                if (!exception.IsValidValue(str))                 //숫자가 아닌 입력 or 0~2범위가 아닌 경우
+                if (!exception.IsValidValue(Input))                 //숫자가 아닌 입력
                 {
                     Console.Clear();
                     printScreen.PrintPlayScreen(mode, board);                                     //게임플레이화면 출력
-                    Console.WriteLine("-------------0 ~ 2 중 하나를 입력해주세요.------------");  //경고메세지 출력
+                    Console.WriteLine("-------------1 ~ 9 중 하나를 입력해주세요.------------");  //경고메세지 출력
                     continue;                                     //처음으로 돌아가서 행, 열을 다시 입력받는다
                 }
                 else if(!exception.IsValidSpace(board, row, Convert.ToInt32(str)))   //유효한 입력이지만 해당 칸이 빈 칸이 아닌 경우
