@@ -31,7 +31,7 @@ namespace TicTacToe
                     Console.WriteLine("-------------1 ~ 9 중 하나를 입력해주세요.------------");  //경고메세지 출력
                     continue;                                     //처음으로 돌아가서 행, 열을 다시 입력받는다
                 }
-                else if(!exception.IsValidSpace(board, row, Convert.ToInt32(str)))   //유효한 입력이지만 해당 칸이 빈 칸이 아닌 경우
+                else if(!board.IsValidSpace(Input))              //유효한 입력이지만 해당 칸이 빈 칸이 아닌 경우
                 {
                     Console.Clear();
                     printScreen.PrintPlayScreen(mode, board);                                     //게임플레이화면 출력
@@ -43,8 +43,8 @@ namespace TicTacToe
                     loop = false;
                 }
             }
-            column = Convert.ToInt32(str);
-            board.SetOneSpace(row, column, player.DrawType);                //보드객체에 입력받은 칸 정보 저장
+            
+            board.SetOneSpace(Convert.ToInt32(Input), player.DrawType);     //보드객체에 입력받은 칸 정보 저장
             player.AddSpaceNumber(board.FindSpaceNumber(row, column));      //player객체의 칸 번호 리스트에 입력한 칸 번호 저장
         }
         
