@@ -92,5 +92,16 @@ namespace TicTacToe
             PrintBoardScreen(board);                                      //보드판 출력
             Console.WriteLine("\n>>>>>>>>>>>>>>>>>>번호를 입력해주세요<<<<<<<<<<<<<<<<<");
         }
+
+        public void PrintEndingScreen(Player player1, Player player2)       //최종스코어를 기준으로 승자를 출력하는 함수
+        {
+            int player1Score = player1.Score;
+            int player2Score = player1.Score;
+
+            if (player1Score > player2Score) PrintWinner(player1.Name);           //player1이 승리하는 경우
+            else if (player1Score < player2Score) PrintWinner(player2.Name);      //player2가 승리하는 경우
+            else PrintDraw();                                                     //비기는 경우
+
+        }
     }
 }

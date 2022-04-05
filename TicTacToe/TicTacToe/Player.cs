@@ -32,6 +32,7 @@ namespace TicTacToe
 
         public void SetPlayer(char drawType, string name)
         {
+            score = 0;
             this.drawType = drawType;
             this.name = name;
         }

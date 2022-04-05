@@ -23,6 +23,10 @@ namespace TicTacToe
             {
                 player[i] = new Player();    //player생성
             }
+            player[0].SetPlayer('X', "User");
+            player[1].SetPlayer('O', "Computer");
+            player[2].SetPlayer('X', "User1");
+            player[3].SetPlayer('O', "User2");
         }
 
         public void PrintInputScreen(int playerNumber, string message)    //유저가 칸번호를 입력했을 때 오류가 생기면 출력하는 화면
@@ -42,7 +46,6 @@ namespace TicTacToe
         {
             bool isValidSpaceNumber = false; //빈칸(유효한)인지 판단하는 변수
             string spaceNumber = "";         //칸번호 입력 변수
-
 
             while (!isValidSpaceNumber)
             {
@@ -136,7 +139,7 @@ namespace TicTacToe
             player[winPlayer].Score++;                         //승리 체크(스코어 +1)
             printScreen.PrintPlayScreen(player[player1], player[player2], board); //승자의 입력을 반영한 게임화면 출력
 
-            if (IsRetry(winPlayer))                    //player가 승리 + 다시시작
+            if (IsRetry(winPlayer))                           //player가 승리 + 다시시작
             {
                 board.InitBoard();                            //다시 시작한다면 보드판 초기화
                 return WIN_AND_RETRY;
@@ -150,7 +153,7 @@ namespace TicTacToe
         {
             bool loop = true;
             int isWinAndRetry = 0;
-
+            printScreen.PrintPlayScreen(player[2], player[3], board);
             while (loop)
             {
                 printScreen.PrintPlayScreen(player[2], player[3], board);          //게임 플레이 화면 출력
@@ -197,7 +200,11 @@ namespace TicTacToe
             printScreen.PrintMainScreen();            //게임 메인 화면 출력
             int mode = InputMode();                   //모드를 입력받음
 
-            if (mode == 1)
+            if(mode == 0)    //게임 종료
+            {
+                return;
+            }
+            else if (mode == 1)
             {
                 UserVersusComputer();      //유저  vs 컴퓨터 게임모드 실행
                 Console.Clear();
@@ -208,6 +215,10 @@ namespace TicTacToe
                 User1VersusUser2();        //유저1 vs 유저2 게임모드 실행
                 Console.Clear();
                 printScreen.PrintEndingScreen(player[2], player[3]);            //게임 종료화면 출력
+            }
+            else    //mode == 3
+            {
+
             }
 
             
