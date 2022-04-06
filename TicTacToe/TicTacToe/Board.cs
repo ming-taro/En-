@@ -26,18 +26,14 @@ namespace TicTacToe
                 spaceDrawType.Add((char)('0' + i));    //초기 보드판에는 각 칸마다 칸번호를 저장한다
             }
         }
-
         public void SetOneSpace(int spaceNumber, char drawType)   //해당 칸에 x or o를 그리는 함수
         {
             spaceDrawType[spaceNumber] = drawType;                //입력받은 칸 번호에 X or O를 저장
         }
-        
-
         public char GetSpaceDrawType(int spaceNumber)  //해당 칸에 그려진 값 얻기
         {
             return spaceDrawType[spaceNumber];   //입력받은 행, 열에 대한 칸 번호를 찾아 그려진 값 반환
         }
-
         public bool IsValidSpace(string Input)    //해당 칸번호가 비어있는(유효한) 칸번호인지 확인하는 함수
         {
             int spaceNumber = Convert.ToInt32(Input) - 1;   //입력받은 칸 번호
@@ -46,14 +42,6 @@ namespace TicTacToe
             else return false;                                      //X or O 표시가 있다면 false
 
         }
-
-        /*public int FindEmptySpace(int space1, int space2, int space3)
-        {
-            if (spaceDrawType[space1] == ' ' && spaceDrawType[space2] == spaceDrawType[space3]) return space1;
-            else if (spaceDrawType[space2] == ' ' && spaceDrawType[space1] == spaceDrawType[space3]) return space2;
-            else if (spaceDrawType[space3] == ' ' && spaceDrawType[space1] == spaceDrawType[space2]) return space3;
-            else return WRONG_VALUE;
-        }*/
         public int FindSpaceToWin()                 //승리할 수 있는 칸의 위치를 찾는 함수
         {
             if (spaceDrawType[2] >= '1' && spaceDrawType[2] <= '9') return 2;  //컴퓨터가 입력 세번만에 이길 수 있음
@@ -88,13 +76,11 @@ namespace TicTacToe
                 return;
             }
         }
-
         public bool IsSameType(int spaceNumber1, int spaceNumber2, int spaceNumber3) //나란한 세 칸이 같은 타입인지 확인하는 함수
         {
             if (spaceDrawType[spaceNumber1] == spaceDrawType[spaceNumber2] && spaceDrawType[spaceNumber2] == spaceDrawType[spaceNumber3]) return CHECK_WIN;
             else return !CHECK_WIN;
         }
-
         public bool CheckDiagonal(int spaceNumber)   //대각선방향을 검사해 승리를 확인하는 함수
         {
             switch (spaceNumber)   //보드판에서 0, 2, 4, 6, 8번에 그려져있을때만 대각선을 검사한다
@@ -112,7 +98,6 @@ namespace TicTacToe
                     return !CHECK_WIN;
             }
         }
-
         public bool CheckRow(int spaceNumber)    //가로방향을 검사해 승리를 확인하는 함수
         {
             switch (spaceNumber)
@@ -128,7 +113,6 @@ namespace TicTacToe
                     else return !CHECK_WIN;
             }
         }
-
         public bool CheckColumn(int spaceNumber)  //세로방향을 검사해 승리를 확인하는 함수
         {
             switch(spaceNumber){
