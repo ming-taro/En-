@@ -159,10 +159,9 @@ namespace TicTacToe
         
         private int InputMode() //모드를 입력받는 함수
         {
-            bool loop = true;
             string input = "";
 
-            while (loop)
+            while (IS_VALID_INPUT)
             {
                 Console.Write(">모드를 입력해주세요 : ");
                 input = Console.ReadLine();                   //모드를 입력받음
@@ -171,21 +170,18 @@ namespace TicTacToe
                     printScreen.PrintErrorScreenForInput1To4();                          //1~4를 입력해달라는 메세지 출력
                     continue;                                                            //처음으로 돌아가서 다시 입력받음
                 }
-                else  //1~4중 하나가 입력되는 경우(올바른 입력)
-                {
-                    loop = false;                                                                                                                                                                                       
-                }
+                else break;                  //1~4중 하나가 입력되는 경우(올바른 입력)
+                
             }
             return Convert.ToInt32(input);   //올바르게 입력받은 모드값 반환
         }
         private int InputInScoareBoardScreen()
         {
-            bool loop = true;
             string input = "";
 
             printScreen.PrintScoreBoardScreen(player);        //스코어보드 화면 출력
 
-            while (loop)
+            while (IS_VALID_INPUT)
             {
                 Console.Write(">입력 : ");
                 input = Console.ReadLine();                   //메인으로 or 종료 중 하나를 입력받음
@@ -194,34 +190,37 @@ namespace TicTacToe
                     printScreen.PrintErrorScreenForInputInScoreBoard(player);            //1~2를 입력해달라는 메세지 출력
                     continue;                                                            //처음으로 돌아가서 다시 입력받음
                 }
-                else  //1 or 2중 하나가 입력되는 경우(올바른 입력)
-                {
-                    loop = false;
-                }
+                else break;                                   //1 or 2중 하나가 입력되는 경우(올바른 입력)
+
             }
-            return Convert.ToInt32(input);   //올바르게 입력받은 번호값 반환
+
+            if (Convert.ToInt32(input) == 2) return 4;        //scoreboard에서의 종료는 2번이지만, 메인화면에서의 종료는 4이므로 4 리턴
+            return 0;                                         //scoreboard에서의 메인화면으로는 1번이지만, StartGame()에서의 메인화면 출력은 0이므로 0 리턴
         }
         public void StartGame()
         {
-            printScreen.PrintMainScreen();            //게임 메인 화면 출력
-            int mode = InputMode();                   //모드를 입력받음
+            int mode = 0;
 
             while (IS_VALID_INPUT)
             {
                 switch (mode)
                 {
+                    case 0:
+                        printScreen.PrintMainScreen();            //게임 메인 화면 출력
+                        mode = InputMode();                       //모드를 입력받음
+                        break;
                     case 1:
-                        UserVersusComputer();      //유저  vs 컴퓨터 게임모드 실행
-                        printScreen.PrintEndingScreen(player[0], player[1]);         //게임 종료화면 출력
+                        UserVersusComputer();                     //유저  vs 컴퓨터 게임모드 실행
+                        mode = 4;                                 //게임이 끝나면 종료를 묻는 화면으로 이동(4번)
                         break;
                     case 2:
-                        User1VersusUser2();        //유저1 vs 유저2 게임모드 실행
-                        printScreen.PrintEndingScreen(player[2], player[3]);            //게임 종료화면 출력
+                        User1VersusUser2();                       //유저1 vs 유저2 게임모드 실행
+                        mode = 4;                                 //게임이 끝나면 종료를 묻는 화면으로 이동(4번)
                         break;
                     case 3:
-                        mode = InputInScoareBoardScreen();
+                        mode = InputInScoareBoardScreen();        //0번:메인으로, 4번: 종료
                         break;
-                    case 4:
+                    case 4:                                       //종료    
                         break;
 
                 }

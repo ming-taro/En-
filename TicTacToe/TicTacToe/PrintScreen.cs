@@ -10,6 +10,7 @@ namespace TicTacToe
     {
         public void PrintMainScreen()     //게임 시작화면을 출력하는 함수
         {
+            Console.Clear();
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>>TicTacToe 게임<<<<<<<<<<<<<<<<<<<<");
             Console.WriteLine("======================모드 선택=======================\n\n");
             Console.WriteLine("              1. User    vs    Computer               \n");
