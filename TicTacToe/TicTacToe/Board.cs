@@ -146,6 +146,42 @@ namespace TicTacToe
             }
             return blankSpace;
         }
+        public int FindRow(int spaceNumber)
+        {
+            int blankSpace = -1;
+
+            switch (spaceNumber)
+            {
+                case 0:
+                    blankSpace = BlankSpace(0, 1, 2);
+                    break;
+                case 1:
+                    blankSpace = BlankSpace(1, 0, 2);
+                    break;
+                case 2:
+                    blankSpace = BlankSpace(2, 0, 1);
+                    break;
+                case 3:
+                    blankSpace = BlankSpace(3, 4, 5);
+                    break;
+                case 4:
+                    blankSpace = BlankSpace(4, 3, 5);
+                    break;
+                case 5:
+                    blankSpace = BlankSpace(5, 3, 4);
+                    break;
+                case 6:
+                    blankSpace = BlankSpace(6, 7, 8);
+                    break;
+                case 7:
+                    blankSpace = BlankSpace(7, 6, 8);
+                    break;
+                case 8:
+                    blankSpace = BlankSpace(8, 7, 8);
+                    break;
+            }
+            return blankSpace;
+        }
         public int FindToWinSpace(Player computer)
         {
             int blankSpace = -1;
@@ -153,6 +189,8 @@ namespace TicTacToe
             foreach(int spaceNumber in computer.mySpaceNumber)
             {
                 blankSpace = FindDiagonal(spaceNumber);
+                if (blankSpace != -1) return blankSpace;
+                blankSpace = FindRow(spaceNumber);
                 if (blankSpace != -1) return blankSpace;
             }
 
