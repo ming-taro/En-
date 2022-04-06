@@ -9,6 +9,8 @@ namespace TicTacToe
     class PrintScreen
     {
         public const int NO_WINER = -1;
+        public const int NO_WINNER_AND_MODE_ONE = -1;
+        public const int NO_WINNER_AND_MODE_TWO = -2;
         public void PrintMainScreen()     //게임 시작화면을 출력하는 함수
         {
             Console.Clear();
@@ -162,18 +164,18 @@ namespace TicTacToe
         public void PrintErrorForInput1To2(int winPlayer, Player[] player, Board board)
         {
             Console.Clear();
-            if (winPlayer == 0 || winPlayer == 1)
+            if (winPlayer == NO_WINNER_AND_MODE_ONE || winPlayer == 0 || winPlayer == 1)  //무승부 or User(X)승리 or Computer(O)승리
             {
                 PrintPlayScreen(player[0], player[1], board);   //게임플레이화면 출력(User vs Computer)
             }
-            else
+            else                                                //무승부 or User1(X)승리 or User2(X)승리
             {
                 PrintPlayScreen(player[2], player[3], board);   //게임플레이화면 출력(User1 vs User2)
             }
 
-            if (winPlayer == NO_WINER) PrnitRetry("Draw");       //승자가 없었다면 PrintRetry에 승자의 이름 대신 Draw메세지를 전달
-            else PrnitRetry(player[winPlayer].Name);             //승자가 있었다면 승자의 이름을 전달 + 다시 묻는 화면 출력
-                                          //다시 묻는 화면 출력
+            string winPlayerName = "Draw";
+            if (winPlayer >= 0 && winPlayer <= 3) winPlayerName = player[winPlayer].Name;   //승자가 있다면 winPlayerName에 승자 이름 저장  
+            PrnitRetry(winPlayerName);                                                      //다시 묻는 화면 출력
             Console.WriteLine("-------------1과 2중 하나를 입력해주세요--------------\n");  //경고메세지 출력
         }
         public void PrintErrorForInput1To4()

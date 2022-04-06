@@ -19,7 +19,8 @@ namespace TicTacToe
         public const int DRAW_AND_RETRY = 4;
         public const int DRAW_AND_CLOSE = 5;
         public const int CONTINUE = 6;
-        public const int NO_WINER = -1;
+        public const int NO_WINNER_AND_MODE_ONE = -1;
+        public const int NO_WINNER_AND_MODE_TWO = -2;
         public const int GAME_MAIN_SCREEN = 0;
         public const int USER_VERSUS_COMPUTER = 1;
         public const int USER1_VERSUS_USER2 = 2;
@@ -81,29 +82,24 @@ namespace TicTacToe
         private bool IsRetry(int winPlayer)     //게임을 다시 할지 확인하는 함수
         {
             string input = "";
+            string winPlayerName = "Draw";      //승자 이름의 초기값은 Draw
             int losePlayer = LosePlayer(winPlayer);
             bool loop = true;
 
-            if (winPlayer == NO_WINER) printScreen.PrnitRetry("Draw");       //승자가 없었다면 PrintRetry에 승자의 이름 대신 Draw메세지를 전달
-            else printScreen.PrnitRetry(player[winPlayer].Name);             //승자가 있었다면 승자의 이름을 전달 + 다시 묻는 화면 출력
+            if (winPlayer >= 0 && winPlayer <= 3) winPlayerName = player[winPlayer].Name;   //승자가 있다면 winPlayerName에 승자 이름 저장  
+            printScreen.PrnitRetry(winPlayerName);                                         //다시 묻는 화면 출력
 
             while (loop)
             {
-                Console.Write(">입력 : ");
+                Console.Write(">입력 : ");                                               //1. 다시 시작   2. 종료
                 input = Console.ReadLine();
                 if (!exception.IsValidValue(input) || !exception.IsNumber1Or2(input))    //유효하지 않은 입력 or 1,2가 아닌 경우
                 {
-                    printScreen.PrintErrorForInput1To2(winPlayer, player, board);  //1~2를 입력해달라는 메세지 + 다시 입력할지 물음
+                    printScreen.PrintErrorForInput1To2(winPlayer, player, board);        //1~2를 입력해달라는 메세지 + 다시 입력할지 물음
                     continue;                                                            //처음으로 돌아가서 다시 입력받음
                 }
-                else
-                {
-                    loop = false;
-                }
+                else break;
             }
-
-            player[winPlayer].InitMySpaceNumber();           //player들의 칸번호 리스트 초기화
-            player[losePlayer].InitMySpaceNumber();
 
             if (Convert.ToInt32(input) == 1) return true;    //다시 시작
             else return false;
@@ -127,26 +123,46 @@ namespace TicTacToe
                 else if (isWinAndRetry == WIN_AND_CLOSE) return;//유저 승리 + 종료
             }
         }
-        private int CheckWinAndRetry(int winPlayer, int player1, int player2)         //승부를 확인하고 다시 할지 물음
+
+        public void InitGameData(int player1, int player2)                        //게임이 한 판 끝나면 보드판, 각 player의 칸번호 리스트를 초기화하는 함수
         {
-            if (!board.CheckWin(player[winPlayer]))
+            printScreen.PrintPlayScreen(player[player1], player[player2], board); //승자의 입력을 반영한 게임화면 출력
+            board.InitBoard();                                                    //보드판 초기화
+            player[player1].InitMySpaceNumber();                                  //player들의 칸번호 리스트 초기화
+            player[player2].InitMySpaceNumber();
+        }
+        private int CheckWinAndRetry(int winPlayer, int player1, int player2)     //승부를 확인하고 다시 할지 물음
+        {
+            if (!board.CheckWin(player[winPlayer]) && board.ValidSpaceCount == 0)
+            {
+                return CheckDrawAndRetry(winPlayer);                              //승부가 나지X && 보드판에 빈칸X -> 무승부(다시 할지 or 종료할지를 확인하고 해당 값 리턴)
+            }
+            else if (!board.CheckWin(player[winPlayer]))
             {
                 printScreen.PrintPlayScreen(player[2], player[3], board);         //입력을 반영한 게임 플레이 화면 출력
                 return CONTINUE;                                                  //승부가 나지X -> 게임 재개
             }
-            else if (!board.CheckWin(player[winPlayer]) && board.ValidSpaceCount == 0) return CheckDrawAndRetry(); //승부가 나지X && 보드판에 빈칸X -> 무승부
             
+            player[winPlayer].Score++;                    //승부가 났을 때 -> 승리 체크(스코어++)
+            InitGameData(player1, player2);               //게임데이터 초기화
 
-            player[winPlayer].Score++;                                            //승리 체크(스코어 +1)
-            printScreen.PrintPlayScreen(player[player1], player[player2], board); //승자의 입력을 반영한 게임화면 출력
-            board.InitBoard();                                                    //보드판 초기화
-
-            if (IsRetry(winPlayer)) return WIN_AND_RETRY;                         //player가 승리 + 다시시작
-            else return WIN_AND_CLOSE;                                            //player 승리 + 종료
+            if (IsRetry(winPlayer)) return WIN_AND_RETRY; //player가 승리 + 다시시작
+            else return WIN_AND_CLOSE;                    //player 승리 + 종료
         }
-        private int CheckDrawAndRetry()
+        private int CheckDrawAndRetry(int winPlayer)                             //무승부 상황에서 게임을 다시 할지 or 종료를 판별하는 함수
         {
-            if (IsRetry(NO_WINER)) return DRAW_AND_RETRY;                         //무승부 + 다시시작
+            if (winPlayer == 2 || winPlayer == 3)        //모드2 : user1, user2의 게임데이터를 초기화
+            {
+                InitGameData(2, 3);
+                winPlayer = NO_WINNER_AND_MODE_TWO;       
+            }
+            else                                         //모드1 : user, computer의 게임데이터를 초기화
+            {
+                InitGameData(0, 1);
+                winPlayer = NO_WINNER_AND_MODE_ONE;
+            }
+
+            if (IsRetry(winPlayer)) return DRAW_AND_RETRY;                        //무승부 + 다시시작
             else return DRAW_AND_CLOSE;                                           //무승부 + 종료
         }
         private void User1VersusUser2()        //모드 : 2번
@@ -160,13 +176,13 @@ namespace TicTacToe
 
                 InputUserSpaceNumber(2);                        //유저1입력
                 checkWinAndRetry = CheckWinAndRetry(2, 2, 3);      
-                if (checkWinAndRetry == WIN_AND_RETRY || checkWinAndRetry == DRAW_AND_RETRY) continue;   //유저1 승리 or 무승부 + 다시시작
-                else if (checkWinAndRetry == WIN_AND_CLOSE || checkWinAndRetry == DRAW_AND_CLOSE) return;//유저1 승리 or 무승부 + 종료
+                if (checkWinAndRetry == WIN_AND_RETRY || checkWinAndRetry == DRAW_AND_RETRY) continue;   //유저1 승리 or 무승부 -> 다시시작
+                else if (checkWinAndRetry == WIN_AND_CLOSE || checkWinAndRetry == DRAW_AND_CLOSE) return;//유저1 승리 or 무승부 -> 종료
                 
                 InputUserSpaceNumber(3);                        //유저2입력
                 checkWinAndRetry = CheckWinAndRetry(3, 2, 3);      
-                if (checkWinAndRetry == WIN_AND_RETRY || checkWinAndRetry == DRAW_AND_RETRY) continue;   //유저2 승리 or 무승부 + 다시시작
-                else if (checkWinAndRetry == WIN_AND_CLOSE || checkWinAndRetry == DRAW_AND_CLOSE) return;//유저2 승리 or 무승부 + 종료
+                if (checkWinAndRetry == WIN_AND_RETRY || checkWinAndRetry == DRAW_AND_RETRY) continue;   //유저2 승리 or 무승부 -> 다시시작
+                else if (checkWinAndRetry == WIN_AND_CLOSE || checkWinAndRetry == DRAW_AND_CLOSE) return;//유저2 승리 or 무승부 -> 종료
             }
 
         }
