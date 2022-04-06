@@ -118,7 +118,18 @@ namespace TicTacToe
             Console.WriteLine("\n\n\n>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<");
             Console.WriteLine("========== 1. 메인화면으로 돌아가기   2. 종료 =========\n");
         }
-        public void PrintErrorScreenForInput1To9(int playerNumber, Player []player, Board board)    //유저가 칸번호를 입력했을 때 오류가 생기면 출력하는 화면
+        public void PrintGameEndScreen()
+        {
+            Console.Clear();
+            Console.WriteLine(">>>>>>>>>>>>>>>>>>>게임을 종료합니다<<<<<<<<<<<<<<<<<<");
+            Console.WriteLine("======================================================\n\n\n\n");
+            Console.WriteLine("              [게임을 종료하시겠습니까?]\n\n");
+            Console.WriteLine("          1. 메인화면으로 돌아가기    2. 종료\n\n\n");
+            Console.WriteLine("======================================================");
+            Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<\n");
+        }
+
+        public void PrintErrorForInput1To9(int playerNumber, Player []player, Board board)    //유저가 칸번호를 입력했을 때 오류가 생기면 출력하는 화면
         {
             Console.Clear();
             if (playerNumber == 0 || playerNumber == 1)
@@ -132,7 +143,7 @@ namespace TicTacToe
                 Console.WriteLine("-------------1 ~ 9 중 하나를 입력해주세요.------------");      //잘못입력시 게임플레이화면과 함께 경고 메세지 출력
             }
         }
-        public void PrintErrorScreenForInputInvalidSpace(int playerNumber, Player[] player, Board board) //유저가 칸번호를 입력했을 때 오류가 생기면 출력하는 화면
+        public void PrintErrorForInputInvalidSpace(int playerNumber, Player[] player, Board board) //유저가 칸번호를 입력했을 때 오류가 생기면 출력하는 화면
         {
             Console.Clear();
             if (playerNumber == 0 || playerNumber == 1)
@@ -146,7 +157,7 @@ namespace TicTacToe
                 Console.WriteLine("----------빈칸이 아닙니다. 다시 입력해주세요.---------");  //잘못입력시 게임플레이화면과 함께 경고 메세지 출력
             }
         }
-        public void PrintErrorScreenForInput1To2(int winPlayer, Player[] player, Board board)
+        public void PrintErrorForInput1To2(int winPlayer, Player[] player, Board board)
         {
             Console.Clear();
             if (winPlayer == 0 || winPlayer == 1)
@@ -160,19 +171,24 @@ namespace TicTacToe
             Console.WriteLine("-------------1과 2중 하나를 입력해주세요--------------\n");  //경고메세지 출력
             PrnitRetry(player[winPlayer].Name);                                             //다시 묻는 화면 출력
         }
-        public void PrintErrorScreenForInput1To4()
+        public void PrintErrorForInput1To4()
         {
             Console.Clear();
             PrintMainScreen();                                                              //게임 메인 화면 출력
             Console.WriteLine("-------------1 ~ 4중 하나를 입력해주세요--------------\n");  //경고메세지 출력
         }
-        public void PrintErrorScreenForInputInScoreBoard(Player[] player)
+        public void PrintErrorInScoreBoard(Player[] player)
         {
             Console.Clear();
             PrintScoreBoardScreen(player);
             Console.WriteLine("-------------1과 2중 하나를 입력해주세요--------------\n");  //경고메세지 출력
         }
         
-        
+        public void PrintErroInGameEndScreen()
+        {
+            Console.Clear();
+            PrintGameEndScreen();         //종료를 묻는 화면 출력
+            Console.WriteLine("-------------1과 2중 하나를 입력해주세요--------------\n");  //경고메세지 출력
+        }
     }
 }

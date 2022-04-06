@@ -42,12 +42,12 @@ namespace TicTacToe
                 
                 if (!exception.IsValidValue(spaceNumber) || !exception.IsBetween1To9(spaceNumber))   //숫자가 아님 or 1~9가 아닌 입력
                 {
-                    printScreen.PrintErrorScreenForInput1To9(playerNumber, player, board);           //1~9를 입력해달라는 메세지 출력
+                    printScreen.PrintErrorForInput1To9(playerNumber, player, board);           //1~9를 입력해달라는 메세지 출력
                     continue;                                                                        //처음으로 돌아가서 칸 번호를 다시 입력받는다
                 }
                 else if(!board.IsValidSpace(spaceNumber))   //유효한 입력이지만 해당 칸이 빈 칸이 아닌 경우
                 {
-                    printScreen.PrintErrorScreenForInputInvalidSpace(playerNumber, player, board);   //빈칸이 아닌 칸을 입력했음을 알려주는 메세지 출력
+                    printScreen.PrintErrorForInputInvalidSpace(playerNumber, player, board);   //빈칸이 아닌 칸을 입력했음을 알려주는 메세지 출력
                     continue;                                                                        //처음으로 돌아가서 칸 번호를 다시 입력받는다
                 }
                 else                                        //올바른 좌표를 입력받으면 while문 탈출
@@ -80,7 +80,7 @@ namespace TicTacToe
                 input = Console.ReadLine();
                 if (!exception.IsValidValue(input) || !exception.IsNumber1Or2(input))    //유효하지 않은 입력 or 1,2가 아닌 경우
                 {
-                    printScreen.PrintErrorScreenForInput1To2(winPlayer, player, board);  //1~2를 입력해달라는 메세지 + 다시 입력할지 물음
+                    printScreen.PrintErrorForInput1To2(winPlayer, player, board);  //1~2를 입력해달라는 메세지 + 다시 입력할지 물음
                     continue;                                                            //처음으로 돌아가서 다시 입력받음
                 }
                 else
@@ -167,7 +167,7 @@ namespace TicTacToe
                 input = Console.ReadLine();                   //모드를 입력받음
                 if (!exception.IsValidValue(input) || !exception.IsNumber1To4(input))    //유효하지 않은 입력 or 1~4가 아닌 경우
                 {
-                    printScreen.PrintErrorScreenForInput1To4();                          //1~4를 입력해달라는 메세지 출력
+                    printScreen.PrintErrorForInput1To4();                          //1~4를 입력해달라는 메세지 출력
                     continue;                                                            //처음으로 돌아가서 다시 입력받음
                 }
                 else break;                  //1~4중 하나가 입력되는 경우(올바른 입력)
@@ -187,7 +187,7 @@ namespace TicTacToe
                 input = Console.ReadLine();                   //메인으로 or 종료 중 하나를 입력받음
                 if (!exception.IsValidValue(input) || !exception.IsNumber1Or2(input))    //유효하지 않은 입력 or 1~2가 아닌 경우
                 {
-                    printScreen.PrintErrorScreenForInputInScoreBoard(player);            //1~2를 입력해달라는 메세지 출력
+                    printScreen.PrintErrorInScoreBoard(player);            //1~2를 입력해달라는 메세지 출력
                     continue;                                                            //처음으로 돌아가서 다시 입력받음
                 }
                 else break;                                   //1 or 2중 하나가 입력되는 경우(올바른 입력)
@@ -200,8 +200,9 @@ namespace TicTacToe
         public void StartGame()
         {
             int mode = 0;
+            bool loop = true;
 
-            while (IS_VALID_INPUT)
+            while (loop)
             {
                 switch (mode)
                 {
@@ -220,7 +221,9 @@ namespace TicTacToe
                     case 3:
                         mode = InputInScoareBoardScreen();        //0번:메인으로, 4번: 종료
                         break;
-                    case 4:                                       //종료    
+                    case 4:                                       //게임 종료를 묻는 화면   
+                        printScreen.PrintGameEndScreen();
+                        loop = false;
                         break;
 
                 }
