@@ -112,7 +112,52 @@ namespace TicTacToe
 
             return !CHECK_WIN;          //연달아 3개가 그려지지 않았으므로 false 반환
         }
+        
+        //computer전용 함수
+        public bool IsTwoSameType(int blank, int space)  //blank 빈칸인지 알고싶은 칸번호
+        {
+            if (spaceDrawType[blank] >= '1' && spaceDrawType[blank] <= '9' && spaceDrawType[space] == 'X') return true;
+            else return false;
+        }
+        public int BlankSpace(int validSpace, int space1, int space2)  //validSpace는 'X'표시가 있음(space1, 2 중 빈칸이 있는지 확인하고 반환)
+        {
+            if (IsTwoSameType(space1, space2)) return space1;
+            else if (IsTwoSameType(space2, space1)) return space2;
+            else return -1;   //한 줄에 validSpace만 X표시 되어있는 경우
+        }
+        public int FindDiagonal(int spaceNumber)
+        {
+            int blankSpace = -1;
 
+            switch (spaceNumber)   //보드판에서 0, 2, 4, 6, 8번에 그려져있을때만 대각선을 검사한다
+            {
+                case 0:
+                    blankSpace = BlankSpace(0, 4, 8);
+                    break;
+                case 2:
+                    blankSpace = BlankSpace(2, 4, 6);
+                    break;
+                case 6:
+                    blankSpace = BlankSpace(6, 4, 2);
+                    break;
+                case 8:
+                    blankSpace = BlankSpace(8, 0, 4);
+                    break;
+            }
+            return blankSpace;
+        }
+        public int FindToWinSpace(Player computer)
+        {
+            int blankSpace = -1;
+
+            foreach(int spaceNumber in computer.mySpaceNumber)
+            {
+                blankSpace = FindDiagonal(spaceNumber);
+                if (blankSpace != -1) return blankSpace;
+            }
+
+            return blankSpace;
+        }
 
     }
 }
