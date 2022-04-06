@@ -100,6 +100,7 @@ namespace TicTacToe
             int player1Score = player1.Score;
             int player2Score = player1.Score;
 
+            Console.Clear();
             if (player1Score > player2Score) PrintWinner(player1.Name);           //player1이 승리하는 경우
             else if (player1Score < player2Score) PrintWinner(player2.Name);      //player2가 승리하는 경우
             else PrintDraw();                                                     //비기는 경우
@@ -114,7 +115,7 @@ namespace TicTacToe
             Console.WriteLine("\n");
             PrintScoreBoard(player[2], player[3]);
             Console.WriteLine("\n\n\n>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<");
-
+            Console.WriteLine("========== 1. 메인화면으로 돌아가기   2. 종료 =========\n");
         }
         public void PrintErrorScreenForInput1To9(int playerNumber, Player []player, Board board)    //유저가 칸번호를 입력했을 때 오류가 생기면 출력하는 화면
         {
@@ -164,5 +165,13 @@ namespace TicTacToe
             PrintMainScreen();                                                              //게임 메인 화면 출력
             Console.WriteLine("-------------1 ~ 4중 하나를 입력해주세요--------------\n");  //경고메세지 출력
         }
+        public void PrintErrorScreenForInputInScoreBoard(Player[] player)
+        {
+            Console.Clear();
+            PrintScoreBoardScreen(player);
+            Console.WriteLine("-------------1과 2중 하나를 입력해주세요--------------\n");  //경고메세지 출력
+        }
+        
+        
     }
 }

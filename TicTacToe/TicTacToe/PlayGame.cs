@@ -16,6 +16,7 @@ namespace TicTacToe
         public const int WIN_AND_RETRY = 2;
         public const int WIN_AND_CLOSE = 3;
         public const int CONTINUE = 4;
+        public const bool IS_VALID_INPUT = true;
 
         public PlayGame()
         {
@@ -30,7 +31,7 @@ namespace TicTacToe
         }
 
         
-        public void InputUserSpaceNumber(int playerNumber)  //player(=user)의 좌표입력을 받고 리스트에 저장하는 함수
+        private void InputUserSpaceNumber(int playerNumber)  //player(=user)의 좌표입력을 받고 리스트에 저장하는 함수
         {
             bool isValidSpaceNumber = false; //빈칸(유효한)인지 판단하는 변수
             string spaceNumber = "";         //칸번호 입력 변수
@@ -58,14 +59,14 @@ namespace TicTacToe
             board.SetOneSpace(Convert.ToInt32(spaceNumber) - 1, player[playerNumber].DrawType);   //보드객체에 입력받은 칸 정보 저장
             player[playerNumber].AddMySpaceNumber(Convert.ToInt32(spaceNumber) - 1);              //나의 칸번호 리스트에 입력한 칸번호 추가
         }
-        public int LosePlayer(int winPlayer)
+        private int LosePlayer(int winPlayer)
         {
             if (winPlayer == 0) return 1;
             else if (winPlayer == 1) return 0;
             else if (winPlayer == 2) return 3;
             else return 2;
         }
-        public bool IsRetry(int winPlayer)     //게임을 다시 할지 확인하는 함수
+        private bool IsRetry(int winPlayer)     //게임을 다시 할지 확인하는 함수
         {
             string input = "";
             int losePlayer = LosePlayer(winPlayer);
@@ -95,7 +96,7 @@ namespace TicTacToe
             else return false;
         }
         
-        public void UserVersusComputer()     //모드 : 1번
+        private void UserVersusComputer()     //모드 : 1번
         {
             bool loop = true;
             int isWinAndRetry = 0;
@@ -113,7 +114,7 @@ namespace TicTacToe
                 else if (isWinAndRetry == WIN_AND_CLOSE) return;//유저 승리 + 종료
             }
         }
-        public int IsWinAndRetry(int winPlayer, int player1, int player2)      //player가 승리하는 경우
+        private int IsWinAndRetry(int winPlayer, int player1, int player2)      //player가 승리하는 경우
         {
             if (!board.CheckWin(player[winPlayer]))
             {
@@ -134,7 +135,7 @@ namespace TicTacToe
                 return WIN_AND_CLOSE;
             }
         }
-        public void User1VersusUser2()        //모드 : 2번
+        private void User1VersusUser2()        //모드 : 2번
         {
             bool loop = true;
             int isWinAndRetry = 0;
@@ -156,7 +157,7 @@ namespace TicTacToe
 
         }
         
-        public int InputMode() //모드를 입력받는 함수
+        private int InputMode() //모드를 입력받는 함수
         {
             bool loop = true;
             string input = "";
@@ -170,40 +171,62 @@ namespace TicTacToe
                     printScreen.PrintErrorScreenForInput1To4();                          //1~4를 입력해달라는 메세지 출력
                     continue;                                                            //처음으로 돌아가서 다시 입력받음
                 }
-                else  //1 or 2중 하나가 입력되는 경우(올바른 입력)
+                else  //1~4중 하나가 입력되는 경우(올바른 입력)
                 {
                     loop = false;                                                                                                                                                                                       
                 }
             }
-
             return Convert.ToInt32(input);   //올바르게 입력받은 모드값 반환
+        }
+        private int InputInScoareBoardScreen()
+        {
+            bool loop = true;
+            string input = "";
+
+            printScreen.PrintScoreBoardScreen(player);        //스코어보드 화면 출력
+
+            while (loop)
+            {
+                Console.Write(">입력 : ");
+                input = Console.ReadLine();                   //메인으로 or 종료 중 하나를 입력받음
+                if (!exception.IsValidValue(input) || !exception.IsNumber1Or2(input))    //유효하지 않은 입력 or 1~2가 아닌 경우
+                {
+                    printScreen.PrintErrorScreenForInputInScoreBoard(player);            //1~2를 입력해달라는 메세지 출력
+                    continue;                                                            //처음으로 돌아가서 다시 입력받음
+                }
+                else  //1 or 2중 하나가 입력되는 경우(올바른 입력)
+                {
+                    loop = false;
+                }
+            }
+            return Convert.ToInt32(input);   //올바르게 입력받은 번호값 반환
         }
         public void StartGame()
         {
             printScreen.PrintMainScreen();            //게임 메인 화면 출력
             int mode = InputMode();                   //모드를 입력받음
 
+            while (IS_VALID_INPUT)
+            {
+                switch (mode)
+                {
+                    case 1:
+                        UserVersusComputer();      //유저  vs 컴퓨터 게임모드 실행
+                        printScreen.PrintEndingScreen(player[0], player[1]);         //게임 종료화면 출력
+                        break;
+                    case 2:
+                        User1VersusUser2();        //유저1 vs 유저2 게임모드 실행
+                        printScreen.PrintEndingScreen(player[2], player[3]);            //게임 종료화면 출력
+                        break;
+                    case 3:
+                        mode = InputInScoareBoardScreen();
+                        break;
+                    case 4:
+                        break;
+
+                }
+            }
             
-            if (mode == 1)
-            {
-                UserVersusComputer();      //유저  vs 컴퓨터 게임모드 실행
-                Console.Clear();
-                printScreen.PrintEndingScreen(player[0], player[1]);         //게임 종료화면 출력
-            }
-            else if (mode == 2)
-            {
-                User1VersusUser2();        //유저1 vs 유저2 게임모드 실행
-                Console.Clear();
-                printScreen.PrintEndingScreen(player[2], player[3]);            //게임 종료화면 출력
-            }
-            else if(mode == 3)
-            {
-                printScreen.PrintScoreBoardScreen(player);
-            }
-            else
-            {
-                return;
-            }
             
         }
     }
