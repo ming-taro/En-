@@ -30,19 +30,17 @@ namespace TicTacToe
         public const bool IS_VALID_INPUT = true;
         
 
-        public PlayingGame()
+        public PlayingGame()                 //생성자
         {
             for(int i=0; i<4; i++)
             {
                 player[i] = new Player();    //player생성
             }
-            player[0].SetPlayer('X', "User");
+            player[0].SetPlayer('X', "User");       //표시타입과 이름 저장
             player[1].SetPlayer('O', "Computer");
             player[2].SetPlayer('X', "User1");
             player[3].SetPlayer('O', "User2");
         }
-
-        
         private void InputUserSpaceNumber(int playerNumber)  //player(=user)의 좌표입력을 받고 리스트에 저장하는 함수
         {
             bool isValidSpaceNumber = false; //빈칸(유효한)인지 판단하는 변수
@@ -53,15 +51,15 @@ namespace TicTacToe
                 Console.Write(player[playerNumber].Name + ">번호를 입력해주세요(1 ~ 9) : ");
                 spaceNumber = Console.ReadLine();            //번호를 입력받음(1~9)
                 
-                if (!exception.IsValidValue(spaceNumber) || !exception.IsBetween1To9(spaceNumber))   //숫자가 아님 or 1~9가 아닌 입력
+                if (!exception.IsValidValue(spaceNumber) || !exception.IsBetween1To9(spaceNumber))//숫자가 아님 or 1~9가 아닌 입력
                 {
-                    printScreen.PrintErrorForInput1To9(playerNumber, player, board);                 //1~9를 입력해달라는 메세지 출력
-                    continue;                                                                        //처음으로 돌아가서 칸 번호를 다시 입력받는다
+                    printScreen.PrintErrorForInput1To9(playerNumber, player, board);     //1~9를 입력해달라는 메세지 출력
+                    continue;                                                            //처음으로 돌아가서 칸 번호를 다시 입력받는다
                 }
-                else if(!board.IsValidSpace(spaceNumber))   //유효한 입력이지만 해당 칸이 빈 칸이 아닌 경우
+                else if(!board.IsValidSpace(spaceNumber))                                //유효한 입력이지만 해당 칸이 빈 칸이 아닌 경우
                 {
-                    printScreen.PrintErrorForInputInvalidSpace(playerNumber, player, board);         //빈칸이 아닌 칸을 입력했음을 알려주는 메세지 출력
-                    continue;                                                                        //처음으로 돌아가서 칸 번호를 다시 입력받는다
+                    printScreen.PrintErrorForInputInvalidSpace(playerNumber, player, board);//빈칸이 아닌 칸을 입력했음을 알려주는 메세지 출력
+                    continue;                                                            //처음으로 돌아가서 칸 번호를 다시 입력받는다
                 }
                 else                                        //올바른 좌표를 입력받으면 while문 탈출
                 {
@@ -72,18 +70,10 @@ namespace TicTacToe
             board.SetOneSpace(Convert.ToInt32(spaceNumber) - 1, player[playerNumber].DrawType);   //보드객체에 입력받은 칸 정보 저장
             player[playerNumber].AddMySpaceNumber(Convert.ToInt32(spaceNumber) - 1);              //나의 칸번호 리스트에 입력한 칸번호 추가
         }
-        private int LosePlayer(int winPlayer)
-        {
-            if (winPlayer == 0) return 1;
-            else if (winPlayer == 1) return 0;
-            else if (winPlayer == 2) return 3;
-            else return 2;
-        }
         private bool IsRetry(int winPlayer)     //게임을 다시 할지 확인하는 함수
         {
             string input = "";
             string winPlayerName = "Draw";      //승자 이름의 초기값은 Draw
-            int losePlayer = LosePlayer(winPlayer);
 
             if (winPlayer >= 0 && winPlayer <= 3) winPlayerName = player[winPlayer].Name;   //승자가 있다면 winPlayerName에 승자 이름 저장  
             printScreen.PrnitRetry(winPlayerName);                                         //다시 묻는 화면 출력
