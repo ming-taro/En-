@@ -50,17 +50,17 @@ namespace TicTacToe
 
             while (!isValidSpaceNumber)
             {
-                Console.Write(">번호(1 ~ 9) : ");
-                spaceNumber = Console.ReadLine();           //번호를 입력받음(1~9)
+                Console.Write(player[playerNumber].Name + ">번호를 입력해주세요(1 ~ 9) : ");
+                spaceNumber = Console.ReadLine();            //번호를 입력받음(1~9)
                 
                 if (!exception.IsValidValue(spaceNumber) || !exception.IsBetween1To9(spaceNumber))   //숫자가 아님 or 1~9가 아닌 입력
                 {
-                    printScreen.PrintErrorForInput1To9(playerNumber, player, board);           //1~9를 입력해달라는 메세지 출력
+                    printScreen.PrintErrorForInput1To9(playerNumber, player, board);                 //1~9를 입력해달라는 메세지 출력
                     continue;                                                                        //처음으로 돌아가서 칸 번호를 다시 입력받는다
                 }
                 else if(!board.IsValidSpace(spaceNumber))   //유효한 입력이지만 해당 칸이 빈 칸이 아닌 경우
                 {
-                    printScreen.PrintErrorForInputInvalidSpace(playerNumber, player, board);   //빈칸이 아닌 칸을 입력했음을 알려주는 메세지 출력
+                    printScreen.PrintErrorForInputInvalidSpace(playerNumber, player, board);         //빈칸이 아닌 칸을 입력했음을 알려주는 메세지 출력
                     continue;                                                                        //처음으로 돌아가서 칸 번호를 다시 입력받는다
                 }
                 else                                        //올바른 좌표를 입력받으면 while문 탈출
@@ -84,12 +84,11 @@ namespace TicTacToe
             string input = "";
             string winPlayerName = "Draw";      //승자 이름의 초기값은 Draw
             int losePlayer = LosePlayer(winPlayer);
-            bool loop = true;
 
             if (winPlayer >= 0 && winPlayer <= 3) winPlayerName = player[winPlayer].Name;   //승자가 있다면 winPlayerName에 승자 이름 저장  
             printScreen.PrnitRetry(winPlayerName);                                         //다시 묻는 화면 출력
 
-            while (loop)
+            while (IS_VALID_INPUT)
             {
                 Console.Write(">입력 : ");                                               //1. 다시 시작   2. 종료
                 input = Console.ReadLine();
@@ -107,10 +106,9 @@ namespace TicTacToe
         
         private void UserVersusComputer()     //모드 : 1번
         {
-            bool loop = true;
             int isWinAndRetry = 0;
 
-            while (loop)
+            while (IS_VALID_INPUT)
             {
                 board.InputComputerPoint(player[1]);              //컴퓨터 입력
                 isWinAndRetry = CheckWinAndRetry(1, 0, 1);
@@ -167,22 +165,21 @@ namespace TicTacToe
         }
         private void User1VersusUser2()        //모드 : 2번
         {
-            bool loop = true;
             int checkWinAndRetry = 0;
-            printScreen.PrintPlayScreen(player[2], player[3], board);
-            while (loop)
+
+            while (IS_VALID_INPUT)
             {
                 printScreen.PrintPlayScreen(player[2], player[3], board);          //게임 플레이 화면 출력
 
                 InputUserSpaceNumber(2);                        //유저1입력
                 checkWinAndRetry = CheckWinAndRetry(2, 2, 3);      
-                if (checkWinAndRetry == WIN_AND_RETRY || checkWinAndRetry == DRAW_AND_RETRY) continue;   //유저1 승리 or 무승부 -> 다시시작
-                else if (checkWinAndRetry == WIN_AND_CLOSE || checkWinAndRetry == DRAW_AND_CLOSE) return;//유저1 승리 or 무승부 -> 종료
-                
+                if (checkWinAndRetry == WIN_AND_CLOSE || checkWinAndRetry == DRAW_AND_CLOSE) return;//유저1 승리 or 무승부 -> 종료
+
+                printScreen.PrintPlayScreen(player[2], player[3], board);
+
                 InputUserSpaceNumber(3);                        //유저2입력
                 checkWinAndRetry = CheckWinAndRetry(3, 2, 3);      
-                if (checkWinAndRetry == WIN_AND_RETRY || checkWinAndRetry == DRAW_AND_RETRY) continue;   //유저2 승리 or 무승부 -> 다시시작
-                else if (checkWinAndRetry == WIN_AND_CLOSE || checkWinAndRetry == DRAW_AND_CLOSE) return;//유저2 승리 or 무승부 -> 종료
+                if (checkWinAndRetry == WIN_AND_CLOSE || checkWinAndRetry == DRAW_AND_CLOSE) return;//유저2 승리 or 무승부 -> 종료
             }
 
         }
@@ -217,7 +214,7 @@ namespace TicTacToe
                 input = Console.ReadLine();                   //메인으로 or 종료 중 하나를 입력받음
                 if (!exception.IsValidValue(input) || !exception.IsNumber1Or2(input))    //유효하지 않은 입력 or 1~2가 아닌 경우
                 {
-                    printScreen.PrintErrorInScoreBoard(player);            //1~2를 입력해달라는 메세지 출력
+                    printScreen.PrintErrorInScoreBoard(player);                          //1~2를 입력해달라는 메세지 출력
                     continue;                                                            //처음으로 돌아가서 다시 입력받음
                 }
                 else break;                                   //1 or 2중 하나가 입력되는 경우(올바른 입력)
@@ -249,7 +246,7 @@ namespace TicTacToe
         }
         public void StartGame()
         {
-            int mode = 0;
+            int mode = GAME_MAIN_SCREEN;
 
             while (mode != PROGRAM_END)
             {
