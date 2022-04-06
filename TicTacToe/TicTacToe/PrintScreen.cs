@@ -39,6 +39,10 @@ namespace TicTacToe
          
         public void PrintScoreBoard(Player player1, Player player2)    //스코어보드를 출력하는 함수
         {
+            for(int i=0; i<player2.mySpaceNumber.Count; i++)
+            {
+                Console.WriteLine((i+1)+"번:" + player2.mySpaceNumber[i]); //테스트용 코드
+            }
             switch (player1.Name)
             {
                 case "User" :

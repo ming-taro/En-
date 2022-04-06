@@ -50,40 +50,6 @@ namespace TicTacToe
             else return false;                                      //X or O 표시가 있다면 false
 
         }
-        public int FindSpaceToWin()                 //승리할 수 있는 칸의 위치를 찾는 함수
-        {
-            if (spaceDrawType[2] >= '1' && spaceDrawType[2] <= '9') return 2;  //컴퓨터가 입력 세번만에 이길 수 있음
-            else if (spaceDrawType[3] >= '1' && spaceDrawType[3] <= '9' && spaceDrawType[0] >= '1' && spaceDrawType[0] <= '9') return 0;    //컴퓨터의 세번째 입력값 : 이길 수 있는 경우
-            else if (spaceDrawType[7] >= '1' && spaceDrawType[7] <= '9' && spaceDrawType[8] >= '1' && spaceDrawType[8] <= '9') return 8;    //컴퓨터의 세번째 입력값 : 이길 수 있는 경우
-            else if (spaceDrawType[3] >= '1' && spaceDrawType[3] <= '9') return 3;   //컴퓨터의 네번째 입력값 : 0,3,6 승리
-            else if (spaceDrawType[8] >= '1' && spaceDrawType[8] <= '9') return 8;   //컴퓨터의 네번째 입력값 : 
-            else if (spaceDrawType[0] >= '1' && spaceDrawType[0] <= '9') return 0;
-            else if (spaceDrawType[7] >= '1' && spaceDrawType[7] <= '9') return 7;
-            else return WRONG_VALUE;
-
-        }
-        public void InputComputerPoint(Player player)
-        {
-            if (spaceDrawType[6] >= '1' && spaceDrawType[6] <= '9')
-            {
-                spaceDrawType[6] = 'O';        //컴퓨터의 첫 번째 입력
-                player.AddMySpaceNumber(6);
-                return;
-            }
-            else if (spaceDrawType[4] >= '1' && spaceDrawType[4] <= '9')
-            {
-                spaceDrawType[4] = '0';        //컴퓨터의 두 번째 입력
-                player.AddMySpaceNumber(4);
-                return;
-            }
-            else                               //컴퓨터의 세 번째 입력~
-            {
-                int spaceNumber = FindSpaceToWin();
-                spaceDrawType[spaceNumber] = 'O';
-                player.AddMySpaceNumber(spaceNumber);
-                return;
-            }
-        }
         public bool IsSameType(int spaceNumber1, int spaceNumber2, int spaceNumber3) //나란한 세 칸이 같은 타입인지 확인하는 함수
         {
             if (spaceDrawType[spaceNumber1] == spaceDrawType[spaceNumber2] && spaceDrawType[spaceNumber2] == spaceDrawType[spaceNumber3]) return CHECK_WIN;
@@ -146,5 +112,7 @@ namespace TicTacToe
 
             return !CHECK_WIN;          //연달아 3개가 그려지지 않았으므로 false 반환
         }
+
+
     }
 }

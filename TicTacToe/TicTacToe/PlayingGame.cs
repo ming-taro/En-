@@ -91,7 +91,7 @@ namespace TicTacToe
             }
 
             if (Convert.ToInt32(input) == 1) return true;    //다시 시작
-            else return false;
+            else return false;                               //다시 시작 안함(종료)
         }
         
         private void UserVersusComputer()     //모드 : 1번
@@ -100,13 +100,13 @@ namespace TicTacToe
 
             while (IS_VALID_INPUT)
             {
-                board.InputComputerPoint(player[1]);              //컴퓨터 입력
+                //board.InputComputerPoint(player[1]);                        //컴퓨터 입력
                 checkWinAndRetry = CheckWinAndRetry(1, 0, 1);
                 if (checkWinAndRetry == WIN_AND_CLOSE || checkWinAndRetry == DRAW_AND_CLOSE) return;//컴퓨터 승리 or 무승부 -> 종료
 
-                printScreen.PrintPlayScreen(player[0], player[1], board);          //게임 플레이 화면 출력
+                printScreen.PrintPlayScreen(player[0], player[1], board);   //게임 플레이 화면 출력
 
-                InputUserSpaceNumber(0);                                           //유저입력
+                InputUserSpaceNumber(0);                                    //유저입력
                 checkWinAndRetry = CheckWinAndRetry(0, 0, 1);    
                 if (checkWinAndRetry == WIN_AND_CLOSE || checkWinAndRetry == DRAW_AND_CLOSE) return;//유저 승리 or 무승부 -> 종료
             }
