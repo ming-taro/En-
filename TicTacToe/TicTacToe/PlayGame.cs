@@ -16,7 +16,10 @@ namespace TicTacToe
         public const int WIN = 1;
         public const int WIN_AND_RETRY = 2;
         public const int WIN_AND_CLOSE = 3;
-        public const int CONTINUE = 4;
+        public const int DRAW_AND_RETRY = 4;
+        public const int DRAW_AND_CLOSE = 5;
+        public const int CONTINUE = 6;
+        public const int NO_WINER = -1;
         public const int GAME_MAIN_SCREEN = 0;
         public const int USER_VERSUS_COMPUTER = 1;
         public const int USER1_VERSUS_USER2 = 2;
@@ -81,7 +84,8 @@ namespace TicTacToe
             int losePlayer = LosePlayer(winPlayer);
             bool loop = true;
 
-            printScreen.PrnitRetry(player[winPlayer].Name);                              //다시 묻는 화면 출력
+            if (winPlayer == NO_WINER) printScreen.PrnitRetry("Draw");       //승자가 없었다면 PrintRetry에 승자의 이름 대신 Draw메세지를 전달
+            else printScreen.PrnitRetry(player[winPlayer].Name);             //승자가 있었다면 승자의 이름을 전달 + 다시 묻는 화면 출력
 
             while (loop)
             {
@@ -130,7 +134,8 @@ namespace TicTacToe
                 printScreen.PrintPlayScreen(player[2], player[3], board);         //입력을 반영한 게임 플레이 화면 출력
                 return CONTINUE;                                                  //승부가 나지X -> 게임 재개
             }
-            else if (!board.CheckWin(player[winPlayer]) && board.ValidSpaceCount == 0) return DRAW;//승부가 나지X && 보드판에 빈칸X -> 무승부
+            else if (!board.CheckWin(player[winPlayer]) && board.ValidSpaceCount == 0) return CheckDrawAndRetry(); //승부가 나지X && 보드판에 빈칸X -> 무승부
+            
 
             player[winPlayer].Score++;                                            //승리 체크(스코어 +1)
             printScreen.PrintPlayScreen(player[player1], player[player2], board); //승자의 입력을 반영한 게임화면 출력
@@ -141,28 +146,27 @@ namespace TicTacToe
         }
         private int CheckDrawAndRetry()
         {
-
+            if (IsRetry(NO_WINER)) return DRAW_AND_RETRY;                         //무승부 + 다시시작
+            else return DRAW_AND_CLOSE;                                           //무승부 + 종료
         }
         private void User1VersusUser2()        //모드 : 2번
         {
             bool loop = true;
-            int isWinAndRetry = 0;
+            int checkWinAndRetry = 0;
             printScreen.PrintPlayScreen(player[2], player[3], board);
             while (loop)
             {
                 printScreen.PrintPlayScreen(player[2], player[3], board);          //게임 플레이 화면 출력
 
                 InputUserSpaceNumber(2);                        //유저1입력
-                isWinAndRetry = CheckWinAndRetry(2, 2, 3);         //승부가 났을 때
-                if (isWinAndRetry == WIN_AND_RETRY) continue;   //유저1 승리 + 다시시작
-                else if (isWinAndRetry == WIN_AND_CLOSE) return;//유저1 승리 + 종료
-                else if(isWinAndRetry == DRAW)                  //무승부 일 때
-
+                checkWinAndRetry = CheckWinAndRetry(2, 2, 3);      
+                if (checkWinAndRetry == WIN_AND_RETRY || checkWinAndRetry == DRAW_AND_RETRY) continue;   //유저1 승리 or 무승부 + 다시시작
+                else if (checkWinAndRetry == WIN_AND_CLOSE || checkWinAndRetry == DRAW_AND_CLOSE) return;//유저1 승리 or 무승부 + 종료
+                
                 InputUserSpaceNumber(3);                        //유저2입력
-                isWinAndRetry = CheckWinAndRetry(3, 2, 3);         //승부가 났을 때
-                if (isWinAndRetry == WIN_AND_RETRY) continue;   //유저2 승리 + 다시시작
-                else if (isWinAndRetry == WIN_AND_CLOSE) return;//유저2 승리 + 종료
-                else if (isWinAndRetry == DRAW)                 //무승부 일 때
+                checkWinAndRetry = CheckWinAndRetry(3, 2, 3);      
+                if (checkWinAndRetry == WIN_AND_RETRY || checkWinAndRetry == DRAW_AND_RETRY) continue;   //유저2 승리 or 무승부 + 다시시작
+                else if (checkWinAndRetry == WIN_AND_CLOSE || checkWinAndRetry == DRAW_AND_CLOSE) return;//유저2 승리 or 무승부 + 종료
             }
 
         }
@@ -206,7 +210,7 @@ namespace TicTacToe
             if (Convert.ToInt32(input) == 2) return 4;        //scoreboard에서의 종료는 2번이지만, 메인화면에서의 종료는 4이므로 4 리턴
             return 0;                                         //scoreboard에서의 메인화면으로는 1번이지만, StartGame()에서의 메인화면 출력은 0이므로 0 리턴
         }
-        private int InputInGameEndScreen()
+        private int InputInGameEndScreen()                    //1. 메인화면으로    2. 종료
         {
             string input = "";
 

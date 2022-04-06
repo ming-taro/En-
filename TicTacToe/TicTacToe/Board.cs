@@ -36,7 +36,7 @@ namespace TicTacToe
         public void SetOneSpace(int spaceNumber, char drawType)   //해당 칸에 x or o를 그리는 함수
         {
             spaceDrawType[spaceNumber] = drawType;                //입력받은 칸 번호에 X or O를 저장
-            validSpaceCount++;
+            validSpaceCount--;
         }
         public char GetSpaceDrawType(int spaceNumber)  //해당 칸에 그려진 값 얻기
         {
