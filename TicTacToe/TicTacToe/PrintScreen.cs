@@ -42,7 +42,7 @@ namespace TicTacToe
                     Console.WriteLine("\n            "+ player1.Name + "(X): " + player1.Score + "   vs   Computer(O): " + player2.Score + "\n");
                     break;
                 default:
-                    Console.WriteLine("\n           " + player2.Name + "(X): " + player1.Score + "   vs   User2(O): " + player2.Score + "\n");
+                    Console.WriteLine("\n            " + player1.Name + "(X): " + player1.Score + "   vs   User2(O): " + player2.Score + "\n");
                     break;
             }
         }
@@ -50,13 +50,13 @@ namespace TicTacToe
         public void PrintBoardScreen(Board board)   //보드판을 출력하는 함수
         {
             Console.WriteLine("\n                             ");
-            Console.WriteLine("                  ┏━━━┳━━━┳━━━┓");
-            Console.WriteLine("                  ┃ " + board.GetSpaceDrawType(0) + " ┃ " + board.GetSpaceDrawType(1) + " ┃ " + board.GetSpaceDrawType(2) + " ┃");
-            Console.WriteLine("                  ┣━━━╋━━━╋━━━┫ ");
-            Console.WriteLine("                  ┃ " + board.GetSpaceDrawType(3) + " ┃ " + board.GetSpaceDrawType(4) + " ┃ " + board.GetSpaceDrawType(5) + " ┃");
-            Console.WriteLine("                  ┣━━━╋━━━╋━━━┫ ");
-            Console.WriteLine("                  ┃ " + board.GetSpaceDrawType(6) + " ┃ " + board.GetSpaceDrawType(7) + " ┃ " + board.GetSpaceDrawType(8) + " ┃");
-            Console.WriteLine("                  ┗━━━┻━━━┻━━━┛");
+            Console.WriteLine("                     ┏━━━┳━━━┳━━━┓");
+            Console.WriteLine("                     ┃ " + board.GetSpaceDrawType(0) + " ┃ " + board.GetSpaceDrawType(1) + " ┃ " + board.GetSpaceDrawType(2) + " ┃");
+            Console.WriteLine("                     ┣━━━╋━━━╋━━━┫ ");
+            Console.WriteLine("                     ┃ " + board.GetSpaceDrawType(3) + " ┃ " + board.GetSpaceDrawType(4) + " ┃ " + board.GetSpaceDrawType(5) + " ┃");
+            Console.WriteLine("                     ┣━━━╋━━━╋━━━┫ ");
+            Console.WriteLine("                     ┃ " + board.GetSpaceDrawType(6) + " ┃ " + board.GetSpaceDrawType(7) + " ┃ " + board.GetSpaceDrawType(8) + " ┃");
+            Console.WriteLine("                     ┗━━━┻━━━┻━━━┛");
         }
 
         public void PrintWinner(string name)       //엔딩화면을 출력하는 함수 - 1
@@ -79,9 +79,9 @@ namespace TicTacToe
 
         public void PrnitRetry(string name)        //재시도 화면을 출력하는 함수
         {
-            if (name.Equals("Computer")) Console.WriteLine("\n-------Computer의 승리입니다. 다시하시겠습니까?-------");
-            else if (name.Equals("User")) Console.WriteLine("\n---------User의 승리입니다. 다시하시겠습니까?---------");
-            else Console.WriteLine("\n---------" + name + "의 승리입니다. 다시하시겠습니까?--------");
+            if (name.Equals("Computer")) Console.WriteLine("-------Computer의 승리입니다. 다시하시겠습니까?-------");
+            else if (name.Equals("User")) Console.WriteLine("---------User의 승리입니다. 다시하시겠습니까?---------");
+            else Console.WriteLine("---------" + name + "의 승리입니다. 다시하시겠습니까?--------");
             Console.WriteLine("\n              1. 다시 시작        2. 종료             ");
             Console.WriteLine("------------------------------------------------------");
         }
@@ -93,7 +93,7 @@ namespace TicTacToe
             else PrintModeScreen(2);
             PrintScoreBoard(player1, player2);                            //스코어보드 출력
             PrintBoardScreen(board);                                      //보드판 출력
-            Console.WriteLine("\n>>>>>>>>>>>>>>>>>>번호를 입력해주세요<<<<<<<<<<<<<<<<<");
+            Console.WriteLine("\n>>>>>>>>>>>>>>>>>>번호를 입력해주세요<<<<<<<<<<<<<<<<<\n");
         }
 
         public void PrintEndingScreen(Player player1, Player player2)       //최종스코어를 기준으로 승자를 출력하는 함수
@@ -169,8 +169,8 @@ namespace TicTacToe
             {
                 PrintPlayScreen(player[2], player[3], board);   //게임플레이화면 출력(User1 vs User2)
             }
-            Console.WriteLine("-------------1과 2중 하나를 입력해주세요--------------\n");  //경고메세지 출력
             PrnitRetry(player[winPlayer].Name);                                             //다시 묻는 화면 출력
+            Console.WriteLine("-------------1과 2중 하나를 입력해주세요--------------\n");  //경고메세지 출력
         }
         public void PrintErrorForInput1To4()
         {

@@ -45,6 +45,7 @@ namespace TicTacToe
 
             while (!isValidSpaceNumber)
             {
+                Console.Write(">번호(1 ~ 9) : ");
                 spaceNumber = Console.ReadLine();           //번호를 입력받음(1~9)
                 
                 if (!exception.IsValidValue(spaceNumber) || !exception.IsBetween1To9(spaceNumber))   //숫자가 아님 or 1~9가 아닌 입력
