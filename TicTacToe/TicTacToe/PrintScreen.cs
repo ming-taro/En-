@@ -81,11 +81,15 @@ namespace TicTacToe
         {
             if (name.Equals("Computer")) Console.WriteLine("-------Computer의 승리입니다. 다시하시겠습니까?-------");
             else if (name.Equals("User")) Console.WriteLine("---------User의 승리입니다. 다시하시겠습니까?---------");
+            else if (name.Equals("Draw")) Console.WriteLine("-----------무승부입니다. 다시하시겠습니까?------------");
             else Console.WriteLine("---------" + name + "의 승리입니다. 다시하시겠습니까?--------");
             Console.WriteLine("\n              1. 다시 시작        2. 종료             ");
             Console.WriteLine("------------------------------------------------------");
         }
+        public void PrintDraw()
+        {
 
+        }
         public void PrintPlayScreen(Player player1, Player player2, Board board)       //게임진행화면을 출력하는 함수
         {
             Console.Clear();

@@ -10,6 +10,7 @@ namespace TicTacToe
     class Board
     {
         private List<char> spaceDrawType = new List<char>();    //보드판에 그려진 (X or O)'표시' 저장
+        private int validSpaceCount;
         public const bool CHECK_WIN = true;
         public const int WRONG_VALUE = -1;
 
@@ -20,15 +21,22 @@ namespace TicTacToe
         public void InitBoard()            //보드판 초기화 함수
         {
             spaceDrawType.Clear();
+            validSpaceCount = 9;           //초기 보드판의 유효한 칸 개수는 9개
 
             for (int i = 1; i <= 9; i++)
             {
                 spaceDrawType.Add((char)('0' + i));    //초기 보드판에는 각 칸마다 칸번호를 저장한다
             }
         }
+        public int ValidSpaceCount
+        {
+            get { return validSpaceCount; }
+            set { validSpaceCount = value; }
+        }
         public void SetOneSpace(int spaceNumber, char drawType)   //해당 칸에 x or o를 그리는 함수
         {
             spaceDrawType[spaceNumber] = drawType;                //입력받은 칸 번호에 X or O를 저장
+            validSpaceCount++;
         }
         public char GetSpaceDrawType(int spaceNumber)  //해당 칸에 그려진 값 얻기
         {
