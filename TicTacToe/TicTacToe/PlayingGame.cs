@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TicTacToe
 {
-    class PlayGame  
+    class PlayingGame  
     {
         Player[] player = new Player[4];
         Board board = new Board();
@@ -30,7 +30,7 @@ namespace TicTacToe
         public const bool IS_VALID_INPUT = true;
         
 
-        public PlayGame()
+        public PlayingGame()
         {
             for(int i=0; i<4; i++)
             {
@@ -106,19 +106,19 @@ namespace TicTacToe
         
         private void UserVersusComputer()     //모드 : 1번
         {
-            int isWinAndRetry = 0;
+            int checkWinAndRetry = 0;
 
             while (IS_VALID_INPUT)
             {
                 board.InputComputerPoint(player[1]);              //컴퓨터 입력
-                isWinAndRetry = CheckWinAndRetry(1, 0, 1);
-                if (isWinAndRetry == WIN_AND_RETRY) continue;//컴퓨터 승리 + 다시시작
-                else if (isWinAndRetry == WIN_AND_CLOSE) return;//컴퓨터 승리 + 종료
+                checkWinAndRetry = CheckWinAndRetry(1, 0, 1);
+                if (checkWinAndRetry == WIN_AND_CLOSE || checkWinAndRetry == DRAW_AND_CLOSE) return;//컴퓨터 승리 or 무승부 -> 종료
 
-                InputUserSpaceNumber(0);                         //유저입력
-                isWinAndRetry = CheckWinAndRetry(1, 0, 1);
-                if (isWinAndRetry == WIN_AND_RETRY) continue;//유저 승리 + 다시시작
-                else if (isWinAndRetry == WIN_AND_CLOSE) return;//유저 승리 + 종료
+                printScreen.PrintPlayScreen(player[0], player[1], board);          //게임 플레이 화면 출력
+
+                InputUserSpaceNumber(0);                                           //유저입력
+                checkWinAndRetry = CheckWinAndRetry(0, 0, 1);    
+                if (checkWinAndRetry == WIN_AND_CLOSE || checkWinAndRetry == DRAW_AND_CLOSE) return;//유저 승리 or 무승부 -> 종료
             }
         }
 
