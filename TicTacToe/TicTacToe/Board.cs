@@ -21,9 +21,9 @@ namespace TicTacToe
         {
             spaceDrawType.Clear();
 
-            for (int i = 0; i < 9; i++)
+            for (int i = 1; i <= 9; i++)
             {
-                spaceDrawType.Add(' ');    //초기 보드판에는 각 칸마다 공백을 저장한다
+                spaceDrawType.Add((char)('0' + i));    //초기 보드판에는 각 칸마다 칸번호를 저장한다
             }
         }
 
@@ -38,35 +38,11 @@ namespace TicTacToe
             return spaceDrawType[spaceNumber];   //입력받은 행, 열에 대한 칸 번호를 찾아 그려진 값 반환
         }
 
-        public int FindSpaceNumber(int row, int column)  //행, 열값에 따른 칸 번호를 찾아 반환해주는 함수
-        {
-            switch (row, column)
-            {
-                case (0, 0):
-                    return 0;
-                case (0, 1):
-                    return 1; 
-                case (0, 2):
-                    return 2;
-                case (1, 0):
-                    return 3;
-                case (1, 1):
-                    return 4;
-                case (1, 2):
-                    return 5;
-                case (2, 0):
-                    return 6;
-                case (2, 1):
-                    return 7;
-                default:         //case (2,2)
-                    return 8;
-            }
-        }
         public bool IsValidSpace(string Input)    //해당 칸번호가 비어있는(유효한) 칸번호인지 확인하는 함수
         {
             int spaceNumber = Convert.ToInt32(Input) - 1;   //입력받은 칸 번호
 
-            if (spaceDrawType[spaceNumber] == ' ') return true;     //비어있다면 true
+            if (spaceDrawType[spaceNumber] >= '1' && spaceDrawType[spaceNumber] <= '9') return true;     //비어있다면 true
             else return false;                                      //X or O 표시가 있다면 false
 
         }
@@ -80,25 +56,25 @@ namespace TicTacToe
         }*/
         public int FindSpaceToWin()                 //승리할 수 있는 칸의 위치를 찾는 함수
         {
-            if (spaceDrawType[2] == ' ') return 2;  //컴퓨터가 입력 세번만에 이길 수 있음
-            else if (spaceDrawType[3] == ' ' && spaceDrawType[0] == ' ') return 0;    //컴퓨터의 세번째 입력값 : 이길 수 있는 경우
-            else if (spaceDrawType[7] == ' ' && spaceDrawType[8] == ' ') return 8;    //컴퓨터의 세번째 입력값 : 이길 수 있는 경우
-            else if (spaceDrawType[3] == ' ') return 3;   //컴퓨터의 네번째 입력값 : 0,3,6 승리
-            else if (spaceDrawType[8] == ' ') return 8;   //컴퓨터의 네번째 입력값 : 
-            else if (spaceDrawType[0] == ' ') return 0;
-            else if (spaceDrawType[7] == ' ') return 7;
+            if (spaceDrawType[2] >= '1' && spaceDrawType[2] <= '9') return 2;  //컴퓨터가 입력 세번만에 이길 수 있음
+            else if (spaceDrawType[3] >= '1' && spaceDrawType[3] <= '9' && spaceDrawType[0] >= '1' && spaceDrawType[0] <= '9') return 0;    //컴퓨터의 세번째 입력값 : 이길 수 있는 경우
+            else if (spaceDrawType[7] >= '1' && spaceDrawType[7] <= '9' && spaceDrawType[8] >= '1' && spaceDrawType[8] <= '9') return 8;    //컴퓨터의 세번째 입력값 : 이길 수 있는 경우
+            else if (spaceDrawType[3] >= '1' && spaceDrawType[3] <= '9') return 3;   //컴퓨터의 네번째 입력값 : 0,3,6 승리
+            else if (spaceDrawType[8] >= '1' && spaceDrawType[8] <= '9') return 8;   //컴퓨터의 네번째 입력값 : 
+            else if (spaceDrawType[0] >= '1' && spaceDrawType[0] <= '9') return 0;
+            else if (spaceDrawType[7] >= '1' && spaceDrawType[7] <= '9') return 7;
             else return WRONG_VALUE;
 
         }
         public void InputComputerPoint(Player player)
         {
-            if (spaceDrawType[6] == ' ')
+            if (spaceDrawType[6] >= '1' && spaceDrawType[6] <= '9')
             {
                 spaceDrawType[6] = 'O';        //컴퓨터의 첫 번째 입력
                 player.AddMySpaceNumber(6);
                 return;
             }
-            else if (spaceDrawType[4] == ' ')
+            else if (spaceDrawType[4] >= '1' && spaceDrawType[4] <= '9')
             {
                 spaceDrawType[4] = '0';        //컴퓨터의 두 번째 입력
                 player.AddMySpaceNumber(4);
