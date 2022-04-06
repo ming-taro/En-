@@ -12,7 +12,7 @@ namespace TicTacToe
         {
             Console.Clear();
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>>TicTacToe 게임<<<<<<<<<<<<<<<<<<<<");
-            Console.WriteLine("======================모드 선택=======================\n\n");
+            Console.WriteLine("======================모드 선택=======================\n\n\n");
             Console.WriteLine("              1. User    vs    Computer               \n");
             Console.WriteLine("              2. User1   vs    User2                  \n");
             Console.WriteLine("              3.     ScoreBoard\n");
@@ -116,15 +116,16 @@ namespace TicTacToe
             Console.WriteLine("\n");
             PrintScoreBoard(player[2], player[3]);
             Console.WriteLine("\n\n\n>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<");
-            Console.WriteLine("========== 1. 메인화면으로 돌아가기   2. 종료 =========\n");
+            Console.WriteLine("========= 1. 메인화면으로 돌아가기   2. 종료 =========\n");
         }
         public void PrintGameEndScreen()
         {
             Console.Clear();
-            Console.WriteLine(">>>>>>>>>>>>>>>>>>>게임을 종료합니다<<<<<<<<<<<<<<<<<<");
+            //Console.WriteLine(">>>>>>>>>>>>>>>>>>>게임을 종료합니다<<<<<<<<<<<<<<<<<<");
+            Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<");
             Console.WriteLine("======================================================\n\n\n\n");
-            Console.WriteLine("              [게임을 종료하시겠습니까?]\n\n");
-            Console.WriteLine("          1. 메인화면으로 돌아가기    2. 종료\n\n\n");
+            Console.WriteLine("              [게임을 종료하시겠습니까?]\n\n\n");
+            Console.WriteLine("          1. 메인화면으로 돌아가기    2. 종료\n\n\n\n");
             Console.WriteLine("======================================================");
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<\n");
         }

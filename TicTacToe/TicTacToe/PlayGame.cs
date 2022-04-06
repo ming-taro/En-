@@ -16,7 +16,14 @@ namespace TicTacToe
         public const int WIN_AND_RETRY = 2;
         public const int WIN_AND_CLOSE = 3;
         public const int CONTINUE = 4;
+        public const int GAME_MAIN_SCREEN = 0;
+        public const int USER_VERSUS_COMPUTER = 1;
+        public const int USER1_VERSUS_USER2 = 2;
+        public const int SCORE_BOARD_SCREEN = 3;
+        public const int GAME_END_SCREEN = 4;
+        public const int PROGRAM_END = 5;
         public const bool IS_VALID_INPUT = true;
+        
 
         public PlayGame()
         {
@@ -191,45 +198,60 @@ namespace TicTacToe
                     continue;                                                            //처음으로 돌아가서 다시 입력받음
                 }
                 else break;                                   //1 or 2중 하나가 입력되는 경우(올바른 입력)
-
             }
 
             if (Convert.ToInt32(input) == 2) return 4;        //scoreboard에서의 종료는 2번이지만, 메인화면에서의 종료는 4이므로 4 리턴
             return 0;                                         //scoreboard에서의 메인화면으로는 1번이지만, StartGame()에서의 메인화면 출력은 0이므로 0 리턴
         }
+        private int InputInGameEndScreen()
+        {
+            string input = "";
+
+            printScreen.PrintGameEndScreen();                 //게임 종료를 묻는 화면 출력
+
+            while (IS_VALID_INPUT)
+            {
+                Console.Write(">입력 : ");
+                input = Console.ReadLine();                   //메인으로 or 종료 중 하나를 입력받음
+                if (!exception.IsValidValue(input) || !exception.IsNumber1Or2(input))    //유효하지 않은 입력 or 1~2가 아닌 경우
+                {
+                    printScreen.PrintErroInGameEndScreen();                              //1~2를 입력해달라는 메세지 출력
+                    continue;                                                            //처음으로 돌아가서 다시 입력받음
+                }
+                else break;                                   //1 or 2중 하나가 입력되는 경우(올바른 입력)
+            }
+
+            if (Convert.ToInt32(input) == 1) return GAME_MAIN_SCREEN;        //메인화면으로
+            else return PROGRAM_END;                                         //게임의 완전한 종료
+        }
         public void StartGame()
         {
             int mode = 0;
-            bool loop = true;
 
-            while (loop)
+            while (mode != PROGRAM_END)
             {
                 switch (mode)
                 {
-                    case 0:
+                    case GAME_MAIN_SCREEN:
                         printScreen.PrintMainScreen();            //게임 메인 화면 출력
                         mode = InputMode();                       //모드를 입력받음
                         break;
-                    case 1:
+                    case USER_VERSUS_COMPUTER:
                         UserVersusComputer();                     //유저  vs 컴퓨터 게임모드 실행
                         mode = 4;                                 //게임이 끝나면 종료를 묻는 화면으로 이동(4번)
                         break;
-                    case 2:
+                    case USER1_VERSUS_USER2:
                         User1VersusUser2();                       //유저1 vs 유저2 게임모드 실행
                         mode = 4;                                 //게임이 끝나면 종료를 묻는 화면으로 이동(4번)
                         break;
-                    case 3:
-                        mode = InputInScoareBoardScreen();        //0번:메인으로, 4번: 종료
+                    case SCORE_BOARD_SCREEN:
+                        mode = InputInScoareBoardScreen();        //1번:메인으로, 2번:종료
                         break;
-                    case 4:                                       //게임 종료를 묻는 화면   
-                        printScreen.PrintGameEndScreen();
-                        loop = false;
+                    case GAME_END_SCREEN:                         //게임 종료를 묻는 화면   
+                        mode = InputInGameEndScreen();            //1번:메인으로, 2번:종료 
                         break;
-
                 }
             }
-            
-            
         }
     }
 }
