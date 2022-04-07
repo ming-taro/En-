@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,10 @@ namespace Library
         private string author;        //저자
         private string price;         //가격
         private string quantity;      //수량
-
+        public BookVO() //파일에 있는 책목록 저장
+        {
+            
+        }
         public BookVO(string id, string name, string publisher, string author, string price, string quantity)
         {
             this.id = id;

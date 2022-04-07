@@ -13,6 +13,7 @@ namespace Library
             Screen screen = new Screen();
             screen.PrintMain(menu);
 
+            BookVO b = new BookVO();
         }
     }
 }
