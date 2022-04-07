@@ -7,11 +7,11 @@ namespace Library
         static void Main(string[] args)
         {
 
-
+            string[] menu = { "메뉴1", "메뉴2" };  //테스트케이스
 
 
             Screen screen = new Screen();
-            screen.PrintMain();
+            screen.PrintMain(menu);
 
         }
     }
