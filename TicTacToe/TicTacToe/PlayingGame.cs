@@ -97,10 +97,11 @@ namespace TicTacToe
         private void UserVersusComputer()     //모드 : 1번
         {
             int checkWinAndRetry = 0;
+            ComputerInput computerInput = new ComputerInput();
 
             while (IS_VALID_INPUT)
             {
-                //board.InputComputerPoint(player[1]);                        //컴퓨터 입력
+                computerInput.InputComputer(player[1], board);              //컴퓨터 입력
                 checkWinAndRetry = CheckWinAndRetry(1, 0, 1);
                 if (checkWinAndRetry == WIN_AND_CLOSE || checkWinAndRetry == DRAW_AND_CLOSE) return;//컴퓨터 승리 or 무승부 -> 종료
 

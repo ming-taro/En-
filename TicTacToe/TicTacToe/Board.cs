@@ -182,16 +182,54 @@ namespace TicTacToe
             }
             return blankSpace;
         }
+        public int FindColumn(int spaceNumber)
+        {
+            int blankSpace = -1;
+
+            switch (spaceNumber)
+            {
+                case 0:
+                    blankSpace = BlankSpace(0, 3, 6);
+                    break;
+                case 1:
+                    blankSpace = BlankSpace(1, 4, 7);
+                    break;
+                case 2:
+                    blankSpace = BlankSpace(2, 5, 8);
+                    break;
+                case 3:
+                    blankSpace = BlankSpace(3, 0, 6);
+                    break;
+                case 4:
+                    blankSpace = BlankSpace(4, 1, 7);
+                    break;
+                case 5:
+                    blankSpace = BlankSpace(5, 2, 8);
+                    break;
+                case 6:
+                    blankSpace = BlankSpace(6, 0, 3);
+                    break;
+                case 7:
+                    blankSpace = BlankSpace(7, 1, 4);
+                    break;
+                case 8:
+                    blankSpace = BlankSpace(8, 2, 5);
+                    break;
+            }
+            return blankSpace;
+        }
         public int FindToWinSpace(Player computer)
         {
             int blankSpace = -1;
 
             foreach(int spaceNumber in computer.mySpaceNumber)
             {
-                blankSpace = FindDiagonal(spaceNumber);
+                blankSpace = FindDiagonal(spaceNumber);    //대각선 검사
                 if (blankSpace != -1) return blankSpace;
-                blankSpace = FindRow(spaceNumber);
+                blankSpace = FindRow(spaceNumber);         //가로 검사
                 if (blankSpace != -1) return blankSpace;
+                blankSpace = FindColumn(spaceNumber);      //세로 검사
+                if (blankSpace != -1) return blankSpace; 
             }
 
             return blankSpace;

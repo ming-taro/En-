@@ -1,0 +1,16 @@
+C:\Users\sec\OneDrive\바탕 화면\En#\Library\Library\bin\Debug\net5.0\Library.exe
+C:\Users\sec\OneDrive\바탕 화면\En#\Library\Library\bin\Debug\net5.0\Library.deps.json
+C:\Users\sec\OneDrive\바탕 화면\En#\Library\Library\bin\Debug\net5.0\Library.runtimeconfig.json
+C:\Users\sec\OneDrive\바탕 화면\En#\Library\Library\bin\Debug\net5.0\Library.runtimeconfig.dev.json
+C:\Users\sec\OneDrive\바탕 화면\En#\Library\Library\bin\Debug\net5.0\Library.dll
+C:\Users\sec\OneDrive\바탕 화면\En#\Library\Library\bin\Debug\net5.0\ref\Library.dll
+C:\Users\sec\OneDrive\바탕 화면\En#\Library\Library\bin\Debug\net5.0\Library.pdb
+C:\Users\sec\OneDrive\바탕 화면\En#\Library\Library\obj\Debug\net5.0\Library.csprojAssemblyReference.cache
+C:\Users\sec\OneDrive\바탕 화면\En#\Library\Library\obj\Debug\net5.0\Library.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\sec\OneDrive\바탕 화면\En#\Library\Library\obj\Debug\net5.0\Library.AssemblyInfoInputs.cache
+C:\Users\sec\OneDrive\바탕 화면\En#\Library\Library\obj\Debug\net5.0\Library.AssemblyInfo.cs
+C:\Users\sec\OneDrive\바탕 화면\En#\Library\Library\obj\Debug\net5.0\Library.csproj.CoreCompileInputs.cache
+C:\Users\sec\OneDrive\바탕 화면\En#\Library\Library\obj\Debug\net5.0\Library.dll
+C:\Users\sec\OneDrive\바탕 화면\En#\Library\Library\obj\Debug\net5.0\ref\Library.dll
+C:\Users\sec\OneDrive\바탕 화면\En#\Library\Library\obj\Debug\net5.0\Library.pdb
+C:\Users\sec\OneDrive\바탕 화면\En#\Library\Library\obj\Debug\net5.0\Library.genruntimeconfig.cache
