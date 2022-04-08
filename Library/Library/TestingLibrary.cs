@@ -50,15 +50,27 @@ namespace Library
             InitMemberList();  //초기 회원목록
             AdminVO admin = new AdminVO();  //관리자
         }
+        public void ControlMemberMenu()
+        {
+            bool isSelect = SelectMenu(13,15);
+
+            switch(left, top)
+            {
+                case (25, 13):
+                    SignUp signUp = new SignUp();
+                    break;
+
+            }
+        }
         public void ControlMain()
         {
             switch (left, top)  //커서의 위치값으로 메뉴를 구분
             {
                 case (25, 13):
-                    MemberMenu memberMenu = new MemberMenu();     //회원모드
+                    MemberMenu memberMenu = new MemberMenu();     //1. 회원모드
                     break;
                 case (25, 14):
-                    AdminSignUp adminSignUp = new AdminSignUp();  //관리자모드
+                    AdminSignIn adminSignIn = new AdminSignIn();  //2. 관리자모드
                     break;
             }
         }
