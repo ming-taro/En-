@@ -53,43 +53,48 @@ namespace Library
         public void ControlAdminMode()     //관리자 모드 관리
         {
             Screen screen = new Screen();
-            screen.PrintAdminMode();       //관리자 모드 출력
-
             TestingLibrary testingLibrary = new TestingLibrary();
-            testingLibrary.InitCursorPosition();
-            bool isSelectMenu = testingLibrary.SelectMenu(13, 17);   //메뉴선택 완료
-            int menu = testingLibrary.GetTop();  //메뉴의 해당 커서값
-            Console.WriteLine();
+            bool isSelectMenu;
+            int menu;
 
-            switch (menu)
+            while (value.ADMIN_MODE)
             {
-                case 13:  //도서검색
-                    SearchingBook searchingBook= new SearchingBook(bookList);
-                    ControlSearchingBook();
-                    break;
+                screen.PrintAdminMode();       //관리자 모드 출력
+                testingLibrary.InitCursorPosition();
+                isSelectMenu = testingLibrary.SelectMenu(13, 17);   //메뉴선택 완료
+                menu = testingLibrary.GetTop();//메뉴의 해당 커서값
+                SelectMenu(menu);              //해당 메뉴 기능 실행
             }
         }
-        public void ControlSearchingBook()
+        
+        public void SelectMenu(int menu) //관리자 메뉴에서 선택
         {
-            Screen screen = new Screen();
-            screen.PrintSearchingBook(bookList);
-
-            TestingLibrary testingLibrary = new TestingLibrary();
-            testingLibrary.SetPosition(0, 1);     //커서위치 시작점(left = 0, top = 1)
-            bool isSelectMenu = testingLibrary.SelectMenu(1, 3);  //메뉴선택
-            int menu = testingLibrary.GetTop();   //메뉴선택 완료(1.도서명  2.출판사  3.저자)
-
-            Console.SetCursorPosition(10, menu);
-            string bookName = Console.ReadLine();
-
             switch (menu)
             {
-                case 1:
-                    screen.PrintSearchingName(bookName, bookList);
-                    Console.ReadLine();
+                case 13:  //도서 이름 검색
+                    SearchingBook searchingBook = new SearchingBook(bookList);
+                    searchingBook.ControlSearchingBook(bookList);
                     break;
-            }
+                case 14:  //도서 등록
+                    break;
+                case 15:  //도서 수량 관리
+                    break;
+                case 16:  //도서 삭제
+                    break;
+                case 17:  //회원관리
+                    break;
 
+            }
+            
+            GoningBack();   //뒤로가기 -> 관리자메뉴로 돌아감
+        }
+        public void GoningBack()  //뒤로가기
+        {
+            while (value.INPUT_VALUE)
+            {
+                ConsoleKeyInfo keyInfo = Console.ReadKey();
+                if (keyInfo.Key == ConsoleKey.Escape) break;
+            }   //escape키 입력 -> 뒤로가기
         }
     }
 }

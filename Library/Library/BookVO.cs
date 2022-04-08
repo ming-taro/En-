@@ -28,6 +28,14 @@ namespace Library
         {
             get { return name; }
         }
+        public string Publisher
+        {
+            get { return publisher; }
+        }
+        public string Author
+        {
+            get { return author; }
+        }
         
         public override String ToString()
         {

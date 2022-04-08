@@ -75,10 +75,23 @@ namespace Library
     }
     class SearchingBook
     {
-        public SearchingBook(List<BookVO> bookList)
+        public SearchingBook(List<BookVO> bookList)   //도서검색화면 출력
         {
             Screen screen = new Screen();
             screen.PrintSearchingBook(bookList);
+        }
+        public void ControlSearchingBook(List<BookVO> bookList)  //도서검색하기(검색어 입력 -> 목록 출력)
+        {
+            Screen screen = new Screen();
+            TestingLibrary testingLibrary = new TestingLibrary();
+            testingLibrary.SetPosition(0, 1);     //커서위치
+            bool isSelectMenu = testingLibrary.SelectMenu(1, 3);  //메뉴선택
+            int menu = testingLibrary.GetTop();   //메뉴선택 완료(1.도서명  2.출판사  3.저자)
+
+            Console.SetCursorPosition(10, menu);  //커서위치
+            string name = Console.ReadLine();     //검색어 입력받기
+
+            screen.PrintSearchingBook(menu, name, bookList);   //검색결과로 나온 책목록 출력
         }
     }
 }

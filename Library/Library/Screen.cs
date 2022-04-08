@@ -93,12 +93,14 @@ namespace Library
             PrintSearchBox();
             PrintBookList(bookList);
         }
-        public void PrintSearchingName(string bookname, List<BookVO> bookList)
+        public void PrintSearchingBook(int menu, string name, List<BookVO> bookList)
         {
             Console.Clear();
+            Console.WriteLine("\n=============================================================\n");
             for (int i = 0; i < bookList.Count; i++)
             {
-                if (bookList[i].Name.Contains(bookname))
+                //1.도서명   2.출판사   3.저자
+                if (menu == 1 && bookList[i].Name.Contains(name) || menu == 2 && bookList[i].Publisher.Contains(name) || menu == 3 && bookList[i].Author == name)
                 {
                     Console.WriteLine(bookList[i]);
                     Console.WriteLine("\n=============================================================\n");

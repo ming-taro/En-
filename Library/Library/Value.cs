@@ -21,9 +21,11 @@ namespace Library
         public int MANAGING_MEMBER = 5;
 
         public bool OUT_OF_MENU = true;
+        public bool ADMIN_MODE = true;
 
         public bool GOING_NEXT = true;
-        public bool GOING_BACK = false;
+        public bool GOING_BACK = true;
+        public bool INPUT_VALUE = true;
         public bool RIGHT_VALUE = true;
         public bool WRONG_VALUE = false;
         public string SIGN_IN_ERROR = "아이디 또는 비밀번호를 잘못 입력하셨습니다.\n다시 입력해주세요.\n";
