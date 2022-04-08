@@ -83,6 +83,7 @@ namespace Library
             {
                 Console.SetCursorPosition(left, top);
                 key = ControlKeyboard();            //키보드를 입력받음
+                if (IsOutOfMenu(minTop, maxTop)) continue;  //메뉴를 벗어나는 이동은 X
 
                 if (key == value.ENTERING_MENU)     //메뉴입력 -> 해당 메뉴로 이동(1.회원모드   2.관리자모드)
                 {
@@ -121,6 +122,14 @@ namespace Library
             }
             return value.INVALID_INPUT;
         }
+        public bool IsOutOfMenu(int minTop, int maxTop)
+        {
+            if (top == (minTop - 1)) top = minTop;
+            else if (top == (maxTop + 1)) top = maxTop;
+            else return !value.OUT_OF_MENU;
+
+            return value.OUT_OF_MENU;
+        }
         public void TestLibrary()  //메인화면
         {
             string[] menu = { "회원 모드", "관리자 모드", "종료" }; //메인화면 메뉴 
@@ -134,16 +143,7 @@ namespace Library
             {
                 Console.SetCursorPosition(left, top);
                 key = ControlKeyboard();            //입력받은 키값
-                if (top == 12)
-                {
-                    top = 13;
-                    continue;
-                }
-                else if(top == 16)
-                {
-                    top = 15;
-                    continue;
-                }
+                if (IsOutOfMenu(13, 15)) continue;  //메뉴를 벗어나는 이동은 X
 
                 if (key == value.ENTERING_MENU)   //메뉴입력 -> 해당 메뉴로 이동
                 {  

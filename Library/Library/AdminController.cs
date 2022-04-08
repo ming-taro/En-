@@ -75,9 +75,20 @@ namespace Library
             screen.PrintSearchingBook(bookList);
 
             TestingLibrary testingLibrary = new TestingLibrary();
-            testingLibrary.SetPosition(0, 0);
-            bool isSelectMenu = testingLibrary.SelectMenu(0, 2);
+            testingLibrary.SetPosition(0, 1);     //커서위치 시작점(left = 0, top = 1)
+            bool isSelectMenu = testingLibrary.SelectMenu(1, 3);  //메뉴선택
             int menu = testingLibrary.GetTop();   //메뉴선택 완료(1.도서명  2.출판사  3.저자)
+
+            Console.SetCursorPosition(10, menu);
+            string bookName = Console.ReadLine();
+
+            switch (menu)
+            {
+                case 1:
+                    screen.PrintSearchingName(bookName, bookList);
+                    Console.ReadLine();
+                    break;
+            }
 
         }
     }

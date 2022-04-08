@@ -84,7 +84,7 @@ namespace Library
         {
             Console.Clear();
             
-            Console.WriteLine("1.도서명: ");
+            Console.WriteLine("\n1.도서명: ");
             Console.WriteLine("2.출판사: ");
             Console.WriteLine("3.저자: ");
         }
@@ -92,6 +92,18 @@ namespace Library
         {
             PrintSearchBox();
             PrintBookList(bookList);
+        }
+        public void PrintSearchingName(string bookname, List<BookVO> bookList)
+        {
+            Console.Clear();
+            for (int i = 0; i < bookList.Count; i++)
+            {
+                if (bookList[i].Name.Contains(bookname))
+                {
+                    Console.WriteLine(bookList[i]);
+                    Console.WriteLine("\n=============================================================\n");
+                }
+            }
         }
     }
 }

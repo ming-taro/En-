@@ -24,6 +24,10 @@ namespace Library
             this.price = price;
             this.quantity = quantity;
         }
+        public string Name
+        {
+            get { return name; }
+        }
         
         public override String ToString()
         {

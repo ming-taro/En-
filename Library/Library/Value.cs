@@ -20,6 +20,8 @@ namespace Library
         public int REMOVING_BOOK = 4;
         public int MANAGING_MEMBER = 5;
 
+        public bool OUT_OF_MENU = true;
+
         public bool GOING_NEXT = true;
         public bool GOING_BACK = false;
         public bool RIGHT_VALUE = true;
