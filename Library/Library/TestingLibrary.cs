@@ -44,7 +44,7 @@ namespace Library
         public void ControlMemberMenu()    //1.회원가입  2.로그인  3.종료(미완)
         {
             InitCursorPosition();
-            bool isSelect = SelectMenu(13,15);
+            int menu = SelectMenu(13,15);
 
             switch (left, top)
             {
@@ -74,29 +74,21 @@ namespace Library
             left = 25;
             top = 13;
         }
-        public bool SelectMenu(int minTop, int maxTop)//메뉴 고르기 -> 고른 메뉴의 커서값을 left,top에 반영
+        public int SelectMenu(int minTop, int maxTop)//메뉴 고르기 -> 고른 메뉴의 커서값을 left,top에 반영
         {
-            int entering = value.MOVING_CURSOR;
-            int key;
+            int entering = value.MOVING_CURSOR;     
+            int key = value.MOVING_CURSOR;
             
-            while (entering != value.CLOSE_PROGRAM)
+            while (entering != value.CLOSE_PROGRAM) //키보드 방향키로 움직이는 동안
             {
                 Console.SetCursorPosition(left, top);
                 key = ControlKeyboard();            //키보드를 입력받음
                 if (IsOutOfMenu(minTop, maxTop)) continue;  //메뉴를 벗어나는 이동은 X
 
-                if (key == value.ENTERING_MENU)     //메뉴입력 -> 해당 메뉴로 이동(1.회원모드   2.관리자모드)
-                {
-                    entering = value.ENTERING_MENU;
-                    return true;                     //=>메뉴를 고름
-                }
-                else if (key == value.ESCAPE)
-                {
-                    entering = value.CLOSE_PROGRAM;  //뒤로가기(미완)
-                    break;                           //=>메뉴를 고르지X
-                }
+                if (key == value.ENTERING_MENU || key == value.ESCAPE) break;//메뉴입력 -> 해당 메뉴로 이동(1.회원모드   2.관리자모드)
             }
-            return false;
+
+            return key;
         }
         public int ControlKeyboard() //현재 키보드 입력값 반환
         {
