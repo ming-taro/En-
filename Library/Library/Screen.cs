@@ -69,5 +69,22 @@ namespace Library
             string[] menu = { "도서 검색", "도서 등록", "도서 수량 관리", "도서 삭제", "회원정보 관리"};
             PrintMain(menu);
         }
+        public void PrintBookList(List<BookVO> bookList)
+        {
+            Console.Clear();
+            Console.SetCursorPosition(0,5);
+            Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+            
+            for (int i=0; i<bookList.Count; i++)
+            {
+                bookList[i].ToString();
+                Console.WriteLine("\n=============================================================\n");
+            }
+            Console.ReadLine();
+        }
+        public void PrintSearchBox()
+        {
+
+        }
     }
 }

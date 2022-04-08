@@ -73,4 +73,12 @@ namespace Library
             screen.PrintMain(menu);
         }
     }
+    class SearchingBook
+    {
+        public SearchingBook(List<BookVO> bookList)
+        {
+            Screen screen = new Screen();
+            screen.PrintBookList(bookList);
+        }
+    }
 }

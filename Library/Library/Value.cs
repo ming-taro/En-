@@ -14,11 +14,11 @@ namespace Library
         public int MOVING_CURSOR = 0;
         public int ENTERING_MENU = 1;
 
-        /*public const int CLOSE_PROGRAM = -3;
-        public const int INVALID_INPUT = -2;
-        public const int ESCAPE = -1;
-        public const int MOVING_CURSOR = 0;
-        public const int ENTERING_MENU = 1;*/
+        public int SEARCHING_BOOK = 1;
+        public int REGISTRATION_BOOK = 2;
+        public int MANAGING_BOOK = 3;
+        public int REMOVING_BOOK = 4;
+        public int MANAGING_MEMBER = 5;
 
         public bool GOING_NEXT = true;
         public bool GOING_BACK = false;

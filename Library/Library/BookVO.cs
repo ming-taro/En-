@@ -15,10 +15,6 @@ namespace Library
         private string author;        //저자
         private string price;         //가격
         private string quantity;      //수량
-        public BookVO() //파일에 있는 책목록 저장
-        {
-            
-        }
         public BookVO(string id, string name, string publisher, string author, string price, string quantity)
         {
             this.id = id;
@@ -28,6 +24,7 @@ namespace Library
             this.price = price;
             this.quantity = quantity;
         }
+        
         public override string ToString()
         {
             return "도서번호: " + id + "\n도서명" + name + "\n출판사" + publisher +
