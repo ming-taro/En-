@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Library
 {
+    
     class SettingMode
     {
-
 
     }
     class MemberMenu   //유저모드 선택 -> 1.회원가입  2.로그인  3.종료
@@ -44,17 +44,24 @@ namespace Library
     }
     class SignIn
     {
+        Value value = new Value();
         public SignIn()
+        {
+            PrintScreen();
+        }
+        public void PrintScreen()
         {
             Screen screen = new Screen();
             screen.PrintSingIn("로그인");
         }
-        public void SignInAdmin(ref string id, ref string password)
+        public bool SignInAdmin(ref string id, ref string password)
         {
             Console.SetCursorPosition(8, 5);
             id = Console.ReadLine();     //아이디 입력
             Console.SetCursorPosition(10, 6);
             password = Console.ReadLine();     //비밀번호 입력
+
+            return value.GOING_NEXT;
         }
     }
     class AdminMode
