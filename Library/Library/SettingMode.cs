@@ -78,7 +78,7 @@ namespace Library
         public SearchingBook(List<BookVO> bookList)
         {
             Screen screen = new Screen();
-            screen.PrintBookList(bookList);
+            screen.PrintSearchingBook(bookList);
         }
     }
 }

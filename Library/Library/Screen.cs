@@ -71,20 +71,27 @@ namespace Library
         }
         public void PrintBookList(List<BookVO> bookList)
         {
-            Console.Clear();
             Console.SetCursorPosition(0,5);
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
             
             for (int i=0; i<bookList.Count; i++)
             {
-                bookList[i].ToString();
+                Console.WriteLine(bookList[i]);
                 Console.WriteLine("\n=============================================================\n");
             }
-            Console.ReadLine();
         }
         public void PrintSearchBox()
         {
-
+            Console.Clear();
+            
+            Console.WriteLine("1.도서명: ");
+            Console.WriteLine("2.출판사: ");
+            Console.WriteLine("3.저자: ");
+        }
+        public void PrintSearchingBook(List<BookVO> bookList)
+        {
+            PrintSearchBox();
+            PrintBookList(bookList);
         }
     }
 }

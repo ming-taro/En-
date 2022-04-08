@@ -17,7 +17,11 @@ namespace Library
         {
             return top;
         }
-        
+        public void SetPosition(int left, int top)
+        {
+            this.left = left;
+            this.top = top;
+        }
         public void InitMemberList()
         {
             memberList = new List<MemberVO>(); //회원목록
@@ -39,9 +43,10 @@ namespace Library
         }
         public void ControlMemberMenu()    //1.회원가입  2.로그인  3.종료(미완)
         {
+            InitCursorPosition();
             bool isSelect = SelectMenu(13,15);
 
-            switch(left, top)
+            switch (left, top)
             {
                 case (25, 13):
                     SignUp signUp = new SignUp();
@@ -73,8 +78,7 @@ namespace Library
         {
             int entering = value.MOVING_CURSOR;
             int key;
-            InitCursorPosition();
-
+            
             while (entering != value.CLOSE_PROGRAM)
             {
                 Console.SetCursorPosition(left, top);

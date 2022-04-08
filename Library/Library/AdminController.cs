@@ -11,6 +11,10 @@ namespace Library
     {
         Value value = new Value();
         private List<BookVO> bookList;   //책목록
+        public AdminController()
+        {
+            InintBookList();
+        }
         public void InintBookList()
         {
             bookList = new List<BookVO>(); 
@@ -52,16 +56,29 @@ namespace Library
             screen.PrintAdminMode();       //관리자 모드 출력
 
             TestingLibrary testingLibrary = new TestingLibrary();
+            testingLibrary.InitCursorPosition();
             bool isSelectMenu = testingLibrary.SelectMenu(13, 17);   //메뉴선택 완료
             int menu = testingLibrary.GetTop();  //메뉴의 해당 커서값
             Console.WriteLine();
 
             switch (menu)
             {
-                case 1:
+                case 13:  //도서검색
                     SearchingBook searchingBook= new SearchingBook(bookList);
+                    ControlSearchingBook();
                     break;
             }
+        }
+        public void ControlSearchingBook()
+        {
+            Screen screen = new Screen();
+            screen.PrintSearchingBook(bookList);
+
+            TestingLibrary testingLibrary = new TestingLibrary();
+            testingLibrary.SetPosition(0, 0);
+            bool isSelectMenu = testingLibrary.SelectMenu(0, 2);
+            int menu = testingLibrary.GetTop();   //메뉴선택 완료(1.도서명  2.출판사  3.저자)
+
         }
     }
 }

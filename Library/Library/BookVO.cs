@@ -25,9 +25,9 @@ namespace Library
             this.quantity = quantity;
         }
         
-        public override string ToString()
+        public override String ToString()
         {
-            return "도서번호: " + id + "\n도서명" + name + "\n출판사" + publisher +
+            return "도서번호: " + id + "\n도서명: " + name + "\n출판사: " + publisher +
                 "\n저자: " + author + "\n가격: " + price + "\n수량: " + quantity;
         }
     }
