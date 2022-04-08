@@ -71,6 +71,11 @@ namespace Library
             string[] menu = { "로그인", "회원가입", "종료"};
             PrintMain(menu);
         }
+        public void PrintMemberMode()
+        {
+            string[] menu = { "도서 검색", "도서 대여", "도서 반납", "개인 정보 수정", "종료"};
+            PrintMain(menu);
+        }
         public void PrintAdminMode()
         {
             string[] menu = { "도서 검색", "도서 등록", "도서 수량 관리", "도서 삭제", "회원정보 관리"};

@@ -90,7 +90,7 @@ namespace Library
             }
 
             //기능을 모두 수행함 : 뒤로가기 입력받음 -> 관리자메뉴로 돌아감
-            if (function == value.COMPLETE_FUNCTION)GoningBack();
+            if (function == value.COMPLETE_FUNCTION) GoningBack();
         }
         public void GoningBack()  //뒤로가기
         {
