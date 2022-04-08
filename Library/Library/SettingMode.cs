@@ -48,10 +48,13 @@ namespace Library
         {
             Screen screen = new Screen();
             screen.PrintSingIn("로그인");
+        }
+        public void SignInAdmin(ref string id, ref string password)
+        {
             Console.SetCursorPosition(8, 5);
-            Console.ReadLine();     //아이디 입력
+            id = Console.ReadLine();     //아이디 입력
             Console.SetCursorPosition(10, 6);
-            Console.ReadLine();     //비밀번호 입력
+            password = Console.ReadLine();     //비밀번호 입력
         }
     }
     class AdminMode

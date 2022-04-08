@@ -12,6 +12,8 @@ namespace Library
         private List<BookVO> bookList;
         private List<MemberVO> memberList;
         private int left = 25, top = 13;
+        private AdminController adminController = new AdminController();
+
         public const int CLOSE_PROGRAM = -3;
         public const int INVALID_INPUT = -2;
         public const int ESCAPE = -1;
@@ -64,16 +66,18 @@ namespace Library
                     break;
             }
         }
+        
+        
         public void ControlMain()
         {
             switch (left, top)  //커서의 위치값으로 메뉴를 구분
             {
                 case (25, 13):
                     MemberMenu memberMenu = new MemberMenu();     //1. 회원모드
-                    ControlMemberMenu();                          //회원메뉴 컨트롤로 이동
+                    ControlMemberMenu();                          //회원메뉴 화면으로 이동
                     break;
-                case (25, 14):
-                    SignIn admin = new SignIn();  //2. 관리자모드(->관리자 로그인 화면으로 이동)
+                case (25, 14):                                    //2. 관리자 모드
+                    adminController.ControlAdminSignIn();         //관리자 로그인 화면으로 이동
                     break;
             }
         }

@@ -64,5 +64,10 @@ namespace Library
             Console.WriteLine("휴대전화: \n(숫자만 입력해주세요.)\n");
             Console.WriteLine("도로명 주소: \n(ex: 서울특별시 광진구 능동로 209)\n");
         }
+        public void PrintAdminMode()
+        {
+            string[] menu = { "도서 검색", "도서 등록", "도서 수량 관리", "도서 삭제", "회원정보 관리"};
+            PrintMain(menu);
+        }
     }
 }
