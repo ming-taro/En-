@@ -50,7 +50,7 @@ namespace Library
             InitMemberList();  //초기 회원목록
             AdminVO admin = new AdminVO();  //관리자
         }
-        public void ControlMemberMenu()
+        public void ControlMemberMenu()    //1.회원가입  2.로그인  3.종료(미완)
         {
             bool isSelect = SelectMenu(13,15);
 
@@ -59,7 +59,9 @@ namespace Library
                 case (25, 13):
                     SignUp signUp = new SignUp();
                     break;
-
+                case (25, 14):
+                    SignIn member = new SignIn();
+                    break;
             }
         }
         public void ControlMain()
@@ -68,9 +70,10 @@ namespace Library
             {
                 case (25, 13):
                     MemberMenu memberMenu = new MemberMenu();     //1. 회원모드
+                    ControlMemberMenu();                          //회원메뉴 컨트롤로 이동
                     break;
                 case (25, 14):
-                    AdminSignIn adminSignIn = new AdminSignIn();  //2. 관리자모드
+                    SignIn admin = new SignIn();  //2. 관리자모드(->관리자 로그인 화면으로 이동)
                     break;
             }
         }

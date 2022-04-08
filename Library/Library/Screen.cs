@@ -50,23 +50,19 @@ namespace Library
             PrintMenu(menu);
             Console.WriteLine("아이디: ");
             Console.Write("비밀번호: ");
-            Console.SetCursorPosition(8, 5);
-            Console.ReadLine();
-            Console.SetCursorPosition(10, 6);
-            Console.ReadLine();
         }
         
         public void PrintSingUp()
         {
             Console.Clear();
             PrintMenu("회원가입");
-            Console.WriteLine("아이디: \n(5~10자의 영어, 숫자만 입력해주세요.)");
-            Console.WriteLine("비밀번호: \n(5~10자의 영어, 숫자만 입력해주세요.)");
-            Console.WriteLine("비밀번호 재확인: ");
-            Console.WriteLine("이름: \n(영어, 한글만 입력해주세요.)");
-            Console.WriteLine("나이: \n(숫자만 입력해주세요.)");
-            Console.WriteLine("휴대전화: \n(숫자만 입력해주세요.)");
-            Console.WriteLine("도로명 주소: \n(ex: 서울특별시 광진구 능동로 209)");
+            Console.WriteLine("아이디: \n(5~10자의 영어, 숫자만 입력해주세요.)\n");
+            Console.WriteLine("비밀번호: \n(5~10자의 영어, 숫자만 입력해주세요.)\n");
+            Console.WriteLine("비밀번호 재확인: \n");
+            Console.WriteLine("이름: \n(영어, 한글만 입력해주세요.)\n");
+            Console.WriteLine("나이: \n(숫자만 입력해주세요.)\n");
+            Console.WriteLine("휴대전화: \n(숫자만 입력해주세요.)\n");
+            Console.WriteLine("도로명 주소: \n(ex: 서울특별시 광진구 능동로 209)\n");
         }
     }
 }
