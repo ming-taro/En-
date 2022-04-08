@@ -52,8 +52,6 @@ namespace Library
         }
         public void ControlMain()
         {
-            SelectMenu(13, 14); //메뉴를 선택함(커서 위치가 해당 메뉴옆에 위치)
-
             switch (left, top)  //커서의 위치값으로 메뉴를 구분
             {
                 case (25, 13):
@@ -64,26 +62,33 @@ namespace Library
                     break;
             }
         }
-        public void SelectMenu(int minTop, int maxTop)              //메뉴 고르기
+        public void InitCursorPosition()
+        {
+            left = 25;
+            top = 13;
+        }
+        public bool SelectMenu(int minTop, int maxTop)//메뉴 고르기
         {
             int entering = MOVING_CURSOR;
             int key;
+            InitCursorPosition();
 
             while (entering != CLOSE_PROGRAM)
-            { 
-                key = ControlKeyboard();      //키보드를 입력받음
-                //if (top < 13 || top > 14) continue;
-                if (top < minTop || top > maxTop) continue;
+            {
+                Console.SetCursorPosition(left, top);
+                key = ControlKeyboard();            //키보드를 입력받음
+
                 switch (key)
                 {
                     case ENTERING_MENU:            //메뉴입력 -> 해당 메뉴로 이동(1.회원모드   2.관리자모드)
                         entering = ENTERING_MENU;
-                        break;
+                        return true;               //=>메뉴를 고름
                     case ESCAPE:
-                        entering = CLOSE_PROGRAM;  //뒤로가기(->메인화면으로)
-                        break;
+                        entering = CLOSE_PROGRAM;  //뒤로가기
+                        break;                     //=>메뉴를 고르지X
                 }
             }
+            return false;
         }
         public int ControlKeyboard() //현재 키보드 입력값 반환
         {
