@@ -54,14 +54,14 @@ namespace Library
         {
             Screen screen = new Screen();
             TestingLibrary testingLibrary = new TestingLibrary();
-            bool isSelectMenu;
             int menu;
+            bool isMenu;
 
             while (value.ADMIN_MODE)
             {
                 screen.PrintAdminMode();       //관리자 모드 출력
                 testingLibrary.InitCursorPosition();
-                isSelectMenu = testingLibrary.SelectMenu(13, 17);   //메뉴선택 완료
+                isMenu = testingLibrary.SelectMenu(13, 17);   //메뉴선택 완료
                 menu = testingLibrary.GetTop();//메뉴의 해당 커서값
                 SelectMenu(menu);              //해당 메뉴 기능 실행
             }
@@ -85,8 +85,12 @@ namespace Library
                     break;
 
             }
-            
-            GoningBack();   //뒤로가기 -> 관리자메뉴로 돌아감
+            while (value.INPUT_VALUE)
+            {
+                ConsoleKeyInfo keyInfo = Console.ReadKey();
+                if (keyInfo.Key == ConsoleKey.Escape) break;
+            }
+            // bool isGoingBack = IsGoningBack();   //뒤로가기 -> 관리자메뉴로 돌아감
         }
         public void GoningBack()  //뒤로가기
         {

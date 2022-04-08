@@ -20,6 +20,8 @@ namespace Library
         public int REMOVING_BOOK = 4;
         public int MANAGING_MEMBER = 5;
 
+        public int COMPLETE_FUNCTION = 7;
+
         public bool OUT_OF_MENU = true;
         public bool ADMIN_MODE = true;
 
