@@ -17,6 +17,11 @@ namespace Library
         {
             return top;
         }
+        public void InitCursorPosition()
+        {
+            left = 25;
+            top = 13;
+        }
         public void SetPosition(int left, int top)
         {
             this.left = left;
@@ -68,11 +73,6 @@ namespace Library
                     adminController.ControlAdminSignIn();         //관리자 로그인 화면으로 이동
                     break;
             }
-        }
-        public void InitCursorPosition()
-        {
-            left = 25;
-            top = 13;
         }
         public int SelectMenu(int minTop, int maxTop)//메뉴 고르기 -> 고른 메뉴의 커서값을 left,top에 반영
         {
@@ -139,7 +139,7 @@ namespace Library
 
                 if (key == value.ENTERING_MENU)   //메뉴입력 -> 해당 메뉴로 이동
                 {  
-                    ControlMain();
+                    ControlMain();               
                 } 
                 else if (key == value.ESCAPE)     //프로그램 종료
                 {

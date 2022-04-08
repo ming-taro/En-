@@ -21,6 +21,7 @@ namespace Library
             Console.WriteLine("┃                                             **          ┃");
             Console.WriteLine("┃                                           **            ┃ ");
             Console.WriteLine("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+            Console.WriteLine("     >>메뉴를 방향키로 이동하고 [Enter]키를 눌러주세요<<");
         }
         public void PrintMenu(string menu)
         {
@@ -72,8 +73,8 @@ namespace Library
         }
         public void PrintBookList(List<BookVO> bookList)
         {
-            Console.SetCursorPosition(0,5);
-            Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+            Console.SetCursorPosition(0,5); 
+            Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>뒤로가기:[ESC]<<<<<<<<<<<<<<<<<<<<<<<<");
             
             for (int i=0; i<bookList.Count; i++)
             {
@@ -84,13 +85,13 @@ namespace Library
         public void PrintSearchBox()
         {
             Console.Clear();
-            
             Console.WriteLine("\n1.도서명: ");
             Console.WriteLine("2.출판사: ");
             Console.WriteLine("3.저자: ");
         }
         public void PrintSearchingBook(List<BookVO> bookList)
         {
+            
             PrintSearchBox();
             PrintBookList(bookList);
         }
@@ -107,6 +108,7 @@ namespace Library
                     Console.WriteLine("\n=============================================================\n");
                 }
             }
+            Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>뒤로가기:[ESC]<<<<<<<<<<<<<<<<<<<<<<<<");
         }
     }
 }

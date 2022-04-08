@@ -58,13 +58,14 @@ namespace Library
 
             while (value.ADMIN_MODE)
             {
-
                 screen.PrintAdminMode();       //관리자 모드 출력
                 testingLibrary.InitCursorPosition();
                 menu = testingLibrary.SelectMenu(13, 17); //메뉴선택 완료
+                if (menu == value.ESCAPE) break;          //관리자 메뉴 선택중 esc -> 관리자 모드 종료
                 menu = testingLibrary.GetTop();//메뉴의 해당 커서값
                 SelectMenu(menu);              //해당 메뉴 기능 실행
             }
+            //관리자 모드 종료 -> 메인화면으로 돌아감
         }
         
         public void SelectMenu(int menu) //관리자 메뉴에서 선택
@@ -87,8 +88,9 @@ namespace Library
                     break;
 
             }
-            
-            if(function == value.COMPLETE_FUNCTION)GoningBack();//뒤로가기 -> 관리자메뉴로 돌아감
+
+            //기능을 모두 수행함 : 뒤로가기 입력받음 -> 관리자메뉴로 돌아감
+            if (function == value.COMPLETE_FUNCTION)GoningBack();
         }
         public void GoningBack()  //뒤로가기
         {
