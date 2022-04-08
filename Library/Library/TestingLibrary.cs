@@ -70,7 +70,7 @@ namespace Library
             int key;
 
             while (entering != CLOSE_PROGRAM)
-            {
+            { 
                 key = ControlKeyboard();      //키보드를 입력받음
                 //if (top < 13 || top > 14) continue;
                 if (top < minTop || top > maxTop) continue;
