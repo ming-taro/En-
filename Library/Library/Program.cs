@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace Library
 {
@@ -6,14 +8,9 @@ namespace Library
     {
         static void Main(string[] args)
         {
-
-            string[] menu = { "메뉴1", "메뉴2" };  //테스트케이스
-
-
-            Screen screen = new Screen();
-            screen.PrintMain(menu);
-
-            BookVO b = new BookVO();
+            TestingLibrary testingLibrary = new TestingLibrary();
+            testingLibrary.TestLibrary();
+           
         }
     }
 }

@@ -44,19 +44,45 @@ namespace Library
             InitMemberList();  //초기 회원목록
             AdminVO admin = new AdminVO();  //관리자
         }
-        public TestingLibrary()
+        public void SelectMenu(int left, int right)
         {
-            string[] menu = { "메뉴1", "메뉴2" };  //테스트케이스
             Screen screen = new Screen();
 
-            int mode = 0;
-
-            switch (mode)
+            switch (left, right)
             {
-                case 0:
-                    screen.PrintMain(menu);
+                case (25, 13):
+                    MemberMenu memberMenu = new MemberMenu();
+                    break;
+                case (25, 14):
+                    AdminSignUp adminSignUp = new AdminSignUp();
+                    break;
             }
 
+
+        }
+        public void TestLibrary()
+        {
+            string[] menu = { "회원 모드", "관리자 모드", "종료" };  //테스트케이스
+            Screen screen = new Screen();
+            screen.PrintMain(menu);
+            int left = 25, top = 13;
+            bool loop = true;
+            while (loop)
+            {
+                ConsoleKeyInfo keyInfo = Console.ReadKey();
+                switch (keyInfo.Key)
+                {
+                    case ConsoleKey.DownArrow:
+                        Console.SetCursorPosition(left, ++top);
+                        break;
+                    case ConsoleKey.UpArrow:
+                        Console.SetCursorPosition(left, --top);
+                        break;
+                    case ConsoleKey.Enter:
+                        SelectMenu(left, top);
+                        break;
+                }
+            }
         }
     }
 }

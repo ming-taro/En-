@@ -23,9 +23,10 @@ namespace Library
         }
         public void PrintMenu(string menu)
         {
+            Console.Clear();
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-            Console.SetCursorPosition(20, 2);
-            Console.WriteLine("[" + menu + "]");
+            Console.SetCursorPosition(25, 2);
+            Console.WriteLine("[" + menu + "]\n");
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
         }
         //string
@@ -42,16 +43,16 @@ namespace Library
                 Console.SetCursorPosition(25, 13 + i);
                 Console.WriteLine("☞" + menu[i]);
             }
-            //ConsoleKeyInfo keyInfo = Console.ReadKey();
-            //if(keyInfo.Key == ConsoleKey.A) Console.Write("AAAAAAAa!\n");
+            Console.SetCursorPosition(25,13);
         }
         public void PrintSingUp(string menu)
         {
-            
             PrintMenu(menu);
-            Console.Write("아이디 : ");
+            Console.WriteLine("아이디: ");
+            Console.Write("비밀번호: ");
+            Console.SetCursorPosition(8, 5);
             Console.ReadLine();
-            Console.Write("비밀번호 : ");
+            Console.SetCursorPosition(10, 6);
             Console.ReadLine();
         }
         
