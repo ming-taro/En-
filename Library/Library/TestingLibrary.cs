@@ -11,6 +11,12 @@ namespace Library
     {
         private List<BookVO> bookList;
         private List<MemberVO> memberList;
+        private int left = 25, top = 13;
+        public const int CLOSE_PROGRAM = -3;
+        public const int INVALID_INPUT = -2;
+        public const int ESCAPE = -1;
+        public const int MOVING_CURSOR = 0;
+        public const int ENTERING_MENU = 1;
 
         public void InintBookList()
         {
@@ -44,45 +50,101 @@ namespace Library
             InitMemberList();  //초기 회원목록
             AdminVO admin = new AdminVO();  //관리자
         }
-        public void SelectMenu(int left, int right)
+        public void ControlMain()
         {
-            Screen screen = new Screen();
+            SelectMenu(13, 14); //메뉴를 선택함(커서 위치가 해당 메뉴옆에 위치)
 
-            switch (left, right)
+            switch (left, top)  //커서의 위치값으로 메뉴를 구분
             {
                 case (25, 13):
-                    MemberMenu memberMenu = new MemberMenu();
+                    MemberMenu memberMenu = new MemberMenu();     //회원모드
                     break;
                 case (25, 14):
-                    AdminSignUp adminSignUp = new AdminSignUp();
+                    AdminSignUp adminSignUp = new AdminSignUp();  //관리자모드
                     break;
             }
-
-
         }
-        public void TestLibrary()
+        public void SelectMenu(int minTop, int maxTop)              //메뉴 고르기
         {
-            string[] menu = { "회원 모드", "관리자 모드", "종료" };  //테스트케이스
-            Screen screen = new Screen();
-            screen.PrintMain(menu);
-            int left = 25, top = 13;
-            bool loop = true;
-            while (loop)
+            int entering = MOVING_CURSOR;
+            int key;
+
+            while (entering != CLOSE_PROGRAM)
             {
-                ConsoleKeyInfo keyInfo = Console.ReadKey();
-                switch (keyInfo.Key)
+                key = ControlKeyboard();      //키보드를 입력받음
+                //if (top < 13 || top > 14) continue;
+                if (top < minTop || top > maxTop) continue;
+                switch (key)
                 {
-                    case ConsoleKey.DownArrow:
-                        Console.SetCursorPosition(left, ++top);
+                    case ENTERING_MENU:            //메뉴입력 -> 해당 메뉴로 이동(1.회원모드   2.관리자모드)
+                        entering = ENTERING_MENU;
                         break;
-                    case ConsoleKey.UpArrow:
-                        Console.SetCursorPosition(left, --top);
-                        break;
-                    case ConsoleKey.Enter:
-                        SelectMenu(left, top);
+                    case ESCAPE:
+                        entering = CLOSE_PROGRAM;  //뒤로가기(->메인화면으로)
                         break;
                 }
             }
+        }
+        public int ControlKeyboard() //현재 키보드 입력값 반환
+        {
+            int input = INVALID_INPUT;
+            ConsoleKeyInfo keyInfo;
+
+            while (input == INVALID_INPUT)   //다른 키를 입력하면 올바른 키를 입력할때까지 무한루프
+            {
+                keyInfo = Console.ReadKey(); //키를 입력받음 
+                switch (keyInfo.Key)
+                {
+                    case ConsoleKey.DownArrow:
+                        Console.SetCursorPosition(left, ++top);   //↓방향키 입력
+                        return MOVING_CURSOR;
+                    case ConsoleKey.UpArrow:                      //↑방향키 입력
+                        Console.SetCursorPosition(left, --top);
+                        return MOVING_CURSOR;
+                    case ConsoleKey.Enter:                        //enter 입력
+                        return ENTERING_MENU;
+                    case ConsoleKey.Escape:                       //escape 입력
+                        return ESCAPE;
+                }
+            }
+            return INVALID_INPUT;
+        }
+        public void TestLibrary()  //메인화면
+        {
+            string[] menu = { "회원 모드", "관리자 모드", "종료" }; //메인화면 메뉴 
+            Screen screen = new Screen();
+            screen.PrintMain(menu);
+
+            int entering = MOVING_CURSOR;
+            int key;
+
+            while (entering != CLOSE_PROGRAM)
+            {
+                Console.SetCursorPosition(left, top);
+                key = ControlKeyboard();            //입력받은 키값
+                if (top == 12)
+                {
+                    top = 13;
+                    continue;
+                }
+                else if(top == 16)
+                {
+                    top = 15;
+                    continue;
+                }
+
+                switch (key)
+                {
+                    case ENTERING_MENU:            //메뉴입력 -> 해당 메뉴로 이동
+                        ControlMain();
+                        break;
+                    case ESCAPE:
+                        entering = CLOSE_PROGRAM;  //프로그램 종료
+                        break;
+                }
+            }
+
+            Console.SetCursorPosition(25, 20);
         }
     }
 }
