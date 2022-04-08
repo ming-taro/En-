@@ -71,6 +71,7 @@ namespace Library
         public void SelectMenu(int menu) //관리자 메뉴에서 선택
         {
             int function = value.COMPLETE_FUNCTION;
+            MemberController memberController = new MemberController();
 
             switch (menu)
             {
@@ -85,6 +86,8 @@ namespace Library
                 case 16:  //도서 삭제
                     break;
                 case 17:  //회원관리
+                    SearchingMember searchingMember = new SearchingMember(memberController.memberList);
+                    function = searchingMember.ControlSearchingMember(memberController.memberList);
                     break;
 
             }

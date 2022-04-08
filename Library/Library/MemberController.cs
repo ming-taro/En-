@@ -10,7 +10,7 @@ namespace Library
     class MemberController
     {
         Value value = new Value();
-        private List<MemberVO> memberList;
+        public List<MemberVO> memberList;
 
         public MemberController()
         {

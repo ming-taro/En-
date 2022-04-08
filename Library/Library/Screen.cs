@@ -95,13 +95,12 @@ namespace Library
         public void PrintSearchBox()
         {
             Console.Clear();
-            Console.WriteLine("\n1.도서명: ");
-            Console.WriteLine("2.출판사: ");
-            Console.WriteLine("3.저자: ");
+            Console.WriteLine("\n☞도서명: ");
+            Console.WriteLine("☞출판사: ");
+            Console.WriteLine("☞저자: ");
         }
         public void PrintSearchingBook(List<BookVO> bookList)
         {
-            
             PrintSearchBox();
             PrintBookList(bookList);
         }
@@ -115,6 +114,33 @@ namespace Library
                 if (menu == 1 && bookList[i].Name.Contains(name) || menu == 2 && bookList[i].Publisher.Contains(name) || menu == 3 && bookList[i].Author == name)
                 {
                     Console.WriteLine(bookList[i]);
+                    Console.WriteLine("\n=============================================================\n");
+                }
+            }
+            Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>뒤로가기:[ESC]<<<<<<<<<<<<<<<<<<<<<<<<");
+        }
+        public void PrintSearchingMember(List<MemberVO> memberList)
+        {
+            Console.Clear();
+            Console.WriteLine("\n☞삭제할 회원 아이디: ");
+            Console.SetCursorPosition(0, 3);
+            Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>뒤로가기:[ESC]<<<<<<<<<<<<<<<<<<<<<<<<");
+
+            for (int i = 0; i < memberList.Count; i++)
+            {
+                Console.WriteLine(memberList[i]);
+                Console.WriteLine("\n=============================================================\n");
+            }
+        }
+        public void PrintSearchingMember(string id, List<MemberVO> memberList)
+        {
+            Console.Clear();
+            Console.WriteLine("\n=============================================================\n");
+            for(int i=0; i<memberList.Count; i++)
+            {
+                if (memberList[i].Id.Equals(id))
+                {
+                    Console.WriteLine(memberList[i]);
                     Console.WriteLine("\n=============================================================\n");
                 }
             }
