@@ -21,6 +21,14 @@ namespace Library
             this.phoneNumber = phoneNumber;
             this.address = address;
         }
+        public string Id
+        {
+            get { return id; }
+        }
+        public string Password
+        {
+            get { return password; }
+        }
         public override string ToString()
         {
             return "아이디: " + id + "\n비밀번호: " + password + "\n이름: " + name + 

@@ -24,6 +24,10 @@ namespace Library
 
         public bool OUT_OF_MENU = true;
         public bool ADMIN_MODE = true;
+        public bool MEMBER_MODE = true;
+
+        public bool CORRECT_MEMBERSHIP = true;
+        public bool WRONG_MEMBERSHIP = false;
 
         public bool GOING_NEXT = true;
         public bool GOING_BACK = true;
