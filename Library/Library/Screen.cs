@@ -10,16 +10,17 @@ namespace Library
     {
         public void PrintTitle()
         {
-            Console.WriteLine("\n  ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-            Console.WriteLine("  ┃                                                         ┃");
-            Console.WriteLine("  ┃    **          **                                       ┃");
-            Console.WriteLine("  ┃    **          **                                       ┃");
-            Console.WriteLine("  ┃    **      ★  ****   *  **   **     *  **    *    **   ┃");
-            Console.WriteLine("  ┃    **      **  **☆*  **     *☆*    **       *  **     ┃");
-            Console.WriteLine("  ┃    ******  **  ****   **      **  *  **       **        ┃");
-            Console.WriteLine("  ┃                                             **          ┃");
-            Console.WriteLine("  ┃                                           **            ┃ ");
-            Console.WriteLine("  ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+            Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+            Console.WriteLine("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+            Console.WriteLine("┃                                                         ┃");
+            Console.WriteLine("┃    **          **                                       ┃");
+            Console.WriteLine("┃    **          **                                       ┃");
+            Console.WriteLine("┃    **      ★  ****   *  **   **     *  **    *    **   ┃");
+            Console.WriteLine("┃    **      **  **☆*  **     *☆*    **       *  **     ┃");
+            Console.WriteLine("┃    ******  **  ****   **      **  *  **       **        ┃");
+            Console.WriteLine("┃                                             **          ┃");
+            Console.WriteLine("┃                                           **            ┃ ");
+            Console.WriteLine("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
         }
         public void PrintMenu(string menu)
         {

@@ -55,13 +55,13 @@ namespace Library
             Screen screen = new Screen();
             TestingLibrary testingLibrary = new TestingLibrary();
             int menu;
-            bool isMenu;
 
             while (value.ADMIN_MODE)
             {
+
                 screen.PrintAdminMode();       //관리자 모드 출력
                 testingLibrary.InitCursorPosition();
-                isMenu = testingLibrary.SelectMenu(13, 17);   //메뉴선택 완료
+                menu = testingLibrary.SelectMenu(13, 17); //메뉴선택 완료
                 menu = testingLibrary.GetTop();//메뉴의 해당 커서값
                 SelectMenu(menu);              //해당 메뉴 기능 실행
             }
@@ -69,11 +69,13 @@ namespace Library
         
         public void SelectMenu(int menu) //관리자 메뉴에서 선택
         {
+            int function = value.COMPLETE_FUNCTION;
+
             switch (menu)
             {
                 case 13:  //도서 이름 검색
                     SearchingBook searchingBook = new SearchingBook(bookList);
-                    searchingBook.ControlSearchingBook(bookList);
+                    function = searchingBook.ControlSearchingBook(bookList);
                     break;
                 case 14:  //도서 등록
                     break;
@@ -85,12 +87,8 @@ namespace Library
                     break;
 
             }
-            while (value.INPUT_VALUE)
-            {
-                ConsoleKeyInfo keyInfo = Console.ReadKey();
-                if (keyInfo.Key == ConsoleKey.Escape) break;
-            }
-            // bool isGoingBack = IsGoningBack();   //뒤로가기 -> 관리자메뉴로 돌아감
+            
+            if(function == value.COMPLETE_FUNCTION)GoningBack();//뒤로가기 -> 관리자메뉴로 돌아감
         }
         public void GoningBack()  //뒤로가기
         {

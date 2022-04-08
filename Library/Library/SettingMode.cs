@@ -86,10 +86,10 @@ namespace Library
             TestingLibrary testingLibrary = new TestingLibrary();
             Value value = new Value();
             testingLibrary.SetPosition(0, 1);     //커서위치
-            bool isMenu = testingLibrary.SelectMenu(1, 3);     //메뉴선택
-            //if (menu == value.ESCAPE) return value.ESCAPE;  //메뉴선택도중 뒤로가기 -> 도서검색 종료
+            int menu = testingLibrary.SelectMenu(1, 3);       //메뉴선택
+            if (menu == value.ESCAPE) return value.ESCAPE;    //메뉴선택도중 뒤로가기 -> 도서검색 종료
 
-            int menu = testingLibrary.GetTop();       //메뉴선택 완료(1.도서명  2.출판사  3.저자)
+            menu = testingLibrary.GetTop();       //메뉴선택 완료(1.도서명  2.출판사  3.저자)
             Console.SetCursorPosition(10, menu);  //커서위치
             string name = Console.ReadLine();     //검색어 입력받기(------------------>검색어 입력도중 뒤로가기, 입력예외처리 추가 필요)
             screen.PrintSearchingBook(menu, name, bookList);   //검색결과로 나온 책목록 출력
