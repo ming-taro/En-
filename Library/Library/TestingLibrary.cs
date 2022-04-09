@@ -108,14 +108,16 @@ namespace Library
                 key = ControlKeyboard();            //입력받은 키값
                 if (IsOutOfMenu(13, 15)) continue;  //메뉴를 벗어나는 이동은 X
 
-                if (key == value.ENTERING_MENU)   //메뉴입력 -> 해당 메뉴로 이동
-                {  
-                    ControlMain();               
-                } 
-                else if (key == value.ESCAPE)     //프로그램 종료
+                if (key == value.ESCAPE || key == value.ENTERING_MENU && top == 15)     //프로그램 종료
                 {
                     entering = value.CLOSE_PROGRAM;
-                }    
+                }
+                else if (key == value.ENTERING_MENU)   //메뉴입력 -> 해당 메뉴로 이동
+                {  
+                    ControlMain();
+                    screen.PrintMain(menu);
+                } 
+                    
             }
 
             Console.SetCursorPosition(25, 20);
