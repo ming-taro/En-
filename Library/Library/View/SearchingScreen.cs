@@ -15,21 +15,11 @@ namespace Library
             Console.WriteLine("☞출판사: ");
             Console.WriteLine("☞저자: ");
         }
-        public void PrintBookList(List<BookVO> bookList)  //도서목록 출력
-        {
-            Console.SetCursorPosition(0, 5);
-            Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>뒤로가기:[ESC]<<<<<<<<<<<<<<<<<<<<<<<<");
-
-            for (int i = 0; i < bookList.Count; i++)
-            {
-                Console.WriteLine(bookList[i]);
-                Console.WriteLine("\n=============================================================\n");
-            }
-        }
         public void PrintSearchingBook(List<BookVO> bookList)  //도서검색화면 출력
         {
-            PrintSearchBox();
-            PrintBookList(bookList);
+            PrintSearchBox();                  //검색화면
+            ListScreen listscreen = new ListScreen();
+            listscreen.PrintBookList(bookList);//도서목록화면
         }
         public void PrintSearchingBook(int menu, string name, List<BookVO> bookList)
         {

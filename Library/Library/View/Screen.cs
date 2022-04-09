@@ -8,7 +8,7 @@ namespace Library
 {
     class Screen
     {
-        public void PrintTitle()
+        public void PrintTitle()//이사완
         {
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
             Console.WriteLine("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
@@ -23,7 +23,7 @@ namespace Library
             Console.WriteLine("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
             Console.WriteLine("     >>메뉴를 방향키로 이동하고 [Enter]키를 눌러주세요<<");
         }
-        public void PrintMenu(string menu)
+        public void PrintMenu(string menu)//이사완
         {
             Console.Clear();
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
@@ -81,7 +81,7 @@ namespace Library
             string[] menu = { "도서 검색", "도서 등록", "도서 수량 관리", "도서 삭제", "회원정보 관리"};
             PrintMain(menu);
         }
-        public void PrintBookList(List<BookVO> bookList)
+        public void PrintBookList(List<BookVO> bookList)//이사 완
         {
             Console.SetCursorPosition(0,5); 
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>뒤로가기:[ESC]<<<<<<<<<<<<<<<<<<<<<<<<");
@@ -95,7 +95,7 @@ namespace Library
         
         
         
-        public void PrintSearchingMember(List<MemberVO> memberList)
+        public void PrintSearchingMember(List<MemberVO> memberList)//이사완
         {
             Console.Clear();
             Console.WriteLine("\n☞삭제할 회원 아이디: ");

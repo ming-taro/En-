@@ -19,7 +19,7 @@ namespace Library
             while (input == Constants.WRONG_VALUE)
             {
                 admin.SignInAdmin(ref id, ref password);   //로그인
-                if (id == "123456789" && password == "00000")
+                if (id == "12345" && password == "00000")
                 {
                     ControlAdminMode();  //관리자 모드로
                     input = Constants.RIGHT_VALUE;
@@ -61,6 +61,8 @@ namespace Library
                     function = searchingBook.ControlSearchingBook();
                     break;
                 case 14:  //도서 등록(미완)
+                    RegisteringBook registeringBook = new RegisteringBook();
+                    function = registeringBook.ControlRegistering();
                     break;
                 case 15:  //도서 수량 관리(미완)
                     break;

@@ -8,14 +8,14 @@ namespace Library
     {
         static void Main(string[] args)
         {
-            StartingLibrary testingLibrary = new StartingLibrary();
-            testingLibrary.TestLibrary();
+            StartingLibrary startingLibrary = new StartingLibrary();
+            startingLibrary.TestLibrary();
         }
     }
 }
 //관리자
-//아이디 : 123456789
+//아이디 :   12345
 //비밀번호 : 00000
 //회원
-//아이디 : aaabbb
+//아이디 :   aaabbb
 //비밀번호 : 000111
