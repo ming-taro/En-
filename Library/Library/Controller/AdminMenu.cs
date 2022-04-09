@@ -52,18 +52,22 @@ namespace Library
         }
         public int ControlRegistering()
         {
+            string[] book = new string[6];
             Console.SetCursorPosition(10, 7);
-            Console.ReadLine();  //도서번호
+            book[0] = Console.ReadLine();  //도서번호
             Console.SetCursorPosition(8, 9);
-            Console.ReadLine();  //도서명
+            book[1] = Console.ReadLine();  //도서명
             Console.SetCursorPosition(8, 11);
-            Console.ReadLine();  //출판사
+            book[2] = Console.ReadLine();  //출판사
             Console.SetCursorPosition(6, 13);
-            Console.ReadLine();  //저자
+            book[3] = Console.ReadLine();  //저자
             Console.SetCursorPosition(6, 15);
-            Console.ReadLine();  //가격
+            book[4] = Console.ReadLine();  //가격
             Console.SetCursorPosition(6, 17);
-            Console.ReadLine();  //수량
+            book[5] = Console.ReadLine();  //수량
+
+            BookListVO bookListVO = BookListVO.getBookListVO();  //도서목록
+            bookListVO.bookList.Add(new BookVO(book[0], book[1], book[2], book[3], book[4], book[5])); //도서목록에 등록된 도서정보 추가
 
             return Constants.COMPLETE_FUNCTION;       //도서등록까지 모두 완료
         }
