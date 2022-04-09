@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Library.Model
+namespace Library
 {
     class BookListVO
     {
         private static BookListVO bookListVO = null;
         public List<BookVO> bookList;
-        public static BookListVO getBookList()
+        public static BookListVO getBookListVO()
         {
             if(bookListVO == null)
             {

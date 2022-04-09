@@ -9,24 +9,6 @@ namespace Library
 {
     class AdminController
     {
-        public List<BookVO> bookList;   //책목록
-        public AdminController()
-        {
-            InitBookList();
-        }
-        public void InitBookList()
-        {
-            bookList = new List<BookVO>(); 
-
-            string path = "./text/BookList.txt";
-            StreamReader reader = new StreamReader(path);
-            while (reader.Peek() >= 0)
-            {
-                String[] text = reader.ReadLine().ToString().Split(",");     //책 정보를 읽어옴
-                bookList.Add(new BookVO(text[0], text[1], text[2], text[3], text[4], text[5])); //초기 책 목록을 리스트에 저장
-            }
-            reader.Close();
-        }
         public void ControlAdminSignIn()  //관리자 로그인 관리
         {
             string id = "";
@@ -75,8 +57,8 @@ namespace Library
             switch (menu)
             {
                 case 13:  //도서 이름 검색
-                    SearchingBook searchingBook = new SearchingBook(bookList);
-                    function = searchingBook.ControlSearchingBook(bookList);
+                    SearchingBook searchingBook = new SearchingBook();
+                    function = searchingBook.ControlSearchingBook();
                     break;
                 case 14:  //도서 등록(미완)
                     break;

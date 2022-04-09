@@ -74,23 +74,25 @@ namespace Library
     }
     class SearchingBook
     {
-        public SearchingBook(List<BookVO> bookList)   //도서검색화면 출력
+        private BookListVO bookListVO = BookListVO.getBookListVO();  //도서목록
+        SearchingScreen screen;
+        public SearchingBook()   //도서검색화면 출력
         {
-            Screen screen = new Screen();
-            screen.PrintSearchingBook(bookList);
+            screen = new SearchingScreen();
+            screen.PrintSearchingBook(bookListVO.bookList);  
         }
-        public int ControlSearchingBook(List<BookVO> bookList)  //도서검색하기(검색어 입력 -> 목록 출력)
+        public int ControlSearchingBook()  //도서검색하기(검색어 입력 -> 목록 출력)
         {
-            Screen screen = new Screen();
             StartingLibrary testingLibrary = new StartingLibrary();
             testingLibrary.SetPosition(0, 1);     //커서위치
-            int menu = testingLibrary.SelectMenu(1, 3);       //메뉴선택
-            if (menu == Constants.ESCAPE) return Constants.ESCAPE;    //메뉴선택도중 뒤로가기 -> 도서검색 종료
+            int menu = testingLibrary.SelectMenu(1, 3);               //메뉴선택
+            if (menu == Constants.ESCAPE) return Constants.ESCAPE;    //메뉴선택도중 뒤로가기 -> 관리자 메뉴로 돌아감
 
             menu = testingLibrary.GetTop();       //메뉴선택 완료(1.도서명  2.출판사  3.저자)
             Console.SetCursorPosition(10, menu);  //커서위치
             string name = Console.ReadLine();     //검색어 입력받기(------------------>검색어 입력도중 뒤로가기, 입력예외처리 추가 필요)
-            screen.PrintSearchingBook(menu, name, bookList);   //검색결과로 나온 책목록 출력
+            screen.PrintSearchingBook(menu, name, bookListVO.bookList);   //검색결과로 나온 책목록 출력
+            
             return Constants.COMPLETE_FUNCTION;       //검색결과 출력까지 모두 완료
         }
     }
@@ -148,7 +150,7 @@ namespace Library
         {
             AdminController adminController = new AdminController();
             Screen screen = new Screen();
-            screen.PrintBorrowingBook(adminController.bookList, "\n☞반납할 도서 번호: ");
+            //screen.PrintBorrowingBook(adminController.bookList, "\n☞반납할 도서 번호: ");
             Console.Read();
         }
     }
