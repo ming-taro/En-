@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace Library
 {
@@ -50,11 +51,33 @@ namespace Library
             RegisteringScreen screen = new RegisteringScreen();
             screen.PrintRegistering(); //도서등록 입력화면
         }
+        public string InputBookId()
+        {
+            Regex regex = new Regex("^[A-Za-z0-9]{1,3}$");   //도서번호:영숫자,0~999까지
+            string book;
+
+            while (Constants.INPUT_VALUE)
+            {
+                Console.SetCursorPosition(0, 7);
+                Console.WriteLine("도서번호:                                                       ");
+                Console.SetCursorPosition(10, 7);
+                book = Console.ReadLine();        //도서번호를 입력 받음
+                if (regex.IsMatch(book))
+                {
+                    Console.SetCursorPosition(0, 8);
+                    Console.WriteLine("                                               ");
+                    break;
+                }
+                Console.SetCursorPosition(0, 8);
+                Console.WriteLine("(영어, 숫자만 입력 가능합니다.(최대 3글자))");  //잘못입력시 메세지 출력
+            }
+            return book;
+        }
         public int ControlRegistering()
         {
             string[] book = new string[6];
-            Console.SetCursorPosition(10, 7);
-            book[0] = Console.ReadLine();  //도서번호
+
+            book[0] = InputBookId();
             Console.SetCursorPosition(8, 9);
             book[1] = Console.ReadLine();  //도서명
             Console.SetCursorPosition(8, 11);
