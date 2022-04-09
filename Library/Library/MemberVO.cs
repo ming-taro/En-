@@ -32,7 +32,7 @@ namespace Library
         public override string ToString()
         {
             return "아이디: " + id + "\n비밀번호: " + password + "\n이름: " + name + 
-                "\n나이" + age + "\n휴대전화: " + phoneNumber + "\n도로명 주소" + address;
+                "\n나이: " + age + "\n휴대전화: " + phoneNumber + "\n도로명 주소: " + address;
         }
     }
 }

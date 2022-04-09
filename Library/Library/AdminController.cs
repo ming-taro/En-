@@ -13,9 +13,9 @@ namespace Library
         private List<BookVO> bookList;   //책목록
         public AdminController()
         {
-            InintBookList();
+            InitBookList();
         }
-        public void InintBookList()
+        public void InitBookList()
         {
             bookList = new List<BookVO>(); 
 
@@ -79,13 +79,13 @@ namespace Library
                     SearchingBook searchingBook = new SearchingBook(bookList);
                     function = searchingBook.ControlSearchingBook(bookList);
                     break;
-                case 14:  //도서 등록
+                case 14:  //도서 등록(미완)
                     break;
-                case 15:  //도서 수량 관리
+                case 15:  //도서 수량 관리(미완)
                     break;
-                case 16:  //도서 삭제
+                case 16:  //도서 삭제(미완)
                     break;
-                case 17:  //회원관리
+                case 17:  //회원관리(미완 -> 회원출력만 가능)
                     SearchingMember searchingMember = new SearchingMember(memberController.memberList);
                     function = searchingMember.ControlSearchingMember(memberController.memberList);
                     break;
@@ -93,9 +93,9 @@ namespace Library
             }
 
             //기능을 모두 수행함 : 뒤로가기 입력받음 -> 관리자메뉴로 돌아감
-            if (function == value.COMPLETE_FUNCTION) GoningBack();
+            if (function == value.COMPLETE_FUNCTION) GoBack();
         }
-        public void GoningBack()  //뒤로가기
+        public void GoBack()  //뒤로가기
         {
             while (value.INPUT_VALUE)
             {

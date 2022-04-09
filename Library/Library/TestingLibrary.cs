@@ -67,7 +67,7 @@ namespace Library
 
             while (input == value.INVALID_INPUT)   //다른 키를 입력하면 올바른 키를 입력할때까지 무한루프
             {
-                keyInfo = Console.ReadKey(); //키를 입력받음 
+                keyInfo = Console.ReadKey(true); //키를 입력받음 
                 switch (keyInfo.Key)
                 {
                     case ConsoleKey.DownArrow:
@@ -94,6 +94,7 @@ namespace Library
         }
         public void TestLibrary()  //메인화면
         {
+            Console.SetWindowSize(61,40);
             string[] menu = { "회원 모드", "관리자 모드", "종료" }; //메인화면 메뉴 
             Screen screen = new Screen();
             screen.PrintMain(menu);

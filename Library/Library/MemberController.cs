@@ -66,7 +66,7 @@ namespace Library
         {
             switch (menu)
             {
-                case 13:  //도서검색(미완)
+                case 13:  //도서검색
                     AdminController adminController = new AdminController();
                     adminController.SelectMenu(menu);
                     break;
