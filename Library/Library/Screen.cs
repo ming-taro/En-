@@ -146,5 +146,12 @@ namespace Library
             }
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>뒤로가기:[ESC]<<<<<<<<<<<<<<<<<<<<<<<<");
         }
+        public void PrintBorrowingBook(string memberId, List<BorrowBookVO> borrowList)
+        {
+            for(int i=0; i<borrowList.Count; i++)
+            {
+                if(borrowList[i].MemberId.Equals(memberId))
+            }
+        }
     }
 }

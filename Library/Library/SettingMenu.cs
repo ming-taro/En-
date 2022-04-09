@@ -113,4 +113,23 @@ namespace Library
             return value.COMPLETE_FUNCTION;       //검색결과 출력까지 모두 완료
         }
     }
+    class BorrowingBook
+    {
+        private List<BookVO> myBookList;
+        public BorrowingBook(string memberId, List<BookVO> bookList)  
+        {
+            List<BorrowBookVO> borrowList = new List<BorrowBookVO>();  //도서대여목록
+            for(int i=0; i<bookList.Count; i++)
+            {
+                if (borrowList[i].MemberId.Equals(memberId)) myBookList.Add(bookList[i]); //나의 도서대여 목록
+            }
+        }
+        public void ControlBorrowingBook()
+        {
+            Screen screen = new Screen();
+            screen.PrintBorrowingBook(myBookList);  //대여한 도서 목록 출력
+            Console.SetCursorPosition(20, 1);
+            string bookId = Console.ReadLine();     //반납할 도서 번호 입력받기
+        }
+    }
 }

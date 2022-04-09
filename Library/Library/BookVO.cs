@@ -36,11 +36,11 @@ namespace Library
         {
             get { return author; }
         }
-        
         public override String ToString()
         {
             return "도서번호: " + id + "\n도서명: " + name + "\n출판사: " + publisher +
                 "\n저자: " + author + "\n가격: " + price + "\n수량: " + quantity;
         }
+
     }
 }
