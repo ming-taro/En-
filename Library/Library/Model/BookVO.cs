@@ -24,6 +24,10 @@ namespace Library
             this.price = price;
             this.quantity = quantity;
         }
+        public string Id
+        {
+            get { return Id; }
+        }
         public string Name
         {
             get { return name; }
@@ -35,6 +39,14 @@ namespace Library
         public string Author
         {
             get { return author; }
+        }
+        public string Price
+        {
+            get { return price; }
+        }
+        public string Quantity
+        {
+            get { return quantity; }
         }
         public override String ToString()
         {

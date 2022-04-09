@@ -9,9 +9,9 @@ namespace Library
 {
     class MemberController
     {
-        Value value = new Value();
+        string myId;
         public List<MemberVO> memberList;
-
+        
         public MemberController()
         {
             InitMemberList();
@@ -32,18 +32,22 @@ namespace Library
         public void ControlMemberMode(int maxTop)    //1.회원가입  2.로그인  3.종료(미완)
         {
             Screen screen = new Screen();
-            TestingLibrary testingLibrary = new TestingLibrary();
+            StartingLibrary testingLibrary = new StartingLibrary();
             testingLibrary.InitCursorPosition();
             int menu;
 
-            while (value.MEMBER_MODE)
+            while (Constants.MEMBER_MODE)
             {
                 if (maxTop == 15) screen.PrintMemberMenu();//1.로그인  2.회원가입  3.종료
                 else screen.PrintMemberMode();    //1.도서검색  2.도서대여  3.도서반납  4.개인정보수정  5.종료
                 menu = testingLibrary.SelectMenu(13, maxTop);  //메뉴선택
-                if (menu == value.ESCAPE) break;  //메뉴선택 중 뒤로가기 -> 메인화면으로
+                if (menu == Constants.ESCAPE) break;  //메뉴선택 중 뒤로가기 -> 메인화면으로
                 menu = testingLibrary.GetTop();   //메뉴의 해당 커서값
-                if (maxTop == 15) SelectMenu1(menu); //1.로그인  2.회원가입  3.종료
+                if (maxTop == 15)
+                {
+                    SelectMenu1(menu); //1.로그인  2.회원가입  3.종료
+                    break;
+                }
                 else SelectMenu2(menu);              //1.도서검색  2.도서대여  3.도서반납  4.개인정보수정  5.종료
             }
             //회원 모드 종료 -> 메인화면으로 돌아감
@@ -54,6 +58,7 @@ namespace Library
             {
                 case 13:  //로그인
                     ControlSignIn();
+                    ControlMemberMode(17);  //회원 모드로(1.도서검색  2.도서대여  3.도서반납  4.개인정보수정  5.종료)
                     break;
                 case 14:  //회원가입(미완)
                     SignUp signUp = new SignUp();
@@ -71,9 +76,12 @@ namespace Library
                     adminController.SelectMenu(menu);
                     break;
                 case 14:  //도서대여(미완)
-
+                    ReturningBook returningBook = new ReturningBook();
+                    returningBook.ControlReturningBook();
                     break;
                 case 15:   //도서반납(미완)
+                    BorrowingBook borrowingBook = new BorrowingBook(myId);
+                    borrowingBook.ControlBorrowingBook();
                     break;
                 case 16:   //개인정보수정(미완)
                     break;
@@ -87,10 +95,10 @@ namespace Library
             {
                 if(memberList[i].Id.Equals(id) && memberList[i].Password.Equals(password))
                 {
-                    return value.CORRECT_MEMBERSHIP;
+                    return Constants.CORRECT_MEMBERSHIP;
                 }
             }
-            return value.WRONG_MEMBERSHIP;
+            return Constants.WRONG_MEMBERSHIP;
         }
         public void ControlSignIn()
         {
@@ -98,20 +106,20 @@ namespace Library
             string password = "";
             SignIn member = new SignIn();  //회원 로그인 화면으로 이동)
 
-            bool input = value.WRONG_VALUE;
+            bool input = Constants.WRONG_VALUE;
 
-            while (input == value.WRONG_VALUE)
+            while (input == Constants.WRONG_VALUE)
             {
                 member.SignInAdmin(ref id, ref password);   //로그인
                 if (IsCorrectMemberShip(id, password))
                 {
-                    ControlMemberMode(17);  //회원 모드로(1.도서검색  2.도서대여  3.도서반납  4.개인정보수정  5.종료)
-                    input = value.RIGHT_VALUE;
+                    myId = id;
+                    input = Constants.RIGHT_VALUE;
                 }
                 else
                 {
                     member.PrintScreen();//로그인 실패시 다시 입력(+오류 메세지)
-                    Console.WriteLine("\n\n" + value.SIGN_IN_ERROR);
+                    Console.WriteLine("\n\n" + Constants.SIGN_IN_ERROR);
                 }
             }
         }

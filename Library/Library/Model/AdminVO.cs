@@ -41,18 +41,6 @@ namespace Library
         {
             get { return bookId; }
         }
-        public void InitBorrowList(List<BorrowBookVO> borrowList)
-        {
-            borrowList = new List<BorrowBookVO>();
-
-            string path = "./text/BookList.txt";
-            StreamReader reader = new StreamReader(path);
-            while (reader.Peek() >= 0)
-            {
-                String[] text = reader.ReadLine().ToString().Split(",");   //도서대여 정보를 읽어옴
-                borrowList.Add(new BorrowBookVO(text[0], text[1])); //초기 책 목록을 리스트에 저장
-            }
-            reader.Close();
-        }
+        
     }
 }

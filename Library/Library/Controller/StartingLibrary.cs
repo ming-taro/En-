@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 
 namespace Library
 {
-    class TestingLibrary
+    class StartingLibrary
     {
         private int left = 25, top = 13;
-        Value value = new Value();
-        public TestingLibrary()
+        public StartingLibrary()
         {
             AdminVO admin = new AdminVO();  //관리자
         }
@@ -46,51 +45,51 @@ namespace Library
         }
         public int SelectMenu(int minTop, int maxTop)//메뉴 고르기 -> 고른 메뉴의 커서값을 left,top에 반영
         {
-            int entering = value.MOVING_CURSOR;     
-            int key = value.MOVING_CURSOR;
+            int entering = Constants.MOVING_CURSOR;     
+            int key = Constants.MOVING_CURSOR;
             
-            while (entering != value.CLOSE_PROGRAM) //키보드 방향키로 움직이는 동안
+            while (entering != Constants.CLOSE_PROGRAM) //키보드 방향키로 움직이는 동안
             {
                 Console.SetCursorPosition(left, top);
                 key = ControlKeyboard();            //키보드를 입력받음
                 if (IsOutOfMenu(minTop, maxTop)) continue;  //메뉴를 벗어나는 이동은 X
 
-                if (key == value.ENTERING_MENU || key == value.ESCAPE) break;//메뉴입력 -> 해당 메뉴로 이동(1.회원모드   2.관리자모드)
+                if (key == Constants.ENTERING_MENU || key == Constants.ESCAPE) break;//메뉴입력 -> 해당 메뉴로 이동(1.회원모드   2.관리자모드)
             }
 
             return key;
         }
         public int ControlKeyboard() //현재 키보드 입력값 반환
         {
-            int input = value.INVALID_INPUT;
+            int input = Constants.INVALID_INPUT;
             ConsoleKeyInfo keyInfo;
 
-            while (input == value.INVALID_INPUT)   //다른 키를 입력하면 올바른 키를 입력할때까지 무한루프
+            while (input == Constants.INVALID_INPUT)   //다른 키를 입력하면 올바른 키를 입력할때까지 무한루프
             {
                 keyInfo = Console.ReadKey(true); //키를 입력받음 
                 switch (keyInfo.Key)
                 {
                     case ConsoleKey.DownArrow:
                         Console.SetCursorPosition(left, ++top);   //↓방향키 입력
-                        return value.MOVING_CURSOR;
+                        return Constants.MOVING_CURSOR;
                     case ConsoleKey.UpArrow:                      //↑방향키 입력
                         Console.SetCursorPosition(left, --top);
-                        return value.MOVING_CURSOR;
+                        return Constants.MOVING_CURSOR;
                     case ConsoleKey.Enter:                        //enter 입력
-                        return value.ENTERING_MENU;
+                        return Constants.ENTERING_MENU;
                     case ConsoleKey.Escape:                       //escape 입력
-                        return value.ESCAPE;
+                        return Constants.ESCAPE;
                 }
             }
-            return value.INVALID_INPUT;
+            return Constants.INVALID_INPUT;
         }
         public bool IsOutOfMenu(int minTop, int maxTop)
         {
             if (top == (minTop - 1)) top = minTop;
             else if (top == (maxTop + 1)) top = maxTop;
-            else return !value.OUT_OF_MENU;
+            else return !Constants.OUT_OF_MENU;
 
-            return value.OUT_OF_MENU;
+            return Constants.OUT_OF_MENU;
         }
         public void TestLibrary()  //메인화면
         {
@@ -99,20 +98,20 @@ namespace Library
             Screen screen = new Screen();
             screen.PrintMain(menu);
 
-            int entering = value.MOVING_CURSOR;
+            int entering = Constants.MOVING_CURSOR;
             int key;
 
-            while (entering != value.CLOSE_PROGRAM)
+            while (entering != Constants.CLOSE_PROGRAM)
             {
                 Console.SetCursorPosition(left, top);
                 key = ControlKeyboard();            //입력받은 키값
                 if (IsOutOfMenu(13, 15)) continue;  //메뉴를 벗어나는 이동은 X
 
-                if (key == value.ESCAPE || key == value.ENTERING_MENU && top == 15)     //프로그램 종료
+                if (key == Constants.ESCAPE || key == Constants.ENTERING_MENU && top == 15)     //프로그램 종료
                 {
-                    entering = value.CLOSE_PROGRAM;
+                    entering = Constants.CLOSE_PROGRAM;
                 }
-                else if (key == value.ENTERING_MENU)   //메뉴입력 -> 해당 메뉴로 이동
+                else if (key == Constants.ENTERING_MENU)   //메뉴입력 -> 해당 메뉴로 이동
                 {  
                     ControlMain();
                     screen.PrintMain(menu);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,7 +44,6 @@ namespace Library
     }
     class SignIn
     {
-        Value value = new Value();
         public SignIn()
         {
             PrintScreen();
@@ -60,7 +60,7 @@ namespace Library
             Console.SetCursorPosition(10, 6);
             password = Console.ReadLine();     //비밀번호 입력
 
-            return value.GOING_NEXT;
+            return Constants.GOING_NEXT;
         }
     }
     class AdminMode
@@ -82,17 +82,16 @@ namespace Library
         public int ControlSearchingBook(List<BookVO> bookList)  //도서검색하기(검색어 입력 -> 목록 출력)
         {
             Screen screen = new Screen();
-            TestingLibrary testingLibrary = new TestingLibrary();
-            Value value = new Value();
+            StartingLibrary testingLibrary = new StartingLibrary();
             testingLibrary.SetPosition(0, 1);     //커서위치
             int menu = testingLibrary.SelectMenu(1, 3);       //메뉴선택
-            if (menu == value.ESCAPE) return value.ESCAPE;    //메뉴선택도중 뒤로가기 -> 도서검색 종료
+            if (menu == Constants.ESCAPE) return Constants.ESCAPE;    //메뉴선택도중 뒤로가기 -> 도서검색 종료
 
             menu = testingLibrary.GetTop();       //메뉴선택 완료(1.도서명  2.출판사  3.저자)
             Console.SetCursorPosition(10, menu);  //커서위치
             string name = Console.ReadLine();     //검색어 입력받기(------------------>검색어 입력도중 뒤로가기, 입력예외처리 추가 필요)
             screen.PrintSearchingBook(menu, name, bookList);   //검색결과로 나온 책목록 출력
-            return value.COMPLETE_FUNCTION;       //검색결과 출력까지 모두 완료
+            return Constants.COMPLETE_FUNCTION;       //검색결과 출력까지 모두 완료
         }
     }
     class SearchingMember
@@ -105,31 +104,52 @@ namespace Library
         public int ControlSearchingMember(List<MemberVO> memberList)
         {
             Screen screen = new Screen();
-            TestingLibrary testingLibrary = new TestingLibrary();
-            Value value = new Value();
+            StartingLibrary testingLibrary = new StartingLibrary();
             Console.SetCursorPosition(22, 1);
             string memberId = Console.ReadLine();  //회원아이디 입력받기
 
-            return value.COMPLETE_FUNCTION;       //검색결과 출력까지 모두 완료
+            return Constants.COMPLETE_FUNCTION;       //검색결과 출력까지 모두 완료
         }
     }
     class BorrowingBook
     {
-        private List<BookVO> myBookList;
-        public BorrowingBook(string memberId, List<BookVO> bookList)  
+        List<BookVO> bookList = new List<BookVO>();
+        public BorrowingBook(string myId)
         {
-            List<BorrowBookVO> borrowList = new List<BorrowBookVO>();  //도서대여목록
-            for(int i=0; i<bookList.Count; i++)
+            InitBorrowList(myId);
+        }
+        public void InitBorrowList(string myId)
+        {
+            string path = "./text/BorrowList.txt";
+            StreamReader reader = new StreamReader(path);
+
+            while (reader.Peek() >= 0)
             {
-                if (borrowList[i].MemberId.Equals(memberId)) myBookList.Add(bookList[i]); //나의 도서대여 목록
+                String[] text = reader.ReadLine().ToString().Split(",");   //도서대여 정보를 읽어옴
+                if (myId.Equals(text[0]))
+                {
+                    bookList.Add(new BookVO(text[1], text[2], text[3], text[4], text[5], text[6]));
+                }
             }
+            reader.Close();
         }
         public void ControlBorrowingBook()
         {
             Screen screen = new Screen();
-            screen.PrintBorrowingBook(myBookList);  //대여한 도서 목록 출력
+            screen.PrintBorrowingBook(bookList, "\n☞대여할 도서 번호: ");  //대여한 도서 목록 출력
             Console.SetCursorPosition(20, 1);
             string bookId = Console.ReadLine();     //반납할 도서 번호 입력받기
+
+        }
+    }
+    class ReturningBook
+    {
+        public void ControlReturningBook()
+        {
+            AdminController adminController = new AdminController();
+            Screen screen = new Screen();
+            screen.PrintBorrowingBook(adminController.bookList, "\n☞반납할 도서 번호: ");
+            Console.Read();
         }
     }
 }

@@ -8,9 +8,8 @@ namespace Library
     {
         static void Main(string[] args)
         {
-            TestingLibrary testingLibrary = new TestingLibrary();
+            StartingLibrary testingLibrary = new StartingLibrary();
             testingLibrary.TestLibrary();
-            
         }
     }
 }
