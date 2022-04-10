@@ -9,7 +9,7 @@ namespace Library
 {
     class AdminController
     {
-        public void ControlAdminSignIn()  //관리자 로그인 관리
+        public bool ControlAdminSignIn()  //관리자 로그인 관리
         {
             string id = "";
             string password = "";
@@ -21,8 +21,7 @@ namespace Library
                 admin.SignInAdmin(ref id, ref password);   //로그인
                 if (id == "12345" && password == "00000")
                 {
-                    ControlAdminMode();  //관리자 모드로
-                    input = Constants.RIGHT_VALUE;
+                    return true;
                 }
                 else
                 {
@@ -30,6 +29,7 @@ namespace Library
                     Console.WriteLine("\n\n"+ Constants.SIGN_IN_ERROR);
                 }
             }
+            return false;
         }
         public void ControlAdminMode()     //관리자 모드 관리
         {
@@ -52,8 +52,7 @@ namespace Library
         public void SelectMenu(int menu) //관리자 메뉴에서 선택
         {
             int function = Constants.COMPLETE_FUNCTION;
-            MemberController memberController = new MemberController();
-
+            
             switch (menu)
             {
                 case 13:  //도서 이름 검색
@@ -68,10 +67,10 @@ namespace Library
                     break;
                 case 16:  //도서 삭제(미완)
                     break;
-                case 17:  //회원관리(미완 -> 회원출력만 가능)
-                    SearchingMember searchingMember = new SearchingMember(memberController.memberList);
+                //case 17:  //회원관리(미완 -> 회원출력만 가능)
+                    /*SearchingMember searchingMember = new SearchingMember(memberController.memberList);
                     function = searchingMember.ControlSearchingMember(memberController.memberList);
-                    break;
+                    break;*/
 
             }
 

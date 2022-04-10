@@ -29,6 +29,8 @@ namespace Library
         public const bool CORRECT_MEMBERSHIP = true;
         public const bool WRONG_MEMBERSHIP = false;
 
+        public const bool DUPLICATE_ID = true;
+
         public const bool GOING_NEXT = true;
         public const bool GOING_BACK = true;
         public const bool INPUT_VALUE = true;
