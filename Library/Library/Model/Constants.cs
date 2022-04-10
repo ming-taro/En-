@@ -32,6 +32,8 @@ namespace Library
         public const bool DUPLICATE_ID = true;
         public const string REMOVE_LINE = "                                                             ";
 
+        public const bool EXISTING_MEMBER = true;
+
         public const bool GOING_NEXT = true;
         public const bool GOING_BACK = true;
         public const bool INPUT_VALUE = true;

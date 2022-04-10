@@ -9,25 +9,10 @@ namespace Library
 {
     class MemberController
     {
-        string myId;
-        public List<MemberVO> memberList;
-        
+        private string myId;
         public MemberController()
         {
-            InitMemberList();
-        }
-        public void InitMemberList()   //회원목록 불러오기
-        {
-            memberList = new List<MemberVO>(); //회원목록
-
-            string path = "./text/MemberList.txt";
-            StreamReader reader = new StreamReader(path);
-            while (reader.Peek() >= 0)
-            {
-                String[] text = reader.ReadLine().ToString().Split(",");     //회원 정보를 읽어옴
-                memberList.Add(new MemberVO(text[0], text[1], text[2], text[3], text[4], text[5])); //초기 회원 목록을 리스트에 저장
-            }
-            reader.Close();
+            myId = "";
         }
         public void ControlMemberMode(int maxTop)    //1.회원가입  2.로그인  3.종료(미완)
         {
@@ -39,16 +24,12 @@ namespace Library
             while (Constants.MEMBER_MODE)
             {
                 if (maxTop == 15) screen.PrintMemberMenu();//1.로그인  2.회원가입  3.종료
-                else screen.PrintMemberMode();    //1.도서검색  2.도서대여  3.도서반납  4.개인정보수정  5.종료
+                else screen.PrintMemberMode();             //1.도서검색  2.도서대여  3.도서반납  4.개인정보수정  5.종료
                 menu = testingLibrary.SelectMenu(13, maxTop);  //메뉴선택
-                if (menu == Constants.ESCAPE) break;  //메뉴선택 중 뒤로가기 -> 메인화면으로
-                menu = testingLibrary.GetTop();   //메뉴의 해당 커서값
-                if (maxTop == 15)
-                {
-                    SelectMenu1(menu); //1.로그인  2.회원가입  3.종료
-                    break;
-                }
-                else SelectMenu2(menu);              //1.도서검색  2.도서대여  3.도서반납  4.개인정보수정  5.종료
+                if (menu == Constants.ESCAPE) break;           //메뉴선택 중 뒤로가기 -> 메인화면으로
+                menu = testingLibrary.GetTop();                //메뉴의 해당 커서값
+                if (maxTop == 15) SelectMenu1(menu);       //1.로그인  2.회원가입  3.종료
+                else SelectMenu2(menu);                    //1.도서검색  2.도서대여  3.도서반납  4.개인정보수정  5.종료
             }
             //회원 모드 종료 -> 메인화면으로 돌아감
         }
@@ -89,39 +70,10 @@ namespace Library
                     break;
             }
         }
-        public bool IsCorrectMemberShip(string id, string password)
-        {
-            for(int i=0; i<memberList.Count; i++)
-            {
-                if(memberList[i].Id.Equals(id) && memberList[i].Password.Equals(password))
-                {
-                    return Constants.CORRECT_MEMBERSHIP;
-                }
-            }
-            return Constants.WRONG_MEMBERSHIP;
-        }
         public void ControlSignIn()
         {
-            string id = "";
-            string password = "";
-            SignIn member = new SignIn();  //회원 로그인 화면으로 이동)
-
-            bool input = Constants.WRONG_VALUE;
-
-            while (input == Constants.WRONG_VALUE)
-            {
-                member.SignInAdmin(ref id, ref password);   //로그인
-                if (IsCorrectMemberShip(id, password))
-                {
-                    myId = id;
-                    input = Constants.RIGHT_VALUE;
-                }
-                else
-                {
-                    member.PrintScreen();//로그인 실패시 다시 입력(+오류 메세지)
-                    Console.WriteLine("\n\n" + Constants.SIGN_IN_ERROR);
-                }
-            }
+            SignIn signIn = new SignIn();  //회원 로그인 화면으로 이동
+            myId = signIn.SignInMember();  //회원 아이디 
         }
     }
 }

@@ -42,27 +42,7 @@ namespace Library
             Console.ReadLine();
         }
     }
-    class SignIn
-    {
-        public SignIn()
-        {
-            PrintScreen();
-        }
-        public void PrintScreen()
-        {
-            Screen screen = new Screen();
-            screen.PrintSingIn("로그인");
-        }
-        public bool SignInAdmin(ref string id, ref string password)
-        {
-            Console.SetCursorPosition(8, 5);
-            id = Console.ReadLine();     //아이디 입력
-            Console.SetCursorPosition(10, 6);
-            password = Console.ReadLine();     //비밀번호 입력
-
-            return Constants.GOING_NEXT;
-        }
-    }
+    
     
     
     class SearchingMember
