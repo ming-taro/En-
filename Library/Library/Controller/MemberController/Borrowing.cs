@@ -44,14 +44,40 @@ namespace Library
 
             return !Constants.QUANTITY_ZERO;
         }
+        public string InputBookName()
+        {
+            Regex regex = new Regex(@"^[\w]{1,1}[^\e]{0,49}$");   //도서명: 1~50자 이내
+            string bookName;
+
+            Console.SetCursorPosition(0, 1);
+            Console.WriteLine("☞도서명 검색:                                                      ");
+
+            while (Constants.INPUT_VALUE)
+            {
+                Console.SetCursorPosition(10, 1);
+                bookName = Console.ReadLine();                   //도서명을 입력 받음
+                if (string.IsNullOrEmpty(bookName) || !regex.IsMatch(bookName))  //입력형식에 맞지 않은 경우
+                {
+                    Console.WriteLine("\n(공백으로 시작하지 않는 50자 이내의 글자를 입력해주세요.)                    ");
+                }
+                else
+                {
+                    
+                }
+            }
+            return bookName;
+        }
         public string InputBookId()          //도서명 입력 후 도서번호 입력
         {
             Regex regex = new Regex(@"^[0-9]{1,3}$");   //도서번호:숫자,0~999까지
             string bookId;
 
+            Console.SetCursorPosition(0,1);
+            Console.WriteLine("☞대여할 도서 번호:                                                   ");
+
             while (Constants.INPUT_VALUE)
             {
-                Console.SetCursorPosition(10, 1);
+                Console.SetCursorPosition(24, 1);
                 bookId = Console.ReadLine();            //도서번호를 입력 받음
                 if (string.IsNullOrEmpty(bookId) || !regex.IsMatch(bookId)) //형식에 맞지 않는 입력일 경우
                 {
@@ -72,10 +98,11 @@ namespace Library
         }
         public int ControlBorrowing(string memberId)
         {
-            Registering registeringBook = new Registering();
+            Registering registering = new Registering();
+
             while (Constants.INPUT_VALUE)
             {
-                string bookName = registeringBook.InputBookName(19, 1, "도서명으로 검색");   //먼저 도서명 입력받기
+                string bookName = InputBookName();   //먼저 도서명 입력받기
                 string bookId = InputBookId();  //도서번호를 입력받음
                 if (!bookId.Equals(Constants.RE_ENTER)) break;   //도서번호를 잘못 입력받으면 도서명부터 다시 입력
             }
