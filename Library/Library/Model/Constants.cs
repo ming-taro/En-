@@ -33,6 +33,7 @@ namespace Library
         public const string REMOVE_LINE = "                                                             ";
 
         public const bool EXISTING_MEMBER = true;
+        public const bool BOOK_I_BORROWED = true;
 
         public const bool GOING_NEXT = true;
         public const bool GOING_BACK = true;
