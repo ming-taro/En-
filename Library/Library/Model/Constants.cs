@@ -30,6 +30,7 @@ namespace Library
         public const bool WRONG_MEMBERSHIP = false;
 
         public const bool DUPLICATE_ID = true;
+        public const string REMOVE_LINE = "                                                             ";
 
         public const bool GOING_NEXT = true;
         public const bool GOING_BACK = true;

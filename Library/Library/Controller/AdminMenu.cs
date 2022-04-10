@@ -51,6 +51,11 @@ namespace Library
             RegisteringScreen screen = new RegisteringScreen();
             screen.PrintRegistering(); //도서등록 입력화면
         }
+        public void PrintInputBox(int left, int top, string message)
+        {
+            Console.SetCursorPosition(left, top);
+            Console.Write(message);
+        }
         public bool IsDuplicateId(string bookId)   //입력값이 중복된 아이디인지 검사
         {
             BookListVO bookListVO = BookListVO.getBookListVO();  //도서목록
@@ -63,58 +68,63 @@ namespace Library
         }
         public string InputBookId()
         {
-            Regex regex = new Regex("^[A-Za-z0-9]{1,3}$");   //도서번호:영숫자,0~999까지
+            Regex regex = new Regex(@"^[0-9]{1,3}$");   //도서번호:숫자,0~999까지
             string bookId;
 
             while (Constants.INPUT_VALUE)
             {
-                Console.SetCursorPosition(0, 7);
-                Console.WriteLine("도서번호:                                                  ");
                 Console.SetCursorPosition(10, 7);
                 bookId = Console.ReadLine();        //도서번호를 입력 받음
                 if (!string.IsNullOrEmpty(bookId) && regex.IsMatch(bookId) && !IsDuplicateId(bookId)) //중복 없이 알맞게 입력한 경우
                 {
                     Console.SetCursorPosition(0, 8);
-                    Console.Write("                                                        ");
+                    PrintInputBox(0, 8, Constants.REMOVE_LINE);
                     break;
                 }
                 else if (!string.IsNullOrEmpty(bookId) && regex.IsMatch(bookId))      //입력 양식은 맞지만 도서아이디가 이미 존재하는 경우
                 {
-                    Console.SetCursorPosition(0, 8);
-                    Console.Write("(이미 존재하는 아이디입니다. 다시 입력해주세요.)       ");
+                    PrintInputBox(0, 8, "(이미 존재하는 아이디입니다. 다시 입력해주세요.)       ");
                 }
                 else
                 {
-                    Console.SetCursorPosition(0, 8);
-                    Console.Write("(0~999사이의 숫자가 아닙니다. 다시 입력해주세요.)          ");
+                    PrintInputBox(0, 7, "도서번호:" + Constants.REMOVE_LINE);
+                    PrintInputBox(0, 8, "(0~999사이의 숫자가 아닙니다. 다시 입력해주세요.)          ");
                 }
             }
             return bookId;
         }
         public string InputBookName(int left, int top, string inputType)
         {
-            Regex regex = new Regex("[^/s]{1},{1,49}");   //(도서명/출판사): 1~50자 이내
+            Regex regex = new Regex(@"^[\w]{1,1}[\w|\s]{0,49}$");   //(도서명/출판사): 1~50자 이내
             string bookName;
 
             while (Constants.INPUT_VALUE)
             {
-                Console.SetCursorPosition(0, top);
-                Console.WriteLine(inputType + ":                                                  ");
                 Console.SetCursorPosition(left, top);
                 bookName = Console.ReadLine();        //(도서명/출판사)를 입력 받음
                 if (!string.IsNullOrEmpty(bookName) && regex.IsMatch(bookName))  
                 {
-                    Console.SetCursorPosition(0, top + 1);
-                    Console.Write("                                                        ");
+                    PrintInputBox(0, top+1, Constants.REMOVE_LINE);
                     break;
                 }
                 else
                 {
-                    Console.SetCursorPosition(0, top + 1);
-                    Console.Write("(공백으로 시작하지 않는 50자 이내의 글자를 입력해주세요.)");
+                    PrintInputBox(0, top, inputType + ":" + Constants.REMOVE_LINE);
+                    PrintInputBox(0, top+1, "(공백으로 시작하지 않는 50자 이내의 글자를 입력해주세요.)");
                 }
             }
             return bookName;
+        }
+        public string InputAuthor()
+        {
+            Regex regex = new Regex("[^/s]{1},{0,49}");   //(도서명/출판사): 1~50자 이내
+            string bookName;
+
+            while (Constants.INPUT_VALUE)
+            {
+                Console.SetCursorPosition(0, 16);
+                Console.SetCursorPosition(6, 16);
+            }
         }
         public int ControlRegistering()
         {
