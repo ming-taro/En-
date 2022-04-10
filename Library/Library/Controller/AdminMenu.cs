@@ -158,7 +158,7 @@ namespace Library
         }
         public string InputQuantity()
         {
-            Regex regex = new Regex(@"^[0-9]{1,2}");   //숫자, 2자 이내
+            Regex regex = new Regex(@"^[0-9]{1,2}$");   //숫자, 2자 이내
             string quantity;
 
             while (Constants.INPUT_VALUE)
@@ -186,11 +186,13 @@ namespace Library
             book[2] = InputBookName(8, 13, "출판사");  //출판사
             book[3] = InputAuthor();                   //저자
             book[4] = InputPrice();                    //가격
-            book[5] = InputQuantity();  //수량
+            book[5] = InputQuantity();                 //수량
 
             BookListVO bookListVO = BookListVO.getBookListVO();  //도서목록
             bookListVO.bookList.Add(new BookVO(book[0], book[1], book[2], book[3], book[4], book[5])); //도서목록에 등록된 도서정보 추가
 
+            RegisteringScreen screen = new RegisteringScreen();
+            screen.PrintComplete();                   //등록 완료 화면 출력
             return Constants.COMPLETE_FUNCTION;       //도서등록까지 모두 완료
         }
     }

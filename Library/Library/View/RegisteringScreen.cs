@@ -21,5 +21,15 @@ namespace Library
             Console.WriteLine("가격: \n(숫자만 입력 가능합니다.(ex: 34000)\n");
             Console.WriteLine("수량: \n(1~99사이의 숫자만 입력 가능합니다.(ex: 5))");
         }
+        public void PrintComplete()
+        {
+            Console.Clear();
+            LogoScreen logoScreen = new LogoScreen();
+            logoScreen.PrintMenu("도서 등록 완료");
+            BookListVO bookListVO = BookListVO.getBookListVO();  //도서목록
+            int registeringBookVO = bookListVO.bookList.Count() - 1;
+            Console.WriteLine(bookListVO.bookList[registeringBookVO]);  //방금 등록한 도서 정보 출력
+            Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>뒤로가기:[ESC]<<<<<<<<<<<<<<<<<<<<<<<<");
+        }
     }
 }
