@@ -26,7 +26,7 @@ namespace Library
             Console.Clear();
             LogoScreen logoScreen = new LogoScreen();
             logoScreen.PrintMenu("도서 등록 완료");
-            BookListVO bookListVO = BookListVO.getBookListVO();  //도서목록
+            BookListVO bookListVO = BookListVO.GetBookListVO();  //도서목록
             int registeringBookVO = bookListVO.bookList.Count() - 1;
             Console.WriteLine(bookListVO.bookList[registeringBookVO]);  //방금 등록한 도서 정보 출력
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>뒤로가기:[ESC]<<<<<<<<<<<<<<<<<<<<<<<<");

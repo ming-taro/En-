@@ -57,12 +57,12 @@ namespace Library
                     adminController.SelectMenu(menu);
                     break;
                 case 14:  //도서대여(미완)
-                    ReturningBook returningBook = new ReturningBook();
-                    returningBook.ControlReturningBook();
+                    Returning returning = new Returning(myId);
+                    returning.ControlReturning();
                     break;
                 case 15:   //도서반납(미완)
-                    BorrowingBook borrowingBook = new BorrowingBook(myId);
-                    borrowingBook.ControlBorrowingBook();
+                    //Borrowing borrowingBook = new BorrowingBook(myId);
+                    //borrowingBook.ControlBorrowingBook();
                     break;
                 case 16:   //개인정보수정(미완)
                     break;

@@ -10,7 +10,7 @@ namespace Library
     {
         private static BookListVO bookListVO = null;
         public List<BookVO> bookList;
-        public static BookListVO getBookListVO()
+        public static BookListVO GetBookListVO()
         {
             if(bookListVO == null)
             {

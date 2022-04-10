@@ -10,7 +10,7 @@ namespace Library
     class BorrowListVO
     {
         private static BorrowListVO borrowListVO = null;
-        public ArrayList borrowList;
+        public List<BorrowVO> borrowList;
         public static BorrowListVO GetBorrowListVO()
         {
             if (borrowListVO == null)
@@ -21,7 +21,7 @@ namespace Library
         }
         public BorrowListVO()
         {
-            borrowList = new ArrayList();
+            borrowList = new List<BorrowVO>();
             BookListVO bookListVO = BookListVO.GetBookListVO();
 
             borrowList.Add(new BorrowVO("aaabbb", bookListVO.bookList[0]));

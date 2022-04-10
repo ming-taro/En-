@@ -62,45 +62,4 @@ namespace Library
             return Constants.COMPLETE_FUNCTION;       //검색결과 출력까지 모두 완료
         }
     }
-    class BorrowingBook
-    {
-        List<BookVO> bookList = new List<BookVO>();
-        public BorrowingBook(string myId)
-        {
-            InitBorrowList(myId);
-        }
-        public void InitBorrowList(string myId)
-        {
-            string path = "./text/BorrowList.txt";
-            StreamReader reader = new StreamReader(path);
-
-            while (reader.Peek() >= 0)
-            {
-                String[] text = reader.ReadLine().ToString().Split(",");   //도서대여 정보를 읽어옴
-                if (myId.Equals(text[0]))
-                {
-                    bookList.Add(new BookVO(text[1], text[2], text[3], text[4], text[5], text[6]));
-                }
-            }
-            reader.Close();
-        }
-        public void ControlBorrowingBook()
-        {
-            Screen screen = new Screen();
-            screen.PrintBorrowingBook(bookList, "\n☞대여할 도서 번호: ");  //대여한 도서 목록 출력
-            Console.SetCursorPosition(20, 1);
-            string bookId = Console.ReadLine();     //반납할 도서 번호 입력받기
-
-        }
-    }
-    class ReturningBook
-    {
-        public void ControlReturningBook()
-        {
-            AdminController adminController = new AdminController();
-            Screen screen = new Screen();
-            //screen.PrintBorrowingBook(adminController.bookList, "\n☞반납할 도서 번호: ");
-            Console.Read();
-        }
-    }
 }
