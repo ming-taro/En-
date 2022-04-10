@@ -41,7 +41,7 @@ namespace Library
                 }
                 else if (!string.IsNullOrEmpty(bookId) && regex.IsMatch(bookId))      //입력 양식은 맞지만 도서아이디가 이미 존재하는 경우
                 {
-                    PrintInputBox(0, 8, "(이미 존재하는 아이디입니다. 다시 입력해주세요.)       ");
+                    PrintInputBox(0, 8, "(이미 존재하는 아이디입니다. 다시 입력해주세요.)          ");
                 }
                 else
                 {

@@ -18,5 +18,12 @@ namespace Library
             ListScreen listScreen = new ListScreen();
             listScreen.PrintBookList(bookListVO.bookList);        //도서목록 출력
         }
+
+        public void PrintSuccessMessage()
+        {
+            LogoScreen logoScreen = new LogoScreen();
+            logoScreen.PrintMenu("도서대여 완료");
+            Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>뒤로가기:[ESC]<<<<<<<<<<<<<<<<<<<<<<<<\n");
+        }
     }
 }

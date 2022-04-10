@@ -35,6 +35,9 @@ namespace Library
         public const bool EXISTING_MEMBER = true;
         public const bool BOOK_I_BORROWED = true;
 
+        public const bool QUANTITY_ZERO = true;
+        public const string RE_ENTER = "RE_ENTER";
+
         public const bool GOING_NEXT = true;
         public const bool GOING_BACK = true;
         public const bool INPUT_VALUE = true;
