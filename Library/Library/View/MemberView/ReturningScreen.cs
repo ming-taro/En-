@@ -25,9 +25,18 @@ namespace Library
         public void PrintErrorMessage(string message)
         {
             Console.SetCursorPosition(0, 1);
-            Console.WriteLine("☞반납할 도서 번호: ");
+            Console.WriteLine("☞반납할 도서 번호:                                                    ");
             Console.SetCursorPosition(0, 2);
             Console.WriteLine(message);
+        }
+
+        public void PrintSuccessMessage(List<BookVO> bookList)
+        {
+            LogoScreen logoScreen = new LogoScreen();
+            logoScreen.PrintMenu("도서반납 완료");
+
+            ListScreen listScreen = new ListScreen();
+            listScreen.PrintBookList(bookList);
         }
     }
 }
