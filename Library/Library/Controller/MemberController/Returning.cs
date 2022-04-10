@@ -77,10 +77,24 @@ namespace Library
                 }
             }
         }
+        public void AddInBookListVO(string bookId)
+        {
+            BookListVO bookListVO = BookListVO.GetBookListVO();
+            int i;
+
+            for(i = 0; i<bookListVO.bookList.Count; i++)
+            {
+                if (bookListVO.bookList[i].Id.Equals(bookId)) break;//반납한 도서 아이디를 도서목록에서 찾음
+            }
+
+            int quantity = int.Parse(bookListVO.bookList[i].Quantity) + 1; //해당 도서 수량을 +1만큼
+            bookListVO.bookList[i].Quantity = quantity.ToString();
+        }
         public int ControlReturning(string memberId)
         {
             string bookId = InputBookId();                       //반납하려는 도서번호
             RemoveInBorrowListVO(memberId, bookId);              //대여도서목록에서 반납한 도서 데이터 삭제
+            AddInBookListVO(bookId);
             ReturningScreen returningScreen = new ReturningScreen();
             returningScreen.PrintSuccessMessage(myBorrowList);   //반납 후 나의 대여 도서 목록 출력
 

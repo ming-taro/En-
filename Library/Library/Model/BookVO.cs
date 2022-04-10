@@ -51,6 +51,7 @@ namespace Library
         public string Quantity
         {
             get { return quantity; }
+            set { quantity = value; }
         }
         public override String ToString()
         {
