@@ -9,7 +9,7 @@ namespace Library
 {
     class Borrowing
     {
-        private List<BookVO> bookList;
+        private List<BookVO> bookList;   
         public Borrowing()
         {
             bookList = new List<BookVO>();
@@ -21,33 +21,45 @@ namespace Library
             Console.SetCursorPosition(0, 2);
             Console.Write(message);
         }
-        public bool IsBookOnList(string bookId)
+        public void AddBookOnList(string bookName) 
         {
+            BookListVO bookListVO = BookListVO.GetBookListVO();
 
-            for(int i=0; i<bookList.Count; i++)
+            for(int i=0; i<bookListVO.bookList.Count; i++)
             {
-                if (bookList[i].Id.Equals(bookId)) return true;
+                if (bookListVO.bookList[i].Name.Contains(bookName))
+                {
+                    bookList.Add(bookListVO.bookList[i]);   //입력된 도서명을 포함하는 도서를 찾아 리스트에 저장
+                }
             }
-            return false;
         }
-        public bool IsDuplicateId(string bookId)   //입력값이 중복된 아이디인지 검사
+        public bool IsBookInList(string bookName)
         {
-            BookListVO bookListVO = BookListVO.GetBookListVO();  //도서목록
+            BookListVO bookListVO = BookListVO.GetBookListVO();
 
             for (int i = 0; i < bookListVO.bookList.Count; i++)
             {
-                if (bookListVO.bookList[i].Id.Equals(bookId)) return Constants.DUPLICATE_ID;  //도서목록에 존재함
+                if (bookListVO.bookList[i].Name.Contains(bookName))
+                {
+                    return Constants.BOOK_IN_LIST;   //입력된 도서명이 목록에 있음
+                }
+            }
+            return !Constants.BOOK_IN_LIST;
+        }
+        public bool IsDuplicateId(string bookId)   //입력값이 중복된 아이디인지 검사
+        {
+            for (int i = 0; i < bookList.Count; i++)
+            {
+                if (bookList[i].Id.Equals(bookId)) return Constants.DUPLICATE_ID;  //도서목록에 존재함
             }
 
             return !Constants.DUPLICATE_ID;  //도서목록에 없는 책을 대여하려 함
         }
         public bool IsQuantityZero(string bookId)
         {
-            BookListVO bookListVO = BookListVO.GetBookListVO();  //도서목록
-
-            for(int i = 0; i<bookListVO.bookList.Count; i++)
+            for(int i = 0; i<bookList.Count; i++)
             {
-                if (bookListVO.bookList[i].Id.Equals(bookId) && bookListVO.bookList[i].Quantity.Equals("0"))
+                if (bookList[i].Id.Equals(bookId) && bookList[i].Quantity.Equals("0"))
                 {
                     return Constants.QUANTITY_ZERO;
                 }
@@ -71,10 +83,11 @@ namespace Library
                 {
                     PrintInputBox("\n(공백으로 시작하지 않는 50자 이내의 글자를 입력해주세요.)                    ");
                 }
-                else
+                else if(!IsBookInList(bookName))  //입력형식은 맞지만, 도서목록에 없는 도서명일 경우
                 {
-                    break;   
+                    PrintInputBox("\n(검색어를 포함하는 도서가 없습니다. 다시 입력해주세요.)                    ");
                 }
+                else break; ;  //도서목록에 있는 도서명을 검색한 경우
             }
             return bookName;
         }
@@ -95,14 +108,15 @@ namespace Library
                 {
                     PrintInputBox("(0~999사이의 숫자가 아닙니다.다시 입력해주세요.)               ");
                 }
-                else if (!IsDuplicateId(bookId))         //입력형식은 맞지만, 목록에 없는 도서를 빌리려고 했을 때
+                else if (!IsDuplicateId(bookId))  //입력형식은 맞지만, 목록에 없는 도서를 빌리려고 했을 때
                 {
                     PrintInputBox("(도서목록에 없는 도서번호입니다. 다시 입력해주세요.)           ");
+                    return Constants.RE_ENTER;    //도서명부터 다시 검색
                 }
                 else if (IsQuantityZero(bookId))  //목록에 있는 도서이지만 수량이 0일 때
                 {
                     PrintInputBox("(대여가능한 도서가 0권입니다. 다시 입력해주세요.)              ");
-                    return Constants.RE_ENTER;
+                    return Constants.RE_ENTER;    //도서명부터 다시 검색
                 }
                 else break;  //도서목록에 있는 책을 빌리려고 했을 때 -> 해당 도서 아이디 리턴
             }
@@ -116,8 +130,9 @@ namespace Library
             while (Constants.INPUT_VALUE)
             {
                 string bookName = InputBookName();   //먼저 도서명 입력받기
-                searchingScreen.PrintSearchingBook(1, bookName, bookListVO.bookList);   //도서명 검색결과 목록 출력
-                string bookId = InputBookId();      //도서번호를 입력받음
+                AddBookOnList(bookName);             //검색어를 포함하는 책 리스트 저장
+                searchingScreen.PrintSearchingBook(1, bookName, bookList);   //도서명 검색결과 목록 출력
+                string bookId = InputBookId();       //도서번호를 입력받음
                 if (!bookId.Equals(Constants.RE_ENTER)) break;   //도서번호를 잘못 입력받으면 도서명부터 다시 입력
             }
             
