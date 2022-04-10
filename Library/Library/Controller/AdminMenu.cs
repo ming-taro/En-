@@ -91,18 +91,45 @@ namespace Library
             }
             return bookId;
         }
+        public string InputBookName(int left, int top, string inputType)
+        {
+            Regex regex = new Regex("[^/s]{1},{1,49}");   //(도서명/출판사): 1~50자 이내
+            string bookName;
+
+            while (Constants.INPUT_VALUE)
+            {
+                Console.SetCursorPosition(0, top);
+                Console.WriteLine(inputType + ":                                                  ");
+                Console.SetCursorPosition(left, top);
+                bookName = Console.ReadLine();        //(도서명/출판사)를 입력 받음
+                if (!string.IsNullOrEmpty(bookName) && regex.IsMatch(bookName))  
+                {
+                    Console.SetCursorPosition(0, top + 1);
+                    Console.Write("                                                        ");
+                    break;
+                }
+                else
+                {
+                    Console.SetCursorPosition(0, top + 1);
+                    Console.Write("(공백으로 시작하지 않는 50자 이내의 글자를 입력해주세요.)");
+                }
+            }
+            return bookName;
+        }
         public int ControlRegistering()
         {
             string[] book = new string[6];
-            book[0] = InputBookId();
-            Console.SetCursorPosition(8, 10);
-            book[1] = Console.ReadLine();  //도서명
-            Console.SetCursorPosition(8, 13);
-            book[2] = Console.ReadLine();  //출판사
+
+            book[0] = InputBookId();    //도서번호
+            book[1] = InputBookName(8, 10, "도서명");  //도서명
+            book[2] = InputBookName(8, 13, "출판사");  //출판사
+
             Console.SetCursorPosition(6, 16);
             book[3] = Console.ReadLine();  //저자
+
             Console.SetCursorPosition(6, 19);
             book[4] = Console.ReadLine();  //가격
+
             Console.SetCursorPosition(6, 22);
             book[5] = Console.ReadLine();  //수량
 
