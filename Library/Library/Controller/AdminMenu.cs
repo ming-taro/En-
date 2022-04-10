@@ -87,15 +87,15 @@ namespace Library
                 }
                 else
                 {
-                    PrintInputBox(0, 7, "도서번호:" + Constants.REMOVE_LINE);
-                    PrintInputBox(0, 8, "(0~999사이의 숫자가 아닙니다. 다시 입력해주세요.)          ");
+                    PrintInputBox(0, 7, "도서번호:" + Constants.REMOVE_LINE + "\n(0~999사이의 숫자가 아닙니다. 다시 입력해주세요.)          ");
+                    //PrintInputBox(0, 8, );
                 }
             }
             return bookId;
         }
         public string InputBookName(int left, int top, string inputType)
         {
-            Regex regex = new Regex(@"^[\w]{1,1}[\w|\s]{0,49}$");   //(도서명/출판사): 1~50자 이내
+            Regex regex = new Regex(@"^[\w]{1,1}[^\e]{0,49}$");   //(도서명/출판사): 1~50자 이내
             string bookName;
 
             while (Constants.INPUT_VALUE)
@@ -109,39 +109,84 @@ namespace Library
                 }
                 else
                 {
-                    PrintInputBox(0, top, inputType + ":" + Constants.REMOVE_LINE);
-                    PrintInputBox(0, top+1, "(공백으로 시작하지 않는 50자 이내의 글자를 입력해주세요.)");
+                    PrintInputBox(0, top, inputType + ":" + Constants.REMOVE_LINE + "\n(공백으로 시작하지 않는 50자 이내의 글자를 입력해주세요.)                    ");
                 }
             }
             return bookName;
         }
         public string InputAuthor()
         {
-            Regex regex = new Regex("[^/s]{1},{0,49}");   //(도서명/출판사): 1~50자 이내
-            string bookName;
+            Regex regex = new Regex(@"^[a-zA-Z가-힣]{1,50}$");   //영어,한글,1~50자 이내
+            string author;
 
             while (Constants.INPUT_VALUE)
             {
-                Console.SetCursorPosition(0, 16);
                 Console.SetCursorPosition(6, 16);
+                author = Console.ReadLine();             //저자를 입력받음
+                if (!string.IsNullOrEmpty(author) && regex.IsMatch(author))
+                {
+                    PrintInputBox(0, 17, Constants.REMOVE_LINE);
+                    break;
+                }
+                else
+                {
+                    PrintInputBox(0, 16, "저자: " + Constants.REMOVE_LINE + "\n(50자 이내의 영어, 한글만 입력해주세요.)                            ");
+                }
             }
+            return author;
+        }
+        public string InputPrice()
+        {
+            Regex regex = new Regex(@"^[0-9]{1,10}");   //숫자,10자 이내
+            string price;
+
+            while (Constants.INPUT_VALUE)
+            {
+                Console.SetCursorPosition(6, 19);
+                price = Console.ReadLine();             //가격을 입력받음
+                if (!string.IsNullOrEmpty(price) && regex.IsMatch(price))
+                {
+                    PrintInputBox(0, 20, Constants.REMOVE_LINE);
+                    break;
+                }
+                else
+                {
+                    PrintInputBox(0, 19, "가격: " + Constants.REMOVE_LINE + "\n(10자 이내의 숫자만 가능합니다. 다시 입력해주세요.)                            ");
+                }
+            }
+            return price;
+        }
+        public string InputQuantity()
+        {
+            Regex regex = new Regex(@"^[0-9]{1,2}");   //숫자, 2자 이내
+            string quantity;
+
+            while (Constants.INPUT_VALUE)
+            {
+                Console.SetCursorPosition(6, 22);
+                quantity = Console.ReadLine();                     //수량을 입력받음
+                if (!string.IsNullOrEmpty(quantity) && regex.IsMatch(quantity))
+                {
+                    PrintInputBox(0, 23, Constants.REMOVE_LINE);
+                    break;
+                }
+                else
+                {
+                    PrintInputBox(0, 22, "수량: " + Constants.REMOVE_LINE + "\n(1~99사이의 숫자만 가능합니다. 다시 입력해주세요.)                            ");
+                }
+            }
+            return quantity;
         }
         public int ControlRegistering()
         {
             string[] book = new string[6];
 
-            book[0] = InputBookId();    //도서번호
+            book[0] = InputBookId();                   //도서번호
             book[1] = InputBookName(8, 10, "도서명");  //도서명
             book[2] = InputBookName(8, 13, "출판사");  //출판사
-
-            Console.SetCursorPosition(6, 16);
-            book[3] = Console.ReadLine();  //저자
-
-            Console.SetCursorPosition(6, 19);
-            book[4] = Console.ReadLine();  //가격
-
-            Console.SetCursorPosition(6, 22);
-            book[5] = Console.ReadLine();  //수량
+            book[3] = InputAuthor();                   //저자
+            book[4] = InputPrice();                    //가격
+            book[5] = InputQuantity();  //수량
 
             BookListVO bookListVO = BookListVO.getBookListVO();  //도서목록
             bookListVO.bookList.Add(new BookVO(book[0], book[1], book[2], book[3], book[4], book[5])); //도서목록에 등록된 도서정보 추가
