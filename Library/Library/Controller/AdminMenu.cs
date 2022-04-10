@@ -69,7 +69,7 @@ namespace Library
                     break;
                 }
                 Console.SetCursorPosition(0, 8);
-                Console.WriteLine("(영어, 숫자만 입력 가능합니다.(최대 3글자))");  //잘못입력시 메세지 출력
+                Console.WriteLine("(영어, 숫자만 입력 가능합니다.(최대 3글자))       ");  //잘못입력시 메세지 출력
             }
             return book;
         }
@@ -78,15 +78,15 @@ namespace Library
             string[] book = new string[6];
 
             book[0] = InputBookId();
-            Console.SetCursorPosition(8, 9);
+            Console.SetCursorPosition(8, 10);
             book[1] = Console.ReadLine();  //도서명
-            Console.SetCursorPosition(8, 11);
+            Console.SetCursorPosition(8, 13);
             book[2] = Console.ReadLine();  //출판사
-            Console.SetCursorPosition(6, 13);
+            Console.SetCursorPosition(6, 16);
             book[3] = Console.ReadLine();  //저자
-            Console.SetCursorPosition(6, 15);
+            Console.SetCursorPosition(6, 19);
             book[4] = Console.ReadLine();  //가격
-            Console.SetCursorPosition(6, 17);
+            Console.SetCursorPosition(6, 22);
             book[5] = Console.ReadLine();  //수량
 
             BookListVO bookListVO = BookListVO.getBookListVO();  //도서목록
