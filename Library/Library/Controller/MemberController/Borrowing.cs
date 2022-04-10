@@ -10,15 +10,21 @@ namespace Library
     {
         public Borrowing()
         {
+            BorrowingScreen borrowingScreen = new BorrowingScreen();
+            borrowingScreen.PrintBorrowing();
         }
-        
-        public void ControlBorrowingBook()
+        public void InputBookName()
         {
-            Screen screen = new Screen();
-            //screen.PrintBorrowingBook(bookList, "\n☞대여할 도서 번호: ");  //대여한 도서 목록 출력
+            Console.Read();
+            //Regex regex = new Regex(@"");
+        }
+        public int ControlBorrowing(string memberId)
+        {
             Console.SetCursorPosition(20, 1);
-            string bookId = Console.ReadLine();     //반납할 도서 번호 입력받기
+            string bookId = Console.ReadLine();     //도서명으로 검색하기
 
+
+            return Constants.COMPLETE_FUNCTION;
         }
     }
 }

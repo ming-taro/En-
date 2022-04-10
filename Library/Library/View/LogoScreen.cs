@@ -31,5 +31,13 @@ namespace Library
             Console.WriteLine("[" + menu + "]\n");
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
         }
+
+        public void PrintSearchBox(string searchWord)
+        {
+            Console.Clear();
+            Console.WriteLine(searchWord);
+            Console.SetCursorPosition(0, 3);
+            //Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>뒤로가기:[ESC]<<<<<<<<<<<<<<<<<<<<<<<<\n");
+        }
     }
 }

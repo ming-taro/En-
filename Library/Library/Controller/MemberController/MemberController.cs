@@ -65,13 +65,13 @@ namespace Library
                     adminController.SelectMenu(menu);
                     break;
                 case 14:  //도서대여(미완)
-                    
+                    Borrowing borrowing = new Borrowing();
+                    function = borrowing.ControlBorrowing(myId);
                     break;
                 case 15:   //도서반납
                     Returning returning = new Returning(myId);
                     function = returning.ControlReturning(myId);
-                    //Borrowing borrowingBook = new BorrowingBook(myId);
-                    //borrowingBook.ControlBorrowingBook();
+                    
                     break;
                 case 16:   //개인정보수정(미완)
                     break;
