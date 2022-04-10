@@ -31,7 +31,6 @@ namespace Library
         public string Id
         {
             get { return id; }
-            set { id = value; }
         }
         public string Name
         {
