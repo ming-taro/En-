@@ -60,8 +60,8 @@ namespace Library
                     function = searchingBook.ControlSearchingBook();
                     break;
                 case 14:  //도서 등록(미완)
-                    RegisteringBook registeringBook = new RegisteringBook();
-                    function = registeringBook.ControlRegistering();
+                    Registering registering = new Registering();
+                    function = registering.ControlRegistering();
                     break;
                 case 15:  //도서 수량 관리(미완)
                     break;
