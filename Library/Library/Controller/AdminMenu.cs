@@ -21,7 +21,7 @@ namespace Library
     }
     class SearchingBook  //1.도서 검색
     {
-        private BookListVO bookListVO = BookListVO.getBookListVO();  //도서목록
+        private BookListVO bookListVO = BookListVO.GetBookListVO();  //도서목록
         SearchingScreen screen;
         public SearchingBook()   //도서검색화면 출력
         {
@@ -58,7 +58,7 @@ namespace Library
         }
         public bool IsDuplicateId(string bookId)   //입력값이 중복된 아이디인지 검사
         {
-            BookListVO bookListVO = BookListVO.getBookListVO();  //도서목록
+            BookListVO bookListVO = BookListVO.GetBookListVO();  //도서목록
             Console.WriteLine(bookListVO.bookList[0].Id);
             for(int i=0; i<bookListVO.bookList.Count; i++)
             {
@@ -188,7 +188,7 @@ namespace Library
             book[4] = InputPrice();                    //가격
             book[5] = InputQuantity();                 //수량
 
-            BookListVO bookListVO = BookListVO.getBookListVO();  //도서목록
+            BookListVO bookListVO = BookListVO.GetBookListVO();  //도서목록
             bookListVO.bookList.Add(new BookVO(book[0], book[1], book[2], book[3], book[4], book[5])); //도서목록에 등록된 도서정보 추가
 
             RegisteringScreen screen = new RegisteringScreen();
