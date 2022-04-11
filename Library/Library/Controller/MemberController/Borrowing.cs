@@ -24,7 +24,7 @@ namespace Library
             Console.SetCursorPosition(0, 2);
             Console.Write(message);
         }
-        public void AddBookOnList(string bookName) 
+        public void AddBookOnList(string bookName)   //입력받은 도서명을 포함하는 도서목록리스트 생성
         {
             BookListVO bookListVO = BookListVO.GetBookListVO();
 
@@ -36,7 +36,18 @@ namespace Library
                 }
             }
         }
-        public bool IsBookInList(string bookName)
+        public bool IsBookIBorrowed(string bookId)
+        {
+            BorrowListVO borrowListVO = BorrowListVO.GetBorrowListVO();  //대여목록
+
+            for(int i=0; i<borrowListVO.borrowList.Count; i++)
+            {
+                if (borrowListVO.borrowList[i].BookVO.Id.Equals(bookId)) return Constants.BOOK_I_BORROWED; //이미 대여중인 도서 -> 도서 대여 불가
+            }
+
+            return !Constants.BOOK_I_BORROWED;   //빌린 적 없는 도서 -> 도서 대여 가능함
+        }
+        public bool IsBookInList(string bookName)   //입력받은 도서명 -> 도서목록에 존재하는 책인지 확인
         {
             BookListVO bookListVO = BookListVO.GetBookListVO();
 
@@ -116,12 +127,16 @@ namespace Library
                     PrintInputBox("(도서목록에 없는 도서번호입니다. 다시 입력해주세요.)           ");
                     //return Constants.RE_ENTER;    //도서명부터 다시 검색
                 }
-                else if (IsQuantityZero(bookId))  //목록에 있는 도서이지만 수량이 0일 때
+                else if (IsBookIBorrowed(bookId))  //도서목록에 있지만, 이미 대여중인 도서일 때
                 {
-                    PrintInputBox("(대여가능한 도서가 0권입니다. 다시 입력해주세요.)              ");
+                    PrintInputBox("(이미 대여중인 도서입니다. 다른 도서를 선택해주세요.)");
+                }
+                else if (IsQuantityZero(bookId))   //도서목록에 있고, 대여하지 않은 도서이지만 수량이 0일 때
+                {
+                    PrintInputBox("(대여가능한 도서가 0권입니다. 다른 도서를 선택해주세요.)              ");
                     //return Constants.RE_ENTER;    //도서명부터 다시 검색
                 }
-                else break;  //도서목록에 있는 책을 빌리려고 했을 때 -> 해당 도서 아이디 리턴
+                else break;  //도서대여가능 -> 해당 도서 아이디 리턴
             }
             return bookId;
         }
@@ -138,10 +153,11 @@ namespace Library
                 Console.Clear();                    
                 listScreen.PrintBookList(bookList);  //도서명 검색결과 목록 출력
                 string bookId = InputBookId();       //도서번호를 입력받음
-                if (bookId.Equals(Constants.RE_ENTER)) continue;   //도서번호를 잘못 입력받으면 도서명부터 다시 입력
-                else break;
+                break;
             }
+
             borrowingScreen.PrintSuccessMessage();//도서대여 완료 메세지 출력
+
 
             return Constants.COMPLETE_FUNCTION;
         }
