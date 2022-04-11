@@ -130,8 +130,8 @@ namespace Library
             //나이
             profile[3] = InputPassword(6, 17, @"^[1-9]+[0-9]{0,1}$", "(1~99세까지 입력 가능합니다.)                ");       //나이
             //휴대전화
-            //profile[4] = InputPassword(10, 20, @"");
-            Console.SetCursorPosition(10, 20);  //휴대전화
+            profile[4] = InputPassword(10, 20, @"010-[0-9]{4}-[0-9]{4}$", "(양식에 맞춰 다시 입력해주세요.(ex: 010-0000-0000))              ");
+            //Console.SetCursorPosition(10, 20);  //휴대전화
             Console.ReadLine();
             Console.SetCursorPosition(13, 23);  //도로명 주소
             Console.ReadLine();
