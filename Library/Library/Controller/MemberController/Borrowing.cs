@@ -156,6 +156,7 @@ namespace Library
 
             int quantity = int.Parse(bookListVO.bookList[i].Quantity) - 1; //해당 도서의 수량 -1
             bookListVO.bookList[i].Quantity = quantity.ToString();         //도서정보에 변경된 수량 반영
+            
             return bookListVO.bookList[i];  
         }
         public void AddBorrowList(string memberId, string bookId)   //도서번호를 알맞게 입력받아 도서대여 완료 -> 현재 도서대여목록에 데이터 추가

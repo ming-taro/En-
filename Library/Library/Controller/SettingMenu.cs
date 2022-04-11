@@ -20,30 +20,6 @@ namespace Library
             screen.PrintMain(menu);                           //회원모드화면 출력
         }
     }
-    class SignUp     //1.회원가입
-    {
-        public SignUp()
-        {
-            Screen screen = new Screen();
-            screen.PrintSingUp();
-            Console.SetCursorPosition(8, 5);    //아이디
-            Console.ReadLine();
-            Console.SetCursorPosition(10, 8);   //비밀번호
-            Console.ReadLine();
-            Console.SetCursorPosition(17, 11);  //비밀번호 재확인
-            Console.ReadLine();
-            Console.SetCursorPosition(6, 13);   //이름
-            Console.ReadLine();
-            Console.SetCursorPosition(6, 16);   //나이
-            Console.ReadLine();
-            Console.SetCursorPosition(10, 19);  //휴대전화
-            Console.ReadLine();
-            Console.SetCursorPosition(13, 22);  //도로명 주소
-            Console.ReadLine();
-        }
-    }
-    
-    
     
     class SearchingMember
     {

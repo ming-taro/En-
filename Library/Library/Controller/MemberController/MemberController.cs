@@ -30,6 +30,7 @@ namespace Library
                     break;
                 case 14:  //회원가입(미완)
                     SignUp signUp = new SignUp();
+                    signUp.ControlSignUp();
                     break;
                 case 15:   //종료(미완)
                     break;
@@ -64,14 +65,13 @@ namespace Library
                     AdminController adminController = new AdminController();
                     adminController.SelectMenu(menu);
                     break;
-                case 14:  //도서대여(미완)
+                case 14:  //도서대여
                     Borrowing borrowing = new Borrowing();
                     function = borrowing.ControlBorrowing(myId);
                     break;
                 case 15:   //도서반납
                     Returning returning = new Returning(myId);
                     function = returning.ControlReturning(myId);
-                    
                     break;
                 case 16:   //개인정보수정(미완)
                     break;
