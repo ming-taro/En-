@@ -50,25 +50,24 @@ namespace Library
             }
             return id;   //사용 가능한 아이디
         }
-        public string InputPassword()
+        public string InputPassword(int left, int top, string regexText, string errorMessage)
         {
-            Regex regex = new Regex(@"^[a-zA-Z0-9]{5,10}$");
             string password;
 
             while (Constants.INPUT_VALUE)
             {
-                Console.SetCursorPosition(10, 8);  
+                Console.SetCursorPosition(left, top);  
                 password = Console.ReadLine();
-                if (string.IsNullOrEmpty(password) || !regex.IsMatch(password))   //입력형식에 맞지 않은 경우 -> 비밀번호 다시 입력
+                if (string.IsNullOrEmpty(password) || !Regex.IsMatch(password, regexText))   //입력형식에 맞지 않은 경우 -> 비밀번호 다시 입력
                 {
-                    PrintInputBox(0, 9, "(5~10자의 영어, 숫자만 다시 입력해주세요.)         ");
+                    PrintInputBox(0, top + 1, errorMessage);
                 }
                 else
                 {
-                    PrintInputBox(0, 9, Constants.REMOVE_LINE);   //올바르게 입력한 경우 -> 비밀번호 재확인으로 넘어감
+                    PrintInputBox(0, top + 1, Constants.REMOVE_LINE);   //올바르게 입력한 경우 -> 비밀번호 재확인으로 넘어감
                     break;
                 }
-                PrintInputBox(10, 8, Constants.REMOVE_LINE);
+                PrintInputBox(left, top, Constants.REMOVE_LINE);
             }
             return password;
         }
@@ -91,29 +90,6 @@ namespace Library
                 }
                 PrintInputBox(17, 11, Constants.REMOVE_LINE);
             }
-        }
-        public string InputName()  //이름을 입력받음
-        {
-            Regex regex = new Regex(@"^[a-zA-Z가-힣]{1,30}$");
-            string name;
-
-            while (Constants.INPUT_VALUE)
-            {
-                Console.SetCursorPosition(6, 14);
-                name = Console.ReadLine();     //이름을 입력받음
-                if (string.IsNullOrEmpty(name) || !regex.IsMatch(name))   //형식에 맞지 않는 입력
-                {
-                    PrintInputBox(0, 15, "(30자 이내의 영어, 한글만 다시 입력해주세요.)             ");
-                }
-                else
-                {
-                    PrintInputBox(0, 15, Constants.REMOVE_LINE);   //형식에 맞게 입력 -> 휴대전화 입력으로 넘어감
-                    break;
-                }
-                PrintInputBox(6, 14, Constants.REMOVE_LINE);
-            }
-
-            return name;
         }
         public string InputAge()
         {
@@ -143,12 +119,18 @@ namespace Library
             signUpScreen.PrintSingUp();  //회원가입화면 출력
             string[] profile = new string[6];
 
-            profile[0] = InputId();        //아이디
-            profile[1] = InputPassword();  //비밀번호
-            ReconfirmPassword(profile[1]); //비밀번호 재확인
-            profile[2] = InputName();      //이름
-            profile[3] = InputAge();       //나이
-            Console.ReadLine();
+            //아이디
+            profile[0] = InputId();
+            //비밀번호
+            profile[1] = InputPassword(10, 8, @"^[a-zA-Z0-9]{5,10}$", "(5~10자의 영어, 숫자만 다시 입력해주세요.)         "); 
+            //비밀번호 재확인
+            ReconfirmPassword(profile[1]); 
+            //이름
+            profile[2] = InputPassword(6, 14, @"^[a-zA-Z가-힣]{1,30}$", "(30자 이내의 영어, 한글만 다시 입력해주세요.)             ");
+            //나이
+            profile[3] = InputPassword(6, 17, @"^[1-9]+[0-9]{0,1}$", "(1~99세까지 입력 가능합니다.)                ");       //나이
+            //휴대전화
+            //profile[4] = InputPassword(10, 20, @"");
             Console.SetCursorPosition(10, 20);  //휴대전화
             Console.ReadLine();
             Console.SetCursorPosition(13, 23);  //도로명 주소
