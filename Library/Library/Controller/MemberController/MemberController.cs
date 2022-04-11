@@ -26,7 +26,7 @@ namespace Library
             {
                 case 13:  //로그인
                     ControlSignIn();
-                    ControlMemberMode(17);  //회원 모드로(1.도서검색  2.도서대여  3.도서반납  4.개인정보수정  5.종료)
+                    ControlMemberMode(16);  //회원 모드로(1.도서검색  2.도서대여  3.도서반납  4.개인정보수정  5.종료)
                     break;
                 case 14:  //회원가입
                     SignUp signUp = new SignUp();
@@ -38,15 +38,15 @@ namespace Library
         }
         public void ControlMemberMode(int maxTop)    //1.회원가입  2.로그인 
         {
-            Screen screen = new Screen();
+            MenuScreen menuScreen = new MenuScreen();
             StartingLibrary testingLibrary = new StartingLibrary();
             testingLibrary.InitCursorPosition();
             int menu;
 
             while (Constants.MEMBER_MODE)
             {
-                if (maxTop == 14) screen.PrintMemberMenu();//1.로그인  2.회원가입
-                else screen.PrintMemberMode();             //1.도서검색  2.도서대여  3.도서반납  4.개인정보수정  5.종료
+                if (maxTop == 14) menuScreen.PrintMemberMenu();//1.로그인  2.회원가입
+                else menuScreen.PrintMemberMode();             //1.도서검색  2.도서대여  3.도서반납  4.개인정보수정  5.종료
                 
                 menu = testingLibrary.SelectMenu(13, maxTop);//메뉴선택
                 if (menu == Constants.ESCAPE) break;         //메뉴선택 중 뒤로가기 -> 메인화면으로

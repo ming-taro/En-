@@ -25,6 +25,7 @@ namespace Library
         public const bool OUT_OF_MENU = true;
         public const bool ADMIN_MODE = true;
         public const bool MEMBER_MODE = true;
+        public const bool SIGN_IN = true;
 
         public const bool CORRECT_MEMBERSHIP = true;
         public const bool WRONG_MEMBERSHIP = false;

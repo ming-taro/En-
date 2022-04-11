@@ -11,15 +11,6 @@ namespace Library
     {
 
     }
-    class MemberMenu   //유저모드 선택 -> 1.회원가입  2.로그인  3.종료
-    {
-        public MemberMenu()
-        {
-            Screen screen = new Screen();
-            string[] menu = { "회원가입", "로그인", "종료"};  
-            screen.PrintMain(menu);                           //회원모드화면 출력
-        }
-    }
     
     class SearchingMember
     {

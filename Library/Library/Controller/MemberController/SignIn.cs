@@ -14,19 +14,21 @@ namespace Library
             SignInScreen signInScreen = new SignInScreen();
             signInScreen.PrintSignIn();
         }
-        public void PrintScreen()  //지울 함수
+        public void SignInAdmin()
         {
-            Screen screen = new Screen();
-            screen.PrintSingIn("로그인");
-        }
-        public bool SignInAdmin(ref string id, ref string password)
-        {
-            Console.SetCursorPosition(8, 5);
-            id = Console.ReadLine();     //아이디 입력
-            Console.SetCursorPosition(10, 6);
-            password = Console.ReadLine();     //비밀번호 입력
+            SignInScreen signInScreen = new SignInScreen();
 
-            return Constants.GOING_NEXT;
+            while (Constants.INPUT_VALUE)
+            {
+                Console.SetCursorPosition(8, 5);
+                string id = Console.ReadLine();           //아이디 입력
+                Console.SetCursorPosition(10, 6);
+                string password = Console.ReadLine();     //비밀번호 입력
+
+                if (id == "12345" && password == "00000") break;   //관리자 로그인 완료
+
+                signInScreen.PrintFailure();              //다시 입력해달라는 메세제 출력
+            }
         }
         public bool IsExistingMember(string id, string password)  //입력된 정보가 존재하는 회원인지 확인
         {

@@ -39,5 +39,17 @@ namespace Library
             Console.SetCursorPosition(0, 3);
             //Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>뒤로가기:[ESC]<<<<<<<<<<<<<<<<<<<<<<<<\n");
         }
+
+        public void PrintMain(string[] menu)
+        {
+            Console.Clear();
+            PrintTitle();
+            for (int i = 0; i < menu.Length; i++)
+            {
+                Console.SetCursorPosition(25, 13 + i);
+                Console.WriteLine("☞" + menu[i]);
+            }
+            Console.SetCursorPosition(25, 13);
+        }
     }
 }

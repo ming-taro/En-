@@ -9,44 +9,24 @@ namespace Library
 {
     class AdminController
     {
-        public bool ControlAdminSignIn()  //관리자 로그인 관리
-        {
-            string id = "";
-            string password = "";
-            SignIn admin = new SignIn();  //2. 관리자모드(->관리자 로그인 화면으로 이동)
-            bool input = Constants.WRONG_VALUE;
-
-            while (input == Constants.WRONG_VALUE)
-            {
-                admin.SignInAdmin(ref id, ref password);   //로그인
-                if (id == "12345" && password == "00000")
-                {
-                    return true;
-                }
-                else
-                {
-                    admin.PrintScreen();//로그인 실패시 다시 입력(+오류 메세지)
-                    Console.WriteLine("\n\n"+ Constants.SIGN_IN_ERROR);
-                }
-            }
-            return false;
-        }
         public void ControlAdminMode()     //관리자 모드 관리
         {
-            Screen screen = new Screen();
+            SignIn signIn = new SignIn();
+            signIn.SignInAdmin();           //관리자 로그인
+
+            MenuScreen menuScreen = new MenuScreen();
             StartingLibrary testingLibrary = new StartingLibrary();
             int menu;
 
             while (Constants.ADMIN_MODE)
             {
-                screen.PrintAdminMode();       //관리자 모드 출력
+                menuScreen.PrintAdminMode();
                 testingLibrary.InitCursorPosition();
                 menu = testingLibrary.SelectMenu(13, 17); //메뉴선택 완료
-                if (menu == Constants.ESCAPE) break;          //관리자 메뉴 선택중 esc -> 관리자 모드 종료
-                menu = testingLibrary.GetTop();//메뉴의 해당 커서값
-                SelectMenu(menu);              //해당 메뉴 기능 실행
+                if (menu == Constants.ESCAPE) break;      //관리자 메뉴 선택중 esc -> 관리자 모드 종료(메인으로 돌아감)
+                menu = testingLibrary.GetTop();           //메뉴의 해당 커서값
+                SelectMenu(menu);                         //해당 메뉴 기능 실행
             }
-            //관리자 모드 종료 -> 메인화면으로 돌아감
         }
         
         public void SelectMenu(int menu) //관리자 메뉴에서 선택
@@ -59,7 +39,7 @@ namespace Library
                     SearchingBook searchingBook = new SearchingBook();
                     function = searchingBook.ControlSearchingBook();
                     break;
-                case 14:  //도서 등록(미완)
+                case 14:  //도서 등록
                     Registering registering = new Registering();
                     function = registering.ControlRegistering();
                     break;

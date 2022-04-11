@@ -35,7 +35,7 @@ namespace Library
                     break;
                 case (25, 14):                                    //2. 관리자 모드
                     AdminController adminController = new AdminController();    //관리자 로그인 화면으로 이동
-                    if (adminController.ControlAdminSignIn()) adminController.ControlAdminMode();  //관리자 모드로     
+                    adminController.ControlAdminMode();            //관리자 모드로     
                     break;
             }
         }
@@ -91,8 +91,8 @@ namespace Library
         {
             Console.SetWindowSize(61,40);
             string[] menu = { "회원 모드", "관리자 모드", "종료" }; //메인화면 메뉴 
-            Screen screen = new Screen();
-            screen.PrintMain(menu);
+            LogoScreen logoScreen = new LogoScreen();
+            logoScreen.PrintMain(menu);
 
             int entering = Constants.MOVING_CURSOR;
             int key;
@@ -110,7 +110,7 @@ namespace Library
                 else if (key == Constants.ENTERING_MENU)   //메뉴입력 -> 해당 메뉴로 이동
                 {  
                     ControlMain();
-                    screen.PrintMain(menu);
+                    logoScreen.PrintMain(menu);
                 } 
                     
             }
