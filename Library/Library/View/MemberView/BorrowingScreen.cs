@@ -12,7 +12,7 @@ namespace Library
         public void PrintBorrowing()
         {
             LogoScreen logoScreen = new LogoScreen();
-            logoScreen.PrintSearchBox("\n☞도서명으로 검색: ");  //검색창 출력
+            logoScreen.PrintSearchBox("\n☞도서명 검색: ");  //검색창 출력
 
             BookListVO bookListVO = BookListVO.GetBookListVO();
             ListScreen listScreen = new ListScreen();

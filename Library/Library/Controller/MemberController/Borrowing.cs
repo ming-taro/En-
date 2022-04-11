@@ -72,9 +72,6 @@ namespace Library
             Regex regex = new Regex(@"^[\w]{1,1}[^\e]{0,49}$");   //도서명: 1~50자 이내
             string bookName;
 
-            Console.SetCursorPosition(0, 1);
-            Console.WriteLine("☞도서명 검색:                                                      ");
-
             while (Constants.INPUT_VALUE)
             {
                 Console.SetCursorPosition(15, 1);
@@ -88,6 +85,9 @@ namespace Library
                     PrintInputBox("\n(검색어를 포함하는 도서가 없습니다. 다시 입력해주세요.)                    ");
                 }
                 else break; ;  //도서목록에 있는 도서명을 검색한 경우
+
+                Console.SetCursorPosition(0, 1);
+                Console.WriteLine("☞도서명 검색:                                                      ");
             }
             return bookName;
         }
@@ -98,7 +98,6 @@ namespace Library
 
             Console.SetCursorPosition(0,1);
             Console.WriteLine("☞대여할 도서 번호:                                                   ");
-            Console.Write("\n=============================================================\n");
 
             while (Constants.INPUT_VALUE)
             {
@@ -124,14 +123,14 @@ namespace Library
         }
         public int ControlBorrowing(string memberId)
         {
-            SearchingScreen searchingScreen = new SearchingScreen();
-            BookListVO bookListVO = BookListVO.GetBookListVO();
+            ListScreen listScreen = new ListScreen();
 
             while (Constants.INPUT_VALUE)
             {
                 string bookName = InputBookName();   //먼저 도서명 입력받기
                 AddBookOnList(bookName);             //검색어를 포함하는 책 리스트 저장
-                searchingScreen.PrintSearchingBook(1, bookName, bookList);   //도서명 검색결과 목록 출력
+                Console.Clear();                    
+                listScreen.PrintBookList(bookList);  //도서명 검색결과 목록 출력
                 string bookId = InputBookId();       //도서번호를 입력받음
                 if (!bookId.Equals(Constants.RE_ENTER)) break;   //도서번호를 잘못 입력받으면 도서명부터 다시 입력
             }
