@@ -31,7 +31,7 @@ namespace Library
             {
                 case (25, 13):
                     MemberController memberController = new MemberController(); //1. 회원모드
-                    memberController.ControlMemberMode(15);       //회원메뉴 컨트롤로 이동
+                    memberController.ControlMemberMode(14);       //회원메뉴 컨트롤로 이동
                     break;
                 case (25, 14):                                    //2. 관리자 모드
                     AdminController adminController = new AdminController();    //관리자 로그인 화면으로 이동

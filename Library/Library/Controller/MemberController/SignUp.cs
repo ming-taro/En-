@@ -131,7 +131,8 @@ namespace Library
             profile[4] = InputPassword(10, 20, @"010-[0-9]{4}-[0-9]{4}$", "(양식에 맞춰 다시 입력해주세요.(ex: 010-0000-0000))              ");
             //주소
             profile[5] = InputPassword(6, 23, @"[가-힣]+(시|도)\s[가-힣]+(시|군|구)\s[가-힣]+(읍|면|동)", "(양식에 맞춰 입력해주세요.(ex: 서울특별시 광진구 군자동))");
-            
+
+            signUpScreen.PrintSuccessMessage();  //회원가입 축하 화면 출력
         }
     }
 }
