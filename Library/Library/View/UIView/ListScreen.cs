@@ -21,8 +21,6 @@ namespace Library
         }
         public void PrintMemberList(List<MemberVO> memberList)
         {
-            Console.Clear();
-            Console.WriteLine("\n☞삭제할 회원 아이디: ");
             Console.SetCursorPosition(0, 3);
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>뒤로가기:[ESC]<<<<<<<<<<<<<<<<<<<<<<<<");
 

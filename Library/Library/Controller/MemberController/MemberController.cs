@@ -75,7 +75,7 @@ namespace Library
                     Returning returning = new Returning(myId);
                     function = returning.ControlReturning(myId);
                     break;
-                case 16:   //개인정보수정(미완)
+                case 16:   //개인정보수정
                     EditingProfile editingProfle = new EditingProfile(myId);
                     myId = editingProfle.ControlEditingProfile();  //아이디를 수정했을 수 있음 -> 수정된 아이디를 myId에 저장
                     break;
