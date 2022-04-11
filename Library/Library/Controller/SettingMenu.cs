@@ -22,7 +22,7 @@ namespace Library
         public int ControlSearchingMember(List<MemberVO> memberList)
         {
             Screen screen = new Screen();
-            StartingLibrary testingLibrary = new StartingLibrary();
+            Keyboard testingLibrary = new Keyboard();
             Console.SetCursorPosition(22, 1);
             string memberId = Console.ReadLine();  //회원아이디 입력받기
 

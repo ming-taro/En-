@@ -15,7 +15,7 @@ namespace Library
             signIn.SignInAdmin();           //관리자 로그인
 
             MenuScreen menuScreen = new MenuScreen();
-            StartingLibrary testingLibrary = new StartingLibrary();
+            Keyboard testingLibrary = new Keyboard();
             int menu;
 
             while (Constants.ADMIN_MODE)

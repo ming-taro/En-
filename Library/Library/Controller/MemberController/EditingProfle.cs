@@ -9,5 +9,11 @@ namespace Library
     class EditingProfle
     {
 
+        public void ControlEditingProfile()
+        {
+            EditingScreen editingScreen = new EditingScreen();
+
+
+        }
     }
 }

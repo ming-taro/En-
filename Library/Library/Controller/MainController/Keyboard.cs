@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Library
 {
-    class StartingLibrary
+    class Keyboard
     {
         private int left = 25, top = 13;
         public int GetTop()
@@ -24,24 +24,9 @@ namespace Library
             this.left = left;
             this.top = top;
         }
-        
-        public void ControlMain()
-        {
-            switch (left, top)  //커서의 위치값으로 메뉴를 구분
-            {
-                case (25, 13):
-                    MemberController memberController = new MemberController(); //1. 회원모드
-                    memberController.ControlMemberMode(14);       //회원메뉴 컨트롤로 이동
-                    break;
-                case (25, 14):                                    //2. 관리자 모드
-                    AdminController adminController = new AdminController();    //관리자 로그인 화면으로 이동
-                    adminController.ControlAdminMode();            //관리자 모드로     
-                    break;
-            }
-        }
         public int SelectMenu(int minTop, int maxTop)//메뉴 고르기 -> 고른 메뉴의 커서값을 left,top에 반영
-        { 
-            int key = Constants.MOVING_CURSOR;
+        {
+            int key;
             
             while (Constants.KEYBOARD_OPERATION)    //키보드 방향키로 움직이는 동안
             {
@@ -84,31 +69,6 @@ namespace Library
 
             return Constants.OUT_OF_MENU;
         }
-        public void StartLibrary()  //메인화면
-        {
-            Console.SetWindowSize(61,40);
-            string[] menu = { "회원 모드", "관리자 모드", "종료" }; //메인화면 메뉴 
-            LogoScreen logoScreen = new LogoScreen();
-            logoScreen.PrintMain(menu);
-            int key;
-
-            while (Constants.KEYBOARD_OPERATION)
-            {
-                Console.SetCursorPosition(left, top);
-                key = ControlKeyboard();            //입력받은 키값
-                if (IsOutOfMenu(13, 15)) continue;  //메뉴를 벗어나는 이동은 X
-
-                if (key == Constants.ESCAPE || key == Constants.ENTERING_MENU && top == 15)     //프로그램 종료
-                {
-                    break;
-                }
-                else if (key == Constants.ENTERING_MENU)   //메뉴입력 -> 해당 메뉴로 이동
-                {  
-                    ControlMain();
-                    logoScreen.PrintMain(menu);
-                } 
-            }
-            Console.SetCursorPosition(0, 25);
-        }
+        
     }
 }

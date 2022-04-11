@@ -39,7 +39,7 @@ namespace Library
         public void ControlMemberMode(int maxTop)    //1.회원가입  2.로그인 
         {
             MenuScreen menuScreen = new MenuScreen();
-            StartingLibrary testingLibrary = new StartingLibrary();
+            Keyboard testingLibrary = new Keyboard();
             testingLibrary.InitCursorPosition();
             int menu;
 
@@ -76,8 +76,6 @@ namespace Library
                     function = returning.ControlReturning(myId);
                     break;
                 case 16:   //개인정보수정(미완)
-                    break;
-                case 17:   //종료(미완)
                     break;
             }
 

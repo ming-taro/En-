@@ -17,7 +17,7 @@ namespace Library
         }
         public int ControlSearchingBook()  //도서검색하기(검색어 입력 -> 목록 출력)
         {
-            StartingLibrary testingLibrary = new StartingLibrary();
+            Keyboard testingLibrary = new Keyboard();
             testingLibrary.SetPosition(0, 1);     //커서위치
             int menu = testingLibrary.SelectMenu(1, 3);               //메뉴선택
             if (menu == Constants.ESCAPE) return Constants.ESCAPE;    //메뉴선택도중 뒤로가기 -> 관리자 메뉴로 돌아감

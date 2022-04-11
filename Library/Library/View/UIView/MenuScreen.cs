@@ -13,6 +13,12 @@ namespace Library
         {
             logoScreen = new LogoScreen();
         }
+        public void PrintMainMenu()
+        {
+            Console.SetWindowSize(61, 40);
+            string[] menu = { "회원 모드", "관리자 모드", "종료" };   //메인화면 메뉴 
+            logoScreen.PrintMain(menu);
+        }
         public void PrintMemberMenu()
         {
             
