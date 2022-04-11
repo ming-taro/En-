@@ -28,7 +28,7 @@ namespace Library
 
             Console.Clear();
             logoScreen.PrintMenu("회원가입 완료");
-            Console.WriteLine("\n                [회원가입이 완료되었습니다]\n");
+            Console.WriteLine("\n\n\n                [회원가입이 완료되었습니다]\n\n");
             Console.WriteLine("\n          등록하신 회원 정보로 로그인이 가능합니다.");
             Console.WriteLine("\n            ESC키를 누르면 회원모드로 돌아갑니다.");
         }

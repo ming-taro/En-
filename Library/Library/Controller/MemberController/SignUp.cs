@@ -111,6 +111,11 @@ namespace Library
             }
             return age;
         }
+        public void AddMemberList(string[] profile)   //회원가입완료 후 -> 회원리스트에 가입한 정보 저장
+        {
+            MemberListVO memberListVO = MemberListVO.GetMemberListVO();
+            memberListVO.memberList.Add(new MemberVO(profile[0], profile[1], profile[2], profile[3], profile[4], profile[5]));
+        }
         public void ControlSignUp()
         {
             SignUpScreen signUpScreen = new SignUpScreen();
@@ -132,6 +137,7 @@ namespace Library
             //주소
             profile[5] = InputPassword(6, 23, @"[가-힣]+(시|도)\s[가-힣]+(시|군|구)\s[가-힣]+(읍|면|동)", "(양식에 맞춰 입력해주세요.(ex: 서울특별시 광진구 군자동))");
 
+            AddMemberList(profile);              //회원리스트에 가입정보 저장
             signUpScreen.PrintSuccessMessage();  //회원가입 축하 화면 출력
         }
     }

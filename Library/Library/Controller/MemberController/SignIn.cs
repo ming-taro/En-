@@ -30,7 +30,7 @@ namespace Library
         }
         public bool IsExistingMember(string id, string password)  //입력된 정보가 존재하는 회원인지 확인
         {
-            MemberListVO memberListVO = new MemberListVO();
+            MemberListVO memberListVO = MemberListVO.GetMemberListVO();
 
             for(int i=0; i<memberListVO.memberList.Count; i++)
             {
