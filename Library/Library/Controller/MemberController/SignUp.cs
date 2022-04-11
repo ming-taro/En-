@@ -72,6 +72,26 @@ namespace Library
             }
             return password;
         }
+        public void ReconfirmPassword(string password1)   //비밀번호 재확인
+        {
+            string password2;
+
+            while (Constants.INPUT_VALUE)
+            {
+                Console.SetCursorPosition(17, 11);
+                password2 = Console.ReadLine();   //비밀번호 입력
+                if (string.IsNullOrEmpty(password2) || !password1.Equals(password2))   //입력형식에 맞지 않은 경우 -> 비밀번호 다시 입력
+                {
+                    PrintInputBox(0, 12, "(비밀번호가 맞지 않습니다. 다시 입력해주세요.)         ");
+                }
+                else
+                {
+                    PrintInputBox(0, 12, Constants.REMOVE_LINE);  //비밀번호를 알맞게 입력 -> 이름 입력으로 넘어감
+                    break;
+                }
+                PrintInputBox(17, 11, Constants.REMOVE_LINE);
+            }
+        }
         public void ControlSignUp()
         {
             SignUpScreen signUpScreen = new SignUpScreen();
@@ -80,9 +100,8 @@ namespace Library
 
             profile[0] = InputId();        //아이디
             profile[1] = InputPassword();  //비밀번호
-            
+            ReconfirmPassword(profile[1]); //비밀번호 재확인
 
-            Console.SetCursorPosition(17, 11);  //비밀번호 재확인
             Console.ReadLine();
             Console.SetCursorPosition(6, 13);   //이름
             Console.ReadLine();
