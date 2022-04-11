@@ -26,7 +26,7 @@ namespace Library
         }
         public string InputId()  //아이디 입력
         {
-            Regex regex = new Regex(@"^[a-zA-z0-9]{5,10}$");
+            Regex regex = new Regex(@"^[a-zA-Z0-9]{5,10}$"); //아이디 : 5~10자,영어,숫자
             string id;
 
             while (Constants.INPUT_VALUE)
@@ -35,21 +35,42 @@ namespace Library
                 id = Console.ReadLine();  //아이디 입력
                 if (string.IsNullOrEmpty(id) || !regex.IsMatch(id))  //입력형식에 맞지 않음 -> 아이디 다시입력
                 {
-                    PrintInputBox(0, 6, "(5~10자의 영어, 숫자만 다시 입력해주세요.)                    ");
+                    PrintInputBox(0, 6, "(5~10자의 영어, 숫자만 다시 입력해주세요.)         ");
                 }
                 else if (IsDuplicatedId(id))  //입력형식은 맞지만, 기존회원과 중복된 아이디인 경우 -> 아이디 다시입력
                 {
-                    Console.SetCursorPosition(0, 6);
-                    PrintInputBox(0, 6, "(이미 사용중인 아이디입니다. 다시 입력해주세요.)              ");
+                    PrintInputBox(0, 6, "(이미 사용중인 아이디입니다. 다시 입력해주세요.)    ");
                 }
                 else
                 {
-                    PrintInputBox(0,6, "(사용 가능한 아이디입니다.)                                     ");
+                    PrintInputBox(0, 6, "(사용 가능한 아이디입니다.)                          ");
                     break;  //입력형식에 맞고, 기존에 없는 새로운 아이디 -> 아이디 등록가능
                 }
                 PrintInputBox(8, 5, Constants.REMOVE_LINE);
             }
             return id;   //사용 가능한 아이디
+        }
+        public string InputPassword()
+        {
+            Regex regex = new Regex(@"^[a-zA-Z0-9]{5,10}$");
+            string password;
+
+            while (Constants.INPUT_VALUE)
+            {
+                Console.SetCursorPosition(10, 8);  
+                password = Console.ReadLine();
+                if (string.IsNullOrEmpty(password) || !regex.IsMatch(password))   //입력형식에 맞지 않은 경우 -> 비밀번호 다시 입력
+                {
+                    PrintInputBox(0, 9, "(5~10자의 영어, 숫자만 다시 입력해주세요.)         ");
+                }
+                else
+                {
+                    PrintInputBox(0, 9, Constants.REMOVE_LINE);   //올바르게 입력한 경우 -> 비밀번호 재확인으로 넘어감
+                    break;
+                }
+                PrintInputBox(10, 8, Constants.REMOVE_LINE);
+            }
+            return password;
         }
         public void ControlSignUp()
         {
@@ -57,10 +78,10 @@ namespace Library
             signUpScreen.PrintSingUp();  //회원가입화면 출력
             string[] profile = new string[6];
 
-            profile[0] = InputId();   //아이디
+            profile[0] = InputId();        //아이디
+            profile[1] = InputPassword();  //비밀번호
             
-            Console.SetCursorPosition(10, 8);   //비밀번호
-            Console.ReadLine();
+
             Console.SetCursorPosition(17, 11);  //비밀번호 재확인
             Console.ReadLine();
             Console.SetCursorPosition(6, 13);   //이름
