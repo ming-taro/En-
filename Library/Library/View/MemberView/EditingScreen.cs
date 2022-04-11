@@ -21,7 +21,7 @@ namespace Library
         {
             LogoScreen logoScreen = new LogoScreen();
             logoScreen.PrintMenu("회원정보수정");
-            Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>뒤로가기:[ESC]<<<<<<<<<<<<<<<<<<<<<<<<\n");
+            Console.WriteLine("=======================뒤로가기:[ESC]=======================\n");
             PrintProfile(memberId);
             Console.WriteLine("\n============================================================\n");
             Console.WriteLine("☞아이디: \n(5~10자의 영어, 숫자만 입력해주세요.)\n");
@@ -31,6 +31,13 @@ namespace Library
             Console.WriteLine("☞나이: \n(숫자만 입력해주세요.)\n");
             Console.WriteLine("☞휴대전화: \n(숫자만 입력해주세요.)\n");
             Console.WriteLine("☞주소: \n(ex: 서울특별시 광진구 능동로 209)\n");
+        }
+        public void PrintSuccessMessage(int left, int top, string menu)
+        {
+            Console.SetCursorPosition(left, top);
+            Console.WriteLine(Constants.REMOVE_LINE);   //입력값 지우기
+            Console.SetCursorPosition(0, top + 1);
+            Console.WriteLine("(" + menu + " 정보가 변경되었습니다.)           ");  //변경완료문구 출력
         }
     }
 }

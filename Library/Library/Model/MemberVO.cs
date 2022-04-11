@@ -24,10 +24,32 @@ namespace Library
         public string Id
         {
             get { return id; }
+            set { id = value; }
         }
         public string Password
         {
             get { return password; }
+            set { password = value; }
+        }
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+        public string Age
+        {
+            get { return age; }
+            set { age = value; }
+        }
+        public string PhoneNumber
+        {
+            get { return phoneNumber; }
+            set { phoneNumber = value; }
+        }
+        public string Address
+        {
+            get { return address; }
+            set { address = value; }
         }
         public override string ToString()
         {
