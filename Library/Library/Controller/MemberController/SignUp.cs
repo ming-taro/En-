@@ -99,21 +99,43 @@ namespace Library
 
             while (Constants.INPUT_VALUE)
             {
-                Console.SetCursorPosition(6, 13);
+                Console.SetCursorPosition(6, 14);
                 name = Console.ReadLine();     //이름을 입력받음
                 if (string.IsNullOrEmpty(name) || !regex.IsMatch(name))   //형식에 맞지 않는 입력
                 {
-                    PrintInputBox(0, 14, "(30자 이내의 영어, 한글만 다시 입력해주세요.)             ");
+                    PrintInputBox(0, 15, "(30자 이내의 영어, 한글만 다시 입력해주세요.)             ");
                 }
                 else
                 {
-                    PrintInputBox(0, 14, Constants.REMOVE_LINE);   //형식에 맞게 입력 -> 휴대전화 입력으로 넘어감
+                    PrintInputBox(0, 15, Constants.REMOVE_LINE);   //형식에 맞게 입력 -> 휴대전화 입력으로 넘어감
                     break;
                 }
-                PrintInputBox(6, 13, Constants.REMOVE_LINE);
+                PrintInputBox(6, 14, Constants.REMOVE_LINE);
             }
 
             return name;
+        }
+        public string InputAge()
+        {
+            Regex regex = new Regex(@"^[0-9]{1,2}$");
+            string age;
+
+            while (Constants.INPUT_VALUE)
+            {
+                Console.SetCursorPosition(6, 17);
+                age = Console.ReadLine();
+                if (string.IsNullOrEmpty(age) || !regex.IsMatch(age))   //형식에 맞지 않는 입력
+                {
+                    PrintInputBox(0, 18, "(1~99세까지 입력 가능합니다.)                ");
+                }
+                else
+                {
+                    PrintInputBox(0, 18, Constants.REMOVE_LINE);   //형식에 맞게 입력 -> 휴대전화 입력으로 넘어감
+                    break;
+                }
+                PrintInputBox(6, 17, Constants.REMOVE_LINE);
+            }
+            return age;
         }
         public void ControlSignUp()
         {
@@ -125,12 +147,11 @@ namespace Library
             profile[1] = InputPassword();  //비밀번호
             ReconfirmPassword(profile[1]); //비밀번호 재확인
             profile[2] = InputName();      //이름
+            profile[3] = InputAge();       //나이
             Console.ReadLine();
-            Console.SetCursorPosition(6, 16);   //나이
+            Console.SetCursorPosition(10, 20);  //휴대전화
             Console.ReadLine();
-            Console.SetCursorPosition(10, 19);  //휴대전화
-            Console.ReadLine();
-            Console.SetCursorPosition(13, 22);  //도로명 주소
+            Console.SetCursorPosition(13, 23);  //도로명 주소
             Console.ReadLine();
         }
     }
