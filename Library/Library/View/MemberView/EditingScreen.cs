@@ -26,7 +26,7 @@ namespace Library
             Console.WriteLine("\n============================================================\n");
             Console.WriteLine("☞아이디: \n(5~10자의 영어, 숫자만 입력해주세요.)\n");
             Console.WriteLine("☞비밀번호: \n(5~10자의 영어, 숫자만 입력해주세요.)\n");
-            Console.WriteLine("☞비밀번호 재확인: \n\n");
+            Console.WriteLine("  비밀번호 재확인: \n\n");
             Console.WriteLine("☞이름: \n(영어, 한글만 입력해주세요.)\n");
             Console.WriteLine("☞나이: \n(숫자만 입력해주세요.)\n");
             Console.WriteLine("☞휴대전화: \n(숫자만 입력해주세요.)\n");
