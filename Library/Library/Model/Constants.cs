@@ -13,6 +13,7 @@ namespace Library
         public const int ESCAPE = -1;
         public const int MOVING_CURSOR = 0;
         public const int ENTERING_MENU = 1;
+        public const bool KEYBOARD_OPERATION = true;
 
         public const int SEARCHING_BOOK = 1;
         public const int REGISTRATION_BOOK = 2;

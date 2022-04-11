@@ -9,7 +9,7 @@ namespace Library
         static void Main(string[] args)
         {
             StartingLibrary startingLibrary = new StartingLibrary();
-            startingLibrary.TestLibrary();
+            startingLibrary.StartLibrary();
         }
     }
 }

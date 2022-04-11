@@ -40,11 +40,10 @@ namespace Library
             }
         }
         public int SelectMenu(int minTop, int maxTop)//메뉴 고르기 -> 고른 메뉴의 커서값을 left,top에 반영
-        {
-            int entering = Constants.MOVING_CURSOR;     
+        { 
             int key = Constants.MOVING_CURSOR;
             
-            while (entering != Constants.CLOSE_PROGRAM) //키보드 방향키로 움직이는 동안
+            while (Constants.KEYBOARD_OPERATION)    //키보드 방향키로 움직이는 동안
             {
                 Console.SetCursorPosition(left, top);
                 key = ControlKeyboard();            //키보드를 입력받음
@@ -57,12 +56,11 @@ namespace Library
         }
         public int ControlKeyboard() //현재 키보드 입력값 반환
         {
-            int input = Constants.INVALID_INPUT;
             ConsoleKeyInfo keyInfo;
 
-            while (input == Constants.INVALID_INPUT)   //다른 키를 입력하면 올바른 키를 입력할때까지 무한루프
+            while (Constants.KEYBOARD_OPERATION)   //다른 키를 입력하면 올바른 키를 입력할때까지 무한루프
             {
-                keyInfo = Console.ReadKey(true); //키를 입력받음 
+                keyInfo = Console.ReadKey(true);   //키를 입력받음 
                 switch (keyInfo.Key)
                 {
                     case ConsoleKey.DownArrow:
@@ -77,7 +75,6 @@ namespace Library
                         return Constants.ESCAPE;
                 }
             }
-            return Constants.INVALID_INPUT;
         }
         public bool IsOutOfMenu(int minTop, int maxTop)
         {
@@ -87,17 +84,15 @@ namespace Library
 
             return Constants.OUT_OF_MENU;
         }
-        public void TestLibrary()  //메인화면
+        public void StartLibrary()  //메인화면
         {
             Console.SetWindowSize(61,40);
             string[] menu = { "회원 모드", "관리자 모드", "종료" }; //메인화면 메뉴 
             LogoScreen logoScreen = new LogoScreen();
             logoScreen.PrintMain(menu);
-
-            int entering = Constants.MOVING_CURSOR;
             int key;
 
-            while (entering != Constants.CLOSE_PROGRAM)
+            while (Constants.KEYBOARD_OPERATION)
             {
                 Console.SetCursorPosition(left, top);
                 key = ControlKeyboard();            //입력받은 키값
@@ -105,17 +100,15 @@ namespace Library
 
                 if (key == Constants.ESCAPE || key == Constants.ENTERING_MENU && top == 15)     //프로그램 종료
                 {
-                    entering = Constants.CLOSE_PROGRAM;
+                    break;
                 }
                 else if (key == Constants.ENTERING_MENU)   //메뉴입력 -> 해당 메뉴로 이동
                 {  
                     ControlMain();
                     logoScreen.PrintMain(menu);
                 } 
-                    
             }
-
-            Console.SetCursorPosition(25, 20);
+            Console.SetCursorPosition(0, 25);
         }
     }
 }
