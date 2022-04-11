@@ -15,16 +15,16 @@ namespace Library
             signIn.SignInAdmin();           //관리자 로그인
 
             MenuScreen menuScreen = new MenuScreen();
-            Keyboard testingLibrary = new Keyboard();
+            Keyboard keyboard = new Keyboard();
             int menu;
 
             while (Constants.ADMIN_MODE)
             {
                 menuScreen.PrintAdminMode();
-                testingLibrary.InitCursorPosition();
-                menu = testingLibrary.SelectMenu(13, 17); //메뉴선택 완료
+                keyboard.InitCursorPosition();
+                menu = keyboard.SelectMenu(13, 17, 1); //메뉴선택 완료
                 if (menu == Constants.ESCAPE) break;      //관리자 메뉴 선택중 esc -> 관리자 모드 종료(메인으로 돌아감)
-                menu = testingLibrary.GetTop();           //메뉴의 해당 커서값
+                menu = keyboard.GetTop();           //메뉴의 해당 커서값
                 SelectMenu(menu);                         //해당 메뉴 기능 실행
             }
         }

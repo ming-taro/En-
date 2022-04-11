@@ -17,12 +17,12 @@ namespace Library
         }
         public int ControlSearchingBook()  //도서검색하기(검색어 입력 -> 목록 출력)
         {
-            Keyboard testingLibrary = new Keyboard();
-            testingLibrary.SetPosition(0, 1);     //커서위치
-            int menu = testingLibrary.SelectMenu(1, 3);               //메뉴선택
+            Keyboard keyboard = new Keyboard();
+            keyboard.SetPosition(0, 1);     //커서위치
+            int menu = keyboard.SelectMenu(1, 3, 1);               //메뉴선택
             if (menu == Constants.ESCAPE) return Constants.ESCAPE;    //메뉴선택도중 뒤로가기 -> 관리자 메뉴로 돌아감
 
-            menu = testingLibrary.GetTop();       //메뉴선택 완료(1.도서명  2.출판사  3.저자)
+            menu = keyboard.GetTop();       //메뉴선택 완료(1.도서명  2.출판사  3.저자)
             Console.SetCursorPosition(10, menu);  //커서위치
             string name = Console.ReadLine();     //검색어 입력받기(------------------>검색어 입력도중 뒤로가기, 입력예외처리 추가 필요)
             screen.PrintSearchingBook(menu, name, bookListVO.bookList);   //검색결과로 나온 책목록 출력

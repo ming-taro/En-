@@ -39,8 +39,8 @@ namespace Library
         public void ControlMemberMode(int maxTop)    //1.회원가입  2.로그인 
         {
             MenuScreen menuScreen = new MenuScreen();
-            Keyboard testingLibrary = new Keyboard();
-            testingLibrary.InitCursorPosition();
+            Keyboard keyboard = new Keyboard();
+            keyboard.InitCursorPosition();
             int menu;
 
             while (Constants.MEMBER_MODE)
@@ -48,12 +48,12 @@ namespace Library
                 if (maxTop == 14) menuScreen.PrintMemberMenu();//1.로그인  2.회원가입
                 else menuScreen.PrintMemberMode();             //1.도서검색  2.도서대여  3.도서반납  4.개인정보수정  5.종료
                 
-                menu = testingLibrary.SelectMenu(13, maxTop);//메뉴선택
-                if (menu == Constants.ESCAPE) break;         //메뉴선택 중 뒤로가기 -> 메인화면으로
-                menu = testingLibrary.GetTop();              //메뉴의 해당 커서값
+                menu = keyboard.SelectMenu(13, maxTop, 1);     //메뉴선택
+                if (menu == Constants.ESCAPE) break;           //메뉴선택 중 뒤로가기 -> 메인화면으로
+                menu = keyboard.GetTop();                      //메뉴의 해당 커서값
 
-                if (maxTop == 14) SelectMenu1(menu);       //1.로그인  2.회원가입
-                else SelectMenu2(menu);                    //1.도서검색  2.도서대여  3.도서반납  4.개인정보수정  5.종료
+                if (maxTop == 14) SelectMenu1(menu);           //1.로그인  2.회원가입
+                else SelectMenu2(menu);                        //1.도서검색  2.도서대여  3.도서반납  4.개인정보수정  5.종료
             }
             //회원 모드 종료 -> 메인화면으로 돌아감
         }
@@ -76,6 +76,8 @@ namespace Library
                     function = returning.ControlReturning(myId);
                     break;
                 case 16:   //개인정보수정(미완)
+                    EditingProfile editingProfle = new EditingProfile();
+                    function = editingProfle.ControlEditingProfile(myId);
                     break;
             }
 

@@ -27,23 +27,23 @@ namespace Library
             MenuScreen menuScreen = new MenuScreen();  //메인화면 출력
             menuScreen.PrintMainMenu();
 
-            Keyboard startingLibrary = new Keyboard();
+            Keyboard keyboard = new Keyboard();
             int key;
             int top = 13;
 
             while (Constants.KEYBOARD_OPERATION)
             {
                 Console.SetCursorPosition(25, top);
-                key = startingLibrary.ControlKeyboard();            //입력받은 키값
-                if (startingLibrary.IsOutOfMenu(13, 15)) continue;  //메뉴를 벗어나는 이동은 X
-                top = startingLibrary.GetTop();                     //엔터를 누른 시점의 top값 -> 선택한 메뉴를 알 수 있음
+                key = keyboard.ControlKeyboard(1);            //입력받은 키값
+                if (keyboard.IsOutOfMenu(13, 15)) continue;  //메뉴를 벗어나는 이동은 X
+                top = keyboard.GetTop();                     //엔터를 누른 시점의 top값 -> 선택한 메뉴를 알 수 있음
                 if (key == Constants.ESCAPE || key == Constants.ENTERING_MENU && top == 15)     //프로그램 종료
                 {
                     break;
                 }
                 else if (key == Constants.ENTERING_MENU)   //메뉴입력 -> 해당 메뉴로 이동
                 {
-                    ControlMain(startingLibrary.GetTop());
+                    ControlMain(keyboard.GetTop());
                     menuScreen.PrintMainMenu();
                 }
                 
