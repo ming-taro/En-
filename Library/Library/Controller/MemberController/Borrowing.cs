@@ -36,16 +36,20 @@ namespace Library
                 }
             }
         }
-        public bool IsBookIBorrowed(string bookId)
+        public bool IsBookIBorrowed(string memberId, string bookId)
         {
             BorrowListVO borrowListVO = BorrowListVO.GetBorrowListVO();  //대여목록
 
             for(int i=0; i<borrowListVO.borrowList.Count; i++)
             {
-                if (borrowListVO.borrowList[i].BookVO.Id.Equals(bookId)) return Constants.BOOK_I_BORROWED; //이미 대여중인 도서 -> 도서 대여 불가
+                //대여리스트에서 회원아이디와 책아이디를 비교 -> 현재 대여중인 도서인지 확인
+                if (borrowListVO.borrowList[i].MemberId.Equals(memberId) && borrowListVO.borrowList[i].BookVO.Id.Equals(bookId))
+                {
+                    return Constants.BOOK_I_BORROWED; //이미 대여중인 도서 -> 도서 대여 불가
+                }
             }
 
-            return !Constants.BOOK_I_BORROWED;   //빌린 적 없는 도서 -> 도서 대여 가능함
+            return !Constants.BOOK_I_BORROWED;        //빌린 적 없는 도서 -> 도서 대여 가능함
         }
         public bool IsBookInList(string bookName)   //입력받은 도서명 -> 도서목록에 존재하는 책인지 확인
         {
@@ -107,7 +111,7 @@ namespace Library
             }
             return bookName;
         }
-        public string InputBookId()          //도서명 입력 후 도서번호 입력
+        public string InputBookId(string memberId)          //도서명 입력 후 도서번호 입력
         {
             Regex regex = new Regex(@"^[0-9]{1,3}$");   //도서번호:숫자,0~999까지
             string bookId;
@@ -127,7 +131,7 @@ namespace Library
                     PrintInputBox("(도서목록에 없는 도서번호입니다. 다시 입력해주세요.)           ");
                     //return Constants.RE_ENTER;    //도서명부터 다시 검색
                 }
-                else if (IsBookIBorrowed(bookId))  //도서목록에 있지만, 이미 대여중인 도서일 때
+                else if (IsBookIBorrowed(memberId, bookId))  //도서목록에 있지만, 이미 대여중인 도서일 때
                 {
                     PrintInputBox("(이미 대여중인 도서입니다. 다른 도서를 선택해주세요.)");
                 }
@@ -148,11 +152,11 @@ namespace Library
             while (Constants.INPUT_VALUE)
             {
                 PrintBorrowing();
-                string bookName = InputBookName();   //먼저 도서명 입력받기
-                AddBookOnList(bookName);             //검색어를 포함하는 책 리스트 저장
+                string bookName = InputBookName();    //먼저 도서명 입력받기
+                AddBookOnList(bookName);              //검색어를 포함하는 책 리스트 저장
                 Console.Clear();                    
-                listScreen.PrintBookList(bookList);  //도서명 검색결과 목록 출력
-                string bookId = InputBookId();       //도서번호를 입력받음
+                listScreen.PrintBookList(bookList);   //도서명 검색결과 목록 출력
+                string bookId = InputBookId(memberId);//도서번호를 입력받음
                 break;
             }
 
