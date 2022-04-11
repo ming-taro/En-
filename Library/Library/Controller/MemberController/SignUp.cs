@@ -26,14 +26,13 @@ namespace Library
         }
         public string InputId()  //아이디 입력
         {
-            Regex regex = new Regex(@"^[a-zA-Z0-9]{5,10}$"); //아이디 : 5~10자,영어,숫자
             string id;
 
             while (Constants.INPUT_VALUE)
             {
                 Console.SetCursorPosition(8,5);
                 id = Console.ReadLine();  //아이디 입력
-                if (string.IsNullOrEmpty(id) || !regex.IsMatch(id))  //입력형식에 맞지 않음 -> 아이디 다시입력
+                if (string.IsNullOrEmpty(id) || !Regex.IsMatch(id, @"^[a-zA-Z0-9]{5,10}$"))  //입력형식에 맞지 않음 -> 아이디 다시입력
                 {
                     PrintInputBox(0, 6, "(5~10자의 영어, 숫자만 다시 입력해주세요.)         ");
                 }
@@ -93,14 +92,13 @@ namespace Library
         }
         public string InputAge()
         {
-            Regex regex = new Regex(@"^[0-9]{1,2}$");
             string age;
 
             while (Constants.INPUT_VALUE)
             {
                 Console.SetCursorPosition(6, 17);
                 age = Console.ReadLine();
-                if (string.IsNullOrEmpty(age) || !regex.IsMatch(age))   //형식에 맞지 않는 입력
+                if (string.IsNullOrEmpty(age) || !Regex.IsMatch(age, @"^[0-9]{1,2}$"))   //형식에 맞지 않는 입력
                 {
                     PrintInputBox(0, 18, "(1~99세까지 입력 가능합니다.)                ");
                 }
@@ -131,10 +129,9 @@ namespace Library
             profile[3] = InputPassword(6, 17, @"^[1-9]+[0-9]{0,1}$", "(1~99세까지 입력 가능합니다.)                ");       //나이
             //휴대전화
             profile[4] = InputPassword(10, 20, @"010-[0-9]{4}-[0-9]{4}$", "(양식에 맞춰 다시 입력해주세요.(ex: 010-0000-0000))              ");
-            //Console.SetCursorPosition(10, 20);  //휴대전화
-            Console.ReadLine();
-            Console.SetCursorPosition(13, 23);  //도로명 주소
-            Console.ReadLine();
+            //주소
+            profile[5] = InputPassword(6, 23, @"[가-힣]+(시|도)\s[가-힣]+(시|군|구)\s[가-힣]+(읍|면|동)", "(양식에 맞춰 입력해주세요.(ex: 서울특별시 광진구 군자동))");
+            
         }
     }
 }
