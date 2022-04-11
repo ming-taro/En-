@@ -13,6 +13,9 @@ namespace Library
         public Borrowing()
         {
             bookList = new List<BookVO>();
+        }
+        public void PrintBorrowing()
+        {
             BorrowingScreen borrowingScreen = new BorrowingScreen();
             borrowingScreen.PrintBorrowing();
         }
@@ -50,9 +53,11 @@ namespace Library
         {
             for (int i = 0; i < bookList.Count; i++)
             {
-                if (bookList[i].Id.Equals(bookId)) return Constants.DUPLICATE_ID;  //도서목록에 존재함
+                if (bookList[i].Id.Equals(bookId))
+                {
+                    return Constants.DUPLICATE_ID;  //도서목록에 존재함
+                }
             }
-
             return !Constants.DUPLICATE_ID;  //도서목록에 없는 책을 대여하려 함
         }
         public bool IsQuantityZero(string bookId)
@@ -64,7 +69,7 @@ namespace Library
                     return Constants.QUANTITY_ZERO;
                 }
             }
-
+            
             return !Constants.QUANTITY_ZERO;
         }
         public string InputBookName()
@@ -96,11 +101,10 @@ namespace Library
             Regex regex = new Regex(@"^[0-9]{1,3}$");   //도서번호:숫자,0~999까지
             string bookId;
 
-            Console.SetCursorPosition(0,1);
-            Console.WriteLine("☞대여할 도서 번호:                                                   ");
-
             while (Constants.INPUT_VALUE)
             {
+                Console.SetCursorPosition(0, 1);
+                Console.WriteLine("☞대여할 도서 번호:                                                   ");
                 Console.SetCursorPosition(20, 1);
                 bookId = Console.ReadLine();            //도서번호를 입력 받음
                 if (string.IsNullOrEmpty(bookId) || !regex.IsMatch(bookId)) //형식에 맞지 않는 입력일 경우
@@ -110,12 +114,12 @@ namespace Library
                 else if (!IsDuplicateId(bookId))  //입력형식은 맞지만, 목록에 없는 도서를 빌리려고 했을 때
                 {
                     PrintInputBox("(도서목록에 없는 도서번호입니다. 다시 입력해주세요.)           ");
-                    return Constants.RE_ENTER;    //도서명부터 다시 검색
+                    //return Constants.RE_ENTER;    //도서명부터 다시 검색
                 }
                 else if (IsQuantityZero(bookId))  //목록에 있는 도서이지만 수량이 0일 때
                 {
                     PrintInputBox("(대여가능한 도서가 0권입니다. 다시 입력해주세요.)              ");
-                    return Constants.RE_ENTER;    //도서명부터 다시 검색
+                    //return Constants.RE_ENTER;    //도서명부터 다시 검색
                 }
                 else break;  //도서목록에 있는 책을 빌리려고 했을 때 -> 해당 도서 아이디 리턴
             }
@@ -124,17 +128,21 @@ namespace Library
         public int ControlBorrowing(string memberId)
         {
             ListScreen listScreen = new ListScreen();
+            BorrowingScreen borrowingScreen = new BorrowingScreen();
 
             while (Constants.INPUT_VALUE)
             {
+                PrintBorrowing();
                 string bookName = InputBookName();   //먼저 도서명 입력받기
                 AddBookOnList(bookName);             //검색어를 포함하는 책 리스트 저장
                 Console.Clear();                    
                 listScreen.PrintBookList(bookList);  //도서명 검색결과 목록 출력
                 string bookId = InputBookId();       //도서번호를 입력받음
-                if (!bookId.Equals(Constants.RE_ENTER)) break;   //도서번호를 잘못 입력받으면 도서명부터 다시 입력
+                if (bookId.Equals(Constants.RE_ENTER)) continue;   //도서번호를 잘못 입력받으면 도서명부터 다시 입력
+                else break;
             }
-            
+            borrowingScreen.PrintSuccessMessage();//도서대여 완료 메세지 출력
+
             return Constants.COMPLETE_FUNCTION;
         }
     }
