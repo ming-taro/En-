@@ -59,7 +59,7 @@ namespace Library
         }
         public void SelectMenu2(int menu)
         {
-            int function = Constants.COMPLETE_FUNCTION;
+            int function = 0;
 
             switch (menu)
             {
@@ -76,8 +76,8 @@ namespace Library
                     function = returning.ControlReturning(myId);
                     break;
                 case 16:   //개인정보수정(미완)
-                    EditingProfile editingProfle = new EditingProfile();
-                    function = editingProfle.ControlEditingProfile(myId);
+                    EditingProfile editingProfle = new EditingProfile(myId);
+                    myId = editingProfle.ControlEditingProfile();  //아이디를 수정했을 수 있음 -> 수정된 아이디를 myId에 저장
                     break;
             }
 
