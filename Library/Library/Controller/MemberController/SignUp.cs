@@ -92,6 +92,29 @@ namespace Library
                 PrintInputBox(17, 11, Constants.REMOVE_LINE);
             }
         }
+        public string InputName()  //이름을 입력받음
+        {
+            Regex regex = new Regex(@"^[a-zA-Z가-힣]{1,30}$");
+            string name;
+
+            while (Constants.INPUT_VALUE)
+            {
+                Console.SetCursorPosition(6, 13);
+                name = Console.ReadLine();     //이름을 입력받음
+                if (string.IsNullOrEmpty(name) || !regex.IsMatch(name))   //형식에 맞지 않는 입력
+                {
+                    PrintInputBox(0, 14, "(30자 이내의 영어, 한글만 다시 입력해주세요.)             ");
+                }
+                else
+                {
+                    PrintInputBox(0, 14, Constants.REMOVE_LINE);   //형식에 맞게 입력 -> 휴대전화 입력으로 넘어감
+                    break;
+                }
+                PrintInputBox(6, 13, Constants.REMOVE_LINE);
+            }
+
+            return name;
+        }
         public void ControlSignUp()
         {
             SignUpScreen signUpScreen = new SignUpScreen();
@@ -101,9 +124,7 @@ namespace Library
             profile[0] = InputId();        //아이디
             profile[1] = InputPassword();  //비밀번호
             ReconfirmPassword(profile[1]); //비밀번호 재확인
-
-            Console.ReadLine();
-            Console.SetCursorPosition(6, 13);   //이름
+            profile[2] = InputName();      //이름
             Console.ReadLine();
             Console.SetCursorPosition(6, 16);   //나이
             Console.ReadLine();
