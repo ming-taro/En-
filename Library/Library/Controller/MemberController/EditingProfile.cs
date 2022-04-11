@@ -78,7 +78,7 @@ namespace Library
                 menu = keyboard.SelectMenu(16, 34, 3);
                 if (menu == Constants.ESCAPE) return myId;   //메뉴선택 중 뒤로가기를 누르면 종료(아이디를 수정했다면 memberController에 수정된 id를 리턴해줘야 한다)
                 InputProfile(keyboard.GetTop(), myId);       //선택한 정보에 해당하는 회원정보 수정 및 회원리스트에 반영
-                editingScreen.PrintEditing(myId);            //회원정보수정 화면
+                editingScreen.PrintSuccessMessage(myId);     //수정된 정보가 반영된 화면 출력
             }
         }
     }
