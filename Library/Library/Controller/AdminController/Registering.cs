@@ -72,14 +72,13 @@ namespace Library
         }
         public string InputAuthor()
         {
-            Regex regex = new Regex(@"^[a-zA-Z가-힣]{1,50}$");   //영어,한글,1~50자 이내
             string author;
 
             while (Constants.INPUT_VALUE)
             {
                 Console.SetCursorPosition(6, 16);
                 author = Console.ReadLine();             //저자를 입력받음
-                if (!string.IsNullOrEmpty(author) && regex.IsMatch(author))
+                if (!string.IsNullOrEmpty(author) && Regex.IsMatch(author, @"^[a-zA-Z가-힣]{1,50}$"))
                 {
                     PrintInputBox(0, 17, Constants.REMOVE_LINE);
                     break;

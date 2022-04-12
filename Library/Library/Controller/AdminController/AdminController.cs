@@ -46,6 +46,8 @@ namespace Library
                 case 15:  //도서 수량 관리(미완)
                     break;
                 case 16:  //도서 삭제(미완)
+                    DeletingBook deletingBook = new DeletingBook();
+                    function = deletingBook.ControlDeletingBook();
                     break;
                 case 17:  //회원관리
                     DeletingMember deletingMember = new DeletingMember();
