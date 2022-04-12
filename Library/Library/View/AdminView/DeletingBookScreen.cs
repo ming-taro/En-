@@ -12,7 +12,7 @@ namespace Library
         {
             Console.Clear();
             LogoScreen logoScreen = new LogoScreen();
-            logoScreen.PrintSearchBox("\n☞삭제할 도서번호 입력");
+            logoScreen.PrintSearchBox("\n☞삭제할 도서번호 입력:");
 
             BookListVO bookListVO = BookListVO.GetBookListVO();
             SearchingScreen searchingScreen = new SearchingScreen();
