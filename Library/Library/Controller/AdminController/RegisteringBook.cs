@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace Library
 {
-    class Registering
+    class RegisteringBook
     {
         public void PrintInputBox(int left, int top, string message)
         {
             Console.SetCursorPosition(left, top);
             Console.Write(message);
         }
-        public bool IsDuplicateId(string bookId)   //입력값이 중복된 아이디인지 검사
+        public bool IsDuplicateId(string bookId)   //입력한 도서번호가 중복된 아이디인지 검사
         {
             BookListVO bookListVO = BookListVO.GetBookListVO();  //도서목록
             Console.WriteLine(bookListVO.bookList[0].Id);

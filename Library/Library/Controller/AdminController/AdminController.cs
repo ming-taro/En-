@@ -40,12 +40,14 @@ namespace Library
                     function = searchingBook.ControlSearchingBook();
                     break;
                 case 14:  //도서 등록
-                    Registering registering = new Registering();
-                    function = registering.ControlRegistering();
+                    RegisteringBook registeringBook = new RegisteringBook();
+                    function = registeringBook.ControlRegistering();
                     break;
-                case 15:  //도서 수량 관리(미완)
+                case 15:  //도서 수량 관리
+                    QuantityManagement quantityManagement = new QuantityManagement();
+                    function = quantityManagement.ControlQuantity();
                     break;
-                case 16:  //도서 삭제(미완)
+                case 16:  //도서 삭제
                     DeletingBook deletingBook = new DeletingBook();
                     function = deletingBook.ControlDeletingBook();
                     break;

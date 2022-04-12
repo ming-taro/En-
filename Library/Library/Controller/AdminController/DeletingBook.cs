@@ -36,7 +36,7 @@ namespace Library
             {
                 if(bookListVO.bookList[i].Name.Contains(bookName) && bookListVO.bookList[i].Id.Equals(bookId))
                 {
-                    bookIndex = i;
+                    bookIndex = i;   //도서 삭제할때 사용
                     return Constants.BOOK_IN_LIST;   //도서명,번호에 해당하는 책을 찾음
                 }
             }
@@ -71,6 +71,11 @@ namespace Library
 
             return bookName;
         }
+        public void DeleteBookInList()
+        {
+            BookListVO bookListVO = BookListVO.GetBookListVO();
+            bookListVO.bookList.RemoveAt(bookIndex); //도서목록에서 해당 도서 삭제
+        }
         public int ControlDeletingBook()
         {
             DeletingBookScreen deletingBookScreen = new DeletingBookScreen();
@@ -86,7 +91,9 @@ namespace Library
             menu = keyboard.SelectMenu(1, 1, 0);
             if (menu == Constants.ESCAPE) return Constants.ESCAPE;   //뒤로가기 -> 관리자모드로 돌아감
             InputBookId(bookName);
-            
+
+            deletingBookScreen.PrintSuccessMessage(bookIndex);   //도서삭제 완료 메세지 출력
+            DeleteBookInList();                                  //리스트에서 도서삭제
 
             return Constants.COMPLETE_FUNCTION;
         }

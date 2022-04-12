@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace Library
 {
-    class MemberVO : AdminVO
+    class MemberVO
     {
+        private string id;
+        private string password;
         private string name;
         private string age;
         private string phoneNumber;

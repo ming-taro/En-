@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace Library
 {
-    class Borrowing
+    class BorrowingBook
     {
         private List<BookVO> bookList;   
-        public Borrowing()
+        public BorrowingBook()
         {
             bookList = new List<BookVO>();
         }

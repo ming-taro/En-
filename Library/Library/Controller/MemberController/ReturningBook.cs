@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace Library
 {
-    class Returning
+    class ReturningBook
     {
         private List<BookVO> myBorrowList;
-        public Returning(string memberId)
+        public ReturningBook(string memberId)
         {
             myBorrowList = new List<BookVO>();                           //나의 도서 대여 목록
             BorrowListVO borrowListVO = BorrowListVO.GetBorrowListVO();  //도서목록
