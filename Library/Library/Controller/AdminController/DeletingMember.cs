@@ -69,7 +69,7 @@ namespace Library
         }
         public int ControlDeletingMember()
         {
-            DeletingScreen deletingScreen = new DeletingScreen();
+            DeletingMemberScreen deletingScreen = new DeletingMemberScreen();
             deletingScreen.PrintDeleting();     //삭제입력화면 출력
 
             Keyboard keyboard = new Keyboard();

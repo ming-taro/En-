@@ -26,40 +26,38 @@ namespace Library
         }
         public string InputBookId()
         {
-            Regex regex = new Regex(@"^[0-9]{1,3}$");   //도서번호:숫자,0~999까지
             string bookId;
 
             while (Constants.INPUT_VALUE)
             {
                 Console.SetCursorPosition(10, 7);
                 bookId = Console.ReadLine();        //도서번호를 입력 받음
-                if (!string.IsNullOrEmpty(bookId) && regex.IsMatch(bookId) && !IsDuplicateId(bookId)) //중복 없이 알맞게 입력한 경우
+                if (!string.IsNullOrEmpty(bookId) && Regex.IsMatch(bookId, @"^[0-9]{1,3}$") && !IsDuplicateId(bookId)) //중복 없이 알맞게 입력한 경우
                 {
-                    Console.SetCursorPosition(0, 8);
                     PrintInputBox(0, 8, Constants.REMOVE_LINE);
                     break;
                 }
-                else if (!string.IsNullOrEmpty(bookId) && regex.IsMatch(bookId))      //입력 양식은 맞지만 도서아이디가 이미 존재하는 경우
+                else if (!string.IsNullOrEmpty(bookId) && Regex.IsMatch(bookId, @"^[0-9]{1,3}$"))      //입력 양식은 맞지만 도서아이디가 이미 존재하는 경우
                 {
                     PrintInputBox(0, 8, "(이미 존재하는 아이디입니다. 다시 입력해주세요.)          ");
                 }
                 else
                 {
-                    PrintInputBox(0, 7, "도서번호:" + Constants.REMOVE_LINE + "\n(0~999사이의 숫자가 아닙니다. 다시 입력해주세요.)          ");
+                    PrintInputBox(0, 8, "(0~999사이의 숫자가 아닙니다. 다시 입력해주세요.)          ");
                 }
+                PrintInputBox(10, 7, Constants.REMOVE_LINE);
             }
             return bookId;
         }
         public string InputBookName(int left, int top, string inputType)
         {
-            Regex regex = new Regex(@"^[\w]{1,1}[^\e]{0,49}$");   //(도서명/출판사): 1~50자 이내
             string bookName;
 
             while (Constants.INPUT_VALUE)
             {
                 Console.SetCursorPosition(left, top);
                 bookName = Console.ReadLine();        //(도서명/출판사)를 입력 받음
-                if (!string.IsNullOrEmpty(bookName) && regex.IsMatch(bookName))
+                if (!string.IsNullOrEmpty(bookName) && Regex.IsMatch(bookName, @"^[\w]{1,1}[^\e]{0,49}$"))
                 {
                     PrintInputBox(0, top + 1, Constants.REMOVE_LINE);
                     break;
@@ -68,6 +66,7 @@ namespace Library
                 {
                     PrintInputBox(0, top, inputType + ":" + Constants.REMOVE_LINE + "\n(공백으로 시작하지 않는 50자 이내의 글자를 입력해주세요.)                    ");
                 }
+                PrintInputBox(left, top, Constants.REMOVE_LINE);
             }
             return bookName;
         }
@@ -87,50 +86,51 @@ namespace Library
                 }
                 else
                 {
-                    PrintInputBox(0, 16, "저자: " + Constants.REMOVE_LINE + "\n(50자 이내의 영어, 한글만 입력해주세요.)                            ");
+                    PrintInputBox(0, 17, "(50자 이내의 영어, 한글만 입력해주세요.)                            ");
                 }
+                PrintInputBox(6, 16, Constants.REMOVE_LINE);
             }
             return author;
         }
         public string InputPrice()
         {
-            Regex regex = new Regex(@"^[0-9]{1,10}");   //숫자,10자 이내
             string price;
 
             while (Constants.INPUT_VALUE)
             {
                 Console.SetCursorPosition(6, 19);
                 price = Console.ReadLine();             //가격을 입력받음
-                if (!string.IsNullOrEmpty(price) && regex.IsMatch(price))
+                if (!string.IsNullOrEmpty(price) && Regex.IsMatch(price, @"^[1-9]{1}[0-9]{0,9}"))
                 {
                     PrintInputBox(0, 20, Constants.REMOVE_LINE);
                     break;
                 }
                 else
                 {
-                    PrintInputBox(0, 19, "가격: " + Constants.REMOVE_LINE + "\n(10자 이내의 숫자만 가능합니다. 다시 입력해주세요.)                            ");
+                    PrintInputBox(0, 20, "(0이상의 숫자를 10자 이내로 다시 입력해주세요.)                                 ");
                 }
+                PrintInputBox(6, 19, Constants.REMOVE_LINE);
             }
             return price;
         }
         public string InputQuantity()
         {
-            Regex regex = new Regex(@"^[0-9]{1,2}$");   //숫자, 2자 이내
             string quantity;
 
             while (Constants.INPUT_VALUE)
             {
                 Console.SetCursorPosition(6, 22);
                 quantity = Console.ReadLine();                     //수량을 입력받음
-                if (!string.IsNullOrEmpty(quantity) && regex.IsMatch(quantity))
+                if (!string.IsNullOrEmpty(quantity) && Regex.IsMatch(quantity, @"^[1-9]{1}[0-9]{0,1}$"))
                 {
                     PrintInputBox(0, 23, Constants.REMOVE_LINE);
                     break;
                 }
                 else
                 {
-                    PrintInputBox(0, 22, "수량: " + Constants.REMOVE_LINE + "\n(1~99사이의 숫자만 가능합니다. 다시 입력해주세요.)                            ");
+                    PrintInputBox(0, 23, "(1~99사이의 숫자만 가능합니다. 다시 입력해주세요.)                            ");
                 }
+                PrintInputBox(6, 22, Constants.REMOVE_LINE);
             }
             return quantity;
         }

@@ -47,7 +47,7 @@ namespace Library
                     break;
                 case 16:  //도서 삭제(미완)
                     break;
-                case 17:  //회원관리(미완 -> 회원출력만 가능)
+                case 17:  //회원관리
                     DeletingMember deletingMember = new DeletingMember();
                     function = deletingMember.ControlDeletingMember();
                     break;

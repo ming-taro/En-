@@ -12,7 +12,7 @@ namespace Library
         {
             LogoScreen logoScreen = new LogoScreen();
             logoScreen.PrintMenu("도서 등록");
-            Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>뒤로가기:[ESC]<<<<<<<<<<<<<<<<<<<<<<<<");
+            Console.WriteLine("=======================뒤로가기:[ESC]========================");
             Console.SetCursorPosition(0, 7);
             Console.WriteLine("도서번호: \n(0~999사이의 숫자만 입력 가능합니다.(ex: 123))\n");
             Console.WriteLine("도서명: \n(50자 이내로 입력해주세요.(ex: 이것이 C#이다))\n");
