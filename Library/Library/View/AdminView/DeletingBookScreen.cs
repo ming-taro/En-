@@ -10,8 +10,9 @@ namespace Library
     {
         public void PrintSearchingBook(string bookName)
         {
+            Console.Clear();
             LogoScreen logoScreen = new LogoScreen();
-            logoScreen.PrintSearchBox("삭제할 도서번호 입력");
+            logoScreen.PrintSearchBox("\n☞삭제할 도서번호 입력");
 
             BookListVO bookListVO = BookListVO.GetBookListVO();
             SearchingScreen searchingScreen = new SearchingScreen();
@@ -20,7 +21,7 @@ namespace Library
         public void PrintBookList()
         {
             LogoScreen logoScreen = new LogoScreen();
-            logoScreen.PrintSearchBox("삭제할 도서명 검색");
+            logoScreen.PrintSearchBox("\n☞삭제할 도서명 검색:");
 
             BookListVO bookListVO = BookListVO.GetBookListVO();
             ListScreen listScreen = new ListScreen();

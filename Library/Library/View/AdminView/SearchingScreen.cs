@@ -23,7 +23,6 @@ namespace Library
         }
         public void PrintSearchingBook(int menu, string name, List<BookVO> bookList)
         {
-            Console.Clear();
             Console.WriteLine("\n=============================================================\n");
             for (int i = 0; i < bookList.Count; i++)
             {
