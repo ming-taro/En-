@@ -31,22 +31,27 @@ namespace Library
         public string Id
         {
             get { return id; }
+            set { id = value; }
         }
         public string Name
         {
             get { return name; }
+            set { name = value; }
         }
         public string Publisher
         {
             get { return publisher; }
+            set { publisher = value; }
         }
         public string Author
         {
             get { return author; }
+            set { author = value; }
         }
         public string Price
         {
             get { return price; }
+            set { price = value; }
         }
         public string Quantity
         {

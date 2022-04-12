@@ -32,7 +32,7 @@ namespace Library
         }
         public void PrintAdminMode()
         {
-            string[] menu = { "도서 검색", "도서 등록", "도서 수량 관리", "도서 삭제", "회원정보 관리" };
+            string[] menu = { "도서 검색", "도서 등록", "도서정보 수정", "도서 삭제", "회원정보 관리" };
             logoScreen.PrintMain(menu);
         }
     }

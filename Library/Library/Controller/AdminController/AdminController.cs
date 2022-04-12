@@ -44,7 +44,7 @@ namespace Library
                     function = registeringBook.ControlRegistering();
                     break;
                 case 15:  //도서 수량 관리
-                    QuantityManagement quantityManagement = new QuantityManagement();
+                    EditingBook quantityManagement = new EditingBook();
                     function = quantityManagement.ControlQuantity();
                     break;
                 case 16:  //도서 삭제
