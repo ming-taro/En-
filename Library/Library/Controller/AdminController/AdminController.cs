@@ -35,7 +35,7 @@ namespace Library
             
             switch (menu)
             {
-                case 13:  //도서 이름 검색
+                case 13:  //도서 이름 검색  //--->키값도 매직처리
                     SearchingBook searchingBook = new SearchingBook();
                     function = searchingBook.ControlSearchingBook();
                     break;
@@ -44,8 +44,8 @@ namespace Library
                     function = registeringBook.ControlRegistering();
                     break;
                 case 15:  //도서 수량 관리
-                    EditingBook quantityManagement = new EditingBook();
-                    function = quantityManagement.ControlQuantity();
+                    EditingBook editingBook = new EditingBook();
+                    function = editingBook.ControlEditingBook();
                     break;
                 case 16:  //도서 삭제
                     DeletingBook deletingBook = new DeletingBook();
@@ -59,7 +59,7 @@ namespace Library
             }
 
             //기능을 모두 수행함 : 뒤로가기 입력받음 -> 관리자메뉴로 돌아감
-            if (function == Constants.COMPLETE_FUNCTION) GoBack();
+            if (function == Constants.COMPLETE_FUNCTION) GoBack(); ///---->
         }
         public void GoBack()  //뒤로가기
         {

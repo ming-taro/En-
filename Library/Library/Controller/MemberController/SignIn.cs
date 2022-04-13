@@ -9,14 +9,14 @@ namespace Library
 {
     class SignIn
     {
-        public SignIn()
+        public SignIn()  //-->>안됨
         {
             SignInScreen signInScreen = new SignInScreen();
             signInScreen.PrintSignIn();
         }
         public void SignInAdmin()
         {
-            SignInScreen signInScreen = new SignInScreen();
+            SignInScreen signInScreen = new SignInScreen();   //--->수정
 
             while (Constants.INPUT_VALUE)
             {
@@ -42,7 +42,7 @@ namespace Library
                 }
             }
 
-            return !Constants.EXISTING_MEMBER;
+            return !Constants.EXISTING_MEMBER;  //----->느낌표XXXX(따로만들기)
         }
         public string SignInMember()
         {

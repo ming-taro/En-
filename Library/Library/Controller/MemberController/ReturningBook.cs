@@ -92,6 +92,10 @@ namespace Library
         }
         public int ControlReturning(string memberId)
         {
+            Keyboard keyboard = new Keyboard(0, 1);
+            int menu = keyboard.SelectMenu(1, 1, 0);
+            if (menu == Constants.ESCAPE) return Constants.ESCAPE;   //뒤로가기 -> 회원모드로 돌아감
+
             string bookId = InputBookId();                       //반납하려는 도서번호
             RemoveInBorrowListVO(memberId, bookId);              //대여도서목록에서 반납한 도서 데이터 삭제
             AddInBookListVO(bookId);

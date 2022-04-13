@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Library
 {
-    class QuantityScreen
+    class EditingBookScreen
     {
         public void PrintSearchingBookId()
         {
@@ -39,7 +39,7 @@ namespace Library
         {
             PrintBook(bookVO);
             Console.SetCursorPosition(0, 14);
-            Console.WriteLine("==================도서정보가 변경되었습니다===================");  //변경완료문구 출력
+            Console.WriteLine("==================도서정보가 변경되었습니다===================\n");  //변경완료문구 출력
             PrintQuantityManagement();
         }
     }

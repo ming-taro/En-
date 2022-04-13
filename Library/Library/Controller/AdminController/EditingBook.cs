@@ -78,15 +78,15 @@ namespace Library
                     break;
             }
         }
-        public int ControlQuantity()
+        public int ControlEditingBook()
         {
-            QuantityScreen quantityScreen = new QuantityScreen();
-            quantityScreen.PrintSearchingBookId();    //도서번호검색화면 출력
+            EditingBookScreen editingBookScreen = new EditingBookScreen();
+            editingBookScreen.PrintSearchingBookId();    //도서번호검색화면 출력
 
             InputBookId();  //도서번호를 입력받음
 
-            quantityScreen.PrintBook(bookVO);      //해당 도서정보 출력
-            quantityScreen.PrintQuantityManagement(); //도서정보 수정 화면 출력
+            editingBookScreen.PrintBook(bookVO);      //해당 도서정보 출력
+            editingBookScreen.PrintQuantityManagement(); //도서정보 수정 화면 출력
 
             Keyboard keyboard = new Keyboard(0, 16);
             int menu;
@@ -96,7 +96,7 @@ namespace Library
                 menu = keyboard.SelectMenu(16, 31, 3);
                 if (menu == Constants.ESCAPE) return Constants.ESCAPE;   //메뉴선택 중 뒤로가기를 누르면 종료
                 InputBook(keyboard.GetTop());                   //해당 도서정보 수정
-                quantityScreen.PrintSuccessMessage(bookVO);     //수정된 정보가 반영된 화면 출력
+                editingBookScreen.PrintSuccessMessage(bookVO);     //수정된 정보가 반영된 화면 출력
             }
         }
     }

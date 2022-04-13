@@ -118,8 +118,6 @@ namespace Library
 
             while (Constants.INPUT_VALUE)
             {
-                Console.SetCursorPosition(0, 1);
-                Console.WriteLine("☞대여할 도서 번호:                                                   ");
                 Console.SetCursorPosition(20, 1);
                 bookId = Console.ReadLine();            //도서번호를 입력 받음
                 if (string.IsNullOrEmpty(bookId) || !regex.IsMatch(bookId)) //형식에 맞지 않는 입력일 경우
@@ -141,6 +139,8 @@ namespace Library
                     //return Constants.RE_ENTER;    //도서명부터 다시 검색
                 }
                 else break;  //도서대여가능 -> 해당 도서 아이디 리턴
+                Console.SetCursorPosition(20, 1);
+                Console.Write(Constants.REMOVE_LINE);
             }
             return bookId;
         }
@@ -169,21 +169,25 @@ namespace Library
         {
             ListScreen listScreen = new ListScreen();
             BorrowingScreen borrowingScreen = new BorrowingScreen();
-            string bookName, bookId;
 
-            while (Constants.INPUT_VALUE)
-            {
-                PrintBorrowing();
-                bookName = InputBookName();    //먼저 도서명 입력받기
-                AddBookOnList(bookName);              //검색어를 포함하는 책 리스트 저장
-                Console.Clear();                    
-                listScreen.PrintBookList(bookList);   //도서명 검색결과 목록 출력
-                bookId = InputBookId(memberId);//도서번호를 입력받음
-                break;
-            }
+            PrintBorrowing();                     //도서목록 출력
+            Keyboard keyboard = new Keyboard(0, 1);
+            int menu = keyboard.SelectMenu(1, 1, 0);
+            if (menu == Constants.ESCAPE) return Constants.ESCAPE;   //뒤로가기 -> 관리자모드로 돌아감
 
+            string bookName = InputBookName();    //먼저 도서명 입력받기
+            AddBookOnList(bookName);              //검색어를 포함하는 책 리스트 저장
+            Console.Clear();
+            Console.SetCursorPosition(0, 1);
+            Console.WriteLine("☞대여할 도서 번호:                                                   ");
+            listScreen.PrintBookList(bookList);   //도서명 검색결과 목록 출력
+
+            menu = keyboard.SelectMenu(1, 1, 0);
+            if (menu == Constants.ESCAPE) return Constants.ESCAPE;   //뒤로가기 -> 관리자모드로 돌아감
+
+            string bookId = InputBookId(memberId);//도서번호를 입력받음
             borrowingScreen.PrintSuccessMessage();//도서대여 완료 메세지 출력
-            AddBorrowList(memberId, bookId);
+            AddBorrowList(memberId, bookId);      //도서대여목록에 추가
 
             return Constants.COMPLETE_FUNCTION;
         }

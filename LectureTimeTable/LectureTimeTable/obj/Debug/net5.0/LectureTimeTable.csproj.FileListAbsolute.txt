@@ -1,0 +1,16 @@
+C:\Users\sec\OneDrive\바탕 화면\En#\LectureTimeTable\LectureTimeTable\bin\Debug\net5.0\LectureTimeTable.exe
+C:\Users\sec\OneDrive\바탕 화면\En#\LectureTimeTable\LectureTimeTable\bin\Debug\net5.0\LectureTimeTable.deps.json
+C:\Users\sec\OneDrive\바탕 화면\En#\LectureTimeTable\LectureTimeTable\bin\Debug\net5.0\LectureTimeTable.runtimeconfig.json
+C:\Users\sec\OneDrive\바탕 화면\En#\LectureTimeTable\LectureTimeTable\bin\Debug\net5.0\LectureTimeTable.runtimeconfig.dev.json
+C:\Users\sec\OneDrive\바탕 화면\En#\LectureTimeTable\LectureTimeTable\bin\Debug\net5.0\LectureTimeTable.dll
+C:\Users\sec\OneDrive\바탕 화면\En#\LectureTimeTable\LectureTimeTable\bin\Debug\net5.0\ref\LectureTimeTable.dll
+C:\Users\sec\OneDrive\바탕 화면\En#\LectureTimeTable\LectureTimeTable\bin\Debug\net5.0\LectureTimeTable.pdb
+C:\Users\sec\OneDrive\바탕 화면\En#\LectureTimeTable\LectureTimeTable\obj\Debug\net5.0\LectureTimeTable.csprojAssemblyReference.cache
+C:\Users\sec\OneDrive\바탕 화면\En#\LectureTimeTable\LectureTimeTable\obj\Debug\net5.0\LectureTimeTable.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\sec\OneDrive\바탕 화면\En#\LectureTimeTable\LectureTimeTable\obj\Debug\net5.0\LectureTimeTable.AssemblyInfoInputs.cache
+C:\Users\sec\OneDrive\바탕 화면\En#\LectureTimeTable\LectureTimeTable\obj\Debug\net5.0\LectureTimeTable.AssemblyInfo.cs
+C:\Users\sec\OneDrive\바탕 화면\En#\LectureTimeTable\LectureTimeTable\obj\Debug\net5.0\LectureTimeTable.csproj.CoreCompileInputs.cache
+C:\Users\sec\OneDrive\바탕 화면\En#\LectureTimeTable\LectureTimeTable\obj\Debug\net5.0\LectureTimeTable.dll
+C:\Users\sec\OneDrive\바탕 화면\En#\LectureTimeTable\LectureTimeTable\obj\Debug\net5.0\ref\LectureTimeTable.dll
+C:\Users\sec\OneDrive\바탕 화면\En#\LectureTimeTable\LectureTimeTable\obj\Debug\net5.0\LectureTimeTable.pdb
+C:\Users\sec\OneDrive\바탕 화면\En#\LectureTimeTable\LectureTimeTable\obj\Debug\net5.0\LectureTimeTable.genruntimeconfig.cache

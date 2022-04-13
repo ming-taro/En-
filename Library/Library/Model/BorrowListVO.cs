@@ -19,7 +19,7 @@ namespace Library
             }
             return borrowListVO;
         }
-        public BorrowListVO()
+        public BorrowListVO()//--->수정
         {
             borrowList = new List<BorrowVO>();
             BookListVO bookListVO = BookListVO.GetBookListVO();

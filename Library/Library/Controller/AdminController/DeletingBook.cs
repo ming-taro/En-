@@ -10,7 +10,7 @@ namespace Library
     class DeletingBook
     {
         int bookIndex;
-        public void PrintInputBox(int left, int top, string message)
+        public void PrintInputBox(int left, int top, string message)///---->뷰로빼기(겹침)
         {
             Console.SetCursorPosition(left, top);
             Console.Write(message);
