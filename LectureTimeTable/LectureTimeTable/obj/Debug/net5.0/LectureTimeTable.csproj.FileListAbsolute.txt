@@ -14,3 +14,5 @@ C:\Users\sec\OneDrive\바탕 화면\En#\LectureTimeTable\LectureTimeTable\obj\De
 C:\Users\sec\OneDrive\바탕 화면\En#\LectureTimeTable\LectureTimeTable\obj\Debug\net5.0\ref\LectureTimeTable.dll
 C:\Users\sec\OneDrive\바탕 화면\En#\LectureTimeTable\LectureTimeTable\obj\Debug\net5.0\LectureTimeTable.pdb
 C:\Users\sec\OneDrive\바탕 화면\En#\LectureTimeTable\LectureTimeTable\obj\Debug\net5.0\LectureTimeTable.genruntimeconfig.cache
+C:\Users\sec\OneDrive\바탕 화면\En#\LectureTimeTable\LectureTimeTable\bin\Debug\net5.0\Microsoft.Office.Interop.Excel.dll
+C:\Users\sec\OneDrive\바탕 화면\En#\LectureTimeTable\LectureTimeTable\obj\Debug\net5.0\LectureTimeTable.csproj.CopyComplete

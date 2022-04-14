@@ -1,0 +1,7 @@
+C:\Users\sec\OneDrive\바탕 화면\En#\Test3\Test3\bin\Debug\Test3.exe.config
+C:\Users\sec\OneDrive\바탕 화면\En#\Test3\Test3\bin\Debug\Test3.exe
+C:\Users\sec\OneDrive\바탕 화면\En#\Test3\Test3\bin\Debug\Test3.pdb
+C:\Users\sec\OneDrive\바탕 화면\En#\Test3\Test3\obj\Debug\Test3.csprojAssemblyReference.cache
+C:\Users\sec\OneDrive\바탕 화면\En#\Test3\Test3\obj\Debug\Test3.csproj.CoreCompileInputs.cache
+C:\Users\sec\OneDrive\바탕 화면\En#\Test3\Test3\obj\Debug\Test3.exe
+C:\Users\sec\OneDrive\바탕 화면\En#\Test3\Test3\obj\Debug\Test3.pdb
