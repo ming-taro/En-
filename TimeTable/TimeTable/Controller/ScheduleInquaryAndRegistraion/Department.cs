@@ -11,6 +11,7 @@ namespace TimeTable
         public string ShowMenu(int menu)
         {
             SearchCategoryScreen searchCategoryScreen = new SearchCategoryScreen();
+            searchCategoryScreen.PrintDepartmentMenu();
 
             switch (menu)
             {
@@ -30,20 +31,18 @@ namespace TimeTable
 
             return "";
         }
-        public int SelectMenu(ref string department)  //학과전공 선택(커서 좌우로 이동)
+        public void SelectMenu(ref string department)  //학과전공 선택(커서 좌우로 이동)
         {
             SearchCategoryScreen searchCategoryScreen = new SearchCategoryScreen();
-            searchCategoryScreen.PrintDepartmentMenu();        //학과 선택 화면 출력
+            if (department == null) searchCategoryScreen.PrintDepartmentMenu();      //학과 선택 화면 출력
 
             Keyboard keyboard = new Keyboard((int)Constants.Department.ALL, (int)Constants.LectureSchedule.DEPARTMENT);
             int menu = keyboard.SelectLeft((int)Constants.Department.ALL, (int)Constants.Department.HISTORY, (int)Constants.Department.STEP);   //학과선택
 
-            if (menu == (int)Constants.Keyboard.ESCAPE) return (int)Constants.Keyboard.ESCAPE;  //학과선택 중 뒤로가기
+            if (menu == (int)Constants.Keyboard.ESCAPE) return;  //학과선택 중 뒤로가기
             menu = keyboard.Left;
 
             department = ShowMenu(menu);   //학과이름 저장
-
-            return (int)Constants.Keyboard.ENTERING_MENU;     //학과를 선택함
         }
     }
 }
