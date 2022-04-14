@@ -49,9 +49,10 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="Controller\Keyboard.cs" />
+    <Compile Include="Controller\LectureScheduleAndRegistraion\Department.cs" />
     <Compile Include="Controller\LogIn.cs" />
     <Compile Include="Controller\TimeTableMenu.cs" />
-    <Compile Include="Controller\ViewingLectureSchedule.cs" />
+    <Compile Include="Controller\LectureScheduleAndRegistraion\ViewingLectureSchedule.cs" />
     <Compile Include="EnteringText.cs" />
     <Compile Include="TimeTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

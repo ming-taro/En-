@@ -22,6 +22,8 @@ namespace TimeTable
         public const bool LOGIN_IN = true;
         public const bool LOGIN_FAILURE = false;
         public const bool KEYBOARD_OPERATION = true;
+        public const bool TOP = true;
+        public const bool LEFT = false;
 
         public enum Keyboard{
             ENTERING_MENU,
@@ -38,6 +40,14 @@ namespace TimeTable
             COURSE_TITLE = 14,
             INSTRUCTOR = 17,
             SEARCH = 20
+        }
+
+        public enum Grade
+        {
+            FRESHMAN = 40,   //left값
+            SOPHOMORE = 50,
+            JUNIOR = 60,
+            SENIOR = 70
         }
     }
 }

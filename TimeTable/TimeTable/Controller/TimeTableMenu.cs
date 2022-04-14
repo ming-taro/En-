@@ -14,7 +14,7 @@ namespace TimeTable
             timeTableMenuScreen.PrintMenu();
 
             Keyboard keyboard = new Keyboard(50, 9);
-            int menu = keyboard.SelectMenu(9, 15, 2);            //강좌조회 및 수강신청 : 메뉴선택
+            int menu = keyboard.SelectTop(9, 15, 2);            //강좌조회 및 수강신청 : 메뉴선택
             if (menu == (int)Constants.Keyboard.ESCAPE) return;  //esc클릭 -> 로그인 화면으로 돌아감
             menu = keyboard.Top;
 
@@ -41,14 +41,17 @@ namespace TimeTable
         {
             Console.ForegroundColor = ConsoleColor.White;
             Logo logo = new Logo();
-            
+            logo.PrintMain();           //메인화면 출력
 
             LogIn logIn = new LogIn();
 
             while (Constants.LOGIN_IN)
             {
-                logo.PrintMain();           //메인화면 출력
-                if (logIn.LogInToWebsite() == Constants.LOGIN_IN) SelectMenu();
+                if (logIn.LogInToWebsite() == Constants.LOGIN_IN)
+                {
+                    SelectMenu();
+                    logo.PrintMain();           //메인화면 출력
+                }
                 else
                 {
                     logo.FailureMessage(60, 14, "(학번이나 비밀번호가 일치하지 않습니다.)");  //로그인 실패 메세지 출력
