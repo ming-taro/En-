@@ -31,6 +31,7 @@ namespace TimeTable
         }
         public void PrintMain()
         {
+            Console.Clear();
             Console.SetWindowSize(120,25);
             PrintLine(1,1);
             PrintMenu(20, 6, "   Sejong University\n");

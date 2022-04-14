@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TimeTable.Controller
+namespace TimeTable
 {
     class Keyboard
     {
@@ -43,9 +43,10 @@ namespace TimeTable.Controller
             {
                 Console.SetCursorPosition(left, top);
                 key = ControlKeyboard(move);            //키보드를 입력받음
-                if (IsOutOfMenu(minTop, maxTop)) continue;  //메뉴를 벗어나는 이동은 X
+                if (OutOfMenu(minTop, maxTop) == (int)Constants.Keyboard.OUT_OF_MENU) continue;  //메뉴를 벗어나는 이동은 X
 
-                if (key == Constants.ENTERING_MENU || key == Constants.ESCAPE) break;//메뉴입력 -> 해당 메뉴로 이동(1.회원모드   2.관리자모드)
+                //메뉴입력 -> 해당 메뉴로 이동
+                if (key == (int)Constants.Keyboard.ENTERING_MENU || key == (int)Constants.Keyboard.ESCAPE) break;
             }
 
             return key;
@@ -62,25 +63,25 @@ namespace TimeTable.Controller
                     case ConsoleKey.DownArrow:
                         top += move;
                         Console.SetCursorPosition(left, top);   //↓방향키 입력
-                        return Constants.MOVING_CURSOR;
+                        return (int)Constants.Keyboard.MOVING_CURSOR;
                     case ConsoleKey.UpArrow:                      //↑방향키 입력
                         top -= move;
                         Console.SetCursorPosition(left, top);
-                        return Constants.MOVING_CURSOR;
+                        return (int)Constants.Keyboard.MOVING_CURSOR;
                     case ConsoleKey.Enter:                        //enter 입력
-                        return Constants.ENTERING_MENU;
+                        return (int)Constants.Keyboard.ENTERING_MENU;
                     case ConsoleKey.Escape:                       //escape 입력
-                        return Constants.ESCAPE;
+                        return (int)Constants.Keyboard.ESCAPE;
                 }
             }
         }
-        public bool IsOutOfMenu(int minTop, int maxTop)
+        public int OutOfMenu(int minTop, int maxTop)
         {
             if (top < minTop) top = minTop;
             else if (top > maxTop) top = maxTop;
-            else return !Constants.OUT_OF_MENU;
+            else return (int)Constants.Keyboard.WITHIN_THE_MENU;  //입력범위 내에서 키보드를 움직임
 
-            return Constants.OUT_OF_MENU;
+            return (int)Constants.Keyboard.OUT_OF_MENU;   //입력 범위를 벗어남
         }
     }
 }

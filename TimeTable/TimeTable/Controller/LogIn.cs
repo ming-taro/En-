@@ -11,7 +11,7 @@ namespace TimeTable
 
         public bool IsPossibleToLogIn(string id, string password)
         {
-            if (id.Equals("19011507") && password.Equals("aaa123")) return Constants.LOGIN_IN;
+            if (id.Equals("19011507") && password.Equals("aaaaa")) return Constants.LOGIN_IN;
             else return Constants.LOGIN_FAILURE;
         }
         public bool LogInToWebsite()  //로그인하기

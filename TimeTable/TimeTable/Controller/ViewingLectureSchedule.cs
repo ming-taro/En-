@@ -8,6 +8,16 @@ namespace TimeTable
 {
     class ViewingLectureSchedule
     {
+        private void SelectMenu()
+        {
+            LectureScheduleScreen lectureScheduleScreen = new LectureScheduleScreen();
+            lectureScheduleScreen.PrintMenu();
+
+            Keyboard keyboard = new Keyboard(50, 10);
+            int menu = keyboard.SelectMenu(10, 16, 2);   //강좌조회 및 수강신청 : 메뉴선택
+            if (menu == (int)Constants.Keyboard.ESCAPE) return;  //esc클릭 -> 로그인 화면으로 돌아감
+            
+        }
 
         public void ViewLectueSchedule()
         {
@@ -19,7 +29,7 @@ namespace TimeTable
 
             while (Constants.LOGIN_IN)
             {
-                if (logIn.LogInToWebsite() == Constants.LOGIN_IN) break;
+                if (logIn.LogInToWebsite() == Constants.LOGIN_IN) SelectMenu();
                 else
                 {
                     logo.FailureMessage(60, 14, "(학번이나 비밀번호가 일치하지 않습니다.)");  //로그인 실패 메세지 출력

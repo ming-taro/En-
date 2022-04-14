@@ -54,6 +54,7 @@
     <Compile Include="EnteringText.cs" />
     <Compile Include="TimeTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="View\LectureScheduleScreen.cs" />
     <Compile Include="View\Logo.cs" />
   </ItemGroup>
   <ItemGroup>

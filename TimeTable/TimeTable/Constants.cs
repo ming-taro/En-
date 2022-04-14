@@ -21,6 +21,14 @@ namespace TimeTable
         //ViewLectureSchedule
         public const bool LOGIN_IN = true;
         public const bool LOGIN_FAILURE = false;
-        public const string 
+        public const bool KEYBOARD_OPERATION = true;
+
+        public enum Keyboard{
+            ENTERING_MENU,
+            ESCAPE,
+            MOVING_CURSOR,
+            OUT_OF_MENU,
+            WITHIN_THE_MENU
+        }
     }
 }
