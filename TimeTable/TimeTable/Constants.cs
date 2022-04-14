@@ -52,10 +52,11 @@ namespace TimeTable
         }
         public enum Department
         {
-            ALL = 40,
-            COMPUTER_ENGINEERING = 50,
-            DATA_SCIENCE = 60,
-            HISTORY = 70
+            ALL = 23,
+            COMPUTER_ENGINEERING = 46,
+            DATA_SCIENCE = 69,
+            HISTORY = 92,
+            STEP = 23
         }
     }
 }

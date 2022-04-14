@@ -28,18 +28,19 @@ namespace TimeTable
                     break;
             }
         }
-        public int SelectMenu()  //학과전공 선택
+        public int SelectMenu()  //학과전공 선택(커서 좌우로 이동)
         {
             SearchCategoryScreen searchCategoryScreen = new SearchCategoryScreen();
             searchCategoryScreen.PrintDepartmentMenu();        //학과 선택 화면 출력
 
             Keyboard keyboard = new Keyboard((int)Constants.Department.ALL, (int)Constants.LectureSchedule.DEPARTMENT);
-            int menu = keyboard.SelectLeft((int)Constants.Department.ALL, (int)Constants.Department.HISTORY, 10);   //학과선택
+            int menu = keyboard.SelectLeft((int)Constants.Department.ALL, (int)Constants.Department.HISTORY, (int)Constants.Department.STEP);   //학과선택
 
             if (menu == (int)Constants.Keyboard.ESCAPE) return (int)Constants.Keyboard.ESCAPE;  //학과선택 중 뒤로가기
             menu = keyboard.Left;
 
             ShowMenu(menu);
+
             return (int)Constants.Keyboard.ENTERING_MENU;     //학과를 선택함
         }
     }

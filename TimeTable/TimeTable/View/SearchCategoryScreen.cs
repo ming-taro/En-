@@ -11,9 +11,11 @@ namespace TimeTable
         public void ShowSelection(int left, int top, string menu)
         {
             Logo logo = new Logo();
-            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.BackgroundColor = ConsoleColor.Yellow;
+            Console.ForegroundColor = ConsoleColor.Black;
             logo.PrintMenu(left, top, menu);
             Console.ForegroundColor = ConsoleColor.White;
+            Console.BackgroundColor = ConsoleColor.Black;
         }
         public void PrintDepartmentMenu()
         {
