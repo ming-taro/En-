@@ -8,6 +8,11 @@ namespace TimeTable
 {
     class ViewingLectureSchedule
     {
+        private string department;
+        private string completionType;
+        private string grade;
+        private string courseTitle;
+        private string instructor;
 
         private void SelectMenu(int menu)
         {
@@ -17,8 +22,7 @@ namespace TimeTable
             {
                 case (int)Constants.LectureSchedule.DEPARTMENT:       //학과전공
                     Department department = new Department();
-                    selection = department.SelectMenu();
-                    Console.Read();  //test용 지울것
+                    selection = department.SelectMenu(ref this.department);
                     break;
                 case (int)Constants.LectureSchedule.COMPLETION_TYPE:  //이수구분
 
@@ -37,6 +41,8 @@ namespace TimeTable
                     break;
             }
 
+            Console.WriteLine(this.department);
+            Console.Read();
 
         }
         public void ViewLectureSchedule()

@@ -8,7 +8,7 @@ namespace TimeTable
 {
     class Department
     {
-        public void ShowMenu(int menu)
+        public string ShowMenu(int menu)
         {
             SearchCategoryScreen searchCategoryScreen = new SearchCategoryScreen();
 
@@ -19,16 +19,18 @@ namespace TimeTable
                     break;
                 case (int)Constants.Department.COMPUTER_ENGINEERING:
                     searchCategoryScreen.ShowSelection(menu, (int)Constants.LectureSchedule.DEPARTMENT, "▷컴퓨터공학과");
-                    break;
+                    return "컴퓨터공학과";
                 case (int)Constants.Department.DATA_SCIENCE:
                     searchCategoryScreen.ShowSelection(menu, (int)Constants.LectureSchedule.DEPARTMENT, "▷데이터사이언스과");
-                    break;
+                    return "데이터사이언스학과";
                 case (int)Constants.Department.HISTORY:
                     searchCategoryScreen.ShowSelection(menu, (int)Constants.LectureSchedule.DEPARTMENT, "▷역사학과");
-                    break;
+                    return "역사학과";
             }
+
+            return "";
         }
-        public int SelectMenu()  //학과전공 선택(커서 좌우로 이동)
+        public int SelectMenu(ref string department)  //학과전공 선택(커서 좌우로 이동)
         {
             SearchCategoryScreen searchCategoryScreen = new SearchCategoryScreen();
             searchCategoryScreen.PrintDepartmentMenu();        //학과 선택 화면 출력
@@ -39,7 +41,7 @@ namespace TimeTable
             if (menu == (int)Constants.Keyboard.ESCAPE) return (int)Constants.Keyboard.ESCAPE;  //학과선택 중 뒤로가기
             menu = keyboard.Left;
 
-            ShowMenu(menu);
+            department = ShowMenu(menu);   //학과이름 저장
 
             return (int)Constants.Keyboard.ENTERING_MENU;     //학과를 선택함
         }
