@@ -36,31 +36,31 @@ namespace TimeTable
         }
         public void PrintTwoLine()
         {
-            Console.SetCursorPosition(1, 1);
+            Console.SetCursorPosition(11, 1);
             Console.Write(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-            Console.SetCursorPosition(1, 22);
+            Console.SetCursorPosition(11, 22);
             Console.Write(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
         }
         public void PrintMain()
         {
             Console.Clear();
-            Console.SetWindowSize(120,25);
+            Console.SetWindowSize(145, 25);
             PrintTwoLine();
-            PrintMenu(20, 6, "   Sejong University\n");
-            Console.WriteLine("              ■");
-            Console.WriteLine("              ■                             ■");
-            Console.WriteLine("              ■");
-            Console.WriteLine("              ■            ■■     ■■    ■  ■ ■");
-            Console.WriteLine("              ■           ■  ■   ■  ■   ■  ■   ■");
-            Console.WriteLine("              ■■■■■    ■■     ■■    ■  ■   ■");
-            Console.WriteLine("                                        ■");
-            Console.WriteLine("                                    ■  ■");
-            Console.WriteLine("                                     ■■");
-            Console.SetCursorPosition(60, 9);
+            PrintMenu(40, 6, "   Sejong University\n");
+            Console.WriteLine("                                ■");
+            Console.WriteLine("                                ■                             ■");
+            Console.WriteLine("                                ■");
+            Console.WriteLine("                                ■            ■■     ■■    ■  ■ ■");
+            Console.WriteLine("                                ■           ■  ■   ■  ■   ■  ■   ■");
+            Console.WriteLine("                                ■■■■■    ■■     ■■    ■  ■   ■");
+            Console.WriteLine("                                                          ■");
+            Console.WriteLine("                                                      ■  ■");
+            Console.WriteLine("                                                       ■■");
+            Console.SetCursorPosition(80, 9);
             Console.WriteLine("▷학번(숫자 8자리):");
-            Console.SetCursorPosition(60, 12);
+            Console.SetCursorPosition(80, 12);
             Console.Write("▷비밀번호(영어,숫자 5~10자리):");
-            PrintMenu(20, 18, "[ESC를 누르면 종료합니다]");
+            PrintMenu(40, 18, "[ESC를 누르면 종료합니다]");
         }
         
     }

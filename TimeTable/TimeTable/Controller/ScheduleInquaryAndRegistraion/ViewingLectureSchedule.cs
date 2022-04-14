@@ -39,18 +39,17 @@ namespace TimeTable
                     instructorMenu.InputCourseTitle(ref this.instructor, (int)Constants.LectureSchedule.INSTRUCTOR);
                     break;
                 case (int)Constants.LectureSchedule.SEARCH:           //조회
-
+                    LectureScheduleScreen lectureScheduleScreen = new LectureScheduleScreen();
+                    lectureScheduleScreen.PrintLectureSchedule(0, 25);
                     break;
             }
-
-
         }
         public void ViewLectureSchedule()
         {
             ViewingScheduleScreen viewingScheduleScreen = new ViewingScheduleScreen();
             viewingScheduleScreen.PrintMenu();
 
-            Keyboard keyboard = new Keyboard(5, (int)Constants.LectureSchedule.DEPARTMENT);
+            Keyboard keyboard = new Keyboard(25, (int)Constants.LectureSchedule.DEPARTMENT);
             int menu;
 
             while (Constants.KEYBOARD_OPERATION)

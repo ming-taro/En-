@@ -13,7 +13,7 @@ namespace TimeTable
             TimeTableMenuScreen timeTableMenuScreen = new TimeTableMenuScreen();
             timeTableMenuScreen.PrintMenu();
 
-            Keyboard keyboard = new Keyboard(50, 9);
+            Keyboard keyboard = new Keyboard(60, 9);
             int menu = keyboard.SelectTop(9, 15, 2);            //강좌조회 및 수강신청 : 메뉴선택
             if (menu == (int)Constants.Keyboard.ESCAPE) return;  //esc클릭 -> 로그인 화면으로 돌아감
             menu = keyboard.Top;
@@ -54,9 +54,9 @@ namespace TimeTable
                 }
                 else
                 {
-                    logo.FailureMessage(60, 14, "(학번이나 비밀번호가 일치하지 않습니다.)");  //로그인 실패 메세지 출력
-                    logo.RemoveLine(80, 9);
-                    logo.RemoveLine(92, 12);
+                    logo.FailureMessage(80, 14, "(학번이나 비밀번호가 일치하지 않습니다.)");  //로그인 실패 메세지 출력
+                    logo.RemoveLine(100, 9);
+                    logo.RemoveLine(112, 12);
                 }
             }
         }

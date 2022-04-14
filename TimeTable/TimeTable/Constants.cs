@@ -37,7 +37,7 @@ namespace TimeTable
         }
         public enum LectureSchedule
         {
-            DEPARTMENT = 5,
+            DEPARTMENT = 5,         //top
             COMPLETION_TYPE = 8,
             GRADE = 11,
             COURSE_TITLE = 14,
@@ -47,28 +47,28 @@ namespace TimeTable
 
         public enum Grade
         {
-            ALL = 23,
-            FRESHMAN = 41,   
-            SOPHOMORE = 59,
-            JUNIOR = 77,
-            SENIOR = 95,
-            STEP = 18
+            ALL = 43,              //left
+            FRESHMAN = 63,   
+            SOPHOMORE = 83,
+            JUNIOR = 103,
+            SENIOR = 123,
+            STEP = 20
         }
         public enum Department
         {
-            ALL = 23,
-            COMPUTER_ENGINEERING = 41,
-            DATA_SCIENCE = 64,
-            HISTORY = 87,
-            STEP = 18
+            ALL = 43,
+            COMPUTER_ENGINEERING = 63,
+            DATA_SCIENCE = 83,
+            HISTORY = 103,
+            STEP = 20
         }
         public enum CompletionType
         {
-            ALL = 23,
-            COMON_EDUCATION_REQUIRED = 41,
-            MAJOR_REQUIRED = 64,
-            MAJOR_ELECTIVE = 87,
-            STEP = 18
+            ALL = 43,
+            COMON_EDUCATION_REQUIRED = 63,
+            MAJOR_REQUIRED = 83,
+            MAJOR_ELECTIVE = 103,
+            STEP = 20
         }
     }
 }
