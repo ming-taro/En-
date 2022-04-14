@@ -8,7 +8,11 @@ namespace TimeTable
 {
     class Logo
     {
-        
+        public void RemoveInput(int left, int top)
+        {
+            RemoveLine(left, top);
+            RemoveLine(left, top + 1);
+        }
         public void PrintMenu(int left, int top, string label)
         {
             Console.SetCursorPosition(left, top);

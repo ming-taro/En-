@@ -26,6 +26,8 @@ namespace TimeTable
         public const bool LEFT = false;
         public const bool IS_NOT_NULL_OR_EXCEPTION = false;
 
+        public const int LEFT_VALUE_OF_COURSE_INPUT = 42;
+
         public enum Keyboard{
             ENTERING_MENU,
             ESCAPE,

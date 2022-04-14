@@ -9,32 +9,32 @@ namespace TimeTable
 {
     class CourseTitle
     {
-        public void InputCourseTitle(ref string courseTitle)
+        public void InputCourseTitle(ref string courseTitle, int top)
         {
             Logo logo = new Logo();
-            logo.PrintMenu((int)Constants.Grade.ALL, (int)Constants.LectureSchedule.COURSE_TITLE, "☞2글자 이상 입력:");
-            logo.RemoveLine(42, (int)Constants.LectureSchedule.COURSE_TITLE + 1);
-
+            logo.PrintMenu((int)Constants.Grade.ALL, top, "☞2글자 이상 입력:");
+            
             EnteringText text = new EnteringText();
             string title;
 
             while (Constants.INPUT_VALUE)
             {
-                logo.RemoveLine(42, (int)Constants.LectureSchedule.COURSE_TITLE);
-                title = text.EnterText(42, (int)Constants.LectureSchedule.COURSE_TITLE);
+                logo.RemoveLine(Constants.LEFT_VALUE_OF_COURSE_INPUT, top); //이전 입력기록 지움
+                title = text.EnterText(Constants.LEFT_VALUE_OF_COURSE_INPUT, top); //검색어 입력
 
-                if (title.Equals(Constants.ESC))
+                if (title.Equals(Constants.ESC))  //esc -> 입력중 뒤로가기
                 {
-                    logo.RemoveLine(42, (int)Constants.LectureSchedule.COURSE_TITLE + 1);   //경고메세지 지움
+                    logo.RemoveInput(Constants.LEFT_VALUE_OF_COURSE_INPUT, top);   //입력값, 경고메세지 지움
                     courseTitle = "";
                     return;
                 }
                 else if (string.IsNullOrEmpty(title) == Constants.IS_NOT_NULL_OR_EXCEPTION && Regex.IsMatch(title, @"^[a-zA-Z가-힣\#\+]{2,20}"))
                 {
+                    logo.RemoveLine(Constants.LEFT_VALUE_OF_COURSE_INPUT, top + 1);//경고메세지 지움
                     courseTitle = title;
                     return;
                 }
-                logo.FailureMessage(42, (int)Constants.LectureSchedule.COURSE_TITLE + 1, "두 글자 이상 입력해주세요.");
+                logo.FailureMessage(Constants.LEFT_VALUE_OF_COURSE_INPUT, top + 1, "영어,한글,+,#만 가능합니다.");  //경고메세지 출력
             }
         }
     }

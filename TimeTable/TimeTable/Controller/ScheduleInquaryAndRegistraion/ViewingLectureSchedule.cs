@@ -32,10 +32,11 @@ namespace TimeTable
                     break;
                 case (int)Constants.LectureSchedule.COURSE_TITLE:     //교과목명
                     CourseTitle courseTitleMenu = new CourseTitle();
-                    courseTitleMenu.InputCourseTitle(ref this.courseTitle);
+                    courseTitleMenu.InputCourseTitle(ref this.courseTitle, (int)Constants.LectureSchedule.COURSE_TITLE);
                     break;
                 case (int)Constants.LectureSchedule.INSTRUCTOR:       //교수명
-
+                    CourseTitle instructorMenu = new CourseTitle();
+                    instructorMenu.InputCourseTitle(ref this.instructor, (int)Constants.LectureSchedule.INSTRUCTOR);
                     break;
                 case (int)Constants.LectureSchedule.SEARCH:           //조회
 
