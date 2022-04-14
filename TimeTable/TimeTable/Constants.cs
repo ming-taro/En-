@@ -17,5 +17,10 @@ namespace TimeTable
         public const string INVALID_VALUE = "INVALID_VALUE";
         public const bool KOREAN = true;
         public const bool NOT_KOREAN = false;
+
+        //ViewLectureSchedule
+        public const bool LOGIN_IN = true;
+        public const bool LOGIN_FAILURE = false;
+        public const string 
     }
 }

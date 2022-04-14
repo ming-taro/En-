@@ -48,7 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
-    <Compile Include="Controller\SignIn.cs" />
+    <Compile Include="Controller\LogIn.cs" />
     <Compile Include="Controller\ViewingLectureSchedule.cs" />
     <Compile Include="EnteringText.cs" />
     <Compile Include="TimeTable.cs" />
