@@ -58,5 +58,13 @@ namespace TimeTable
             HISTORY = 92,
             STEP = 23
         }
+        public enum CompletionType
+        {
+            ALL = 23,
+            COMON_EDUCATION_REQUIRED = 46,
+            MAJOR_REQUIRED = 69,
+            MAJOR_ELECTIVE = 92,
+            STEP = 23
+        }
     }
 }

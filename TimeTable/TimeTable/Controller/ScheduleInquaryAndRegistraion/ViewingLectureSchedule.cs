@@ -23,7 +23,8 @@ namespace TimeTable
                     department.SelectMenu(ref this.department);
                     break;
                 case (int)Constants.LectureSchedule.COMPLETION_TYPE:  //이수구분
-
+                    CompletionType completionType = new CompletionType();
+                    completionType.SelectMenu(ref this.completionType);
                     break;
                 case (int)Constants.LectureSchedule.GRADE:            //학년
 

@@ -25,5 +25,13 @@ namespace TimeTable
             logo.PrintMenu((int)Constants.Department.DATA_SCIENCE, (int)Constants.LectureSchedule.DEPARTMENT, "▷데이터사이언스과");
             logo.PrintMenu((int)Constants.Department.HISTORY, (int)Constants.LectureSchedule.DEPARTMENT, "▷역사학과");
         }
+        public void PrintCompletionTypeMenu()
+        {
+            Logo logo = new Logo();
+            logo.PrintMenu((int)Constants.CompletionType.ALL, (int)Constants.LectureSchedule.COMPLETION_TYPE, "▷전체");
+            logo.PrintMenu((int)Constants.CompletionType.COMON_EDUCATION_REQUIRED, (int)Constants.LectureSchedule.COMPLETION_TYPE, "▷공통교양필수");
+            logo.PrintMenu((int)Constants.CompletionType.MAJOR_REQUIRED, (int)Constants.LectureSchedule.COMPLETION_TYPE, "▷전공필수");
+            logo.PrintMenu((int)Constants.CompletionType.MAJOR_ELECTIVE, (int)Constants.LectureSchedule.COMPLETION_TYPE, "▷전공선택");
+        }
     }
 }
