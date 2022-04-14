@@ -42,5 +42,10 @@ namespace TimeTable
             logo.PrintMenu((int)Constants.Grade.JUNIOR, (int)Constants.LectureSchedule.GRADE, "▷3학년");
             logo.PrintMenu((int)Constants.Grade.SENIOR, (int)Constants.LectureSchedule.GRADE, "▷4학년");
         }
+        public void PrintCourseTitleMenu()
+        {
+            Logo logo = new Logo();
+            logo.PrintMenu((int)Constants.Grade.ALL, (int)Constants.LectureSchedule.COURSE_TITLE, "▷2자 이상 입력:");
+        }
     }
 }

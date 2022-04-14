@@ -31,7 +31,8 @@ namespace TimeTable
                     gradeMenu.SelectMenu(ref this.grade);
                     break;
                 case (int)Constants.LectureSchedule.COURSE_TITLE:     //교과목명
-
+                    CourseTitle courseTitleMenu = new CourseTitle();
+                    courseTitleMenu.InputCourseTitle(ref this.courseTitle);
                     break;
                 case (int)Constants.LectureSchedule.INSTRUCTOR:       //교수명
 

@@ -17,7 +17,7 @@ namespace TimeTable
         public void FailureMessage(int left, int top, string message)
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            PrintMenu(left, top, message);
+            PrintMenu(left, top, "(" + message + ")");
             Console.ForegroundColor = ConsoleColor.White;
         }
         public void RemoveLine(int left, int top)
