@@ -52,6 +52,7 @@
     <Compile Include="Controller\ScheduleInquaryAndRegistraion\CompletionType.cs" />
     <Compile Include="Controller\ScheduleInquaryAndRegistraion\Department.cs" />
     <Compile Include="Controller\LogIn.cs" />
+    <Compile Include="Controller\ScheduleInquaryAndRegistraion\Grade.cs" />
     <Compile Include="Controller\TimeTableMenu.cs" />
     <Compile Include="Controller\ScheduleInquaryAndRegistraion\ViewingLectureSchedule.cs" />
     <Compile Include="EnteringText.cs" />

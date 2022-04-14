@@ -19,15 +19,16 @@ namespace TimeTable
             switch (menu)
             {
                 case (int)Constants.LectureSchedule.DEPARTMENT:       //학과전공
-                    Department department = new Department();
-                    department.SelectMenu(ref this.department);
+                    Department departmentMenu = new Department();
+                    departmentMenu.SelectMenu(ref this.department);
                     break;
                 case (int)Constants.LectureSchedule.COMPLETION_TYPE:  //이수구분
-                    CompletionType completionType = new CompletionType();
-                    completionType.SelectMenu(ref this.completionType);
+                    CompletionType completionTypeMenu = new CompletionType();
+                    completionTypeMenu.SelectMenu(ref this.completionType);
                     break;
                 case (int)Constants.LectureSchedule.GRADE:            //학년
-
+                    Grade gradeMenu = new Grade();
+                    gradeMenu.SelectMenu(ref this.grade);
                     break;
                 case (int)Constants.LectureSchedule.COURSE_TITLE:     //교과목명
 

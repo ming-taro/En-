@@ -44,27 +44,28 @@ namespace TimeTable
 
         public enum Grade
         {
-            ALL = 40,
-            FRESHMAN = 50,   //left값
-            SOPHOMORE = 60,
-            JUNIOR = 70,
-            SENIOR = 80
+            ALL = 23,
+            FRESHMAN = 41,   
+            SOPHOMORE = 59,
+            JUNIOR = 77,
+            SENIOR = 95,
+            STEP = 18
         }
         public enum Department
         {
             ALL = 23,
-            COMPUTER_ENGINEERING = 46,
-            DATA_SCIENCE = 69,
-            HISTORY = 92,
-            STEP = 23
+            COMPUTER_ENGINEERING = 41,
+            DATA_SCIENCE = 64,
+            HISTORY = 87,
+            STEP = 18
         }
         public enum CompletionType
         {
             ALL = 23,
-            COMON_EDUCATION_REQUIRED = 46,
-            MAJOR_REQUIRED = 69,
-            MAJOR_ELECTIVE = 92,
-            STEP = 23
+            COMON_EDUCATION_REQUIRED = 41,
+            MAJOR_REQUIRED = 64,
+            MAJOR_ELECTIVE = 87,
+            STEP = 18
         }
     }
 }

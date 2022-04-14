@@ -33,5 +33,14 @@ namespace TimeTable
             logo.PrintMenu((int)Constants.CompletionType.MAJOR_REQUIRED, (int)Constants.LectureSchedule.COMPLETION_TYPE, "▷전공필수");
             logo.PrintMenu((int)Constants.CompletionType.MAJOR_ELECTIVE, (int)Constants.LectureSchedule.COMPLETION_TYPE, "▷전공선택");
         }
+        public void PrintGradeMenu()
+        {
+            Logo logo = new Logo();
+            logo.PrintMenu((int)Constants.Grade.ALL, (int)Constants.LectureSchedule.GRADE, "▷전체");
+            logo.PrintMenu((int)Constants.Grade.FRESHMAN, (int)Constants.LectureSchedule.GRADE, "▷1학년");
+            logo.PrintMenu((int)Constants.Grade.SOPHOMORE, (int)Constants.LectureSchedule.GRADE, "▷2학년");
+            logo.PrintMenu((int)Constants.Grade.JUNIOR, (int)Constants.LectureSchedule.GRADE, "▷3학년");
+            logo.PrintMenu((int)Constants.Grade.SENIOR, (int)Constants.LectureSchedule.GRADE, "▷4학년");
+        }
     }
 }
