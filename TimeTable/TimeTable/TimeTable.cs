@@ -11,8 +11,8 @@ namespace TimeTable
     {
         static void Main(string[] args)
         {
-            ViewingLectureSchedule viewingLectureSchedule = new ViewingLectureSchedule();
-            viewingLectureSchedule.ViewLectueSchedule();
+            TimeTableMenu timeTableMenu = new TimeTableMenu();
+            timeTableMenu.ShowTimeTableMenu();
 
             /*try
             {

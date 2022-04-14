@@ -29,11 +29,18 @@ namespace TimeTable
             Console.SetCursorPosition(left, top);
             Console.Write(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
         }
+        public void PrintTwoLine()
+        {
+            Console.SetCursorPosition(1, 1);
+            Console.Write(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+            Console.SetCursorPosition(1, 22);
+            Console.Write(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+        }
         public void PrintMain()
         {
             Console.Clear();
             Console.SetWindowSize(120,25);
-            PrintLine(1,1);
+            PrintTwoLine();
             PrintMenu(20, 6, "   Sejong University\n");
             Console.WriteLine("              ■");
             Console.WriteLine("              ■                             ■");
@@ -49,7 +56,6 @@ namespace TimeTable
             Console.SetCursorPosition(60, 12);
             Console.Write("▷비밀번호(영어,숫자 5~10자리):");
             PrintMenu(20, 18, "[ESC를 누르면 종료합니다]");
-            PrintLine(1,22);
         }
         
     }

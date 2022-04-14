@@ -30,5 +30,14 @@ namespace TimeTable
             OUT_OF_MENU,
             WITHIN_THE_MENU
         }
+        public enum LectureSchedule
+        {
+            DEPARTMENT = 5,
+            COMPLETION_TYPE = 8,
+            GRADE = 11,
+            COURSE_TITLE = 14,
+            INSTRUCTOR = 17,
+            SEARCH = 20
+        }
     }
 }
