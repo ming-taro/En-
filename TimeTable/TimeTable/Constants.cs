@@ -44,10 +44,18 @@ namespace TimeTable
 
         public enum Grade
         {
-            FRESHMAN = 40,   //left값
-            SOPHOMORE = 50,
-            JUNIOR = 60,
-            SENIOR = 70
+            ALL = 40,
+            FRESHMAN = 50,   //left값
+            SOPHOMORE = 60,
+            JUNIOR = 70,
+            SENIOR = 80
+        }
+        public enum Department
+        {
+            ALL = 40,
+            COMPUTER_ENGINEERING = 50,
+            DATA_SCIENCE = 60,
+            HISTORY = 70
         }
     }
 }

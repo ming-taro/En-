@@ -11,10 +11,14 @@ namespace TimeTable
 
         private void SelectMenu(int menu)
         {
+            int selection;
+
             switch (menu)
             {
                 case (int)Constants.LectureSchedule.DEPARTMENT:       //학과전공
-
+                    Department department = new Department();
+                    selection = department.SelectMenu();
+                    Console.WriteLine();  //test용 지울것
                     break;
                 case (int)Constants.LectureSchedule.COMPLETION_TYPE:  //이수구분
 

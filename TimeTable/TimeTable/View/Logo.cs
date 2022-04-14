@@ -8,6 +8,7 @@ namespace TimeTable
 {
     class Logo
     {
+        
         public void PrintMenu(int left, int top, string label)
         {
             Console.SetCursorPosition(left, top);
