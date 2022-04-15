@@ -16,16 +16,16 @@ namespace TimeTable
             switch (menu)
             {
                 case (int)Constants.Department.ALL:
-                    searchCategoryScreen.ShowSelection(menu, (int)Constants.LectureSchedule.DEPARTMENT, "▷전체");
+                    searchCategoryScreen.ShowSelection(menu, (int)Constants.ColumnMenu.FIRST, "▷전체");
                     break;
                 case (int)Constants.Department.COMPUTER_ENGINEERING:
-                    searchCategoryScreen.ShowSelection(menu, (int)Constants.LectureSchedule.DEPARTMENT, "▷컴퓨터공학과");
+                    searchCategoryScreen.ShowSelection(menu, (int)Constants.ColumnMenu.FIRST, "▷컴퓨터공학과");
                     return "컴퓨터공학과";
                 case (int)Constants.Department.DATA_SCIENCE:
-                    searchCategoryScreen.ShowSelection(menu, (int)Constants.LectureSchedule.DEPARTMENT, "▷데이터사이언스과");
+                    searchCategoryScreen.ShowSelection(menu, (int)Constants.ColumnMenu.FIRST, "▷데이터사이언스과");
                     return "데이터사이언스학과";
                 case (int)Constants.Department.HISTORY:
-                    searchCategoryScreen.ShowSelection(menu, (int)Constants.LectureSchedule.DEPARTMENT, "▷역사학과");
+                    searchCategoryScreen.ShowSelection(menu, (int)Constants.ColumnMenu.FIRST, "▷역사학과");
                     return "역사학과";
             }
 
@@ -36,7 +36,7 @@ namespace TimeTable
             SearchCategoryScreen searchCategoryScreen = new SearchCategoryScreen();
             if (department == null) searchCategoryScreen.PrintDepartmentMenu();      //학과 선택 화면 출력
 
-            Keyboard keyboard = new Keyboard((int)Constants.Department.ALL, (int)Constants.LectureSchedule.DEPARTMENT);
+            Keyboard keyboard = new Keyboard((int)Constants.Department.ALL, (int)Constants.ColumnMenu.FIRST);
             int menu = keyboard.SelectLeft((int)Constants.Department.ALL, (int)Constants.Department.HISTORY, (int)Constants.Department.STEP);   //학과선택
 
             if (menu == (int)Constants.Keyboard.ESCAPE) return;  //학과선택 중 뒤로가기

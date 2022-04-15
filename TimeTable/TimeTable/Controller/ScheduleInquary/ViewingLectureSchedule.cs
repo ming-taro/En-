@@ -18,27 +18,27 @@ namespace TimeTable
         {
             switch (menu)
             {
-                case (int)Constants.LectureSchedule.DEPARTMENT:       //학과전공
+                case (int)Constants.ColumnMenu.FIRST:       //학과전공
                     Department departmentMenu = new Department();
                     departmentMenu.SelectMenu(ref this.department);
                     break;
-                case (int)Constants.LectureSchedule.COMPLETION_TYPE:  //이수구분
+                case (int)Constants.ColumnMenu.SECOND:  //이수구분
                     CompletionType completionTypeMenu = new CompletionType();
                     completionTypeMenu.SelectMenu(ref this.completionType);
                     break;
-                case (int)Constants.LectureSchedule.GRADE:            //학년
+                case (int)Constants.ColumnMenu.THIRD:            //학년
                     Grade gradeMenu = new Grade();
                     gradeMenu.SelectMenu(ref this.grade);
                     break;
-                case (int)Constants.LectureSchedule.COURSE_TITLE:     //교과목명
+                case (int)Constants.ColumnMenu.FOURTH:     //교과목명
                     CourseTitle courseTitleMenu = new CourseTitle();
-                    courseTitleMenu.InputCourseTitle(ref this.courseTitle, (int)Constants.LectureSchedule.COURSE_TITLE);
+                    courseTitleMenu.InputCourseTitle(ref this.courseTitle, (int)Constants.ColumnMenu.FOURTH);
                     break;
-                case (int)Constants.LectureSchedule.INSTRUCTOR:       //교수명
+                case (int)Constants.ColumnMenu.FIFTH:       //교수명
                     CourseTitle instructorMenu = new CourseTitle();
-                    instructorMenu.InputCourseTitle(ref this.instructor, (int)Constants.LectureSchedule.INSTRUCTOR);
+                    instructorMenu.InputCourseTitle(ref this.instructor, (int)Constants.ColumnMenu.FIFTH);
                     break;
-                case (int)Constants.LectureSchedule.SEARCH:           //조회
+                case (int)Constants.ColumnMenu.SIXTH:           //조회
                     LectureScheduleScreen lectureScheduleScreen = new LectureScheduleScreen();
                     lectureScheduleScreen.PrintLectureSchedule(0, 25);
                     break;
@@ -49,12 +49,12 @@ namespace TimeTable
             ViewingScheduleScreen viewingScheduleScreen = new ViewingScheduleScreen();
             viewingScheduleScreen.PrintMenu();
 
-            Keyboard keyboard = new Keyboard(25, (int)Constants.LectureSchedule.DEPARTMENT);
+            Keyboard keyboard = new Keyboard((int)Constants.ColumnMenu.LEFT, (int)Constants.ColumnMenu.FIRST);
             int menu;
 
             while (Constants.KEYBOARD_OPERATION)
             {
-                menu = keyboard.SelectTop((int)Constants.LectureSchedule.DEPARTMENT, (int)Constants.LectureSchedule.SEARCH, 3);
+                menu = keyboard.SelectTop((int)Constants.ColumnMenu.FIRST, (int)Constants.ColumnMenu.SIXTH, (int)Constants.ColumnMenu.STEP);
                 if (menu == (int)Constants.Keyboard.ESCAPE) return;  //메뉴선택 중 esc -> 뒤로가기(강의조회 및 수강신청 화면으로)
                 menu = keyboard.Top;
                 SelectMenu(menu);  //1.학과전공  2.이수구분  3.학년  4.교과목명  5.교수명  6.조회

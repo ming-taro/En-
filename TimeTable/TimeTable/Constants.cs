@@ -35,15 +35,6 @@ namespace TimeTable
             OUT_OF_MENU,
             WITHIN_THE_MENU
         }
-        public enum LectureSchedule
-        {
-            DEPARTMENT = 5,         //top
-            COMPLETION_TYPE = 8,
-            GRADE = 11,
-            COURSE_TITLE = 14,
-            INSTRUCTOR = 17,
-            SEARCH = 20
-        }
 
         public enum Grade
         {
@@ -69,6 +60,35 @@ namespace TimeTable
             MAJOR_REQUIRED = 83,
             MAJOR_ELECTIVE = 103,
             STEP = 20
+        }
+
+        public enum MainMenu
+        {
+            STEP = 2,
+            FIRST = 9,
+            SECOND = 11,
+            THIRD = 13,
+            FOURTH = 15,
+            LOGO_LEFT = 58,
+            LOGO_TOP = 3,
+            LEFT = 60
+        }
+        public enum ColumnMenu
+        {
+            STEP = 3,
+            FIRST = 5,         //top
+            SECOND = 8,
+            THIRD = 11,
+            FOURTH = 14,
+            FIFTH = 17,
+            SIXTH = 20,
+            LOGO_LEFT = 58,
+            LOGO_TOP = 3,
+            LEFT = 15
+        }
+        public enum MenuTop
+        {
+            MAIN_MENU = 9
         }
     }
 }

@@ -49,13 +49,13 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="Controller\Keyboard.cs" />
-    <Compile Include="Controller\ScheduleInquaryAndRegistraion\CompletionType.cs" />
-    <Compile Include="Controller\ScheduleInquaryAndRegistraion\CourseTitle.cs" />
-    <Compile Include="Controller\ScheduleInquaryAndRegistraion\Department.cs" />
-    <Compile Include="Controller\ScheduleInquaryAndRegistraion\LogIn.cs" />
-    <Compile Include="Controller\ScheduleInquaryAndRegistraion\Grade.cs" />
+    <Compile Include="Controller\ScheduleInquary\CompletionType.cs" />
+    <Compile Include="Controller\ScheduleInquary\CourseTitle.cs" />
+    <Compile Include="Controller\ScheduleInquary\Department.cs" />
+    <Compile Include="Controller\ScheduleInquary\LogIn.cs" />
+    <Compile Include="Controller\ScheduleInquary\Grade.cs" />
     <Compile Include="Controller\TimeTableMenu.cs" />
-    <Compile Include="Controller\ScheduleInquaryAndRegistraion\ViewingLectureSchedule.cs" />
+    <Compile Include="Controller\ScheduleInquary\ViewingLectureSchedule.cs" />
     <Compile Include="Controller\EnteringText.cs" />
     <Compile Include="TimeTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

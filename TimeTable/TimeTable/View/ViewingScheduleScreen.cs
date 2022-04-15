@@ -13,13 +13,13 @@ namespace TimeTable
             Console.Clear();
             Logo logo = new Logo();
             logo.PrintTwoLine();
-            logo.PrintMenu(70, 3, "[강의 시간표 조회]");
-            logo.PrintMenu(25, (int)Constants.LectureSchedule.DEPARTMENT, "☞학과전공");
-            logo.PrintMenu(25, (int)Constants.LectureSchedule.COMPLETION_TYPE, "☞이수구분");
-            logo.PrintMenu(25, (int)Constants.LectureSchedule.GRADE, "☞학년");
-            logo.PrintMenu(25, (int)Constants.LectureSchedule.COURSE_TITLE, "☞교과목명");
-            logo.PrintMenu(25, (int)Constants.LectureSchedule.INSTRUCTOR, "☞교수명");
-            logo.PrintMenu(25, (int)Constants.LectureSchedule.SEARCH, "☞조회");
+            logo.PrintMenu(56, 3, "[강의 시간표 조회]");
+            logo.PrintMenu(15, (int)Constants.ColumnMenu.FIRST, "☞학과전공");
+            logo.PrintMenu(15, (int)Constants.ColumnMenu.SECOND, "☞이수구분");
+            logo.PrintMenu(15, (int)Constants.ColumnMenu.THIRD, "☞학년");
+            logo.PrintMenu(15, (int)Constants.ColumnMenu.FOURTH, "☞교과목명");
+            logo.PrintMenu(15, (int)Constants.ColumnMenu.FIFTH, "☞교수명");
+            logo.PrintMenu(15, (int)Constants.ColumnMenu.SIXTH, "☞조회");
         }
     }
 }
