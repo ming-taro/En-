@@ -77,13 +77,14 @@ namespace TimeTable
 
             while (Constants.KEYBOARD_OPERATION)
             {
-                Console.Clear();
                 searchByFieldScreen.PrintLine();
                 departmentMenu.SelectMenu(courseVO);      //학과 선택하기
                 if (courseVO.Department == null) break;  //학과선택 중 esc -> 과목조회를 종료하고 분야별검색 메뉴로 돌아감
 
                 searchByFieldScreen.PrintResult(appliedCredit, lectureSchedule, courseVO);   //학과선택시 -> 학과검색결과를 보여줌
                 InputCourseNumber(courseVO.Department);   //순번 입력
+                courseVO.Department = "";  //검색어 초기화
+                Console.Clear();
             }
 
             return appliedCredit;   //esc클릭 후 종료할 때 담은 관심과목 학점을 리턴
