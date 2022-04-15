@@ -22,7 +22,7 @@ namespace TimeTable
         {
             for (int row = 1; row < lectureSchedule.Count; row++)  //lectureSchedule[0]은 목록이름
             {
-                if (lectureSchedule[row].Number.Equals(number) && lectureSchedule[row].Department.Equals(department))  //선택한 학과와 입력한 순번이 일치하는 과목을 찾음)
+                if (lectureSchedule[row].Number.Equals(number) && lectureSchedule[row].Department.Contains(department))  //선택한 학과와 입력한 순번이 일치하는 과목을 찾음)
                 {
                     return row;  //찾은 강좌의 인덱스번호 리턴
                 }
@@ -39,9 +39,9 @@ namespace TimeTable
         }
         public bool IsDuplicateCourse(int courseIndex) //추가하려는 강의가 이미 관심과목리스트에 있는지 확인(같은 과목X)
         {
-            for(int row = 1; row < courseOfInterest.Count; row++)
+            for(int row = 1; row < courseOfInterest.Count; row++) //과목명이 겹치는가로 확인
             {
-                if (courseOfInterest.Equals(lectureSchedule[courseIndex].CourseTitle)) return Constants.IS_DUPLICATE_COURSE; 
+                if (courseOfInterest[row].CourseTitle.Equals(lectureSchedule[courseIndex].CourseTitle)) return Constants.IS_DUPLICATE_COURSE; 
             }
 
             return Constants.IS_FIRST_APPLICATION;    //처음 담는 강의
@@ -97,7 +97,7 @@ namespace TimeTable
             {
                 searchByFieldScreen.PrintLine();
                 departmentMenu.SelectMenu(courseVO);     //학과 선택하기
-                if (courseVO.Department == null) break;  //학과선택 중 esc -> 과목조회를 종료하고 분야별검색 메뉴로 돌아감
+                if (courseVO.Department == null || courseVO.Department == "") break;  //학과선택 중 esc -> 과목조회를 종료하고 분야별검색 메뉴로 돌아감
 
                 searchByFieldScreen.PrintResult(appliedCredit, lectureSchedule, courseVO);   //학과선택시 -> 학과검색결과를 보여줌
                 InputCourseNumber(courseVO.Department);   //순번 입력
@@ -105,7 +105,8 @@ namespace TimeTable
                 courseVO.Department = "";  //학과별 조회 창으로 -> 검색어 초기화
                 Console.Clear();
             }
-
+            Console.WriteLine("["+appliedCredit+"]");
+            Console.ReadLine();
             return appliedCredit;   //esc클릭 후 종료할 때 담은 관심과목 학점을 리턴
         }
     }

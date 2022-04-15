@@ -137,7 +137,7 @@ namespace TimeTable
             {
                 keyInfo = Console.ReadKey(true);   //키를 입력받음 
                 if (keyInfo.Key == ConsoleKey.Escape) return (int)Constants.Keyboard.ESCAPE;
-                else return (int)Constants.Keyboard.ENTERING_MENU;
+                else if(keyInfo.Key == ConsoleKey.Enter) return (int)Constants.Keyboard.ENTERING_MENU;
             }
         }
         private int OutOfTop(int minTop, int maxTop)
