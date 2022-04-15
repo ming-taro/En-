@@ -8,10 +8,12 @@ namespace TimeTable
 {
     class AddingCourseOfInterest
     {
-        private List<CourseVO> courseOfInterest;
+        private List<CourseVO> lectureSchedule;   //강의목록
+        private List<CourseVO> courseOfInterest;  //관심과목 리스트
         private int appliedCredit;
-        public AddingCourseOfInterest(List<CourseVO> courseOfInterest)
+        public AddingCourseOfInterest(List<CourseVO> lectureSchedule, List<CourseVO> courseOfInterest)
         {
+            this.lectureSchedule = lectureSchedule;
             this.courseOfInterest = courseOfInterest;
             appliedCredit = 0;
         }
@@ -38,7 +40,7 @@ namespace TimeTable
                 switch (menu)
                 {
                     case (int)Constants.MainMenu.FIRST:   //학과전공
-                        DepartmentMajor departmentMajor = new DepartmentMajor(courseOfInterest);
+                        DepartmentMajor departmentMajor = new DepartmentMajor(lectureSchedule, courseOfInterest);
                         departmentMajor.SearchMajor(ref appliedCredit);
                         break;
                     case (int)Constants.MainMenu.SECOND:  //학수번호/분반

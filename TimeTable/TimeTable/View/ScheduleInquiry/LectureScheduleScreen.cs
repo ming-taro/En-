@@ -15,57 +15,57 @@ namespace TimeTable
 
             return Constants.IS_NOT_MEETING_CONDITION;
         }
-        private bool IsValueMeetCondition(Array data, int row, CourseVO courseVO)
+        private bool IsValueMeetCondition(CourseVO LectureSchedule, CourseVO courseVO)
         {
-            if (IsContainingWord(data.GetValue(row, 2).ToString(), courseVO.Department) == Constants.IS_NOT_MEETING_CONDITION) return Constants.IS_NOT_MEETING_CONDITION;
-            if (IsContainingWord(data.GetValue(row, 7).ToString(), courseVO.CompletionType) == Constants.IS_NOT_MEETING_CONDITION) return Constants.IS_NOT_MEETING_CONDITION;
-            if (IsContainingWord(data.GetValue(row, 9).ToString(), courseVO.Grade) == Constants.IS_NOT_MEETING_CONDITION) return Constants.IS_NOT_MEETING_CONDITION;
-            if (IsContainingWord(data.GetValue(row, 5).ToString(), courseVO.CourseTitle) == Constants.IS_NOT_MEETING_CONDITION) return Constants.IS_NOT_MEETING_CONDITION;
-            if (IsContainingWord(data.GetValue(row, 10).ToString(), courseVO.Instructor) == Constants.IS_NOT_MEETING_CONDITION) return Constants.IS_NOT_MEETING_CONDITION;
+            if (IsContainingWord(LectureSchedule.Department, courseVO.Department) == Constants.IS_NOT_MEETING_CONDITION) return Constants.IS_NOT_MEETING_CONDITION;
+            if (IsContainingWord(LectureSchedule.CompletionType, courseVO.CompletionType) == Constants.IS_NOT_MEETING_CONDITION) return Constants.IS_NOT_MEETING_CONDITION;
+            if (IsContainingWord(LectureSchedule.Grade, courseVO.Grade) == Constants.IS_NOT_MEETING_CONDITION) return Constants.IS_NOT_MEETING_CONDITION;
+            if (IsContainingWord(LectureSchedule.CourseTitle, courseVO.CourseTitle) == Constants.IS_NOT_MEETING_CONDITION) return Constants.IS_NOT_MEETING_CONDITION;
+            if (IsContainingWord(LectureSchedule.Instructor, courseVO.Instructor) == Constants.IS_NOT_MEETING_CONDITION) return Constants.IS_NOT_MEETING_CONDITION;
 
             return Constants.IS_MEETING_CONDITION;
         }
-        public void PrintLectureSchedule(int top, CourseVO courseVO)
+        public void PrintLectureSchedule(int top, List<CourseVO> lectureSchedule, CourseVO courseVO)
         {
             Logo logo = new Logo();
 
-            try
+            int[] leftSize = new int[] { 1, 6, 29, 38, 43, 65, 74, 83, 99, 104, 112, 130};
+
+            logo.PrintLongLine(0, top);
+            for (int row = 0; row < lectureSchedule.Count; row++)
             {
-
-                Excel.Application application = new Excel.Application(); 
-                Excel.Workbook workbook = application.Workbooks.Open(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\excelStudy.xlsx");
-                Excel.Sheets sheets = workbook.Sheets;
-                Excel.Worksheet worksheet = sheets["ensharp"] as Excel.Worksheet;
-                Excel.Range cellRange = worksheet.get_Range("A1", "L164") as Excel.Range;
-                Array data = cellRange.Cells.Value2;
-                
-                int[] leftSize = new int[] { 1, 6, 29, 38, 43, 65, 74, 83, 99, 104, 112, 130};
-
-                logo.PrintLongLine(0, top);
-                for (int row = 1; row <= cellRange.Rows.Count; row++)
+                if (row != 0 && IsValueMeetCondition(lectureSchedule[row], courseVO) == Constants.IS_NOT_MEETING_CONDITION)
                 {
-                    if (row != 1 && IsValueMeetCondition(data, row, courseVO) == Constants.IS_NOT_MEETING_CONDITION)
-                    {
-                        continue;  //조건에 맞지 않다면 출력X
-                    }
-
-                    for (int column = 1; column <= cellRange.Columns.Count; column++)
-                    {
-                        Console.SetCursorPosition(leftSize[column - 1], Console.CursorTop);
-                        Console.Write(data.GetValue(row, column));
-                    }
-                    if (row == 1) Console.WriteLine();
-                    Console.WriteLine();
+                    continue;  //조건에 맞지 않다면 출력X
                 }
-                logo.PrintLongLine(0, Console.CursorTop);
-
-                application.Workbooks.Close();
-                application.Quit();
+                Console.SetCursorPosition(leftSize[0], Console.CursorTop);
+                Console.Write(lectureSchedule[row].Number);  
+                Console.SetCursorPosition(leftSize[1], Console.CursorTop);
+                Console.Write(lectureSchedule[row].Department);
+                Console.SetCursorPosition(leftSize[2], Console.CursorTop);
+                Console.Write(lectureSchedule[row].ClassNumber);
+                Console.SetCursorPosition(leftSize[3], Console.CursorTop);
+                Console.Write(lectureSchedule[row].Distribution);
+                Console.SetCursorPosition(leftSize[4], Console.CursorTop);
+                Console.Write(lectureSchedule[row].CourseTitle);
+                Console.SetCursorPosition(leftSize[5], Console.CursorTop);
+                Console.Write(lectureSchedule[row].Language);
+                Console.SetCursorPosition(leftSize[6], Console.CursorTop);
+                Console.Write(lectureSchedule[row].CompletionType);
+                Console.SetCursorPosition(leftSize[7], Console.CursorTop);
+                Console.Write(lectureSchedule[row].Credit);
+                Console.SetCursorPosition(leftSize[8], Console.CursorTop);
+                Console.Write(lectureSchedule[row].Grade);
+                Console.SetCursorPosition(leftSize[9], Console.CursorTop);
+                Console.Write(lectureSchedule[row].Instructor);
+                Console.SetCursorPosition(leftSize[10], Console.CursorTop);
+                Console.Write(lectureSchedule[row].ClassDay);
+                Console.SetCursorPosition(leftSize[11], Console.CursorTop);
+                Console.Write(lectureSchedule[row].LectureRoom);
+                if (row == 0) Console.WriteLine();
+                Console.WriteLine();
             }
-            catch (SystemException e)
-            {
-                Console.WriteLine(e.Message);
-            }
+            logo.PrintLongLine(0, Console.CursorTop);
         }
     }
 }

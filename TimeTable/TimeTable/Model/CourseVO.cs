@@ -20,6 +20,21 @@ namespace TimeTable
         private string instructor;     //교수명
         private string classDay;       //요일
         private string lectureRoom;    //강의실
+        public void SetCourse(string number, string department, string classNumber, string distribution, string courseTitle, string language, string completionType, string credit, string grade, string instructor, string classDay, string lectureRoom)
+        {
+            this.number = number;
+            this.department = department;
+            this.classNumber = classNumber;
+            this.distribution = distribution;
+            this.courseTitle = courseTitle;
+            this.language = language;
+            this.completionType = completionType;
+            this.credit = credit;
+            this.grade = grade;
+            this.instructor = instructor;
+            this.classDay = classDay;
+            this.lectureRoom = lectureRoom;
+        }
 
         public string Number
         {

@@ -8,9 +8,11 @@ namespace TimeTable
 {
     class ViewingLectureSchedule
     {
+        private List<CourseVO> lectureSchedule;
         private CourseVO courseVO;
-        public ViewingLectureSchedule()
+        public ViewingLectureSchedule(List<CourseVO> lectureSchedule)
         {
+            this.lectureSchedule = lectureSchedule;
             courseVO = new CourseVO();
         }
         private void InitSearchWord()
@@ -47,7 +49,7 @@ namespace TimeTable
                     break;
                 case (int)Constants.ColumnMenu.SIXTH:       //조회
                     Searching searching = new Searching();
-                    searching.ShowLectureSchedule(courseVO);
+                    searching.ShowLectureSchedule(lectureSchedule, courseVO);
                     InitSearchWord();   //조회 후 검색어 초기화
                     break;
             }
