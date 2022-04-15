@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TimeTable
 {
-    class CourseTitle
+    class SelectingCourseTitle
     {
         public void InputCourseTitle(CourseVO courseVO, int top)
         {

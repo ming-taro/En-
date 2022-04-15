@@ -27,12 +27,12 @@ namespace TimeTable
             while (Constants.KEYBOARD_OPERATION)
             {
                 searchByFieldScreen.PrintLine();
-                selectingGrade.SelectMenu(courseVO);     //학년선택하기
+                selectingGrade.SelectMenu(courseVO, (int)Constants.ColumnMenu.FIRST);     //학년선택하기
                 if (courseVO.Grade == null) break;  //학년선택 중 esc -> 과목조회를 종료하고 분야별검색 메뉴로 돌아감
 
                 searchByFieldScreen.PrintResult(appliedCredit, lectureSchedule, courseVO);   //학년선택시 -> 학년검색결과를 보여줌
                 departmentMajor.InputCourseNumber(courseVO.Grade);   //순번 입력
-                appliedCredit = departmentMajor.GetAppliedCredit();
+                appliedCredit = departmentMajor.GetAppliedCredit();  //과목을 담았다면 현재 담은 학점 저장
                 courseVO.Grade = null;  //학과별 조회 창으로 -> 검색어 초기화
                 Console.Clear();
             }

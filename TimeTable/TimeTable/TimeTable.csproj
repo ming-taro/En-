@@ -49,11 +49,12 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="Controller\CourseOfInterest\AddingCourseOfInterest.cs" />
+    <Compile Include="Controller\CourseOfInterest\CourseTitle.cs" />
     <Compile Include="Controller\CourseOfInterest\DepartmentMajor.cs" />
     <Compile Include="Controller\CourseOfInterest\Grade.cs" />
     <Compile Include="Controller\Keyboard.cs" />
     <Compile Include="Controller\ScheduleInquiry\CompletionType.cs" />
-    <Compile Include="Controller\ScheduleInquiry\CourseTitle.cs" />
+    <Compile Include="Controller\ScheduleInquiry\SelectingCourseTitle.cs" />
     <Compile Include="Controller\ScheduleInquiry\Department.cs" />
     <Compile Include="Controller\ScheduleInquiry\LogIn.cs" />
     <Compile Include="Controller\ScheduleInquiry\SelectingGrade.cs" />

@@ -33,14 +33,14 @@ namespace TimeTable
             logo.PrintMenu((int)Constants.RowMenu.THIRD, (int)Constants.ColumnMenu.SECOND, "▷전공필수");
             logo.PrintMenu((int)Constants.RowMenu.FOURTH, (int)Constants.ColumnMenu.SECOND, "▷전공선택");
         }
-        public void PrintGradeMenu()
+        public void PrintGradeMenu(int top)
         {
             Logo logo = new Logo();
-            logo.PrintMenu((int)Constants.RowMenu.FIRST, (int)Constants.ColumnMenu.THIRD, "▷전체");
-            logo.PrintMenu((int)Constants.RowMenu.SECOND, (int)Constants.ColumnMenu.THIRD, "▷1학년");
-            logo.PrintMenu((int)Constants.RowMenu.THIRD, (int)Constants.ColumnMenu.THIRD, "▷2학년");
-            logo.PrintMenu((int)Constants.RowMenu.FOURTH, (int)Constants.ColumnMenu.THIRD, "▷3학년");
-            logo.PrintMenu((int)Constants.RowMenu.FIFTH, (int)Constants.ColumnMenu.THIRD, "▷4학년");
+            logo.PrintMenu((int)Constants.RowMenu.FIRST, top, "▷전체");
+            logo.PrintMenu((int)Constants.RowMenu.SECOND, top, "▷1학년");
+            logo.PrintMenu((int)Constants.RowMenu.THIRD, top, "▷2학년");
+            logo.PrintMenu((int)Constants.RowMenu.FOURTH, top, "▷3학년");
+            logo.PrintMenu((int)Constants.RowMenu.FIFTH, top, "▷4학년");
         }
         public void PrintCourseTitleMenu()
         {

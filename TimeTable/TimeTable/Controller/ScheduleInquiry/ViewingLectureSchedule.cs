@@ -37,14 +37,14 @@ namespace TimeTable
                     break;
                 case (int)Constants.ColumnMenu.THIRD:      //학년
                     SelectingGrade gradeMenu = new SelectingGrade();
-                    gradeMenu.SelectMenu(courseVO);
+                    gradeMenu.SelectMenu(courseVO, (int)Constants.ColumnMenu.THIRD);
                     break;
                 case (int)Constants.ColumnMenu.FOURTH:     //교과목명
-                    CourseTitle courseTitleMenu = new CourseTitle();
+                    SelectingCourseTitle courseTitleMenu = new SelectingCourseTitle();
                     courseTitleMenu.InputCourseTitle(courseVO, (int)Constants.ColumnMenu.FOURTH);
                     break;
                 case (int)Constants.ColumnMenu.FIFTH:       //교수명
-                    CourseTitle instructorMenu = new CourseTitle();
+                    SelectingCourseTitle instructorMenu = new SelectingCourseTitle();
                     instructorMenu.InputCourseTitle(courseVO, (int)Constants.ColumnMenu.FIFTH);
                     break;
                 case (int)Constants.ColumnMenu.SIXTH:       //조회
