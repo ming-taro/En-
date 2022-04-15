@@ -9,9 +9,18 @@ namespace TimeTable
     class AddingCourseOfInterest
     {
         private List<CourseVO> courseOfInterest;
+        private int appliedCredit;
         public AddingCourseOfInterest(List<CourseVO> courseOfInterest)
         {
             this.courseOfInterest = courseOfInterest;
+            appliedCredit = 0;
+        }
+        private void CalculateCredit()
+        {
+            for(int i=0; i<courseOfInterest.Count; i++)
+            {
+                appliedCredit += courseOfInterest[i].ClassDay[0] - '0';
+            }
         }
         private void SelectMenu()
         {
@@ -30,7 +39,7 @@ namespace TimeTable
                 {
                     case (int)Constants.MainMenu.FIRST:   //학과전공
                         DepartmentMajor departmentMajor = new DepartmentMajor(courseOfInterest);
-                        departmentMajor.SearchMajor();
+                        departmentMajor.SearchMajor(ref appliedCredit);
                         break;
                     case (int)Constants.MainMenu.SECOND:  //학수번호/분반
 
@@ -47,6 +56,8 @@ namespace TimeTable
         }
         public void ShowCourseOfInterestMenu()
         {
+            CalculateCredit();  //현재 관심과목에 담은 학점 계산
+
             CourseOfInterestScreen courseOfInterestScreen = new CourseOfInterestScreen();
             Keyboard keyboard = new Keyboard((int)Constants.MainMenu.LEFT, (int)Constants.MainMenu.FIRST);
             int menu;

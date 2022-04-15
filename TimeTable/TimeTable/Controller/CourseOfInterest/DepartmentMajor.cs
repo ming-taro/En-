@@ -14,7 +14,7 @@ namespace TimeTable
             this.courseOfInterest = courseOfInterest;
         }
 
-        public void SearchMajor()
+        public void SearchMajor(ref int appliedCredit)
         {
             SearchByFieldScreen searchByFieldScreen = new SearchByFieldScreen();
             searchByFieldScreen.PrintLine();          
@@ -25,10 +25,11 @@ namespace TimeTable
             departmentMenu.SelectMenu(courseVO);
             if (courseVO.Department == null) return;  //학과선택 중 esc -> 과목조회를 종료하고 분야별검색 메뉴로 돌아감
 
-            //학과선택시
-
+            searchByFieldScreen.PrintInputBox(appliedCredit);                                   //학과선택시
             LectureScheduleScreen lectureScheduleScreen = new LectureScheduleScreen();
-            lectureScheduleScreen.PrintLectureSchedule((int)Constants.Console.MiDLIE_TOP + 2, courseVO);
+            lectureScheduleScreen.PrintLectureSchedule((int)Constants.Credit.TOP + 2, courseVO);//목록을 보여줌
+
+            Console.SetCursorPosition((int)Constants.Credit.THIRD + 20, (int)Constants.Credit.TOP);
             Console.Read();
         }
     }
