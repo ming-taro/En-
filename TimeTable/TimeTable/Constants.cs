@@ -30,7 +30,7 @@ namespace TimeTable
         public const bool IS_COURSE_IN_LIST = true;
         public const bool IS_NOT_COURSE_IN_LIST = false;
 
-        public const int LEFT_VALUE_OF_COURSE_INPUT = 54;
+        public const int LEFT_VALUE_OF_COURSE_INPUT = 49;
         public const int GO_BACK_BUTTON_LEFT = 110;
         public enum Credit
         {

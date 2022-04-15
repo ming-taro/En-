@@ -32,8 +32,10 @@ namespace TimeTable
         {
             Logo logo = new Logo();
 
+            Console.ForegroundColor = ConsoleColor.Yellow;
             logo.PrintMenu((int)Constants.RowMenu.SECOND, (int)Constants.Credit.TOP - 2, ">>>관심과목 담기에 성공했습니다!<<<");
             logo.PrintMenu((int)Constants.RowMenu.FOURTH, (int)Constants.Credit.TOP - 2, "[ESC]:뒤로가기       [ENTER]:재조회");
+            Console.ForegroundColor = ConsoleColor.White;
         }
     }
 }

@@ -87,10 +87,11 @@ namespace TimeTable
 
         public void ShowTimeTableMenu()
         {
+            MakeCourseList();
             Console.ForegroundColor = ConsoleColor.White;
             Logo logo = new Logo();
             logo.PrintMain();           //메인화면 출력
-            MakeCourseList();
+            
 
             LogIn logIn = new LogIn();
 
