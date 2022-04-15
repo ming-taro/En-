@@ -66,7 +66,7 @@ namespace TimeTable
             get { return grade; }
             set { grade = value; }
         }
-        public string Instructorer
+        public string Instructor
         {
             get { return instructor; }
             set { instructor = value; }

@@ -8,10 +8,10 @@ namespace TimeTable
 {
     class Searching
     {
-        public void ShowLectureSchedule(string department, string completionType, string grade, string courseTitle, string instructor)
+        public void ShowLectureSchedule(CourseVO courseVO)
         {
             LectureScheduleScreen lectureScheduleScreen = new LectureScheduleScreen();
-            lectureScheduleScreen.PrintLectureSchedule((int)Constants.Console.HEIGHT + 3, department, completionType, grade, courseTitle, instructor);
+            lectureScheduleScreen.PrintLectureSchedule((int)Constants.Console.HEIGHT + 3, courseVO);
 
             Logo logo = new Logo();
             logo.PrintMenu((int)Constants.GO_BACK_BUTTON_LEFT, Console.CursorTop, "☜[ESC]를 누르면 뒤로갑니다");

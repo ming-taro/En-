@@ -31,10 +31,10 @@ namespace TimeTable
 
             return "";
         }
-        public void SelectMenu(ref string completionType)  //이수구분 선택(커서 좌우로 이동)
+        public void SelectMenu(CourseVO courseVO)  //이수구분 선택(커서 좌우로 이동)
         {
             SearchCategoryScreen searchCategoryScreen = new SearchCategoryScreen();
-            if (completionType == null || completionType.Equals("")) searchCategoryScreen.PrintCompletionTypeMenu();      //이수구분 화면 출력
+            if (courseVO.CompletionType == null || courseVO.CompletionType.Equals("")) searchCategoryScreen.PrintCompletionTypeMenu();      //이수구분 화면 출력
 
             Keyboard keyboard = new Keyboard((int)Constants.RowMenu.FIRST, (int)Constants.ColumnMenu.SECOND);
             int menu = keyboard.SelectLeft((int)Constants.RowMenu.FIRST, (int)Constants.RowMenu.FOURTH, (int)Constants.RowMenu.STEP);   //학과선택
@@ -42,7 +42,7 @@ namespace TimeTable
             if (menu == (int)Constants.Keyboard.ESCAPE) return;  //이수구분선택 중 뒤로가기
             menu = keyboard.Left;
 
-            completionType = ShowMenu(menu);   //이수구분 저장
+            courseVO.CompletionType = ShowMenu(menu);   //이수구분 저장
         }
     }
 }

@@ -31,10 +31,10 @@ namespace TimeTable
 
             return "";
         }
-        public void SelectMenu(ref string department)  //학과전공 선택(커서 좌우로 이동)
+        public void SelectMenu(CourseVO courseVO)  //학과전공 선택(커서 좌우로 이동)
         {
             SearchCategoryScreen searchCategoryScreen = new SearchCategoryScreen();
-            if (department == null || department.Equals("")) searchCategoryScreen.PrintDepartmentMenu();      //학과 선택 화면 출력
+            if (courseVO.Department == null || courseVO.Department.Equals("")) searchCategoryScreen.PrintDepartmentMenu();      //학과 선택 화면 출력
 
             Keyboard keyboard = new Keyboard((int)Constants.RowMenu.FIRST, (int)Constants.ColumnMenu.FIRST);
             int menu = keyboard.SelectLeft((int)Constants.RowMenu.FIRST, (int)Constants.RowMenu.FOURTH, (int)Constants.RowMenu.STEP);   //학과선택
@@ -42,7 +42,7 @@ namespace TimeTable
             if (menu == (int)Constants.Keyboard.ESCAPE) return;  //학과선택 중 뒤로가기
             menu = keyboard.Left;
 
-            department = ShowMenu(menu);   //학과이름 저장
+            courseVO.Department = ShowMenu(menu);   //학과이름 저장
         }
     }
 }

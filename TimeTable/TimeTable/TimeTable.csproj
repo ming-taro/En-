@@ -60,6 +60,7 @@
     <Compile Include="Controller\TimeTableMenu.cs" />
     <Compile Include="Controller\ScheduleInquiry\ViewingLectureSchedule.cs" />
     <Compile Include="Controller\EnteringText.cs" />
+    <Compile Include="Model\CourseVO.cs" />
     <Compile Include="TimeTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="View\CourseOfInterest\CourseOfInterestScreen.cs" />
@@ -74,8 +75,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

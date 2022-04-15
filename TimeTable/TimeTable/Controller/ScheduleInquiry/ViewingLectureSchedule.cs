@@ -8,19 +8,18 @@ namespace TimeTable
 {
     class ViewingLectureSchedule
     {
-        private string department;
-        private string completionType;
-        private string grade;
-        private string courseTitle;
-        private string instructor;
-
+        private CourseVO courseVO;
+        public ViewingLectureSchedule()
+        {
+            courseVO = new CourseVO();
+        }
         private void InitSearchWord()
         {
-            department = "";
-            completionType = "";
-            grade = "";
-            courseTitle = "";
-            instructor = "";
+            courseVO.Department = "";
+            courseVO.CompletionType = "";
+            courseVO.Grade = "";
+            courseVO.CourseTitle = "";
+            courseVO.Instructor = "";
         }
         private void SelectMenu(int menu)
         {
@@ -28,27 +27,27 @@ namespace TimeTable
             {
                 case (int)Constants.ColumnMenu.FIRST:       //학과전공
                     Department departmentMenu = new Department();
-                    departmentMenu.SelectMenu(ref department);
+                    departmentMenu.SelectMenu(courseVO);
                     break;
                 case (int)Constants.ColumnMenu.SECOND:     //이수구분
                     CompletionType completionTypeMenu = new CompletionType();
-                    completionTypeMenu.SelectMenu(ref completionType);
+                    completionTypeMenu.SelectMenu(courseVO);
                     break;
                 case (int)Constants.ColumnMenu.THIRD:      //학년
                     Grade gradeMenu = new Grade();
-                    gradeMenu.SelectMenu(ref grade);
+                    gradeMenu.SelectMenu(courseVO);
                     break;
                 case (int)Constants.ColumnMenu.FOURTH:     //교과목명
                     CourseTitle courseTitleMenu = new CourseTitle();
-                    courseTitleMenu.InputCourseTitle(ref courseTitle, (int)Constants.ColumnMenu.FOURTH);
+                    courseTitleMenu.InputCourseTitle(courseVO, (int)Constants.ColumnMenu.FOURTH);
                     break;
                 case (int)Constants.ColumnMenu.FIFTH:       //교수명
                     CourseTitle instructorMenu = new CourseTitle();
-                    instructorMenu.InputCourseTitle(ref instructor, (int)Constants.ColumnMenu.FIFTH);
+                    instructorMenu.InputCourseTitle(courseVO, (int)Constants.ColumnMenu.FIFTH);
                     break;
                 case (int)Constants.ColumnMenu.SIXTH:       //조회
                     Searching searching = new Searching();
-                    searching.ShowLectureSchedule(department, completionType, grade, courseTitle, instructor);
+                    searching.ShowLectureSchedule(courseVO);
                     InitSearchWord();   //조회 후 검색어 초기화
                     break;
             }

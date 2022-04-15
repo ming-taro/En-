@@ -8,6 +8,8 @@ namespace TimeTable
 {
     class TimeTableMenu
     {
+        private List<CourseVO> courseOfInterest; 
+
         private void SelectMenu()
         {
             TimeTableMenuScreen timeTableMenuScreen = new TimeTableMenuScreen();

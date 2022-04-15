@@ -34,10 +34,10 @@ namespace TimeTable
 
             return "";
         }
-        public void SelectMenu(ref string grade)  //학년 선택(커서 좌우로 이동)
+        public void SelectMenu(CourseVO courseVO)  //학년 선택(커서 좌우로 이동)
         {
             SearchCategoryScreen searchCategoryScreen = new SearchCategoryScreen();
-            if (grade == null || grade.Equals("")) searchCategoryScreen.PrintGradeMenu();      //학년구분 화면 출력
+            if (courseVO.Grade == null || courseVO.Grade.Equals("")) searchCategoryScreen.PrintGradeMenu();      //학년구분 화면 출력
 
             Keyboard keyboard = new Keyboard((int)Constants.RowMenu.FIRST, (int)Constants.ColumnMenu.THIRD);
             int menu = keyboard.SelectLeft((int)Constants.RowMenu.FIRST, (int)Constants.RowMenu.FIFTH, (int)Constants.RowMenu.STEP);   //학년 선택
@@ -45,7 +45,7 @@ namespace TimeTable
             if (menu == (int)Constants.Keyboard.ESCAPE) return;  //학년구분선택 중 뒤로가기
             menu = keyboard.Left;
 
-            grade = ShowMenu(menu);   //학년 숫자 저장
+            courseVO.Grade = ShowMenu(menu);   //학년 숫자 저장
         }
     }
 }

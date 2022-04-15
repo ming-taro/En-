@@ -19,7 +19,7 @@ namespace TimeTable
             while (Constants.KEYBOARD_OPERATION)
             {
                 department = "";
-                departmentMenu.SelectMenu(ref department);      //학과선택
+                //departmentMenu.SelectMenu(ref department);      //학과선택
                 if (department.Equals("")) return;  //학과선택도중 ESC -> 전공검색종료, 분야별 과목 검색 메뉴로 돌아감
 
 
