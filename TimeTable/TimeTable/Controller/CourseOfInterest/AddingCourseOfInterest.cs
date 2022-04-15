@@ -8,6 +8,11 @@ namespace TimeTable
 {
     class AddingCourseOfInterest
     {
+        private List<CourseVO> courseOfInterest;
+        public AddingCourseOfInterest(List<CourseVO> courseOfInterest)
+        {
+            this.courseOfInterest = courseOfInterest;
+        }
         private void SelectMenu()
         {
             CourseOfInterestScreen courseOfInterestScreen = new CourseOfInterestScreen();
@@ -24,7 +29,7 @@ namespace TimeTable
                 switch (menu)
                 {
                     case (int)Constants.MainMenu.FIRST:   //학과전공
-                        DepartmentMajor departmentMajor = new DepartmentMajor();
+                        DepartmentMajor departmentMajor = new DepartmentMajor(courseOfInterest);
                         departmentMajor.SearchMajor();
                         break;
                     case (int)Constants.MainMenu.SECOND:  //학수번호/분반

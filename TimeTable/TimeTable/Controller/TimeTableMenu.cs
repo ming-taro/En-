@@ -8,7 +8,11 @@ namespace TimeTable
 {
     class TimeTableMenu
     {
-        private List<CourseVO> courseOfInterest; 
+        private List<CourseVO> courseOfInterest;  //관심과목 리스트
+        public TimeTableMenu()
+        {
+            courseOfInterest = new List<CourseVO>();
+        }
 
         private void SelectMenu()
         {
@@ -30,7 +34,7 @@ namespace TimeTable
                         viewingLectureSchedule.ViewLectureSchedule();
                         break;
                     case (int)Constants.MainMenu.SECOND:  //관심과목 담기
-                        AddingCourseOfInterest addingCourseOfInterest = new AddingCourseOfInterest();
+                        AddingCourseOfInterest addingCourseOfInterest = new AddingCourseOfInterest(courseOfInterest);
                         addingCourseOfInterest.ShowCourseOfInterestMenu();      
                         break;
                     case (int)Constants.MainMenu.THIRD:  //수강신청
