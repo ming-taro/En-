@@ -30,8 +30,15 @@ namespace TimeTable
 
         public const int LEFT_VALUE_OF_COURSE_INPUT = 54;
         public const int GO_BACK_BUTTON_LEFT = 110;
-        public const int CONSOLE_WIDTH = 145;
-        public const int CONSOLE_HEIGHT = 25;
+        public enum Console
+        {
+            WIDTH = 145,
+            HEIGHT = 25,
+            LEFT = 11,
+            MIN_TOP = 1,
+            MAX_TOP = 22
+        }
+        
         public enum Keyboard{
             ENTERING_MENU,
             ESCAPE,
@@ -46,6 +53,7 @@ namespace TimeTable
             SECOND = 11,
             THIRD = 13,
             FOURTH = 15,
+            FIFTH = 18,
             LOGO_LEFT = 58,
             LOGO_TOP = 3,
             LEFT = 60

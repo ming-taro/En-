@@ -11,13 +11,13 @@ namespace TimeTable
         private void SelectMenu()
         {
             TimeTableMenuScreen timeTableMenuScreen = new TimeTableMenuScreen();
-            Keyboard keyboard = new Keyboard(60, 9);
+            Keyboard keyboard = new Keyboard((int)Constants.MainMenu.LEFT, (int)Constants.MainMenu.FIRST);
             int menu;
 
             while (Constants.KEYBOARD_OPERATION)
             {
                 timeTableMenuScreen.PrintMenu();                //메뉴선택화면 출력
-                menu = keyboard.SelectTop(9, 15, 2);            //강좌조회 및 수강신청 : 메뉴선택
+                menu = keyboard.SelectTop((int)Constants.MainMenu.FIRST, (int)Constants.MainMenu.FOURTH, (int)Constants.MainMenu.STEP);            //강좌조회 및 수강신청 : 메뉴선택
                 if (menu == (int)Constants.Keyboard.ESCAPE) return;  //esc클릭 -> 로그인 화면으로 돌아감
                 menu = keyboard.Top;
 
@@ -28,7 +28,8 @@ namespace TimeTable
                         viewingLectureSchedule.ViewLectureSchedule();
                         break;
                     case 11:  //관심과목 담기
-
+                        AddingCourseOfInterest addingCourseOfInterest = new AddingCourseOfInterest();
+                        addingCourseOfInterest.ShowCourseOfInterestMenu();      
                         break;
                     case 13:  //수강신청
 

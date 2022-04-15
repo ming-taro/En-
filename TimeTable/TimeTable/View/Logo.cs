@@ -42,15 +42,15 @@ namespace TimeTable
         }
         public void PrintTwoLine()
         {
-            Console.SetCursorPosition(11, 1);
+            Console.SetCursorPosition((int)Constants.Console.LEFT, (int)Constants.Console.MIN_TOP);
             Console.Write(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-            Console.SetCursorPosition(11, 22);
+            Console.SetCursorPosition((int)Constants.Console.LEFT, (int)Constants.Console.MAX_TOP);
             Console.Write(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
         }
         public void PrintMain()
         {
             Console.Clear();
-            Console.SetWindowSize((int)Constants.CONSOLE_WIDTH, (int)Constants.CONSOLE_HEIGHT);
+            Console.SetWindowSize((int)Constants.Console.WIDTH, (int)Constants.Console.HEIGHT);
             PrintTwoLine();
             PrintMenu(40, 6, "   Sejong University\n");
             Console.WriteLine("                                ■");

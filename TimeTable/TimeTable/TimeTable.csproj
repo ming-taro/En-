@@ -48,23 +48,25 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
+    <Compile Include="Controller\CourseOfInterest\AddingCourseOfInterest.cs" />
     <Compile Include="Controller\Keyboard.cs" />
-    <Compile Include="Controller\ScheduleInquary\CompletionType.cs" />
-    <Compile Include="Controller\ScheduleInquary\CourseTitle.cs" />
-    <Compile Include="Controller\ScheduleInquary\Department.cs" />
-    <Compile Include="Controller\ScheduleInquary\LogIn.cs" />
-    <Compile Include="Controller\ScheduleInquary\Grade.cs" />
-    <Compile Include="Controller\ScheduleInquary\Searching.cs" />
+    <Compile Include="Controller\ScheduleInquiry\CompletionType.cs" />
+    <Compile Include="Controller\ScheduleInquiry\CourseTitle.cs" />
+    <Compile Include="Controller\ScheduleInquiry\Department.cs" />
+    <Compile Include="Controller\ScheduleInquiry\LogIn.cs" />
+    <Compile Include="Controller\ScheduleInquiry\Grade.cs" />
+    <Compile Include="Controller\ScheduleInquiry\Searching.cs" />
     <Compile Include="Controller\TimeTableMenu.cs" />
-    <Compile Include="Controller\ScheduleInquary\ViewingLectureSchedule.cs" />
+    <Compile Include="Controller\ScheduleInquiry\ViewingLectureSchedule.cs" />
     <Compile Include="Controller\EnteringText.cs" />
     <Compile Include="TimeTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="View\LectureScheduleScreen.cs" />
-    <Compile Include="View\SearchCategoryScreen.cs" />
+    <Compile Include="View\CourseOfInterest\CourseOfInterestScreen.cs" />
+    <Compile Include="View\ScheduleInquiry\LectureScheduleScreen.cs" />
+    <Compile Include="View\ScheduleInquiry\SearchCategoryScreen.cs" />
     <Compile Include="View\TimeTableMenuScreen.cs" />
     <Compile Include="View\Logo.cs" />
-    <Compile Include="View\ViewingScheduleScreen.cs" />
+    <Compile Include="View\ScheduleInquiry\ViewingScheduleScreen.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
