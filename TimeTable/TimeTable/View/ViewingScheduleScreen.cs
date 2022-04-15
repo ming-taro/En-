@@ -13,13 +13,13 @@ namespace TimeTable
             Console.Clear();
             Logo logo = new Logo();
             logo.PrintTwoLine();
-            logo.PrintMenu(56, 3, "[강의 시간표 조회]");
-            logo.PrintMenu(15, (int)Constants.ColumnMenu.FIRST, "☞학과전공");
-            logo.PrintMenu(15, (int)Constants.ColumnMenu.SECOND, "☞이수구분");
-            logo.PrintMenu(15, (int)Constants.ColumnMenu.THIRD, "☞학년");
-            logo.PrintMenu(15, (int)Constants.ColumnMenu.FOURTH, "☞교과목명");
-            logo.PrintMenu(15, (int)Constants.ColumnMenu.FIFTH, "☞교수명");
-            logo.PrintMenu(15, (int)Constants.ColumnMenu.SIXTH, "☞조회");
+            logo.PrintMenu((int)Constants.ColumnMenu.LOGO_LEFT, (int)Constants.ColumnMenu.LOGO_TOP, "[강의 시간표 조회]");
+            logo.PrintMenu((int)Constants.ColumnMenu.LEFT, (int)Constants.ColumnMenu.FIRST, "☞학과전공");
+            logo.PrintMenu((int)Constants.ColumnMenu.LEFT, (int)Constants.ColumnMenu.SECOND, "☞이수구분");
+            logo.PrintMenu((int)Constants.ColumnMenu.LEFT, (int)Constants.ColumnMenu.THIRD, "☞학년");
+            logo.PrintMenu((int)Constants.ColumnMenu.LEFT, (int)Constants.ColumnMenu.FOURTH, "☞교과목명");
+            logo.PrintMenu((int)Constants.ColumnMenu.LEFT, (int)Constants.ColumnMenu.FIFTH, "☞교수명");
+            logo.PrintMenu((int)Constants.ColumnMenu.LEFT, (int)Constants.ColumnMenu.SIXTH, "☞조회");
         }
     }
 }

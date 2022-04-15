@@ -21,9 +21,9 @@ namespace TimeTable
         {
             Logo logo = new Logo();
             logo.PrintMenu((int)Constants.RowMenu.FIRST, (int)Constants.ColumnMenu.FIRST, "▷전체");
-            logo.PrintMenu((int)Constants.RowMenu.SECOND, (int)Constants.ColumnMenu.FIRST, "▷컴퓨터공학과");
-            logo.PrintMenu((int)Constants.RowMenu.THIRD, (int)Constants.ColumnMenu.FIRST, "▷데이터사이언스과");
-            logo.PrintMenu((int)Constants.RowMenu.FOURTH, (int)Constants.ColumnMenu.FIRST, "▷역사학과");
+            logo.PrintMenu((int)Constants.RowMenu.SECOND, (int)Constants.ColumnMenu.FIRST, "▷데이터사이언스학과");
+            logo.PrintMenu((int)Constants.RowMenu.THIRD, (int)Constants.ColumnMenu.FIRST, "▷컴퓨터공학과");
+            logo.PrintMenu((int)Constants.RowMenu.FOURTH, (int)Constants.ColumnMenu.FIRST, "▷미디어커뮤니케이션학과");
         }
         public void PrintCompletionTypeMenu()
         {

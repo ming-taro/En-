@@ -34,6 +34,12 @@ namespace TimeTable
             Console.SetCursorPosition(left, top);
             Console.Write(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
         }
+        public void PrintLongLine(int left, int top)
+        {
+            Console.SetCursorPosition(left, top);
+            Console.Write("=================================================================================================================================================");
+
+        }
         public void PrintTwoLine()
         {
             Console.SetCursorPosition(11, 1);
@@ -44,7 +50,7 @@ namespace TimeTable
         public void PrintMain()
         {
             Console.Clear();
-            Console.SetWindowSize(145, 25);
+            Console.SetWindowSize((int)Constants.CONSOLE_WIDTH, (int)Constants.CONSOLE_HEIGHT);
             PrintTwoLine();
             PrintMenu(40, 6, "   Sejong University\n");
             Console.WriteLine("                                ■");

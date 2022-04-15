@@ -9,52 +9,57 @@ namespace TimeTable
 {
     class LectureScheduleScreen
     {
-        public void PrintLectureSchedule(int left, int top)
+        private bool IsContainingWord(string cellData, string searchWord)
+        {
+            if (searchWord == null || cellData.Contains(searchWord)) return Constants.IS_MEETING_CONDITION;
+
+            return Constants.IS_NOT_MEETING_CONDITION;
+        }
+        private bool IsValueMeetCondition(Array data, int row, string department, string completionType, string grade, string courseTitle, string instructor)
+        {
+            if (IsContainingWord(data.GetValue(row, 2).ToString(), department) == Constants.IS_NOT_MEETING_CONDITION) return Constants.IS_NOT_MEETING_CONDITION;
+            if (IsContainingWord(data.GetValue(row, 7).ToString(), completionType) == Constants.IS_NOT_MEETING_CONDITION) return Constants.IS_NOT_MEETING_CONDITION;
+            if (IsContainingWord(data.GetValue(row, 9).ToString(), grade) == Constants.IS_NOT_MEETING_CONDITION) return Constants.IS_NOT_MEETING_CONDITION;
+            if (IsContainingWord(data.GetValue(row, 5).ToString(), courseTitle) == Constants.IS_NOT_MEETING_CONDITION) return Constants.IS_NOT_MEETING_CONDITION;
+            if (IsContainingWord(data.GetValue(row, 10).ToString(), instructor) == Constants.IS_NOT_MEETING_CONDITION) return Constants.IS_NOT_MEETING_CONDITION;
+
+            return Constants.IS_MEETING_CONDITION;
+        }
+        public void PrintLectureSchedule(int top, string department, string completionType, string grade, string courseTitle, string instructor)
         {
             Logo logo = new Logo();
 
             try
             {
-                // Excel Application 객체 생성
-                Excel.Application application = new Excel.Application();
-
-                // Workbook 객체 생성 및 파일 오픈 (바탕화면에 있는 excelStudy.xlsx 가져옴)
+                Excel.Application application = new Excel.Application(); 
                 Excel.Workbook workbook = application.Workbooks.Open(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\excelStudy.xlsx");
-
-                // sheets에 읽어온 엑셀값을 넣기 (한 workbook 내의 모든 sheet 가져옴)
                 Excel.Sheets sheets = workbook.Sheets;
-
-                // 특정 sheet의 값 가져오기
                 Excel.Worksheet worksheet = sheets["ensharp"] as Excel.Worksheet;
-
-                // 범위 설정 (좌측 상단, 우측 하단)
                 Excel.Range cellRange = worksheet.get_Range("A1", "L164") as Excel.Range;
-
-                // 설정한 범위만큼 데이터 담기 (Value2 -셀의 기본 값 제공)
                 Array data = cellRange.Cells.Value2;
- 
-                // 데이터 출력
+                
                 int[] leftSize = new int[] { 1, 6, 29, 38, 43, 65, 74, 83, 99, 104, 112, 130};
 
-                logo.PrintLine(left, top);
+                logo.PrintLongLine(0, top);
                 Console.WriteLine();
-
                 for (int row = 1; row <= cellRange.Rows.Count; row++)
                 {
-                    for(int column = 1; column <= cellRange.Columns.Count; column++)
+                    if (row != 1 && IsValueMeetCondition(data, row, department, completionType, grade, courseTitle, instructor) == Constants.IS_NOT_MEETING_CONDITION)
+                    {
+                        continue;  //조건에 맞지 않다면 출력X
+                    }
+
+                    for (int column = 1; column <= cellRange.Columns.Count; column++)
                     {
                         Console.SetCursorPosition(leftSize[column - 1], Console.CursorTop);
                         Console.Write(data.GetValue(row, column));
                     }
+                    if (row == 1) Console.WriteLine();
                     Console.WriteLine();
                 }
+                logo.PrintLongLine(0, Console.CursorTop);
 
-                logo.PrintLine(Console.CursorLeft, Console.CursorTop);
-
-                // 모든 워크북 닫기
                 application.Workbooks.Close();
-
-                // application 종료
                 application.Quit();
             }
             catch (SystemException e)

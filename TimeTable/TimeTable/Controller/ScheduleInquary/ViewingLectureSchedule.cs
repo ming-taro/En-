@@ -20,27 +20,27 @@ namespace TimeTable
             {
                 case (int)Constants.ColumnMenu.FIRST:       //학과전공
                     Department departmentMenu = new Department();
-                    departmentMenu.SelectMenu(ref this.department);
+                    departmentMenu.SelectMenu(ref department);
                     break;
-                case (int)Constants.ColumnMenu.SECOND:  //이수구분
+                case (int)Constants.ColumnMenu.SECOND:     //이수구분
                     CompletionType completionTypeMenu = new CompletionType();
-                    completionTypeMenu.SelectMenu(ref this.completionType);
+                    completionTypeMenu.SelectMenu(ref completionType);
                     break;
-                case (int)Constants.ColumnMenu.THIRD:            //학년
+                case (int)Constants.ColumnMenu.THIRD:      //학년
                     Grade gradeMenu = new Grade();
-                    gradeMenu.SelectMenu(ref this.grade);
+                    gradeMenu.SelectMenu(ref grade);
                     break;
                 case (int)Constants.ColumnMenu.FOURTH:     //교과목명
                     CourseTitle courseTitleMenu = new CourseTitle();
-                    courseTitleMenu.InputCourseTitle(ref this.courseTitle, (int)Constants.ColumnMenu.FOURTH);
+                    courseTitleMenu.InputCourseTitle(ref courseTitle, (int)Constants.ColumnMenu.FOURTH);
                     break;
                 case (int)Constants.ColumnMenu.FIFTH:       //교수명
                     CourseTitle instructorMenu = new CourseTitle();
-                    instructorMenu.InputCourseTitle(ref this.instructor, (int)Constants.ColumnMenu.FIFTH);
+                    instructorMenu.InputCourseTitle(ref instructor, (int)Constants.ColumnMenu.FIFTH);
                     break;
-                case (int)Constants.ColumnMenu.SIXTH:           //조회
-                    LectureScheduleScreen lectureScheduleScreen = new LectureScheduleScreen();
-                    lectureScheduleScreen.PrintLectureSchedule(0, 25);
+                case (int)Constants.ColumnMenu.SIXTH:       //조회
+                    Searching searching = new Searching();
+                    searching.ShowLectureSchedule(department, completionType, grade, courseTitle, instructor);
                     break;
             }
         }

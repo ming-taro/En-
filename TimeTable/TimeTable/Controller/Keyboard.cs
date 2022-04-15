@@ -67,7 +67,7 @@ namespace TimeTable
 
             return key;
         }
-        public int ControlKeyboardUpAndDown(int move) //현재 키보드 입력값 반환
+        private int ControlKeyboardUpAndDown(int move) //현재 키보드 입력값 반환
         {
             ConsoleKeyInfo keyInfo;
 
@@ -91,7 +91,7 @@ namespace TimeTable
                 }
             }
         }
-        public int ControlKeyboardLeftAndRight(int move) //현재 키보드 입력값 반환
+        private int ControlKeyboardLeftAndRight(int move) //현재 키보드 입력값 반환
         {
             ConsoleKeyInfo keyInfo;
 
@@ -115,7 +115,17 @@ namespace TimeTable
                 }
             }
         }
-        public int OutOfTop(int minTop, int maxTop)
+        public void PressESC()
+        {
+            ConsoleKeyInfo keyInfo;
+
+            while (Constants.KEYBOARD_OPERATION)   //다른 키를 입력하면 올바른 키를 입력할때까지 무한루프
+            {
+                keyInfo = Console.ReadKey(true);   //키를 입력받음 
+                if (keyInfo.Key == ConsoleKey.Escape) return;
+            }
+        }
+        private int OutOfTop(int minTop, int maxTop)
         {
             if (top < minTop) top = minTop;
             else if (top > maxTop) top = maxTop;
@@ -123,7 +133,7 @@ namespace TimeTable
 
             return (int)Constants.Keyboard.OUT_OF_MENU;   //입력 범위를 벗어남
         }
-        public int OutOfLeft(int minLeft, int maxLeft)
+        private int OutOfLeft(int minLeft, int maxLeft)
         {
             if (Left < minLeft) left = minLeft;
             else if (Left > maxLeft) left = maxLeft;

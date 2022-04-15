@@ -19,14 +19,14 @@ namespace TimeTable
                     searchCategoryScreen.ShowSelection(menu, (int)Constants.ColumnMenu.FIRST, "▷전체");
                     break;
                 case (int)Constants.RowMenu.SECOND:
+                    searchCategoryScreen.ShowSelection(menu, (int)Constants.ColumnMenu.FIRST, "▷데이터사이언스학과");
+                    return "데이터사이언스학과";
+                case (int)Constants.RowMenu.THIRD:
                     searchCategoryScreen.ShowSelection(menu, (int)Constants.ColumnMenu.FIRST, "▷컴퓨터공학과");
                     return "컴퓨터공학과";
-                case (int)Constants.RowMenu.THIRD:
-                    searchCategoryScreen.ShowSelection(menu, (int)Constants.ColumnMenu.FIRST, "▷데이터사이언스과");
-                    return "데이터사이언스학과";
                 case (int)Constants.RowMenu.FOURTH:
-                    searchCategoryScreen.ShowSelection(menu, (int)Constants.ColumnMenu.FIRST, "▷역사학과");
-                    return "역사학과";
+                    searchCategoryScreen.ShowSelection(menu, (int)Constants.ColumnMenu.FIRST, "▷미디어커뮤니케이션학과");
+                    return "미디어커뮤니케이션학과";
             }
 
             return "";
