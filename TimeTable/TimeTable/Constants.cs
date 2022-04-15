@@ -27,8 +27,9 @@ namespace TimeTable
         public const bool IS_NOT_NULL_OR_EXCEPTION = false;
         public const bool IS_MEETING_CONDITION = true;
         public const bool IS_NOT_MEETING_CONDITION = false;
-        public const bool IS_COURSE_IN_LIST = true;
-        public const bool IS_NOT_COURSE_IN_LIST = false;
+        public const int COURSE_NOT_ON_LIST = 0;
+        public const bool IS_APPLYING_WITHIN_CREDIT = true;
+        public const bool IS_NOT_APPLYING_WITHIN_CREDIT = false;
 
         public const int LEFT_VALUE_OF_COURSE_INPUT = 49;
         public const int GO_BACK_BUTTON_LEFT = 110;

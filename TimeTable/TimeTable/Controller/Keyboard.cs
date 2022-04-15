@@ -10,6 +10,10 @@ namespace TimeTable
     {
         private int left;
         private int top;
+        public Keyboard()
+        {
+
+        }
         public Keyboard(int left, int top)
         {
             this.left = left;
@@ -123,6 +127,17 @@ namespace TimeTable
             {
                 keyInfo = Console.ReadKey(true);   //키를 입력받음 
                 if (keyInfo.Key == ConsoleKey.Escape) return;
+            }
+        }
+        public int PressEnterOrESC()
+        {
+            ConsoleKeyInfo keyInfo;
+
+            while (Constants.KEYBOARD_OPERATION)   //다른 키를 입력하면 올바른 키를 입력할때까지 무한루프
+            {
+                keyInfo = Console.ReadKey(true);   //키를 입력받음 
+                if (keyInfo.Key == ConsoleKey.Escape) return (int)Constants.Keyboard.ESCAPE;
+                else return (int)Constants.Keyboard.ENTERING_MENU;
             }
         }
         private int OutOfTop(int minTop, int maxTop)

@@ -40,8 +40,8 @@ namespace TimeTable
                 switch (menu)
                 {
                     case (int)Constants.MainMenu.FIRST:   //학과전공
-                        DepartmentMajor departmentMajor = new DepartmentMajor(lectureSchedule, courseOfInterest);
-                        departmentMajor.SearchMajor(ref appliedCredit);
+                        DepartmentMajor departmentMajor = new DepartmentMajor(lectureSchedule, courseOfInterest, appliedCredit);
+                        departmentMajor.SearchMajor();
                         break;
                     case (int)Constants.MainMenu.SECOND:  //학수번호/분반
 

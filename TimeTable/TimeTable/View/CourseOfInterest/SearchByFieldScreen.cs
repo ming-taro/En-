@@ -17,14 +17,18 @@ namespace TimeTable
             logo.PrintLine((int)Constants.Console.LEFT, (int)Constants.Console.MiDLIE_TOP);
             logo.PrintMenu((int)Constants.RowMenu.FOURTH, (int)Constants.Console.MiDLIE_TOP - 2, "[ESC]:뒤로가기       [ENTER]:조회");
         }
-        public void PrintInputBox(int appliedCredit, List<CourseVO> lectureSchedule, CourseVO courseVO)
+        public void PrintInputBox(int appliedCredit)
         {
             Logo logo = new Logo();
 
             logo.PrintMenu((int)Constants.Credit.FIRST, (int)Constants.Credit.TOP, "◇등록가능학점: " + (24 - appliedCredit));
             logo.PrintMenu((int)Constants.Credit.SECOND, (int)Constants.Credit.TOP, "◇담은 학점: " + appliedCredit);
             logo.PrintMenu((int)Constants.Credit.THIRD, (int)Constants.Credit.TOP, "◇담을 과목 순번:");
-
+            logo.RemoveLine((int)Constants.Credit.THIRD + 18, (int)Constants.Credit.TOP);  //순번 입력값 지우기
+        }
+        public void PrintResult(int appliedCredit, List<CourseVO> lectureSchedule, CourseVO courseVO)
+        {
+            PrintInputBox(appliedCredit);
             LectureScheduleScreen lectureScheduleScreen = new LectureScheduleScreen();
             lectureScheduleScreen.PrintLectureSchedule((int)Constants.Credit.TOP + 2, lectureSchedule, courseVO);//목록을 보여줌
         }
@@ -34,6 +38,15 @@ namespace TimeTable
 
             Console.ForegroundColor = ConsoleColor.Yellow;
             logo.PrintMenu((int)Constants.RowMenu.SECOND, (int)Constants.Credit.TOP - 2, ">>>관심과목 담기에 성공했습니다!<<<");
+            logo.PrintMenu((int)Constants.RowMenu.FOURTH, (int)Constants.Credit.TOP - 2, "[ESC]:뒤로가기       [ENTER]:재조회");
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+        public void PrinFaliureMessage()
+        {
+            Logo logo = new Logo();
+
+            Console.ForegroundColor = ConsoleColor.Red;
+            logo.PrintMenu((int)Constants.RowMenu.SECOND, (int)Constants.Credit.TOP - 2, ">입력하신 번호에 해당하는 강의가 없습니다<");
             logo.PrintMenu((int)Constants.RowMenu.FOURTH, (int)Constants.Credit.TOP - 2, "[ESC]:뒤로가기       [ENTER]:재조회");
             Console.ForegroundColor = ConsoleColor.White;
         }
