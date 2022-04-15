@@ -8,7 +8,7 @@ namespace TimeTable
 {
     class Department
     {
-        public string ShowMenu(int menu)
+        private string ShowMenu(int menu)
         {
             SearchCategoryScreen searchCategoryScreen = new SearchCategoryScreen();
             searchCategoryScreen.PrintDepartmentMenu();

@@ -10,13 +10,18 @@ namespace TimeTable
     {
         public void SearchMajor()
         {
-            string department = "";
+            SearchByFieldScreen searchByFieldScreen = new SearchByFieldScreen();
+            searchByFieldScreen.PrintLine();          
+
             Department departmentMenu = new Department();
-            Console.Read();  ///test용ㅇ요요요요
-            departmentMenu.SelectMenu(ref department);
+            string department;
 
             while (Constants.KEYBOARD_OPERATION)
             {
+                department = "";
+                departmentMenu.SelectMenu(ref department);      //학과선택
+                if (department.Equals("")) return;  //학과선택도중 ESC -> 전공검색종료, 분야별 과목 검색 메뉴로 돌아감
+
 
             }
 

@@ -8,14 +8,18 @@ namespace TimeTable
 {
     class SearchByFieldScreen
     {
-        public void PrintDepartment()
+        public void PrintLine()
         {
-            SearchCategoryScreen searchCategoryScreen = new SearchCategoryScreen();
             Logo logo = new Logo();
 
+            Console.Clear();
             logo.PrintLine((int)Constants.Console.LEFT, (int)Constants.Console.MIN_TOP);
-            searchCategoryScreen.PrintDepartmentMenu();
-            logo.PrintLine((int)Constants.Console.LEFT, (int)Constants.Console.MIN_TOP);
+            logo.PrintLine((int)Constants.Console.LEFT, (int)Constants.SEARCH_BUTTON_TOP + 2);
+        }
+        public void PrintDepartmentSearchResult(string m)
+        {
+            LectureScheduleScreen lectureScheduleScreen = new LectureScheduleScreen();
+            //lectureScheduleScreen.PrintLectureSchedule((int)Constants.SEARCH_BUTTON_TOP + 4, );
         }
     }
 }

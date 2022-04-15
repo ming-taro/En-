@@ -16,7 +16,7 @@ namespace TimeTable
 
             while (Constants.KEYBOARD_OPERATION)
             {
-                courseOfInterestScreen.PrintSearchMenu();
+                courseOfInterestScreen.PrintSearchMenu(); //분야별 검색 메뉴 출력
                 menu = keyboard.SelectTop((int)Constants.MainMenu.FIRST, (int)Constants.MainMenu.FIFTH, (int)Constants.MainMenu.STEP);
                 if (menu == (int)Constants.Keyboard.ESCAPE) return;  //esc클릭 -> 관심과목 담기 메뉴 화면으로 돌아감
                 menu = keyboard.Top;

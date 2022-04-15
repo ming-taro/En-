@@ -30,6 +30,7 @@ namespace TimeTable
 
         public const int LEFT_VALUE_OF_COURSE_INPUT = 54;
         public const int GO_BACK_BUTTON_LEFT = 110;
+        public const int SEARCH_BUTTON_TOP = 9;
         public enum Console
         {
             WIDTH = 145,
@@ -73,12 +74,12 @@ namespace TimeTable
         }
         public enum RowMenu
         {
-            FIRST = 35,
-            SECOND = 55,
-            THIRD = 75,
-            FOURTH = 95,
-            FIFTH = 115,
-            STEP = 20
+            FIRST = 30,
+            SECOND = 52,
+            THIRD = 74,
+            FOURTH = 96,
+            FIFTH = 118,
+            STEP = 22
         }
         public enum MenuTop
         {
