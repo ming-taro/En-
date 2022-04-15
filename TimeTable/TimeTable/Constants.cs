@@ -49,11 +49,11 @@ namespace TimeTable
         public enum MainMenu
         {
             STEP = 2,
-            FIRST = 9,
+            FIRST = 9,  
             SECOND = 11,
             THIRD = 13,
             FOURTH = 15,
-            FIFTH = 18,
+            FIFTH = 17,
             LOGO_LEFT = 58,
             LOGO_TOP = 3,
             LEFT = 60

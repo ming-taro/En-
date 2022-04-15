@@ -23,18 +23,18 @@ namespace TimeTable
 
                 switch (menu)
                 {
-                    case 9:   //강의 시간표 조회
+                    case (int)Constants.MainMenu.FIRST:   //강의 시간표 조회
                         ViewingLectureSchedule viewingLectureSchedule = new ViewingLectureSchedule();
                         viewingLectureSchedule.ViewLectureSchedule();
                         break;
-                    case 11:  //관심과목 담기
+                    case (int)Constants.MainMenu.SECOND:  //관심과목 담기
                         AddingCourseOfInterest addingCourseOfInterest = new AddingCourseOfInterest();
                         addingCourseOfInterest.ShowCourseOfInterestMenu();      
                         break;
-                    case 13:  //수강신청
+                    case (int)Constants.MainMenu.THIRD:  //수강신청
 
                         break;
-                    case 15:  //수강내역 조회
+                    case (int)Constants.MainMenu.FOURTH:  //수강내역 조회
 
                         break;
 
