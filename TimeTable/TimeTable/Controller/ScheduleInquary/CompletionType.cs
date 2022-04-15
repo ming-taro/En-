@@ -34,7 +34,7 @@ namespace TimeTable
         public void SelectMenu(ref string completionType)  //이수구분 선택(커서 좌우로 이동)
         {
             SearchCategoryScreen searchCategoryScreen = new SearchCategoryScreen();
-            if (completionType == null) searchCategoryScreen.PrintCompletionTypeMenu();      //이수구분 화면 출력
+            if (completionType == null || completionType.Equals("")) searchCategoryScreen.PrintCompletionTypeMenu();      //이수구분 화면 출력
 
             Keyboard keyboard = new Keyboard((int)Constants.RowMenu.FIRST, (int)Constants.ColumnMenu.SECOND);
             int menu = keyboard.SelectLeft((int)Constants.RowMenu.FIRST, (int)Constants.RowMenu.FOURTH, (int)Constants.RowMenu.STEP);   //학과선택

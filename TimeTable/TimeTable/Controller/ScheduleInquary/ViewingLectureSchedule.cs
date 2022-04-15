@@ -14,6 +14,14 @@ namespace TimeTable
         private string courseTitle;
         private string instructor;
 
+        private void InitSearchWord()
+        {
+            department = "";
+            completionType = "";
+            grade = "";
+            courseTitle = "";
+            instructor = "";
+        }
         private void SelectMenu(int menu)
         {
             switch (menu)
@@ -41,6 +49,7 @@ namespace TimeTable
                 case (int)Constants.ColumnMenu.SIXTH:       //조회
                     Searching searching = new Searching();
                     searching.ShowLectureSchedule(department, completionType, grade, courseTitle, instructor);
+                    InitSearchWord();   //조회 후 검색어 초기화
                     break;
             }
         }

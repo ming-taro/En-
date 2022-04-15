@@ -41,7 +41,6 @@ namespace TimeTable
                 int[] leftSize = new int[] { 1, 6, 29, 38, 43, 65, 74, 83, 99, 104, 112, 130};
 
                 logo.PrintLongLine(0, top);
-                Console.WriteLine();
                 for (int row = 1; row <= cellRange.Rows.Count; row++)
                 {
                     if (row != 1 && IsValueMeetCondition(data, row, department, completionType, grade, courseTitle, instructor) == Constants.IS_NOT_MEETING_CONDITION)

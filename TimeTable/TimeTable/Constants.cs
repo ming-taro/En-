@@ -29,7 +29,7 @@ namespace TimeTable
         public const bool IS_NOT_MEETING_CONDITION = false;
 
         public const int LEFT_VALUE_OF_COURSE_INPUT = 54;
-        public const int GO_BACK_BUTTON_LEFT = 120;
+        public const int GO_BACK_BUTTON_LEFT = 110;
         public const int CONSOLE_WIDTH = 145;
         public const int CONSOLE_HEIGHT = 25;
         public enum Keyboard{
