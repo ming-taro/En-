@@ -88,6 +88,7 @@ namespace TimeTable
         public void ShowTimeTableMenu()
         {
             MakeCourseList();
+            courseOfInterest.Add(lectureSchedule[0]);  //관심과목담기리스트에 먼저 목록이름 저장
             Console.ForegroundColor = ConsoleColor.White;
             Logo logo = new Logo();
             logo.PrintMain();           //메인화면 출력

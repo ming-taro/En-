@@ -27,7 +27,7 @@ namespace TimeTable
         public void RemoveLine(int left, int top)
         {
             Console.SetCursorPosition(left, top);
-            Console.Write("                                                      ");
+            Console.Write("                                                                               ");
         }
         public void PrintLine(int left, int top)
         {

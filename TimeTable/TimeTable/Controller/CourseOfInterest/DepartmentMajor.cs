@@ -20,11 +20,11 @@ namespace TimeTable
         }
         public int FindCourseIndexInList(string number, string department)//입력받은 강의의 강의목록 내 인덱스값 찾기
         {
-            for (int row = 1; row <= lectureSchedule.Count; row++)
+            for (int row = 1; row < lectureSchedule.Count; row++)  //lectureSchedule[0]은 목록이름
             {
                 if (lectureSchedule[row].Number.Equals(number) && lectureSchedule[row].Department.Equals(department))  //선택한 학과와 입력한 순번이 일치하는 과목을 찾음)
                 {
-                    return row;
+                    return row;  //찾은 강좌의 인덱스번호 리턴
                 }
             }
             return Constants.COURSE_NOT_ON_LIST;  //강의목록에 없는 순번을 입력한 경우
@@ -37,10 +37,20 @@ namespace TimeTable
             }
             return Constants.IS_NOT_APPLYING_WITHIN_CREDIT;
         }
+        public bool IsDuplicateCourse(int courseIndex) //추가하려는 강의가 이미 관심과목리스트에 있는지 확인(같은 과목X)
+        {
+            for(int row = 1; row < courseOfInterest.Count; row++)
+            {
+                if (courseOfInterest.Equals(lectureSchedule[courseIndex].CourseTitle)) return Constants.IS_DUPLICATE_COURSE; 
+            }
+
+            return Constants.IS_FIRST_APPLICATION;    //처음 담는 강의
+        }
         public void InputCourseNumber(string department)
         {
             EnteringText text = new EnteringText();
             SearchByFieldScreen searchByFieldScreen = new SearchByFieldScreen();
+            Logo logo = new Logo();
             Keyboard keyboard = new Keyboard();
             string number;
             int courseIndex;
@@ -52,9 +62,17 @@ namespace TimeTable
 
                 courseIndex = FindCourseIndexInList(number, department);  //입력받은 과목의 목록 내 인덱스 찾기
 
-                if(courseIndex == Constants.COURSE_NOT_ON_LIST || IsAppyingWithinCredit(courseIndex) == Constants.IS_NOT_APPLYING_WITHIN_CREDIT)
+                if(courseIndex == Constants.COURSE_NOT_ON_LIST)
                 {
-                    searchByFieldScreen.PrinFaliureMessage();     //관심과목 담기 실패 메세지
+                    searchByFieldScreen.PrinFaliureMessage(">입력하신 번호에 해당하는 강의가 없습니다<");     //관심과목 담기 실패 메세지
+                }
+                else if(IsAppyingWithinCredit(courseIndex) == Constants.IS_NOT_APPLYING_WITHIN_CREDIT)
+                {
+                    searchByFieldScreen.PrinFaliureMessage(">관심과목은 최대 24학점까지 담을 수 있습니다<");     //관심과목 담기 실패 메세지
+                }
+                else if (IsDuplicateCourse(courseIndex))
+                {
+                    searchByFieldScreen.PrinFaliureMessage(">같은 강의는 중복해서 담을 수 없습니다<");     //관심과목 담기 실패 메세지
                 }
                 else
                 {
@@ -64,8 +82,8 @@ namespace TimeTable
                 }
                 
                 if(keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break;   //순번입력 후 esc -> 학과검색으로 돌아가기
-                
                 searchByFieldScreen.PrintInputBox(appliedCredit);  //enter입력 -> 현재 페이지에서 과목 입력하기
+                
             }
         }
 
@@ -78,12 +96,13 @@ namespace TimeTable
             while (Constants.KEYBOARD_OPERATION)
             {
                 searchByFieldScreen.PrintLine();
-                departmentMenu.SelectMenu(courseVO);      //학과 선택하기
+                departmentMenu.SelectMenu(courseVO);     //학과 선택하기
                 if (courseVO.Department == null) break;  //학과선택 중 esc -> 과목조회를 종료하고 분야별검색 메뉴로 돌아감
 
                 searchByFieldScreen.PrintResult(appliedCredit, lectureSchedule, courseVO);   //학과선택시 -> 학과검색결과를 보여줌
                 InputCourseNumber(courseVO.Department);   //순번 입력
-                courseVO.Department = "";  //검색어 초기화
+
+                courseVO.Department = "";  //학과별 조회 창으로 -> 검색어 초기화
                 Console.Clear();
             }
 

@@ -30,6 +30,8 @@ namespace TimeTable
         public const int COURSE_NOT_ON_LIST = 0;
         public const bool IS_APPLYING_WITHIN_CREDIT = true;
         public const bool IS_NOT_APPLYING_WITHIN_CREDIT = false;
+        public const bool IS_DUPLICATE_COURSE = true;
+        public const bool IS_FIRST_APPLICATION = false;
 
         public const int LEFT_VALUE_OF_COURSE_INPUT = 49;
         public const int GO_BACK_BUTTON_LEFT = 110;

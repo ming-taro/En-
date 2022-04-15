@@ -19,9 +19,9 @@ namespace TimeTable
         }
         private void CalculateCredit()
         {
-            for(int i=0; i<courseOfInterest.Count; i++)
+            for(int row = 1; row<courseOfInterest.Count; row++)
             {
-                appliedCredit += courseOfInterest[i].ClassDay[0] - '0';
+                appliedCredit += courseOfInterest[row].ClassDay[0] - '0';
             }
         }
         private void SelectMenu()

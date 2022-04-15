@@ -25,6 +25,7 @@ namespace TimeTable
             logo.PrintMenu((int)Constants.Credit.SECOND, (int)Constants.Credit.TOP, "◇담은 학점: " + appliedCredit);
             logo.PrintMenu((int)Constants.Credit.THIRD, (int)Constants.Credit.TOP, "◇담을 과목 순번:");
             logo.RemoveLine((int)Constants.Credit.THIRD + 18, (int)Constants.Credit.TOP);  //순번 입력값 지우기
+            logo.RemoveLine((int)Constants.RowMenu.SECOND, (int)Constants.Credit.TOP - 2); //메세지 지우기
         }
         public void PrintResult(int appliedCredit, List<CourseVO> lectureSchedule, CourseVO courseVO)
         {
@@ -41,12 +42,12 @@ namespace TimeTable
             logo.PrintMenu((int)Constants.RowMenu.FOURTH, (int)Constants.Credit.TOP - 2, "[ESC]:뒤로가기       [ENTER]:재조회");
             Console.ForegroundColor = ConsoleColor.White;
         }
-        public void PrinFaliureMessage()
+        public void PrinFaliureMessage(string message)
         {
             Logo logo = new Logo();
 
             Console.ForegroundColor = ConsoleColor.Red;
-            logo.PrintMenu((int)Constants.RowMenu.SECOND, (int)Constants.Credit.TOP - 2, ">입력하신 번호에 해당하는 강의가 없습니다<");
+            logo.PrintMenu((int)Constants.RowMenu.SECOND, (int)Constants.Credit.TOP - 2, message);
             logo.PrintMenu((int)Constants.RowMenu.FOURTH, (int)Constants.Credit.TOP - 2, "[ESC]:뒤로가기       [ENTER]:재조회");
             Console.ForegroundColor = ConsoleColor.White;
         }
