@@ -12,7 +12,7 @@ namespace TimeTable
         public void InputCourseTitle(ref string courseTitle, int top)
         {
             Logo logo = new Logo();
-            logo.PrintMenu((int)Constants.Grade.ALL, top, "☞2글자 이상 입력:");
+            logo.PrintMenu((int)Constants.RowMenu.FIRST, top, "☞2글자 이상 입력:");
             
             EnteringText text = new EnteringText();
             string title;

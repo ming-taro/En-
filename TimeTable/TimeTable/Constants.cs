@@ -26,7 +26,7 @@ namespace TimeTable
         public const bool LEFT = false;
         public const bool IS_NOT_NULL_OR_EXCEPTION = false;
 
-        public const int LEFT_VALUE_OF_COURSE_INPUT = 42;
+        public const int LEFT_VALUE_OF_COURSE_INPUT = 54;
 
         public enum Keyboard{
             ENTERING_MENU,
@@ -35,33 +35,6 @@ namespace TimeTable
             OUT_OF_MENU,
             WITHIN_THE_MENU
         }
-
-        public enum Grade
-        {
-            ALL = 43,              //left
-            FRESHMAN = 63,   
-            SOPHOMORE = 83,
-            JUNIOR = 103,
-            SENIOR = 123,
-            STEP = 20
-        }
-        public enum Department
-        {
-            ALL = 43,
-            COMPUTER_ENGINEERING = 63,
-            DATA_SCIENCE = 83,
-            HISTORY = 103,
-            STEP = 20
-        }
-        public enum CompletionType
-        {
-            ALL = 43,
-            COMON_EDUCATION_REQUIRED = 63,
-            MAJOR_REQUIRED = 83,
-            MAJOR_ELECTIVE = 103,
-            STEP = 20
-        }
-
         public enum MainMenu
         {
             STEP = 2,
@@ -85,6 +58,15 @@ namespace TimeTable
             LOGO_LEFT = 58,
             LOGO_TOP = 3,
             LEFT = 15
+        }
+        public enum RowMenu
+        {
+            FIRST = 35,
+            SECOND = 55,
+            THIRD = 75,
+            FOURTH = 95,
+            FIFTH = 115,
+            STEP = 20
         }
         public enum MenuTop
         {

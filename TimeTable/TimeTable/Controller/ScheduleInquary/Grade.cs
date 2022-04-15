@@ -15,19 +15,19 @@ namespace TimeTable
 
             switch (menu)
             {
-                case (int)Constants.Grade.ALL:
+                case (int)Constants.RowMenu.FIRST:
                     searchCategoryScreen.ShowSelection(menu, (int)Constants.ColumnMenu.THIRD, "▷전체");
                     break;
-                case (int)Constants.Grade.FRESHMAN:
+                case (int)Constants.RowMenu.SECOND:
                     searchCategoryScreen.ShowSelection(menu, (int)Constants.ColumnMenu.THIRD, "▷1학년");
                     return "1";
-                case (int)Constants.Grade.SOPHOMORE:
+                case (int)Constants.RowMenu.THIRD:
                     searchCategoryScreen.ShowSelection(menu, (int)Constants.ColumnMenu.THIRD, "▷2학년");
                     return "2";
-                case (int)Constants.Grade.JUNIOR:
+                case (int)Constants.RowMenu.FOURTH:
                     searchCategoryScreen.ShowSelection(menu, (int)Constants.ColumnMenu.THIRD, "▷3학년");
                     return "3";
-                case (int)Constants.Grade.SENIOR:
+                case (int)Constants.RowMenu.FIFTH:
                     searchCategoryScreen.ShowSelection(menu, (int)Constants.ColumnMenu.THIRD, "▷4학년");
                     return "4";
             }
@@ -39,8 +39,8 @@ namespace TimeTable
             SearchCategoryScreen searchCategoryScreen = new SearchCategoryScreen();
             if (grade == null) searchCategoryScreen.PrintGradeMenu();      //학년구분 화면 출력
 
-            Keyboard keyboard = new Keyboard((int)Constants.Grade.ALL, (int)Constants.ColumnMenu.THIRD);
-            int menu = keyboard.SelectLeft((int)Constants.Grade.ALL, (int)Constants.Grade.SENIOR, (int)Constants.Grade.STEP);   //학년 선택
+            Keyboard keyboard = new Keyboard((int)Constants.RowMenu.FIRST, (int)Constants.ColumnMenu.THIRD);
+            int menu = keyboard.SelectLeft((int)Constants.RowMenu.FIRST, (int)Constants.RowMenu.FIFTH, (int)Constants.RowMenu.STEP);   //학년 선택
 
             if (menu == (int)Constants.Keyboard.ESCAPE) return;  //학년구분선택 중 뒤로가기
             menu = keyboard.Left;
