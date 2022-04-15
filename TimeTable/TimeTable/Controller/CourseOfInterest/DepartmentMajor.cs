@@ -18,13 +18,25 @@ namespace TimeTable
             this.lectureSchedule = lectureSchedule;
             this.appliedCredit = appliedCredit;
         }
+        public int GetAppliedCredit()
+        {
+            return appliedCredit;
+        }
         public int FindCourseIndexInList(string number, string department)//입력받은 강의의 강의목록 내 인덱스값 찾기
         {
             for (int row = 1; row < lectureSchedule.Count; row++)  //lectureSchedule[0]은 목록이름
             {
-                if (lectureSchedule[row].Number.Equals(number) && lectureSchedule[row].Department.Contains(department))  //선택한 학과와 입력한 순번이 일치하는 과목을 찾음)
+                if (department == "" && lectureSchedule[row].Number.Equals(number))  //전체조회시(과목번호만 있는지 비교)
+                {
+                    return row;   
+                }
+                else if (department[department.Length-1] == '과' && lectureSchedule[row].Number.Equals(number) && lectureSchedule[row].Department.Contains(department))  //선택한 학과와 입력한 순번이 일치하는 과목을 찾음)
                 {
                     return row;  //찾은 강좌의 인덱스번호 리턴
+                }
+                else if(lectureSchedule[row].Number.Equals(number) && lectureSchedule[row].Grade.Equals(department))
+                {
+                    return row;
                 }
             }
             return Constants.COURSE_NOT_ON_LIST;  //강의목록에 없는 순번을 입력한 경우
@@ -97,16 +109,15 @@ namespace TimeTable
             {
                 searchByFieldScreen.PrintLine();
                 departmentMenu.SelectMenu(courseVO);     //학과 선택하기
-                if (courseVO.Department == null || courseVO.Department == "") break;  //학과선택 중 esc -> 과목조회를 종료하고 분야별검색 메뉴로 돌아감
+                if (courseVO.Department == null) break;  //학과선택 중 esc -> 과목조회를 종료하고 분야별검색 메뉴로 돌아감
 
                 searchByFieldScreen.PrintResult(appliedCredit, lectureSchedule, courseVO);   //학과선택시 -> 학과검색결과를 보여줌
                 InputCourseNumber(courseVO.Department);   //순번 입력
 
-                courseVO.Department = "";  //학과별 조회 창으로 -> 검색어 초기화
+                courseVO.Department = null;  //학과별 조회 창으로 -> 검색어 초기화
                 Console.Clear();
             }
-            Console.WriteLine("["+appliedCredit+"]");
-            Console.ReadLine();
+
             return appliedCredit;   //esc클릭 후 종료할 때 담은 관심과목 학점을 리턴
         }
     }

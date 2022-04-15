@@ -36,7 +36,7 @@ namespace TimeTable
                     completionTypeMenu.SelectMenu(courseVO);
                     break;
                 case (int)Constants.ColumnMenu.THIRD:      //학년
-                    Grade gradeMenu = new Grade();
+                    SelectingGrade gradeMenu = new SelectingGrade();
                     gradeMenu.SelectMenu(courseVO);
                     break;
                 case (int)Constants.ColumnMenu.FOURTH:     //교과목명

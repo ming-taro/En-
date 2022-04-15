@@ -47,9 +47,13 @@ namespace TimeTable
 
                         break;
                     case (int)Constants.MainMenu.THIRD:   //학년
+                        Grade grade = new Grade(lectureSchedule, courseOfInterest, appliedCredit);
+                        appliedCredit = grade.SearchGrade();
+                        break;
+                    case (int)Constants.MainMenu.FOURTH:  //교과목명
 
                         break;
-                    case (int)Constants.MainMenu.FOURTH:  //교수명
+                    case (int)Constants.MainMenu.FIFTH:    //교수명
 
                         break;
 

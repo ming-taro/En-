@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TimeTable
 {
-    class Grade
+    class SelectingGrade
     {
         public string ShowMenu(int menu)
         {
