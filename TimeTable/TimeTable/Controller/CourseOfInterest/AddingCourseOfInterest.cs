@@ -52,10 +52,11 @@ namespace TimeTable
                         break;
                     case (int)Constants.MainMenu.FOURTH:  //교과목명
                         CourseTitle courseTitle = new CourseTitle(lectureSchedule, courseOfInterest, appliedCredit);
-                        appliedCredit =courseTitle.SearchTitle();
+                        appliedCredit =courseTitle.SearchTitle("courseTitle");
                         break;
                     case (int)Constants.MainMenu.FIFTH:    //교수명
-
+                        CourseTitle instructor = new CourseTitle(lectureSchedule, courseOfInterest, appliedCredit);
+                        appliedCredit = instructor.SearchTitle("instructor");
                         break;
 
                 }
