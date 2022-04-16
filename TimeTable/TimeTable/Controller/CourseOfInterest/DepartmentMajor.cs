@@ -69,6 +69,7 @@ namespace TimeTable
 
             while (Constants.INPUT_VALUE)
             {
+                searchByFieldScreen.PrintInputBox(appliedCredit);  
                 number = text.EnterText((int)Constants.Credit.THIRD + 18, (int)Constants.Credit.TOP);   //담을 순번 입력
                 if (number.Equals(Constants.ESC)) break;    //입력도중 esc -> 관심과목 입력 종료
 
@@ -94,7 +95,6 @@ namespace TimeTable
                 }
                 
                 if(keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break;   //순번입력 후 esc -> 학과검색으로 돌아가기
-                searchByFieldScreen.PrintInputBox(appliedCredit);  //enter입력 -> 현재 페이지에서 과목 입력하기
                 
             }
         }

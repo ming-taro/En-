@@ -14,12 +14,14 @@ namespace TimeTable.Controller.CourseOfInterest
             CourseVO courseVO = new CourseVO();
             Logo logo = new Logo();
             logo.PrintTwoLine();
-            logo.PrintMenu();
+            //logo.PrintMenu();
 
             logo.PrintMenu((int)Constants.RowMenu.FIRST, (int)Constants.ColumnMenu.FIRST, "☞2글자 이상 입력:");
 
             EnteringText text = new EnteringText();
-            string title;
+            //text.EnterText()
+
+            return 1;
         }
     }
 }
