@@ -16,7 +16,7 @@ namespace TimeTable
             lectureSchedule = new List<CourseVO>();
             courseOfInterest = new List<CourseVO>();
         }
-        public void MakeCourseList()
+        private void MakeCourseList()
         {
             Excel.Application application = new Excel.Application();
             Excel.Workbook workbook = application.Workbooks.Open(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\excelStudy.xlsx");
@@ -35,15 +35,12 @@ namespace TimeTable
                 courseVO.Distribution = data.GetValue(row, 4).ToString();  //분반
                 courseVO.CourseTitle = data.GetValue(row, 5).ToString();    //교과목명
                 if (data.GetValue(row, 6) != null) courseVO.Language = data.GetValue(row, 6).ToString(); //강의언어
-                else courseVO.Language = "";
                 courseVO.CompletionType = data.GetValue(row, 7).ToString(); //이수구분
                 courseVO.Credit = data.GetValue(row, 8).ToString();         //학점
                 courseVO.Grade = data.GetValue(row, 9).ToString();          //학년
                 courseVO.Instructor = data.GetValue(row, 10).ToString();     //교수명
-                if (data.GetValue(row, 11) != null) courseVO.ClassDay = data.GetValue(row, 11).ToString();
-                else courseVO.ClassDay = "";  //요일
+                if (data.GetValue(row, 11) != null) courseVO.ClassDay = data.GetValue(row, 11).ToString();//요일
                 if (data.GetValue(row, 12) != null) courseVO.LectureRoom = data.GetValue(row, 12).ToString();    //강의실
-                else courseVO.LectureRoom = "";
                 lectureSchedule.Add(courseVO);
             }
             application.Workbooks.Close();
@@ -92,7 +89,6 @@ namespace TimeTable
             Console.ForegroundColor = ConsoleColor.White;
             Logo logo = new Logo();
             logo.PrintMain();           //메인화면 출력
-            
 
             LogIn logIn = new LogIn();
 
@@ -105,9 +101,9 @@ namespace TimeTable
                 }
                 else
                 {
-                    logo.FailureMessage(80, 14, "(학번이나 비밀번호가 일치하지 않습니다.)");  //로그인 실패 메세지 출력
-                    logo.RemoveLine(100, 9);
-                    logo.RemoveLine(112, 12);
+                    logo.FailureMessage(93, 14, "학번이나 비밀번호가 일치하지 않습니다.");  //로그인 실패 메세지 출력
+                    logo.RemoveLine(93, 9);
+                    logo.RemoveLine(93, 12);
                 }
             }
         }

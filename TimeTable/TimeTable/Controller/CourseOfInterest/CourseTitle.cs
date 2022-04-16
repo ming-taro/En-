@@ -91,7 +91,7 @@ namespace TimeTable
                 Console.Clear();
                 searchByFieldScreen.PrintLine();
                 logo.PrintMenu((int)Constants.RowMenu.FIRST, (int)Constants.ColumnMenu.FIRST, "☞2글자 이상 입력:");
-                if(InputType.Equals("courseTitle")) logo.PrintMenu((int)Constants.ColumnMenu.LOGO_LEFT, (int)Constants.ColumnMenu.LOGO_TOP, "[교과명 검색]");
+                if(InputType.Equals("courseTitle")) logo.PrintMenu((int)Constants.ColumnMenu.LOGO_LEFT, (int)Constants.ColumnMenu.LOGO_TOP, "[교과목명 검색]");
                 else if(InputType.Equals("instructor")) logo.PrintMenu((int)Constants.ColumnMenu.LOGO_LEFT, (int)Constants.ColumnMenu.LOGO_TOP, "[교수명 검색]");
 
                 string title = InputCourseTitle((int)Constants.ColumnMenu.FIRST);  //교과명 입력

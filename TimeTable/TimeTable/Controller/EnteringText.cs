@@ -33,7 +33,7 @@ namespace TimeTable
 
             while (Constants.INPUT_VALUE)
             {
-                keyInfo = Console.ReadKey(true);  //키 입력
+                keyInfo = Console.ReadKey(true);             //키 입력
 
                 if (keyInfo.Key == ConsoleKey.Escape)        //esc
                 {

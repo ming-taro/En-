@@ -8,17 +8,17 @@ namespace TimeTable
 {
     class Logo
     {
-        public void RemoveInput(int left, int top)
+        public void RemoveInput(int left, int top)                      //입력 후 입력값, 메세지 출력부분 삭제
         {
             RemoveLine(left, top);
             RemoveLine(left, top + 1);
         }
-        public void PrintMenu(int left, int top, string label)
+        public void PrintMenu(int left, int top, string label)          //현재 조회중인 목록의 카테고리 이름
         {
             Console.SetCursorPosition(left, top);
             Console.Write(label);
         }
-        public void FailureMessage(int left, int top, string message)
+        public void FailureMessage(int left, int top, string message)   //입력값이 올바르지 않음
         {
             Console.ForegroundColor = ConsoleColor.Red;
             PrintMenu(left, top, "(" + message + ")");
@@ -63,9 +63,9 @@ namespace TimeTable
             Console.WriteLine("                                                      ■  ■");
             Console.WriteLine("                                                       ■■");
             Console.SetCursorPosition(80, 9);
-            Console.WriteLine("▷학번(숫자 8자리):");
+            Console.Write("▷    학번 :");
             Console.SetCursorPosition(80, 12);
-            Console.Write("▷비밀번호(영어,숫자 5~10자리):");
+            Console.Write("▷비밀번호 :");
             PrintMenu(40, 18, "[ESC를 누르면 종료합니다]");
         }
         

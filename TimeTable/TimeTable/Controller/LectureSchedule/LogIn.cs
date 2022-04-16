@@ -18,9 +18,9 @@ namespace TimeTable
         {
             EnteringText text = new EnteringText();
 
-            string id = text.EnterText(100, 9);  //아이디 입력
+            string id = text.EnterText(93, 9);  //아이디 입력
             if (id.Equals(Constants.ESC)) return Constants.LOGIN_FAILURE;        //아이디 입력 중 esc -> 종료
-            string password = text.EnterText(112, 12);
+            string password = text.EnterText(93, 12);
             if (password.Equals(Constants.ESC)) return Constants.LOGIN_FAILURE;  //비밀번호 입력 중 esc -> 종료
 
             if (IsPossibleToLogIn(id, password)) return Constants.LOGIN_IN;      //올바르게 입력하면 로그인 성공

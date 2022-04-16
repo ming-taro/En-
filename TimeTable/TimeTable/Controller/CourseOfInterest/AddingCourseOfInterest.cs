@@ -21,7 +21,7 @@ namespace TimeTable
         {
             for(int row = 1; row<courseOfInterest.Count; row++)
             {
-                appliedCredit += courseOfInterest[row].ClassDay[0] - '0';
+                appliedCredit += Int32.Parse(courseOfInterest[row].Credit);
             }
         }
         private void SelectMenu()
