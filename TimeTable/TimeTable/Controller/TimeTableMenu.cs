@@ -19,7 +19,7 @@ namespace TimeTable
         private void MakeCourseList()
         {
             Excel.Application application = new Excel.Application();
-            Excel.Workbook workbook = application.Workbooks.Open(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\excelStudy.xlsx");
+            Excel.Workbook workbook = application.Workbooks.Open(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\LectureSchedule.xlsx");
             Excel.Sheets sheets = workbook.Sheets;
             Excel.Worksheet worksheet = sheets["ensharp"] as Excel.Worksheet;
             Excel.Range cellRange = worksheet.get_Range("A1", "L164") as Excel.Range;

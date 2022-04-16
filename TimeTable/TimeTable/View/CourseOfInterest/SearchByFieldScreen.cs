@@ -28,6 +28,17 @@ namespace TimeTable
             logo.RemoveLine((int)Constants.Credit.THIRD + 18, (int)Constants.Credit.TOP);  //순번 입력값 지우기
             logo.RemoveLine((int)Constants.RowMenu.SECOND, (int)Constants.Credit.TOP - 2); //메세지 지우기
         }
+        public void PrintDeletionInputBox(int appliedCredit)
+        {
+            Logo logo = new Logo();
+
+            logo.RemoveLine((int)Constants.Credit.FIRST, (int)Constants.ColumnMenu.LOGO_TOP + 6);
+            logo.PrintMenu((int)Constants.Credit.FIRST, (int)Constants.ColumnMenu.LOGO_TOP + 6, "◇등록가능학점: " + (24 - appliedCredit).ToString());
+            logo.PrintMenu((int)Constants.Credit.SECOND, (int)Constants.ColumnMenu.LOGO_TOP + 6, "◇담은 학점: " + appliedCredit);
+            logo.PrintMenu((int)Constants.Credit.THIRD, (int)Constants.ColumnMenu.LOGO_TOP + 6, "◇삭제할 과목 순번:");
+            logo.RemoveLine((int)Constants.Credit.THIRD + 20, (int)Constants.ColumnMenu.LOGO_TOP + 6);  //순번 입력값 지우기
+            logo.RemoveLine((int)Constants.RowMenu.SECOND, (int)Constants.ColumnMenu.LOGO_TOP + 4); //메세지 지우기
+        }
         public void PrintResult(int appliedCredit, List<CourseVO> lectureSchedule, CourseVO courseVO)
         {
             PrintInputBox(appliedCredit);

@@ -92,7 +92,7 @@ namespace TimeTable
             while (Constants.INPUT_VALUE)
             {
                 searchByFieldScreen.PrintInputBox(appliedCredit);  
-                number = text.EnterText((int)Constants.Credit.THIRD + 18, (int)Constants.Credit.TOP);   //담을 순번 입력
+                number = text.EnterText((int)Constants.Credit.THIRD + 18, (int)Constants.Credit.TOP, "");   //담을 순번 입력
                 if (number.Equals(Constants.ESC)) break;    //입력도중 esc -> 관심과목 입력 종료
 
                 courseIndex = FindCourseIndexInList(number, department);  //입력받은 과목의 목록 내 인덱스 찾기

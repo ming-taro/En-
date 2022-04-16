@@ -83,14 +83,15 @@ namespace TimeTable
                         SelectMenu();
                         break;
                     case (int)Constants.MainMenu.SECOND:  //담은 강의 내역
-                        CourseOfInterest courseOfInterestMenu = new CourseOfInterest();
-                        courseOfInterestMenu.ShowCourseHistory(courseOfInterest);
+                        CourseOfInterest checkMenu = new CourseOfInterest();
+                        checkMenu.ShowCourseHistory(courseOfInterest);
                         break;
                     case (int)Constants.MainMenu.THIRD:   //관심과목 시간표
 
                         break;
                     case (int)Constants.MainMenu.FOURTH:  //관심과목 삭제
-
+                        CourseOfInterest deletionMenu = new CourseOfInterest();
+                        deletionMenu.DeleteCourseApplication(appliedCredit, courseOfInterest);
                         break;
 
                 }

@@ -20,7 +20,7 @@ namespace TimeTable
             while (Constants.INPUT_VALUE)
             {
                 logo.RemoveLine(Constants.LEFT_VALUE_OF_COURSE_INPUT, top); //이전 입력기록 지움
-                title = text.EnterText(Constants.LEFT_VALUE_OF_COURSE_INPUT, top); //검색어 입력
+                title = text.EnterText(Constants.LEFT_VALUE_OF_COURSE_INPUT, top, ""); //검색어 입력
 
                 if (title.Equals(Constants.ESC))  //esc -> 입력중 뒤로가기
                 {

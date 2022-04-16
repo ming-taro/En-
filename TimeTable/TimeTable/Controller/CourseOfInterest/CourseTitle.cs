@@ -42,7 +42,7 @@ namespace TimeTable
             while (Constants.INPUT_VALUE)
             {
                 logo.RemoveLine(Constants.LEFT_VALUE_OF_COURSE_INPUT, top); //이전 입력기록 지움
-                title = text.EnterText(Constants.LEFT_VALUE_OF_COURSE_INPUT, top); //검색어 입력
+                title = text.EnterText(Constants.LEFT_VALUE_OF_COURSE_INPUT, top, ""); //검색어 입력
 
                 if (title.Equals(Constants.ESC))  //esc -> 입력중 뒤로가기
                 {
@@ -69,8 +69,8 @@ namespace TimeTable
 
             while (Constants.INPUT_VALUE)
             {
-                searchByFieldScreen.PrintInputBox(appliedCredit);
-                number = text.EnterText((int)Constants.Credit.THIRD + 18, (int)Constants.Credit.TOP);   //담을 순번 입력
+                searchByFieldScreen.PrintInputBox(appliedCredit);  //현재 신청한 학점 표시
+                number = text.EnterText((int)Constants.Credit.THIRD + 18, (int)Constants.Credit.TOP, "");   //담을 순번 입력
                 if (number.Equals(Constants.ESC)) break;    //입력도중 esc -> 관심과목 입력 종료
 
                 courseIndex = FindCourseIndexInList(number, title, inputType);  //입력받은 과목의 목록 내 인덱스 찾기
