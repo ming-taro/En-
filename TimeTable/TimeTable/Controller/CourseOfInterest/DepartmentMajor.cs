@@ -43,7 +43,7 @@ namespace TimeTable
         }
         public bool IsAppyingWithinCredit(int courseIndex)  //24학점 범위 내에서 신청하는지
         {
-            if(24 >= appliedCredit + (lectureSchedule[courseIndex].Credit[0] - '0'))
+            if(24 >= appliedCredit + (Int32.Parse(lectureSchedule[courseIndex].Credit)))
             {
                 return Constants.IS_APPLYING_WITHIN_CREDIT;
             }
@@ -58,11 +58,33 @@ namespace TimeTable
 
             return Constants.IS_FIRST_APPLICATION;    //처음 담는 강의
         }
+        public void ShowMessage(int courseIndex)
+        {
+            SearchByFieldScreen searchByFieldScreen = new SearchByFieldScreen();
+
+            if (courseIndex == Constants.COURSE_NOT_ON_LIST)
+            {
+                searchByFieldScreen.PrinFaliureMessage(">입력하신 번호에 해당하는 강의가 없습니다<");     //관심과목 담기 실패 메세지
+            }
+            else if (IsAppyingWithinCredit(courseIndex) == Constants.IS_NOT_APPLYING_WITHIN_CREDIT)
+            {
+                searchByFieldScreen.PrinFaliureMessage(">관심과목은 최대 24학점까지 담을 수 있습니다<");     //관심과목 담기 실패 메세지
+            }
+            else if (IsDuplicateCourse(courseIndex))
+            {
+                searchByFieldScreen.PrinFaliureMessage(">같은 강의는 중복해서 담을 수 없습니다<");     //관심과목 담기 실패 메세지
+            }
+            else
+            {
+                searchByFieldScreen.PrintSuccessMessage();    //관심과목 담기 성공 메세지
+                courseOfInterest.Add(lectureSchedule[courseIndex]);     //관심과목 리스트에 등록
+                appliedCredit += (Int32.Parse(lectureSchedule[courseIndex].Credit)); //담은 학점에 성공한 과목의 학점 추가
+            }
+        }
         public void InputCourseNumber(string department)
         {
             EnteringText text = new EnteringText();
             SearchByFieldScreen searchByFieldScreen = new SearchByFieldScreen();
-            Logo logo = new Logo();
             Keyboard keyboard = new Keyboard();
             string number;
             int courseIndex;
@@ -74,27 +96,9 @@ namespace TimeTable
                 if (number.Equals(Constants.ESC)) break;    //입력도중 esc -> 관심과목 입력 종료
 
                 courseIndex = FindCourseIndexInList(number, department);  //입력받은 과목의 목록 내 인덱스 찾기
+                ShowMessage(courseIndex);
 
-                if(courseIndex == Constants.COURSE_NOT_ON_LIST)
-                {
-                    searchByFieldScreen.PrinFaliureMessage(">입력하신 번호에 해당하는 강의가 없습니다<");     //관심과목 담기 실패 메세지
-                }
-                else if(IsAppyingWithinCredit(courseIndex) == Constants.IS_NOT_APPLYING_WITHIN_CREDIT)
-                {
-                    searchByFieldScreen.PrinFaliureMessage(">관심과목은 최대 24학점까지 담을 수 있습니다<");     //관심과목 담기 실패 메세지
-                }
-                else if (IsDuplicateCourse(courseIndex))
-                {
-                    searchByFieldScreen.PrinFaliureMessage(">같은 강의는 중복해서 담을 수 없습니다<");     //관심과목 담기 실패 메세지
-                }
-                else
-                {
-                    searchByFieldScreen.PrintSuccessMessage();    //관심과목 담기 성공 메세지
-                    courseOfInterest.Add(lectureSchedule[courseIndex]);     //관심과목 리스트에 등록
-                    appliedCredit += lectureSchedule[courseIndex].Credit[0] - '0'; //담은 학점에 성공한 과목의 학점 추가
-                }
-                
-                if(keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break;   //순번입력 후 esc -> 학과검색으로 돌아가기
+                if (keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break;   //순번입력 후 esc -> 학과검색으로 돌아가기
                 
             }
         }

@@ -51,7 +51,8 @@ namespace TimeTable
                         appliedCredit = grade.SearchGrade();
                         break;
                     case (int)Constants.MainMenu.FOURTH:  //교과목명
-
+                        CourseTitle courseTitle = new CourseTitle(lectureSchedule, courseOfInterest, appliedCredit);
+                        appliedCredit =courseTitle.SearchTitle();
                         break;
                     case (int)Constants.MainMenu.FIFTH:    //교수명
 

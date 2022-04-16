@@ -21,6 +21,7 @@ namespace TimeTable
         {
             Logo logo = new Logo();
 
+            logo.RemoveLine((int)Constants.Credit.FIRST, (int)Constants.Credit.TOP);
             logo.PrintMenu((int)Constants.Credit.FIRST, (int)Constants.Credit.TOP, "◇등록가능학점: " + (24 - appliedCredit).ToString());
             logo.PrintMenu((int)Constants.Credit.SECOND, (int)Constants.Credit.TOP, "◇담은 학점: " + appliedCredit);
             logo.PrintMenu((int)Constants.Credit.THIRD, (int)Constants.Credit.TOP, "◇담을 과목 순번:");

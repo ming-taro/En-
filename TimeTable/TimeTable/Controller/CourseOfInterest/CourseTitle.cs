@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace TimeTable.Controller.CourseOfInterest
+namespace TimeTable
 {
     class CourseTitle
     {
@@ -54,24 +54,50 @@ namespace TimeTable.Controller.CourseOfInterest
             }
             return title;
         }
-        public int SearchTitle(int top)
+        public void InputCourseNumber(string title)
+        {
+            EnteringText text = new EnteringText();
+            SearchByFieldScreen searchByFieldScreen = new SearchByFieldScreen();
+            Keyboard keyboard = new Keyboard();
+            DepartmentMajor departmentMajor = new DepartmentMajor(lectureSchedule, courseOfInterest, appliedCredit);
+            string number;
+            int courseIndex;
+
+            while (Constants.INPUT_VALUE)
+            {
+                searchByFieldScreen.PrintInputBox(appliedCredit);
+                number = text.EnterText((int)Constants.Credit.THIRD + 18, (int)Constants.Credit.TOP);   //담을 순번 입력
+                if (number.Equals(Constants.ESC)) break;    //입력도중 esc -> 관심과목 입력 종료
+
+                courseIndex = FindCourseIndexInList(number, title);  //입력받은 과목의 목록 내 인덱스 찾기
+                departmentMajor.ShowMessage(courseIndex);
+                appliedCredit = departmentMajor.GetAppliedCredit();  //학점수정
+
+                if (keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break;   //순번입력 후 esc -> 학과검색으로 돌아가기
+            }
+        }
+        public int SearchTitle()
         {
             CourseVO courseVO = new CourseVO();
-            Logo logo = new Logo();
-            logo.PrintTwoLine();
-            logo.PrintMenu((int)Constants.RowMenu.FIRST, (int)Constants.ColumnMenu.FIRST, "☞2글자 이상 입력:");
-            logo.PrintMenu((int)Constants.ColumnMenu.LOGO_LEFT, (int)Constants.ColumnMenu.LOGO_TOP, "[교과명 검색]");
-
-            string title = InputCourseTitle(top);
-            if (title.Equals(Constants.ESC)) return appliedCredit; //입력종료
-            
-            courseVO.CourseTitle = title;
-
             SearchByFieldScreen searchByFieldScreen = new SearchByFieldScreen();
-            searchByFieldScreen.PrintResult(appliedCredit, lectureSchedule, courseVO);
+            Logo logo = new Logo();
+            
+            while (Constants.INPUT_VALUE)
+            {
+                Console.Clear();
+                searchByFieldScreen.PrintLine();
+                logo.PrintMenu((int)Constants.RowMenu.FIRST, (int)Constants.ColumnMenu.FIRST, "☞2글자 이상 입력:");
+                logo.PrintMenu((int)Constants.ColumnMenu.LOGO_LEFT, (int)Constants.ColumnMenu.LOGO_TOP, "[교과명 검색]");
 
-            DepartmentMajor departmentMajor = new DepartmentMajor(lectureSchedule, courseOfInterest, appliedCredit);
-            departmentMajor.ShowMessage(FindCourseIndexInList());
+                string title = InputCourseTitle((int)Constants.ColumnMenu.FIRST);  //교과명 입력
+                if (title.Equals(Constants.ESC)) return appliedCredit; //교과명 입력중 esc -> 입력종료
+
+                courseVO.CourseTitle = title;
+                searchByFieldScreen.PrintResult(appliedCredit, lectureSchedule, courseVO);   //강의목록 출력
+
+                InputCourseNumber(title);  //순번 입력
+                courseVO.CourseTitle = null;
+            }
 
         }
     }
