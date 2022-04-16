@@ -19,14 +19,17 @@ namespace TimeTable
                     searchCategoryScreen.ShowSelection(menu, (int)Constants.ColumnMenu.FIRST, "▷전체");
                     break;
                 case (int)Constants.RowMenu.SECOND:
-                    searchCategoryScreen.ShowSelection(menu, (int)Constants.ColumnMenu.FIRST, "▷데이터사이언스학과");
-                    return "데이터사이언스학과";
-                case (int)Constants.RowMenu.THIRD:
                     searchCategoryScreen.ShowSelection(menu, (int)Constants.ColumnMenu.FIRST, "▷컴퓨터공학과");
                     return "컴퓨터공학과";
+                case (int)Constants.RowMenu.THIRD:
+                    searchCategoryScreen.ShowSelection(menu, (int)Constants.ColumnMenu.FIRST, "▷소프트웨어학과");
+                    return "소프트웨어학과";
                 case (int)Constants.RowMenu.FOURTH:
-                    searchCategoryScreen.ShowSelection(menu, (int)Constants.ColumnMenu.FIRST, "▷미디어커뮤니케이션학과");
-                    return "미디어커뮤니케이션학과";
+                    searchCategoryScreen.ShowSelection(menu, (int)Constants.ColumnMenu.FIRST, "▷지능기전공학부");
+                    return "지능기전공학부";
+                case (int)Constants.RowMenu.FIFTH:
+                    searchCategoryScreen.ShowSelection(menu, (int)Constants.ColumnMenu.FIRST, "▷기계항공우주공학부");
+                    return "기계항공우주공학부";
             }
 
             return "";
@@ -37,7 +40,7 @@ namespace TimeTable
             if (courseVO.Department == null || courseVO.Department.Equals("")) searchCategoryScreen.PrintDepartmentMenu();      //학과 선택 화면 출력
 
             Keyboard keyboard = new Keyboard((int)Constants.RowMenu.FIRST, (int)Constants.ColumnMenu.FIRST);
-            int menu = keyboard.SelectLeft((int)Constants.RowMenu.FIRST, (int)Constants.RowMenu.FOURTH, (int)Constants.RowMenu.STEP);   //학과선택
+            int menu = keyboard.SelectLeft((int)Constants.RowMenu.FIRST, (int)Constants.RowMenu.FIFTH, (int)Constants.RowMenu.STEP);   //학과선택
 
             if (menu == (int)Constants.Keyboard.ESCAPE) return;  //학과선택 중 뒤로가기
             menu = keyboard.Left;

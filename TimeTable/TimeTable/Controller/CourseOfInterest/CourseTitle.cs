@@ -18,7 +18,7 @@ namespace TimeTable
             this.lectureSchedule = lectureSchedule;
             this.appliedCredit = appliedCredit;
         }
-        public int FindCourseIndexInList(string number, string title, string inputType)//입력받은 강의의 강의목록 내 인덱스값 찾기
+        private int FindCourseIndexInList(string number, string title, string inputType)//입력받은 강의의 강의목록 내 인덱스값 찾기
         {
             for (int row = 1; row < lectureSchedule.Count; row++)  //lectureSchedule[0]은 목록이름
             {
@@ -26,14 +26,18 @@ namespace TimeTable
                 {
                     return row;  //찾은 강좌의 인덱스번호 리턴
                 }
-                else if(inputType.Equals("instructor") && lectureSchedule[row].Number.Equals(number) && lectureSchedule[row].Instructor.Contains(title))
+                else if (inputType.Equals("instructor") && lectureSchedule[row].Number.Equals(number) && lectureSchedule[row].Instructor.Contains(title))
+                {
+                    return row;
+                }
+                else if (inputType.Equals("classNumber") && lectureSchedule[row].Number.Equals(number) && lectureSchedule[row].ClassNumber.Equals(title))
                 {
                     return row;
                 }
             }
             return Constants.COURSE_NOT_ON_LIST;  //강의목록에 없는 순번을 입력한 경우
         }
-        public string InputCourseTitle(int top)
+        private string InputCourseTitle(int top)
         {
             Logo logo = new Logo();
             string title;

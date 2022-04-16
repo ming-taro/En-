@@ -88,12 +88,12 @@ namespace TimeTable
         }
         public enum RowMenu      //left
         {
-            FIRST = 30,
-            SECOND = 52,
-            THIRD = 74,
-            FOURTH = 96,
-            FIFTH = 118,
-            STEP = 22
+            FIRST = 29,
+            SECOND = 47,
+            THIRD = 65,
+            FOURTH = 83,
+            FIFTH = 101,
+            STEP = 18
         }
     }
 }

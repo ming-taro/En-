@@ -13,29 +13,13 @@ namespace TimeTable
         private string classNumber;    //학수번호
         private string distribution;  //분반
         private string courseTitle;    //교과목명
-        private string language;       //강의언어
         private string completionType; //이수구분
-        private string credit;         //학점
         private string grade;          //학년
-        private string instructor;     //교수명
+        private string credit;         //학점
         private string classDay;       //요일
         private string lectureRoom;    //강의실
-        public void SetCourse(string number, string department, string classNumber, string distribution, string courseTitle, string language, string completionType, string credit, string grade, string instructor, string classDay, string lectureRoom)
-        {
-            this.number = number;
-            this.department = department;
-            this.classNumber = classNumber;
-            this.distribution = distribution;
-            this.courseTitle = courseTitle;
-            this.language = language;
-            this.completionType = completionType;
-            this.credit = credit;
-            this.grade = grade;
-            this.instructor = instructor;
-            this.classDay = classDay;
-            this.lectureRoom = lectureRoom;
-        }
-
+        private string instructor;     //교수명
+        private string language;       //강의언어
         public string Number
         {
             get { return number; }

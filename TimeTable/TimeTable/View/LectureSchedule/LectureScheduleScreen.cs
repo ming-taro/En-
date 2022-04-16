@@ -9,19 +9,26 @@ namespace TimeTable
 {
     class LectureScheduleScreen
     {
+        private bool IsSameWord(string cellData, string searchWord)
+        {
+            if (searchWord == null || searchWord == "" || cellData.Equals(searchWord)) return Constants.IS_MEETING_CONDITION;
+
+            return Constants.IS_NOT_MEETING_CONDITION;
+        }
         private bool IsContainingWord(string cellData, string searchWord)
         {
-            if (searchWord == null || cellData.Contains(searchWord)) return Constants.IS_MEETING_CONDITION;
+            if (searchWord == null || searchWord == "" || cellData.Contains(searchWord)) return Constants.IS_MEETING_CONDITION;
 
             return Constants.IS_NOT_MEETING_CONDITION;
         }
         private bool IsValueMeetCondition(CourseVO LectureSchedule, CourseVO courseVO)
         {
-            if (IsContainingWord(LectureSchedule.Department, courseVO.Department) == Constants.IS_NOT_MEETING_CONDITION) return Constants.IS_NOT_MEETING_CONDITION;
-            if (IsContainingWord(LectureSchedule.CompletionType, courseVO.CompletionType) == Constants.IS_NOT_MEETING_CONDITION) return Constants.IS_NOT_MEETING_CONDITION;
-            if (IsContainingWord(LectureSchedule.Grade, courseVO.Grade) == Constants.IS_NOT_MEETING_CONDITION) return Constants.IS_NOT_MEETING_CONDITION;
+            if (IsSameWord(LectureSchedule.Department, courseVO.Department) == Constants.IS_NOT_MEETING_CONDITION) return Constants.IS_NOT_MEETING_CONDITION;
+            if (IsSameWord(LectureSchedule.CompletionType, courseVO.CompletionType) == Constants.IS_NOT_MEETING_CONDITION) return Constants.IS_NOT_MEETING_CONDITION;
+            if (IsSameWord(LectureSchedule.Grade, courseVO.Grade) == Constants.IS_NOT_MEETING_CONDITION) return Constants.IS_NOT_MEETING_CONDITION;
             if (IsContainingWord(LectureSchedule.CourseTitle, courseVO.CourseTitle) == Constants.IS_NOT_MEETING_CONDITION) return Constants.IS_NOT_MEETING_CONDITION;
             if (IsContainingWord(LectureSchedule.Instructor, courseVO.Instructor) == Constants.IS_NOT_MEETING_CONDITION) return Constants.IS_NOT_MEETING_CONDITION;
+            if (IsSameWord(LectureSchedule.ClassNumber, courseVO.ClassNumber) == Constants.IS_NOT_MEETING_CONDITION && IsSameWord(LectureSchedule.Distribution, courseVO.Distribution) == Constants.IS_NOT_MEETING_CONDITION) return Constants.IS_NOT_MEETING_CONDITION;
 
             return Constants.IS_MEETING_CONDITION;
         }
@@ -29,7 +36,7 @@ namespace TimeTable
         {
             Logo logo = new Logo();
 
-            int[] leftSize = new int[] { 1, 6, 29, 38, 43, 65, 74, 83, 99, 104, 112, 130};
+            int[] leftSize = new int[] { 1, 6, 25, 34, 39, 65, 74, 87, 92, 97, 108, 130};
 
             logo.PrintLongLine(0, top);
             for (int row = 0; row < lectureSchedule.Count; row++)

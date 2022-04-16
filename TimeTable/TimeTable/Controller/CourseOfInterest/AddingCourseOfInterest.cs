@@ -44,7 +44,7 @@ namespace TimeTable
                         appliedCredit = departmentMajor.SearchMajor();
                         break;
                     case (int)Constants.MainMenu.SECOND:  //학수번호/분반
-                        ClassNumber classNumber = new ClassNumber();
+                        ClassNumber classNumber = new ClassNumber(lectureSchedule, courseOfInterest, appliedCredit);
                         classNumber.SearchClassNumber();
                         break;
                     case (int)Constants.MainMenu.THIRD:   //학년

@@ -19,28 +19,29 @@ namespace TimeTable
         private void MakeCourseList()
         {
             Excel.Application application = new Excel.Application();
-            Excel.Workbook workbook = application.Workbooks.Open(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\LectureSchedule.xlsx");
+            Excel.Workbook workbook = application.Workbooks.Open(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\2022년도 1학기 강의시간표.xlsx");
             Excel.Sheets sheets = workbook.Sheets;
             Excel.Worksheet worksheet = sheets["ensharp"] as Excel.Worksheet;
-            Excel.Range cellRange = worksheet.get_Range("A1", "L164") as Excel.Range;
+            Excel.Range cellRange = worksheet.get_Range("A1", "L185") as Excel.Range;
             Array data = cellRange.Cells.Value2;
 
             for (int row = 1; row <= cellRange.Rows.Count; row++)
             {
                 CourseVO courseVO = new CourseVO();
 
-                courseVO.Number = data.GetValue(row, 1).ToString();         //순번
-                courseVO.Department = data.GetValue(row, 2).ToString();     //학과
-                courseVO.ClassNumber = data.GetValue(row, 3).ToString();    //학수번호
-                courseVO.Distribution = data.GetValue(row, 4).ToString();  //분반
-                courseVO.CourseTitle = data.GetValue(row, 5).ToString();    //교과목명
-                if (data.GetValue(row, 6) != null) courseVO.Language = data.GetValue(row, 6).ToString(); //강의언어
-                courseVO.CompletionType = data.GetValue(row, 7).ToString(); //이수구분
-                courseVO.Credit = data.GetValue(row, 8).ToString();         //학점
-                courseVO.Grade = data.GetValue(row, 9).ToString();          //학년
-                courseVO.Instructor = data.GetValue(row, 10).ToString();     //교수명
-                if (data.GetValue(row, 11) != null) courseVO.ClassDay = data.GetValue(row, 11).ToString();//요일
-                if (data.GetValue(row, 12) != null) courseVO.LectureRoom = data.GetValue(row, 12).ToString();    //강의실
+                if (data.GetValue(row, 1) != null) courseVO.Number = data.GetValue(row, 1).ToString();         //순번
+                if (data.GetValue(row, 2) != null) courseVO.Department = data.GetValue(row, 2).ToString();     //학과
+                if (data.GetValue(row, 3) != null) courseVO.ClassNumber = data.GetValue(row, 3).ToString();    //학수번호
+                if (data.GetValue(row, 4) != null) courseVO.Distribution = data.GetValue(row, 4).ToString();  //분반
+                if (data.GetValue(row, 5) != null) courseVO.CourseTitle = data.GetValue(row, 5).ToString();    //교과목명
+                if (data.GetValue(row, 6) != null) courseVO.CompletionType = data.GetValue(row, 6).ToString(); //이수구분
+                if (data.GetValue(row, 7) != null) courseVO.Grade = data.GetValue(row, 7).ToString();          //학년
+                if (data.GetValue(row, 8) != null) courseVO.Credit = data.GetValue(row, 8).ToString();         //학점
+                if (data.GetValue(row, 9) != null) courseVO.ClassDay = data.GetValue(row, 9).ToString();//요일
+                if (data.GetValue(row, 10) != null) courseVO.LectureRoom = data.GetValue(row, 10).ToString();    //강의실
+                if (data.GetValue(row, 11) != null) courseVO.Instructor = data.GetValue(row, 11).ToString();     //교수명
+                if (data.GetValue(row, 12) != null) courseVO.Language = data.GetValue(row, 12).ToString(); //강의언어
+
                 lectureSchedule.Add(courseVO);
             }
             application.Workbooks.Close();

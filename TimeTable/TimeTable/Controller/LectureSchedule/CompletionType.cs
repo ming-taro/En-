@@ -20,13 +20,13 @@ namespace TimeTable
                     break;
                 case (int)Constants.RowMenu.SECOND:
                     searchCategoryScreen.ShowSelection(menu, (int)Constants.ColumnMenu.SECOND, "▷공통교양필수");
-                    return "공필";
+                    return "공통교양필수";
                 case (int)Constants.RowMenu.THIRD:
                     searchCategoryScreen.ShowSelection(menu, (int)Constants.ColumnMenu.SECOND, "▷전공필수");
-                    return "전필";
+                    return "전공필수";
                 case (int)Constants.RowMenu.FOURTH:
                     searchCategoryScreen.ShowSelection(menu, (int)Constants.ColumnMenu.SECOND, "▷전공선택");
-                    return "전선";
+                    return "전공선택";
             }
 
             return "";
