@@ -91,7 +91,7 @@ namespace TimeTable
                         break;
                     case (int)Constants.MainMenu.FOURTH:  //관심과목 삭제
                         CourseOfInterest deletionMenu = new CourseOfInterest();
-                        deletionMenu.DeleteCourseApplication(appliedCredit, courseOfInterest);
+                        appliedCredit = deletionMenu.DeleteCourseApplication(appliedCredit, courseOfInterest);
                         break;
 
                 }

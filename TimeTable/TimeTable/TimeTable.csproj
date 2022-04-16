@@ -53,7 +53,6 @@
     <Compile Include="Controller\CourseOfInterest\CourseTitle.cs" />
     <Compile Include="Controller\CourseOfInterest\DepartmentMajor.cs" />
     <Compile Include="Controller\CourseOfInterest\Grade.cs" />
-    <Compile Include="Controller\EnteringPassword.cs" />
     <Compile Include="Controller\Keyboard.cs" />
     <Compile Include="Controller\LectureSchedule\CompletionType.cs" />
     <Compile Include="Controller\LectureSchedule\SelectingCourseTitle.cs" />

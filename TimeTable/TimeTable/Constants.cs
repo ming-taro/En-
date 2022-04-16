@@ -18,9 +18,6 @@ namespace TimeTable
         public const bool KOREAN = true;
         public const bool NOT_KOREAN = false;
 
-        //ViewLectureSchedule
-        public const bool LOGIN_IN = true;
-        public const bool LOGIN_FAILURE = false;
         public const bool KEYBOARD_OPERATION = true;
         public const bool TOP = true;
         public const bool LEFT = false;
@@ -35,6 +32,12 @@ namespace TimeTable
 
         public const int LEFT_VALUE_OF_COURSE_INPUT = 49;
         public const int GO_BACK_BUTTON_LEFT = 110;
+
+        public enum Login{
+            LOGIN_SUCCESS,
+            LOGIN_FAILURE,
+            COLSE
+        }
         public enum Credit
         {
             FIRST = 11,   //left

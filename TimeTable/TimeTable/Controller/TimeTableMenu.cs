@@ -91,13 +91,20 @@ namespace TimeTable
             logo.PrintMain();           //메인화면 출력
 
             LogIn logIn = new LogIn();
+            int logInResult;
 
-            while (Constants.LOGIN_IN)
+            while (Constants.INPUT_VALUE)
             {
-                if (logIn.LogInToWebsite() == Constants.LOGIN_IN)
+                logInResult = logIn.LogInToWebsite();
+
+                if (logInResult == (int)Constants.Login.LOGIN_SUCCESS)
                 {
                     SelectMenu();
                     logo.PrintMain();           //메인화면 출력
+                }
+                else if(logInResult == (int)Constants.Login.COLSE)  //프로그램 종료
+                {
+                    break;
                 }
                 else
                 {
