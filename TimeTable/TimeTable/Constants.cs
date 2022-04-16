@@ -92,9 +92,5 @@ namespace TimeTable
             FIFTH = 118,
             STEP = 22
         }
-        public enum MenuTop
-        {
-            MAIN_MENU = 9
-        }
     }
 }

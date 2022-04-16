@@ -4,13 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TimeTable.View.CourseOfInterest
+namespace TimeTable
 {
     class CourseHistoryScreen
     {
-        public void PrintCourseHistory(List<CourseVO> courseHistory)
+        public void PrintCourseHistory(int top, List<CourseVO> courseHistory)
         {
             int[] leftSize = new int[] { 1, 6, 29, 38, 43, 65, 74, 83, 99, 104, 112, 130 };
+
+            Logo logo = new Logo();
+            logo.PrintLongLine(0, top);
 
             for (int row = 0; row < courseHistory.Count; row++)
             {
@@ -41,7 +44,7 @@ namespace TimeTable.View.CourseOfInterest
                 if (row == 0) Console.WriteLine();
                 Console.WriteLine();
             }
-
+            logo.PrintLongLine(0, Console.CursorTop);
         }
     }
 }

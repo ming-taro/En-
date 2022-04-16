@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="Controller\CourseOfInterest\AddingCourseOfInterest.cs" />
+    <Compile Include="Controller\CourseOfInterest\CourseOfInterest.cs" />
     <Compile Include="Controller\CourseOfInterest\CourseTitle.cs" />
     <Compile Include="Controller\CourseOfInterest\DepartmentMajor.cs" />
     <Compile Include="Controller\CourseOfInterest\Grade.cs" />

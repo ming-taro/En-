@@ -10,14 +10,14 @@ namespace TimeTable
     {
         private List<CourseVO> lectureSchedule;   //강의목록
         private List<CourseVO> courseOfInterest;  //관심과목 리스트
-        private int appliedCredit;
+        private int appliedCredit;                //현재 관심과목 리스트에 있는 강좌의 총 학점
         public AddingCourseOfInterest(List<CourseVO> lectureSchedule, List<CourseVO> courseOfInterest)
         {
             this.lectureSchedule = lectureSchedule;
             this.courseOfInterest = courseOfInterest;
             appliedCredit = 0;
         }
-        private void CalculateCredit()
+        private void CalculateCredit()  //현재 관심과목에 담겨있는 신청학점 계산
         {
             for(int row = 1; row<courseOfInterest.Count; row++)
             {
@@ -54,7 +54,7 @@ namespace TimeTable
                         CourseTitle courseTitle = new CourseTitle(lectureSchedule, courseOfInterest, appliedCredit);
                         appliedCredit =courseTitle.SearchTitle("courseTitle");
                         break;
-                    case (int)Constants.MainMenu.FIFTH:    //교수명
+                    case (int)Constants.MainMenu.FIFTH:   //교수명
                         CourseTitle instructor = new CourseTitle(lectureSchedule, courseOfInterest, appliedCredit);
                         appliedCredit = instructor.SearchTitle("instructor");
                         break;
@@ -83,7 +83,8 @@ namespace TimeTable
                         SelectMenu();
                         break;
                     case (int)Constants.MainMenu.SECOND:  //담은 강의 내역
-
+                        CourseOfInterest courseOfInterestMenu = new CourseOfInterest();
+                        courseOfInterestMenu.ShowCourseHistory(courseOfInterest);
                         break;
                     case (int)Constants.MainMenu.THIRD:   //관심과목 시간표
 
