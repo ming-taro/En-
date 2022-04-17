@@ -138,16 +138,40 @@ namespace TimeTable
         {
             PrintTime();
 
-            for(int row = 1; row < lectureSchedule.Count; row++)
+            int dayLeft;
+            int dayTop;
+            int line;
+
+            for (int row = 1; row < lectureSchedule.Count; row++)
             {
                 string classDay = lectureSchedule[row].ClassDay;
                 string day = Regex.Replace(classDay, @"[^월|화|수|목|금]", "");  //요일
-                string time = Regex.Replace(classDay, @"[^0-9]", "");  //시간
+                string time = Regex.Replace(classDay, @"[^0-9]", "");            //시간
 
-                int dayLeft = GetLeft(day[0]);   //요일에 해당하는 세로 라인의 left값
-                int dayTop = GetTop(time.Substring(0,4));       //수업의 시작시간에 해당하는 가로 라인의 top값
-                int line = CalculateLine(time);
-                PrintCourse(dayLeft, dayTop, line, lectureSchedule[row].CourseTitle, lectureSchedule[row].LectureRoom);
+                if(day.Length == 1 && time.Length == 8)   //요일이 하루, 시간이 한 타임인 강의(ex: 화 09:00~10:00)
+                {
+                    dayLeft = GetLeft(day[0]);                   //요일에 해당하는 세로 라인의 left값
+                    dayTop = GetTop(time.Substring(0, 4));       //수업의 시작시간에 해당하는 가로 라인의 top값
+                    line = CalculateLine(time);                  //시작점으로부터 출력할 횟수
+                    PrintCourse(dayLeft, dayTop, line, lectureSchedule[row].CourseTitle, lectureSchedule[row].LectureRoom);
+                }
+                else if (day.Length ==  2 && time.Length == 8)   //요일이 이틀, 시간이 같은 강의(ex: 화 목 09:00~10:00)
+                {
+                    dayLeft = GetLeft(day[0]);                   //첫번째 요일에 해당하는 세로 라인의 left값
+                    dayTop = GetTop(time.Substring(0, 4));       //수업의 시작시간에 해당하는 가로 라인의 top값
+                    line = CalculateLine(time);                  //시작점으로부터 출력할 횟수
+                    PrintCourse(dayLeft, dayTop, line, lectureSchedule[row].CourseTitle, lectureSchedule[row].LectureRoom);
+
+                    dayLeft = GetLeft(day[1]);                   //두번째 요일에 해당하는 세로 라인의 left값
+                    PrintCourse(dayLeft, dayTop, line, lectureSchedule[row].CourseTitle, lectureSchedule[row].LectureRoom);
+                }
+                else
+                {
+
+
+                }
+                
+                
 
             }
 
