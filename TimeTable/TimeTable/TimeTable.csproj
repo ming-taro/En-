@@ -51,7 +51,7 @@
     <Compile Include="Controller\CourseOfInterest\AddingCourseOfInterest.cs" />
     <Compile Include="Controller\CourseOfInterest\ClassNumber.cs" />
     <Compile Include="Controller\CourseOfInterest\CourseOfInterest.cs" />
-    <Compile Include="Controller\CourseRegistraton.cs" />
+    <Compile Include="Controller\CourseRegistration\CourseRegistraton.cs" />
     <Compile Include="Controller\Keyboard.cs" />
     <Compile Include="Controller\LectureSchedule\CompletionType.cs" />
     <Compile Include="Controller\LectureSchedule\SelectingCourseTitle.cs" />

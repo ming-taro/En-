@@ -52,7 +52,16 @@ namespace TimeTable
             searchByFieldScreen.PrintDeletionInputBox(appliedCredit, maxCredit);
 
         }
+        public void PrintCourserOfInterest(int appliedCredit, int maxCredit, List<CourseVO> courseOfInterest)
+        {
+            CourseHistoryScreen courseHistoryScreen = new CourseHistoryScreen();
+            Logo logo = new Logo();
 
+            courseHistoryScreen.PrintMyCourseHistory(courseOfInterest);           //관심과목리스트 출력
+            logo.PrintMenu((int)Constants.Credit.FIRST, (int)Constants.ColumnMenu.LOGO_TOP + 4, "◇등록가능학점: " + (maxCredit - appliedCredit).ToString());
+            logo.PrintMenu((int)Constants.Credit.SECOND, (int)Constants.ColumnMenu.LOGO_TOP + 4, "◇담은 학점: " + appliedCredit);
+            logo.PrintMenu((int)Constants.Credit.THIRD, (int)Constants.ColumnMenu.LOGO_TOP + 4, "◇담을 과목 순번:");
+        }
         
         public void PrintSuccessMessage(int top, string message)
         {
