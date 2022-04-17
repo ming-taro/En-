@@ -90,8 +90,6 @@ namespace TimeTable
             string classNumber;
             string distribution;
 
-
-            //int courseIndex;
             courseVO.ClassNumber = "";
             courseVO.Distribution = "";
             logo.RemoveLine((int)Constants.RowMenu.SECOND, (int)Constants.ColumnMenu.SECOND);
@@ -117,16 +115,6 @@ namespace TimeTable
             courseVO.Distribution = distribution;
 
 
-            /*while (Constants.INPUT_VALUE)
-            {
-                
-
-                
-                //courseIndex = FindCourseIndexInList(classNumber, distribution);
-                //searchByFieldScreen.PrintResult(appliedCredit, lectureSchedule, courseVO);   //검색결과 출력
-
-                //InputCourseNumber(classNumber, distribution);  //순번입력
-            }*/
 
         }
     }

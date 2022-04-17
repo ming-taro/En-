@@ -84,6 +84,33 @@ namespace TimeTable
 
             return Constants.IS_FIRST_APPLICATION;    //처음 담는 강의
         }
+        /*public void check(int courseIndex, string classDayOfCourse)
+        {
+            string classDay = lectureSchedule[courseIndex].ClassDay;  //신청하려는 강의의 수업요일
+
+            char firstDay = classDayOfCourse[0];     //첫번째 요일
+            char secondDay = classDayOfCourse[2];    //두번째 요일
+
+            if (classDay[0] != firstDay && class[])
+            {
+
+            }
+            
+
+        }
+        public bool IsTimeOverlap(int courseIndex)
+        {
+            for(int row = 1; row < courseOfInterest.Count; row++)   //현재 담은 관심과목중에서 입력받은 과목이 시간표가 겹치는지 확인
+            {
+                if(courseOfInterest[row].ClassDay.Length == 15)
+                {
+                    
+                }
+
+            }
+
+
+        }*/
         public void ShowMessage(int courseIndex)
         {
             SearchByFieldScreen searchByFieldScreen = new SearchByFieldScreen();

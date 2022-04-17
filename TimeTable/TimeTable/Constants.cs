@@ -33,6 +33,41 @@ namespace TimeTable
         public const int LEFT_VALUE_OF_COURSE_INPUT = 49;
         public const int GO_BACK_BUTTON_LEFT = 110;
 
+        public enum Day
+        {
+            MONDAY = 20,
+            TUESDAY = 45,
+            WEDNESDAY = 70,
+            THURSDAY = 95,
+            FRIDAY = 120
+        }
+        public enum Time
+        {
+            NINE = 5,
+            NINE_THIRTY = 7,
+            TEN = 9,
+            TEN_THIRTY = 11,
+            ELEVEN = 13,
+            ELEVEN_THIRTY = 15,
+            TWELVE = 17,
+            TWELVE_THIRTY = 19,
+            ONE = 21,
+            ONE_THIRTY = 23,
+            TWO = 25,
+            TWO_THIRTY = 27,
+            THREE = 29,
+            THREE_THIRTY = 31,
+            FOUR = 33,
+            FOUR_THIRTY = 35,
+            FIVE = 37,
+            FIVE_THIRTY = 39,
+            SIX = 41,
+            SIX_THIRTY = 43,
+            SEVEN = 45,
+            SEVEN_THIRTY = 47,
+            EIGHT = 49,
+            EIGHT_THIRTY = 51,
+        }
         public enum Login{
             LOGIN_SUCCESS,
             LOGIN_FAILURE,

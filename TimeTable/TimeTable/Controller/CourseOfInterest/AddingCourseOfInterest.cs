@@ -84,47 +84,7 @@ namespace TimeTable
                 menu = keyboard.Top;
 
                 SelectMenu(menu, courseVO);    //검색할 분야 선택
-                
-                
-                
             }
-
-
-            /*
-
-
-            while (Constants.KEYBOARD_OPERATION)
-            {
-                courseOfInterestScreen.PrintSearchMenu(); //분야별 검색 메뉴 출력
-                menu = keyboard.SelectTop((int)Constants.MainMenu.FIRST, (int)Constants.MainMenu.FIFTH, (int)Constants.MainMenu.STEP);
-                if (menu == (int)Constants.Keyboard.ESCAPE) return;  //esc클릭 -> 관심과목 담기 메뉴 화면으로 돌아감
-                menu = keyboard.Top;
-
-                switch (menu)
-                {
-                    case (int)Constants.MainMenu.FIRST:   //학과전공
-                        DepartmentMajor departmentMajor = new DepartmentMajor(lectureSchedule, courseOfInterest, appliedCredit);
-                        appliedCredit = departmentMajor.SearchMajor();
-                        break;
-                    case (int)Constants.MainMenu.SECOND:  //학수번호/분반
-                        ClassNumber classNumber = new ClassNumber(lectureSchedule, courseOfInterest, appliedCredit);
-                        classNumber.SearchClassNumber();
-                        break;
-                    case (int)Constants.MainMenu.THIRD:   //학년
-                        Grade grade = new Grade(lectureSchedule, courseOfInterest, appliedCredit);
-                        appliedCredit = grade.SearchGrade();
-                        break;
-                    case (int)Constants.MainMenu.FOURTH:  //교과목명
-                        CourseTitle courseTitle = new CourseTitle(lectureSchedule, courseOfInterest, appliedCredit);
-                        appliedCredit =courseTitle.SearchTitle("courseTitle");
-                        break;
-                    case (int)Constants.MainMenu.FIFTH:   //교수명
-                        CourseTitle instructor = new CourseTitle(lectureSchedule, courseOfInterest, appliedCredit);
-                        appliedCredit = instructor.SearchTitle("instructor");
-                        break;
-
-                }
-            }*/
         }
         public void ShowCourseOfInterestMenu()
         {
@@ -151,7 +111,9 @@ namespace TimeTable
                         checkMenu.ShowCourseHistory(courseOfInterest);
                         break;
                     case (int)Constants.MainMenu.THIRD:   //관심과목 시간표
-
+                        TimeTableScreen timeTableScreen = new TimeTableScreen();
+                        timeTableScreen.PrintTimeTable(courseOfInterest);
+                        keyboard.PressESC();    //esc -> 뒤로가기
                         break;
                     case (int)Constants.MainMenu.FOURTH:  //관심과목 삭제
                         CourseOfInterest deletionMenu = new CourseOfInterest();

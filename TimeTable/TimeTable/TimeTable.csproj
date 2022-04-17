@@ -51,9 +51,6 @@
     <Compile Include="Controller\CourseOfInterest\AddingCourseOfInterest.cs" />
     <Compile Include="Controller\CourseOfInterest\ClassNumber.cs" />
     <Compile Include="Controller\CourseOfInterest\CourseOfInterest.cs" />
-    <Compile Include="Controller\CourseOfInterest\CourseTitle.cs" />
-    <Compile Include="Controller\CourseOfInterest\DepartmentMajor.cs" />
-    <Compile Include="Controller\CourseOfInterest\Grade.cs" />
     <Compile Include="Controller\Keyboard.cs" />
     <Compile Include="Controller\LectureSchedule\CompletionType.cs" />
     <Compile Include="Controller\LectureSchedule\SelectingCourseTitle.cs" />
@@ -70,6 +67,7 @@
     <Compile Include="View\CourseOfInterest\CourseHistoryScreen.cs" />
     <Compile Include="View\CourseOfInterest\CourseOfInterestScreen.cs" />
     <Compile Include="View\CourseOfInterest\SearchByFieldScreen.cs" />
+    <Compile Include="View\CourseOfInterest\TimeTableScreen.cs" />
     <Compile Include="View\LectureSchedule\LectureScheduleScreen.cs" />
     <Compile Include="View\LectureSchedule\SearchCategoryScreen.cs" />
     <Compile Include="View\Logo\TimeTableMenuScreen.cs" />
