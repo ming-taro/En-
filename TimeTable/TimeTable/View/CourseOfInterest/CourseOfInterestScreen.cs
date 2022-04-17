@@ -8,6 +8,20 @@ namespace TimeTable
 {
     class CourseOfInterestScreen
     {
+        public void PrintRegistrationMenu()
+        {
+            Logo logo = new Logo();
+
+            Console.Clear();
+            logo.PrintLine((int)Constants.Console.LEFT, (int)Constants.Console.MIN_TOP);
+            logo.PrintMenu((int)Constants.MainMenu.LOGO_LEFT + 5, (int)Constants.MainMenu.LOGO_TOP, "[수강신청]");
+            logo.PrintMenu((int)Constants.MainMenu.LEFT, (int)Constants.MainMenu.FIRST, "☞분야별 과목 검색");
+            logo.PrintMenu((int)Constants.MainMenu.LEFT, (int)Constants.MainMenu.SECOND, "☞관심과목 검색");
+            logo.PrintMenu((int)Constants.MainMenu.LEFT, (int)Constants.MainMenu.THIRD, "☞수강신청한 강의 내역");
+            logo.PrintMenu((int)Constants.MainMenu.LEFT, (int)Constants.MainMenu.FOURTH, "☞수강신청 시간표");
+            logo.PrintMenu((int)Constants.MainMenu.LEFT, (int)Constants.MainMenu.FIFTH, "☞수강신청과목 삭제");
+            logo.PrintLine((int)Constants.Console.LEFT, (int)Constants.Console.MAX_TOP);
+        }
         public void PrintMenu()
         {
             Logo logo = new Logo();

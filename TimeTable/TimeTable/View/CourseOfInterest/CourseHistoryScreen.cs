@@ -22,7 +22,7 @@ namespace TimeTable
 
         public void PrintCourseHistory(int top, List<CourseVO> courseHistory)
         {
-            int[] leftSize = new int[] { 1, 6, 29, 38, 43, 65, 74, 83, 99, 104, 112, 130 };
+            int[] leftSize = new int[] { 1, 6, 25, 34, 39, 65, 74, 87, 92, 97, 108, 130 };
 
             Logo logo = new Logo();
             logo.PrintLongLine(0, top);

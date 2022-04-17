@@ -10,11 +10,13 @@ namespace TimeTable
     class TimeTableMenu
     {
         private List<CourseVO> lectureSchedule;
-        private List<CourseVO> courseOfInterest;  //관심과목 리스트
+        private List<CourseVO> courseOfInterest;    //관심과목 리스트
+        private List<CourseVO> courseRegistration;  //수강신청 리스트
         public TimeTableMenu()
         {
             lectureSchedule = new List<CourseVO>();
             courseOfInterest = new List<CourseVO>();
+            courseRegistration = new List<CourseVO>();
         }
         private void MakeCourseList()
         {
@@ -69,10 +71,11 @@ namespace TimeTable
                         break;
                     case (int)Constants.MainMenu.SECOND:  //관심과목 담기
                         AddingCourseOfInterest addingCourseOfInterest = new AddingCourseOfInterest(lectureSchedule, courseOfInterest);
-                        addingCourseOfInterest.ShowCourseOfInterestMenu();      
+                        addingCourseOfInterest.ShowCourseOfInterestMenu(24); //최대 24학점까지 담을 수 있음     
                         break;
                     case (int)Constants.MainMenu.THIRD:  //수강신청
-
+                        CourseRegistraton courseRegistrationMenu = new CourseRegistraton(lectureSchedule, courseOfInterest, courseRegistration);
+                        courseRegistrationMenu.ShowCourseRegistrationMenu(21);  //수강신청은 최대 21학점까지 담을 수 있음
                         break;
                     case (int)Constants.MainMenu.FOURTH:  //수강내역 조회
 
@@ -87,6 +90,7 @@ namespace TimeTable
         {
             MakeCourseList();
             courseOfInterest.Add(lectureSchedule[0]);  //관심과목담기리스트에 먼저 목록이름 저장
+            courseRegistration.Add(lectureSchedule[0]);//수강목록 리스트에 먼저 목록이름 저장
             Console.ForegroundColor = ConsoleColor.White;
             Logo logo = new Logo();
             logo.PrintMain();           //메인화면 출력

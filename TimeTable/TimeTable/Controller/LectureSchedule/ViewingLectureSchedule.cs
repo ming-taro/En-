@@ -17,8 +17,8 @@ namespace TimeTable
         }
         private void InitSearchWord()
         {
-            ViewingScheduleScreen viewingScheduleScreen = new ViewingScheduleScreen();
-            viewingScheduleScreen.PrintMenu("☞이수구분");
+            SearchCategoryScreen searchCategoryScreen = new SearchCategoryScreen();
+            searchCategoryScreen.PrintMenu("☞이수구분");
 
             courseVO.Department = "";
             courseVO.CompletionType = "";
@@ -61,8 +61,8 @@ namespace TimeTable
         }
         public void ViewLectureSchedule()
         {
-            ViewingScheduleScreen viewingScheduleScreen = new ViewingScheduleScreen();
-            viewingScheduleScreen.PrintMenu("☞이수구분");
+            SearchCategoryScreen searchCategoryScreen = new SearchCategoryScreen();
+            searchCategoryScreen.PrintMenu("☞이수구분");
 
             Keyboard keyboard = new Keyboard((int)Constants.ColumnMenu.LEFT, (int)Constants.ColumnMenu.FIRST);
             int menu;

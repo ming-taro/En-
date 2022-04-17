@@ -16,7 +16,7 @@ namespace TimeTable
             }
             return Constants.COURSE_NOT_ON_LIST;
         }
-        public int DeleteCourseApplication(int appliedCredit, List<CourseVO> courseOfInterest)   //관심과목에 담았던 내역 삭제
+        public int DeleteCourseApplication(int appliedCredit, int maxCredit, List<CourseVO> courseOfInterest)   //관심과목에 담았던 내역 삭제
         {
             SearchByFieldScreen searchByFieldScreen = new SearchByFieldScreen();
             EnteringText text = new EnteringText();
@@ -26,7 +26,7 @@ namespace TimeTable
 
             while (Constants.INPUT_VALUE)
             {
-                searchByFieldScreen.PrintDeletionResult(appliedCredit, courseOfInterest);  //현재 관심과목 리스트
+                searchByFieldScreen.PrintDeletionResult(appliedCredit, maxCredit, courseOfInterest);  //현재 관심과목 리스트
                 number = text.EnterText((int)Constants.Credit.THIRD + 20, (int)Constants.ColumnMenu.LOGO_TOP + 4, "");  //삭제할 과목 순번 입력
                 if (number.Equals(Constants.ESC)) break;     //과목번호 입력 도중 esc -> 뒤로가기
                 courseIndex = FindCourseIndex(number, courseOfInterest);   //입력받은 과목번호가 관심과목에 있는지 확인

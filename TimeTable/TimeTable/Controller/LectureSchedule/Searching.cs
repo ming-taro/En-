@@ -67,9 +67,9 @@ namespace TimeTable
             }
             return Constants.COURSE_NOT_ON_LIST;  //강의목록에 없는 순번을 입력한 경우
         }
-        public bool IsAppyingWithinCredit(int courseIndex)  //24학점 범위 내에서 신청하는지
+        public bool IsAppyingWithinCredit(int courseIndex, int maxCredit)  //24학점 범위 내에서 신청하는지
         {
-            if (24 >= appliedCredit + (Int32.Parse(lectureSchedule[courseIndex].Credit)))
+            if (maxCredit >= appliedCredit + (Int32.Parse(lectureSchedule[courseIndex].Credit)))
             {
                 return Constants.IS_APPLYING_WITHIN_CREDIT;
             }
@@ -84,34 +84,7 @@ namespace TimeTable
 
             return Constants.IS_FIRST_APPLICATION;    //처음 담는 강의
         }
-        /*public void check(int courseIndex, string classDayOfCourse)
-        {
-            string classDay = lectureSchedule[courseIndex].ClassDay;  //신청하려는 강의의 수업요일
-
-            char firstDay = classDayOfCourse[0];     //첫번째 요일
-            char secondDay = classDayOfCourse[2];    //두번째 요일
-
-            if (classDay[0] != firstDay && class[])
-            {
-
-            }
-            
-
-        }
-        public bool IsTimeOverlap(int courseIndex)
-        {
-            for(int row = 1; row < courseOfInterest.Count; row++)   //현재 담은 관심과목중에서 입력받은 과목이 시간표가 겹치는지 확인
-            {
-                if(courseOfInterest[row].ClassDay.Length == 15)
-                {
-                    
-                }
-
-            }
-
-
-        }*/
-        public void ShowMessage(int courseIndex)
+        public void ShowMessage(int courseIndex, int maxCredit)
         {
             SearchByFieldScreen searchByFieldScreen = new SearchByFieldScreen();
 
@@ -119,9 +92,9 @@ namespace TimeTable
             {
                 searchByFieldScreen.PrintFailureMessage((int)Constants.Credit.TOP - 2, ">입력하신 번호에 해당하는 강의가 없습니다<");     //관심과목 담기 실패 메세지
             }
-            else if (IsAppyingWithinCredit(courseIndex) == Constants.IS_NOT_APPLYING_WITHIN_CREDIT)
+            else if (IsAppyingWithinCredit(courseIndex, maxCredit) == Constants.IS_NOT_APPLYING_WITHIN_CREDIT)
             {
-                searchByFieldScreen.PrintFailureMessage((int)Constants.Credit.TOP - 2, ">관심과목은 최대 24학점까지 담을 수 있습니다<");     //관심과목 담기 실패 메세지
+                searchByFieldScreen.PrintFailureMessage((int)Constants.Credit.TOP - 2, ">최대 " + maxCredit + "학점까지 담을 수 있습니다<");     //관심과목 담기 실패 메세지
             }
             else if (IsDuplicateCourse(courseIndex))
             {
@@ -134,10 +107,10 @@ namespace TimeTable
                 appliedCredit += (Int32.Parse(lectureSchedule[courseIndex].Credit)); //담은 학점에 성공한 과목의 학점 추가
             }
         }
-        public int InputCourseNumber(CourseVO courseVO)  //관심과목담기
+        public int InputCourseNumber(CourseVO courseVO, int maxCredit)  //관심과목담기
         {
             SearchByFieldScreen searchByFieldScreen = new SearchByFieldScreen();
-            searchByFieldScreen.PrintResult(appliedCredit, lectureSchedule, courseVO);   //검색 결과 강의목록 출력
+            searchByFieldScreen.PrintResult(appliedCredit, maxCredit, lectureSchedule, courseVO);   //검색 결과 강의목록 출력
 
             EnteringText text = new EnteringText();
             Keyboard keyboard = new Keyboard();
@@ -146,12 +119,12 @@ namespace TimeTable
 
             while (Constants.INPUT_VALUE)
             {
-                searchByFieldScreen.PrintInputBox(appliedCredit);  //현재 신청한 학점 표시
+                searchByFieldScreen.PrintInputBox(appliedCredit, maxCredit);  //현재 신청한 학점 표시
                 number = text.EnterText((int)Constants.Credit.THIRD + 18, (int)Constants.Credit.TOP, "");   //담을 순번 입력
                 if (number.Equals(Constants.ESC)) break;           //입력도중 esc -> 관심과목 입력 종료
 
                 courseIndex = FindCourseIndexInList(number, courseVO);  //입력받은 과목의 목록 내 인덱스 찾기
-                ShowMessage(courseIndex);
+                ShowMessage(courseIndex, maxCredit);
 
                 if (keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break;   //순번입력 후 esc -> 학과검색으로 돌아가기
             }

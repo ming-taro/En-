@@ -117,6 +117,7 @@ namespace TimeTable
             FOURTH = 14,
             FIFTH = 17,
             SIXTH = 20,
+            SEVEN = 22,
             LOGO_LEFT = 61,
             LOGO_TOP = 3,
             LEFT = 15

@@ -55,7 +55,7 @@ namespace TimeTable
 
             return classNumber;
         }
-        public void InputCourseNumber(string classNumber, string distribution)
+        public void InputCourseNumber(int maxCredit, string classNumber, string distribution)
         {
             EnteringText text = new EnteringText();
             SearchByFieldScreen searchByFieldScreen = new SearchByFieldScreen();
@@ -65,7 +65,7 @@ namespace TimeTable
 
             while (Constants.INPUT_VALUE)
             {
-                searchByFieldScreen.PrintInputBox(appliedCredit);  //현재 신청한 학점 표시
+                searchByFieldScreen.PrintInputBox(appliedCredit, maxCredit);  //현재 신청한 학점 표시
                 number = text.EnterText((int)Constants.Credit.THIRD + 18, (int)Constants.Credit.TOP, "");   //담을 순번 입력
                 if (number.Equals(Constants.ESC)) break;           //입력도중 esc -> 관심과목 입력 종료
 

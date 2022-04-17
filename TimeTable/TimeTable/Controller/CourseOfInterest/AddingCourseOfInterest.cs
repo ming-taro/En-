@@ -11,13 +11,18 @@ namespace TimeTable
         private List<CourseVO> lectureSchedule;   //강의목록
         private List<CourseVO> courseOfInterest;  //관심과목 리스트
         private int appliedCredit;                //현재 관심과목 리스트에 있는 강좌의 총 학점
+        public int AppliedCredit
+        {
+            get { return appliedCredit; }
+            set { appliedCredit = value; }
+        }
         public AddingCourseOfInterest(List<CourseVO> lectureSchedule, List<CourseVO> courseOfInterest)
         {
             this.lectureSchedule = lectureSchedule;
             this.courseOfInterest = courseOfInterest;
             appliedCredit = 0;
         }
-        private void CalculateCredit()  //현재 관심과목에 담겨있는 신청학점 계산
+        public void CalculateCredit()  //현재 관심과목에 담겨있는 신청학점 계산
         {
             for(int row = 1; row<courseOfInterest.Count; row++)
             {
@@ -26,8 +31,8 @@ namespace TimeTable
         }
         private void InitSearchWord(CourseVO courseVO)
         {
-            ViewingScheduleScreen viewingScheduleScreen = new ViewingScheduleScreen();
-            viewingScheduleScreen.PrintMenu("☞학수번호/분반");
+            SearchCategoryScreen searchCategoryScreen = new SearchCategoryScreen();
+            searchCategoryScreen.PrintMenu("☞학수번호/분반");
 
             courseVO.Department = "";
             courseVO.CompletionType = "";
@@ -38,7 +43,7 @@ namespace TimeTable
             courseVO.Distribution = "";
         }
 
-        public void SelectMenu(int menu, CourseVO courseVO)
+        public void SelectMenu(int menu, int maxCredit, CourseVO courseVO)
         {
             switch (menu)
             {
@@ -62,20 +67,21 @@ namespace TimeTable
                     SelectingCourseTitle instructorMenu = new SelectingCourseTitle();
                     instructorMenu.InputCourseTitle(courseVO, (int)Constants.ColumnMenu.FIFTH);
                     break;
-                case (int)Constants.ColumnMenu.SIXTH:       //조회
-                    Searching searching = new Searching(lectureSchedule, courseOfInterest, appliedCredit);
-                    appliedCredit = searching.InputCourseNumber(courseVO);
-                    InitSearchWord(courseVO);   //조회 후 검색어 초기화
-                    break;
             }
         }
-        private void SearchCourse()
+        public void SearchResult(CourseVO courseVO, int maxCredit)//조회
         {
-            ViewingScheduleScreen viewingScheduleScreen = new ViewingScheduleScreen();
+            Searching searching = new Searching(lectureSchedule, courseOfInterest, appliedCredit);
+            appliedCredit = searching.InputCourseNumber(courseVO, maxCredit);
+            InitSearchWord(courseVO);   //조회 후 검색어 초기화
+        }
+        public void SearchCourse(int maxCredit)
+        {
+            SearchCategoryScreen searchCategoryScreen = new SearchCategoryScreen();
             Keyboard keyboard = new Keyboard((int)Constants.ColumnMenu.LEFT, (int)Constants.ColumnMenu.FIRST);
             CourseVO courseVO = new CourseVO();
             int menu;
-            viewingScheduleScreen.PrintMenu("☞학수번호/분반");  //관심분야 검색 화면 출력
+            searchCategoryScreen.PrintMenu("☞학수번호/분반");  //관심분야 검색 화면 출력
 
             while (Constants.KEYBOARD_OPERATION)
             {
@@ -83,10 +89,11 @@ namespace TimeTable
                 if (menu == (int)Constants.Keyboard.ESCAPE) return;  //메뉴선택 중 esc -> 뒤로가기(강의조회 및 수강신청 화면으로)
                 menu = keyboard.Top;
 
-                SelectMenu(menu, courseVO);    //검색할 분야 선택
+                if (menu == (int)Constants.ColumnMenu.SIXTH) SearchResult(courseVO, maxCredit);  //조회
+                else SelectMenu(menu, maxCredit, courseVO);    //검색할 분야 선택
             }
         }
-        public void ShowCourseOfInterestMenu()
+        public void ShowCourseOfInterestMenu(int maxCredit)
         {
             CalculateCredit();  //현재 관심과목에 담은 학점 계산
 
@@ -104,7 +111,7 @@ namespace TimeTable
                 switch (menu)
                 {
                     case (int)Constants.MainMenu.FIRST:   //분야별 과목 검색
-                        SearchCourse();
+                        SearchCourse(maxCredit);
                         break;
                     case (int)Constants.MainMenu.SECOND:  //담은 강의 내역
                         CourseOfInterest checkMenu = new CourseOfInterest();
@@ -117,7 +124,7 @@ namespace TimeTable
                         break;
                     case (int)Constants.MainMenu.FOURTH:  //관심과목 삭제
                         CourseOfInterest deletionMenu = new CourseOfInterest();
-                        appliedCredit = deletionMenu.DeleteCourseApplication(appliedCredit, courseOfInterest);
+                        appliedCredit = deletionMenu.DeleteCourseApplication(appliedCredit, maxCredit, courseOfInterest);
                         break;
 
                 }

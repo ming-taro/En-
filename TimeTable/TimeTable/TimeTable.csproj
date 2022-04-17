@@ -51,6 +51,7 @@
     <Compile Include="Controller\CourseOfInterest\AddingCourseOfInterest.cs" />
     <Compile Include="Controller\CourseOfInterest\ClassNumber.cs" />
     <Compile Include="Controller\CourseOfInterest\CourseOfInterest.cs" />
+    <Compile Include="Controller\CourseRegistraton.cs" />
     <Compile Include="Controller\Keyboard.cs" />
     <Compile Include="Controller\LectureSchedule\CompletionType.cs" />
     <Compile Include="Controller\LectureSchedule\SelectingCourseTitle.cs" />
@@ -72,7 +73,6 @@
     <Compile Include="View\LectureSchedule\SearchCategoryScreen.cs" />
     <Compile Include="View\Logo\TimeTableMenuScreen.cs" />
     <Compile Include="View\Logo\Logo.cs" />
-    <Compile Include="View\LectureSchedule\ViewingScheduleScreen.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
