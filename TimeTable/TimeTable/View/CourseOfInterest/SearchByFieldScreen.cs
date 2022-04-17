@@ -76,7 +76,7 @@ namespace TimeTable
 
             Console.ForegroundColor = ConsoleColor.Yellow;
             logo.PrintMenu((int)Constants.RowMenu.SECOND, top, message);
-            logo.PrintMenu((int)Constants.RowMenu.FOURTH, top, "[ESC]:뒤로가기       [ENTER]:재조회");
+            logo.PrintMenu((int)Constants.RowMenu.FIFTH, top, "[ESC]:뒤로가기       [ENTER]:재조회");
             Console.ForegroundColor = ConsoleColor.White;
         }
         public void PrintFailureMessage(int top, string message)
@@ -85,7 +85,7 @@ namespace TimeTable
 
             Console.ForegroundColor = ConsoleColor.Red;
             logo.PrintMenu((int)Constants.RowMenu.SECOND, top, message);
-            logo.PrintMenu((int)Constants.RowMenu.FOURTH, top, "[ESC]:뒤로가기       [ENTER]:재조회");
+            logo.PrintMenu((int)Constants.RowMenu.FIFTH, top, "[ESC]:뒤로가기       [ENTER]:재조회");
             Console.ForegroundColor = ConsoleColor.White;
         }
     }

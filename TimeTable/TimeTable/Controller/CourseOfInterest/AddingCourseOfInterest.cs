@@ -64,7 +64,7 @@ namespace TimeTable
                     break;
                 case (int)Constants.ColumnMenu.SIXTH:       //조회
                     Searching searching = new Searching(lectureSchedule, courseOfInterest, appliedCredit);
-                    searching.InputCourseNumber(courseVO);
+                    appliedCredit = searching.InputCourseNumber(courseVO);
                     InitSearchWord(courseVO);   //조회 후 검색어 초기화
                     break;
             }

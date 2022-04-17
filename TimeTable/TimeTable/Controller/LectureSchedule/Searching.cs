@@ -62,8 +62,6 @@ namespace TimeTable
             {
                 if (lectureSchedule[row].Number.Equals(number) && IsValueMeetCondition(lectureSchedule[row], courseVO))
                 {
-                    Console.WriteLine("["+row+"]");
-                    Console.ReadLine();
                     return row;
                 }
             }

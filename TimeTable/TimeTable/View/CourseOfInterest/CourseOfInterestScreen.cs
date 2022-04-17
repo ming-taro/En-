@@ -14,7 +14,7 @@ namespace TimeTable
 
             Console.Clear();
             logo.PrintLine((int)Constants.Console.LEFT, (int)Constants.Console.MIN_TOP);
-            logo.PrintMenu((int)Constants.MainMenu.LOGO_LEFT, (int)Constants.MainMenu.LOGO_TOP, "[관심과목 담기]");
+            logo.PrintMenu((int)Constants.MainMenu.LOGO_LEFT + 5, (int)Constants.MainMenu.LOGO_TOP, "[관심과목 담기]");
             logo.PrintMenu((int)Constants.MainMenu.LEFT, (int)Constants.MainMenu.FIRST, "☞분야별 과목 검색");
             logo.PrintMenu((int)Constants.MainMenu.LEFT, (int)Constants.MainMenu.SECOND, "☞담은 강의 내역");
             logo.PrintMenu((int)Constants.MainMenu.LEFT, (int)Constants.MainMenu.THIRD, "☞관심과목 시간표");
