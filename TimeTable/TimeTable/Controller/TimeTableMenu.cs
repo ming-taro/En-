@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,7 +24,7 @@ namespace TimeTable
             Excel.Application application = new Excel.Application();
             Excel.Workbook workbook = application.Workbooks.Open(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\2022년도 1학기 강의시간표.xlsx");
             Excel.Sheets sheets = workbook.Sheets;
-            Excel.Worksheet worksheet = sheets["ensharp"] as Excel.Worksheet;
+            Excel.Worksheet worksheet = sheets["sheet1"] as Excel.Worksheet;
             Excel.Range cellRange = worksheet.get_Range("A1", "L185") as Excel.Range;
             Array data = cellRange.Cells.Value2;
 
@@ -48,6 +49,48 @@ namespace TimeTable
             }
             application.Workbooks.Close();
             application.Quit();
+        }
+        public void WirteToExcel()
+        {
+            TimeTableScreen timeTableScreen = new TimeTableScreen();
+            timeTableScreen.PrintTimeTable(courseRegistration);   //콘솔에 시간표 출력
+            Console.SetCursorPosition(45, 1);
+            Console.WriteLine("☞시간표가 바탕화면에 Excel파일로 저장되었습니다.([ESC]:뒤로가기)");
+
+            //엑셀저장
+            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop); // 바탕화면 경로
+            string path = Path.Combine(desktopPath, "LectureTimeTable.xlsx");
+
+            Excel.Application application = new Excel.Application();
+            Excel.Workbook workBook = application.Workbooks.Add();
+            Excel.Sheets sheets = workBook.Sheets;
+            Excel.Worksheet workSheet = sheets["sheet1"] as Excel.Worksheet;
+
+            for (int row = 0; row < courseRegistration.Count; row++)  //현재 신청한 강의 리스트 엑셀에 저장
+            {
+                workSheet.Cells[row + 1, 1] = courseRegistration[row].Number;
+                workSheet.Cells[row + 1, 2] = courseRegistration[row].Department;
+                workSheet.Cells[row + 1, 3] = courseRegistration[row].ClassNumber;
+                workSheet.Cells[row + 1, 4] = courseRegistration[row].Distribution;
+                workSheet.Cells[row + 1, 5] = courseRegistration[row].CourseTitle;
+                workSheet.Cells[row + 1, 6] = courseRegistration[row].CompletionType;
+                workSheet.Cells[row + 1, 7] = courseRegistration[row].Grade;
+                workSheet.Cells[row + 1, 8] = courseRegistration[row].Credit;
+                workSheet.Cells[row + 1, 9] = courseRegistration[row].ClassDay;
+                workSheet.Cells[row + 1, 10] = courseRegistration[row].LectureRoom;
+                workSheet.Cells[row + 1, 11] = courseRegistration[row].Instructor;
+                workSheet.Cells[row + 1, 12] = courseRegistration[row].Language;
+            }
+
+            timeTableScreen.WriteToExcel(workSheet, courseRegistration);  //시간표 저장
+
+            workSheet.Columns.AutoFit();
+            workBook.SaveAs(path, Excel.XlFileFormat.xlWorkbookDefault);
+            application.Workbooks.Close();
+            application.Quit();
+
+            Keyboard keyboard = new Keyboard();
+            keyboard.PressESC();
         }
 
         private void SelectMenu()
@@ -78,13 +121,14 @@ namespace TimeTable
                         courseRegistrationMenu.ShowCourseRegistrationMenu(21);  //수강신청은 최대 21학점까지 담을 수 있음
                         break;
                     case (int)Constants.MainMenu.FOURTH:  //수강내역 조회
-
+                        WirteToExcel();
                         break;
 
                 }
             }
             
         }
+
 
         public void ShowTimeTableMenu()
         {

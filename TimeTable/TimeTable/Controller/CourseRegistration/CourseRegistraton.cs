@@ -68,6 +68,7 @@ namespace TimeTable
                 if (keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break;   //esc -> 관심과목 조회 종료
             }
         }
+
         public void ShowCourseRegistrationMenu(int maxCredit)
         {
             CourseOfInterestScreen courseOfInterestScreen = new CourseOfInterestScreen();
@@ -87,7 +88,7 @@ namespace TimeTable
                 switch (menu)
                 {
                     case (int)Constants.MainMenu.FIRST:   //분야별 과목 검색
-                        addingCourseOfInterest.CalculateCredit();
+                        addingCourseOfInterest.AppliedCredit = appliedCredit;
                         addingCourseOfInterest.SearchCourse(maxCredit);        //수강신청은 최대 21학점까지
                         appliedCredit = addingCourseOfInterest.AppliedCredit;  //과목검색 후 담은 학점 저장
                         break;

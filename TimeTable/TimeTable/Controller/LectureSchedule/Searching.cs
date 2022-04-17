@@ -102,7 +102,7 @@ namespace TimeTable
             }
             else
             {
-                searchByFieldScreen.PrintSuccessMessage((int)Constants.Credit.TOP - 2, ">>>관심과목 담기에 성공했습니다!<<<");    //관심과목 담기 성공 메세지
+                searchByFieldScreen.PrintSuccessMessage((int)Constants.Credit.TOP - 2, ">>>과목 신청이 완료되었습니다!<<<");    //관심과목 담기 성공 메세지
                 courseOfInterest.Add(lectureSchedule[courseIndex]);     //관심과목 리스트에 등록
                 appliedCredit += (Int32.Parse(lectureSchedule[courseIndex].Credit)); //담은 학점에 성공한 과목의 학점 추가
             }

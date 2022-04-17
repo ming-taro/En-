@@ -52,7 +52,7 @@
     <Compile Include="Controller\CourseOfInterest\ClassNumber.cs" />
     <Compile Include="Controller\CourseOfInterest\CourseOfInterest.cs" />
     <Compile Include="Controller\CourseRegistration\CourseRegistraton.cs" />
-    <Compile Include="Controller\Keyboard.cs" />
+    <Compile Include="Keyboard.cs" />
     <Compile Include="Controller\LectureSchedule\CompletionType.cs" />
     <Compile Include="Controller\LectureSchedule\SelectingCourseTitle.cs" />
     <Compile Include="Controller\LectureSchedule\Department.cs" />
@@ -61,7 +61,7 @@
     <Compile Include="Controller\LectureSchedule\Searching.cs" />
     <Compile Include="Controller\TimeTableMenu.cs" />
     <Compile Include="Controller\LectureSchedule\ViewingLectureSchedule.cs" />
-    <Compile Include="Controller\EnteringText.cs" />
+    <Compile Include="EnteringText.cs" />
     <Compile Include="Model\CourseVO.cs" />
     <Compile Include="TimeTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
