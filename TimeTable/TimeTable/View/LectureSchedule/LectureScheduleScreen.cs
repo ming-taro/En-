@@ -28,7 +28,7 @@ namespace TimeTable
             if (IsSameWord(LectureSchedule.Grade, courseVO.Grade) == Constants.IS_NOT_MEETING_CONDITION) return Constants.IS_NOT_MEETING_CONDITION;
             if (IsContainingWord(LectureSchedule.CourseTitle, courseVO.CourseTitle) == Constants.IS_NOT_MEETING_CONDITION) return Constants.IS_NOT_MEETING_CONDITION;
             if (IsContainingWord(LectureSchedule.Instructor, courseVO.Instructor) == Constants.IS_NOT_MEETING_CONDITION) return Constants.IS_NOT_MEETING_CONDITION;
-            if (IsSameWord(LectureSchedule.ClassNumber, courseVO.ClassNumber) == Constants.IS_NOT_MEETING_CONDITION && IsSameWord(LectureSchedule.Distribution, courseVO.Distribution) == Constants.IS_NOT_MEETING_CONDITION) return Constants.IS_NOT_MEETING_CONDITION;
+            if (IsSameWord(LectureSchedule.ClassNumber, courseVO.ClassNumber) == Constants.IS_NOT_MEETING_CONDITION || IsSameWord(LectureSchedule.Distribution, courseVO.Distribution) == Constants.IS_NOT_MEETING_CONDITION) return Constants.IS_NOT_MEETING_CONDITION;
 
             return Constants.IS_MEETING_CONDITION;
         }

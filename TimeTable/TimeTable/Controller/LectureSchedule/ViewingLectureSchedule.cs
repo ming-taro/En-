@@ -17,6 +17,9 @@ namespace TimeTable
         }
         private void InitSearchWord()
         {
+            ViewingScheduleScreen viewingScheduleScreen = new ViewingScheduleScreen();
+            viewingScheduleScreen.PrintMenu("☞이수구분");
+
             courseVO.Department = "";
             courseVO.CompletionType = "";
             courseVO.Grade = "";
@@ -53,11 +56,13 @@ namespace TimeTable
                     InitSearchWord();   //조회 후 검색어 초기화
                     break;
             }
+
+
         }
         public void ViewLectureSchedule()
         {
             ViewingScheduleScreen viewingScheduleScreen = new ViewingScheduleScreen();
-            viewingScheduleScreen.PrintMenu();
+            viewingScheduleScreen.PrintMenu("☞이수구분");
 
             Keyboard keyboard = new Keyboard((int)Constants.ColumnMenu.LEFT, (int)Constants.ColumnMenu.FIRST);
             int menu;

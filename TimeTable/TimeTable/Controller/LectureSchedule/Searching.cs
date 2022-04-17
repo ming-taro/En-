@@ -18,9 +18,6 @@ namespace TimeTable
             Keyboard keyboard = new Keyboard((int)Constants.GO_BACK_BUTTON_LEFT, Console.CursorTop);
             Console.SetCursorPosition((int)Constants.GO_BACK_BUTTON_LEFT, Console.CursorTop);
             keyboard.PressESC();   //뒤로가기(esc) -> 조회 종료
-
-            ViewingScheduleScreen viewingScheduleScreen = new ViewingScheduleScreen();
-            viewingScheduleScreen.PrintMenu();
         }
 
     }

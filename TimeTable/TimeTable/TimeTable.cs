@@ -14,7 +14,6 @@ namespace TimeTable
 
             TimeTableMenu timeTableMenu = new TimeTableMenu();
             timeTableMenu.ShowTimeTableMenu();
-            
         }
     }
 }

@@ -38,18 +38,18 @@ namespace TimeTable
 
             while (Constants.INPUT_VALUE)
             {
-                classNumber = text.EnterText(left, (int)Constants.ColumnMenu.FIRST, "");
+                classNumber = text.EnterText(left, (int)Constants.ColumnMenu.SECOND, "");
                 if (classNumber.Equals(Constants.ESC)) return Constants.ESC;
 
                 if (Regex.IsMatch(classNumber, regex))
                 {
-                    logo.RemoveLine(left, (int)Constants.ColumnMenu.FIRST + 1);   //경고메세지를 지움
+                    logo.RemoveLine(left, (int)Constants.ColumnMenu.SECOND + 1);   //경고메세지를 지움
                     break;
                 }
                 else
                 {
-                    logo.FailureMessage(left, (int)Constants.ColumnMenu.FIRST + 1, "숫자만 입력 가능합니다.");
-                    logo.RemoveLine(left, (int)Constants.ColumnMenu.FIRST);   //입력을 지움
+                    logo.FailureMessage(left, (int)Constants.ColumnMenu.SECOND + 1, "숫자만 입력 가능합니다.");
+                    logo.RemoveLine(left, (int)Constants.ColumnMenu.SECOND);   //입력을 지움
                 }
             }
 
@@ -83,36 +83,50 @@ namespace TimeTable
                 if (keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break;   //순번입력 후 esc -> 학과검색으로 돌아가기
             }
         }
-        public void SearchClassNumber()
+        public void SearchClassNumber(CourseVO courseVO)
         {
-            CourseVO courseVO = new CourseVO();
             SearchByFieldScreen searchByFieldScreen = new SearchByFieldScreen();
             Logo logo = new Logo();
-            int courseIndex;
+            string classNumber;
+            string distribution;
 
-            while (Constants.INPUT_VALUE)
+
+            //int courseIndex;
+            courseVO.ClassNumber = "";
+            courseVO.Distribution = "";
+            logo.RemoveLine((int)Constants.RowMenu.SECOND, (int)Constants.ColumnMenu.SECOND);
+            logo.PrintMenu((int)Constants.RowMenu.SECOND, (int)Constants.ColumnMenu.SECOND, "☞학수번호(6자리 숫자):");
+
+            classNumber = InputClassNumber((int)Constants.RowMenu.SECOND + 24, @"^[0-9]{6}$");   //학수번호
+            if (classNumber.Equals(Constants.ESC))
             {
-                Console.Clear();
-                searchByFieldScreen.PrintLine();
-                logo.PrintMenu((int)Constants.ColumnMenu.LOGO_LEFT, (int)Constants.ColumnMenu.LOGO_TOP, "[학수번호/분반 검색]");
-
-                logo.PrintMenu((int)Constants.RowMenu.FIRST, (int)Constants.ColumnMenu.FIRST, "☞학수번호(6자리 숫자):");
-                string classNumber = InputClassNumber((int)Constants.RowMenu.FIRST + 24, @"^[0-9]{6}");   //학수번호
-                if (classNumber.Equals(Constants.ESC)) return;
-
-                logo.PrintMenu((int)Constants.RowMenu.THIRD, (int)Constants.ColumnMenu.FIRST, "☞분반(3자리 숫자):");
-                string distribution = InputClassNumber((int)Constants.RowMenu.THIRD + 20, @"^[0-9]{3}");  //분반
-                if (distribution.Equals(Constants.ESC)) return;
-
-                courseVO.ClassNumber = classNumber;
-                courseVO.Distribution = distribution;
-                courseIndex = FindCourseIndexInList(classNumber, distribution);
-                searchByFieldScreen.PrintResult(appliedCredit, lectureSchedule, courseVO);   //검색결과 출력
-
-                InputCourseNumber(classNumber, distribution);  //순번입력
-                courseVO.ClassNumber = null;
-                courseVO.Distribution = null;
+                logo.RemoveLine((int)Constants.RowMenu.SECOND, (int)Constants.ColumnMenu.SECOND);
+                return;
             }
+
+            logo.PrintMenu((int)Constants.RowMenu.FOURTH, (int)Constants.ColumnMenu.SECOND, "☞분반(3자리 숫자):");
+
+            distribution = InputClassNumber((int)Constants.RowMenu.FOURTH + 20, @"^[0-9]{3}$");  //분반
+            if (distribution.Equals(Constants.ESC))
+            {
+                logo.RemoveLine((int)Constants.RowMenu.SECOND, (int)Constants.ColumnMenu.SECOND);
+                return;
+            }
+
+            courseVO.ClassNumber = classNumber;
+            courseVO.Distribution = distribution;
+
+
+            /*while (Constants.INPUT_VALUE)
+            {
+                
+
+                
+                //courseIndex = FindCourseIndexInList(classNumber, distribution);
+                //searchByFieldScreen.PrintResult(appliedCredit, lectureSchedule, courseVO);   //검색결과 출력
+
+                //InputCourseNumber(classNumber, distribution);  //순번입력
+            }*/
 
         }
     }
