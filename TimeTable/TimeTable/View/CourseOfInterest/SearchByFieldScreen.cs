@@ -8,6 +8,26 @@ namespace TimeTable
 {
     class SearchByFieldScreen
     {
+
+        public void PrintResult(int appliedCredit, List<CourseVO> lectureSchedule, CourseVO courseVO)
+        {
+            PrintInputBox(appliedCredit);
+            LectureScheduleScreen lectureScheduleScreen = new LectureScheduleScreen();
+            lectureScheduleScreen.PrintLectureSchedule((int)Constants.Credit.TOP + 2, lectureSchedule, courseVO);//목록을 보여줌
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
         public void PrintLine()
         {
             Logo logo = new Logo();
@@ -49,12 +69,7 @@ namespace TimeTable
 
         }
 
-        public void PrintResult(int appliedCredit, List<CourseVO> lectureSchedule, CourseVO courseVO)
-        {
-            PrintInputBox(appliedCredit);
-            LectureScheduleScreen lectureScheduleScreen = new LectureScheduleScreen();
-            lectureScheduleScreen.PrintLectureSchedule((int)Constants.Credit.TOP + 2, lectureSchedule, courseVO);//목록을 보여줌
-        }
+        
         public void PrintSuccessMessage(int top, string message)
         {
             Logo logo = new Logo();

@@ -51,8 +51,8 @@ namespace TimeTable
                     instructorMenu.InputCourseTitle(courseVO, (int)Constants.ColumnMenu.FIFTH);
                     break;
                 case (int)Constants.ColumnMenu.SIXTH:       //조회
-                    Searching searching = new Searching();
-                    searching.ShowLectureSchedule(lectureSchedule, courseVO);
+                    Searching searching = new Searching(lectureSchedule);
+                    searching.ShowLectureSchedule(courseVO);
                     InitSearchWord();   //조회 후 검색어 초기화
                     break;
             }

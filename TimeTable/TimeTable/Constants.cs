@@ -43,7 +43,7 @@ namespace TimeTable
             FIRST = 11,   //left
             SECOND = 41,
             THIRD = 71,
-            TOP = 14
+            TOP = 25
         }
         public enum Console
         {
