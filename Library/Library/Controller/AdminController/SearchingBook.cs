@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,10 +10,10 @@ namespace Library
 {
     class SearchingBook
     {
-        private LibraryVO libraryVO;
+        private LibraryVO library;
         public SearchingBook()
         {
-            libraryVO = LibraryVO.GetLibraryVO();
+            library = LibraryVO.GetLibraryVO();
         }
         public void PrintInputBox(int left, int top, string message)
         {
@@ -21,23 +22,30 @@ namespace Library
         }
         public bool IsBookInList(int menu, string searchWord)
         {
-            for(int i=0; i<libraryVO.bookList.Count; i++)
+            string sql = "";
+
+            switch (menu)
             {
-                if(menu == 1 && libraryVO.bookList[i].Name.Contains(searchWord)) //도서명
-                {
-                    return Constants.BOOK_IN_LIST;
-                }
-                else if (menu == 2 && libraryVO.bookList[i].Publisher.Contains(searchWord)) //출판사
-                {
-                    return Constants.BOOK_IN_LIST;
-                }
-                else if (menu == 3 && libraryVO.bookList[i].Author.Contains(searchWord)) //저자
-                {
-                    return Constants.BOOK_IN_LIST;
-                }
+                case 1:
+                    sql = "select*from book where name like \"%" + searchWord + "%\";";
+                    break;
+                case 2:
+                    sql = "select*from book where publisher like \"%" + searchWord + "%\";";
+                    break;
+                case 3:
+                    sql = "select*from book where author like \"%" + searchWord + "%\";";
+                    break;
             }
 
-            return !Constants.BOOK_IN_LIST;   //해당 검색어를 포함하는 도서를 찾지 못함
+            MySqlCommand command = new MySqlCommand(sql, library.Connection);
+            MySqlDataReader table = command.ExecuteReader();
+
+            if (table.HasRows)
+            {
+                return Constants.BOOK_IN_LIST;
+            }
+
+            return !Constants.BOOK_NOT_IN_LIST;   //해당 검색어를 포함하는 도서를 찾지 못함
         }
         public string InputSearchWord(int left, int top, int messageTop)
         {

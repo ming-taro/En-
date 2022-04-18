@@ -24,7 +24,7 @@ namespace Library
             MySqlDataReader table = command.ExecuteReader();
 
             table.Read();
-            if (table != null)
+            if (table.HasRows)
             {
                 table.Close();
                 return Constants.DUPLICATE_ID;
