@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,8 +12,7 @@ namespace Library
     {
         public SignIn()  //-->>안됨
         {
-            SignInScreen signInScreen = new SignInScreen();
-            signInScreen.PrintSignIn();
+            
         }
         public void SignInAdmin()
         {
@@ -34,7 +34,24 @@ namespace Library
         {
             LibraryVO library = LibraryVO.GetLibraryVO();
 
-            for(int i=0; i<library.memberList.Count; i++)
+            string sql = "select*from member where id=\"" + id + "\" and password=\"" + password + "\";";
+            MySqlCommand command = new MySqlCommand(sql, library.Connection);
+            MySqlDataReader table = command.ExecuteReader();
+
+            table.Read();
+            if (table["id"] != null)
+            {
+                table.Close();
+                return Constants.EXISTING_MEMBER;
+            }
+            else
+            {
+                table.Close();
+                return !Constants.NON_EXISTING_MEMBER;
+            }
+            
+
+            /*for (int i=0; i<library.memberList.Count; i++)
             {
                 if (library.memberList[i].Id.Equals(id) && library.memberList[i].Password.Equals(password))
                 {
@@ -42,13 +59,15 @@ namespace Library
                 }
             }
 
-            return !Constants.EXISTING_MEMBER;  //----->느낌표XXXX(따로만들기)
+            return !Constants.EXISTING_MEMBER;*/  //----->느낌표XXXX(따로만들기)
         }
         public string SignInMember()
-        {
+        { 
             SignInScreen signInScreen = new SignInScreen();
             string id, password;
-            
+
+            signInScreen.PrintSignIn();
+
             while (Constants.INPUT_VALUE)
             {
                 Console.SetCursorPosition(8, 5);

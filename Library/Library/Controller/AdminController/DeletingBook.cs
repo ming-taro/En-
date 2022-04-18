@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,7 +24,8 @@ namespace Library
         }
         public bool IsBorrowedBook(string bookId)
         {
-            for(int i=0; i<library.borrowList.Count; i++)
+           
+            for (int i=0; i<library.borrowList.Count; i++)
             {
                 if (library.borrowList[i].BookVO.Id.Equals(bookId))   //해당 도서를 회원이 대여중인 경우 -> 도서삭제 불가
                 {

@@ -9,65 +9,67 @@ namespace Library
 {
     class LibraryVO
     {
-        private static LibraryVO libraryVO;
-        public List<BookVO> bookList;
-        public List<MemberVO> memberList;
-        public List<BorrowVO> borrowList;
+        private static LibraryVO instance = null;
+        private MySqlConnection connection;
+        /// <summary>
+        /// ///////////////////////////////////////////////////
+        /// </summary>
+        public List<BookVO> bookList = new List<BookVO>();
+        public List<BorrowVO> borrowList = new List<BorrowVO>();
+        public List<MemberVO> memberList = new List<MemberVO>();
 
-        private static MySqlConnection connection;
-        /*public static LibraryVO Connection
-        {
-            get
-            {
-                if(connection == null)
-                {
-                    connection = new MySqlConnection();
-                }
-                return connection;
-            }
-
-        }*/
-        private LibraryVO()
-        {
-
-
-
-
-
-
-
-            bookList = new List<BookVO>();
-            memberList = new List<MemberVO>();
-            borrowList = new List<BorrowVO>();
-
-            SetBookList();
-            SetMemberList();
-        }
         public static LibraryVO GetLibraryVO()
         {
-            if (libraryVO == null)
+            if (instance == null)
             {
-                libraryVO = new LibraryVO();
+                instance = new LibraryVO();
             }
-            return libraryVO;
+            return instance;
         }
-        public void SetBookList()  //책목록
+        private LibraryVO() 
         {
-            MySqlConnection connection = new MySqlConnection("Server=localhost;Port=3306;Database=booklist;Uid=root;Pwd=root");
-
-            try//예외 처리
+            try
             {
+                connection = new MySqlConnection("Server=localhost;Port=3306;Database=booklist;Uid=root;Pwd=root");
                 connection.Open();
-                string sql = "select*from book";
-                MySqlCommand command = new MySqlCommand(sql, connection);
-                MySqlDataReader table = command.ExecuteReader();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
 
-                while (table.Read())
+        }
+        public MySqlConnection Connection
+        {
+            get { return connection; }
+        }
+        public void Close()
+        {
+            if(connection != null)
+            {
+                connection.Close();
+            }
+        }
+   
+        
+        public void InsertBookList(string id, string name, string publisher, string author, string price, string quantity)  //책목록
+        {
+            try
+            {
+                string sql = "INSERT INTO booklist VALUES (" + id + "," + name + "," + publisher + "," + author + "," + price + "," + quantity + ");";
+                MySqlCommand command = new MySqlCommand(sql, connection);
+                command.ExecuteNonQuery();
+                
+                //MySqlDataReader table = command.ExecuteReader();
+                //MySqlDataReader table = command.ExecuteReader();
+
+                /*while (table.Read())
                 {
-                    bookList.Add(new BookVO(table["id"].ToString(), table["name"].ToString(), table["publisher"].ToString(), table["author"].ToString(), table["price"].ToString(), table["quantity"].ToString()));
+
+                    //bookList.Add(new BookVO(table["id"].ToString(), table["name"].ToString(), table["publisher"].ToString(), table["author"].ToString(), table["price"].ToString(), table["quantity"].ToString()));
                     //Console.WriteLine("{0} {1} {2} {3} {4} {5}", table["id"], table["name"], table["publisher"], table["author"], table["price"], table["quantity"]);
                 }
-                table.Close();
+                table.Close();*/
 
             }
             catch (Exception ex)
@@ -77,7 +79,7 @@ namespace Library
             }
 
         }
-        public void SetMemberList()  //회원목록
+        /*public void SetMemberList()  //회원목록
         {
             using (MySqlConnection connection = new MySqlConnection("Server=localhost;Port=3306;Database=booklist;Uid=root;Pwd=root"))
             {
@@ -101,6 +103,6 @@ namespace Library
                 }
 
             }
-        }
+        }*/
     }
 }
