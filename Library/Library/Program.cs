@@ -12,17 +12,9 @@ namespace Library
         }
         static void Main(string[] args)
         {
-            //Starting starting = new Starting();
-            //starting.StartLibrary();
+            Library library = new Library();
+            library.StartLibrary();
             
-            List<BookVO> bookList1 = BookVO.GetBookList();
-            Console.WriteLine(bookList1[0].Id);
-
-            bookList1.Add(new BookVO("a", "a", "a", "a", "a", "a"));
-            Console.WriteLine(bookList1[10].Id);
-
-            List<BookVO> bookList2 = BookVO.GetBookList();
-            Console.WriteLine(bookList2[10].Id);
         }
     }
 }

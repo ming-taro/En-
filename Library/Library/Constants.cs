@@ -47,5 +47,9 @@ namespace Library
         public const bool RIGHT_VALUE = true;
         public const bool WRONG_VALUE = false;
         public const string SIGN_IN_ERROR = "아이디 또는 비밀번호를 잘못 입력하셨습니다.\n다시 입력해주세요.\n";
+
+        public bool MODIFIERS = true;
+        public bool NOT_MODIFIERS = false;
+
     }
 }
