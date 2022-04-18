@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,13 +17,23 @@ namespace Library
         }
         public bool IsDuplicatedId(string id)  //기존 회원의 아이디와 중복되는지 확인
         {
-            LibraryVO libraryVO = LibraryVO.GetLibraryVO(); 
+            LibraryVO library = LibraryVO.GetLibraryVO();
 
-            for(int i=0; i<libraryVO.memberList.Count; i++)
+            string sql = "select*from member where id=\"" + id + "\";";
+            MySqlCommand command = new MySqlCommand(sql, library.Connection);
+            MySqlDataReader table = command.ExecuteReader();
+
+            table.Read();
+            if (table != null)
             {
-                if (libraryVO.memberList[i].Id.Equals(id)) return Constants.DUPLICATE_ID;  //중복된 아이디 -> 입력불가
+                table.Close();
+                return Constants.DUPLICATE_ID;
             }
-            return !Constants.DUPLICATE_ID;    //기존에 없는 아이디 -> 입력가능
+            else
+            {
+                table.Close();
+                return Constants.NON_DUPLICATE_ID;
+            }
         }
         public string InputId(int left, int top)  //아이디 입력
         {

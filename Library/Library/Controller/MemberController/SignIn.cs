@@ -39,7 +39,7 @@ namespace Library
             MySqlDataReader table = command.ExecuteReader();
 
             table.Read();
-            if (table != null)
+            if (table.HasRows)
             {
                 table.Close();
                 return Constants.EXISTING_MEMBER;
@@ -47,7 +47,7 @@ namespace Library
             else
             {
                 table.Close();
-                return !Constants.NON_EXISTING_MEMBER;
+                return Constants.NON_EXISTING_MEMBER;
             }
         }
         public string SignInMember()

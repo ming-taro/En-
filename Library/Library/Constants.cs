@@ -32,6 +32,7 @@ namespace Library
         public const bool WRONG_MEMBERSHIP = false;
 
         public const bool DUPLICATE_ID = true;
+        public const bool NON_DUPLICATE_ID = false;
         public const string REMOVE_LINE = "                                                             ";
 
         public const bool EXISTING_MEMBER = true;
