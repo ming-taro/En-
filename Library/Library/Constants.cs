@@ -63,5 +63,15 @@ namespace Library
             FOURTH = 16,
             FIFTH = 17
         }
+        public enum ProfileMenu
+        {
+            FIRST = 16,
+            SECOND = 19,
+            THIRD = 22,
+            FOURTH = 25,
+            FIFTH = 28,
+            SIXTH = 31,
+            SEVENTH = 34
+        }
     }
 }

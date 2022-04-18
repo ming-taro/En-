@@ -19,9 +19,10 @@ namespace Library
             this.left = left;
             this.top = top;
         }
-        public int GetTop()
+        public int Top
         {
-            return top;
+            get { return top; }
+            set { top = value; }
         }
         public void InitCursorPosition()
         {

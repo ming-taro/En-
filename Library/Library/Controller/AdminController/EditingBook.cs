@@ -95,7 +95,7 @@ namespace Library
             {
                 menu = keyboard.SelectMenu(16, 31, 3);
                 if (menu == Constants.ESCAPE) return Constants.ESCAPE;   //메뉴선택 중 뒤로가기를 누르면 종료
-                InputBook(keyboard.GetTop());                   //해당 도서정보 수정
+                InputBook(keyboard.Top);                   //해당 도서정보 수정
                 editingBookScreen.PrintSuccessMessage(bookVO);     //수정된 정보가 반영된 화면 출력
             }
         }

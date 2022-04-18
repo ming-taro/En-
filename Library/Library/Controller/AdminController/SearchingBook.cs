@@ -65,7 +65,7 @@ namespace Library
             int menu = keyboard.SelectMenu(1, 3, 1);                  //메뉴선택
             if (menu == Constants.ESCAPE) return Constants.ESCAPE;    //메뉴선택도중 뒤로가기 -> 관리자 메뉴로 돌아감
 
-            menu = keyboard.GetTop();                //메뉴선택 완료(1.도서명  2.출판사  3.저자)
+            menu = keyboard.Top;                //메뉴선택 완료(1.도서명  2.출판사  3.저자)
             string name = InputSearchWord(10, menu, 4);     //검색어 입력받기
             Console.Clear();
             screen.PrintSearchingBook(menu, name, bookListVO.bookList);   //검색결과로 나온 책목록 출력
