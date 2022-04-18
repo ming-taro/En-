@@ -131,6 +131,9 @@ namespace Library
 
             AddMemberList(id, password, name, age, phoneNumber, address);              //회원리스트에 가입정보 저장
             signUpScreen.PrintSuccessMessage();  //회원가입 축하 화면 출력
+
+            Keyboard keyboard = new Keyboard();
+            keyboard.PressESC();
         }
     }
 }

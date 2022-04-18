@@ -81,6 +81,15 @@ namespace Library
 
             return Constants.OUT_OF_MENU;
         }
-        
+        public void PressESC()
+        {
+            ConsoleKeyInfo keyInfo;
+
+            while (Constants.KEYBOARD_OPERATION)   //다른 키를 입력하면 올바른 키를 입력할때까지 무한루프
+            {
+                keyInfo = Console.ReadKey(true);   //키를 입력받음 
+                if (keyInfo.Key == ConsoleKey.Escape) return;
+            }
+        }
     }
 }

@@ -33,8 +33,6 @@ namespace Library
                     signUp.ControlSignUp();
                     break;
             }
-
-            if (menu == (int)Constants.Menu.SECOND) GoBack();  //회원가입 완료 후 뒤로가기 -> 회원메뉴(1.로그인  2.회원가입)로 이동
         }
         public void ControlMemberMode(int maxTop)    //1.회원가입  2.로그인 
         {
