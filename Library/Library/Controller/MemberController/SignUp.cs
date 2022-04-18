@@ -100,11 +100,6 @@ namespace Library
                 PrintInputBox(left, top, Constants.REMOVE_LINE);
             }
         }
-        public void AddMemberList(string id, string password, string name, string age, string phoneNumber, string address)   //회원가입완료 후 -> 회원리스트에 가입한 정보 저장
-        {
-            LibraryVO libraryVO = LibraryVO.GetLibraryVO();
-            libraryVO.memberList.Add(new MemberVO(id, password, name, age, phoneNumber, address));
-        }
         public void ControlSignUp()
         {
             SignUpScreen signUpScreen = new SignUpScreen();
@@ -129,7 +124,9 @@ namespace Library
             string address = InputPassword(6, 23, @"[가-힣]+(시|도)\s[가-힣]+(시|군|구)\s[가-힣]+(읍|면|동)", "(양식에 맞춰 입력해주세요.(ex: 서울특별시 광진구 군자동))       ");
             if (address.Equals(Constants.ESC)) return;
 
-            AddMemberList(id, password, name, age, phoneNumber, address);              //회원리스트에 가입정보 저장
+            LibraryVO library = LibraryVO.GetLibraryVO();
+            library.InsertMember(id, password, name, age, phoneNumber, address);  //회원리스트에 가입정보 저장
+
             signUpScreen.PrintSuccessMessage();  //회원가입 축하 화면 출력
 
             Keyboard keyboard = new Keyboard();

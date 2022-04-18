@@ -39,7 +39,7 @@ namespace Library
             MySqlDataReader table = command.ExecuteReader();
 
             table.Read();
-            if (table["id"] != null)
+            if (table != null)
             {
                 table.Close();
                 return Constants.EXISTING_MEMBER;
@@ -49,17 +49,6 @@ namespace Library
                 table.Close();
                 return !Constants.NON_EXISTING_MEMBER;
             }
-            
-
-            /*for (int i=0; i<library.memberList.Count; i++)
-            {
-                if (library.memberList[i].Id.Equals(id) && library.memberList[i].Password.Equals(password))
-                {
-                    return Constants.EXISTING_MEMBER;    //회원리스트에 있는 회원이라면 로그인 성공
-                }
-            }
-
-            return !Constants.EXISTING_MEMBER;*/  //----->느낌표XXXX(따로만들기)
         }
         public string SignInMember()
         { 

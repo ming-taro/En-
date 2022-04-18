@@ -59,18 +59,21 @@ namespace Library
                 string sql = "INSERT INTO booklist VALUES (" + id + "," + name + "," + publisher + "," + author + "," + price + "," + quantity + ");";
                 MySqlCommand command = new MySqlCommand(sql, connection);
                 command.ExecuteNonQuery();
-                
-                //MySqlDataReader table = command.ExecuteReader();
-                //MySqlDataReader table = command.ExecuteReader();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("실패");
+                Console.WriteLine(ex.ToString());
+            }
 
-                /*while (table.Read())
-                {
-
-                    //bookList.Add(new BookVO(table["id"].ToString(), table["name"].ToString(), table["publisher"].ToString(), table["author"].ToString(), table["price"].ToString(), table["quantity"].ToString()));
-                    //Console.WriteLine("{0} {1} {2} {3} {4} {5}", table["id"], table["name"], table["publisher"], table["author"], table["price"], table["quantity"]);
-                }
-                table.Close();*/
-
+        }
+        public void InsertMember(string id, string password, string name, string age, string phoneNumber, string address)
+        {
+            try
+            {
+                string sql = "INSERT INTO member VALUES (\""+id +"\",\""+password+"\",\""+name+"\",\""+age+"\",\""+phoneNumber+"\",\""+address+"\");";
+                MySqlCommand command = new MySqlCommand(sql, connection);
+                command.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
