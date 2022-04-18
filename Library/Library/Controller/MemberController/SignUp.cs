@@ -16,11 +16,11 @@ namespace Library
         }
         public bool IsDuplicatedId(string id)  //기존 회원의 아이디와 중복되는지 확인
         {
-            MemberListVO memberListVO = MemberListVO.GetMemberListVO(); //회원목록
+            LibraryVO libraryVO = LibraryVO.GetLibraryVO(); 
 
-            for(int i=0; i<memberListVO.memberList.Count; i++)
+            for(int i=0; i<libraryVO.memberList.Count; i++)
             {
-                if (memberListVO.memberList[i].Id.Equals(id)) return Constants.DUPLICATE_ID;  //중복된 아이디 -> 입력불가
+                if (libraryVO.memberList[i].Id.Equals(id)) return Constants.DUPLICATE_ID;  //중복된 아이디 -> 입력불가
             }
             return !Constants.DUPLICATE_ID;    //기존에 없는 아이디 -> 입력가능
         }
@@ -90,33 +90,32 @@ namespace Library
                 PrintInputBox(left, top, Constants.REMOVE_LINE);
             }
         }
-        public void AddMemberList(string[] profile)   //회원가입완료 후 -> 회원리스트에 가입한 정보 저장
+        public void AddMemberList(string id, string password, string name, string age, string phoneNumber, string address)   //회원가입완료 후 -> 회원리스트에 가입한 정보 저장
         {
-            MemberListVO memberListVO = MemberListVO.GetMemberListVO();
-            memberListVO.memberList.Add(new MemberVO(profile[0], profile[1], profile[2], profile[3], profile[4], profile[5]));
+            LibraryVO libraryVO = LibraryVO.GetLibraryVO();
+            libraryVO.memberList.Add(new MemberVO(id, password, name, age, phoneNumber, address));
         }
         public void ControlSignUp()
         {
             SignUpScreen signUpScreen = new SignUpScreen();
             signUpScreen.PrintSingUp();  //회원가입화면 출력
-            string[] profile = new string[6];
 
             //아이디
-            profile[0] = InputId(8, 5);
+            string id = InputId(8, 5);
             //비밀번호
-            profile[1] = InputPassword(10, 8, @"^[a-zA-Z0-9]{5,10}$", "(5~10자의 영어, 숫자만 다시 입력해주세요.)         "); 
+            string password = InputPassword(10, 8, @"^[a-zA-Z0-9]{5,10}$", "(5~10자의 영어, 숫자만 다시 입력해주세요.)         "); 
             //비밀번호 재확인
-            ReconfirmPassword(17, 11, profile[1]); 
+            ReconfirmPassword(17, 11, password); 
             //이름
-            profile[2] = InputPassword(6, 14, @"^[a-zA-Z가-힣]{1,30}$", "(30자 이내의 영어, 한글만 다시 입력해주세요.)             ");
+            string name = InputPassword(6, 14, @"^[a-zA-Z가-힣]{1,30}$", "(30자 이내의 영어, 한글만 다시 입력해주세요.)             ");
             //나이
-            profile[3] = InputPassword(6, 17, @"^[1-9]{1}[0-9]{0,1}$", "(1~99세까지 입력 가능합니다.)                ");       
+            string age = InputPassword(6, 17, @"^[1-9]{1}[0-9]{0,1}$", "(1~99세까지 입력 가능합니다.)                ");       
             //휴대전화
-            profile[4] = InputPassword(10, 20, @"010-[0-9]{4}-[0-9]{4}$", "(양식에 맞춰 다시 입력해주세요.(ex: 010-0000-0000))              ");
+            string phoneNumber = InputPassword(10, 20, @"010-[0-9]{4}-[0-9]{4}$", "(양식에 맞춰 다시 입력해주세요.(ex: 010-0000-0000))              ");
             //주소
-            profile[5] = InputPassword(6, 23, @"[가-힣]+(시|도)\s[가-힣]+(시|군|구)\s[가-힣]+(읍|면|동)", "(양식에 맞춰 입력해주세요.(ex: 서울특별시 광진구 군자동))       ");
+            string address = InputPassword(6, 23, @"[가-힣]+(시|도)\s[가-힣]+(시|군|구)\s[가-힣]+(읍|면|동)", "(양식에 맞춰 입력해주세요.(ex: 서울특별시 광진구 군자동))       ");
 
-            AddMemberList(profile);              //회원리스트에 가입정보 저장
+            AddMemberList(id, password, name, age, phoneNumber, address);              //회원리스트에 가입정보 저장
             signUpScreen.PrintSuccessMessage();  //회원가입 축하 화면 출력
         }
     }

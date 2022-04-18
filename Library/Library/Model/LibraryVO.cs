@@ -12,10 +12,12 @@ namespace Library
         private static LibraryVO libraryVO = null;
         public List<BookVO> bookList;
         public List<MemberVO> memberList;
+        public List<BorrowVO> borrowList;
         private LibraryVO()
         {
             bookList = new List<BookVO>();
             memberList = new List<MemberVO>();
+            borrowList = new List<BorrowVO>();
         }
         public static LibraryVO GetLibraryVO()
         {

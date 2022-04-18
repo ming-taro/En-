@@ -9,11 +9,6 @@ namespace Library
 {
     class Library
     {
-        private List<BookVO> bookList;
-        public Library()
-        {
-
-        }
 
         private void StartMain(int top)
         {
