@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace Library
 {
-    class Starting
+    class Library
     {
         public void ControlMain(int top)
         {
             switch (top)  //커서의 위치값으로 메뉴를 구분
             {
-                case 13:
+                case (int)Constants.Menu.FIRST:
                     MemberController memberController = new MemberController(); //1. 회원모드
                     memberController.ControlMemberMode(14);       //회원메뉴 컨트롤로 이동
                     break;
-                case 14:                                    //2. 관리자 모드
+                case (int)Constants.Menu.SECOND:                                    //2. 관리자 모드
                     AdminController adminController = new AdminController();    //관리자 로그인 화면으로 이동
                     adminController.ControlAdminMode();            //관리자 모드로     
                     break;

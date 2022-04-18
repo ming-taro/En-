@@ -48,8 +48,20 @@ namespace Library
         public const bool WRONG_VALUE = false;
         public const string SIGN_IN_ERROR = "아이디 또는 비밀번호를 잘못 입력하셨습니다.\n다시 입력해주세요.\n";
 
-        public bool MODIFIERS = true;
-        public bool NOT_MODIFIERS = false;
+        //EnteringText
+        public const bool MODIFIERS = true;
+        public const bool NOT_MODIFIERS = false;
+        public const bool KOREAN = true;
+        public const bool NOT_KOREAN = false;
+        public const string ESC = "ESC";
 
+        public enum Menu
+        {
+            FIRST = 13,
+            SECOND = 14,
+            THIRD = 15,
+            FOURTH = 16,
+            FIFTH = 17
+        }
     }
 }
