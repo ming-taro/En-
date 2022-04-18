@@ -8,7 +8,12 @@ namespace Library
 {
     class DeletingMember
     {
+        private LibraryVO library;
         private int memberIndex;
+        public DeletingMember()
+        {
+            library = LibraryVO.GetLibraryVO();
+        }
         public void PrintInputBox(int left, int top, string message)
         {
             Console.SetCursorPosition(left, top);
@@ -16,11 +21,9 @@ namespace Library
         }
         public bool IsMemberInList(string memberId)  //입력받은 회원아이디가 회원목록에 있는지 확인
         {
-            MemberListVO memberListVO = MemberListVO.GetMemberListVO();  //회원목록
-
-            for(int i=0; i<memberListVO.memberList.Count; i++)
+            for(int i=0; i<library.memberList.Count; i++)
             {
-                if(memberListVO.memberList[i].Id.Equals(memberId))
+                if(library.memberList[i].Id.Equals(memberId))
                 {
                     memberIndex = i;     //삭제할 회원아이디 인덱스 저장
                     return Constants.MEMBER_IN_LIST;
@@ -30,11 +33,9 @@ namespace Library
         }
         public bool IsBorrowingBook(string memberId)  //회원이 도서를 대여중인지 확인
         {
-            BorrowListVO borrowListVO = BorrowListVO.GetBorrowListVO();  //대여 도서 목록
-
-            for(int i=0; i<borrowListVO.borrowList.Count; i++)
+            for(int i=0; i<library.borrowList.Count; i++)
             {
-                if (borrowListVO.borrowList[i].MemberId.Equals(memberId)) return Constants.BOOK_I_BORROWED;   //도서를 대여중 -> 회원삭제 불가
+                if (library.borrowList[i].MemberId.Equals(memberId)) return Constants.BOOK_I_BORROWED;   //도서를 대여중 -> 회원삭제 불가
             }
             return !Constants.BOOK_I_BORROWED;
         }
@@ -62,11 +63,6 @@ namespace Library
             }
             return memberId;
         }
-        public void DeleteMember()
-        {
-            MemberListVO memberListVO = MemberListVO.GetMemberListVO();  //회원목록
-            memberListVO.memberList.RemoveAt(memberIndex);  //회원삭제
-        }
         public int ControlDeletingMember()
         {
             DeletingMemberScreen deletingScreen = new DeletingMemberScreen();
@@ -82,7 +78,7 @@ namespace Library
             string memberId = InputMemberId();   //삭제할 회원 아이디를 입력받음
 
             deletingScreen.PrintSuccessMessage(memberIndex);   //삭제 성공 메세지 출력
-            DeleteMember();//회원삭제
+            library.memberList.RemoveAt(memberIndex);  //회원삭제
 
             return Constants.COMPLETE_FUNCTION;
         }

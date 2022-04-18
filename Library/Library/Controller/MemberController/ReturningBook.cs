@@ -10,23 +10,26 @@ namespace Library
     class ReturningBook
     {
         private List<BookVO> myBorrowList;
-        public ReturningBook(string memberId)
+        private LibraryVO library;
+        public ReturningBook()
         {
             myBorrowList = new List<BookVO>();                           //나의 도서 대여 목록
-            BorrowListVO borrowListVO = BorrowListVO.GetBorrowListVO();  //도서목록
-
-            for (int i = 0; i < borrowListVO.borrowList.Count; i++)
+            library = LibraryVO.GetLibraryVO();   
+        }
+        private void InitMyBorrowList(string memberId)
+        {
+            for (int i = 0; i < library.borrowList.Count; i++)
             {
-                if (borrowListVO.borrowList[i].MemberId.Equals(memberId))
+                if (library.borrowList[i].MemberId.Equals(memberId))
                 {
-                    myBorrowList.Add(borrowListVO.borrowList[i].BookVO); //나의 도서 대여 목록에 책 정보 저장
+                    myBorrowList.Add(library.borrowList[i].BookVO); //나의 도서 대여 목록에 책 정보 저장
                 }
             }
 
             ReturningScreen returningScreen = new ReturningScreen();
             returningScreen.PrintReturning(myBorrowList);                 //회원의 도서대여목록 출력
         }
-        public bool IsBookIBorrowed(string bookId)
+        private bool IsBookIBorrowed(string bookId)
         {
             for (int i = 0; i < myBorrowList.Count; i++)
             {
@@ -38,7 +41,7 @@ namespace Library
             }
             return !Constants.BOOK_I_BORROWED;
         }
-        public string InputBookId()
+        private string InputBookId()
         {
             ReturningScreen returningScreen = new ReturningScreen();
             Regex regex = new Regex(@"^[0-9]{1,3}$");
@@ -64,34 +67,33 @@ namespace Library
 
             return bookId;
         }
-        public void RemoveInBorrowListVO(string memberId, string bookId)
+        private void RemoveInBorrowListVO(string memberId, string bookId)
         {
-            BorrowListVO borrowListVO = BorrowListVO.GetBorrowListVO();   //대여 도서 목록
-
-            for(int i=0; i<borrowListVO.borrowList.Count; i++)
+            for(int i=0; i<library.borrowList.Count; i++)
             {
-                if(borrowListVO.borrowList[i].MemberId.Equals(memberId) && borrowListVO.borrowList[i].BookVO.Id.Equals(bookId))
+                if(library.borrowList[i].MemberId.Equals(memberId) && library.borrowList[i].BookVO.Id.Equals(bookId))
                 {
-                    borrowListVO.borrowList.RemoveAt(i);   //대여도서목록에서 반납한 도서 데이터 삭제
+                    library.borrowList.RemoveAt(i);   //대여도서목록에서 반납한 도서 데이터 삭제
                     break;
                 }
             }
         }
-        public void AddInBookListVO(string bookId)
+        private void AddInBookListVO(string bookId)
         {
-            BookListVO bookListVO = BookListVO.GetBookListVO();
-            int i;
+            int bookIndex;
 
-            for(i = 0; i<bookListVO.bookList.Count; i++)
+            for(bookIndex = 0; bookIndex < library.bookList.Count; bookIndex++)
             {
-                if (bookListVO.bookList[i].Id.Equals(bookId)) break;//반납한 도서 아이디를 도서목록에서 찾음
+                if (library.bookList[bookIndex].Id.Equals(bookId)) break;//반납한 도서 아이디를 도서목록에서 찾음
             }
 
-            int quantity = int.Parse(bookListVO.bookList[i].Quantity) + 1; //해당 도서 수량을 +1만큼
-            bookListVO.bookList[i].Quantity = quantity.ToString();
+            int quantity = int.Parse(library.bookList[bookIndex].Quantity) + 1; //해당 도서 수량을 +1만큼
+            library.bookList[bookIndex].Quantity = quantity.ToString();
         }
         public int ControlReturning(string memberId)
         {
+            InitMyBorrowList(memberId);
+
             Keyboard keyboard = new Keyboard(0, 1);
             int menu = keyboard.SelectMenu(1, 1, 0);
             if (menu == Constants.ESCAPE) return Constants.ESCAPE;   //뒤로가기 -> 회원모드로 돌아감

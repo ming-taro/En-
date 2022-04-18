@@ -16,11 +16,13 @@ namespace Library
         }
         public bool IsDuplicateId(string bookId)   //입력한 도서번호가 중복된 아이디인지 검사
         {
-            BookListVO bookListVO = BookListVO.GetBookListVO();  //도서목록
-            Console.WriteLine(bookListVO.bookList[0].Id);
-            for (int i = 0; i < bookListVO.bookList.Count; i++)
+            LibraryVO library = LibraryVO.GetLibraryVO();  //도서목록
+
+            Console.WriteLine(library.bookList[0].Id);
+
+            for (int i = 0; i < library.bookList.Count; i++)
             {
-                if (bookListVO.bookList[i].Id.Equals(bookId)) return Constants.DUPLICATE_ID;  //이미 존재하는 아이디
+                if (library.bookList[i].Id.Equals(bookId)) return Constants.DUPLICATE_ID;  //이미 존재하는 아이디
             }
             return !Constants.DUPLICATE_ID;  //중복없는 아이디 -> 입력가능
         }
@@ -147,8 +149,8 @@ namespace Library
             book[4] = InputPrice(6, 19);                    //가격
             book[5] = InputQuantity(6, 22);                 //수량
 
-            BookListVO bookListVO = BookListVO.GetBookListVO();  //도서목록
-            bookListVO.bookList.Add(new BookVO(book[0], book[1], book[2], book[3], book[4], book[5])); //도서목록에 등록된 도서정보 추가
+            LibraryVO library = LibraryVO.GetLibraryVO();  //도서목록
+            library.bookList.Add(new BookVO(book[0], book[1], book[2], book[3], book[4], book[5])); //도서목록에 등록된 도서정보 추가
 
             screen = new RegisteringScreen();
             screen.PrintComplete();                   //등록 완료 화면 출력

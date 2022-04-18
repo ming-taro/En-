@@ -14,9 +14,9 @@ namespace Library
             LogoScreen logoScreen = new LogoScreen();
             logoScreen.PrintSearchBox("\n☞도서명 검색: ");  //검색창 출력
 
-            BookListVO bookListVO = BookListVO.GetBookListVO();
+            LibraryVO library = LibraryVO.GetLibraryVO();
             ListScreen listScreen = new ListScreen();
-            listScreen.PrintBookList(bookListVO.bookList);        //도서목록 출력
+            listScreen.PrintBookList(library.bookList);        //도서목록 출력
         }
 
         public void PrintSuccessMessage()

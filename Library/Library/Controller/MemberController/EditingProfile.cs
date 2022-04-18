@@ -15,14 +15,14 @@ namespace Library
         }
         public MemberVO FindMember(string memberId)
         {
-            MemberListVO memberListVO = MemberListVO.GetMemberListVO(); //회원목록
+            LibraryVO library = LibraryVO.GetLibraryVO();
             MemberVO memberVO = null;
 
-            for(int i = 0; i<memberListVO.memberList.Count; i++)
+            for(int i = 0; i<library.memberList.Count; i++)
             {
-                if (memberListVO.memberList[i].Id.Equals(memberId))
+                if (library.memberList[i].Id.Equals(memberId))
                 {
-                    memberVO = memberListVO.memberList[i];
+                    memberVO = library.memberList[i];
                     break;  //목록에서 해당 회원을 찾음
                 }
             }

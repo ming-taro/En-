@@ -26,13 +26,18 @@ namespace Library
         }
         public string InputId(int left, int top)  //아이디 입력
         {
+            EnteringText text = new EnteringText();
             string id;
 
             while (Constants.INPUT_VALUE)
             {
                 Console.SetCursorPosition(left, top);
-                id = Console.ReadLine();  //아이디 입력
-                if (string.IsNullOrEmpty(id) || !Regex.IsMatch(id, @"^[a-zA-Z0-9]{5,10}$"))  //입력형식에 맞지 않음 -> 아이디 다시입력
+                id = text.EnterText(left, top, "");  //아이디 입력
+                if (id.Equals(Constants.ESC))
+                {
+                    return Constants.ESC;
+                }
+                else if (string.IsNullOrEmpty(id) || !Regex.IsMatch(id, @"^[a-zA-Z0-9]{5,10}$"))  //입력형식에 맞지 않음 -> 아이디 다시입력
                 {
                     PrintInputBox(0, top + 1, "(5~10자의 영어, 숫자만 다시 입력해주세요.)         ");
                 }
@@ -51,13 +56,18 @@ namespace Library
         }
         public string InputPassword(int left, int top, string regexText, string errorMessage)
         {
+            EnteringText text = new EnteringText();
             string password;
 
             while (Constants.INPUT_VALUE)
             {
                 Console.SetCursorPosition(left, top);  
-                password = Console.ReadLine();
-                if (string.IsNullOrEmpty(password) || !Regex.IsMatch(password, regexText))   //입력형식에 맞지 않은 경우 -> 비밀번호 다시 입력
+                password = text.EnterText(left, top, "");
+                if (password.Equals(Constants.ESC))
+                {
+                    return Constants.ESC;
+                }
+                else if (string.IsNullOrEmpty(password) || !Regex.IsMatch(password, regexText))   //입력형식에 맞지 않은 경우 -> 비밀번호 다시 입력
                 {
                     PrintInputBox(0, top + 1, errorMessage);
                 }
@@ -100,20 +110,24 @@ namespace Library
             SignUpScreen signUpScreen = new SignUpScreen();
             signUpScreen.PrintSingUp();  //회원가입화면 출력
 
-            //아이디
             string id = InputId(8, 5);
-            //비밀번호
-            string password = InputPassword(10, 8, @"^[a-zA-Z0-9]{5,10}$", "(5~10자의 영어, 숫자만 다시 입력해주세요.)         "); 
-            //비밀번호 재확인
+            if (id.Equals(Constants.ESC)) return; //esc -> 뒤로가기
+
+            string password = InputPassword(10, 8, @"^[a-zA-Z0-9]{5,10}$", "(5~10자의 영어, 숫자만 다시 입력해주세요.)         ");
+            if (password.Equals(Constants.ESC)) return;
             ReconfirmPassword(17, 11, password); 
-            //이름
+            
             string name = InputPassword(6, 14, @"^[a-zA-Z가-힣]{1,30}$", "(30자 이내의 영어, 한글만 다시 입력해주세요.)             ");
-            //나이
-            string age = InputPassword(6, 17, @"^[1-9]{1}[0-9]{0,1}$", "(1~99세까지 입력 가능합니다.)                ");       
-            //휴대전화
+            if (name.Equals(Constants.ESC)) return;
+
+            string age = InputPassword(6, 17, @"^[1-9]{1}[0-9]{0,1}$", "(1~99세까지 입력 가능합니다.)                ");
+            if (age.Equals(Constants.ESC)) return;
+
             string phoneNumber = InputPassword(10, 20, @"010-[0-9]{4}-[0-9]{4}$", "(양식에 맞춰 다시 입력해주세요.(ex: 010-0000-0000))              ");
-            //주소
+            if (phoneNumber.Equals(Constants.ESC)) return;
+
             string address = InputPassword(6, 23, @"[가-힣]+(시|도)\s[가-힣]+(시|군|구)\s[가-힣]+(읍|면|동)", "(양식에 맞춰 입력해주세요.(ex: 서울특별시 광진구 군자동))       ");
+            if (address.Equals(Constants.ESC)) return;
 
             AddMemberList(id, password, name, age, phoneNumber, address);              //회원리스트에 가입정보 저장
             signUpScreen.PrintSuccessMessage();  //회원가입 축하 화면 출력

@@ -9,7 +9,11 @@ namespace Library
 {
     class SearchingBook
     {
-        private BookListVO bookListVO = BookListVO.GetBookListVO();  //도서목록
+        private LibraryVO libraryVO;
+        public SearchingBook()
+        {
+            libraryVO = LibraryVO.GetLibraryVO();
+        }
         public void PrintInputBox(int left, int top, string message)
         {
             Console.SetCursorPosition(left, top);
@@ -17,19 +21,17 @@ namespace Library
         }
         public bool IsBookInList(int menu, string searchWord)
         {
-            BookListVO bookListVO = BookListVO.GetBookListVO();
-
-            for(int i=0; i<bookListVO.bookList.Count; i++)
+            for(int i=0; i<libraryVO.bookList.Count; i++)
             {
-                if(menu == 1 && bookListVO.bookList[i].Name.Contains(searchWord)) //도서명
+                if(menu == 1 && libraryVO.bookList[i].Name.Contains(searchWord)) //도서명
                 {
                     return Constants.BOOK_IN_LIST;
                 }
-                else if (menu == 2 && bookListVO.bookList[i].Publisher.Contains(searchWord)) //출판사
+                else if (menu == 2 && libraryVO.bookList[i].Publisher.Contains(searchWord)) //출판사
                 {
                     return Constants.BOOK_IN_LIST;
                 }
-                else if (menu == 3 && bookListVO.bookList[i].Author.Contains(searchWord)) //저자
+                else if (menu == 3 && libraryVO.bookList[i].Author.Contains(searchWord)) //저자
                 {
                     return Constants.BOOK_IN_LIST;
                 }
@@ -58,7 +60,7 @@ namespace Library
         public int ControlSearchingBook()  //도서검색하기(검색어 입력 -> 목록 출력)
         {
             SearchingScreen screen = new SearchingScreen();
-            screen.PrintSearchingBook(bookListVO.bookList);
+            screen.PrintSearchingBook(libraryVO.bookList);
 
             Keyboard keyboard = new Keyboard();
             keyboard.SetPosition(0, 1);     //커서위치
@@ -68,7 +70,7 @@ namespace Library
             menu = keyboard.Top;                //메뉴선택 완료(1.도서명  2.출판사  3.저자)
             string name = InputSearchWord(10, menu, 4);     //검색어 입력받기
             Console.Clear();
-            screen.PrintSearchingBook(menu, name, bookListVO.bookList);   //검색결과로 나온 책목록 출력
+            screen.PrintSearchingBook(menu, name, libraryVO.bookList);   //검색결과로 나온 책목록 출력
 
             return Constants.COMPLETE_FUNCTION;      //검색결과 출력까지 모두 완료
         }

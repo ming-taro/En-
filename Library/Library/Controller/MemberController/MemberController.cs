@@ -72,7 +72,7 @@ namespace Library
                     function = borrowing.ControlBorrowing(myId);
                     break;
                 case (int)Constants.Menu.THIRD:   //도서반납
-                    ReturningBook returning = new ReturningBook(myId);
+                    ReturningBook returning = new ReturningBook();
                     function = returning.ControlReturning(myId);
                     break;
                 case (int)Constants.Menu.FOURTH:   //개인정보수정

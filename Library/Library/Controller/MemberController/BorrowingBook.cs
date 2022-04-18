@@ -9,10 +9,12 @@ namespace Library
 {
     class BorrowingBook
     {
-        private List<BookVO> bookList;   
+        private List<BookVO> bookList;
+        private LibraryVO library;
         public BorrowingBook()
         {
             bookList = new List<BookVO>();
+            library = LibraryVO.GetLibraryVO();
         }
         public void PrintBorrowing()
         {
@@ -26,24 +28,20 @@ namespace Library
         }
         public void AddBookOnList(string bookName)   //입력받은 도서명을 포함하는 도서목록리스트 생성
         {
-            BookListVO bookListVO = BookListVO.GetBookListVO();
-
-            for(int i=0; i<bookListVO.bookList.Count; i++)
+            for(int i=0; i<library.bookList.Count; i++)
             {
-                if (bookListVO.bookList[i].Name.Contains(bookName))
+                if (library.bookList[i].Name.Contains(bookName))
                 {
-                    bookList.Add(bookListVO.bookList[i]);   //입력된 도서명을 포함하는 도서를 찾아 리스트에 저장
+                    bookList.Add(library.bookList[i]);   //입력된 도서명을 포함하는 도서를 찾아 리스트에 저장
                 }
             }
         }
         public bool IsBookIBorrowed(string memberId, string bookId)
         {
-            BorrowListVO borrowListVO = BorrowListVO.GetBorrowListVO();  //대여목록
-
-            for(int i=0; i<borrowListVO.borrowList.Count; i++)
+            for(int i=0; i<library.borrowList.Count; i++)
             {
                 //대여리스트에서 회원아이디와 책아이디를 비교 -> 현재 대여중인 도서인지 확인
-                if (borrowListVO.borrowList[i].MemberId.Equals(memberId) && borrowListVO.borrowList[i].BookVO.Id.Equals(bookId))
+                if (library.borrowList[i].MemberId.Equals(memberId) && library.borrowList[i].BookVO.Id.Equals(bookId))
                 {
                     return Constants.BOOK_I_BORROWED; //이미 대여중인 도서 -> 도서 대여 불가
                 }
@@ -53,11 +51,9 @@ namespace Library
         }
         public bool IsBookInList(string bookName)   //입력받은 도서명 -> 도서목록에 존재하는 책인지 확인
         {
-            BookListVO bookListVO = BookListVO.GetBookListVO();
-
-            for (int i = 0; i < bookListVO.bookList.Count; i++)
+            for (int i = 0; i < library.bookList.Count; i++)
             {
-                if (bookListVO.bookList[i].Name.Contains(bookName))
+                if (library.bookList[i].Name.Contains(bookName))
                 {
                     return Constants.BOOK_IN_LIST;   //입력된 도서명이 목록에 있음
                 }
@@ -146,24 +142,22 @@ namespace Library
         }
         public BookVO FindBookInList(string bookId)    //입력받은 도서번호에 해당하는 도서정보 리턴
         {
-            BookListVO bookListVO = BookListVO.GetBookListVO();  //도서목록
-            int i;
+            int bookIndex;
 
-            for(i = 0; i<bookListVO.bookList.Count; i++)
+            for(bookIndex = 0; bookIndex < library.bookList.Count; bookIndex++)
             {
-                if (bookListVO.bookList[i].Id.Equals(bookId)) break;   //목록에서 해당 도서를 찾음
+                if (library.bookList[bookIndex].Id.Equals(bookId)) break;   //목록에서 해당 도서를 찾음
             }
 
-            int quantity = int.Parse(bookListVO.bookList[i].Quantity) - 1; //해당 도서의 수량 -1
-            bookListVO.bookList[i].Quantity = quantity.ToString();         //도서정보에 변경된 수량 반영
+            int quantity = int.Parse(library.bookList[bookIndex].Quantity) - 1; //해당 도서의 수량 -1
+            library.bookList[bookIndex].Quantity = quantity.ToString();         //도서정보에 변경된 수량 반영
             
-            return bookListVO.bookList[i];  
+            return library.bookList[bookIndex];  
         }
         public void AddBorrowList(string memberId, string bookId)   //도서번호를 알맞게 입력받아 도서대여 완료 -> 현재 도서대여목록에 데이터 추가
         {
-            BorrowListVO borrowListVO = BorrowListVO.GetBorrowListVO();  //도서대여목록
             BorrowVO borrowVO = new BorrowVO(memberId, FindBookInList(bookId));
-            borrowListVO.borrowList.Add(borrowVO);  //도서대여목록에 대여한 도서정보와 회원번호 추가
+            library.borrowList.Add(borrowVO);  //도서대여목록에 대여한 도서정보와 회원번호 추가
         }
         public int ControlBorrowing(string memberId)
         {

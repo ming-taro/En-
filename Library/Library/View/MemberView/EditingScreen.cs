@@ -6,13 +6,13 @@ namespace Library
     {
         public void PrintProfile(string memberId)
         {
-            MemberListVO memberListVO = MemberListVO.GetMemberListVO();
+            LibraryVO library = LibraryVO.GetLibraryVO();
 
-            for(int i=0; i<memberListVO.memberList.Count; i++)
+            for(int i=0; i<library.memberList.Count; i++)
             {
-                if (memberListVO.memberList[i].Id.Equals(memberId))
+                if (library.memberList[i].Id.Equals(memberId))
                 {
-                    Console.WriteLine(memberListVO.memberList[i]);  //현재 로그인한 회원의 정보 출력
+                    Console.WriteLine(library.memberList[i]);  //현재 로그인한 회원의 정보 출력
                     break;
                 }
             }

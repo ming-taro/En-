@@ -9,7 +9,13 @@ namespace Library
 {
     class DeletingBook
     {
+        private LibraryVO library;
         int bookIndex;
+        public DeletingBook()
+        {
+            library = LibraryVO.GetLibraryVO();
+        }
+
         public void PrintInputBox(int left, int top, string message)///---->뷰로빼기(겹침)
         {
             Console.SetCursorPosition(left, top);
@@ -17,11 +23,9 @@ namespace Library
         }
         public bool IsBorrowedBook(string bookId)
         {
-            BorrowListVO borrowListVO = BorrowListVO.GetBorrowListVO();
-
-            for(int i=0; i<borrowListVO.borrowList.Count; i++)
+            for(int i=0; i<library.borrowList.Count; i++)
             {
-                if (borrowListVO.borrowList[i].BookVO.Id.Equals(bookId))   //해당 도서를 회원이 대여중인 경우 -> 도서삭제 불가
+                if (library.borrowList[i].BookVO.Id.Equals(bookId))   //해당 도서를 회원이 대여중인 경우 -> 도서삭제 불가
                 {
                     return Constants.BOOK_I_BORROWED;
                 }
@@ -30,11 +34,9 @@ namespace Library
         }
         public bool IsBookInList(string bookName, string bookId)
         {
-            BookListVO bookListVO = BookListVO.GetBookListVO();   //도서목록
-
-            for(int i=0; i<bookListVO.bookList.Count; i++)
+            for(int i=0; i<library.bookList.Count; i++)
             {
-                if(bookListVO.bookList[i].Name.Contains(bookName) && bookListVO.bookList[i].Id.Equals(bookId))
+                if(library.bookList[i].Name.Contains(bookName) && library.bookList[i].Id.Equals(bookId))
                 {
                     bookIndex = i;   //도서 삭제할때 사용
                     return Constants.BOOK_IN_LIST;   //도서명,번호에 해당하는 책을 찾음
@@ -71,11 +73,6 @@ namespace Library
 
             return bookName;
         }
-        public void DeleteBookInList()
-        {
-            BookListVO bookListVO = BookListVO.GetBookListVO();
-            bookListVO.bookList.RemoveAt(bookIndex); //도서목록에서 해당 도서 삭제
-        }
         public int ControlDeletingBook()
         {
             DeletingBookScreen deletingBookScreen = new DeletingBookScreen();
@@ -93,7 +90,7 @@ namespace Library
             InputBookId(bookName);
 
             deletingBookScreen.PrintSuccessMessage(bookIndex);   //도서삭제 완료 메세지 출력
-            DeleteBookInList();                                  //리스트에서 도서삭제
+            library.bookList.RemoveAt(bookIndex);                //리스트에서 도서삭제
 
             return Constants.COMPLETE_FUNCTION;
         }

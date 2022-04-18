@@ -17,13 +17,13 @@ namespace Library
         }
         public bool IsBookInList(string bookId)
         {
-            BookListVO bookListVO = BookListVO.GetBookListVO();   //도서목록
+            LibraryVO library = LibraryVO.GetLibraryVO();   //도서목록
 
-            for (int i = 0; i < bookListVO.bookList.Count; i++)
+            for (int i = 0; i < library.bookList.Count; i++)
             {
-                if (bookListVO.bookList[i].Id.Equals(bookId))
+                if (library.bookList[i].Id.Equals(bookId))
                 {
-                    bookVO = bookListVO.bookList[i]; //도서정보 저장   
+                    bookVO = library.bookList[i]; //도서정보 저장   
                     return Constants.BOOK_IN_LIST;   //도서명,번호에 해당하는 책을 찾음
                 }
             }

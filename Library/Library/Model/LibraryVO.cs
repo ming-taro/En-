@@ -18,6 +18,9 @@ namespace Library
             bookList = new List<BookVO>();
             memberList = new List<MemberVO>();
             borrowList = new List<BorrowVO>();
+
+            SetBookList();
+            SetMemberList();
         }
         public static LibraryVO GetLibraryVO()
         {

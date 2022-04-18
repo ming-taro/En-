@@ -32,11 +32,11 @@ namespace Library
         }
         public bool IsExistingMember(string id, string password)  //입력된 정보가 존재하는 회원인지 확인
         {
-            MemberListVO memberListVO = MemberListVO.GetMemberListVO();
+            LibraryVO library = LibraryVO.GetLibraryVO();
 
-            for(int i=0; i<memberListVO.memberList.Count; i++)
+            for(int i=0; i<library.memberList.Count; i++)
             {
-                if (memberListVO.memberList[i].Id.Equals(id) && memberListVO.memberList[i].Password.Equals(password))
+                if (library.memberList[i].Id.Equals(id) && library.memberList[i].Password.Equals(password))
                 {
                     return Constants.EXISTING_MEMBER;    //회원리스트에 있는 회원이라면 로그인 성공
                 }

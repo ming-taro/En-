@@ -24,7 +24,7 @@ namespace Library
             }
             return Constants.NOT_KOREAN;
         }
-        public string EnterText(int left, int top)
+        public string EnterText(int left, int top, string mark)
         {
             StringBuilder text = new StringBuilder();
             ConsoleKeyInfo keyInfo;
@@ -65,6 +65,11 @@ namespace Library
                     Console.SetCursorPosition(Console.CursorLeft - 1, top);
                     Console.Write("  ");
                     Console.SetCursorPosition(Console.CursorLeft - 2, top);
+                }
+                else if (mark.Equals("*"))
+                {
+                    Console.Write("*");
+                    text.Append(keyInfo.KeyChar); //입력값 저장
                 }
                 else
                 {
