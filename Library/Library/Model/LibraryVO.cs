@@ -9,12 +9,33 @@ namespace Library
 {
     class LibraryVO
     {
-        private static LibraryVO libraryVO = null;
+        private static LibraryVO libraryVO;
         public List<BookVO> bookList;
         public List<MemberVO> memberList;
         public List<BorrowVO> borrowList;
+
+        private static MySqlConnection connection;
+        /*public static LibraryVO Connection
+        {
+            get
+            {
+                if(connection == null)
+                {
+                    connection = new MySqlConnection();
+                }
+                return connection;
+            }
+
+        }*/
         private LibraryVO()
         {
+
+
+
+
+
+
+
             bookList = new List<BookVO>();
             memberList = new List<MemberVO>();
             borrowList = new List<BorrowVO>();
@@ -32,30 +53,29 @@ namespace Library
         }
         public void SetBookList()  //책목록
         {
-            using (MySqlConnection connection = new MySqlConnection("Server=localhost;Port=3306;Database=booklist;Uid=root;Pwd=root"))
+            MySqlConnection connection = new MySqlConnection("Server=localhost;Port=3306;Database=booklist;Uid=root;Pwd=root");
+
+            try//예외 처리
             {
-                try//예외 처리
-                {
-                    connection.Open();
-                    string sql = "select*from book";
-                    MySqlCommand command = new MySqlCommand(sql, connection);
-                    MySqlDataReader table = command.ExecuteReader();
+                connection.Open();
+                string sql = "select*from book";
+                MySqlCommand command = new MySqlCommand(sql, connection);
+                MySqlDataReader table = command.ExecuteReader();
 
-                    while (table.Read())
-                    {
-                        bookList.Add(new BookVO(table["id"].ToString(), table["name"].ToString(), table["publisher"].ToString(), table["author"].ToString(), table["price"].ToString(), table["quantity"].ToString()));
-                        //Console.WriteLine("{0} {1} {2} {3} {4} {5}", table["id"], table["name"], table["publisher"], table["author"], table["price"], table["quantity"]);
-                    }
-                    table.Close();
-
-                }
-                catch (Exception ex)
+                while (table.Read())
                 {
-                    Console.WriteLine("실패");
-                    Console.WriteLine(ex.ToString());
+                    bookList.Add(new BookVO(table["id"].ToString(), table["name"].ToString(), table["publisher"].ToString(), table["author"].ToString(), table["price"].ToString(), table["quantity"].ToString()));
+                    //Console.WriteLine("{0} {1} {2} {3} {4} {5}", table["id"], table["name"], table["publisher"], table["author"], table["price"], table["quantity"]);
                 }
+                table.Close();
 
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine("실패");
+                Console.WriteLine(ex.ToString());
+            }
+
         }
         public void SetMemberList()  //회원목록
         {
