@@ -7,13 +7,9 @@ using System.Threading.Tasks;
 
 namespace Library
 {
-    class MemberController
+    class Member
     {
-        private string myId;
-        public MemberController()
-        {
-            myId = "";
-        }
+        private string myId;               //현재 로인한 회원 아이디
         
         public void ControlSignIn()
         {
@@ -26,7 +22,7 @@ namespace Library
             {
                 case (int)Constants.Menu.FIRST:  //로그인
                     ControlSignIn();
-                    ControlMemberMode(16);  //회원 모드로(1.도서검색  2.도서대여  3.도서반납  4.개인정보수정  5.종료)
+                    StartMemberMode(16);  //회원 모드로(1.도서검색  2.도서대여  3.도서반납  4.개인정보수정  5.종료)
                     break;
                 case (int)Constants.Menu.SECOND:  //회원가입
                     SignUp signUp = new SignUp();
@@ -34,7 +30,7 @@ namespace Library
                     break;
             }
         }
-        public void ControlMemberMode(int maxTop)    //1.회원가입  2.로그인 
+        public void StartMemberMode(int maxTop)    //1.회원가입  2.로그인 
         {
             MenuScreen menuScreen = new MenuScreen();
             Keyboard keyboard = new Keyboard();
@@ -65,22 +61,19 @@ namespace Library
                     AdminController adminController = new AdminController();
                     adminController.SelectMenu(menu);
                     break;
-                case (int)Constants.Menu.SECOND:  //도서대여
+                case (int)Constants.Menu.SECOND: //도서대여
                     BorrowingBook borrowingBook = new BorrowingBook();
                     borrowingBook.SearchBorrowBook(myId);
                     break;
-                case (int)Constants.Menu.THIRD:   //도서반납
+                case (int)Constants.Menu.THIRD:  //도서반납
                     ReturningBook returningBook = new ReturningBook();
                     returningBook.ShowMyBookList(myId);
                     break;
-                case (int)Constants.Menu.FOURTH:   //개인정보수정
+                case (int)Constants.Menu.FOURTH: //개인정보수정
                     EditingProfile editingProfle = new EditingProfile(myId);
                     myId = editingProfle.ControlEditingProfile();  //아이디를 수정했을 수 있음 -> 수정된 아이디를 myId에 저장
                     break;
             }
-
-            //기능을 모두 수행함 : 뒤로가기 입력받음 -> 회원메뉴로 돌아감
-            if (menu != 13 && function == Constants.COMPLETE_FUNCTION) GoBack();
         }
         public void GoBack()  //뒤로가기
         {

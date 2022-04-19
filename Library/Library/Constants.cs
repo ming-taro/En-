@@ -80,7 +80,8 @@ namespace Library
             FOURTH = 25,
             FIFTH = 28,
             SIXTH = 31,
-            SEVENTH = 34
+            SEVENTH = 34,
+            STEP = 3
         }
         public enum SearchMenu
         {

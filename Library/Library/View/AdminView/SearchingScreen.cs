@@ -16,12 +16,6 @@ namespace Library
             Console.WriteLine("☞출판사: ");
             Console.WriteLine("☞저자: ");
         }
-        public void PrintSearchingBook(List<BookVO> bookList)  //도서검색화면 출력
-        {
-            PrintSearchBox();                  //검색화면
-            ListScreen listscreen = new ListScreen();
-            listscreen.PrintBookList(bookList);//도서목록화면
-        }
         public void PrintSearchingBook(string sql, LibraryVO library)
         {
             MySqlCommand command = new MySqlCommand(sql + ";", library.Connection);

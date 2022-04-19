@@ -8,9 +8,11 @@ namespace Library
 {
     class EditingProfile
     {
+        private LibraryVO library;
         string myId;
         public EditingProfile(string myId)
         {
+            library = LibraryVO.GetLibraryVO();
             this.myId = myId;
         }
         public MemberVO FindMember(string memberId)
@@ -45,7 +47,7 @@ namespace Library
                     break;
                 case (int)Constants.ProfileMenu.SECOND:   //비밀번호 입력
                     profile = signUp.InputPassword(12, (int)Constants.ProfileMenu.SECOND, @"^[a-zA-Z0-9]{5,10}$", "(5~10자의 영어, 숫자만 다시 입력해주세요.)         ");
-                    signUp.ReconfirmPassword(19, 22, profile);  //비밀번호 재확인
+                    signUp.ReconfirmPassword(19, (int)Constants.ProfileMenu.THIRD, profile);  //비밀번호 재확인
                     memberVO.Password = profile;   //비밀번호 수정내역 저장
                     break;
                 case (int)Constants.ProfileMenu.FOURTH:   //이름
@@ -68,17 +70,17 @@ namespace Library
         }
         public string ControlEditingProfile()
         {
-            Keyboard keyboard = new Keyboard(0, 16);
+            Keyboard keyboard = new Keyboard(0, (int)Constants.ProfileMenu.FIRST);
             EditingScreen editingScreen = new EditingScreen();
-            editingScreen.PrintEditing(myId);                //회원정보수정 화면
             int menu;
+
+            editingScreen.PrintProfile(myId, library);                //회원정보수정 화면
 
             while (Constants.INPUT_VALUE)
             {
-                menu = keyboard.SelectMenu(16, 34, 3);
-                if (menu == Constants.ESCAPE) return myId;   //메뉴선택 중 뒤로가기를 누르면 종료(아이디를 수정했다면 memberController에 수정된 id를 리턴해줘야 한다)
-                InputProfile(keyboard.Top, myId);       //선택한 정보에 해당하는 회원정보 수정 및 회원리스트에 반영
-                editingScreen.PrintSuccessMessage(myId);     //수정된 정보가 반영된 화면 출력
+                menu = keyboard.SelectMenu((int)Constants.ProfileMenu.FIRST, (int)Constants.ProfileMenu.SEVENTH, (int)Constants.ProfileMenu.STEP);
+                if (menu == Constants.ESCAPE) return myId;   //메뉴선택 중 뒤로가기를 누르면 종료(아이디를 수정했다면 수정된 id를 리턴해줘야 한다)
+                InputProfile(keyboard.Top, myId);            //선택한 정보에 해당하는 회원정보 수정 및 회원리스트에 반영
             }
         }
     }
