@@ -20,29 +20,31 @@ namespace Library
             Console.SetCursorPosition(left, top);
             Console.Write(message);
         }
-        public bool IsBookInList(int menu, string searchWord, ref string sql)
+        public bool IsBookInList(int menu, string searchWord, ref string query)
         {
             switch (menu)
             {
                 case 1:
-                    sql = "select*from book where name like \"%" + searchWord + "%\";";
+                    //query = "select*from book where name like \"%" + searchWord + "%\";";
+                    query = "select*from book where name like '%" + searchWord + "%';";
                     break;
                 case 2:
-                    sql = "select*from book where publisher like \"%" + searchWord + "%\";";
+                    query = "select*from book where publisher like \"%" + searchWord + "%\";";
                     break;
                 case 3:
-                    sql = "select*from book where author like \"%" + searchWord + "%\";";
+                    query = "select*from book where author like \"%" + searchWord + "%\";";
                     break;
             }
 
-            MySqlCommand command = new MySqlCommand(sql, library.Connection);
+            MySqlCommand command = new MySqlCommand(query, library.Connection);
             MySqlDataReader table = command.ExecuteReader();
 
             if (table.HasRows)
             {
+                table.Close();
                 return Constants.BOOK_IN_LIST;
             }
-
+            table.Close();
             return Constants.BOOK_NOT_IN_LIST;   //해당 검색어를 포함하는 도서를 찾지 못함
         }
         public string InputSearchWord(int left, int top, int messageTop)
