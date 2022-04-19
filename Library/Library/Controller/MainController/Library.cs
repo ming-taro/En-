@@ -29,14 +29,12 @@ namespace Library
             MenuScreen menuScreen = new MenuScreen();  //메인화면 출력
             menuScreen.PrintMainMenu();
 
-            Keyboard keyboard = new Keyboard(25, 13);
+            Keyboard keyboard = new Keyboard(25, (int)Constants.Menu.FIRST);
             int key;
 
             while (Constants.KEYBOARD_OPERATION)
             {
-                key = keyboard.ControlKeyboard(1);            //입력받은 키값
-                if (keyboard.IsOutOfMenu((int)Constants.Menu.FIRST, (int)Constants.Menu.THIRD)) continue;  //메뉴를 벗어나는 이동은 X
-                     //엔터를 누른 시점의 top값 -> 선택한 메뉴를 알 수 있음
+                key = keyboard.SelectMenu((int)Constants.Menu.FIRST, (int)Constants.Menu.THIRD, (int)Constants.Menu.STEP);      //입력받은 키값
                 if (key == Constants.ESCAPE || key == Constants.ENTERING_MENU && keyboard.Top == (int)Constants.Menu.THIRD)     //프로그램 종료
                 {
                     break;

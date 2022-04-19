@@ -69,15 +69,18 @@ namespace Library
             while (Constants.INPUT_VALUE)
             {
                 bookName = text.EnterText(left, top, "");        //(도서명/출판사)를 입력 받음
-                if()
-                else if (!string.IsNullOrEmpty(bookName) && Regex.IsMatch(bookName, @"^[\w]{1,1}[^\e]{0,49}$"))
+                if (bookName.Equals(Constants.ESC))
                 {
-                    PrintInputBox(0, top + 1, Constants.REMOVE_LINE);
-                    break;
+                    return Constants.ESC;
+                }
+                else if (string.IsNullOrEmpty(bookName) || Regex.IsMatch(bookName, @"^[\w]{1,1}[^\e]{0,49}$") == Constants.IS_NOT_MATCH)
+                {
+                    PrintInputBox(0, top + 1, "(공백으로 시작하지 않는 50자 이내의 글자를 입력해주세요.)                    ");
                 }
                 else
                 {
-                    PrintInputBox(0, top + 1, "(공백으로 시작하지 않는 50자 이내의 글자를 입력해주세요.)                    ");
+                    PrintInputBox(0, top + 1, Constants.REMOVE_LINE);
+                    break;
                 }
                 PrintInputBox(left, top, Constants.REMOVE_LINE);
             }
@@ -85,20 +88,24 @@ namespace Library
         }
         public string InputAuthor(int left, int top)
         {
+            EnteringText text = new EnteringText();
             string author;
 
             while (Constants.INPUT_VALUE)
             {
-                Console.SetCursorPosition(left, top);
-                author = Console.ReadLine();             //저자를 입력받음
-                if (!string.IsNullOrEmpty(author) && Regex.IsMatch(author, @"^[a-zA-Z가-힣]{1,50}$"))
+                author = text.EnterText(left, top, "");            //저자를 입력받음
+                if (author.Equals(Constants.ESC))
                 {
-                    PrintInputBox(0, top + 1, Constants.REMOVE_LINE);
-                    break;
+                    return Constants.ESC;
+                }
+                else if (string.IsNullOrEmpty(author) || Regex.IsMatch(author, @"^[a-zA-Z가-힣]{1,50}$") == Constants.IS_NOT_MATCH)
+                {
+                    PrintInputBox(0, top + 1, "(50자 이내의 영어, 한글만 입력해주세요.)                            ");
                 }
                 else
                 {
-                    PrintInputBox(0, top + 1, "(50자 이내의 영어, 한글만 입력해주세요.)                            ");
+                    PrintInputBox(0, top + 1, Constants.REMOVE_LINE);
+                    break;
                 }
                 PrintInputBox(left, top, Constants.REMOVE_LINE);
             }
@@ -106,20 +113,24 @@ namespace Library
         }
         public string InputPrice(int left, int top)
         {
+            EnteringText text = new EnteringText();
             string price;
 
             while (Constants.INPUT_VALUE)
             {
-                Console.SetCursorPosition(left, top);
-                price = Console.ReadLine();             //가격을 입력받음
-                if (!string.IsNullOrEmpty(price) && Regex.IsMatch(price, @"^[1-9]{1}[0-9]{0,9}"))
+                price = text.EnterText(left, top, "");             //가격을 입력받음
+                if (price.Equals(Constants.ESC))
                 {
-                    PrintInputBox(0, top + 1, Constants.REMOVE_LINE);
-                    break;
+                    return Constants.ESC;
+                }
+                else if (string.IsNullOrEmpty(price) || Regex.IsMatch(price, @"^[1-9]{1}[0-9]{0,9}") == Constants.IS_NOT_MATCH)
+                {
+                    PrintInputBox(0, top + 1, "(0이상의 숫자를 10자 이내로 다시 입력해주세요.)                                 ");
                 }
                 else
                 {
-                    PrintInputBox(0, top + 1, "(0이상의 숫자를 10자 이내로 다시 입력해주세요.)                                 ");
+                    PrintInputBox(0, top + 1, Constants.REMOVE_LINE);
+                    break;
                 }
                 PrintInputBox(left, top, Constants.REMOVE_LINE);
             }
@@ -127,46 +138,55 @@ namespace Library
         }
         public string InputQuantity(int left, int top)
         {
+            EnteringText text = new EnteringText();
             string quantity;
 
             while (Constants.INPUT_VALUE)
             {
-                Console.SetCursorPosition(left, top);
-                quantity = Console.ReadLine();                     //수량을 입력받음
-                if (!string.IsNullOrEmpty(quantity) && Regex.IsMatch(quantity, @"^[1-9]{1}[0-9]{0,1}$"))
+                quantity = text.EnterText(left, top, "");                    //수량을 입력받음
+                if (quantity.Equals(Constants.ESC))
                 {
-                    PrintInputBox(0, top + 1, Constants.REMOVE_LINE);
-                    break;
+                    return Constants.ESC;
+                }
+                else if (string.IsNullOrEmpty(quantity) || Regex.IsMatch(quantity, @"^[1-9]{1}[0-9]{0,1}$") == Constants.IS_NOT_MATCH)
+                {
+                    PrintInputBox(0, top + 1, "(1~99사이의 숫자만 가능합니다. 다시 입력해주세요.)                            ");
                 }
                 else
                 {
-                    PrintInputBox(0, top + 1, "(1~99사이의 숫자만 가능합니다. 다시 입력해주세요.)                            ");
+                    PrintInputBox(0, top + 1, Constants.REMOVE_LINE);
+                    break;
                 }
                 PrintInputBox(left, top, Constants.REMOVE_LINE);
             }
             return quantity;
         }
-        public void ControlRegistering()
+        public void StartRegistration()
         {
             RegisteringScreen screen = new RegisteringScreen();
             screen.PrintRegistering(); //도서등록 입력화면
 
             string id = InputBookId(10, (int)Constants.Registration.FIRST);              //도서번호
             if (id.Equals(Constants.ESC)) return; 
-
-            string name = InputBookName(8, (int)Constants.Registration.SECOND);            //도서명
-            string publisher = InputBookName(8, (int)Constants.Registration.THIRD);            //출판사
-            string author = InputAuthor(6, (int)Constants.Registration.FOURTH);                   //저자
-            string price = InputPrice(6, (int)Constants.Registration.FIFTH);                    //가격
-            string quantity = InputQuantity(6, (int)Constants.Registration.SIXTH);                 //수량
+            string name = InputBookName(8, (int)Constants.Registration.SECOND);          //도서명
+            if (name.Equals(Constants.ESC)) return;
+            string publisher = InputBookName(8, (int)Constants.Registration.THIRD);      //출판사
+            if (publisher.Equals(Constants.ESC)) return;
+            string author = InputAuthor(6, (int)Constants.Registration.FOURTH);          //저자
+            if (author.Equals(Constants.ESC)) return;
+            string price = InputPrice(6, (int)Constants.Registration.FIFTH);             //가격
+            if (price.Equals(Constants.ESC)) return;
+            string quantity = InputQuantity(6, (int)Constants.Registration.SIXTH);       //수량
+            if (quantity.Equals(Constants.ESC)) return;
 
             LibraryVO library = LibraryVO.GetLibraryVO();  //도서목록
-            library.bookList.Add(new BookVO(book[0], book[1], book[2], book[3], book[4], book[5])); //도서목록에 등록된 도서정보 추가
+            library.InsertBookList(id, name, publisher, author, price, quantity); //도서목록에 등록된 도서정보 추가
 
             screen = new RegisteringScreen();
             screen.PrintComplete();                   //등록 완료 화면 출력
 
-            return Constants.COMPLETE_FUNCTION;       //도서등록까지 모두 완료
+            Keyboard keyboard = new Keyboard();
+            keyboard.PressESC();                      //esc->종료(뒤로가기)
         }
     }
 }

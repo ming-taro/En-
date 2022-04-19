@@ -12,7 +12,8 @@ namespace Library
         public void StartAdminMode()     //관리자 모드 관리
         {
             SignIn signIn = new SignIn();
-            signIn.SignInAdmin();           //관리자 로그인
+            string success = signIn.SignInAdmin();        //관리자 로그인
+            if (success == Constants.ESC) return;         //로그인 도중 esc -> 뒤로가기
 
             MenuScreen menuScreen = new MenuScreen();
             Keyboard keyboard = new Keyboard();
@@ -41,7 +42,7 @@ namespace Library
                     break;
                 case (int)Constants.Menu.SECOND:  //도서 등록
                     RegisteringBook registeringBook = new RegisteringBook();
-                    function = registeringBook.ControlRegistering();
+                    registeringBook.StartRegistration();
                     break;
                 case (int)Constants.Menu.THIRD:  //도서 수량 관리
                     EditingBook editingBook = new EditingBook();

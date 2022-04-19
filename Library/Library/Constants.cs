@@ -63,6 +63,7 @@ namespace Library
         public const bool KOREAN = true;
         public const bool NOT_KOREAN = false;
         public const string ESC = "ESC";
+        public const string ENTER = "ENTER";
 
         public enum Menu
         {
@@ -70,7 +71,18 @@ namespace Library
             SECOND = 14,
             THIRD = 15,
             FOURTH = 16,
-            FIFTH = 17
+            FIFTH = 17,
+            STEP = 1
+        }
+        public enum Registration
+        {
+            FIRST = 7,
+            SECOND = 10,
+            THIRD = 13,
+            FOURTH = 16,
+            FIFTH = 19,
+            SIXTH = 22,
+            STEP = 3
         }
         public enum ProfileMenu
         {
