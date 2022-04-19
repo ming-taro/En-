@@ -38,6 +38,11 @@ namespace Library
             Console.SetCursorPosition(0, 1);
             Console.WriteLine(searchWord);
         }
+        public void RemoveLine(int left, int top)
+        {
+            Console.SetCursorPosition(left, top);
+            Console.Write("                                                                           ");
+        }
 
         public void PrintMain(string[] menu)
         {

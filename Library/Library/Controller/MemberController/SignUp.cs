@@ -37,12 +37,14 @@ namespace Library
         }
         public string InputId(int left, int top)  //아이디 입력
         {
+            LogoScreen logoScreen = new LogoScreen();
             EnteringText text = new EnteringText();
             string id;
 
             while (Constants.INPUT_VALUE)
             {
                 Console.SetCursorPosition(left, top);
+                logoScreen.RemoveLine(left, top);
                 id = text.EnterText(left, top, "");  //아이디 입력
                 if (id.Equals(Constants.ESC))
                 {
@@ -67,12 +69,14 @@ namespace Library
         }
         public string InputPassword(int left, int top, string regexText, string errorMessage)
         {
+            LogoScreen logoScreen = new LogoScreen();
             EnteringText text = new EnteringText();
             string password;
 
             while (Constants.INPUT_VALUE)
             {
-                Console.SetCursorPosition(left, top);  
+                Console.SetCursorPosition(left, top);
+                logoScreen.RemoveLine(left, top);
                 password = text.EnterText(left, top, "");
                 if (password.Equals(Constants.ESC))
                 {

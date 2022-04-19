@@ -59,6 +59,10 @@ namespace Library
         {
             StartNonQuery("INSERT INTO member VALUES ('" + id + "','" + password + "','" + name + "','" + age + "','" + phoneNumber + "','" + address + "');");
         }
+        public void UpdateMember(string id, string query)
+        {
+            StartNonQuery("UPDATE member SET " + query + " WHERE id='" + id + "';");
+        }
         public void InsertBorrowBook(string memberId, string bookId)  //대여목록 추가
         {
             StartNonQuery("INSERT INTO borrowBook(memberId,bookId) VALUES ('" + memberId + "', '" + bookId + "');"); //대여목록에 추가

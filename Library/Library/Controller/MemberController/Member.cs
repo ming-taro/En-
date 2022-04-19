@@ -53,8 +53,6 @@ namespace Library
         }
         public void SelectMenu2(int menu)
         {
-            int function = 0;
-
             switch (menu)
             {
                 case (int)Constants.Menu.FIRST:  //도서검색
@@ -70,8 +68,8 @@ namespace Library
                     returningBook.ShowMyBookList(myId);
                     break;
                 case (int)Constants.Menu.FOURTH: //개인정보수정
-                    EditingProfile editingProfle = new EditingProfile(myId);
-                    myId = editingProfle.ControlEditingProfile();  //아이디를 수정했을 수 있음 -> 수정된 아이디를 myId에 저장
+                    EditingProfile editingProfile = new EditingProfile(myId);
+                    myId = editingProfile.EditProfile();  //아이디를 수정했을 수 있음 -> 수정된 아이디를 myId에 저장
                     break;
             }
         }
