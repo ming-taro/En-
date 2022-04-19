@@ -31,13 +31,13 @@ namespace Library
         
         public void SelectMenu(int menu) //관리자 메뉴에서 선택
         {
-            int function = Constants.COMPLETE_FUNCTION;
+            int function = 0;
             
             switch (menu)
             {
                 case 13:  //도서 이름 검색  //--->키값도 매직처리
                     SearchingBook searchingBook = new SearchingBook();
-                    function = searchingBook.ControlSearchingBook();
+                    searchingBook.ControlSearchingBook();
                     break;
                 case 14:  //도서 등록
                     RegisteringBook registeringBook = new RegisteringBook();
