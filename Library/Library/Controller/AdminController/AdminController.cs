@@ -37,7 +37,7 @@ namespace Library
             {
                 case 13:  //도서 이름 검색  //--->키값도 매직처리
                     SearchingBook searchingBook = new SearchingBook();
-                    searchingBook.ControlSearchingBook();
+                    searchingBook.ShowSearchResult();
                     break;
                 case 14:  //도서 등록
                     RegisteringBook registeringBook = new RegisteringBook();

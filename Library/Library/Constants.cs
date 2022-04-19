@@ -38,7 +38,12 @@ namespace Library
         public const bool EXISTING_MEMBER = true;
         public const bool NON_EXISTING_MEMBER = false;
 
+        public const bool IS_MATCH = true;
+        public const bool IS_NOT_MATCH = false;
+
         public const bool BOOK_I_BORROWED = true;
+        public const bool BOOK_I_NEVER_BORROWED = false;
+
         public const bool BOOK_IN_LIST = true;
         public const bool BOOK_NOT_IN_LIST = false;
         public const bool MEMBER_IN_LIST = true;
@@ -76,6 +81,12 @@ namespace Library
             FIFTH = 28,
             SIXTH = 31,
             SEVENTH = 34
+        }
+        public enum SearchMenu
+        {
+            BOOK_NAME = 1,
+            PUBLISHER,
+            AUTHOR
         }
     }
 }

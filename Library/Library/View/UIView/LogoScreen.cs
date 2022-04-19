@@ -35,8 +35,8 @@ namespace Library
         public void PrintSearchBox(string searchWord)
         {
             Console.Clear();
+            Console.SetCursorPosition(0, 1);
             Console.WriteLine(searchWord);
-            Console.SetCursorPosition(0, 3);
         }
 
         public void PrintMain(string[] menu)

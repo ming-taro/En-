@@ -82,6 +82,20 @@ namespace Library
             }
 
         }
+        public void InsertBorrowBook(string memberId, string bookId)
+        {
+            try
+            {
+                string sql = "INSERT INTO borrowBook(memberId,bookId) VALUES ('" + memberId + "', '" + bookId + "');";
+                MySqlCommand command = new MySqlCommand(sql, connection);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("실패");
+                Console.WriteLine(ex.ToString());
+            }
+        }
         /*public void SetMemberList()  //회원목록
         {
             using (MySqlConnection connection = new MySqlConnection("Server=localhost;Port=3306;Database=booklist;Uid=root;Pwd=root"))

@@ -66,8 +66,8 @@ namespace Library
                     adminController.SelectMenu(menu);
                     break;
                 case (int)Constants.Menu.SECOND:  //도서대여
-                    BorrowingBook borrowing = new BorrowingBook();
-                    function = borrowing.ControlBorrowing(myId);
+                    BorrowingBook borrowingBook = new BorrowingBook();
+                    borrowingBook.ControlBorrowing(myId);
                     break;
                 case (int)Constants.Menu.THIRD:   //도서반납
                     ReturningBook returning = new ReturningBook();

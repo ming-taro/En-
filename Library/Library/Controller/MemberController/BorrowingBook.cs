@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,52 +27,39 @@ namespace Library
             Console.SetCursorPosition(0, 2);
             Console.Write(message);
         }
-        public void AddBookOnList(string bookName)   //입력받은 도서명을 포함하는 도서목록리스트 생성
-        {
-            for(int i=0; i<library.bookList.Count; i++)
-            {
-                if (library.bookList[i].Name.Contains(bookName))
-                {
-                    bookList.Add(library.bookList[i]);   //입력된 도서명을 포함하는 도서를 찾아 리스트에 저장
-                }
-            }
-        }
         public bool IsBookIBorrowed(string memberId, string bookId)
         {
-            for(int i=0; i<library.borrowList.Count; i++)
+            string query = "select*from borrowBook where memberId='" + memberId + "' and bookId=" + bookId;
+
+            MySqlCommand command = new MySqlCommand(query + ";", library.Connection);
+            MySqlDataReader table = command.ExecuteReader();
+
+            if (table.HasRows)
             {
-                //대여리스트에서 회원아이디와 책아이디를 비교 -> 현재 대여중인 도서인지 확인
-                if (library.borrowList[i].MemberId.Equals(memberId) && library.borrowList[i].BookVO.Id.Equals(bookId))
-                {
-                    return Constants.BOOK_I_BORROWED; //이미 대여중인 도서 -> 도서 대여 불가
-                }
+                table.Close();
+                return Constants.BOOK_I_BORROWED;
             }
 
-            return !Constants.BOOK_I_BORROWED;        //빌린 적 없는 도서 -> 도서 대여 가능함
+            table.Close();
+            return Constants.BOOK_I_NEVER_BORROWED;   //해당 검색어를 포함하는 도서를 찾지 못함
         }
-        public bool IsBookInList(string bookName)   //입력받은 도서명 -> 도서목록에 존재하는 책인지 확인
+        public bool IsBookOnList(string searchWord)   //입력값이 중복된 아이디인지 검사
         {
-            for (int i = 0; i < library.bookList.Count; i++)
+            string query = searchWord;
+
+            MySqlCommand command = new MySqlCommand(query + ";", library.Connection);
+            MySqlDataReader table = command.ExecuteReader();
+
+            if (table.HasRows)
             {
-                if (library.bookList[i].Name.Contains(bookName))
-                {
-                    return Constants.BOOK_IN_LIST;   //입력된 도서명이 목록에 있음
-                }
+                table.Close();
+                return Constants.BOOK_IN_LIST;
             }
-            return !Constants.BOOK_IN_LIST;
+
+            table.Close();
+            return Constants.BOOK_NOT_IN_LIST;   //해당 검색어를 포함하는 도서를 찾지 못함
         }
-        public bool IsDuplicateId(string bookId)   //입력값이 중복된 아이디인지 검사
-        {
-            for (int i = 0; i < bookList.Count; i++)
-            {
-                if (bookList[i].Id.Equals(bookId))
-                {
-                    return Constants.DUPLICATE_ID;  //도서목록에 존재함
-                }
-            }
-            return !Constants.DUPLICATE_ID;  //도서목록에 없는 책을 대여하려 함
-        }
-        public bool IsQuantityZero(string bookId)
+        /*public bool IsQuantityZero(string bookId)
         {
             for(int i = 0; i<bookList.Count; i++)
             {
@@ -82,59 +70,39 @@ namespace Library
             }
             
             return !Constants.QUANTITY_ZERO;
-        }
-        public string InputBookName()
+        }*/
+        public string InputBookId(string memberId, string searchWord)          //도서명 입력 후 도서번호 입력
         {
-            Regex regex = new Regex(@"^[\w]{1,1}[^\e]{0,49}$");   //도서명: 1~50자 이내
-            string bookName;
-
-            while (Constants.INPUT_VALUE)
-            {
-                Console.SetCursorPosition(15, 1);
-                bookName = Console.ReadLine();                   //도서명을 입력 받음
-                if (string.IsNullOrEmpty(bookName) || !regex.IsMatch(bookName))  //입력형식에 맞지 않은 경우
-                {
-                    PrintInputBox("\n(공백으로 시작하지 않는 50자 이내의 글자를 입력해주세요.)                    ");
-                }
-                else if(!IsBookInList(bookName))  //입력형식은 맞지만, 도서목록에 없는 도서명일 경우
-                {
-                    PrintInputBox("\n(검색어를 포함하는 도서가 없습니다. 다시 입력해주세요.)                    ");
-                }
-                else break; ;  //도서목록에 있는 도서명을 검색한 경우
-
-                Console.SetCursorPosition(0, 1);
-                Console.WriteLine("☞도서명 검색:                                                      ");
-            }
-            return bookName;
-        }
-        public string InputBookId(string memberId)          //도서명 입력 후 도서번호 입력
-        {
+            EnteringText text = new EnteringText();
             Regex regex = new Regex(@"^[0-9]{1,3}$");   //도서번호:숫자,0~999까지
             string bookId;
 
             while (Constants.INPUT_VALUE)
             {
-                Console.SetCursorPosition(20, 1);
-                bookId = Console.ReadLine();            //도서번호를 입력 받음
-                if (string.IsNullOrEmpty(bookId) || !regex.IsMatch(bookId)) //형식에 맞지 않는 입력일 경우
+                bookId = text.EnterText(20, 1, "");            //도서번호를 입력 받음
+
+                if (bookId.Equals(Constants.ESC))
+                {
+                    return Constants.ESC;
+                }
+                else if (string.IsNullOrEmpty(bookId) || regex.IsMatch(bookId) == Constants.IS_NOT_MATCH) //형식에 맞지 않는 입력일 경우
                 {
                     PrintInputBox("(0~999사이의 숫자가 아닙니다.다시 입력해주세요.)               ");
                 }
-                else if (!IsDuplicateId(bookId))  //입력형식은 맞지만, 목록에 없는 도서를 빌리려고 했을 때
+                else if (IsBookOnList(searchWord + " and id=" + bookId) == Constants.BOOK_NOT_IN_LIST)  //입력형식은 맞지만, 목록에 없는 도서를 빌리려고 했을 때
                 {
                     PrintInputBox("(현재 조회 목록에 없는 도서번호입니다. 다시 입력해주세요.)           ");
-                    //return Constants.RE_ENTER;    //도서명부터 다시 검색
                 }
                 else if (IsBookIBorrowed(memberId, bookId))  //도서목록에 있지만, 이미 대여중인 도서일 때
                 {
                     PrintInputBox("(이미 대여중인 도서입니다. 다른 도서를 선택해주세요.)                  ");
                 }
-                else if (IsQuantityZero(bookId))   //도서목록에 있고, 대여하지 않은 도서이지만 수량이 0일 때
+                else if (IsBookOnList(searchWord + " and quantity!=0"))   //도서목록에 있고, 대여하지 않은 도서이지만 수량이 0일 때
                 {
                     PrintInputBox("(대여가능한 도서가 0권입니다. 다른 도서를 선택해주세요.)              ");
-                    //return Constants.RE_ENTER;    //도서명부터 다시 검색
                 }
                 else break;  //도서대여가능 -> 해당 도서 아이디 리턴
+
                 Console.SetCursorPosition(20, 1);
                 Console.Write(Constants.REMOVE_LINE);
             }
@@ -156,34 +124,31 @@ namespace Library
         }
         public void AddBorrowList(string memberId, string bookId)   //도서번호를 알맞게 입력받아 도서대여 완료 -> 현재 도서대여목록에 데이터 추가
         {
+
+
+
+
             BorrowVO borrowVO = new BorrowVO(memberId, FindBookInList(bookId));
             library.borrowList.Add(borrowVO);  //도서대여목록에 대여한 도서정보와 회원번호 추가
         }
-        public int ControlBorrowing(string memberId)
+        public void ControlBorrowing(string memberId)
         {
-            ListScreen listScreen = new ListScreen();
+            SearchingScreen searchingScreen = new SearchingScreen();
             BorrowingScreen borrowingScreen = new BorrowingScreen();
+            LogoScreen logoScreen = new LogoScreen();
 
-            PrintBorrowing();                     //도서목록 출력
-            Keyboard keyboard = new Keyboard(0, 1);
-            int menu = keyboard.SelectMenu(1, 1, 0);
-            if (menu == Constants.ESCAPE) return Constants.ESCAPE;   //뒤로가기 -> 관리자모드로 돌아감
+            SearchingBook searchingBook = new SearchingBook();
+            string searchWord = searchingBook.SearchBook(); //도서명,출판사, 저자명 검색(리턴값 -> 쿼리문)
+            if (searchWord.Equals(Constants.ESC)) return;   //입력 중 esc -> 뒤로가기
 
-            string bookName = InputBookName();    //먼저 도서명 입력받기
-            AddBookOnList(bookName);              //검색어를 포함하는 책 리스트 저장
-            Console.Clear();
-            Console.SetCursorPosition(0, 1);
-            Console.WriteLine("☞대여할 도서 번호:                                                   ");
-            listScreen.PrintBookList(bookList);   //도서명 검색결과 목록 출력
+            logoScreen.PrintSearchBox("☞대여할 도서 번호:");
+            searchingScreen.PrintSearchingBook(searchWord, library); //검색결과로 나온 책목록 출력
 
-            menu = keyboard.SelectMenu(1, 1, 0);
-            if (menu == Constants.ESCAPE) return Constants.ESCAPE;   //뒤로가기 -> 관리자모드로 돌아감
+            string bookId = InputBookId(memberId, searchWord);     //도서번호를 입력받음
+            if (bookId.Equals(Constants.ESC)) return;  //도서번호 입력 중 esc -> 대여종료
 
-            string bookId = InputBookId(memberId);//도서번호를 입력받음
-            borrowingScreen.PrintSuccessMessage();//도서대여 완료 메세지 출력
-            AddBorrowList(memberId, bookId);      //도서대여목록에 추가
-
-            return Constants.COMPLETE_FUNCTION;
+            borrowingScreen.PrintSuccessMessage();     //도서대여 완료 메세지 출력
+            library.InsertBorrowBook();
         }
     }
 }

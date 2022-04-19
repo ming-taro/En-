@@ -24,18 +24,18 @@ namespace Library
         {
             switch (menu)
             {
-                case 1:
-                    query = "select*from book where name like '%" + searchWord + "%';";
+                case (int)Constants.SearchMenu.BOOK_NAME:
+                    query = "select*from book where name like '%" + searchWord + "%'";
                     break;
-                case 2:
-                    query = "select*from book where publisher like '%" + searchWord + "%';";
+                case (int)Constants.SearchMenu.PUBLISHER:
+                    query = "select*from book where publisher like '%" + searchWord + "%'";
                     break;
-                case 3:
-                    query = "select*from book where author like '%" + searchWord + "%';";
+                case (int)Constants.SearchMenu.AUTHOR:
+                    query = "select*from book where author like '%" + searchWord + "%'";
                     break;
             }
 
-            MySqlCommand command = new MySqlCommand(query, library.Connection);
+            MySqlCommand command = new MySqlCommand(query + ";", library.Connection);
             MySqlDataReader table = command.ExecuteReader();
 
             if (table.HasRows)
@@ -75,16 +75,19 @@ namespace Library
         public string SearchBook()  //도서검색하기(검색어 입력 -> 목록 출력)
         {
             SearchingScreen screen = new SearchingScreen();
+            Keyboard keyboard = new Keyboard();
+            string query;
+            int menu;
+
             screen.PrintSearchBox();
             screen.PrintSearchingBook("select*from book", library);   //전체도서 출력
 
-            Keyboard keyboard = new Keyboard();
             keyboard.SetPosition(0, 1);     //커서위치
-            int menu = keyboard.SelectMenu(1, 3, 1);                  //메뉴선택
+            menu = keyboard.SelectMenu(1, 3, 1);               //메뉴선택
             if (menu == Constants.ESCAPE) return Constants.ESC;    //메뉴선택도중 뒤로가기 -> 관리자 메뉴로 돌아감
 
             menu = keyboard.Top;                //메뉴선택 완료(1.도서명  2.출판사  3.저자)
-            string query = InputSearchWord(10, menu, 4); //검색어 입력받기
+            query = InputSearchWord(10, menu, 4); //검색어 입력받기
             if (query.Equals(Constants.ESC)) return Constants.ESC;     //검색어 입력 중 뒤로가기
 
             return query;
@@ -93,7 +96,9 @@ namespace Library
         {
             SearchingScreen screen = new SearchingScreen();
             Keyboard keyboard = new Keyboard();
-            string query = SearchBook(); 
+
+            string query = SearchBook();
+            if (query.Equals(Constants.ESC)) return;    //도중에 esc -> 도서검색 종료 
 
             Console.Clear();
             screen.PrintSearchingBook(query, library);   //검색결과로 나온 책목록 출력

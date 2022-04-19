@@ -24,7 +24,7 @@ namespace Library
         }
         public void PrintSearchingBook(string sql, LibraryVO library)
         {
-            MySqlCommand command = new MySqlCommand(sql, library.Connection);
+            MySqlCommand command = new MySqlCommand(sql + ";", library.Connection);
             MySqlDataReader table = command.ExecuteReader();
 
             Console.WriteLine("\n=============================================================\n");
