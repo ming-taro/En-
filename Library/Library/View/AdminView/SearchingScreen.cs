@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,18 +22,24 @@ namespace Library
             ListScreen listscreen = new ListScreen();
             listscreen.PrintBookList(bookList);//도서목록화면
         }
-        public void PrintSearchingBook(int menu, string name, List<BookVO> bookList)
+        public void PrintSearchingBook(string sql, LibraryVO library)
         {
+            MySqlCommand command = new MySqlCommand(sql, library.Connection);
+            MySqlDataReader table = command.ExecuteReader();
+
             Console.WriteLine("\n=============================================================\n");
-            for (int i = 0; i < bookList.Count; i++)
+            while (table.Read())
             {
-                //1.도서명   2.출판사   3.저자
-                if (menu == 1 && bookList[i].Name.Contains(name) || menu == 2 && bookList[i].Publisher.Contains(name) || menu == 3 && bookList[i].Author == name)
-                {
-                    Console.WriteLine(bookList[i]);
-                    Console.WriteLine("\n=============================================================\n");
-                }
+                Console.WriteLine("도서번호: " + table["id"].ToString());
+                Console.WriteLine("도서명: " + table["name"].ToString());
+                Console.WriteLine("출판사" + table["publisher"].ToString());
+                Console.WriteLine("저자: " + table["author"].ToString());
+                Console.WriteLine("가격: " + table["price"].ToString());
+                Console.WriteLine("수량: " + table["quantity"].ToString());
+                Console.WriteLine("\n=============================================================\n");
             }
+            table.Close();
+
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>뒤로가기:[ESC]<<<<<<<<<<<<<<<<<<<<<<<<");
         }
     }

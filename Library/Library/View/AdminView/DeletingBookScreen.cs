@@ -20,7 +20,7 @@ namespace Library
             logoScreen.PrintSearchBox("\n☞삭제할 도서번호 입력:");
 
             SearchingScreen searchingScreen = new SearchingScreen();
-            searchingScreen.PrintSearchingBook(1, bookName, library.bookList);   //도서명 검색결과
+            //searchingScreen.PrintSearchingBook(1, bookName, library.bookList);   //도서명 검색결과
         }
         public void PrintBookList()
         {
