@@ -80,7 +80,7 @@ namespace Library
                 {
                     PrintInputBox("(이미 대여중인 도서입니다. 다른 도서를 선택해주세요.)                  ");
                 }
-                else if (IsBookOnList(searchWord + " and quantity!=0") == Constants.BOOK_NOT_IN_LIST)   //도서목록에 있고, 대여하지 않은 도서이지만 수량이 0일 때
+                else if (IsBookOnList(searchWord + "and id='" + bookId + "' and quantity!=0") == Constants.BOOK_NOT_IN_LIST)   //도서목록에 있고, 대여하지 않은 도서이지만 수량이 0일 때
                 {
                     PrintInputBox("(대여가능한 도서가 0권입니다. 다른 도서를 선택해주세요.)              ");
                 }
