@@ -17,11 +17,6 @@ namespace Library
             bookList = new List<BookVO>();
             library = LibraryVO.GetLibraryVO();
         }
-        public void PrintBorrowing()
-        {
-            BorrowingScreen borrowingScreen = new BorrowingScreen();
-            borrowingScreen.PrintBorrowing();
-        }
         public void PrintInputBox(string message)
         {
             Console.SetCursorPosition(0, 2);
@@ -59,18 +54,6 @@ namespace Library
             table.Close();
             return Constants.BOOK_NOT_IN_LIST;   //해당 검색어를 포함하는 도서를 찾지 못함
         }
-        /*public bool IsQuantityZero(string bookId)
-        {
-            for(int i = 0; i<bookList.Count; i++)
-            {
-                if (bookList[i].Id.Equals(bookId) && bookList[i].Quantity.Equals("0"))
-                {
-                    return Constants.QUANTITY_ZERO;
-                }
-            }
-            
-            return !Constants.QUANTITY_ZERO;
-        }*/
         public string InputBookId(string memberId, string searchWord)          //도서명 입력 후 도서번호 입력
         {
             EnteringText text = new EnteringText();
@@ -97,7 +80,7 @@ namespace Library
                 {
                     PrintInputBox("(이미 대여중인 도서입니다. 다른 도서를 선택해주세요.)                  ");
                 }
-                else if (IsBookOnList(searchWord + " and quantity!=0"))   //도서목록에 있고, 대여하지 않은 도서이지만 수량이 0일 때
+                else if (IsBookOnList(searchWord + " and quantity!=0") == Constants.BOOK_NOT_IN_LIST)   //도서목록에 있고, 대여하지 않은 도서이지만 수량이 0일 때
                 {
                     PrintInputBox("(대여가능한 도서가 0권입니다. 다른 도서를 선택해주세요.)              ");
                 }
@@ -122,20 +105,12 @@ namespace Library
             
             return library.bookList[bookIndex];  
         }
-        public void AddBorrowList(string memberId, string bookId)   //도서번호를 알맞게 입력받아 도서대여 완료 -> 현재 도서대여목록에 데이터 추가
-        {
-
-
-
-
-            BorrowVO borrowVO = new BorrowVO(memberId, FindBookInList(bookId));
-            library.borrowList.Add(borrowVO);  //도서대여목록에 대여한 도서정보와 회원번호 추가
-        }
-        public void ControlBorrowing(string memberId)
+        public void SearchBorrowBook(string memberId)
         {
             SearchingScreen searchingScreen = new SearchingScreen();
             BorrowingScreen borrowingScreen = new BorrowingScreen();
             LogoScreen logoScreen = new LogoScreen();
+            Keyboard keyboard = new Keyboard();
 
             SearchingBook searchingBook = new SearchingBook();
             string searchWord = searchingBook.SearchBook(); //도서명,출판사, 저자명 검색(리턴값 -> 쿼리문)
@@ -148,7 +123,9 @@ namespace Library
             if (bookId.Equals(Constants.ESC)) return;  //도서번호 입력 중 esc -> 대여종료
 
             borrowingScreen.PrintSuccessMessage();     //도서대여 완료 메세지 출력
-            library.InsertBorrowBook();
+            library.InsertBorrowBook(memberId, bookId);//대여목록에 대여정보 저장
+
+            keyboard.PressESC();   //esc -> 뒤로가기
         }
     }
 }

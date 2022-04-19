@@ -48,7 +48,7 @@ namespace Library
                 
                 menu = keyboard.SelectMenu(13, maxTop, 1);     //메뉴선택
                 if (menu == Constants.ESCAPE) break;           //메뉴선택 중 뒤로가기 -> 메인화면으로
-                menu = keyboard.Top;                      //메뉴의 해당 커서값
+                menu = keyboard.Top;                           //메뉴의 해당 커서값
 
                 if (maxTop == 14) SelectMenu1(menu);           //1.로그인  2.회원가입
                 else SelectMenu2(menu);                        //1.도서검색  2.도서대여  3.도서반납  4.개인정보수정  5.종료
@@ -67,11 +67,11 @@ namespace Library
                     break;
                 case (int)Constants.Menu.SECOND:  //도서대여
                     BorrowingBook borrowingBook = new BorrowingBook();
-                    borrowingBook.ControlBorrowing(myId);
+                    borrowingBook.SearchBorrowBook(myId);
                     break;
                 case (int)Constants.Menu.THIRD:   //도서반납
-                    ReturningBook returning = new ReturningBook();
-                    function = returning.ControlReturning(myId);
+                    ReturningBook returningBook = new ReturningBook();
+                    returningBook.ShowMyBookList(myId);
                     break;
                 case (int)Constants.Menu.FOURTH:   //개인정보수정
                     EditingProfile editingProfle = new EditingProfile(myId);
