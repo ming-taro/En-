@@ -22,7 +22,7 @@ namespace Library
             {
                 menuScreen.PrintAdminMode();
                 keyboard.InitCursorPosition();
-                menu = keyboard.SelectMenu(13, 17, 1); //메뉴선택 완료
+                menu = keyboard.SelectMenu((int)Constants.Menu.FIRST, (int)Constants.Menu.FIFTH, (int)Constants.Menu.STEP); //메뉴선택 완료
                 if (menu == Constants.ESCAPE) break;      //관리자 메뉴 선택중 esc -> 관리자 모드 종료(메인으로 돌아감)
                 menu = keyboard.Top;           //메뉴의 해당 커서값
                 SelectMenu(menu);                         //해당 메뉴 기능 실행
@@ -35,23 +35,23 @@ namespace Library
             
             switch (menu)
             {
-                case 13:  //도서 이름 검색  //--->키값도 매직처리
+                case (int)Constants.Menu.FIRST:  //도서 이름 검색 
                     SearchingBook searchingBook = new SearchingBook();
                     searchingBook.ShowSearchResult();
                     break;
-                case 14:  //도서 등록
+                case (int)Constants.Menu.SECOND:  //도서 등록
                     RegisteringBook registeringBook = new RegisteringBook();
                     function = registeringBook.ControlRegistering();
                     break;
-                case 15:  //도서 수량 관리
+                case (int)Constants.Menu.THIRD:  //도서 수량 관리
                     EditingBook editingBook = new EditingBook();
                     function = editingBook.ControlEditingBook();
                     break;
-                case 16:  //도서 삭제
+                case (int)Constants.Menu.FOURTH:  //도서 삭제
                     DeletingBook deletingBook = new DeletingBook();
                     function = deletingBook.ControlDeletingBook();
                     break;
-                case 17:  //회원관리
+                case (int)Constants.Menu.FIFTH:  //회원관리
                     DeletingMember deletingMember = new DeletingMember();
                     function = deletingMember.ControlDeletingMember();
                     break;

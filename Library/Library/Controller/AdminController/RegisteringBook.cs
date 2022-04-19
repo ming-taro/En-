@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,34 +19,43 @@ namespace Library
         {
             LibraryVO library = LibraryVO.GetLibraryVO();  //도서목록
 
-            Console.WriteLine(library.bookList[0].Id);
+            MySqlCommand command = new MySqlCommand("select id from book where id='" + bookId + "';", library.Connection);
+            MySqlDataReader table = command.ExecuteReader();
 
-            for (int i = 0; i < library.bookList.Count; i++)
+            if (table.HasRows)
             {
-                if (library.bookList[i].Id.Equals(bookId)) return Constants.DUPLICATE_ID;  //이미 존재하는 아이디
+                table.Close();
+                return Constants.DUPLICATE_ID;  //이미 존재하는 아이디
             }
-            return !Constants.DUPLICATE_ID;  //중복없는 아이디 -> 입력가능
+
+            table.Close();
+            return Constants.NON_DUPLICATE_ID;  //중복없는 아이디 -> 입력가능
         }
         public string InputBookId(int left, int top)
         {
+            EnteringText text = new EnteringText();
             string bookId;
 
             while (Constants.INPUT_VALUE)
             {
-                Console.SetCursorPosition(left, top);
-                bookId = Console.ReadLine();        //도서번호를 입력 받음
-                if (!string.IsNullOrEmpty(bookId) && Regex.IsMatch(bookId, @"^[0-9]{1,3}$") && !IsDuplicateId(bookId)) //중복 없이 알맞게 입력한 경우
+                bookId = text.EnterText(left, top, "");        //도서번호를 입력 받음
+
+                if (bookId.Equals(Constants.ESC))//뒤로가기
                 {
-                    PrintInputBox(0, top + 1, Constants.REMOVE_LINE);
-                    break;
+                    return Constants.ESC;
                 }
-                else if (!string.IsNullOrEmpty(bookId) && Regex.IsMatch(bookId, @"^[0-9]{1,3}$"))      //입력 양식은 맞지만 도서아이디가 이미 존재하는 경우
+                else if (string.IsNullOrEmpty(bookId) || Regex.IsMatch(bookId, @"^[0-9]{1,3}$") == Constants.IS_NOT_MATCH) //양식에 맞지 않은 입력
+                {
+                    PrintInputBox(0, top + 1, "(0~999사이의 숫자가 아닙니다. 다시 입력해주세요.)          ");
+                }
+                else if (IsDuplicateId(bookId))      //입력 양식은 맞지만 도서아이디가 이미 존재하는 경우
                 {
                     PrintInputBox(0, top + 1, "(이미 존재하는 아이디입니다. 다시 입력해주세요.)          ");
                 }
                 else
                 {
-                    PrintInputBox(0, top + 1, "(0~999사이의 숫자가 아닙니다. 다시 입력해주세요.)          ");
+                    PrintInputBox(0, top + 1, Constants.REMOVE_LINE);
+                    break;
                 }
                 PrintInputBox(left, top, Constants.REMOVE_LINE);
             }
@@ -53,13 +63,14 @@ namespace Library
         }
         public string InputBookName(int left, int top)
         {
+            EnteringText text = new EnteringText();
             string bookName;
 
             while (Constants.INPUT_VALUE)
             {
-                Console.SetCursorPosition(left, top);
-                bookName = Console.ReadLine();        //(도서명/출판사)를 입력 받음
-                if (!string.IsNullOrEmpty(bookName) && Regex.IsMatch(bookName, @"^[\w]{1,1}[^\e]{0,49}$"))
+                bookName = text.EnterText(left, top, "");        //(도서명/출판사)를 입력 받음
+                if()
+                else if (!string.IsNullOrEmpty(bookName) && Regex.IsMatch(bookName, @"^[\w]{1,1}[^\e]{0,49}$"))
                 {
                     PrintInputBox(0, top + 1, Constants.REMOVE_LINE);
                     break;
@@ -135,19 +146,19 @@ namespace Library
             }
             return quantity;
         }
-        public int ControlRegistering()
+        public void ControlRegistering()
         {
             RegisteringScreen screen = new RegisteringScreen();
             screen.PrintRegistering(); //도서등록 입력화면
 
-            string[] book = new string[6];
+            string id = InputBookId(10, (int)Constants.Registration.FIRST);              //도서번호
+            if (id.Equals(Constants.ESC)) return; 
 
-            book[0] = InputBookId(10, 7);              //도서번호
-            book[1] = InputBookName(8, 10);            //도서명
-            book[2] = InputBookName(8, 13);            //출판사
-            book[3] = InputAuthor(6, 16);                   //저자
-            book[4] = InputPrice(6, 19);                    //가격
-            book[5] = InputQuantity(6, 22);                 //수량
+            string name = InputBookName(8, (int)Constants.Registration.SECOND);            //도서명
+            string publisher = InputBookName(8, (int)Constants.Registration.THIRD);            //출판사
+            string author = InputAuthor(6, (int)Constants.Registration.FOURTH);                   //저자
+            string price = InputPrice(6, (int)Constants.Registration.FIFTH);                    //가격
+            string quantity = InputQuantity(6, (int)Constants.Registration.SIXTH);                 //수량
 
             LibraryVO library = LibraryVO.GetLibraryVO();  //도서목록
             library.bookList.Add(new BookVO(book[0], book[1], book[2], book[3], book[4], book[5])); //도서목록에 등록된 도서정보 추가
