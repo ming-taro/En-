@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Library
 {
-    class AdminController
+    class Admin
     {
-        public void ControlAdminMode()     //관리자 모드 관리
+        public void StartAdminMode()     //관리자 모드 관리
         {
             SignIn signIn = new SignIn();
             signIn.SignInAdmin();           //관리자 로그인

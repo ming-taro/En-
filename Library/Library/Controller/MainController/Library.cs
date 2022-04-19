@@ -19,8 +19,8 @@ namespace Library
                     member.StartMemberMode(14);       //회원메뉴 컨트롤로 이동
                     break;
                 case (int)Constants.Menu.SECOND:                                    //2. 관리자 모드
-                    AdminController adminController = new AdminController();    //관리자 로그인 화면으로 이동
-                    adminController.ControlAdminMode();            //관리자 모드로     
+                    Admin admin = new Admin();    //관리자 로그인 화면으로 이동
+                    admin.StartAdminMode();            //관리자 모드로     
                     break;
             }
         }

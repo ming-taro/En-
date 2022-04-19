@@ -67,11 +67,9 @@ namespace Library
                 if (menu == Constants.ESCAPE) return myId;           //메뉴선택 중 뒤로가기를 누르면 종료(아이디를 수정했다면 수정된 id를 리턴해줘야 한다)
                 menu = keyboard.Top;
 
-                changedItem = InputProfile(menu, ref query);                  //선택한 정보에 해당하는 회원정보 수정
+                changedItem = InputProfile(menu, ref query);                          //선택한 정보에 해당하는 회원정보 수정
                 if (changedItem != Constants.ESC) library.UpdateMember(myId, query);  //수정된 정보 DB에 반영(정보입력 중 esc->뒤로가기(수정할 메뉴 선택으로))
                 if (changedItem != Constants.ESC && menu == (int)Constants.ProfileMenu.FIRST) myId = changedItem;  //방금 수정한 정보가 아이디라면 myId에 변경된 아이디 저장
-                Console.WriteLine(menu + "/" + changedItem + "/" + myId);
-                Console.Read();
             }
         }
     }

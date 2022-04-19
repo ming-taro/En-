@@ -10,20 +10,21 @@ namespace Library
 {
     class SignIn
     {
-        public SignIn()  //-->>안됨
-        {
-            
-        }
         public void SignInAdmin()
         {
             SignInScreen signInScreen = new SignInScreen();   //--->수정
+            EnteringText text = new EnteringText();
+            string id;
+            string password;
+
+            signInScreen.PrintSignIn();
 
             while (Constants.INPUT_VALUE)
             {
-                Console.SetCursorPosition(8, 5);
-                string id = Console.ReadLine();           //아이디 입력
-                Console.SetCursorPosition(10, 6);
-                string password = Console.ReadLine();     //비밀번호 입력
+                id = text.EnterText(8, 5, "");             //아이디 입력
+                if (id.Equals(Constants.ESC)) return;
+                password = text.EnterText(10, 6, "*");     //비밀번호 입력
+                if (password.Equals(Constants.ESC)) return;
 
                 if (id == "12345" && password == "00000") break;   //관리자 로그인 완료
 
@@ -53,16 +54,18 @@ namespace Library
         public string SignInMember()
         { 
             SignInScreen signInScreen = new SignInScreen();
+            EnteringText text = new EnteringText();
             string id, password;
 
             signInScreen.PrintSignIn();
 
             while (Constants.INPUT_VALUE)
             {
-                Console.SetCursorPosition(8, 5);
-                id = Console.ReadLine();           //아이디 입력
-                Console.SetCursorPosition(10, 6);
-                password = Console.ReadLine();     //비밀번호 입력
+                id = text.EnterText(8, 5, "");             //아이디 입력
+                if (id.Equals(Constants.ESC)) return Constants.ESC;
+                password = text.EnterText(10, 6, "*");     //비밀번호 입력
+                if (password.Equals(Constants.ESC)) return Constants.ESC;
+
                 if (IsExistingMember(id, password)) break;
                 signInScreen.PrintFailure();       //다시 입력해달라는 메세지 출력
             }

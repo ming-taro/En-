@@ -22,13 +22,15 @@ namespace Library
             {
                 case (int)Constants.Menu.FIRST:  //로그인
                     ControlSignIn();
-                    StartMemberMode(16);  //회원 모드로(1.도서검색  2.도서대여  3.도서반납  4.개인정보수정  5.종료)
                     break;
                 case (int)Constants.Menu.SECOND:  //회원가입
                     SignUp signUp = new SignUp();
                     signUp.ControlSignUp();
                     break;
             }
+
+            if (myId.Equals(Constants.ESC)) return;   //로그인 중 esc -> 뒤로가기
+            else StartMemberMode(16);  //회원 모드로(1.도서검색  2.도서대여  3.도서반납  4.개인정보수정  5.종료)
         }
         public void StartMemberMode(int maxTop)    //1.회원가입  2.로그인 
         {
@@ -56,7 +58,7 @@ namespace Library
             switch (menu)
             {
                 case (int)Constants.Menu.FIRST:  //도서검색
-                    AdminController adminController = new AdminController();
+                    Admin adminController = new Admin();
                     adminController.SelectMenu(menu);
                     break;
                 case (int)Constants.Menu.SECOND: //도서대여

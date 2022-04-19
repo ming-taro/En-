@@ -95,15 +95,20 @@ namespace Library
             }
             return password;
         }
-        public void ReconfirmPassword(int left, int top, string password1)   //비밀번호 재확인
+        public string ReconfirmPassword(int left, int top, string password)   //비밀번호 재확인
         {
-            string password2;
+            EnteringText text = new EnteringText();
+            string reconfirm;
 
             while (Constants.INPUT_VALUE)
             {
                 Console.SetCursorPosition(left, top);
-                password2 = Console.ReadLine();   //비밀번호 입력
-                if (string.IsNullOrEmpty(password2) || !password1.Equals(password2))   //입력형식에 맞지 않은 경우 -> 비밀번호 다시 입력
+                reconfirm = text.EnterText(left, top, "");   //비밀번호 입력
+                if (reconfirm.Equals(Constants.ESC))  //비밀번호 확인 중 뒤로가기
+                {
+                    return Constants.ESC;
+                }
+                else if (string.IsNullOrEmpty(reconfirm) || password.Equals(reconfirm) == false)   //입력형식에 맞지 않은 경우 -> 비밀번호 다시 입력
                 {
                     PrintInputBox(0, top + 1, "(비밀번호가 맞지 않습니다. 다시 입력해주세요.)         ");
                 }
@@ -114,6 +119,8 @@ namespace Library
                 }
                 PrintInputBox(left, top, Constants.REMOVE_LINE);
             }
+
+            return reconfirm;
         }
         public void ControlSignUp()
         {
@@ -125,7 +132,8 @@ namespace Library
 
             string password = InputPassword(10, 8, @"^[a-zA-Z0-9]{5,10}$", "(5~10자의 영어, 숫자만 다시 입력해주세요.)         ");
             if (password.Equals(Constants.ESC)) return;
-            ReconfirmPassword(17, 11, password); 
+            string reconfirm = ReconfirmPassword(17, 11, password);
+            if (reconfirm.Equals(Constants.ESC)) return;
             
             string name = InputPassword(6, 14, @"^[a-zA-Z가-힣]{1,30}$", "(30자 이내의 영어, 한글만 다시 입력해주세요.)             ");
             if (name.Equals(Constants.ESC)) return;
