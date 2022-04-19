@@ -11,7 +11,6 @@ namespace Library
     class DeletingBook
     {
         private LibraryVO library;
-        int bookIndex;
         public DeletingBook()
         {
             library = LibraryVO.GetLibraryVO();
@@ -24,37 +23,49 @@ namespace Library
         }
         public bool IsBorrowedBook(string bookId)
         {
-           
-            for (int i=0; i<library.borrowList.Count; i++)
+            string query = "select*from borrowBook where bookId='" + bookId + "'";
+
+            MySqlCommand command = new MySqlCommand(query + ";", library.Connection);
+            MySqlDataReader table = command.ExecuteReader();
+
+            if (table.HasRows)
             {
-                if (library.borrowList[i].BookVO.Id.Equals(bookId))   //해당 도서를 회원이 대여중인 경우 -> 도서삭제 불가
-                {
-                    return Constants.BOOK_I_BORROWED;
-                }
+                table.Close();
+                return Constants.BOOK_I_BORROWED;     //대여중인 회원이 있는 도서 -> 삭제 불가
             }
-            return !Constants.BOOK_I_BORROWED;  //도서를 대여중인 회원이 없는 경우 -> 도서 대여 가능
+
+            table.Close();
+            return Constants.BOOK_I_NEVER_BORROWED;   //대여한 회원이 없는 도서 -> 삭제 가능
         }
-        public bool IsBookInList(string bookName, string bookId)
+        public bool IsBookOnList(string searchWord, string bookId)
         {
-            for(int i=0; i<library.bookList.Count; i++)
+            string query = searchWord + " and id='" + bookId + "'";
+
+            MySqlCommand command = new MySqlCommand(query + ";", library.Connection);
+            MySqlDataReader table = command.ExecuteReader();
+
+            if (table.HasRows)
             {
-                if(library.bookList[i].Name.Contains(bookName) && library.bookList[i].Id.Equals(bookId))
-                {
-                    bookIndex = i;   //도서 삭제할때 사용
-                    return Constants.BOOK_IN_LIST;   //도서명,번호에 해당하는 책을 찾음
-                }
+                table.Close();
+                return Constants.BOOK_IN_LIST;
             }
-            return !Constants.BOOK_IN_LIST;
+
+            table.Close();
+            return Constants.BOOK_NOT_IN_LIST;   //해당 검색어를 포함하는 도서를 찾지 못함
         }
-        public void InputBookId(string bookName)
+        public string InputBookId(string searchWord)
         {
+            EnteringText text = new EnteringText();
             string bookId;
 
             while (Constants.INPUT_VALUE)
             {
-                Console.SetCursorPosition(24, 1);
-                bookId = Console.ReadLine();       //도서번호를 입력받음
-                if(string.IsNullOrEmpty(bookId) || !Regex.IsMatch(bookId, @"^[0-9]{1,3}$") || !IsBookInList(bookName, bookId))
+                bookId = text.EnterText(24, 1, "");       //도서번호를 입력받음
+                if (bookId.Equals(Constants.ESC))
+                {
+                    return Constants.ESC;
+                }
+                else if(string.IsNullOrEmpty(bookId) || Regex.IsMatch(bookId, @"^[0-9]{1,3}$") == Constants.IS_NOT_MATCH || IsBookOnList(searchWord, bookId) == Constants.BOOK_NOT_IN_LIST)
                 {
                     PrintInputBox(0, 2, "(현재 조회 목록에 없는 도서번호입니다.다시 입력해주세요.)          ");
                 }
@@ -65,36 +76,33 @@ namespace Library
                 else break;   //도서삭제 가능
                 PrintInputBox(24, 1, Constants.REMOVE_LINE);
             }
-        }
-        public string InputBookName()
-        {
-            string bookName;
 
-            SearchingBook searchingBook = new SearchingBook();
-            bookName = searchingBook.InputSearchWord(22, 1, 2);    //도서명을 입력받음
-
-            return bookName;
+            return bookId;
         }
-        public int ControlDeletingBook()
+        public void DeleteBook()
         {
+            SearchingScreen screen = new SearchingScreen();
             DeletingBookScreen deletingBookScreen = new DeletingBookScreen();
-            deletingBookScreen.PrintBookList();      //책목록 출력
+            LogoScreen logoScreen = new LogoScreen();
+            Keyboard keyboard = new Keyboard();
+            SearchingBook searchingBook = new SearchingBook();
 
-            Keyboard keyboard = new Keyboard(0, 1);
-            int menu = keyboard.SelectMenu(1, 1, 0);
-            if (menu == Constants.ESCAPE) return Constants.ESCAPE;   //뒤로가기 -> 관리자모드로 돌아감
+            string searchWord;
+            string bookId;
 
-            string bookName = InputBookName();                       //도서명을 입력받음
-            deletingBookScreen.PrintSearchingBook(bookName);         //입력받은 도서명 검색결과 출력
+            searchWord = searchingBook.SearchBook(); //도서명,출판사, 저자명 검색(리턴값 -> 쿼리문)
+            if (searchWord.Equals(Constants.ESC)) return;   //입력 중 esc -> 뒤로가기
 
-            menu = keyboard.SelectMenu(1, 1, 0);
-            if (menu == Constants.ESCAPE) return Constants.ESCAPE;   //뒤로가기 -> 관리자모드로 돌아감
-            InputBookId(bookName);
+            logoScreen.PrintSearchBox("☞삭제할 도서번호 입력: ");
+            screen.PrintSearchingBook("select*from book", library);   //전체도서 출력
 
-            deletingBookScreen.PrintSuccessMessage(bookIndex);   //도서삭제 완료 메세지 출력
-            library.bookList.RemoveAt(bookIndex);                //리스트에서 도서삭제
+            bookId = InputBookId(searchWord);
+            if (bookId.Equals(Constants.ESC)) return;
 
-            return Constants.COMPLETE_FUNCTION;
+            deletingBookScreen.PrintSuccessMessage(bookId, library);   //도서삭제 완료 메세지 출력
+            library.DeleteBookList(bookId);                //리스트에서 도서삭제
+
+            keyboard.PressESC();
         }
     }
 }

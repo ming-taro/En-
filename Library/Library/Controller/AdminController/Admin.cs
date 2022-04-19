@@ -50,7 +50,7 @@ namespace Library
                     break;
                 case (int)Constants.Menu.FOURTH:  //도서 삭제
                     DeletingBook deletingBook = new DeletingBook();
-                    function = deletingBook.ControlDeletingBook();
+                    deletingBook.DeleteBook();
                     break;
                 case (int)Constants.Menu.FIFTH:  //회원관리
                     DeletingMember deletingMember = new DeletingMember();

@@ -90,7 +90,7 @@ namespace Library
             query = InputSearchWord(10, menu, 4); //검색어 입력받기
             if (query.Equals(Constants.ESC)) return Constants.ESC;     //검색어 입력 중 뒤로가기
 
-            return query;
+            return query;  //검색어를 입력하는 쿼리문 리턴
         }
         public void ShowSearchResult()
         {

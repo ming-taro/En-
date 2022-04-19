@@ -73,6 +73,10 @@ namespace Library
             StartNonQuery("DELETE FROM borrowBook WHERE memberId='" + memberId + "' and bookId='" + bookId + "';");  //대여목록에서 삭제
             StartNonQuery("UPDATE book SET quantity = quantity + 1 WHERE id='" + bookId + "';");                     //도서수량 +1
         }
+        public void DeleteBookList(string bookId)
+        {
+            StartNonQuery("DELETE FROM book WHERE id='" + bookId + "';");
+        }
         public void StartNonQuery(string query)
         {
             try

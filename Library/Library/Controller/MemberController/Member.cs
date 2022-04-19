@@ -20,7 +20,7 @@ namespace Library
         {
             switch (menu)
             {
-                case (int)Constants.Menu.FIRST:  //로그인
+                case (int)Constants.Menu.FIRST:   //로그인
                     ControlSignIn();
                     break;
                 case (int)Constants.Menu.SECOND:  //회원가입
@@ -74,14 +74,6 @@ namespace Library
                     myId = editingProfile.EditProfile();  //아이디를 수정했을 수 있음 -> 수정된 아이디를 myId에 저장
                     break;
             }
-        }
-        public void GoBack()  //뒤로가기
-        {
-            while (Constants.INPUT_VALUE)
-            {
-                ConsoleKeyInfo keyInfo = Console.ReadKey();
-                if (keyInfo.Key == ConsoleKey.Escape) break;
-            }   //escape키 입력 -> 뒤로가기
         }
     }
 }
