@@ -53,7 +53,7 @@ namespace Library
    
         public void InsertBookList(string id, string name, string publisher, string author, string price, string quantity)  //책목록에 도서정보 추가
         {
-            StartNonQuery("INSERT INTO booklist VALUES ('" + id + "','" + name + "','" + publisher + "','" + author + "','" + price + "'," + quantity + ");");
+            StartNonQuery("INSERT INTO book VALUES ('" + id + "','" + name + "','" + publisher + "','" + author + "','" + price + "'," + Int32.Parse(quantity) + ");");
         }
         public void InsertMember(string id, string password, string name, string age, string phoneNumber, string address)   //회원목록에 회원정보 추가
         {
