@@ -51,25 +51,23 @@ namespace Library
             }
         }
    
-        public void InsertBookList(string id, string name, string publisher, string author, string price, string quantity)  //책목록
+        public void InsertBookList(string id, string name, string publisher, string author, string price, string quantity)  //책목록에 도서정보 추가
         {
             StartQuery("INSERT INTO booklist VALUES ('" + id + "','" + name + "','" + publisher + "','" + author + "','" + price + "'," + quantity + ");");
         }
-        public void InsertMember(string id, string password, string name, string age, string phoneNumber, string address)
+        public void InsertMember(string id, string password, string name, string age, string phoneNumber, string address)   //회원목록에 회원정보 추가
         {
             StartQuery("INSERT INTO member VALUES ('" + id + "','" + password + "','" + name + "','" + age + "','" + phoneNumber + "','" + address + "');");
         }
-        public void InsertBorrowBook(string memberId, string bookId)
+        public void InsertBorrowBook(string memberId, string bookId)  //대여목록 추가
         {
-            StartQuery("INSERT INTO borrowBook(memberId,bookId) VALUES ('" + memberId + "', '" + bookId + "');");
+            StartQuery("INSERT INTO borrowBook(memberId,bookId) VALUES ('" + memberId + "', '" + bookId + "');"); //대여목록에 추가
+            StartQuery("UPDATE book SET quantity = quantity - 1 WHERE id='" + bookId + "';");                     //도서수량 -1
         }
-        public void DeleteBorrowBook(string memberId, string bookId)
+        public void DeleteBorrowBook(string memberId, string bookId)  //대여도서 반납 후 대여목록에서 삭제
         {
-            StartQuery("DELETE FROM borrowBook WHERE memberId='" + memberId + "' and bookId='" + bookId + "';");
-        }
-        public void UpdateQuantity(string bookId)
-        {
-            StartQuery("UPDATE book SET quantity = quantity + 1 WHERE id='" + bookId + "';");
+            StartQuery("DELETE FROM borrowBook WHERE memberId='" + memberId + "' and bookId='" + bookId + "';");  //대여목록에서 삭제
+            StartQuery("UPDATE book SET quantity = quantity + 1 WHERE id='" + bookId + "';");                     //도서수량 +1
         }
         public void StartQuery(string sql)
         {

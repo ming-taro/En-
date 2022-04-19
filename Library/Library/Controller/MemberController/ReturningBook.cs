@@ -86,8 +86,7 @@ namespace Library
             string bookId = InputBookId(memberId);               //반납하려는 도서번호
             if (bookId.Equals(Constants.ESC)) return;            //도서번호 입력 중 esc -> 뒤로가기
 
-            library.DeleteBorrowBook(memberId, bookId);          //대여도서목록에서 반납한 도서 데이터 삭제 
-            library.UpdateQuantity(bookId);                      //도서목록에서 도서 수량+1
+            library.DeleteBorrowBook(memberId, bookId);          //대여도서목록에서 반납한 도서 데이터 삭제, 수량+1
 
             logoScreen.PrintMenu("도서반납 완료");
             searchingScreen.PrintSearchingBook("select*from book,borrowBook where borrowBook.memberId='" + memberId + "' and borrowBook.bookId=book.id", library);

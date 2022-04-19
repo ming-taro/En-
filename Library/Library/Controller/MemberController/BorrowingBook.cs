@@ -10,11 +10,9 @@ namespace Library
 {
     class BorrowingBook
     {
-        private List<BookVO> bookList;
         private LibraryVO library;
         public BorrowingBook()
         {
-            bookList = new List<BookVO>();
             library = LibraryVO.GetLibraryVO();
         }
         public void PrintInputBox(string message)
@@ -90,20 +88,6 @@ namespace Library
                 Console.Write(Constants.REMOVE_LINE);
             }
             return bookId;
-        }
-        public BookVO FindBookInList(string bookId)    //입력받은 도서번호에 해당하는 도서정보 리턴
-        {
-            int bookIndex;
-
-            for(bookIndex = 0; bookIndex < library.bookList.Count; bookIndex++)
-            {
-                if (library.bookList[bookIndex].Id.Equals(bookId)) break;   //목록에서 해당 도서를 찾음
-            }
-
-            int quantity = int.Parse(library.bookList[bookIndex].Quantity) - 1; //해당 도서의 수량 -1
-            library.bookList[bookIndex].Quantity = quantity.ToString();         //도서정보에 변경된 수량 반영
-            
-            return library.bookList[bookIndex];  
         }
         public void SearchBorrowBook(string memberId)
         {
