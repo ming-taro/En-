@@ -58,8 +58,8 @@ namespace Library
             switch (menu)
             {
                 case (int)Constants.Menu.FIRST:  //도서검색
-                    Admin adminController = new Admin();
-                    adminController.SelectMenu(menu);
+                    //Admin adminController = new Admin();
+                    //adminController.SelectMenu(menu);
                     break;
                 case (int)Constants.Menu.SECOND: //도서대여
                     BorrowingBook borrowingBook = new BorrowingBook();
