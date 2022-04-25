@@ -12,7 +12,9 @@ namespace Library
         public void PrintInputBox(int left, int top, string message)
         {
             Console.SetCursorPosition(left, top);
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.Write(message);
+            Console.ForegroundColor = ConsoleColor.Gray;
         }
         public void PrintSearchBox()  //검색모드 선택 화면
         {

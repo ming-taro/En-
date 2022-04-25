@@ -60,7 +60,7 @@ namespace Library
                 }
                 else if(string.IsNullOrEmpty(searchWord) || Regex.IsMatch(searchWord, Constants.BOOK_NAME_REGEX) == Constants.IS_NOT_MATCH || IsBookOnList(top, searchWord, ref query) == Constants.BOOK_NOT_IN_LIST)
                 {
-                    adminMenu.PrintInputBox(0, messageTop, Constants.BOOK_NAME_ERROR_MESSAGE + Constants.REMOVE_LINE);
+                    adminMenu.PrintInputBox(0, messageTop, Constants.BOOK_NAME_ERROR_MESSAGE);
                 } 
                 else break; //목록에 있는 책에 대한 검색어를 입력한 경우
 
@@ -69,9 +69,8 @@ namespace Library
 
             return query; //검색어를 포함하는 도서가 존재함
         }
-        public string SearchBook()  //도서검색하기(검색어 입력 -> 목록 출력)
+        public string SearchBook(Keyboard keyboard)  //도서검색하기(검색어 입력 -> 목록 출력)
         {
-            Keyboard keyboard = new Keyboard();
             string query;
             int menu;
 
@@ -90,7 +89,7 @@ namespace Library
         }
         public void ShowSearchResult(Keyboard keyboard)
         {
-            string query = SearchBook();
+            string query = SearchBook(keyboard);
             if (query.Equals(Constants.ESC)) return;    //도중에 esc -> 도서검색 종료 
 
             Console.Clear();

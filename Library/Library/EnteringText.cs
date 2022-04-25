@@ -31,6 +31,7 @@ namespace Library
         }
         public string EnterText(int left, int top, string mark)
         {
+            text.Clear();
             Console.SetCursorPosition(left, top);
 
             while (Constants.INPUT_VALUE)
