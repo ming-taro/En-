@@ -30,17 +30,17 @@ namespace Library
             deletingBook = new DeletingBook();
             deletingMember = new DeletingMember();
         }
-        public void StartAdminMode()     //관리자 모드 관리
+        public void StartAdminMode()                      //관리자 모드 관리
         {
             string success = signIn.SignInAdmin();        //관리자 로그인
             int menu;
 
             if (success == Constants.ESC) return;         //로그인 도중 esc -> 뒤로가기
 
-            while (Constants.ADMIN_MODE)
+            while (Constants.ADMIN_MODE)                  //로그인 성공
             {
-                menuScreen.PrintAdminMode();   //관리자 모드 화면 출력
-                keyboard.InitCursorPosition(); //커서 위치 조정
+                menuScreen.PrintAdminMode();              //관리자 모드 화면 출력
+                keyboard.InitCursorPosition();            //커서 위치 조정
 
                 menu = keyboard.SelectMenu((int)Constants.Menu.FIRST, (int)Constants.Menu.FIFTH, (int)Constants.Menu.STEP); //메뉴선택 완료
                 if (menu == Constants.ESCAPE) break;      //관리자 메뉴 선택중 esc -> 관리자 모드 종료(메인으로 돌아감)
@@ -57,7 +57,7 @@ namespace Library
             switch (menu)
             {
                 case (int)Constants.Menu.FIRST:  //도서 이름 검색 
-                    searchingBook.ShowSearchResult();
+                    searchingBook.ShowSearchResult(keyboard);
                     break;
                 case (int)Constants.Menu.SECOND:  //도서 등록
                     registeringBook.StartRegistration();

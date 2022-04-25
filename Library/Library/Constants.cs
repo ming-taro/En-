@@ -15,13 +15,7 @@ namespace Library
         public const int ENTERING_MENU = 1;
         public const bool KEYBOARD_OPERATION = true;
 
-        public const int SEARCHING_BOOK = 1;
-        public const int REGISTRATION_BOOK = 2;
-        public const int MANAGING_BOOK = 3;
-        public const int REMOVING_BOOK = 4;
-        public const int MANAGING_MEMBER = 5;
-
-        public const int COMPLETE_FUNCTION = 7;
+        public const int COMPLETE_FUNCTION = 7; //----->삭제할 코드
 
         public const bool OUT_OF_MENU = true;
         public const bool ADMIN_MODE = true;
@@ -53,9 +47,12 @@ namespace Library
         public const bool GOING_NEXT = true;
         public const bool GOING_BACK = true;
         public const bool INPUT_VALUE = true;
-        public const bool RIGHT_VALUE = true;
-        public const bool WRONG_VALUE = false;
         public const string SIGN_IN_ERROR = "아이디 또는 비밀번호를 잘못 입력하셨습니다.\n다시 입력해주세요.\n";
+
+        //정규식
+        public const string BOOK_NAME_REGEX = @"^[\w]{1,1}[^\e]{0,49}$";
+        public const string BOOK_NAME_ERROR_MESSAGE = "(해당 검색어와 일치하는 도서가 없습니다. 다시 입력해주세요.)";
+
 
         //EnteringText
         public const bool MODIFIERS = true;

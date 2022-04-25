@@ -91,7 +91,7 @@ namespace Library
         }
         public void SearchBorrowBook(string memberId)
         {
-            SearchingScreen searchingScreen = new SearchingScreen();
+            AdminMenu searchingScreen = new AdminMenu();
             BorrowingScreen borrowingScreen = new BorrowingScreen();
             LogoScreen logoScreen = new LogoScreen();
             Keyboard keyboard = new Keyboard();

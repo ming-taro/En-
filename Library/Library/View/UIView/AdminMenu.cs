@@ -7,8 +7,13 @@ using System.Threading.Tasks;
 
 namespace Library
 {
-    class SearchingScreen
+    class AdminMenu
     {
+        public void PrintInputBox(int left, int top, string message)
+        {
+            Console.SetCursorPosition(left, top);
+            Console.Write(message);
+        }
         public void PrintSearchBox()  //검색모드 선택 화면
         {
             Console.Clear();

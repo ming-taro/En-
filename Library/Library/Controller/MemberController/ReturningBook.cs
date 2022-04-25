@@ -76,7 +76,7 @@ namespace Library
         }
         public void ShowMyBookList(string memberId)
         {
-            SearchingScreen searchingScreen = new SearchingScreen();
+            AdminMenu searchingScreen = new AdminMenu();
             LogoScreen logoScreen = new LogoScreen();
             Keyboard keyboard = new Keyboard();
 

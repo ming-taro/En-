@@ -21,7 +21,7 @@ namespace Library
 
             return Constants.NOT_MODIFIERS;
         }
-        public bool IsKorean(char oneLetter)   //한글인지 아닌지 확인
+        public bool IsKorean(char oneLetter)   //한글인지 아닌지 확인(uAC00~uD7AF:가~힣, u3130~u314E:ㄱ~ㅎ, u314F~u3163:ㅏ~ㅣ)
         {
             if (oneLetter >= '\uAC00' && oneLetter <= '\uD7AF' || oneLetter >= '\u3130' && oneLetter <= '\u314E' || oneLetter >= '\u314F' && oneLetter <= '\u3163')
             {
