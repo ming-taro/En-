@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Library
 {
-    class MenuScreen
+    class Menu
     {
         LogoScreen logoScreen;
-        public MenuScreen()
+        public Menu()
         {
             logoScreen = new LogoScreen();
         }
@@ -21,7 +21,6 @@ namespace Library
         }
         public void PrintMemberMenu()
         {
-            
             string[] menu = { "로그인", "회원가입" };
             logoScreen.PrintMain(menu);
         }

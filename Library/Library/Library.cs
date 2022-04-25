@@ -5,15 +5,12 @@ using System.IO;
 
 namespace Library
 {
-    class Program
+    class Library
     {
         static void Main(string[] args)
         {
-            Library library = new Library();
-            library.StartLibrary();
-
-            
-
+            LibraryMenu libraryMenu = new LibraryMenu();
+            libraryMenu.StartLibrary();
         }
     }
 }

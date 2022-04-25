@@ -34,7 +34,7 @@ namespace Library
         }
         public void StartMemberMode(int maxTop)    //1.회원가입  2.로그인 
         {
-            MenuScreen menuScreen = new MenuScreen();
+            Menu menuScreen = new Menu();
             Keyboard keyboard = new Keyboard();
             keyboard.InitCursorPosition();
             int menu;

@@ -7,30 +7,38 @@ using MySql.Data.MySqlClient;
 
 namespace Library
 {
-    class Library
+    class LibraryMenu
     {
+        Keyboard keyboard;
+        Menu menuScreen;
+        Member member;
+        Admin admin;
 
+        public LibraryMenu()
+        {
+            keyboard = new Keyboard();
+            menuScreen = new Menu();
+            member = new Member();
+            admin = new Admin(keyboard, menuScreen);
+        }
         private void StartMain(int top)
         {
             switch (top)  //커서의 위치값으로 메뉴를 구분
             {
                 case (int)Constants.Menu.FIRST:
-                    Member member = new Member(); //1. 회원모드
-                    member.StartMemberMode(14);       //회원메뉴 컨트롤로 이동
+                    member.StartMemberMode(14);       //회원메뉴 선택화면으로 이동
                     break;
-                case (int)Constants.Menu.SECOND:                                    //2. 관리자 모드
-                    Admin admin = new Admin();    //관리자 로그인 화면으로 이동
-                    admin.StartAdminMode();            //관리자 모드로     
+                case (int)Constants.Menu.SECOND:                              
+                    admin.StartAdminMode();           //관리자 모드로 이동    
                     break;
             }
         }
         public void StartLibrary()  //메인화면
         {
-            MenuScreen menuScreen = new MenuScreen();  //메인화면 출력
-            menuScreen.PrintMainMenu();
-
-            Keyboard keyboard = new Keyboard(25, (int)Constants.Menu.FIRST);
             int key;
+
+            menuScreen.PrintMainMenu();   //메인화면 출력
+            keyboard.SetPosition(25, (int)Constants.Menu.FIRST);  //커서 위치 조정
 
             while (Constants.KEYBOARD_OPERATION)
             {
