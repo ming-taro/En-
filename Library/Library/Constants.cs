@@ -62,6 +62,13 @@ namespace Library
         public const string ESC = "ESC";
         public const string ENTER = "ENTER";
 
+        //Connection
+        public const string SERVER = "Server = localhost;";
+        public const string PORT = "Port = 3306;";
+        public const string DATABASE = "Database = booklist;";
+        public const string ID = "Uid = root;";
+        public const string PASSWORD = "Pwd = 0000;";
+
         public enum Menu
         {
             FIRST = 13,

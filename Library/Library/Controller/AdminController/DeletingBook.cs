@@ -90,7 +90,7 @@ namespace Library
             string searchWord;
             string bookId;
 
-            searchWord = searchingBook.SearchBook(); //도서명,출판사, 저자명 검색(리턴값 -> 쿼리문)
+            searchWord = searchingBook.SearchBook(keyboard); //도서명,출판사, 저자명 검색(리턴값 -> 쿼리문)
             if (searchWord.Equals(Constants.ESC)) return;   //입력 중 esc -> 뒤로가기
 
             logoScreen.PrintSearchBox("☞삭제할 도서번호 입력: ");

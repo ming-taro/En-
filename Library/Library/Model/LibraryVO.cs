@@ -11,12 +11,10 @@ namespace Library
     {
         private static LibraryVO instance = null;
         private MySqlConnection connection;
-        /// <summary>
-        /// ///////////////////////////////////////////////////
-        /// </summary>
-        public List<BookVO> bookList = new List<BookVO>();
-        public List<BorrowVO> borrowList = new List<BorrowVO>();
-        public List<MemberVO> memberList = new List<MemberVO>();
+
+        public List<BookVO> bookList = new List<BookVO>();         //---->삭제할 코드
+        public List<BorrowVO> borrowList = new List<BorrowVO>();   //---->삭제할 코드
+        public List<MemberVO> memberList = new List<MemberVO>();   //---->삭제할 코드
 
         public static LibraryVO GetLibraryVO()
         {
@@ -30,7 +28,7 @@ namespace Library
         {
             try
             {
-                connection = new MySqlConnection("Server=localhost;Port=3306;Database=booklist;Uid=root;Pwd=0000");
+                connection = new MySqlConnection(Constants.SERVER + Constants.PORT + Constants.DATABASE + Constants.ID + Constants.PASSWORD);
                 connection.Open();
             }
             catch(Exception e)
@@ -59,7 +57,7 @@ namespace Library
         {
             StartNonQuery("INSERT INTO member VALUES ('" + id + "','" + password + "','" + name + "','" + age + "','" + phoneNumber + "','" + address + "');");
         }
-        public void UpdateMember(string id, string query)
+        public void UpdateMember(string id, string query)             //회원정보 수정
         {
             StartNonQuery("UPDATE member SET " + query + " WHERE id='" + id + "';");
         }

@@ -31,7 +31,7 @@ namespace Library
         }
         public string EnterText(int left, int top, string mark)
         {
-            text.Clear();
+            text.Clear();  //stringbuilder 초기화
             Console.SetCursorPosition(left, top);
 
             while (Constants.INPUT_VALUE)

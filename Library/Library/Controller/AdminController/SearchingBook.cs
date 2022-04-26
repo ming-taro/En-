@@ -36,13 +36,14 @@ namespace Library
 
             MySqlCommand command = new MySqlCommand(query + ";", library.Connection);
             MySqlDataReader table = command.ExecuteReader();
-
+            
             if (table.HasRows)
             {
                 table.Close();
                 return Constants.BOOK_IN_LIST;
             }
             table.Close();
+
             return Constants.BOOK_NOT_IN_LIST;   //해당 검색어를 포함하는 도서를 찾지 못함
         }
         public string InputSearchWord(int left, int top, int messageTop)
@@ -90,12 +91,12 @@ namespace Library
         public void ShowSearchResult(Keyboard keyboard)
         {
             string query = SearchBook(keyboard);
-            if (query.Equals(Constants.ESC)) return;    //도중에 esc -> 도서검색 종료 
+            if (query.Equals(Constants.ESC)) return;        //도중에 esc -> 도서검색 종료 
 
             Console.Clear();
             adminMenu.PrintSearchingBook(query, library);   //검색결과로 나온 책목록 출력
 
-            keyboard.PressESC();  //esc -> 뒤로가기
+            keyboard.PressESC();                            //esc -> 뒤로가기
         }
     }
 }

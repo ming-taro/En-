@@ -15,8 +15,8 @@ namespace Library
         private string author;        //저자
         private string price;         //가격
         private string quantity;      //수량
-        private static List<BookVO> bookList;
-        public static List<BookVO> GetBookList()
+        private static List<BookVO> bookList; //--------->삭제할 코드
+        public static List<BookVO> GetBookList()//--------->삭제할 코드
         {
             if(bookList == null)
             {
@@ -25,7 +25,7 @@ namespace Library
             }
             return bookList;
         }
-        public static void InitBookList()
+        public static void InitBookList()//--------->삭제할 코드
         {
             bookList.Add(new BookVO("1", "혼자 공부하는 자바", "한빛미디어", "신용권", "24000", "5"));
             bookList.Add(new BookVO("2", "혼자 공부하는 파이썬", "한빛미디어", "윤인성", "18000", "5"));

@@ -97,7 +97,7 @@ namespace Library
             Keyboard keyboard = new Keyboard();
 
             SearchingBook searchingBook = new SearchingBook();
-            string searchWord = searchingBook.SearchBook(); //도서명,출판사, 저자명 검색(리턴값 -> 쿼리문)
+            string searchWord = searchingBook.SearchBook(keyboard); //도서명,출판사, 저자명 검색(리턴값 -> 쿼리문)
             if (searchWord.Equals(Constants.ESC)) return;   //입력 중 esc -> 뒤로가기
 
             logoScreen.PrintSearchBox("☞대여할 도서 번호:");
