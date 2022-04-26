@@ -23,7 +23,7 @@ namespace Library
             Console.WriteLine("☞출판사: ");
             Console.WriteLine("☞저자: ");
         }
-        public void PrintSearchingBook(string sql, LibraryVO library)
+        public void PrintSearchingBook(string sql, LibraryVO library)//------>삭제할코드
         {
             MySqlCommand command = new MySqlCommand(sql + ";", library.Connection);
             MySqlDataReader table = command.ExecuteReader();
@@ -42,6 +42,20 @@ namespace Library
             table.Close();
 
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>뒤로가기:[ESC]<<<<<<<<<<<<<<<<<<<<<<<<");
+        }
+        public void PrintSearchingBook(List<BookVO> bookList)
+        {
+            Console.WriteLine("\n=============================================================\n");
+            for(int i = 0; i<bookList.Count; i++)
+            {
+                Console.WriteLine("도서번호: " + bookList[i].Id);
+                Console.WriteLine("도서명: " + bookList[i].Name);
+                Console.WriteLine("출판사: " + bookList[i].Publisher);
+                Console.WriteLine("저자: " + bookList[i].Author);
+                Console.WriteLine("가격: " + bookList[i].Price);
+                Console.WriteLine("수량: " + bookList[i].Quantity);
+                Console.WriteLine("\n=============================================================\n");
+            }
         }
     }
 }

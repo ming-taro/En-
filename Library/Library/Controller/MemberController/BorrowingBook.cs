@@ -97,17 +97,17 @@ namespace Library
             Keyboard keyboard = new Keyboard();
 
             SearchingBook searchingBook = new SearchingBook();
-            string searchWord = searchingBook.SearchBook(keyboard); //도서명,출판사, 저자명 검색(리턴값 -> 쿼리문)
-            if (searchWord.Equals(Constants.ESC)) return;   //입력 중 esc -> 뒤로가기
+            //string searchWord = searchingBook.SearchBook(keyboard); //도서명,출판사, 저자명 검색(리턴값 -> 쿼리문)
+            //if (searchWord.Equals(Constants.ESC)) return;   //입력 중 esc -> 뒤로가기
 
             logoScreen.PrintSearchBox("☞대여할 도서 번호:");
-            searchingScreen.PrintSearchingBook(searchWord, library); //검색결과로 나온 책목록 출력
+            //searchingScreen.PrintSearchingBook(searchWord, library); //검색결과로 나온 책목록 출력
 
-            string bookId = InputBookId(memberId, searchWord);     //도서번호를 입력받음
-            if (bookId.Equals(Constants.ESC)) return;  //도서번호 입력 중 esc -> 대여종료
+            //string bookId = InputBookId(memberId, searchWord);     //도서번호를 입력받음
+            //if (bookId.Equals(Constants.ESC)) return;  //도서번호 입력 중 esc -> 대여종료
 
             borrowingScreen.PrintSuccessMessage();     //도서대여 완료 메세지 출력
-            library.InsertBorrowBook(memberId, bookId);//대여목록에 대여정보 저장
+            //library.InsertBorrowBook(memberId, bookId);//대여목록에 대여정보 저장
 
             keyboard.PressESC();   //esc -> 뒤로가기
         }

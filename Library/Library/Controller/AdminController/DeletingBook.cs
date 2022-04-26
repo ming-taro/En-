@@ -90,17 +90,17 @@ namespace Library
             string searchWord;
             string bookId;
 
-            searchWord = searchingBook.SearchBook(keyboard); //도서명,출판사, 저자명 검색(리턴값 -> 쿼리문)
-            if (searchWord.Equals(Constants.ESC)) return;   //입력 중 esc -> 뒤로가기
+            //searchWord = searchingBook.SearchBook(keyboard); //도서명,출판사, 저자명 검색(리턴값 -> 쿼리문)
+            //if (searchWord.Equals(Constants.ESC)) return;   //입력 중 esc -> 뒤로가기
 
             logoScreen.PrintSearchBox("☞삭제할 도서번호 입력: ");
             screen.PrintSearchingBook("select*from book", library);   //전체도서 출력
 
-            bookId = InputBookId(searchWord);
-            if (bookId.Equals(Constants.ESC)) return;
+            //bookId = InputBookId(searchWord);
+            //if (bookId.Equals(Constants.ESC)) return;
 
-            deletingBookScreen.PrintSuccessMessage(bookId, library);   //도서삭제 완료 메세지 출력
-            library.DeleteBookList(bookId);                //리스트에서 도서삭제
+            //deletingBookScreen.PrintSuccessMessage(bookId, library);   //도서삭제 완료 메세지 출력
+            //library.DeleteBookList(bookId);                //리스트에서 도서삭제
 
             keyboard.PressESC();
         }

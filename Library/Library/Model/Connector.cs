@@ -9,19 +9,9 @@ namespace Library
 {
     class Connector
     {
-        private static Connector instance = null;
         private static MySqlConnection connection;
-        public static Connector GetInstance()
-        {
-            if (instance == null)
-            {
-                instance = new Connector();
-            }
 
-            return instance;
-        }
-
-        public MySqlConnection GetConnection()
+        public static MySqlConnection GetConnection()
         {
             try
             {

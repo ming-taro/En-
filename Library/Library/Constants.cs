@@ -49,11 +49,6 @@ namespace Library
         public const bool INPUT_VALUE = true;
         public const string SIGN_IN_ERROR = "아이디 또는 비밀번호를 잘못 입력하셨습니다.\n다시 입력해주세요.\n";
 
-        //정규식
-        public const string BOOK_NAME_REGEX = @"^[\w]{1,1}[^\e]{0,49}$";
-        public const string BOOK_NAME_ERROR_MESSAGE = "(해당 검색어와 일치하는 도서가 없습니다. 다시 입력해주세요.)";
-
-
         //EnteringText
         public const bool MODIFIERS = true;
         public const bool NOT_MODIFIERS = false;
@@ -61,6 +56,17 @@ namespace Library
         public const bool NOT_KOREAN = false;
         public const string ESC = "ESC";
         public const string ENTER = "ENTER";
+
+        //정규식
+        public const string BOOK_NAME_REGEX = @"^[\w]{1,1}[^\e]{0,49}$";
+        public const string BOOK_NAME_ERROR_MESSAGE = "(1~50자 이내의 문자를 입력해주세요.)";
+
+        //쿼리
+        public const string BOOK_LIST = "select*from book;";
+        public const string BOOK_NAME_SEARCH = "select*from book where name like '%";
+        public const string PUBLISHER_SEARCH = "select*from book where publisher like '%";
+        public const string AUTHOR_SEARCH = "select*from book where author like '%";
+        public const string END_OF_SEARCH_QUERY = "%';";
 
         //Connection
         public const string SERVER = "Server = localhost;";
@@ -101,9 +107,13 @@ namespace Library
         }
         public enum SearchMenu
         {
-            BOOK_NAME = 1,
+            ALL = 0,
+            BOOK_NAME,
             PUBLISHER,
-            AUTHOR
+            AUTHOR,
+            ERROR_MESSAGE,
+            LEFT_VALUE_OF_INPUT = 10,     
+            STEP = 1
         }
     }
 }
