@@ -120,7 +120,6 @@ namespace Library
             PUBLISHER,
             AUTHOR,
             ERROR_MESSAGE,
-            NO_SEARCH_RESULT_TOP = 7,
             NO_SEARCH_RESULT_LEFT = 9,
             LEFT_VALUE_OF_INPUT = 10,     
             STEP = 1

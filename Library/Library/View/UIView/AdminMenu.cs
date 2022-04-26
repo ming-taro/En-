@@ -9,6 +9,10 @@ namespace Library
 {
     class AdminMenu
     {
+        public void PrintLine()
+        {
+            Console.WriteLine("\n=============================================================\n");
+        }
         public void PrintInputBox(int left, int top, string message, ConsoleColor color)
         {
             Console.SetCursorPosition(left, top);
@@ -22,6 +26,7 @@ namespace Library
             Console.WriteLine("\n☞도서명: ");
             Console.WriteLine("☞출판사: ");
             Console.WriteLine("☞저자: ");
+            Console.WriteLine("\n>>>>>>>>>>>>>>>>>>>>>>>뒤로가기:[ESC]<<<<<<<<<<<<<<<<<<<<<<<<");
         }
         public void PrintSearchingBook(string sql, LibraryVO library)//------>삭제할코드
         {
@@ -41,13 +46,13 @@ namespace Library
             }
             table.Close();
 
-            Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>뒤로가기:[ESC]<<<<<<<<<<<<<<<<<<<<<<<<");
+            Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>[ESC]:뒤로가기<<<<<<<<<<<<<<<<<<<<<<<<");
         }
         public void PrintBookList(List<BookVO> bookList)
         {
             PrintSearchBox();
 
-            Console.WriteLine("\n=============================================================\n");
+            PrintLine();
             for (int i = 0; i<bookList.Count; i++)
             {
                 Console.WriteLine("도서번호: " + bookList[i].Id);
@@ -56,17 +61,16 @@ namespace Library
                 Console.WriteLine("저자: " + bookList[i].Author);
                 Console.WriteLine("가격: " + bookList[i].Price);
                 Console.WriteLine("수량: " + bookList[i].Quantity);
-                Console.WriteLine("\n=============================================================\n");
+                PrintLine();
             }
-            PrintInputBox(0, Console.CursorTop - 1, Constants.ESC_AND_ENTER, ConsoleColor.Gray);
         }
         public void PrintNoSearchResult()
         {
             PrintSearchBox();
-            Console.WriteLine("\n=============================================================\n");
-            PrintInputBox((int)Constants.SearchMenu.NO_SEARCH_RESULT_LEFT, (int)Constants.SearchMenu.NO_SEARCH_RESULT_TOP, Constants.NO_SEARCH_RESULT, ConsoleColor.Red);
-            Console.WriteLine("\n=============================================================\n");
-            PrintInputBox(0, Console.CursorTop - 1, Constants.ESC_AND_ENTER, ConsoleColor.Gray);
+            PrintLine();
+            PrintInputBox((int)Constants.SearchMenu.NO_SEARCH_RESULT_LEFT, Console.CursorTop, Constants.NO_SEARCH_RESULT, ConsoleColor.Red);
+            PrintLine();
+            PrintInputBox(0, Console.CursorTop - 1, Constants.ESC_AND_ENTER, ConsoleColor.Yellow);
         }
     }
 }

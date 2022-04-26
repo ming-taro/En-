@@ -47,7 +47,7 @@ namespace Library
             int searchType;
 
             adminMenu.PrintBookList(bookDatabaseManager.MakeBookList((int)Constants.SearchMenu.ALL, ""));   //전체도서 출력
-
+            
             keyboard.SetPosition(0, (int)Constants.SearchMenu.BOOK_NAME);      //커서위치
             searchType = keyboard.SelectMenu((int)Constants.SearchMenu.BOOK_NAME, (int)Constants.SearchMenu.AUTHOR, (int)Constants.SearchMenu.STEP);               //메뉴선택
             if (searchType == (int)Constants.Keyboard.ESCAPE) return (int)Constants.Keyboard.ESCAPE;  //검색유형 선택 도중 뒤로가기 -> 관리자 메뉴로 돌아감
@@ -71,8 +71,15 @@ namespace Library
 
                 bookList = bookDatabaseManager.MakeBookList(searchType, searchWord);  //검색결과
 
-                if (bookList.Count == 0) adminMenu.PrintNoSearchResult();//검색결과가 없음
-                else adminMenu.PrintBookList(bookList);                  //검색결과로 나온 책목록 출력
+                if (bookList.Count == 0)
+                {
+                    adminMenu.PrintNoSearchResult();//검색결과가 없음
+                }
+                else
+                {
+                    adminMenu.PrintBookList(bookList);                  //검색결과로 나온 책목록 출력
+                    adminMenu.PrintInputBox(0, Console.CursorTop - 1, Constants.ESC_AND_ENTER, ConsoleColor.Yellow);
+                }
 
                 if (keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break; //Esc->뒤로가기, Enter->재검색
             }
