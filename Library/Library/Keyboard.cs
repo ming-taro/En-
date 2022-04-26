@@ -44,7 +44,7 @@ namespace Library
                 key = ControlKeyboard(move);            //키보드를 입력받음
                 if (IsOutOfMenu(minTop, maxTop)) continue;  //메뉴를 벗어나는 이동은 X
 
-                if (key == Constants.ENTERING_MENU || key == Constants.ESCAPE) break;//메뉴입력 -> 해당 메뉴로 이동(1.회원모드   2.관리자모드)
+                if (key == (int)Constants.Keyboard.ENTER || key == (int)Constants.Keyboard.ESCAPE) break;//메뉴입력 -> 해당 메뉴로 이동(1.회원모드   2.관리자모드)
             }
 
             return key;
@@ -61,15 +61,15 @@ namespace Library
                     case ConsoleKey.DownArrow:
                         top += move;
                         Console.SetCursorPosition(left, top);   //↓방향키 입력
-                        return Constants.MOVING_CURSOR;
+                        return (int)Constants.Keyboard.MOVING_CURSOR;
                     case ConsoleKey.UpArrow:                      //↑방향키 입력
                         top -= move;
                         Console.SetCursorPosition(left, top);
-                        return Constants.MOVING_CURSOR;
+                        return (int)Constants.Keyboard.MOVING_CURSOR;
                     case ConsoleKey.Enter:                        //enter 입력
-                        return Constants.ENTERING_MENU;
+                        return (int)Constants.Keyboard.ENTER;
                     case ConsoleKey.Escape:                       //escape 입력
-                        return Constants.ESCAPE;
+                        return (int)Constants.Keyboard.ESCAPE;
                 }
             }
         }
@@ -89,6 +89,17 @@ namespace Library
             {
                 keyInfo = Console.ReadKey(true);   //키를 입력받음 
                 if (keyInfo.Key == ConsoleKey.Escape) return;
+            }
+        }
+        public int PressEnterOrESC()
+        {
+            ConsoleKeyInfo keyInfo;
+
+            while (Constants.KEYBOARD_OPERATION)   //다른 키를 입력하면 올바른 키를 입력할때까지 무한루프
+            {
+                keyInfo = Console.ReadKey(true);   //키를 입력받음 
+                if (keyInfo.Key == ConsoleKey.Escape) return (int)Constants.Keyboard.ESCAPE;
+                else if (keyInfo.Key == ConsoleKey.Enter) return (int)Constants.Keyboard.ENTER;
             }
         }
     }

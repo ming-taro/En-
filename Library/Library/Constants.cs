@@ -8,6 +8,12 @@ namespace Library
 {
     class Constants
     {
+        public enum Keyboard
+        {
+            ESCAPE = -5,
+            MOVING_CURSOR,
+            ENTER
+        }
         public const int CLOSE_PROGRAM = -3;
         public const int INVALID_INPUT = -2;
         public const int ESCAPE = -1;
@@ -48,6 +54,8 @@ namespace Library
         public const bool GOING_BACK = true;
         public const bool INPUT_VALUE = true;
         public const string SIGN_IN_ERROR = "아이디 또는 비밀번호를 잘못 입력하셨습니다.\n다시 입력해주세요.\n";
+        public const string NO_SEARCH_RESULT = "[입력하신 검색어를 포함하는 도서가 없습니다.]";
+        public const string ESC_AND_ENTER = "[ESC]:뒤로가기    [ENTER]:다시 검색";
 
         //EnteringText
         public const bool MODIFIERS = true;
@@ -112,6 +120,8 @@ namespace Library
             PUBLISHER,
             AUTHOR,
             ERROR_MESSAGE,
+            NO_SEARCH_RESULT_TOP = 7,
+            NO_SEARCH_RESULT_LEFT = 9,
             LEFT_VALUE_OF_INPUT = 10,     
             STEP = 1
         }

@@ -9,11 +9,11 @@ namespace Library
 {
     class AdminMenu
     {
-        public void PrintInputBox(int left, int top, string message)
+        public void PrintInputBox(int left, int top, string message, ConsoleColor color)
         {
             Console.SetCursorPosition(left, top);
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write(message);
+            Console.ForegroundColor = color;
+            Console.WriteLine(message);
             Console.ForegroundColor = ConsoleColor.Gray;
         }
         public void PrintSearchBox()  //검색모드 선택 화면
@@ -43,10 +43,12 @@ namespace Library
 
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>뒤로가기:[ESC]<<<<<<<<<<<<<<<<<<<<<<<<");
         }
-        public void PrintSearchingBook(List<BookVO> bookList)
+        public void PrintBookList(List<BookVO> bookList)
         {
+            PrintSearchBox();
+
             Console.WriteLine("\n=============================================================\n");
-            for(int i = 0; i<bookList.Count; i++)
+            for (int i = 0; i<bookList.Count; i++)
             {
                 Console.WriteLine("도서번호: " + bookList[i].Id);
                 Console.WriteLine("도서명: " + bookList[i].Name);
@@ -56,6 +58,15 @@ namespace Library
                 Console.WriteLine("수량: " + bookList[i].Quantity);
                 Console.WriteLine("\n=============================================================\n");
             }
+            PrintInputBox(0, Console.CursorTop - 1, Constants.ESC_AND_ENTER, ConsoleColor.Gray);
+        }
+        public void PrintNoSearchResult()
+        {
+            PrintSearchBox();
+            Console.WriteLine("\n=============================================================\n");
+            PrintInputBox((int)Constants.SearchMenu.NO_SEARCH_RESULT_LEFT, (int)Constants.SearchMenu.NO_SEARCH_RESULT_TOP, Constants.NO_SEARCH_RESULT, ConsoleColor.Red);
+            Console.WriteLine("\n=============================================================\n");
+            PrintInputBox(0, Console.CursorTop - 1, Constants.ESC_AND_ENTER, ConsoleColor.Gray);
         }
     }
 }

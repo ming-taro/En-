@@ -43,11 +43,12 @@ namespace Library
             while (Constants.KEYBOARD_OPERATION)
             {
                 key = keyboard.SelectMenu((int)Constants.Menu.FIRST, (int)Constants.Menu.THIRD, (int)Constants.Menu.STEP);      //입력받은 키값
-                if (key == Constants.ESCAPE || key == Constants.ENTERING_MENU && keyboard.Top == (int)Constants.Menu.THIRD)     //프로그램 종료
+                
+                if (key == (int)Constants.Keyboard.ESCAPE || key == (int)Constants.Keyboard.ENTER && keyboard.Top == (int)Constants.Menu.THIRD)     //프로그램 종료
                 {
                     break;
                 }
-                else if (key == Constants.ENTERING_MENU)   //메뉴입력 -> 해당 메뉴로 이동
+                else if (key == (int)Constants.Keyboard.ENTER)   //메뉴입력 -> 해당 메뉴로 이동
                 {
                     StartMain(keyboard.Top);
                     menuScreen.PrintMainMenu();
