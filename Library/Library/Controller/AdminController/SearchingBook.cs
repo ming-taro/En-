@@ -13,11 +13,16 @@ namespace Library
         private BookDAO bookDatabaseManager;
         private AdminMenu adminMenu;
         private EnteringText text;
+        private List<BookVO> bookList;
         public SearchingBook()
         {
             bookDatabaseManager = new BookDAO();
             adminMenu = new AdminMenu();
             text = new EnteringText();
+        }
+        public List<BookVO> BookList
+        {
+            get { return bookList; }
         }
         public string InputSearchWord(int left, int top, int messageTop)
         {
@@ -25,19 +30,24 @@ namespace Library
 
             while (Constants.INPUT_VALUE)
             {
-                searchWord = text.EnterText(left, top, "");        //(도서명/출판사/저자)를 입력 받음
-                
-                if (searchWord.Equals(Constants.ESC))              //입력도중 ESC -> 뒤로가기
+                searchWord = text.EnterText(left, top, "");                           //(도서명/출판사/저자)를 입력 받음
+                bookList = bookDatabaseManager.MakeBookList(top, searchWord);         //검색결과(커서의 top값 == 검색유형)
+
+                if (searchWord.Equals(Constants.ESC))   //검색어 입력도중 ESC -> 뒤로가기
                 {
                     return Constants.ESC;
                 }
-                else if(Regex.IsMatch(searchWord, Constants.BOOK_NAME_REGEX) == Constants.IS_NOT_MATCH)
+                else if(Regex.IsMatch(searchWord, Constants.BOOK_NAME_REGEX) == Constants.IS_NOT_MATCH)  //입력형식에 맞지 않은 검색어 입력
                 {
-                    adminMenu.PrintInputBox(0, messageTop, Constants.BOOK_NAME_ERROR_MESSAGE, ConsoleColor.Red);
+                    adminMenu.PrintMessage(0, messageTop, Constants.ERROR_MESSAGE_ABOUT_BOOK_NAME, ConsoleColor.Red);
                 }
-                else break; //목록에 있는 책에 대한 검색어를 입력한 경우
+                else if(bookList.Count == 0)
+                {
+                    adminMenu.PrintMessage(0, messageTop, Constants.ERROR_MESSAGE_ABOUT_BOOK_NOT_IN_LIST, ConsoleColor.Red);
+                }
+                else break; 
 
-                adminMenu.PrintInputBox(left, top, Constants.REMOVE_LINE, ConsoleColor.Gray);
+                adminMenu.PrintMessage(left, top, Constants.REMOVE_LINE, ConsoleColor.Gray);
             }
 
             return searchWord;  //검색어 반환
@@ -46,6 +56,7 @@ namespace Library
         {
             int searchType;
 
+            adminMenu.PrintSearchBox(Constants.SEARCH_TYPE);
             adminMenu.PrintBookList(bookDatabaseManager.MakeBookList((int)Constants.SearchMenu.ALL, ""));   //전체도서 출력
             
             keyboard.SetPosition(0, (int)Constants.SearchMenu.BOOK_NAME);      //커서위치
@@ -59,27 +70,16 @@ namespace Library
         {
             int searchType;
             string searchWord;
-            List<BookVO> bookList;
 
             while (Constants.INPUT_VALUE)
             {
-                searchType = SelectSearchType(keyboard);                 //검색유형 선택
-                if (searchType == (int)Constants.Keyboard.ESCAPE) break; //검색유형 선택 중 esc -> 도서검색 종료
+                searchType = SelectSearchType(keyboard);                   //검색유형 선택
+                if (searchType == (int)Constants.Keyboard.ESCAPE) break;   //검색유형 선택 중 esc -> 도서검색 종료
 
                 searchWord = InputSearchWord((int)Constants.SearchMenu.LEFT_VALUE_OF_INPUT, searchType, (int)Constants.SearchMenu.ERROR_MESSAGE);   //검색어 입력받기
-                if (searchWord.Equals(Constants.ESC)) continue;          //검색어 입력 중 esc -> 검색유형 선택으로
+                if (searchWord.Equals(Constants.ESC)) continue;            //검색어 입력 중 esc -> 검색유형 선택으로
 
-                bookList = bookDatabaseManager.MakeBookList(searchType, searchWord);  //검색결과
-
-                if (bookList.Count == 0)
-                {
-                    adminMenu.PrintNoSearchResult();//검색결과가 없음
-                }
-                else
-                {
-                    adminMenu.PrintBookList(bookList);                  //검색결과로 나온 책목록 출력
-                    adminMenu.PrintInputBox(0, Console.CursorTop - 1, Constants.ESC_AND_ENTER, ConsoleColor.Yellow);
-                }
+                adminMenu.PrintSearchResult(bookList);                     //도서 검색 결과 출력
 
                 if (keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break; //Esc->뒤로가기, Enter->재검색
             }

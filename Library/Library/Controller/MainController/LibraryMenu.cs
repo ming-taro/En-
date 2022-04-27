@@ -18,7 +18,7 @@ namespace Library
         {
             keyboard = new Keyboard();
             menuScreen = new Menu();
-            member = new Member();
+            member = new Member(keyboard);
             admin = new Admin(keyboard, menuScreen);
         }
         private void StartMain(int top)

@@ -9,16 +9,6 @@ namespace Library
 {
     class BorrowingScreen
     {
-        public void PrintBorrowing()
-        {
-            LogoScreen logoScreen = new LogoScreen();
-            logoScreen.PrintSearchBox("\n☞도서명 검색: ");  //검색창 출력
-
-            LibraryVO library = LibraryVO.GetLibraryVO();
-            ListScreen listScreen = new ListScreen();
-            listScreen.PrintBookList(library.bookList);        //도서목록 출력
-        }
-
         public void PrintSuccessMessage()
         {
             LogoScreen logoScreen = new LogoScreen();

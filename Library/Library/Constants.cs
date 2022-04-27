@@ -14,11 +14,11 @@ namespace Library
             MOVING_CURSOR,
             ENTER
         }
-        public const int CLOSE_PROGRAM = -3;
-        public const int INVALID_INPUT = -2;
-        public const int ESCAPE = -1;
-        public const int MOVING_CURSOR = 0;
-        public const int ENTERING_MENU = 1;
+        public const int CLOSE_PROGRAM = -3;    //----->삭제할 코드
+        public const int INVALID_INPUT = -2;    //----->삭제할 코드
+        public const int ESCAPE = -1;           //----->삭제할 코드
+        public const int MOVING_CURSOR = 0;     //----->삭제할 코드
+        public const int ENTERING_MENU = 1;     //----->삭제할 코드
         public const bool KEYBOARD_OPERATION = true;
 
         public const int COMPLETE_FUNCTION = 7; //----->삭제할 코드
@@ -54,8 +54,10 @@ namespace Library
         public const bool GOING_BACK = true;
         public const bool INPUT_VALUE = true;
         public const string SIGN_IN_ERROR = "아이디 또는 비밀번호를 잘못 입력하셨습니다.\n다시 입력해주세요.\n";
+        public const string SEARCH_TYPE = "☞도서명:\n☞출판사:\n☞저자:";
+        public const string BOOK_ID_TO_BORROW= "☞대여할 도서 번호:";
         public const string NO_SEARCH_RESULT = "[입력하신 검색어를 포함하는 도서가 없습니다.]";
-        public const string ESC_AND_ENTER = "[ESC]:뒤로가기    [ENTER]:다시 검색";
+        public const string ESC_AND_ENTER = "                         [ESC]:뒤로가기    [ENTER]:다시 검색";
 
         //EnteringText
         public const bool MODIFIERS = true;
@@ -67,7 +69,9 @@ namespace Library
 
         //정규식
         public const string BOOK_NAME_REGEX = @"^[\w]{1,1}[^\e]{0,49}$";
-        public const string BOOK_NAME_ERROR_MESSAGE = "(1~50자 이내의 문자를 입력해주세요.)";
+        public const string ERROR_MESSAGE_ABOUT_BOOK_NAME = "(1~50자 이내의 문자를 입력해주세요.)   ";
+        public const string ERROR_MESSAGE_ABOUT_BOOK_NOT_IN_LIST = "(목록에 없는 도서입니다.)                ";
+        public const string BOOK_ID_REGEX = @"^[0-9]{1,3}$";
 
         //쿼리
         public const string BOOK_LIST = "select*from book;";

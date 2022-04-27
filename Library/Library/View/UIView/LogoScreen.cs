@@ -47,6 +47,8 @@ namespace Library
         public void PrintMain(string[] menu)
         {
             Console.Clear();
+            Console.SetWindowSize(61, 40);
+            
             PrintTitle();
             for (int i = 0; i < menu.Length; i++)
             {

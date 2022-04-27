@@ -13,20 +13,19 @@ namespace Library
         {
             Console.WriteLine("\n=============================================================\n");
         }
-        public void PrintInputBox(int left, int top, string message, ConsoleColor color)
+        public void PrintMessage(int left, int top, string message, ConsoleColor color)
         {
             Console.SetCursorPosition(left, top);
             Console.ForegroundColor = color;
             Console.WriteLine(message);
             Console.ForegroundColor = ConsoleColor.Gray;
         }
-        public void PrintSearchBox()  //검색모드 선택 화면
+        public void PrintSearchBox(string searchWord)
         {
             Console.Clear();
-            Console.WriteLine("\n☞도서명: ");
-            Console.WriteLine("☞출판사: ");
-            Console.WriteLine("☞저자: ");
-            Console.WriteLine("\n>>>>>>>>>>>>>>>>>>>>>>>뒤로가기:[ESC]<<<<<<<<<<<<<<<<<<<<<<<<");
+            Console.SetCursorPosition(0, 1);
+            Console.WriteLine(searchWord);
+            Console.Write("\n>>>>>>>>>>>>>>>>>>>>>>>뒤로가기:[ESC]<<<<<<<<<<<<<<<<<<<<<<<<");
         }
         public void PrintSearchingBook(string sql, LibraryVO library)//------>삭제할코드
         {
@@ -50,8 +49,6 @@ namespace Library
         }
         public void PrintBookList(List<BookVO> bookList)
         {
-            PrintSearchBox();
-
             PrintLine();
             for (int i = 0; i<bookList.Count; i++)
             {
@@ -64,13 +61,24 @@ namespace Library
                 PrintLine();
             }
         }
+        public void PrintSearchResult(List<BookVO> bookList)
+        {
+            PrintSearchBox(Constants.SEARCH_TYPE);
+            PrintBookList(bookList);                  //검색결과로 나온 책목록 출력
+            PrintMessage(0, Console.CursorTop - 1, Constants.ESC_AND_ENTER, ConsoleColor.Yellow);
+        }
         public void PrintNoSearchResult()
         {
-            PrintSearchBox();
+            PrintSearchBox(Constants.SEARCH_TYPE);
             PrintLine();
-            PrintInputBox((int)Constants.SearchMenu.NO_SEARCH_RESULT_LEFT, Console.CursorTop, Constants.NO_SEARCH_RESULT, ConsoleColor.Red);
+            PrintMessage((int)Constants.SearchMenu.NO_SEARCH_RESULT_LEFT, Console.CursorTop, Constants.NO_SEARCH_RESULT, ConsoleColor.Red);
             PrintLine();
-            PrintInputBox(0, Console.CursorTop - 1, Constants.ESC_AND_ENTER, ConsoleColor.Yellow);
+            PrintMessage(0, Console.CursorTop - 1, Constants.ESC_AND_ENTER, ConsoleColor.Yellow);
+        }
+        public void PrintBookIdInputScreen(List<BookVO> bookList)
+        {
+            PrintSearchBox(Constants.BOOK_ID_TO_BORROW);//도서번호 입력창
+            PrintBookList(bookList);                    //도서 검색 결과 출력
         }
     }
 }

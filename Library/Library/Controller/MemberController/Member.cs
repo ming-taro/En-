@@ -9,8 +9,16 @@ namespace Library
 {
     class Member
     {
-        private string myId;               //현재 로인한 회원 아이디
-        
+        private string myId;                  //현재 로그인한 회원 아이디
+        private Keyboard keyboard;
+        private SearchingBook searchingBook;  //도서검색
+        private BorrowingBook borrowingBook;
+        public Member(Keyboard keyboard)
+        {
+            this.keyboard = keyboard;
+            searchingBook = new SearchingBook();
+            borrowingBook = new BorrowingBook();
+        }
         public void ControlSignIn()
         {
             SignIn signIn = new SignIn();  //회원 로그인 화면으로 이동
@@ -58,12 +66,10 @@ namespace Library
             switch (menu)
             {
                 case (int)Constants.Menu.FIRST:  //도서검색
-                    //Admin adminController = new Admin();
-                    //adminController.SelectMenu(menu);
+                    searchingBook.ShowSearchResult(keyboard);
                     break;
                 case (int)Constants.Menu.SECOND: //도서대여
-                    BorrowingBook borrowingBook = new BorrowingBook();
-                    borrowingBook.SearchBorrowBook(myId);
+                    borrowingBook.SearchBorrowBook(myId, searchingBook, keyboard);
                     break;
                 case (int)Constants.Menu.THIRD:  //도서반납
                     ReturningBook returningBook = new ReturningBook();
