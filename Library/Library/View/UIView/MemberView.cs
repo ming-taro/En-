@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Library.View.UIView
+namespace Library
 {
     class MemberView
     {
@@ -25,6 +25,11 @@ namespace Library.View.UIView
                 Console.WriteLine("가격: " + bookList[i].Price);
                 logo.PrintLine();
             }
+        }
+        public void PrintBookIdInputScreen(List<BookVO> bookList)
+        {
+            logo.PrintSearchBox(Constants.BOOK_ID_TO_BORROW); //도서번호 입력창
+            PrintBookList(bookList);                    //도서 검색 결과 출력
         }
     }
 }

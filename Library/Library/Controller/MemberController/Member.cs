@@ -11,17 +11,19 @@ namespace Library
     {
         private string myId;                  //현재 로그인한 회원 아이디
         private Keyboard keyboard;
+        private Menu menuScreen;
         private SignIn signIn;                //로그인
         private SearchingBook searchingBook;  //1. 도서검색
         private BorrowingBook borrowingBook;  //2. 도서대여
         public Member(Keyboard keyboard)
         {
             this.keyboard = keyboard;
+            menuScreen = new Menu();
             signIn = new SignIn();
             searchingBook = new SearchingBook();
             borrowingBook = new BorrowingBook();
         }
-        public void SelectMenu1(int menu)
+        public void SelectMemberMode(int menu)
         {
             switch (menu)
             {
@@ -39,26 +41,25 @@ namespace Library
         }
         public void StartMemberMode(int maxTop)    //1.회원가입  2.로그인 
         {
-            Menu menuScreen = new Menu();
-            Keyboard keyboard = new Keyboard();
-            keyboard.InitCursorPosition();
             int menu;
 
             while (Constants.MEMBER_MODE)
             {
-                if (maxTop == 14) menuScreen.PrintMemberMenu();//1.로그인  2.회원가입
+                keyboard.InitCursorPosition();
+
+                if (maxTop == (int)Constants.Menu.SECOND) menuScreen.PrintMemberMenu();//1.로그인  2.회원가입
                 else menuScreen.PrintMemberMode();             //1.도서검색  2.도서대여  3.도서반납  4.개인정보수정  5.종료
                 
                 menu = keyboard.SelectMenu(13, maxTop, 1);     //메뉴선택
-                if (menu == Constants.ESCAPE) break;           //메뉴선택 중 뒤로가기 -> 메인화면으로
+                if (menu == (int)Constants.Keyboard.ESCAPE) break;           //메뉴선택 중 뒤로가기 -> 메인화면으로
                 menu = keyboard.Top;                           //메뉴의 해당 커서값
 
-                if (maxTop == 14) SelectMenu1(menu);           //1.로그인  2.회원가입
-                else SelectMenu2(menu);                        //1.도서검색  2.도서대여  3.도서반납  4.개인정보수정  5.종료
+                if (maxTop == (int)Constants.Menu.SECOND) SelectMemberMode(menu);      //1.로그인  2.회원가입
+                else SelectMenu(menu);                         //1.도서검색  2.도서대여  3.도서반납  4.개인정보수정  5.종료
             }
             //회원 모드 종료 -> 메인화면으로 돌아감
         }
-        public void SelectMenu2(int menu)
+        public void SelectMenu(int menu)
         {
             switch (menu)
             {

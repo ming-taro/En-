@@ -26,7 +26,7 @@ namespace Library
             switch (top)  //커서의 위치값으로 메뉴를 구분
             {
                 case (int)Constants.Menu.FIRST:
-                    member.StartMemberMode(14);       //회원메뉴 선택화면으로 이동
+                    member.StartMemberMode((int)Constants.Menu.SECOND);       //회원메뉴 선택화면으로 이동
                     break;
                 case (int)Constants.Menu.SECOND:                              
                     admin.StartAdminMode();           //관리자 모드로 이동    
@@ -37,8 +37,8 @@ namespace Library
         {
             int key;
 
-            menuScreen.PrintMainMenu();   //메인화면 출력
-            keyboard.SetPosition(25, (int)Constants.Menu.FIRST);  //커서 위치 조정
+            menuScreen.PrintMainMenu();     //메인화면 출력
+            keyboard.InitCursorPosition();  //커서 위치 조정
 
             while (Constants.KEYBOARD_OPERATION)
             {
@@ -52,8 +52,9 @@ namespace Library
                 {
                     StartMain(keyboard.Top);
                     menuScreen.PrintMainMenu();
+                    keyboard.InitCursorPosition();  //커서 위치 조정
                 }
-                
+
             }
 
             Console.SetCursorPosition(0, 25);

@@ -12,14 +12,14 @@ namespace Library
     {
         private BookDAO bookDatabaseManager;
         private EnteringText text;
-        private AdminMenu adminMenu;
+        private MemberView memberView;
         private Logo logo;
         
         public BorrowingBook()
         {
             bookDatabaseManager = new BookDAO();
             text = new EnteringText();
-            adminMenu = new AdminMenu();
+            memberView = new MemberView();
             logo = new Logo();
         }
 
@@ -85,6 +85,10 @@ namespace Library
             }
             return bookId;
         }
+        public void UpdateRentalInformation()   //도서 대여 정보 업데이트
+        {
+
+        }
         public void SearchBorrowBook(string memberId, SearchingBook searchingBook, Keyboard keyboard)
         {
             int searchType;        //검색유형
@@ -94,16 +98,17 @@ namespace Library
 
             while (Constants.INPUT_VALUE)
             {
-                searchType = searchingBook.SelectSearchType(keyboard);   //검색유형 선택
-                if (searchType == (int)Constants.Keyboard.ESCAPE) break; //검색유형 선택 중 esc -> 도서검색 종료
+                searchType = searchingBook.SelectSearchType(keyboard);    //검색유형 선택
+                if (searchType == (int)Constants.Keyboard.ESCAPE) break;  //검색유형 선택 중 esc -> 도서검색 종료
 
                 searchWord = searchingBook.InputSearchWord((int)Constants.SearchMenu.LEFT_VALUE_OF_INPUT, searchType, (int)Constants.SearchMenu.FOURTH);   //검색어 입력받기
-                if (searchWord.Equals(Constants.ESC)) continue;          //검색어 입력 중 esc -> 검색유형 선택으로
+                if (searchWord.Equals(Constants.ESC)) continue;           //검색어 입력 중 esc -> 검색유형 선택으로
 
-                adminMenu.PrintBookIdInputScreen(searchingBook.BookList, logo);//도서검색창 출력
+                memberView.PrintBookIdInputScreen(searchingBook.BookList);//도서검색창 출력
 
-                bookId = InputBookId(searchingBook.BookList, borrowList);//도서번호를 입력받음
-                if (bookId.Equals(Constants.ESC)) continue;              //도서번호 입력 중 esc -> 다시 도서검색으로
+                bookId = InputBookId(searchingBook.BookList, borrowList); //도서번호를 입력받음
+                if (bookId.Equals(Constants.ESC)) continue;               //도서번호 입력 중 esc -> 다시 도서검색으로
+
 
 
                 if (keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break; //Esc->뒤로가기, Enter->재검색

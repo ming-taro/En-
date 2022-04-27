@@ -50,10 +50,6 @@ namespace Library
             PrintBookList(bookList, logo);                  //검색결과로 나온 책목록 출력
             logo.PrintMessage(0, Console.CursorTop - 1, Constants.ESC_AND_ENTER, ConsoleColor.Yellow);
         }
-        public void PrintBookIdInputScreen(List<BookVO> bookList, Logo logo)
-        {
-            logo.PrintSearchBox(Constants.BOOK_ID_TO_BORROW); //도서번호 입력창
-            PrintBookList(bookList, logo);                    //도서 검색 결과 출력
-        }
+        
     }
 }
