@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Library
 {
-    class RentalVO
+    class RentalVO//--------->삭제할 클래스(파일삭제->안 씀)
     {
         private string memberId;
         private BookVO bookVO;

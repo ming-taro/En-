@@ -25,18 +25,18 @@ namespace Library
 
         public bool IsBookInList(string bookId, List<BookVO> bookList)   //현재 조회중인 도서목록에 있는 도서인지 검사
         {
-            for(int i=0; i<bookList.Count; i++)
+            for (int i = 0; i < bookList.Count; i++) 
             {
                 if (bookList[i].Id.Equals(bookId)) return Constants.IS_BOOK_IN_LIST;  //목록에 존재하는 도서
             }
 
             return Constants.IS_BOOK_NOT_IN_LIST;    //현재 조회중인 도서목록에 없는 도서를 대여하려고 함
         }
-        public bool IsBookIBorrowed(string bookId, List<BookVO> borrowList)              //회원이 대여중인 도서인지 검사
+        public bool IsBookIBorrowed(string bookId, List<BookVO> myBookList)              //회원이 대여중인 도서인지 검사
         {
-            for (int i = 0; i < borrowList.Count; i++)
+            for (int i = 0; i < myBookList.Count; i++)
             {
-                if (borrowList[i].Id.Equals(bookId)) return Constants.BOOK_I_BORROWED;   //입력한 도서를 이미 대여중 -> 대여할 수 없음
+                if (myBookList[i].Id.Equals(bookId)) return Constants.BOOK_I_BORROWED;   //입력한 도서를 이미 대여중 -> 대여할 수 없음
             }
 
             return Constants.BOOK_I_NEVER_BORROWED;  //대여하지 않은 도서 -> 대여가능
@@ -50,7 +50,7 @@ namespace Library
 
             return Constants.IS_QUANTITY_MORE_THAN_ONE;   //대여 가능 수량이 남아있음 -> 대여가능
         }
-        public string InputBookId(List<BookVO> bookList, List<BookVO> borrowList)    //도서명 입력 후 도서번호 입력
+        public string InputBookId(List<BookVO> bookList, List<BookVO> myBookList)    //도서명 입력 후 도서번호 입력
         {
             string bookId;
 
@@ -70,7 +70,7 @@ namespace Library
                 {
                     logo.PrintMessage(0, (int)Constants.SearchMenu.SECOND, Constants.MESSAGE_ABOUT_BOOK_NOT_IN_LIST, ConsoleColor.Red);
                 }
-                else if (IsBookIBorrowed(bookId, borrowList)) //도서목록에 있지만, 이미 대여중인 도서일 때
+                else if (IsBookIBorrowed(bookId, myBookList)) //도서목록에 있지만, 이미 대여중인 도서일 때
                 {
                     logo.PrintMessage(0, (int)Constants.SearchMenu.SECOND, Constants.MESSAGE_ABOUT_BOOK_I_BORROWED, ConsoleColor.Red);
                 }
@@ -80,8 +80,7 @@ namespace Library
                 }
                 else break;  //도서대여가능 -> 해당 도서 아이디 리턴
 
-                Console.SetCursorPosition(20, (int)Constants.SearchMenu.FIRST);
-                Console.Write(Constants.REMOVE_LINE);
+                logo.RemoveLine(20, (int)Constants.SearchMenu.FIRST);
             }
             return bookId;
         }

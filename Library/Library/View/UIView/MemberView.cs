@@ -35,6 +35,7 @@ namespace Library
         {
             logo.PrintMenu("도서 대여 완료");
             logo.PrintMessage(20, Console.CursorTop + 1, ">나의 도서 대여 목록<", ConsoleColor.Gray);
+            Console.SetCursorPosition(0, Console.CursorTop - 1);
             PrintBookList(myBookList);    //나의 대여 목록 출력
             logo.PrintMessage(0, Console.CursorTop - 1, Constants.ESC_AND_ENTER, ConsoleColor.Yellow);
         }
