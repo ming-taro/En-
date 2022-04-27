@@ -10,54 +10,56 @@ namespace Library
 {
     class ReturningBook
     {
-        private LibraryVO library;
+        private BookDAO bookDatabaseManager;
+        private EnteringText text;
+        private MemberView memberView;
+        private Logo logo;
+
+        private LibraryVO library;//---->삭제할 코드
         public ReturningBook()
         {
-            library = LibraryVO.GetLibraryVO();   
+            bookDatabaseManager = new BookDAO();
+            text = new EnteringText();
+            memberView = new MemberView();
+            logo = new Logo();
+
+            library = LibraryVO.GetLibraryVO();   //----->삭제할 코드
         }
-        private bool IsBookIBorrowed(string memberId, string bookId)
+        public bool IsBookIBorrowed(string bookId, List<BookVO> myBookList)              //회원이 대여중인 도서인지 검사
         {
-            string query = "select*from borrowBook where memberId='" + memberId + "' and bookId=" + bookId;
-
-            MySqlCommand command = new MySqlCommand(query + ";", library.Connection);
-            MySqlDataReader table = command.ExecuteReader();
-
-            if (table.HasRows)
+            for (int i = 0; i < myBookList.Count; i++)
             {
-                table.Close();
-                return Constants.BOOK_I_BORROWED;
+                if (myBookList[i].Id.Equals(bookId)) return Constants.BOOK_I_BORROWED;   //대여한 도서를 반납하려고 할 때 -> 반납가능
             }
 
-            table.Close();
-            return Constants.BOOK_I_NEVER_BORROWED;   //해당 도서를 빌린 적이 없음
+            return Constants.BOOK_I_NEVER_BORROWED;  //대여하지 않은 도서 -> 반납불가
         }
-        private string InputBookId(string memberId)
+        private string InputBookId(string memberId, List<BookVO> myBookList)
         {
-            ReturningScreen returningScreen = new ReturningScreen();
-            EnteringText text = new EnteringText();
-            Regex regex = new Regex(@"^[0-9]{1,3}$");
             string bookId;
 
             while (Constants.INPUT_VALUE)
             {
-                bookId = text.EnterText(20, 1, "");//도서번호 입력
+                bookId = text.EnterText(20, (int)Constants.SearchMenu.FIRST, "");//도서번호 입력
 
-                if (bookId.Equals(Constants.ESC))  //esc->뒤로가기
+                if (bookId.Equals(Constants.ESC))  //도서번호 입력 중 esc -> 뒤로가기
                 {
                     return Constants.ESC;
                 }
-                else if (string.IsNullOrEmpty(bookId) || regex.IsMatch(bookId) == Constants.IS_NOT_MATCH)  //양식에 맞지 않는 입력
+                else if (Regex.IsMatch(bookId, Constants.BOOK_ID_REGEX) == Constants.IS_NOT_MATCH)  //양식에 맞지 않는 입력
                 {
-                    returningScreen.PrintErrorMessage("(0~999사이의 숫자가 아닙니다. 다시 입력해주세요.)");
+                    logo.PrintMessage(0, (int)Constants.SearchMenu.SECOND, Constants.MESSAGE_ABOUT_BOOK_ID_NOT_MATCH, ConsoleColor.Red);
                 }
-                else if (IsBookIBorrowed(memberId, bookId) == Constants.BOOK_I_NEVER_BORROWED) //양식은 지켰지만, 내가 대여한 도서가 아닌 도서를 반납하려 할 때
+                else if (IsBookIBorrowed(bookId, myBookList) == Constants.BOOK_I_NEVER_BORROWED)   //양식은 지켰지만, 내가 대여한 도서가 아닌 도서를 반납하려 할 때
                 {
-                    returningScreen.PrintErrorMessage("(대여하지 않은 도서번호입니다. 다시 입력해주세요.)");
+                    logo.PrintMessage(0, (int)Constants.SearchMenu.SECOND, Constants.MESSAGE_ABOUT_BOOK_I_NEVER_BORROWED, ConsoleColor.Red);
                 }
                 else
                 {
                     break;   //반납 성공
                 }
+
+                logo.RemoveLine(20, (int)Constants.SearchMenu.FIRST);
             }
 
             return bookId;
@@ -74,22 +76,20 @@ namespace Library
             int quantity = int.Parse(library.bookList[bookIndex].Quantity) + 1; //해당 도서 수량을 +1만큼
             library.bookList[bookIndex].Quantity = quantity.ToString();
         }
-        public void ShowMyBookList(string memberId)
+        public void ShowMyBookList(string memberId, Keyboard keyboard)
         {
-            AdminMenu searchingScreen = new AdminMenu();
-            Logo logoScreen = new Logo();
-            Keyboard keyboard = new Keyboard();
+            List<BookVO> myBookList = bookDatabaseManager.MakeBorrowList(memberId); //현재 로그인한 회원의 도서대여목록
 
-            logoScreen.PrintSearchBox("☞반납할 도서 번호:");
-            searchingScreen.PrintSearchingBook("select*from book,borrowBook where borrowBook.memberId='" + memberId + "' and borrowBook.bookId=book.id", library);
-    
-            string bookId = InputBookId(memberId);               //반납하려는 도서번호
+            logo.PrintSearchBox(Constants.BOOK_ID_TO_DELETE);    //도서번호 입력창
+            memberView.PrintMyBookList(myBookList);              //나의 대여 목록 출력
+
+            string bookId = InputBookId(memberId, myBookList);   //반납하려는 도서번호 입력
             if (bookId.Equals(Constants.ESC)) return;            //도서번호 입력 중 esc -> 뒤로가기
 
-            library.DeleteBorrowBook(memberId, bookId);          //대여도서목록에서 반납한 도서 데이터 삭제, 수량+1
+            bookDatabaseManager.DeleteFromRentalList(memberId, bookId); //도서대여리스트에서 대여정보 삭제 
+            myBookList = bookDatabaseManager.MakeBorrowList(memberId);  //도서반납 후 대여목록
 
-            logoScreen.PrintMenu("도서반납 완료");
-            searchingScreen.PrintSearchingBook("select*from book,borrowBook where borrowBook.memberId='" + memberId + "' and borrowBook.bookId=book.id", library);
+
 
             keyboard.PressESC(); //esc -> 뒤로가기
         }

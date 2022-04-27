@@ -57,6 +57,7 @@ namespace Library
         public const string SIGN_IN_ERROR = "아이디 또는 비밀번호를 잘못 입력하셨습니다.\n다시 입력해주세요.\n";
         public const string SEARCH_TYPE = "☞도서명:\n☞출판사:\n☞저자:";
         public const string BOOK_ID_TO_BORROW= "☞대여할 도서 번호:";
+        public const string BOOK_ID_TO_DELETE = "☞반납할 도서 번호:";
         public const string NO_SEARCH_RESULT = "[입력하신 검색어를 포함하는 도서가 없습니다.]";
         public const string ESC_AND_ENTER = "                         [ESC]:뒤로가기    [ENTER]:다시 검색";
 
@@ -69,14 +70,16 @@ namespace Library
         public const string ENTER = "ENTER";
 
         //정규식
-        public const string BOOK_NAME_REGEX = @"^[\w]{1,1}[^\e]{0,49}$"; 
-        public const string MESSAGE_ABOUT_BOOK_NAME = "(1~50자 이내의 문자를 입력해주세요.)                         ";
+        public const string BOOK_NAME_REGEX = @"^[\w]{1,1}[^\e]{0,49}$";
         public const string BOOK_ID_REGEX = @"^[0-9]{1,3}$";
+
+        //입력 오류 메세지
+        public const string MESSAGE_ABOUT_BOOK_NAME = "(1~50자 이내의 문자를 입력해주세요.)                         ";
         public const string MESSAGE_ABOUT_BOOK_ID_NOT_MATCH = "(0~999사이의 숫자가 아닙니다.다시 입력해주세요.)               ";
         public const string MESSAGE_ABOUT_BOOK_NOT_IN_LIST = "(현재 조회 목록에 없는 도서번호입니다. 다시 입력해주세요.)           ";
         public const string MESSAGE_ABOUT_BOOK_I_BORROWED = "(이미 대여중인 도서입니다. 다른 도서를 선택해주세요.)                  ";
         public const string MESSAGE_ABOUT_QUANTITY_ZERO  = "(대여가능한 도서가 0권입니다. 다른 도서를 선택해주세요.)              ";
-
+        public const string MESSAGE_ABOUT_BOOK_I_NEVER_BORROWED = "(대여목록에 없는 도서번호입니다. 다시 입력해주세요.)             ";
         //쿼리
         public const string BOOK_LIST = "select*from book;";
         public const string BOOK_NAME_SEARCH = "select*from book where name like '%";
@@ -86,8 +89,10 @@ namespace Library
         public const string RENTAL_LIST = "select * from book inner join borrowbook on book.id = borrowbook.bookId and borrowbook.memberId = '";
         public const string END_OF_STRING_QUERY = "';";
         public const string ADDITION_TO_RENTAL_LIST = "INSERT INTO borrowBook(memberId,bookId) VALUES ('";
+        public const string DELETION_FROM_RENTAL_LIST = "DELETE FROM borrowBook WHERE memberId='";
         public const string END_OF_VALUE_QUERY = "');";
-        public const string BOOK_QUANTITY_CORRECTION = "UPDATE book SET quantity = quantity - 1 WHERE id='";
+        public const string DECREASE_IN_BOOK_QUANTITY = "UPDATE book SET quantity = quantity - 1 WHERE id='";
+        public const string INCREASE_IN_BOOK_QUANTITY = "UPDATE book SET quantity = quantity + 1 WHERE id='";
 
         //Connection
         public const string SERVER = "Server = localhost;";

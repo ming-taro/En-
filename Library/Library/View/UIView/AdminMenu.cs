@@ -35,12 +35,7 @@ namespace Library
             logo.PrintLine();
             for (int i = 0; i<bookList.Count; i++)
             {
-                Console.WriteLine("도서번호: " + bookList[i].Id);
-                Console.WriteLine("도서명: " + bookList[i].Name);
-                Console.WriteLine("출판사: " + bookList[i].Publisher);
-                Console.WriteLine("저자: " + bookList[i].Author);
-                Console.WriteLine("가격: " + bookList[i].Price);
-                Console.WriteLine("수량: " + bookList[i].Quantity);
+                Console.WriteLine(bookList[i]);
                 logo.PrintLine();
             }
         }

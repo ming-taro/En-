@@ -66,7 +66,12 @@ namespace Library
         public void AddToRentalList(string memberId, string bookId)  //대여목록 추가
         {
             StartNonQuery(Constants.ADDITION_TO_RENTAL_LIST + memberId + "', '" + bookId + Constants.END_OF_VALUE_QUERY); //대여목록에 추가
-            StartNonQuery(Constants.BOOK_QUANTITY_CORRECTION + bookId + Constants.END_OF_STRING_QUERY);                   //도서수량 -1
+            StartNonQuery(Constants.DECREASE_IN_BOOK_QUANTITY + bookId + Constants.END_OF_STRING_QUERY);                  //도서수량 -1
+        }
+        public void DeleteFromRentalList(string memberId, string bookId) //대여도서 반납 후 대여목록에서 삭제
+        {
+            StartNonQuery(Constants.DELETION_FROM_RENTAL_LIST + memberId + "' and bookId='" + bookId + Constants.END_OF_STRING_QUERY);  //대여목록에서 삭제
+            StartNonQuery(Constants.INCREASE_IN_BOOK_QUANTITY + bookId + Constants.END_OF_STRING_QUERY);                                //도서수량 +1
         }
         public void StartNonQuery(string query)
         {

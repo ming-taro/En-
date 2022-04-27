@@ -61,7 +61,7 @@ namespace Library
         {
             StartNonQuery("UPDATE member SET " + query + " WHERE id='" + id + "';");
         }
-        public void InsertBorrowBook(string memberId, string bookId)  //대여목록 추가
+        public void InsertBorrowBook(string memberId, string bookId)  //대여목록 추가--->이사완료
         {
             StartNonQuery("INSERT INTO borrowBook(memberId,bookId) VALUES ('" + memberId + "', '" + bookId + "');"); //대여목록에 추가
             StartNonQuery("UPDATE book SET quantity = quantity - 1 WHERE id='" + bookId + "';");                     //도서수량 -1

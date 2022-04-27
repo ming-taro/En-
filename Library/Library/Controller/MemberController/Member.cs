@@ -15,6 +15,7 @@ namespace Library
         private SignIn signIn;                //로그인
         private SearchingBook searchingBook;  //1. 도서검색
         private BorrowingBook borrowingBook;  //2. 도서대여
+        private ReturningBook returningBook;  //3. 도서반납
         public Member(Keyboard keyboard)
         {
             this.keyboard = keyboard;
@@ -22,6 +23,7 @@ namespace Library
             signIn = new SignIn();
             searchingBook = new SearchingBook();
             borrowingBook = new BorrowingBook();
+            returningBook = new ReturningBook();
         }
         public void SelectMemberMode(int menu)
         {
@@ -70,8 +72,7 @@ namespace Library
                     borrowingBook.SearchBookToBorrow(myId, searchingBook, keyboard);
                     break;
                 case (int)Constants.Menu.THIRD:  //도서반납
-                    ReturningBook returningBook = new ReturningBook();
-                    returningBook.ShowMyBookList(myId);
+                    returningBook.ShowMyBookList(myId, keyboard);
                     break;
                 case (int)Constants.Menu.FOURTH: //개인정보수정
                     EditingProfile editingProfile = new EditingProfile(myId);
