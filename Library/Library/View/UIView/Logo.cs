@@ -36,7 +36,7 @@ namespace Library
             Console.Clear();
             Console.SetCursorPosition(0, 1);
             Console.WriteLine(searchWord);
-            Console.Write("\n>>>>>>>>>>>>>>>>>>>>>>>뒤로가기:[ESC]<<<<<<<<<<<<<<<<<<<<<<<<");
+            Console.Write("\n>>>>>>>>>>>>>>>>>>>>>>>[ESC]:뒤로가기<<<<<<<<<<<<<<<<<<<<<<<<");
         }
         public void PrintMessage(int left, int top, string message, ConsoleColor color)
         {

@@ -77,6 +77,7 @@ namespace Library
             List<BookVO> myBookList = bookDatabaseManager.MakeBorrowList(memberId); //현재 로그인한 회원의 도서대여목록
 
             logo.PrintSearchBox(Constants.BOOK_ID_TO_DELETE);    //도서번호 입력창
+            Console.WriteLine();
             memberView.PrintMyBookList(myBookList);              //나의 대여 목록 출력
 
             string bookId = InputBookId(memberId, myBookList);   //반납하려는 도서번호 입력
