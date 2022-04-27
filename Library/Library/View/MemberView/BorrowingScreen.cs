@@ -11,7 +11,7 @@ namespace Library
     {
         public void PrintSuccessMessage()
         {
-            LogoScreen logoScreen = new LogoScreen();
+            Logo logoScreen = new Logo();
             logoScreen.PrintMenu("도서대여 완료");
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>뒤로가기:[ESC]<<<<<<<<<<<<<<<<<<<<<<<<\n");
         }

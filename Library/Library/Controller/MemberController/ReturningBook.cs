@@ -77,7 +77,7 @@ namespace Library
         public void ShowMyBookList(string memberId)
         {
             AdminMenu searchingScreen = new AdminMenu();
-            LogoScreen logoScreen = new LogoScreen();
+            Logo logoScreen = new Logo();
             Keyboard keyboard = new Keyboard();
 
             logoScreen.PrintSearchBox("☞반납할 도서 번호:");

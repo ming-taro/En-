@@ -69,9 +69,8 @@ namespace Library
         public const string ENTER = "ENTER";
 
         //정규식
-        public const string BOOK_NAME_REGEX = @"^[\w]{1,1}[^\e]{0,49}$";
-        public const string ERROR_MESSAGE_ABOUT_BOOK_NAME = "(1~50자 이내의 문자를 입력해주세요.)   ";
-        public const string ERROR_MESSAGE_ABOUT_BOOK_NOT_IN_LIST = "(목록에 없는 도서입니다.)                ";
+        public const string BOOK_NAME_REGEX = @"^[\w]{1,1}[^\e]{0,49}$"; 
+        public const string MESSAGE_ABOUT_BOOK_NAME = "(1~50자 이내의 문자를 입력해주세요.)                         ";
         public const string BOOK_ID_REGEX = @"^[0-9]{1,3}$";
         public const string MESSAGE_ABOUT_BOOK_ID_NOT_MATCH = "(0~999사이의 숫자가 아닙니다.다시 입력해주세요.)               ";
         public const string MESSAGE_ABOUT_BOOK_NOT_IN_LIST = "(현재 조회 목록에 없는 도서번호입니다. 다시 입력해주세요.)           ";

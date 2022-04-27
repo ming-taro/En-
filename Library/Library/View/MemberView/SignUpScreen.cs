@@ -10,7 +10,7 @@ namespace Library
     {
         public void PrintSingUp()
         {
-            LogoScreen logoScreen = new LogoScreen();
+            Logo logoScreen = new Logo();
 
             Console.Clear();
             logoScreen.PrintMenu("회원가입");
@@ -24,7 +24,7 @@ namespace Library
         }
         public void PrintSuccessMessage()
         {
-            LogoScreen logoScreen = new LogoScreen();
+            Logo logoScreen = new Logo();
 
             Console.Clear();
             logoScreen.PrintMenu("회원가입 완료");

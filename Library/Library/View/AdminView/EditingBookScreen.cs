@@ -10,7 +10,7 @@ namespace Library
     {
         public void PrintSearchingBookId()
         {
-            LogoScreen logoScreen = new LogoScreen();
+            Logo logoScreen = new Logo();
             logoScreen.PrintSearchBox("\n☞정보를 수정할 도서번호:");
             LibraryVO library = LibraryVO.GetLibraryVO();
             ListScreen listScreen = new ListScreen();
@@ -18,7 +18,7 @@ namespace Library
         }
         public void PrintBook(BookVO bookVO)
         {
-            LogoScreen logoScreen = new LogoScreen();
+            Logo logoScreen = new Logo();
             logoScreen.PrintMenu("도서정보 수정");
             Console.WriteLine("=======================뒤로가기:[ESC]========================\n");
             Console.WriteLine(bookVO);  //해당 도서정보 출력

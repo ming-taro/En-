@@ -13,12 +13,14 @@ namespace Library
         private BookDAO bookDatabaseManager;
         private EnteringText text;
         private AdminMenu adminMenu;
+        private Logo logo;
         
         public BorrowingBook()
         {
             bookDatabaseManager = new BookDAO();
             text = new EnteringText();
             adminMenu = new AdminMenu();
+            logo = new Logo();
         }
 
         public bool IsBookInList(string bookId, List<BookVO> bookList)   //현재 조회중인 도서목록에 있는 도서인지 검사
@@ -60,25 +62,25 @@ namespace Library
                 {
                     return Constants.ESC;
                 }
-                else if (Regex.IsMatch(bookId, Constants.BOOK_ID_REGEX) == Constants.IS_NOT_MATCH)      //형식에 맞지 않는 입력일 경우
+                else if (Regex.IsMatch(bookId, Constants.BOOK_ID_REGEX) == Constants.IS_NOT_MATCH)  //형식에 맞지 않는 입력일 경우
                 {
-                    adminMenu.PrintMessage(0, (int)Constants.SearchMenu.SECOND, Constants.MESSAGE_ABOUT_BOOK_ID_NOT_MATCH, ConsoleColor.Red);
+                    logo.PrintMessage(0, (int)Constants.SearchMenu.SECOND, Constants.MESSAGE_ABOUT_BOOK_ID_NOT_MATCH, ConsoleColor.Red);
                 }
                 else if (IsBookInList(bookId, bookList) == Constants.IS_BOOK_NOT_IN_LIST)  //입력형식은 맞지만, 목록에 없는 도서를 빌리려고 했을 때
                 {
-                    adminMenu.PrintMessage(0, (int)Constants.SearchMenu.SECOND, Constants.MESSAGE_ABOUT_BOOK_NOT_IN_LIST, ConsoleColor.Red);
+                    logo.PrintMessage(0, (int)Constants.SearchMenu.SECOND, Constants.MESSAGE_ABOUT_BOOK_NOT_IN_LIST, ConsoleColor.Red);
                 }
-                else if (IsBookIBorrowed(bookId, borrowList))            //도서목록에 있지만, 이미 대여중인 도서일 때
+                else if (IsBookIBorrowed(bookId, borrowList)) //도서목록에 있지만, 이미 대여중인 도서일 때
                 {
-                    adminMenu.PrintMessage(0, (int)Constants.SearchMenu.SECOND, Constants.MESSAGE_ABOUT_BOOK_I_BORROWED, ConsoleColor.Red);
+                    logo.PrintMessage(0, (int)Constants.SearchMenu.SECOND, Constants.MESSAGE_ABOUT_BOOK_I_BORROWED, ConsoleColor.Red);
                 }
                 else if (IsQuantityZero(bookId, bookList))   //도서목록에 있고, 대여하지 않은 도서이지만 수량이 0일 때
                 {
-                    adminMenu.PrintMessage(0, (int)Constants.SearchMenu.SECOND, Constants.MESSAGE_ABOUT_QUANTITY_ZERO, ConsoleColor.Red);
+                    logo.PrintMessage(0, (int)Constants.SearchMenu.SECOND, Constants.MESSAGE_ABOUT_QUANTITY_ZERO, ConsoleColor.Red);
                 }
                 else break;  //도서대여가능 -> 해당 도서 아이디 리턴
 
-                Console.SetCursorPosition(20, 1);
+                Console.SetCursorPosition(20, (int)Constants.SearchMenu.FIRST);
                 Console.Write(Constants.REMOVE_LINE);
             }
             return bookId;
@@ -88,7 +90,7 @@ namespace Library
             int searchType;        //검색유형
             string searchWord;     //검색어
             string bookId;         //도서번호
-            List<BookVO> borrowList = bookDatabaseManager.MakeBorrowList(memberId);          //현재 로그인한 회원의 도서대여목록
+            List<BookVO> borrowList = bookDatabaseManager.MakeBorrowList(memberId); //현재 로그인한 회원의 도서대여목록
 
             while (Constants.INPUT_VALUE)
             {
@@ -98,13 +100,13 @@ namespace Library
                 searchWord = searchingBook.InputSearchWord((int)Constants.SearchMenu.LEFT_VALUE_OF_INPUT, searchType, (int)Constants.SearchMenu.FOURTH);   //검색어 입력받기
                 if (searchWord.Equals(Constants.ESC)) continue;          //검색어 입력 중 esc -> 검색유형 선택으로
 
-                adminMenu.PrintBookIdInputScreen(searchingBook.BookList);//도서검색창 출력
+                adminMenu.PrintBookIdInputScreen(searchingBook.BookList, logo);//도서검색창 출력
 
                 bookId = InputBookId(searchingBook.BookList, borrowList);//도서번호를 입력받음
                 if (bookId.Equals(Constants.ESC)) continue;              //도서번호 입력 중 esc -> 다시 도서검색으로
 
 
-                //if (keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break; //Esc->뒤로가기, Enter->재검색
+                if (keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break; //Esc->뒤로가기, Enter->재검색
             }
 
             //searchingBook.ShowSearchResult(keyboard);

@@ -10,7 +10,7 @@ namespace Library
             string query = "SELECT*FROM member WHERE id='" + memberId + "';";
             MySqlCommand command = new MySqlCommand(query, library.Connection);
             MySqlDataReader table = command.ExecuteReader();
-            LogoScreen logoScreen = new LogoScreen();
+            Logo logoScreen = new Logo();
 
             logoScreen.PrintMenu("회원정보수정");
             Console.WriteLine("=======================뒤로가기:[ESC]========================\n");

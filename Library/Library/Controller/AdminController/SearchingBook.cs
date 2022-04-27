@@ -12,12 +12,14 @@ namespace Library
     {
         private BookDAO bookDatabaseManager;
         private AdminMenu adminMenu;
+        private Logo logo;
         private EnteringText text;
         private List<BookVO> bookList;
         public SearchingBook()
         {
             bookDatabaseManager = new BookDAO();
             adminMenu = new AdminMenu();
+            logo = new Logo();
             text = new EnteringText();
         }
         public List<BookVO> BookList
@@ -39,15 +41,15 @@ namespace Library
                 }
                 else if(Regex.IsMatch(searchWord, Constants.BOOK_NAME_REGEX) == Constants.IS_NOT_MATCH)  //입력형식에 맞지 않은 검색어 입력
                 {
-                    adminMenu.PrintMessage(0, messageTop, Constants.ERROR_MESSAGE_ABOUT_BOOK_NAME, ConsoleColor.Red);
+                    logo.PrintMessage(0, messageTop, Constants.MESSAGE_ABOUT_BOOK_NAME, ConsoleColor.Red);
                 }
                 else if(bookList.Count == 0)
                 {
-                    adminMenu.PrintMessage(0, messageTop, Constants.ERROR_MESSAGE_ABOUT_BOOK_NOT_IN_LIST, ConsoleColor.Red);
+                    logo.PrintMessage(0, messageTop, Constants.MESSAGE_ABOUT_BOOK_NOT_IN_LIST, ConsoleColor.Red);
                 }
                 else break; 
 
-                adminMenu.PrintMessage(left, top, Constants.REMOVE_LINE, ConsoleColor.Gray);
+                logo.PrintMessage(left, top, Constants.REMOVE_LINE, ConsoleColor.Gray);
             }
 
             return searchWord;  //검색어 반환
@@ -56,8 +58,8 @@ namespace Library
         {
             int searchType;
 
-            adminMenu.PrintSearchBox(Constants.SEARCH_TYPE);
-            adminMenu.PrintBookList(bookDatabaseManager.MakeBookList((int)Constants.SearchMenu.ALL, ""));   //전체도서 출력
+            logo.PrintSearchBox(Constants.SEARCH_TYPE);
+            adminMenu.PrintBookList(bookDatabaseManager.MakeBookList((int)Constants.SearchMenu.ALL, ""), logo);   //전체도서 출력
             
             keyboard.SetPosition(0, (int)Constants.SearchMenu.FIRST);      //커서위치
             searchType = keyboard.SelectMenu((int)Constants.SearchMenu.FIRST, (int)Constants.SearchMenu.THIRD, (int)Constants.SearchMenu.STEP);               //메뉴선택
@@ -79,7 +81,7 @@ namespace Library
                 searchWord = InputSearchWord((int)Constants.SearchMenu.LEFT_VALUE_OF_INPUT, searchType, (int)Constants.SearchMenu.FOURTH);   //검색어 입력받기
                 if (searchWord.Equals(Constants.ESC)) continue;            //검색어 입력 중 esc -> 검색유형 선택으로
 
-                adminMenu.PrintSearchResult(bookList);                     //도서 검색 결과 출력
+                adminMenu.PrintSearchResult(bookList, logo);               //도서 검색 결과 출력
 
                 if (keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break; //Esc->뒤로가기, Enter->재검색
             }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Library
 {
-    class LogoScreen
+    class Logo
     {
         public void PrintTitle()
         {
@@ -31,19 +31,29 @@ namespace Library
             Console.WriteLine("[" + menu + "]\n");
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
         }
-
         public void PrintSearchBox(string searchWord)
         {
             Console.Clear();
             Console.SetCursorPosition(0, 1);
             Console.WriteLine(searchWord);
+            Console.Write("\n>>>>>>>>>>>>>>>>>>>>>>>뒤로가기:[ESC]<<<<<<<<<<<<<<<<<<<<<<<<");
+        }
+        public void PrintMessage(int left, int top, string message, ConsoleColor color)
+        {
+            Console.SetCursorPosition(left, top);
+            Console.ForegroundColor = color;
+            Console.WriteLine(message);
+            Console.ForegroundColor = ConsoleColor.Gray;
+        }
+        public void PrintLine()
+        {
+            Console.WriteLine("\n=============================================================\n");
         }
         public void RemoveLine(int left, int top)
         {
             Console.SetCursorPosition(left, top);
             Console.Write("                                                                           ");
         }
-
         public void PrintMain(string[] menu)
         {
             Console.Clear();

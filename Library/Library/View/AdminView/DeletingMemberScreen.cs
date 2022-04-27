@@ -24,7 +24,7 @@ namespace Library
         }
         public void PrintSuccessMessage(int memberIndex)
         {
-            LogoScreen logoScreen = new LogoScreen();
+            Logo logoScreen = new Logo();
             logoScreen.PrintMenu("회원 삭제 완료");
             Console.WriteLine("=======================뒤로가기:[ESC]========================\n");
             Console.WriteLine("======================[삭제한 회원 정보]=====================\n");

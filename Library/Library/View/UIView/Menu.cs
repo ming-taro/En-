@@ -8,10 +8,10 @@ namespace Library
 {
     class Menu
     {
-        LogoScreen logoScreen;
+        Logo logoScreen;
         public Menu()
         {
-            logoScreen = new LogoScreen();
+            logoScreen = new Logo();
         }
         public void PrintMainMenu()
         {

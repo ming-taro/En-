@@ -37,7 +37,7 @@ namespace Library
         }
         public string InputId(int left, int top)  //아이디 입력
         {
-            LogoScreen logoScreen = new LogoScreen();
+            Logo logoScreen = new Logo();
             EnteringText text = new EnteringText();
             string id;
 
@@ -69,7 +69,7 @@ namespace Library
         }
         public string InputPassword(int left, int top, string regexText, string errorMessage)
         {
-            LogoScreen logoScreen = new LogoScreen();
+            Logo logoScreen = new Logo();
             EnteringText text = new EnteringText();
             string password;
 

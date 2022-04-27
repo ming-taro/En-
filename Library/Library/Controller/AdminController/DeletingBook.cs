@@ -83,7 +83,7 @@ namespace Library
         {
             AdminMenu screen = new AdminMenu();
             DeletingBookScreen deletingBookScreen = new DeletingBookScreen();
-            LogoScreen logoScreen = new LogoScreen();
+            Logo logoScreen = new Logo();
             Keyboard keyboard = new Keyboard();
             SearchingBook searchingBook = new SearchingBook();
 

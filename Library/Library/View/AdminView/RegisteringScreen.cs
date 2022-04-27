@@ -10,7 +10,7 @@ namespace Library
     {
         public void PrintRegistering()
         {
-            LogoScreen logoScreen = new LogoScreen();
+            Logo logoScreen = new Logo();
             logoScreen.PrintMenu("도서 등록");
             Console.WriteLine("=======================뒤로가기:[ESC]========================");
             Console.SetCursorPosition(0, 7);
@@ -24,7 +24,7 @@ namespace Library
         public void PrintComplete()
         {
             Console.Clear();
-            LogoScreen logoScreen = new LogoScreen();
+            Logo logoScreen = new Logo();
             logoScreen.PrintMenu("도서 등록 완료");
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>뒤로가기:[ESC]<<<<<<<<<<<<<<<<<<<<<<<<");
 

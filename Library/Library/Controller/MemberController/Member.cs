@@ -17,6 +17,7 @@ namespace Library
         public Member(Keyboard keyboard)
         {
             this.keyboard = keyboard;
+            signIn = new SignIn();
             searchingBook = new SearchingBook();
             borrowingBook = new BorrowingBook();
         }

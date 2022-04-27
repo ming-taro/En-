@@ -10,7 +10,7 @@ namespace Library
     {
         public void PrintSignIn()
         {
-            LogoScreen logoScreen = new LogoScreen();
+            Logo logoScreen = new Logo();
             logoScreen.PrintMenu("로그인");
             Console.WriteLine("아이디: \n비밀번호:");
         }
