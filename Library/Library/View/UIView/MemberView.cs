@@ -29,7 +29,14 @@ namespace Library
         public void PrintBookIdInputScreen(List<BookVO> bookList)
         {
             logo.PrintSearchBox(Constants.BOOK_ID_TO_BORROW); //도서번호 입력창
-            PrintBookList(bookList);                    //도서 검색 결과 출력
+            PrintBookList(bookList);                          //도서 검색 결과 출력
+        }
+        public void PrintBookRentalSuccess(List<BookVO> myBookList)
+        {
+            logo.PrintMenu("도서 대여 완료");
+            logo.PrintMessage(20, Console.CursorTop + 1, ">나의 도서 대여 목록<", ConsoleColor.Gray);
+            PrintBookList(myBookList);    //나의 대여 목록 출력
+            logo.PrintMessage(0, Console.CursorTop - 1, Constants.ESC_AND_ENTER, ConsoleColor.Yellow);
         }
     }
 }

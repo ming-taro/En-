@@ -85,16 +85,12 @@ namespace Library
             }
             return bookId;
         }
-        public void UpdateRentalInformation()   //도서 대여 정보 업데이트
-        {
-
-        }
-        public void SearchBorrowBook(string memberId, SearchingBook searchingBook, Keyboard keyboard)
+        public void SearchBookToBorrow(string memberId, SearchingBook searchingBook, Keyboard keyboard)
         {
             int searchType;        //검색유형
             string searchWord;     //검색어
             string bookId;         //도서번호
-            List<BookVO> borrowList = bookDatabaseManager.MakeBorrowList(memberId); //현재 로그인한 회원의 도서대여목록
+            List<BookVO> myBookList = bookDatabaseManager.MakeBorrowList(memberId); //현재 로그인한 회원의 도서대여목록
 
             while (Constants.INPUT_VALUE)
             {
@@ -106,30 +102,15 @@ namespace Library
 
                 memberView.PrintBookIdInputScreen(searchingBook.BookList);//도서검색창 출력
 
-                bookId = InputBookId(searchingBook.BookList, borrowList); //도서번호를 입력받음
+                bookId = InputBookId(searchingBook.BookList, myBookList); //도서번호를 입력받음
                 if (bookId.Equals(Constants.ESC)) continue;               //도서번호 입력 중 esc -> 다시 도서검색으로
 
-
+                bookDatabaseManager.AddToRentalList(memberId, bookId);    //DB에 변경된 정보 저장
+                myBookList = bookDatabaseManager.MakeBorrowList(memberId);//변경된 현재 로그인한 회원의 도서대여목록
+                memberView.PrintBookRentalSuccess(myBookList);            //회원의 대여목록 출력
 
                 if (keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break; //Esc->뒤로가기, Enter->재검색
             }
-
-            //searchingBook.ShowSearchResult(keyboard);
-            //string searchWord = searchingBook.SearchBook(keyboard); //도서명,출판사, 저자명 검색(리턴값 -> 쿼리문)
-            //if (searchWord.Equals(Constants.ESC)) return;   //입력 중 esc -> 뒤로가기
-
-            //adminMenu.PrintSearchBox("☞대여할 도서 번호:");
-
-            //searchingScreen.PrintSearchingBook(searchWord, library); //검색결과로 나온 책목록 출력
-            ///////////////////////////////////////////------->끝
-            
-            //string bookId = InputBookId(memberId, searchWord);     //도서번호를 입력받음
-            //if (bookId.Equals(Constants.ESC)) return;  //도서번호 입력 중 esc -> 대여종료
-
-            //borrowingScreen.PrintSuccessMessage();     //도서대여 완료 메세지 출력
-            //library.InsertBorrowBook(memberId, bookId);//대여목록에 대여정보 저장
-
-            //keyboard.PressESC();   //esc -> 뒤로가기
         }
     }
 }

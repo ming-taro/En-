@@ -83,8 +83,11 @@ namespace Library
         public const string PUBLISHER_SEARCH = "select*from book where publisher like '%";
         public const string AUTHOR_SEARCH = "select*from book where author like '%";
         public const string END_OF_SEARCH_QUERY = "%';";
-        public const string BORROW_LIST = "select * from book inner join borrowbook on book.id = borrowbook.bookId and borrowbook.memberId = '";
-        public const string END_OF_BORROW_LIST_QUERY = "';";
+        public const string RENTAL_LIST = "select * from book inner join borrowbook on book.id = borrowbook.bookId and borrowbook.memberId = '";
+        public const string END_OF_STRING_QUERY = "';";
+        public const string ADDITION_TO_RENTAL_LIST = "INSERT INTO borrowBook(memberId,bookId) VALUES ('";
+        public const string END_OF_VALUE_QUERY = "');";
+        public const string BOOK_QUANTITY_CORRECTION = "UPDATE book SET quantity = quantity - 1 WHERE id='";
 
         //Connection
         public const string SERVER = "Server = localhost;";

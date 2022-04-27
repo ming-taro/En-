@@ -67,7 +67,7 @@ namespace Library
                     searchingBook.ShowSearchResult(keyboard);
                     break;
                 case (int)Constants.Menu.SECOND: //도서대여
-                    borrowingBook.SearchBorrowBook(myId, searchingBook, keyboard);
+                    borrowingBook.SearchBookToBorrow(myId, searchingBook, keyboard);
                     break;
                 case (int)Constants.Menu.THIRD:  //도서반납
                     ReturningBook returningBook = new ReturningBook();

@@ -13,7 +13,7 @@ namespace Library
         private MySqlConnection connection;
 
         public List<BookVO> bookList = new List<BookVO>();         //---->삭제할 코드
-        public List<BorrowVO> borrowList = new List<BorrowVO>();   //---->삭제할 코드
+        public List<RentalVO> borrowList = new List<RentalVO>();   //---->삭제할 코드
         public List<MemberVO> memberList = new List<MemberVO>();   //---->삭제할 코드
 
         public static LibraryVO GetLibraryVO()

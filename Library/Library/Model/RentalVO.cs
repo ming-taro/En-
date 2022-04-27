@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Library
 {
-    class BorrowVO
+    class RentalVO
     {
         private string memberId;
         private BookVO bookVO;
-        public BorrowVO(string memberId, BookVO bookVO)
+        public RentalVO(string memberId, BookVO bookVO)
         {
             this.memberId = memberId;
             this.bookVO = bookVO;
