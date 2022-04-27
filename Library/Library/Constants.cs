@@ -60,7 +60,7 @@ namespace Library
         public const string BOOK_ID_TO_DELETE = "☞반납할 도서 번호:";
         public const string NO_SEARCH_RESULT = "[입력하신 검색어를 포함하는 도서가 없습니다.]";
         public const string ESC_AND_ENTER = "                         [ESC]:뒤로가기    [ENTER]:다시 검색";
-
+        public const string ESC_MESSAGE = "                                              [ESC]:뒤로가기";
         //EnteringText
         public const bool MODIFIERS = true;
         public const bool NOT_MODIFIERS = false;

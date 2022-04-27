@@ -19,7 +19,7 @@ namespace Library
             for (int i = 0; i < myBookList.Count; i++)
             {
                 Console.Write(myBookList[i]);
-                logo.RemoveLine(0, Console.CursorTop);
+                logo.RemoveLine(0, Console.CursorTop);    //도서 수량 지움
                 logo.PrintLine();
             }
         }
@@ -36,12 +36,16 @@ namespace Library
             PrintMyBookList(myBookList);    //나의 대여 목록 출력
             logo.PrintMessage(0, Console.CursorTop - 1, Constants.ESC_AND_ENTER, ConsoleColor.Yellow);
         }
-        public void PrintBookReturnSuccess()
+        public void PrintBookReturnSuccess(BookVO book)
         {
             logo.PrintMenu("도서 반납 완료");
             logo.PrintMessage(20, Console.CursorTop + 1, ">반납한 도서 정보<", ConsoleColor.Gray);
             Console.SetCursorPosition(0, Console.CursorTop - 1);
-            logo.PrintMessage(0, Console.CursorTop - 1, Constants.ESC_AND_ENTER, ConsoleColor.Yellow);
+            logo.PrintLine();
+            Console.Write(book);
+            logo.RemoveLine(0, Console.CursorTop);  //수량 지움
+            logo.PrintLine();
+            logo.PrintMessage(0, Console.CursorTop - 1, Constants.ESC_MESSAGE, ConsoleColor.Yellow);
         }
     }
 }
