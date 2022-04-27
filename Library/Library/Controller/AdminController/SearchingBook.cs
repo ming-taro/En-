@@ -59,8 +59,8 @@ namespace Library
             adminMenu.PrintSearchBox(Constants.SEARCH_TYPE);
             adminMenu.PrintBookList(bookDatabaseManager.MakeBookList((int)Constants.SearchMenu.ALL, ""));   //전체도서 출력
             
-            keyboard.SetPosition(0, (int)Constants.SearchMenu.BOOK_NAME);      //커서위치
-            searchType = keyboard.SelectMenu((int)Constants.SearchMenu.BOOK_NAME, (int)Constants.SearchMenu.AUTHOR, (int)Constants.SearchMenu.STEP);               //메뉴선택
+            keyboard.SetPosition(0, (int)Constants.SearchMenu.FIRST);      //커서위치
+            searchType = keyboard.SelectMenu((int)Constants.SearchMenu.FIRST, (int)Constants.SearchMenu.THIRD, (int)Constants.SearchMenu.STEP);               //메뉴선택
             if (searchType == (int)Constants.Keyboard.ESCAPE) return (int)Constants.Keyboard.ESCAPE;  //검색유형 선택 도중 뒤로가기 -> 관리자 메뉴로 돌아감
 
             return keyboard.Top;    //Enter를 누른 시점의 커서의 top값으로 선택한 검색유형을 알 수 있음
@@ -76,7 +76,7 @@ namespace Library
                 searchType = SelectSearchType(keyboard);                   //검색유형 선택
                 if (searchType == (int)Constants.Keyboard.ESCAPE) break;   //검색유형 선택 중 esc -> 도서검색 종료
 
-                searchWord = InputSearchWord((int)Constants.SearchMenu.LEFT_VALUE_OF_INPUT, searchType, (int)Constants.SearchMenu.ERROR_MESSAGE);   //검색어 입력받기
+                searchWord = InputSearchWord((int)Constants.SearchMenu.LEFT_VALUE_OF_INPUT, searchType, (int)Constants.SearchMenu.FOURTH);   //검색어 입력받기
                 if (searchWord.Equals(Constants.ESC)) continue;            //검색어 입력 중 esc -> 검색유형 선택으로
 
                 adminMenu.PrintSearchResult(bookList);                     //도서 검색 결과 출력

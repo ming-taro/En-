@@ -11,25 +11,21 @@ namespace Library
     {
         private string myId;                  //현재 로그인한 회원 아이디
         private Keyboard keyboard;
-        private SearchingBook searchingBook;  //도서검색
-        private BorrowingBook borrowingBook;
+        private SignIn signIn;                //로그인
+        private SearchingBook searchingBook;  //1. 도서검색
+        private BorrowingBook borrowingBook;  //2. 도서대여
         public Member(Keyboard keyboard)
         {
             this.keyboard = keyboard;
             searchingBook = new SearchingBook();
             borrowingBook = new BorrowingBook();
         }
-        public void ControlSignIn()
-        {
-            SignIn signIn = new SignIn();  //회원 로그인 화면으로 이동
-            myId = signIn.SignInMember();  //회원 아이디 
-        }
         public void SelectMenu1(int menu)
         {
             switch (menu)
             {
                 case (int)Constants.Menu.FIRST:   //로그인
-                    ControlSignIn();
+                    myId = signIn.SignInMember(); //회원 아이디
                     break;
                 case (int)Constants.Menu.SECOND:  //회원가입
                     SignUp signUp = new SignUp();

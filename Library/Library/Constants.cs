@@ -44,10 +44,11 @@ namespace Library
         public const bool BOOK_I_BORROWED = true;
         public const bool BOOK_I_NEVER_BORROWED = false;
 
-        public const bool BOOK_IN_LIST = true;
-        public const bool BOOK_NOT_IN_LIST = false;
+        public const bool IS_BOOK_IN_LIST = true;
+        public const bool IS_BOOK_NOT_IN_LIST = false;
         public const bool MEMBER_IN_LIST = true;
-        public const bool QUANTITY_ZERO = true;
+        public const bool IS_QUANTITY_ZERO = true;
+        public const bool IS_QUANTITY_MORE_THAN_ONE = false;
         public const string RE_ENTER = "RE_ENTER";
 
         public const bool GOING_NEXT = true;
@@ -72,6 +73,10 @@ namespace Library
         public const string ERROR_MESSAGE_ABOUT_BOOK_NAME = "(1~50자 이내의 문자를 입력해주세요.)   ";
         public const string ERROR_MESSAGE_ABOUT_BOOK_NOT_IN_LIST = "(목록에 없는 도서입니다.)                ";
         public const string BOOK_ID_REGEX = @"^[0-9]{1,3}$";
+        public const string MESSAGE_ABOUT_BOOK_ID_NOT_MATCH = "(0~999사이의 숫자가 아닙니다.다시 입력해주세요.)               ";
+        public const string MESSAGE_ABOUT_BOOK_NOT_IN_LIST = "(현재 조회 목록에 없는 도서번호입니다. 다시 입력해주세요.)           ";
+        public const string MESSAGE_ABOUT_BOOK_I_BORROWED = "(이미 대여중인 도서입니다. 다른 도서를 선택해주세요.)                  ";
+        public const string MESSAGE_ABOUT_QUANTITY_ZERO  = "(대여가능한 도서가 0권입니다. 다른 도서를 선택해주세요.)              ";
 
         //쿼리
         public const string BOOK_LIST = "select*from book;";
@@ -79,6 +84,8 @@ namespace Library
         public const string PUBLISHER_SEARCH = "select*from book where publisher like '%";
         public const string AUTHOR_SEARCH = "select*from book where author like '%";
         public const string END_OF_SEARCH_QUERY = "%';";
+        public const string BORROW_LIST = "select * from book inner join borrowbook on book.id = borrowbook.bookId and borrowbook.memberId = '";
+        public const string END_OF_BORROW_LIST_QUERY = "';";
 
         //Connection
         public const string SERVER = "Server = localhost;";
@@ -120,10 +127,10 @@ namespace Library
         public enum SearchMenu
         {
             ALL = 0,
-            BOOK_NAME,
-            PUBLISHER,
-            AUTHOR,
-            ERROR_MESSAGE,
+            FIRST,
+            SECOND,
+            THIRD,
+            FOURTH,
             NO_SEARCH_RESULT_LEFT = 9,
             LEFT_VALUE_OF_INPUT = 10,     
             STEP = 1

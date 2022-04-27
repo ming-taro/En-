@@ -47,11 +47,11 @@ namespace Library
             if (table.HasRows)
             {
                 table.Close();
-                return Constants.BOOK_IN_LIST;
+                return Constants.IS_BOOK_IN_LIST;
             }
 
             table.Close();
-            return Constants.BOOK_NOT_IN_LIST;   //해당 검색어를 포함하는 도서를 찾지 못함
+            return Constants.IS_BOOK_NOT_IN_LIST;   //해당 검색어를 포함하는 도서를 찾지 못함
         }
         public string InputBookId(string searchWord)
         {
@@ -65,7 +65,7 @@ namespace Library
                 {
                     return Constants.ESC;
                 }
-                else if(string.IsNullOrEmpty(bookId) || Regex.IsMatch(bookId, @"^[0-9]{1,3}$") == Constants.IS_NOT_MATCH || IsBookOnList(searchWord, bookId) == Constants.BOOK_NOT_IN_LIST)
+                else if(string.IsNullOrEmpty(bookId) || Regex.IsMatch(bookId, @"^[0-9]{1,3}$") == Constants.IS_NOT_MATCH || IsBookOnList(searchWord, bookId) == Constants.IS_BOOK_NOT_IN_LIST)
                 {
                     PrintInputBox(0, 2, "(현재 조회 목록에 없는 도서번호입니다.다시 입력해주세요.)          ");
                 }

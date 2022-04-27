@@ -24,10 +24,10 @@ namespace Library
                 if (library.bookList[i].Id.Equals(bookId))
                 {
                     bookVO = library.bookList[i]; //도서정보 저장   
-                    return Constants.BOOK_IN_LIST;   //도서명,번호에 해당하는 책을 찾음
+                    return Constants.IS_BOOK_IN_LIST;   //도서명,번호에 해당하는 책을 찾음
                 }
             }
-            return !Constants.BOOK_IN_LIST;
+            return !Constants.IS_BOOK_IN_LIST;
         }
         public void InputBookId()
         {
