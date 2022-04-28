@@ -30,7 +30,7 @@ namespace Library
         public MemberVO GetMemberAccount(string memberId)
         {
             MemberVO member;
-            string query = Constants.MEMBER_ACCOUNT + memberId + Constants.END_OF_STRING_QUERY;
+            string query = string.Format(Constants.MEMBER_ACCOUNT, memberId.ToString());
 
             MySqlCommand command = new MySqlCommand(query, connection);
             MySqlDataReader table = command.ExecuteReader();
@@ -52,13 +52,13 @@ namespace Library
                     query = Constants.BOOK_LIST;
                     break; 
                 case (int)Constants.SearchMenu.FIRST:      //도서명 검색
-                    query = Constants.BOOK_NAME_SEARCH + searchWord + Constants.END_OF_SEARCH_QUERY;
+                    query = string.Format(Constants.BOOK_NAME_SEARCH, searchWord.ToString());
                     break;
                 case (int)Constants.SearchMenu.SECOND:     //출판사 검색
-                    query = Constants.PUBLISHER_SEARCH + searchWord + Constants.END_OF_SEARCH_QUERY;
+                    query = string.Format(Constants.PUBLISHER_SEARCH , searchWord.ToString());
                     break;
                 case (int)Constants.SearchMenu.THIRD:      //저자 검색
-                    query = Constants.AUTHOR_SEARCH + searchWord + Constants.END_OF_SEARCH_QUERY;
+                    query = string.Format(Constants.AUTHOR_SEARCH, searchWord.ToString());
                     break;
             }
 
@@ -76,7 +76,7 @@ namespace Library
         public List<BookVO> MakeMyBookList(string memberId)    //회원의 도서대여목록
         {
             List<BookVO> borrowList = new List<BookVO>();
-            string query = Constants.RENTAL_LIST + memberId + Constants.END_OF_STRING_QUERY;
+            string query = string.Format(Constants.RENTAL_LIST, memberId.ToString());
 
             MySqlCommand command = new MySqlCommand(query, connection);
             MySqlDataReader table = command.ExecuteReader();
@@ -89,9 +89,24 @@ namespace Library
 
             return borrowList;
         }
+        public List<MemberVO> MakeMemberList()
+        {
+            List<MemberVO> memberList = new List<MemberVO>();
+
+            MySqlCommand command = new MySqlCommand(Constants.MEMBER_LIST, connection);
+            MySqlDataReader table = command.ExecuteReader();
+
+            while (table.Read())
+            {
+                memberList.Add(new MemberVO(table["id"].ToString(), table["password"].ToString(), table["name"].ToString(), table["age"].ToString(), table["phoneNumber"].ToString(), table["address"].ToString()));
+            }
+            table.Close();
+
+            return memberList;
+        }
         public bool IsExistingMember(string id, string password)  //입력된 정보가 존재하는 회원인지 확인
         {
-            string query = Constants.MEMBER_ID + id + Constants.MEMBER_PASSWORD + password + Constants.END_OF_STRING_QUERY;
+            string query = string.Format(Constants.MEMBER_CONFIRMATION, id.ToString(), password.ToString());
 
             MySqlCommand command = new MySqlCommand(query, connection);
             MySqlDataReader table = command.ExecuteReader();
@@ -110,7 +125,7 @@ namespace Library
         }
         public bool IsDuplicatedId(string id)  //기존 회원의 아이디와 중복되는지 확인
         {
-            string query = Constants.DUPLICATED_ID + id + Constants.END_OF_STRING_QUERY;
+            string query = string.Format(Constants.DUPLICATED_ID, id.ToString());
 
             MySqlCommand command = new MySqlCommand(query, connection);
             MySqlDataReader table = command.ExecuteReader();
@@ -130,13 +145,13 @@ namespace Library
 
         public void AddToRentalList(string memberId, string bookId)  //대여목록 추가
         {
-            StartNonQuery(Constants.ADDITION_TO_RENTAL_LIST + memberId + "', '" + bookId + Constants.END_OF_VALUE_QUERY); //대여목록에 추가
-            StartNonQuery(Constants.DECREASE_IN_BOOK_QUANTITY + bookId + Constants.END_OF_STRING_QUERY);                  //도서수량 -1
+            StartNonQuery(string.Format(Constants.ADDITION_TO_RENTAL_LIST, memberId.ToString(), bookId.ToString())); //대여목록에 추가
+            StartNonQuery(string.Format(Constants.DECREASE_IN_BOOK_QUANTITY, bookId.ToString()));                    //도서수량 -1
         }
         public void DeleteFromRentalList(string memberId, string bookId) //대여도서 반납 후 대여목록에서 삭제
         {
-            StartNonQuery(Constants.DELETION_FROM_RENTAL_LIST + memberId + "' and bookId='" + bookId + Constants.END_OF_STRING_QUERY);  //대여목록에서 삭제
-            StartNonQuery(Constants.INCREASE_IN_BOOK_QUANTITY + bookId + Constants.END_OF_STRING_QUERY);                                //도서수량 +1
+            StartNonQuery(string.Format(Constants.DELETION_FROM_RENTAL_LIST, memberId.ToString(), bookId.ToString()));  //대여목록에서 삭제
+            StartNonQuery(string.Format(Constants.INCREASE_IN_BOOK_QUANTITY, bookId.ToString()));                                //도서수량 +1
         }
         public void AddToMember(MemberVO memberAccount)   //회원목록에 회원정보 추가
         {
@@ -147,7 +162,8 @@ namespace Library
             switch (menu)
             {
                 case (int)Constants.ProfileMenu.FIRST:    //아이디
-                    StartNonQuery(string.Format(Constants.UPDATE_ON_MEMBER_ID, changedItem.ToString(), id.ToString()));
+                    StartNonQuery(string.Format(Constants.UPDATE_ON_MEMBER_ID, changedItem.ToString(), id.ToString()));    //회원목록에 회원 아이디 수정
+                    StartNonQuery(string.Format(Constants.UPDATE_ON_RENTAL_LIST, changedItem.ToString(), id.ToString()));  //도서대여목록에서 회원 아이디 수정
                     break;
                 case (int)Constants.ProfileMenu.SECOND:   //비밀번호
                     StartNonQuery(string.Format(Constants.UPDATE_ON_PASSWORD, changedItem.ToString(), id.ToString()));

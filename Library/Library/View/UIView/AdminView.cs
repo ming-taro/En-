@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Library
 {
-    class AdminMenu
+    class AdminView
     {
-        
+        Logo logo = new Logo();
         public void PrintSearchingBook(string sql, LibraryVO library)//------>삭제할코드
         {
             MySqlCommand command = new MySqlCommand(sql + ";", library.Connection);
@@ -30,7 +30,7 @@ namespace Library
 
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>[ESC]:뒤로가기<<<<<<<<<<<<<<<<<<<<<<<<");
         }
-        public void PrintBookList(List<BookVO> bookList, Logo logo)
+        public void PrintBookList(List<BookVO> bookList)
         {
             logo.PrintLine();
             for (int i = 0; i<bookList.Count; i++)
@@ -39,12 +39,25 @@ namespace Library
                 logo.PrintLine();
             }
         }
-        public void PrintSearchResult(List<BookVO> bookList, Logo logo)
+        public void PrintMemberList(List<MemberVO> memberList)
+        {
+            logo.PrintLine();
+            for (int i = 0; i < memberList.Count; i++)
+            {
+                Console.WriteLine(memberList[i]);
+                logo.PrintLine();
+            }
+        }
+        public void PrintSearchResult(List<BookVO> bookList)
         {
             logo.PrintSearchBox(Constants.SEARCH_TYPE);
-            PrintBookList(bookList, logo);                  //검색결과로 나온 책목록 출력
+            PrintBookList(bookList);                  //검색결과로 나온 책목록 출력
             logo.PrintMessage(0, Console.CursorTop - 1, Constants.ESC_AND_ENTER, ConsoleColor.Yellow);
         }
-        
+        public void PrintMemberIdInputScreen(List<MemberVO> memberList)
+        {
+            logo.PrintSearchBox("☞회원 아이디:");
+            PrintMemberList(memberList);
+        }
     }
 }

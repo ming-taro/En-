@@ -30,13 +30,14 @@ namespace Library
             registeringBook = new RegisteringBook();
             editingBook = new EditingBook();
             deletingBook = new DeletingBook();
-            deletingMember = new DeletingMember();
+            deletingMember = new DeletingMember(bookDatabaseManager);
         }
         public void StartAdminMode()                      //관리자 모드 관리
         {
-            string success = signIn.SignInAdmin();        //관리자 로그인
+            string success;
             int menu;
 
+            success = signIn.SignInAdmin();               //관리자 로그인
             if (success == Constants.ESC) return;         //로그인 도중 esc -> 뒤로가기
 
             while (Constants.ADMIN_MODE)                  //로그인 성공
@@ -71,7 +72,7 @@ namespace Library
                     deletingBook.DeleteBook();
                     break;
                 case (int)Constants.Menu.FIFTH:  //회원관리
-                    function = deletingMember.ControlDeletingMember();
+                    deletingMember.ControlDeletingMember();
                     break;
 
             }

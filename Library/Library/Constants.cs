@@ -82,7 +82,7 @@ namespace Library
         //입력 오류 메세지
         public const string MESSAGE_ABOUT_BOOK_NAME = "(1~50자 이내의 문자를 입력해주세요.)                         ";
         public const string MESSAGE_ABOUT_BOOK_ID_NOT_MATCH = "(0~999사이의 숫자가 아닙니다.다시 입력해주세요.)               ";
-        public const string MESSAGE_ABOUT_BOOK_NOT_IN_LIST = "(현재 조회 목록에 없는 도서번호입니다. 다시 입력해주세요.)           ";
+        public const string MESSAGE_ABOUT_BOOK_NOT_IN_LIST = "(현재 조회 목록에 없는 도서입니다. 다시 입력해주세요.)           ";
         public const string MESSAGE_ABOUT_BOOK_I_BORROWED = "(이미 대여중인 도서입니다. 다른 도서를 선택해주세요.)                  ";
         public const string MESSAGE_ABOUT_QUANTITY_ZERO  = "(대여가능한 도서가 0권입니다. 다른 도서를 선택해주세요.)              ";
         public const string MESSAGE_ABOUT_BOOK_I_NEVER_BORROWED = "(대여목록에 없는 도서번호입니다. 다시 입력해주세요.)             ";
@@ -99,23 +99,22 @@ namespace Library
 
         //쿼리
         public const string BOOK_LIST = "select*from book;";
-        public const string BOOK_NAME_SEARCH = "select*from book where name like '%";
-        public const string PUBLISHER_SEARCH = "select*from book where publisher like '%";
-        public const string AUTHOR_SEARCH = "select*from book where author like '%";
-        public const string END_OF_SEARCH_QUERY = "%';";
-        public const string RENTAL_LIST = "select * from book inner join borrowbook on book.id = borrowbook.bookId and borrowbook.memberId = '";
-        public const string END_OF_STRING_QUERY = "';";
-        public const string ADDITION_TO_RENTAL_LIST = "INSERT INTO borrowBook(memberId,bookId) VALUES ('";
-        public const string DELETION_FROM_RENTAL_LIST = "DELETE FROM borrowBook WHERE memberId='";
-        public const string END_OF_VALUE_QUERY = "');";
-        public const string DECREASE_IN_BOOK_QUANTITY = "UPDATE book SET quantity = quantity - 1 WHERE id='";
-        public const string INCREASE_IN_BOOK_QUANTITY = "UPDATE book SET quantity = quantity + 1 WHERE id='";
+        public const string BOOK_NAME_SEARCH = "select*from book where name like '%{0}%';";
+        public const string PUBLISHER_SEARCH = "select*from book where publisher like '%{0}%';";
+        public const string AUTHOR_SEARCH = "select*from book where author like '%{0}%';";
+
+        public const string RENTAL_LIST = "select * from book inner join borrowbook on book.id = borrowbook.bookId and borrowbook.memberId = '{0}';";
+        public const string ADDITION_TO_RENTAL_LIST = "INSERT INTO borrowBook(memberId,bookId) VALUES ('{0}','{1}');";
+        public const string DELETION_FROM_RENTAL_LIST = "DELETE FROM borrowBook WHERE memberId='{0}' and bookId='{1}';";
+        public const string DECREASE_IN_BOOK_QUANTITY = "UPDATE book SET quantity = quantity - 1 WHERE id='{0}';";
+        public const string INCREASE_IN_BOOK_QUANTITY = "UPDATE book SET quantity = quantity + 1 WHERE id='{0}';";
+
         public const string ADMIN_ACCOUNT = "select*from admin;";
-        public const string MEMBER_ACCOUNT = "select*from member where id='";
-        public const string MEMBER_ID = "select id from member where id='";
-        public const string MEMBER_PASSWORD = "' and password='";
+        public const string MEMBER_ACCOUNT = "select*from member where id='{0}';";
+        public const string MEMBER_CONFIRMATION = "select id from member where id='{0}' and password='{1}';";
+
         public const string ADDITION_TO_MEMBER = "INSERT INTO member VALUES ";
-        public const string DUPLICATED_ID = "select id from member where id='";
+        public const string DUPLICATED_ID = "select id from member where id='{0}';";
 
         public const string UPDATE_ON_MEMBER_ID = "UPDATE member SET id='{0}' WHERE id='{1}';";
         public const string UPDATE_ON_PASSWORD = "UPDATE member SET password='{0}' WHERE id='{1}';";
@@ -123,7 +122,9 @@ namespace Library
         public const string UPDATE_ON_AGE = "UPDATE member SET age='{0}' WHERE id='{1}';";
         public const string UPDATE_ON_PHONE_NUMBER = "UPDATE member SET phoneNumber='{0}' WHERE id='{1}';";
         public const string UPDATE_ON_ADDRESS = "UPDATE member SET address='{0}' WHERE id='{1}';";
+        public const string UPDATE_ON_RENTAL_LIST = "UPDATE borrowbook SET memberId='{0}' WHERE memberId = '{1}';";
 
+        public const string MEMBER_LIST = "select*from member;";
 
         //Connection
         public const string SERVER = "Server = localhost;";

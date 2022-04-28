@@ -9,11 +9,11 @@ namespace Library
     class MemberView
     {
         Logo logo;
-        AdminMenu adminMenu;
+        AdminView adminView;
         public MemberView()
         {
             logo = new Logo();
-            adminMenu = new AdminMenu();
+            adminView = new AdminView();
         }
         public void PrintMyBookList(List<BookVO> myBookList) //회원의 도서 대여 목록 출력
         {
@@ -31,7 +31,7 @@ namespace Library
         public void PrintBookIdInputScreen(List<BookVO> bookList)    //전체 도서 목록 출력
         {
             logo.PrintSearchBox(Constants.BOOK_ID_TO_BORROW);        //도서번호 입력창
-            adminMenu.PrintBookList(bookList, logo);                 //도서 검색 결과 출력
+            adminView.PrintBookList(bookList);                 //도서 검색 결과 출력
         }
         public void PrintBookRentalSuccess(List<BookVO> myBookList)  //도서 대여 완료 메세지 + 회원의 대여 목록 출력
         {
@@ -54,7 +54,7 @@ namespace Library
         {
             logo.PrintMenu("회원정보수정");
             Console.WriteLine(Constants.ESC_MESSAGE);
-            Console.WriteLine("\n         >수정하려는 정보를 선택해 [Enter]키를 누르세요<");
+            Console.WriteLine("\n\n        >수정하려는 정보를 선택해 [Enter]키를 누르세요<");
 
             Console.SetCursorPosition(0, (int)Constants.ProfileMenu.FIRST);
             Console.WriteLine("☞아이디: " + member.Id);

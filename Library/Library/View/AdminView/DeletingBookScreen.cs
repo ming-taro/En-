@@ -23,7 +23,7 @@ namespace Library
         }
         public void PrintSuccessMessage(string bookId, LibraryVO library)
         {
-            AdminMenu searchingScreen = new AdminMenu();
+            AdminView searchingScreen = new AdminView();
             Logo logoScreen = new Logo();
             logoScreen.PrintMenu("도서삭제 완료");
 

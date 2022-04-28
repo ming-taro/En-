@@ -22,6 +22,7 @@ namespace Library
             ListScreen listScreen = new ListScreen();
             listScreen.PrintMemberList(library.memberList);   //회원목록 출력    
         }
+        
         public void PrintSuccessMessage(int memberIndex)
         {
             Logo logoScreen = new Logo();

@@ -8,11 +8,17 @@ namespace Library
 {
     class DeletingMember
     {
+        private BookDAO bookDatabaseManager;
+        private EnteringText text;
+        private AdminView adminView;
+
         private LibraryVO library;
         private int memberIndex;
-        public DeletingMember()
+        public DeletingMember(BookDAO bookDatabaseManager)
         {
-            library = LibraryVO.GetLibraryVO();
+            this.bookDatabaseManager = bookDatabaseManager;
+            text = new EnteringText();
+            adminView = new AdminView();
         }
         public void PrintInputBox(int left, int top, string message)
         {
@@ -45,9 +51,13 @@ namespace Library
 
             while (Constants.INPUT_VALUE)
             {
-                Console.SetCursorPosition(22, 1);
-                memberId = Console.ReadLine();     //삭제할 회원 아이디를 입력받음
-                if (string.IsNullOrEmpty(memberId) || !IsMemberInList(memberId))   //존재하지 않는 회원을 삭제하려고 할 때
+                memberId = text.EnterText(15, 1, "");     //삭제할 회원 아이디를 입력받음
+
+                if (text.Equals(Constants.ESC))
+                {
+                    return Constants.ESC;
+                }
+                else if (!IsMemberInList(memberId))   //존재하지 않는 회원을 삭제하려고 할 때
                 {
                     PrintInputBox(0, 2, "(존재하지 않는 회원입니다.)                     ");
                 }
@@ -63,24 +73,19 @@ namespace Library
             }
             return memberId;
         }
-        public int ControlDeletingMember()
+        public void ControlDeletingMember()
         {
             DeletingMemberScreen deletingScreen = new DeletingMemberScreen();
-            deletingScreen.PrintDeleting();     //삭제입력화면 출력
 
-            Keyboard keyboard = new Keyboard();
-            int menu;
+            List<MemberVO> memberList = bookDatabaseManager.MakeMemberList();    //회원 리스트
+            adminView.PrintMemberIdInputScreen(memberList);                      //회원 아이디 검색창 + 회원 리스트 출력
 
-            keyboard.SetPosition(0, 1);
-            menu = keyboard.SelectMenu(1, 1, 1);
-
-            if (menu == Constants.ESCAPE) return Constants.ESCAPE;  //뒤로가기
-            string memberId = InputMemberId();   //삭제할 회원 아이디를 입력받음
+            string memberId = InputMemberId();            //검색할 회원 아이디를 입력받음
+            if (memberId.Equals(Constants.ESC)) return;
 
             deletingScreen.PrintSuccessMessage(memberIndex);   //삭제 성공 메세지 출력
             library.memberList.RemoveAt(memberIndex);  //회원삭제
 
-            return Constants.COMPLETE_FUNCTION;
         }
     }
 }

@@ -81,7 +81,7 @@ namespace Library
         }
         public void DeleteBook()
         {
-            AdminMenu screen = new AdminMenu();
+            AdminView screen = new AdminView();
             DeletingBookScreen deletingBookScreen = new DeletingBookScreen();
             Logo logoScreen = new Logo();
             Keyboard keyboard = new Keyboard();
