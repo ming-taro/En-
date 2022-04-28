@@ -142,6 +142,30 @@ namespace Library
         {
             StartNonQuery(Constants.ADDITION_TO_MEMBER + memberAccount.PrintMember() + ";");
         }
+        public void UpdateToMember(int menu, string id, string changedItem) //회원정보 수정
+        {
+            switch (menu)
+            {
+                case (int)Constants.ProfileMenu.FIRST:    //아이디
+                    StartNonQuery(string.Format(Constants.UPDATE_ON_MEMBER_ID, changedItem.ToString(), id.ToString()));
+                    break;
+                case (int)Constants.ProfileMenu.SECOND:   //비밀번호
+                    StartNonQuery(string.Format(Constants.UPDATE_ON_PASSWORD, changedItem.ToString(), id.ToString()));
+                    break;
+                case (int)Constants.ProfileMenu.FOURTH:   //이름
+                    StartNonQuery(string.Format(Constants.UPDATE_ON_MEMBER_NAME, changedItem.ToString(), id.ToString()));
+                    break;
+                case (int)Constants.ProfileMenu.FIFTH:   //나이
+                    StartNonQuery(string.Format(Constants.UPDATE_ON_AGE, changedItem.ToString(), id.ToString()));
+                    break;
+                case (int)Constants.ProfileMenu.SIXTH:   //휴대전화
+                    StartNonQuery(string.Format(Constants.UPDATE_ON_PHONE_NUMBER, changedItem.ToString(), id.ToString()));
+                    break;
+                case (int)Constants.ProfileMenu.SEVENTH: //주소
+                    StartNonQuery(string.Format(Constants.UPDATE_ON_ADDRESS, changedItem.ToString(), id.ToString()));
+                    break;
+            }
+        }
 
         public void StartNonQuery(string query)
         {

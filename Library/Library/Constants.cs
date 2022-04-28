@@ -61,6 +61,7 @@ namespace Library
         public const string NO_SEARCH_RESULT = "[입력하신 검색어를 포함하는 도서가 없습니다.]";
         public const string ESC_AND_ENTER = "                         [ESC]:뒤로가기    [ENTER]:다시 검색";
         public const string ESC_MESSAGE = "                                              [ESC]:뒤로가기";
+
         //EnteringText
         public const bool MODIFIERS = true;
         public const bool NOT_MODIFIERS = false;
@@ -116,6 +117,14 @@ namespace Library
         public const string ADDITION_TO_MEMBER = "INSERT INTO member VALUES ";
         public const string DUPLICATED_ID = "select id from member where id='";
 
+        public const string UPDATE_ON_MEMBER_ID = "UPDATE member SET id='{0}' WHERE id='{1}';";
+        public const string UPDATE_ON_PASSWORD = "UPDATE member SET password='{0}' WHERE id='{1}';";
+        public const string UPDATE_ON_MEMBER_NAME = "UPDATE member SET name='{0}' WHERE id='{1}';";
+        public const string UPDATE_ON_AGE = "UPDATE member SET age='{0}' WHERE id='{1}';";
+        public const string UPDATE_ON_PHONE_NUMBER = "UPDATE member SET phoneNumber='{0}' WHERE id='{1}';";
+        public const string UPDATE_ON_ADDRESS = "UPDATE member SET address='{0}' WHERE id='{1}';";
+
+
         //Connection
         public const string SERVER = "Server = localhost;";
         public const string PORT = "Port = 3306;";
@@ -161,13 +170,13 @@ namespace Library
         }
         public enum ProfileMenu
         {
-            FIRST = 16,
-            SECOND = 19,
-            THIRD = 22,
-            FOURTH = 25,
-            FIFTH = 28,
-            SIXTH = 31,
-            SEVENTH = 34,
+            FIRST = 12,
+            SECOND = 15,
+            THIRD = 18,
+            FOURTH = 21,
+            FIFTH = 24,
+            SIXTH = 27,
+            SEVENTH = 30,
             STEP = 3
         }
         public enum SearchMenu

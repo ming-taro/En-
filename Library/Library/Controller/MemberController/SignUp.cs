@@ -27,6 +27,7 @@ namespace Library
 
             while (Constants.INPUT_VALUE)
             {
+                logo.RemoveLine(left, top);
                 id = text.EnterText(left, top, "");  //아이디 입력
 
                 if (id.Equals(Constants.ESC))        //아이디 입력도중 Esc -> 뒤로가기
@@ -46,8 +47,6 @@ namespace Library
                     logo.PrintMessage(0, top + 1, Constants.MESSAGE_ABOUT_AVAILABLE_ID, ConsoleColor.Green);
                     break;  
                 }
-
-                logo.RemoveLine(left, top);
             }
             return id;   //사용 가능한 아이디
         }
@@ -57,6 +56,7 @@ namespace Library
 
             while (Constants.INPUT_VALUE)
             {
+                logo.RemoveLine(left, top);
                 password = text.EnterText(left, top, "");  //비밀번호 입력
 
                 if (password.Equals(Constants.ESC))        //비밀번호 입력 중 Esc -> 뒤로가기
@@ -72,8 +72,6 @@ namespace Library
                     logo.RemoveLine(0, top + 1);   //올바르게 입력한 경우 -> 비밀번호 재확인으로 넘어감
                     break;
                 }
-
-                logo.RemoveLine(left, top);
             }
             return password;
         }

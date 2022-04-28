@@ -57,7 +57,7 @@ namespace Library
         {//---------->이사완료
             StartNonQuery("INSERT INTO member VALUES ('" + id + "','" + password + "','" + name + "','" + age + "','" + phoneNumber + "','" + address + "');");
         }
-        public void UpdateMember(string id, string query)             //회원정보 수정
+        public void UpdateMember(string id, string query)             //회원정보 수정---->이사완료
         {
             StartNonQuery("UPDATE member SET " + query + " WHERE id='" + id + "';");
         }

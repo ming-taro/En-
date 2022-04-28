@@ -52,13 +52,9 @@ namespace Library
         }
         public void PrintProfile(MemberVO member) //회원정보수정 화면 출력
         {
-            //string query = "SELECT*FROM member WHERE id='" + memberId + "';";
-            //MySqlCommand command = new MySqlCommand(query, library.Connection);
-            //MySqlDataReader table = command.ExecuteReader();
-
             logo.PrintMenu("회원정보수정");
             Console.WriteLine(Constants.ESC_MESSAGE);
-            Console.WriteLine("         >수정하려는 정보를 선택해 Enter키를 누르세요<");
+            Console.WriteLine("\n         >수정하려는 정보를 선택해 [Enter]키를 누르세요<");
 
             Console.SetCursorPosition(0, (int)Constants.ProfileMenu.FIRST);
             Console.WriteLine("☞아이디: " + member.Id);
