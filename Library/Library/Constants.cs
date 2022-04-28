@@ -72,6 +72,11 @@ namespace Library
         //정규식
         public const string BOOK_NAME_REGEX = @"^[\w]{1,1}[^\e]{0,49}$";
         public const string BOOK_ID_REGEX = @"^[0-9]{1,3}$";
+        public const string MEMBER_ID_REGEX = @"^[a-zA-Z0-9]{5,10}$";
+        public const string NAME_REGEX = @"^[a-zA-Z가-힣]{1,30}$";
+        public const string AGE_REGEX = @"^[1-9]{1}[0-9]{0,1}$";
+        public const string PHONE_NUMBER_REGEX = @"010-[0-9]{4}-[0-9]{4}$";
+        public const string ADDRESS_REGEX = @"[가-힣]+(시|도)\s[가-힣]+(시|군|구)\s[가-힣]+(읍|면|동)";
 
         //입력 오류 메세지
         public const string MESSAGE_ABOUT_BOOK_NAME = "(1~50자 이내의 문자를 입력해주세요.)                         ";
@@ -80,6 +85,17 @@ namespace Library
         public const string MESSAGE_ABOUT_BOOK_I_BORROWED = "(이미 대여중인 도서입니다. 다른 도서를 선택해주세요.)                  ";
         public const string MESSAGE_ABOUT_QUANTITY_ZERO  = "(대여가능한 도서가 0권입니다. 다른 도서를 선택해주세요.)              ";
         public const string MESSAGE_ABOUT_BOOK_I_NEVER_BORROWED = "(대여목록에 없는 도서번호입니다. 다시 입력해주세요.)             ";
+        
+        public const string MESSAGE_ABOUT_MEMBER_ID = "(5~10자의 영어, 숫자만 다시 입력해주세요.)         ";
+        public const string MESSAGE_ABOUT_DUPLICATED_ID = "(이미 사용중인 아이디입니다. 다시 입력해주세요.)    ";
+        public const string MESSAGE_ABOUT_AVAILABLE_ID = "(사용 가능한 아이디입니다.)                          ";
+        public const string MESSAGE_ABOUT_PASSWORD = "(비밀번호가 맞지 않습니다. 다시 입력해주세요.)         ";
+        public const string MESSAGE_ABOUT_MEMBER_NAME = "(30자 이내의 영어, 한글만 다시 입력해주세요.)             ";
+        public const string MESSAGE_ABOUT_AGE = "(1~99세까지 입력 가능합니다.)                ";
+        public const string MESSAGE_ABOUT_PHONE_NUMBER = "(양식에 맞춰 다시 입력해주세요.(ex: 010-0000-0000))              ";
+        public const string MESSAGE_ABOUT_ADDRESS = "(양식에 맞춰 입력해주세요.(ex: 서울특별시 광진구 군자동))       ";
+
+
         //쿼리
         public const string BOOK_LIST = "select*from book;";
         public const string BOOK_NAME_SEARCH = "select*from book where name like '%";
