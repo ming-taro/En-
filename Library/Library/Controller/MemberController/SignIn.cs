@@ -13,9 +13,9 @@ namespace Library
         private BookDAO bookDatabaseManager;
         private EnteringText text;
         private Logo logo;
-        public SignIn()
+        public SignIn(BookDAO bookDatabaseManager)
         {
-            bookDatabaseManager = new BookDAO();
+            this.bookDatabaseManager = bookDatabaseManager;
             text = new EnteringText();
             logo = new Logo();
         }

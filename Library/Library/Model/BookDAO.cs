@@ -27,6 +27,20 @@ namespace Library
 
             return admin;
         }
+        public MemberVO GetMemberAccount(string memberId)
+        {
+            MemberVO member;
+            string query = Constants.MEMBER_ACCOUNT + memberId + Constants.END_OF_STRING_QUERY;
+
+            MySqlCommand command = new MySqlCommand(query, connection);
+            MySqlDataReader table = command.ExecuteReader();
+
+            table.Read();
+            member = new MemberVO(table["id"].ToString(), table["password"].ToString(), table["name"].ToString(), table["age"].ToString(), table["phoneNumber"].ToString(), table["address"].ToString());
+            table.Close();
+
+            return member;
+        }
         public List<BookVO> MakeBookList(int searchType, string searchWord)
         {
             List<BookVO> bookList = new List<BookVO>();

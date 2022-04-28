@@ -9,21 +9,23 @@ namespace Library
 {
     class Admin
     {
-        Keyboard keyboard;
-        Menu menuScreen;
-        SignIn signIn;                         //로그인
-        SearchingBook searchingBook;           //도서검색
-        RegisteringBook registeringBook;       //도서등록
-        EditingBook editingBook;               //도서정보수정
-        DeletingBook deletingBook;             //도서삭제
-        DeletingMember deletingMember;         //회원관리
+        private BookDAO bookDatabaseManager;
+        private Keyboard keyboard;
+        private Menu menuScreen;
+        private SignIn signIn;                         //로그인
+        private SearchingBook searchingBook;           //1. 도서검색
+        private RegisteringBook registeringBook;       //2. 도서등록
+        private EditingBook editingBook;               //3. 도서정보수정
+        private DeletingBook deletingBook;             //4. 도서삭제
+        private DeletingMember deletingMember;         //5. 회원관리
 
         public Admin(Keyboard keyboard, Menu menuScreen)
         {
+            bookDatabaseManager = new BookDAO();
             this.keyboard = keyboard;
             this.menuScreen = menuScreen;
 
-            signIn = new SignIn();                
+            signIn = new SignIn(bookDatabaseManager);                
             searchingBook = new SearchingBook();
             registeringBook = new RegisteringBook();
             editingBook = new EditingBook();

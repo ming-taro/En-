@@ -15,9 +15,9 @@ namespace Library
         private MemberView memberView;
         private Logo logo;
 
-        public ReturningBook()
+        public ReturningBook(BookDAO bookDatabaseManager)
         {
-            bookDatabaseManager = new BookDAO();
+            this.bookDatabaseManager = bookDatabaseManager;
             text = new EnteringText();
             memberView = new MemberView();
             logo = new Logo();

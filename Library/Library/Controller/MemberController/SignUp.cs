@@ -14,9 +14,9 @@ namespace Library
         private EnteringText text;
         private MemberView memberView;
         private Logo logo;
-        public SignUp()
+        public SignUp(BookDAO bookDatabaseManager)
         {
-            bookDatabaseManager = new BookDAO();
+            this.bookDatabaseManager = bookDatabaseManager;
             text = new EnteringText();
             memberView = new MemberView();
             logo = new Logo();
@@ -59,7 +59,7 @@ namespace Library
             {
                 password = text.EnterText(left, top, "");  //비밀번호 입력
 
-                if (password.Equals(Constants.ESC))
+                if (password.Equals(Constants.ESC))        //비밀번호 입력 중 Esc -> 뒤로가기
                 {
                     return Constants.ESC;
                 }

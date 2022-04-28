@@ -11,48 +11,47 @@ namespace Library
         private BookDAO bookDatabaseManager;
         private MemberView memberView;
 
-        public EditingProfile()
+        public EditingProfile(BookDAO bookDatabaseManager)
         {
-            bookDatabaseManager = new BookDAO();
+            this.bookDatabaseManager = bookDatabaseManager;
             memberView = new MemberView();
         }
-        private string InputProfile(int menu, ref string query)
+        private string InputProfile(int menu, ref string query, SignUp signUp)  //수정할 회원정보 입력
         {
-            SignUp signUp = new SignUp();
             string changedItem = "";
 
             switch (menu)
             {
-                case (int)Constants.ProfileMenu.FIRST:    //아이디 입력
+                case (int)Constants.ProfileMenu.FIRST:    //아이디
                     changedItem = signUp.InputId(10, (int)Constants.ProfileMenu.FIRST);
                     query = "id='" + changedItem + "'";   //회원정보를 수정할 쿼리문
                     break;
-                case (int)Constants.ProfileMenu.SECOND:   //비밀번호 입력
-                    changedItem = signUp.InputPassword(12, (int)Constants.ProfileMenu.SECOND, @"^[a-zA-Z0-9]{5,10}$", "(5~10자의 영어, 숫자만 다시 입력해주세요.)         ");
-                    signUp.ReconfirmPassword(19, (int)Constants.ProfileMenu.THIRD, changedItem);  //비밀번호 재확인
+                case (int)Constants.ProfileMenu.SECOND:   //비밀번호
+                    changedItem = signUp.InputPassword(12, (int)Constants.ProfileMenu.SECOND, Constants.MEMBER_ID_REGEX, Constants.MESSAGE_ABOUT_MEMBER_ID);
+                    changedItem = signUp.ReconfirmPassword(19, (int)Constants.ProfileMenu.THIRD, changedItem);  //비밀번호 재확인
                     query = "password='" + changedItem + "'";
                     break;
                 case (int)Constants.ProfileMenu.FOURTH:   //이름
-                    changedItem = signUp.InputPassword(8, (int)Constants.ProfileMenu.FOURTH, @"^[a-zA-Z가-힣]{1,30}$", "(30자 이내의 영어, 한글만 다시 입력해주세요.)             ");
+                    changedItem = signUp.InputPassword(8, (int)Constants.ProfileMenu.FOURTH, Constants.NAME_REGEX, Constants.MESSAGE_ABOUT_MEMBER_NAME);
                     query = "name='" + changedItem + "'";
                     break;
                 case (int)Constants.ProfileMenu.FIFTH:   //나이
-                    changedItem = signUp.InputPassword(8, (int)Constants.ProfileMenu.FIFTH, @"^[1-9]{1}[0-9]{0,1}$", "(1~99세까지 입력 가능합니다.)                ");
+                    changedItem = signUp.InputPassword(8, (int)Constants.ProfileMenu.FIFTH, Constants.AGE_REGEX, Constants.MESSAGE_ABOUT_AGE);
                     query = "age='" + changedItem + "'";
                     break;
                 case (int)Constants.ProfileMenu.SIXTH:   //휴대전화
-                    changedItem = signUp.InputPassword(12, (int)Constants.ProfileMenu.SIXTH, @"010-[0-9]{4}-[0-9]{4}$", "(양식에 맞춰 다시 입력해주세요.(ex: 010-0000-0000))              ");
+                    changedItem = signUp.InputPassword(12, (int)Constants.ProfileMenu.SIXTH, Constants.PHONE_NUMBER_REGEX, Constants.MESSAGE_ABOUT_PHONE_NUMBER);
                     query = "phoneNumber='" + changedItem + "'";
                     break;
-                case (int)Constants.ProfileMenu.SEVENTH:   //주소
-                    changedItem = signUp.InputPassword(8, (int)Constants.ProfileMenu.SEVENTH, @"[가-힣]+(시|도)\s[가-힣]+(시|군|구)\s[가-힣]+(읍|면|동)", "(양식에 맞춰 입력해주세요.(ex: 서울특별시 광진구 군자동))         ");
+                case (int)Constants.ProfileMenu.SEVENTH: //주소
+                    changedItem = signUp.InputPassword(8, (int)Constants.ProfileMenu.SEVENTH, Constants.ADDRESS_REGEX, Constants.MESSAGE_ABOUT_ADDRESS);
                     query = "address='" + changedItem + "'";
                     break;
             }
 
             return changedItem;
         }
-        public string EditProfile(string memberId, Keyboard keyboard)
+        public void EditProfile(MemberVO member, SignUp signUp, Keyboard keyboard)
         {
             string changedItem = "";
             string query = "";
@@ -62,15 +61,15 @@ namespace Library
 
             while (Constants.INPUT_VALUE)
             {
-                //memberView.PrintProfile();            //회원정보수정 화면
+                memberView.PrintProfile(member);       //회원정보수정 화면
 
-                menu = keyboard.SelectMenu((int)Constants.ProfileMenu.FIRST, (int)Constants.ProfileMenu.SEVENTH, (int)Constants.ProfileMenu.STEP);
-                if (menu == Constants.ESCAPE) return memberId;           //메뉴선택 중 뒤로가기를 누르면 종료(아이디를 수정했다면 수정된 id를 리턴해줘야 한다)
+                menu = keyboard.SelectMenu((int)Constants.ProfileMenu.FIRST, (int)Constants.ProfileMenu.SEVENTH, (int)Constants.ProfileMenu.STEP);  //수정할 항목 선택
+                if (menu == Constants.ESCAPE) return;  //메뉴선택 중 뒤로가기를 누르면 종료
                 menu = keyboard.Top;
 
-                changedItem = InputProfile(menu, ref query);                          //선택한 정보에 해당하는 회원정보 수정
+                changedItem = InputProfile(menu, ref query, signUp);                          //선택한 정보에 해당하는 회원정보 수정
                 //if (changedItem != Constants.ESC) library.UpdateMember(memberId, query);  //수정된 정보 DB에 반영(정보입력 중 esc->뒤로가기(수정할 메뉴 선택으로))
-                if (changedItem != Constants.ESC && menu == (int)Constants.ProfileMenu.FIRST) memberId = changedItem;  //방금 수정한 정보가 아이디라면 myId에 변경된 아이디 저장
+                //if (changedItem != Constants.ESC && menu == (int)Constants.ProfileMenu.FIRST) memberId = changedItem;  //방금 수정한 정보가 아이디라면 myId에 변경된 아이디 저장
             }
         }
     }

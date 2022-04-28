@@ -110,6 +110,7 @@ namespace Library
         public const string DECREASE_IN_BOOK_QUANTITY = "UPDATE book SET quantity = quantity - 1 WHERE id='";
         public const string INCREASE_IN_BOOK_QUANTITY = "UPDATE book SET quantity = quantity + 1 WHERE id='";
         public const string ADMIN_ACCOUNT = "select*from admin;";
+        public const string MEMBER_ACCOUNT = "select*from member where id='";
         public const string MEMBER_ID = "select id from member where id='";
         public const string MEMBER_PASSWORD = "' and password='";
         public const string ADDITION_TO_MEMBER = "INSERT INTO member VALUES ";
