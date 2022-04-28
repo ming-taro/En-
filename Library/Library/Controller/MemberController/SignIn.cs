@@ -10,25 +10,34 @@ namespace Library
 {
     class SignIn
     {
+        private BookDAO bookDatabaseManager;
+        private EnteringText text;
+        private Logo logo;
+        public SignIn()
+        {
+            bookDatabaseManager = new BookDAO();
+            text = new EnteringText();
+            logo = new Logo();
+        }
         public string SignInAdmin()
         {
-            SignInScreen signInScreen = new SignInScreen();   //--->수정
-            EnteringText text = new EnteringText();
             string id;
             string password;
+            AdminVO admin = bookDatabaseManager.GetAdminAccount();  //관리자 계정
 
-            signInScreen.PrintSignIn();
+            logo.PrintSignIn();   //로그인 화면 출력
 
             while (Constants.INPUT_VALUE)
             {
                 id = text.EnterText(8, 5, "");             //아이디 입력
                 if (id.Equals(Constants.ESC)) return Constants.ESC;
+
                 password = text.EnterText(10, 6, "");      //비밀번호 입력
                 if (password.Equals(Constants.ESC)) return Constants.ESC;
 
-                if (id == "12345" && password == "00000") break;   //관리자 로그인 완료
+                if (id.Equals(admin.Id) && password.Equals(admin.Password)) break;   //관리자 로그인 완료
 
-                signInScreen.PrintFailure();               //다시 입력해달라는 메세제 출력
+                logo.PrintSignInFailure();                 //다시 입력해달라는 메세지 출력
             }
 
             return Constants.ENTER;
@@ -55,11 +64,9 @@ namespace Library
         }
         public string SignInMember()
         { 
-            SignInScreen signInScreen = new SignInScreen();
-            EnteringText text = new EnteringText();
             string id, password;
 
-            signInScreen.PrintSignIn();
+            logo.PrintSignIn();
 
             while (Constants.INPUT_VALUE)
             {
@@ -69,7 +76,7 @@ namespace Library
                 if (password.Equals(Constants.ESC)) return Constants.ESC;
 
                 if (IsExistingMember(id, password)) break;
-                signInScreen.PrintFailure();       //다시 입력해달라는 메세지 출력
+                logo.PrintSignInFailure();       //다시 입력해달라는 메세지 출력
             }
 
             return id;  

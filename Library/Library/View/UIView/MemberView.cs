@@ -30,8 +30,8 @@ namespace Library
         }
         public void PrintBookIdInputScreen(List<BookVO> bookList)
         {
-            logo.PrintSearchBox(Constants.BOOK_ID_TO_BORROW); //도서번호 입력창
-            adminMenu.PrintBookList(bookList, logo);                        //도서 검색 결과 출력
+            logo.PrintSearchBox(Constants.BOOK_ID_TO_BORROW);        //도서번호 입력창
+            adminMenu.PrintBookList(bookList, logo);                 //도서 검색 결과 출력
         }
         public void PrintBookRentalSuccess(List<BookVO> myBookList)
         {

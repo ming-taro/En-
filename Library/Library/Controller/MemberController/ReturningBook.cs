@@ -74,7 +74,7 @@ namespace Library
         }
         public void ShowMyBookList(string memberId, Keyboard keyboard) 
         {
-            List<BookVO> myBookList = bookDatabaseManager.MakeBorrowList(memberId); //현재 로그인한 회원의 도서대여목록
+            List<BookVO> myBookList = bookDatabaseManager.MakeMyBookList(memberId); //현재 로그인한 회원의 도서대여목록
 
             logo.PrintSearchBox(Constants.BOOK_ID_TO_DELETE);    //도서번호 입력창
             Console.WriteLine();
@@ -85,7 +85,7 @@ namespace Library
 
             memberView.PrintBookReturnSuccess(FindBook(bookId, myBookList));  //반납한 도서정보 출력
             bookDatabaseManager.DeleteFromRentalList(memberId, bookId); //도서대여리스트에서 대여정보 삭제 
-            myBookList = bookDatabaseManager.MakeBorrowList(memberId);  //도서반납 후 대여목록
+            myBookList = bookDatabaseManager.MakeMyBookList(memberId);  //도서반납 후 대여목록
 
             keyboard.PressESC(); //도서 반납 후 Esc -> 회원모드로 돌아감
         }

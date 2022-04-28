@@ -89,7 +89,7 @@ namespace Library
             int searchType;        //검색유형
             string searchWord;     //검색어
             string bookId;         //도서번호
-            List<BookVO> myBookList = bookDatabaseManager.MakeBorrowList(memberId); //현재 로그인한 회원의 도서대여목록
+            List<BookVO> myBookList = bookDatabaseManager.MakeMyBookList(memberId); //현재 로그인한 회원의 도서대여목록
 
             while (Constants.INPUT_VALUE)
             {
@@ -105,7 +105,7 @@ namespace Library
                 if (bookId.Equals(Constants.ESC)) continue;               //도서번호 입력 중 esc -> 다시 도서검색으로
 
                 bookDatabaseManager.AddToRentalList(memberId, bookId);    //DB에 변경된 정보 저장
-                myBookList = bookDatabaseManager.MakeBorrowList(memberId);//변경된 현재 로그인한 회원의 도서대여목록
+                myBookList = bookDatabaseManager.MakeMyBookList(memberId);//변경된 현재 로그인한 회원의 도서대여목록
                 memberView.PrintBookRentalSuccess(myBookList);            //회원의 대여목록 출력
 
                 if (keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break; //Esc->뒤로가기, Enter->재검색

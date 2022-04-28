@@ -93,6 +93,7 @@ namespace Library
         public const string END_OF_VALUE_QUERY = "');";
         public const string DECREASE_IN_BOOK_QUANTITY = "UPDATE book SET quantity = quantity - 1 WHERE id='";
         public const string INCREASE_IN_BOOK_QUANTITY = "UPDATE book SET quantity = quantity + 1 WHERE id='";
+        public const string ADMIN_ACCOUNT = "select*from admin;";
 
         //Connection
         public const string SERVER = "Server = localhost;";

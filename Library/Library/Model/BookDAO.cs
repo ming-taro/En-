@@ -14,6 +14,19 @@ namespace Library
         {
             connection = Connector.GetConnection();
         }
+        public AdminVO GetAdminAccount()   //관리자 계정
+        { 
+            AdminVO admin;
+
+            MySqlCommand command = new MySqlCommand(Constants.ADMIN_ACCOUNT, connection);
+            MySqlDataReader table = command.ExecuteReader();
+
+            table.Read();
+            admin = new AdminVO(table["id"].ToString(), table["password"].ToString());
+            table.Close();
+
+            return admin;
+        }
         public List<BookVO> MakeBookList(int searchType, string searchWord)
         {
             List<BookVO> bookList = new List<BookVO>();
@@ -46,7 +59,7 @@ namespace Library
 
             return bookList;
         }
-        public List<BookVO> MakeBorrowList(string memberId)
+        public List<BookVO> MakeMyBookList(string memberId)    //회원의 도서대여목록
         {
             List<BookVO> borrowList = new List<BookVO>();
             string query = Constants.RENTAL_LIST + memberId + Constants.END_OF_STRING_QUERY;

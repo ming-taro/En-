@@ -66,7 +66,7 @@ namespace Library
             StartNonQuery("INSERT INTO borrowBook(memberId,bookId) VALUES ('" + memberId + "', '" + bookId + "');"); //대여목록에 추가
             StartNonQuery("UPDATE book SET quantity = quantity - 1 WHERE id='" + bookId + "';");                     //도서수량 -1
         }
-        public void DeleteBorrowBook(string memberId, string bookId)  //대여도서 반납 후 대여목록에서 삭제
+        public void DeleteBorrowBook(string memberId, string bookId)  //대여도서 반납 후 대여목록에서 삭제--->이사완료
         {
             StartNonQuery("DELETE FROM borrowBook WHERE memberId='" + memberId + "' and bookId='" + bookId + "';");  //대여목록에서 삭제
             StartNonQuery("UPDATE book SET quantity = quantity + 1 WHERE id='" + bookId + "';");                     //도서수량 +1

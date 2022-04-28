@@ -67,5 +67,15 @@ namespace Library
             }
             Console.SetCursorPosition(25, 13);
         }
+        public void PrintSignIn()
+        {
+            PrintMenu("로그인");
+            Console.WriteLine("아이디: \n비밀번호:");
+        }
+        public void PrintSignInFailure()
+        {
+            PrintSignIn();
+            PrintMessage(0, Console.CursorTop + 1, "\n(아이디 또는 비밀번호를 잘못 입력하셨습니다.\n다시 입력해주세요.)", ConsoleColor.Red);
+        }
     }
 }
