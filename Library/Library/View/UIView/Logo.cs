@@ -70,12 +70,14 @@ namespace Library
         public void PrintSignIn()
         {
             PrintMenu("로그인");
-            Console.WriteLine("아이디: \n비밀번호:");
+            PrintMessage(0, Console.CursorTop, Constants.ESC_MESSAGE, ConsoleColor.Gray);
+            PrintMessage(0, (int)Constants.SignIn.ID, "아이디:", ConsoleColor.Gray);
+            PrintMessage(0, (int)Constants.SignIn.PASSWORD, "비밀번호:", ConsoleColor.Gray);
         }
         public void PrintSignInFailure()
         {
             PrintSignIn();
-            PrintMessage(0, Console.CursorTop + 1, "\n(아이디 또는 비밀번호를 잘못 입력하셨습니다.\n다시 입력해주세요.)", ConsoleColor.Red);
+            PrintMessage(0, Console.CursorTop + 1, "\n(아이디 또는 비밀번호를 잘못 입력하셨습니다.)", ConsoleColor.Red);
         }
     }
 }

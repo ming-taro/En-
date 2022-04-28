@@ -75,6 +75,25 @@ namespace Library
 
             return borrowList;
         }
+        public bool IsExistingMember(string id, string password)  //입력된 정보가 존재하는 회원인지 확인
+        {
+            string query = Constants.MEMBER_ID + id + Constants.MEMBER_PASSWORD + password + Constants.END_OF_STRING_QUERY;
+
+            MySqlCommand command = new MySqlCommand(query, connection);
+            MySqlDataReader table = command.ExecuteReader();
+
+            table.Read();
+            if (table.HasRows)
+            {
+                table.Close();
+                return Constants.EXISTING_MEMBER;
+            }
+            else
+            {
+                table.Close();
+                return Constants.NON_EXISTING_MEMBER;
+            }
+        }
 
         public void AddToRentalList(string memberId, string bookId)  //대여목록 추가
         {

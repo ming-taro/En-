@@ -23,60 +23,43 @@ namespace Library
         {
             string id;
             string password;
-            AdminVO admin = bookDatabaseManager.GetAdminAccount();  //관리자 계정
+            AdminVO adminAccount = bookDatabaseManager.GetAdminAccount();  //관리자 계정
 
             logo.PrintSignIn();   //로그인 화면 출력
 
             while (Constants.INPUT_VALUE)
             {
-                id = text.EnterText(8, 5, "");             //아이디 입력
+                id = text.EnterText((int)Constants.SignIn.INPUT_ID, (int)Constants.SignIn.ID, "");                    //아이디 입력
                 if (id.Equals(Constants.ESC)) return Constants.ESC;
 
-                password = text.EnterText(10, 6, "");      //비밀번호 입력
+                password = text.EnterText((int)Constants.SignIn.INPUT_PASSWORD, (int)Constants.SignIn.PASSWORD, "*"); //비밀번호 입력
                 if (password.Equals(Constants.ESC)) return Constants.ESC;
 
-                if (id.Equals(admin.Id) && password.Equals(admin.Password)) break;   //관리자 로그인 완료
+                if (id.Equals(adminAccount.Id) && password.Equals(adminAccount.Password)) break;   //관리자 로그인 완료
 
-                logo.PrintSignInFailure();                 //다시 입력해달라는 메세지 출력
+                logo.PrintSignInFailure();  
             }
 
             return Constants.ENTER;
         }
-        public bool IsExistingMember(string id, string password)  //입력된 정보가 존재하는 회원인지 확인
-        {
-            LibraryVO library = LibraryVO.GetLibraryVO();
-
-            string sql = "select*from member where id=\"" + id + "\" and password=\"" + password + "\";";
-            MySqlCommand command = new MySqlCommand(sql, library.Connection);
-            MySqlDataReader table = command.ExecuteReader();
-
-            table.Read();
-            if (table.HasRows)
-            {
-                table.Close();
-                return Constants.EXISTING_MEMBER;
-            }
-            else
-            {
-                table.Close();
-                return Constants.NON_EXISTING_MEMBER;
-            }
-        }
         public string SignInMember()
-        { 
-            string id, password;
+        {
+            string id;
+            string password;
 
             logo.PrintSignIn();
 
             while (Constants.INPUT_VALUE)
             {
-                id = text.EnterText(8, 5, "");             //아이디 입력
+                id = text.EnterText((int)Constants.SignIn.INPUT_ID, (int)Constants.SignIn.ID, "");                     //아이디 입력
                 if (id.Equals(Constants.ESC)) return Constants.ESC;
-                password = text.EnterText(10, 6, "*");     //비밀번호 입력
+
+                password = text.EnterText((int)Constants.SignIn.INPUT_PASSWORD, (int)Constants.SignIn.PASSWORD, "*");  //비밀번호 입력
                 if (password.Equals(Constants.ESC)) return Constants.ESC;
 
-                if (IsExistingMember(id, password)) break;
-                logo.PrintSignInFailure();       //다시 입력해달라는 메세지 출력
+                if (bookDatabaseManager.IsExistingMember(id, password)) break;  //존재하는 회원 -> 로그인 성공
+
+                logo.PrintSignInFailure();      
             }
 
             return id;  

@@ -94,6 +94,8 @@ namespace Library
         public const string DECREASE_IN_BOOK_QUANTITY = "UPDATE book SET quantity = quantity - 1 WHERE id='";
         public const string INCREASE_IN_BOOK_QUANTITY = "UPDATE book SET quantity = quantity + 1 WHERE id='";
         public const string ADMIN_ACCOUNT = "select*from admin;";
+        public const string MEMBER_ID = "select*from member where id='";
+        public const string MEMBER_PASSWORD = "' and password='";
 
         //Connection
         public const string SERVER = "Server = localhost;";
@@ -102,6 +104,13 @@ namespace Library
         public const string ID = "Uid = root;";
         public const string PASSWORD = "Pwd = 0000;";
 
+        public enum SignIn
+        {
+            INPUT_ID = 8,         //left
+            INPUT_PASSWORD = 10,  //left
+            ID = 7,               //top
+            PASSWORD = 9          //top
+        }
         public enum Menu
         {
             FIRST = 13,
