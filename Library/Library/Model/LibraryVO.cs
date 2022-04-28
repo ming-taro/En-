@@ -54,7 +54,7 @@ namespace Library
             StartNonQuery("INSERT INTO book VALUES ('" + id + "','" + name + "','" + publisher + "','" + author + "','" + price + "'," + Int32.Parse(quantity) + ");");
         }
         public void InsertMember(string id, string password, string name, string age, string phoneNumber, string address)   //회원목록에 회원정보 추가
-        {
+        {//---------->이사완료
             StartNonQuery("INSERT INTO member VALUES ('" + id + "','" + password + "','" + name + "','" + age + "','" + phoneNumber + "','" + address + "');");
         }
         public void UpdateMember(string id, string query)             //회원정보 수정

@@ -13,6 +13,7 @@ namespace Library
         private Keyboard keyboard;
         private Menu menuScreen;
         private SignIn signIn;                //로그인
+        private SignUp signUp;                //회원가입
         private SearchingBook searchingBook;  //1. 도서검색
         private BorrowingBook borrowingBook;  //2. 도서대여
         private ReturningBook returningBook;  //3. 도서반납
@@ -22,6 +23,7 @@ namespace Library
             this.keyboard = keyboard;
             menuScreen = new Menu();
             signIn = new SignIn();
+            signUp = new SignUp();
             searchingBook = new SearchingBook();
             borrowingBook = new BorrowingBook();
             returningBook = new ReturningBook();
@@ -49,17 +51,16 @@ namespace Library
         {
             switch (menu)
             {
-                case (int)Constants.Menu.FIRST:        //로그인
-                    memberId = signIn.SignInMember();  //회원 아이디 저장
+                case (int)Constants.Menu.FIRST:         //로그인
+                    memberId = signIn.SignInToLibrary();//회원 아이디 저장
                     break;
-                case (int)Constants.Menu.SECOND:       //회원가입
-                    SignUp signUp = new SignUp();
-                    signUp.ControlSignUp();
-                    break;
+                case (int)Constants.Menu.SECOND:        //회원가입
+                    signUp.SignUpForLibrary(keyboard);
+                    return;
             }
 
             if (memberId.Equals(Constants.ESC)) return;//로그인 중 esc -> 뒤로가기
-            else StartMemberMode(16);     //회원 모드로(1.도서검색  2.도서대여  3.도서반납  4.개인정보수정  5.종료)
+            else StartMemberMode((int)Constants.Menu.FOURTH);     //회원 모드로(1.도서검색  2.도서대여  3.도서반납  4.개인정보수정  5.종료)
         }
         public void StartMemberMode(int maxTop)   
         {

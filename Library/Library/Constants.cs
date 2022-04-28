@@ -31,12 +31,12 @@ namespace Library
         public const bool CORRECT_MEMBERSHIP = true;
         public const bool WRONG_MEMBERSHIP = false;
 
-        public const bool DUPLICATE_ID = true;
-        public const bool NON_DUPLICATE_ID = false;
+        public const bool IS_DUPLICATE_ID = true;
+        public const bool IS_NON_DUPLICATE_ID = false;
         public const string REMOVE_LINE = "                                                             ";
 
-        public const bool EXISTING_MEMBER = true;
-        public const bool NON_EXISTING_MEMBER = false;
+        public const bool IS_EXISTING_MEMBER = true;
+        public const bool IS_NON_EXISTING_MEMBER = false;
 
         public const bool IS_MATCH = true;
         public const bool IS_NOT_MATCH = false;
@@ -110,8 +110,10 @@ namespace Library
         public const string DECREASE_IN_BOOK_QUANTITY = "UPDATE book SET quantity = quantity - 1 WHERE id='";
         public const string INCREASE_IN_BOOK_QUANTITY = "UPDATE book SET quantity = quantity + 1 WHERE id='";
         public const string ADMIN_ACCOUNT = "select*from admin;";
-        public const string MEMBER_ID = "select*from member where id='";
+        public const string MEMBER_ID = "select id from member where id='";
         public const string MEMBER_PASSWORD = "' and password='";
+        public const string ADDITION_TO_MEMBER = "INSERT INTO member VALUES ";
+        public const string DUPLICATED_ID = "select id from member where id='";
 
         //Connection
         public const string SERVER = "Server = localhost;";
@@ -126,6 +128,16 @@ namespace Library
             INPUT_PASSWORD = 10,  //left
             ID = 7,               //top
             PASSWORD = 9          //top
+        }
+        public enum SignUp
+        {
+            ID = 5,
+            PASSWORD = 8,
+            RECONFIRM = 11,
+            NAME = 14,
+            AGE = 17,
+            PHONE_NUMBER = 20,
+            ADDRESS = 23
         }
         public enum Menu
         {

@@ -86,12 +86,31 @@ namespace Library
             if (table.HasRows)
             {
                 table.Close();
-                return Constants.EXISTING_MEMBER;
+                return Constants.IS_EXISTING_MEMBER;
             }
             else
             {
                 table.Close();
-                return Constants.NON_EXISTING_MEMBER;
+                return Constants.IS_NON_EXISTING_MEMBER;
+            }
+        }
+        public bool IsDuplicatedId(string id)  //기존 회원의 아이디와 중복되는지 확인
+        {
+            string query = Constants.DUPLICATED_ID + id + Constants.END_OF_STRING_QUERY;
+
+            MySqlCommand command = new MySqlCommand(query, connection);
+            MySqlDataReader table = command.ExecuteReader();
+
+            table.Read();
+            if (table.HasRows)
+            {
+                table.Close();
+                return Constants.IS_DUPLICATE_ID;
+            }
+            else
+            {
+                table.Close();
+                return Constants.IS_NON_DUPLICATE_ID;
             }
         }
 
@@ -105,6 +124,11 @@ namespace Library
             StartNonQuery(Constants.DELETION_FROM_RENTAL_LIST + memberId + "' and bookId='" + bookId + Constants.END_OF_STRING_QUERY);  //대여목록에서 삭제
             StartNonQuery(Constants.INCREASE_IN_BOOK_QUANTITY + bookId + Constants.END_OF_STRING_QUERY);                                //도서수량 +1
         }
+        public void AddToMember(MemberVO memberAccount)   //회원목록에 회원정보 추가
+        {
+            StartNonQuery(Constants.ADDITION_TO_MEMBER + memberAccount.PrintMember() + ";");
+        }
+
         public void StartNonQuery(string query)
         {
             try

@@ -75,5 +75,23 @@ namespace Library
             Console.SetCursorPosition(0, (int)Constants.ProfileMenu.SEVENTH);
             Console.WriteLine("☞주소: " + member.Address);
         }
+        public void PrintSingUp()
+        {
+            logo.PrintMenu("회원가입");
+            logo.PrintMessage(0, (int)Constants.SignUp.ID, "아이디:\n(5~10자의 영어, 숫자만 입력해주세요.)", ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.SignUp.PASSWORD, "비밀번호:\n(5~10자의 영어, 숫자만 입력해주세요.)", ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.SignUp.RECONFIRM, "비밀번호 재확인:", ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.SignUp.NAME, "이름:\n(영어, 한글만 입력해주세요.)", ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.SignUp.AGE, "나이:\n(숫자만 입력해주세요.)", ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.SignUp.PHONE_NUMBER, "휴대전화:\n(숫자만 입력해주세요.(입력형식: 010-0000-0000))", ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.SignUp.ADDRESS, "주소:\n(ex: 서울특별시 광진구 군자동)", ConsoleColor.Gray);
+        }
+        public void PrintSuccessMessage()
+        {
+            logo.PrintMenu("회원가입 완료");
+            Console.WriteLine("\n\n\n                [회원가입이 완료되었습니다]\n\n");
+            Console.WriteLine("\n          등록하신 회원 정보로 로그인이 가능합니다.");
+            Console.WriteLine("\n            ESC키를 누르면 회원모드로 돌아갑니다.");
+        }
     }
 }

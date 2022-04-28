@@ -42,7 +42,7 @@ namespace Library
 
             return Constants.ENTER;
         }
-        public string SignInMember()
+        public string SignInToLibrary()
         {
             string id;
             string password;

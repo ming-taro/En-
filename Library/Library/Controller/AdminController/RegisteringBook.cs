@@ -25,11 +25,11 @@ namespace Library
             if (table.HasRows)
             {
                 table.Close();
-                return Constants.DUPLICATE_ID;  //이미 존재하는 아이디
+                return Constants.IS_DUPLICATE_ID;  //이미 존재하는 아이디
             }
 
             table.Close();
-            return Constants.NON_DUPLICATE_ID;  //중복없는 아이디 -> 입력가능
+            return Constants.IS_NON_DUPLICATE_ID;  //중복없는 아이디 -> 입력가능
         }
         public string InputBookId(int left, int top)
         {

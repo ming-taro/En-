@@ -53,6 +53,10 @@ namespace Library
             get { return address; }
             set { address = value; }
         }
+        public string PrintMember()
+        {
+            return "('" + id + "', '" + password + "', '" + name + "', '" + age + "', '" + phoneNumber + "', '" + address + "')";
+        }
         public override string ToString()
         {
             return "아이디: " + id + "\n비밀번호: " + password + "\n이름: " + name + 
