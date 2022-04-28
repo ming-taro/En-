@@ -9,13 +9,14 @@ namespace Library
 {
     class Member
     {
-        private string myId;                  //현재 로그인한 회원 아이디
+        private string memberId;                  //현재 로그인한 회원 아이디
         private Keyboard keyboard;
         private Menu menuScreen;
         private SignIn signIn;                //로그인
         private SearchingBook searchingBook;  //1. 도서검색
         private BorrowingBook borrowingBook;  //2. 도서대여
         private ReturningBook returningBook;  //3. 도서반납
+        private EditingProfile editingProfile;//4.회원정보 수정
         public Member(Keyboard keyboard)
         {
             this.keyboard = keyboard;
@@ -24,24 +25,43 @@ namespace Library
             searchingBook = new SearchingBook();
             borrowingBook = new BorrowingBook();
             returningBook = new ReturningBook();
+            editingProfile = new EditingProfile();
+        }
+        public void SelectMenu(int menu)
+        {
+            switch (menu)
+            {
+                case (int)Constants.Menu.FIRST:  //도서검색
+                    searchingBook.ShowSearchResult(keyboard);
+                    break;
+                case (int)Constants.Menu.SECOND: //도서대여
+                    borrowingBook.SearchBookToBorrow(memberId, searchingBook, keyboard);
+                    break;
+                case (int)Constants.Menu.THIRD:  //도서반납
+                    returningBook.ShowMyBookList(memberId, keyboard);
+                    break;
+                case (int)Constants.Menu.FOURTH: //개인정보수정
+                    memberId = editingProfile.EditProfile(memberId, keyboard);  //아이디를 수정했을 수 있음 -> 수정된 아이디를 myId에 저장
+                    break;
+            }
         }
         public void SelectMemberMode(int menu)
         {
             switch (menu)
             {
-                case (int)Constants.Menu.FIRST:   //로그인
-                    myId = signIn.SignInMember(); //회원 아이디
+                case (int)Constants.Menu.FIRST:        //로그인
+                    memberId = signIn.SignInMember();  //회원 아이디 저장
                     break;
-                case (int)Constants.Menu.SECOND:  //회원가입
+                case (int)Constants.Menu.SECOND:       //회원가입
                     SignUp signUp = new SignUp();
                     signUp.ControlSignUp();
                     break;
             }
 
-            if (myId.Equals(Constants.ESC)) return;   //로그인 중 esc -> 뒤로가기
-            else StartMemberMode(16);  //회원 모드로(1.도서검색  2.도서대여  3.도서반납  4.개인정보수정  5.종료)
+            if (memberId.Equals(Constants.ESC)) return;//로그인 중 esc -> 뒤로가기
+            else StartMemberMode(16);     //회원 모드로(1.도서검색  2.도서대여  3.도서반납  4.개인정보수정  5.종료)
         }
-        public void StartMemberMode(int maxTop)    //1.회원가입  2.로그인 
+        public void StartMemberMode(int maxTop)   
         {
             int menu;
 
@@ -61,24 +81,6 @@ namespace Library
             }
             //회원 모드 종료 -> 메인화면으로 돌아감
         }
-        public void SelectMenu(int menu)
-        {
-            switch (menu)
-            {
-                case (int)Constants.Menu.FIRST:  //도서검색
-                    searchingBook.ShowSearchResult(keyboard);
-                    break;
-                case (int)Constants.Menu.SECOND: //도서대여
-                    borrowingBook.SearchBookToBorrow(myId, searchingBook, keyboard);
-                    break;
-                case (int)Constants.Menu.THIRD:  //도서반납
-                    returningBook.ShowMyBookList(myId, keyboard);
-                    break;
-                case (int)Constants.Menu.FOURTH: //개인정보수정
-                    EditingProfile editingProfile = new EditingProfile(myId);
-                    myId = editingProfile.EditProfile();  //아이디를 수정했을 수 있음 -> 수정된 아이디를 myId에 저장
-                    break;
-            }
-        }
+        
     }
 }

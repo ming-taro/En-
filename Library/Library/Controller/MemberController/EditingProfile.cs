@@ -8,13 +8,6 @@ namespace Library
 {
     class EditingProfile
     {
-        private LibraryVO library;
-        private string myId;
-        public EditingProfile(string myId)
-        {
-            library = LibraryVO.GetLibraryVO();
-            this.myId = myId;
-        }
         private string InputProfile(int menu, ref string query)
         {
             SignUp signUp = new SignUp();
@@ -51,25 +44,26 @@ namespace Library
 
             return changedItem;
         }
-        public string EditProfile()
+        public string EditProfile(string memberId, Keyboard keyboard)
         {
-            Keyboard keyboard = new Keyboard(0, (int)Constants.ProfileMenu.FIRST);
             EditingScreen editingScreen = new EditingScreen();
             string changedItem = "";
             string query = "";
             int menu;
 
+            keyboard.SetPosition(0, (int)Constants.ProfileMenu.FIRST);  //커서 위치 조정
+
             while (Constants.INPUT_VALUE)
             {
-                editingScreen.PrintProfile(myId, library);            //회원정보수정 화면
+                editingScreen.PrintProfile(memberId, library);            //회원정보수정 화면
 
                 menu = keyboard.SelectMenu((int)Constants.ProfileMenu.FIRST, (int)Constants.ProfileMenu.SEVENTH, (int)Constants.ProfileMenu.STEP);
-                if (menu == Constants.ESCAPE) return myId;           //메뉴선택 중 뒤로가기를 누르면 종료(아이디를 수정했다면 수정된 id를 리턴해줘야 한다)
+                if (menu == Constants.ESCAPE) return memberId;           //메뉴선택 중 뒤로가기를 누르면 종료(아이디를 수정했다면 수정된 id를 리턴해줘야 한다)
                 menu = keyboard.Top;
 
                 changedItem = InputProfile(menu, ref query);                          //선택한 정보에 해당하는 회원정보 수정
-                if (changedItem != Constants.ESC) library.UpdateMember(myId, query);  //수정된 정보 DB에 반영(정보입력 중 esc->뒤로가기(수정할 메뉴 선택으로))
-                if (changedItem != Constants.ESC && menu == (int)Constants.ProfileMenu.FIRST) myId = changedItem;  //방금 수정한 정보가 아이디라면 myId에 변경된 아이디 저장
+                if (changedItem != Constants.ESC) library.UpdateMember(memberId, query);  //수정된 정보 DB에 반영(정보입력 중 esc->뒤로가기(수정할 메뉴 선택으로))
+                if (changedItem != Constants.ESC && menu == (int)Constants.ProfileMenu.FIRST) memberId = changedItem;  //방금 수정한 정보가 아이디라면 myId에 변경된 아이디 저장
             }
         }
     }
