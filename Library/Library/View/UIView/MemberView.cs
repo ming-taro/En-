@@ -50,7 +50,7 @@ namespace Library
             logo.PrintLine();
             logo.PrintMessage(0, Console.CursorTop - 1, Constants.ESC_MESSAGE, ConsoleColor.Yellow);
         }
-        public void PrintProfile(MemberVO member) //
+        public void PrintProfile(MemberVO member) //회원정보수정 화면 출력
         {
             //string query = "SELECT*FROM member WHERE id='" + memberId + "';";
             //MySqlCommand command = new MySqlCommand(query, library.Connection);

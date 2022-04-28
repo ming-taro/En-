@@ -10,10 +10,16 @@ namespace Library
 {
     class SignUp  //회원가입
     {
-        public void PrintInputBox(int left, int top, string message)
+        private BookDAO bookDatabaseManager;
+        private EnteringText text;
+        private MemberView memberView;
+        private Logo logo;
+        public SignUp()
         {
-            Console.SetCursorPosition(left, top);
-            Console.Write(message);
+            bookDatabaseManager = new BookDAO();
+            text = new EnteringText();
+            memberView = new MemberView();
+            logo = new Logo();
         }
         public bool IsDuplicatedId(string id)  //기존 회원의 아이디와 중복되는지 확인
         {
@@ -37,61 +43,55 @@ namespace Library
         }
         public string InputId(int left, int top)  //아이디 입력
         {
-            Logo logoScreen = new Logo();
-            EnteringText text = new EnteringText();
             string id;
 
             while (Constants.INPUT_VALUE)
             {
-                Console.SetCursorPosition(left, top);
-                logoScreen.RemoveLine(left, top);
+                logo.RemoveLine(left, top);
                 id = text.EnterText(left, top, "");  //아이디 입력
+
                 if (id.Equals(Constants.ESC))
                 {
                     return Constants.ESC;
                 }
-                else if (string.IsNullOrEmpty(id) || !Regex.IsMatch(id, @"^[a-zA-Z0-9]{5,10}$"))  //입력형식에 맞지 않음 -> 아이디 다시입력
+                else if (Regex.IsMatch(id, @"^[a-zA-Z0-9]{5,10}$") == Constants.IS_NOT_MATCH)  //입력형식에 맞지 않음
                 {
-                    PrintInputBox(0, top + 1, "(5~10자의 영어, 숫자만 다시 입력해주세요.)         ");
+                    logo.PrintMessage(0, top + 1, "(5~10자의 영어, 숫자만 다시 입력해주세요.)         ", ConsoleColor.Red);
                 }
-                else if (IsDuplicatedId(id))  //입력형식은 맞지만, 기존회원과 중복된 아이디인 경우 -> 아이디 다시입력
+                else if (IsDuplicatedId(id))  //입력형식은 맞지만, 기존회원과 중복된 아이디인 경우
                 {
-                    PrintInputBox(0, top + 1, "(이미 사용중인 아이디입니다. 다시 입력해주세요.)    ");
+                    logo.PrintMessage(0, top + 1, "(이미 사용중인 아이디입니다. 다시 입력해주세요.)    ", ConsoleColor.Red);
                 }
                 else
                 {
-                    PrintInputBox(0, top + 1, "(사용 가능한 아이디입니다.)                          ");
+                    logo.PrintMessage(0, top + 1, "(사용 가능한 아이디입니다.)                          ", ConsoleColor.Green);
                     break;  //입력형식에 맞고, 기존에 없는 새로운 아이디 -> 아이디 등록가능
                 }
-                PrintInputBox(left, top, Constants.REMOVE_LINE);
             }
             return id;   //사용 가능한 아이디
         }
         public string InputPassword(int left, int top, string regexText, string errorMessage)
         {
-            Logo logoScreen = new Logo();
-            EnteringText text = new EnteringText();
             string password;
 
             while (Constants.INPUT_VALUE)
             {
-                Console.SetCursorPosition(left, top);
-                logoScreen.RemoveLine(left, top);
-                password = text.EnterText(left, top, "");
+                logo.RemoveLine(left, top);
+                password = text.EnterText(left, top, "");  //비밀번호 입력
+
                 if (password.Equals(Constants.ESC))
                 {
                     return Constants.ESC;
                 }
-                else if (string.IsNullOrEmpty(password) || !Regex.IsMatch(password, regexText))   //입력형식에 맞지 않은 경우 -> 비밀번호 다시 입력
+                else if (!Regex.IsMatch(password, regexText))   //입력형식에 맞지 않은 경우 -> 비밀번호 다시 입력
                 {
-                    PrintInputBox(0, top + 1, errorMessage);
+                    logo.PrintMessage(0, top + 1, errorMessage, ConsoleColor.Red);
                 }
                 else
                 {
-                    PrintInputBox(0, top + 1, Constants.REMOVE_LINE);   //올바르게 입력한 경우 -> 비밀번호 재확인으로 넘어감
+                    logo.RemoveLine(0, top + 1);   //올바르게 입력한 경우 -> 비밀번호 재확인으로 넘어감
                     break;
                 }
-                PrintInputBox(left, top, Constants.REMOVE_LINE);
             }
             return password;
         }
@@ -110,14 +110,14 @@ namespace Library
                 }
                 else if (string.IsNullOrEmpty(reconfirm) || password.Equals(reconfirm) == false)   //입력형식에 맞지 않은 경우 -> 비밀번호 다시 입력
                 {
-                    PrintInputBox(0, top + 1, "(비밀번호가 맞지 않습니다. 다시 입력해주세요.)         ");
+                    logo.PrintMessage(0, top + 1, "(비밀번호가 맞지 않습니다. 다시 입력해주세요.)         ", ConsoleColor.Red);
                 }
                 else
                 {
-                    PrintInputBox(0, top + 1, Constants.REMOVE_LINE);  //비밀번호를 알맞게 입력 -> 이름 입력으로 넘어감
+                    logo.RemoveLine(0, top + 1);  //비밀번호를 알맞게 입력 -> 이름 입력으로 넘어감
                     break;
                 }
-                PrintInputBox(left, top, Constants.REMOVE_LINE);
+                logo.RemoveLine(left, top);
             }
 
             return reconfirm;
