@@ -46,10 +46,14 @@ namespace Library
 
         public const bool IS_BOOK_IN_LIST = true;
         public const bool IS_BOOK_NOT_IN_LIST = false;
-        public const bool MEMBER_IN_LIST = true;
+        public const bool IS_MEMBER_IN_LIST = true;
+        public const bool IS_MEMBER_NOT_IN_LIST = false;
         public const bool IS_QUANTITY_ZERO = true;
         public const bool IS_QUANTITY_MORE_THAN_ONE = false;
         public const string RE_ENTER = "RE_ENTER";
+
+        public const bool IS_MEMBER_BORROWING_BOOK = true;
+        public const bool IS_MEMBER_NOT_BORROWING_BOOK = false;
 
         public const bool GOING_NEXT = true;
         public const bool GOING_BACK = true;
@@ -96,6 +100,8 @@ namespace Library
         public const string MESSAGE_ABOUT_PHONE_NUMBER = "(양식에 맞춰 다시 입력해주세요.(ex: 010-0000-0000))              ";
         public const string MESSAGE_ABOUT_ADDRESS = "(양식에 맞춰 입력해주세요.(ex: 서울특별시 광진구 군자동))       ";
 
+        public const string MESSAGE_ABOUT_MEMBER_NOT_IN_LIST = "(존재하지 않는 회원입니다.)                     ";
+        public const string MESSAGE_ABOUT_MEMBER_BORROWING_BOOK = "(도서를 대여중인 회원은 삭제가 불가능합니다.)   ";
 
         //쿼리
         public const string BOOK_LIST = "select*from book;";
@@ -125,6 +131,9 @@ namespace Library
         public const string UPDATE_ON_RENTAL_LIST = "UPDATE borrowbook SET memberId='{0}' WHERE memberId = '{1}';";
 
         public const string MEMBER_LIST = "select*from member;";
+        public const string MEMBER_BORROWING_BOOK = "select memberId from borrowbook where memberId = '{0}';";
+        public const string DELETION_FROM_MEMBER_LIST = "DELETE FROM member WHERE id='{0}';";
+
 
         //Connection
         public const string SERVER = "Server = localhost;";

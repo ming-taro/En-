@@ -56,8 +56,18 @@ namespace Library
         }
         public void PrintMemberIdInputScreen(List<MemberVO> memberList)
         {
-            logo.PrintSearchBox("☞회원 아이디:");
+            logo.PrintSearchBox("☞삭제할 회원 아이디:");
             PrintMemberList(memberList);
+        }
+        public void PrintSuccess(MemberVO member)
+        {
+            logo.PrintMenu("회원 삭제 완료");
+            logo.PrintMessage(22, 7, ">삭제한 회원 정보<", ConsoleColor.Gray);
+            Console.SetCursorPosition(0,Console.CursorTop - 1);
+            logo.PrintLine();
+            Console.WriteLine(member);
+            logo.PrintLine();
+            logo.PrintMessage(0, Console.CursorTop - 1, Constants.ESC_AND_ENTER, ConsoleColor.Yellow);
         }
     }
 }

@@ -142,6 +142,25 @@ namespace Library
                 return Constants.IS_NON_DUPLICATE_ID;
             }
         }
+        public bool IsMemberBorrowingBook(string id)  //회원이 도서를 대여중인지 확인
+        {
+            string query = string.Format(Constants.MEMBER_BORROWING_BOOK, id.ToString());
+
+            MySqlCommand command = new MySqlCommand(query, connection);
+            MySqlDataReader table = command.ExecuteReader();
+
+            table.Read();
+            if (table.HasRows)
+            {
+                table.Close();
+                return Constants.IS_MEMBER_BORROWING_BOOK;
+            }
+            else
+            {
+                table.Close();
+                return Constants.IS_MEMBER_NOT_BORROWING_BOOK;
+            }
+        }
 
         public void AddToRentalList(string memberId, string bookId)  //대여목록 추가
         {
@@ -181,6 +200,10 @@ namespace Library
                     StartNonQuery(string.Format(Constants.UPDATE_ON_ADDRESS, changedItem.ToString(), id.ToString()));
                     break;
             }
+        }
+        public void DeleteFromMemberList(string id)      //회원목록에서 회원정보 삭제
+        {
+            StartNonQuery(string.Format(Constants.DELETION_FROM_MEMBER_LIST, id.ToString()));
         }
 
         public void StartNonQuery(string query)

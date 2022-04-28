@@ -72,7 +72,7 @@ namespace Library
                     deletingBook.DeleteBook();
                     break;
                 case (int)Constants.Menu.FIFTH:  //회원관리
-                    deletingMember.ControlDeletingMember();
+                    deletingMember.ControlDeletingMember(keyboard);
                     break;
 
             }
