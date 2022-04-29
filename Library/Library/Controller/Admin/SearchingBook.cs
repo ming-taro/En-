@@ -67,7 +67,6 @@ namespace Library
 
             return keyboard.Top;    //Enter를 누른 시점의 커서의 top값으로 선택한 검색유형을 알 수 있음
         }
-
         public void ShowSearchResult(Keyboard keyboard)
         {
             int searchType;

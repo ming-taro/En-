@@ -20,8 +20,6 @@ namespace Library
             adminView = new AdminView();
             logo = new Logo();
         }
-
-        private BookVO bookVO;
         public bool IsBookInList(string bookId, List<BookVO> bookList)
         {
             for (int i = 0; i < bookList.Count; i++)
@@ -57,70 +55,119 @@ namespace Library
 
             return bookId;
         }
-        public void InputBook(int menu, BookVO book, RegisteringBook registeringBook)  //도서정보입력
+        public string SelectBookId(SearchingBook searchingBook, Keyboard keyboard)  //수정할 도서번호 입력
         {
-            string changedItem;
-
-            switch (menu)
-            {
-                case (int)Constants.Registration.FIRST:   //도서번호
-                    changedItem = registeringBook.InputBookId(12, (int)Constants.Registration.FIRST);
-                    bookVO.Id = changedItem;
-                    break;
-                case (int)Constants.Registration.SECOND:   //도서명
-                    changedItem = registeringBook.InputBookName(10, (int)Constants.Registration.SECOND, Constants.BOOK_NAME_REGEX, Constants.MESSAGE_ABOUT_BOOK_NAME);
-                    bookVO.Name = changedItem;
-                    break;
-                case (int)Constants.Registration.THIRD:   //출판사
-                    changedItem = registeringBook.InputBookName(10, (int)Constants.Registration.THIRD, Constants.PUBLISHER_REGEX, Constants.MESSAGE_ABOUT_PUBLISHER);
-                    bookVO.Publisher = changedItem;
-                    break;
-                case (int)Constants.Registration.FOURTH:   //저자
-                    changedItem = registeringBook.InputBookName(8, (int)Constants.Registration.FOURTH, Constants.AUTHOR_REGEX, Constants.MESSAGE_ABOUT_AUTHOR);
-                    bookVO.Author = changedItem;
-                    break;
-                case (int)Constants.Registration.FIFTH:   //가격
-                    changedItem = registeringBook.InputBookName(8, (int)Constants.Registration.FIFTH, Constants.PRICE_REGEX, Constants.MESSAGE_ABOUT_PRICE);
-                    bookVO.Price = changedItem;
-                    break;
-                case (int)Constants.Registration.SIXTH:   //수량
-                    changedItem = registeringBook.InputBookName(8, (int)Constants.Registration.SIXTH, Constants.QUENTITY_REGEX, Constants.MESSAGE_ABOUT_QUENTITY);
-                    bookVO.Quantity = changedItem;
-                    break;
-            }
-        }
-        public void EditBook(SearchingBook searchingBook, RegisteringBook registeringBook, Keyboard keyboard)
-        {
-            int menu;
             int searchType;
             string searchWord;
             string bookId;
-            BookVO book;
 
             keyboard.SetPosition(0, (int)Constants.Registration.FIRST);  //커서 위치 조정
 
             while (Constants.INPUT_VALUE)
             {
                 searchType = searchingBook.SelectSearchType(keyboard);     //검색유형 선택
-                if (searchType == (int)Constants.Keyboard.ESCAPE) break;   //검색유형 선택 중 Esc -> 도서검색 종료
+                if (searchType == (int)Constants.Keyboard.ESCAPE) return Constants.ESC;   //검색유형 선택 중 Esc -> 도서검색 종료
 
                 searchWord = searchingBook.InputSearchWord((int)Constants.SearchMenu.LEFT_VALUE_OF_INPUT, searchType, (int)Constants.SearchMenu.FOURTH);   //검색어 입력받기
                 if (searchWord.Equals(Constants.ESC)) continue;            //검색어 입력 중 Esc -> 검색유형 선택으로 돌아감
 
                 adminView.PrintBookIdInputScreen(searchingBook.BookList, "☞정보를 수정할 도서번호:");  //도서번호 입력창
-                
+
                 bookId = InputBookId(searchingBook.BookList);  //도서번호를 입력받음
                 if (bookId.Equals(Constants.ESC)) continue;    //도서번호 입력 중 Esc -> 검색유형 선택으로 돌아감
 
-                adminView.PrintBookInputScreen("도서 정보 수정");  //도서 정보 수정 화면 출력
+                return bookId;
+            }
+        }
+        public void ReflectChangeInVO(int menu, string changedItem, BookVO book)  //수정할 도서정보입력
+        {
+            switch (menu)
+            {
+                case (int)Constants.Registration.FIRST:   //도서번호
+                    book.Id = changedItem;
+                    break;
+                case (int)Constants.Registration.SECOND:  //도서명
+                    book.Name = changedItem;
+                    break;
+                case (int)Constants.Registration.THIRD:   //출판사
+                    book.Publisher = changedItem;
+                    break;
+                case (int)Constants.Registration.FOURTH:  //저자
+                    book.Author = changedItem;
+                    break;
+                case (int)Constants.Registration.FIFTH:   //가격
+                    book.Price = changedItem; 
+                    break;
+                case (int)Constants.Registration.SIXTH:   //수량
+                    book.Quantity = changedItem;
+                    break;
+            }
+        }
+        public string InputBookInformation(int menu, RegisteringBook registeringBook)  //수정할 도서정보입력
+        {
+            string changedItem = "";
 
-                keyboard.SetPosition(0, (int)Constants.Registration.FIRST);
+            switch (menu)
+            {
+                case (int)Constants.Registration.FIRST:   //도서번호
+                    changedItem = registeringBook.InputBookId(12, (int)Constants.Registration.FIRST);
+                    break;
+                case (int)Constants.Registration.SECOND:   //도서명
+                    changedItem = registeringBook.InputBookName(10, (int)Constants.Registration.SECOND, Constants.BOOK_NAME_REGEX, Constants.MESSAGE_ABOUT_BOOK_NAME);
+                    break;
+                case (int)Constants.Registration.THIRD:   //출판사
+                    changedItem = registeringBook.InputBookName(10, (int)Constants.Registration.THIRD, Constants.PUBLISHER_REGEX, Constants.MESSAGE_ABOUT_PUBLISHER);
+                    break;
+                case (int)Constants.Registration.FOURTH:   //저자
+                    changedItem = registeringBook.InputBookName(8, (int)Constants.Registration.FOURTH, Constants.AUTHOR_REGEX, Constants.MESSAGE_ABOUT_AUTHOR);
+                    break;
+                case (int)Constants.Registration.FIFTH:   //가격
+                    changedItem = registeringBook.InputBookName(8, (int)Constants.Registration.FIFTH, Constants.PRICE_REGEX, Constants.MESSAGE_ABOUT_PRICE);
+                    break;
+                case (int)Constants.Registration.SIXTH:   //수량
+                    changedItem = registeringBook.InputBookName(8, (int)Constants.Registration.SIXTH, Constants.QUENTITY_REGEX, Constants.MESSAGE_ABOUT_QUENTITY);
+                    break;
+            }
+
+            return changedItem;
+        }
+        public BookVO FindBook(string bookId, List<BookVO> bookList)
+        {
+            int i;
+
+            for (i = 0; i < bookList.Count; i++) 
+            {
+                if (bookList[i].Id.Equals(bookId)) break;
+            }
+
+            return bookList[i];
+        }
+        
+        public void EditBook(SearchingBook searchingBook, RegisteringBook registeringBook, Keyboard keyboard)
+        {
+            int menu;
+            string bookId;
+            string changedItem;
+            BookVO book;
+
+            bookId = SelectBookId(searchingBook, keyboard);   //도서검색 후 수정할 도서번호 입력
+            if (bookId.Equals(Constants.ESC)) return;         //Esc -> 뒤로가기
+
+            book = FindBook(bookId, searchingBook.BookList);  //bookVO에 도서정보 저장
+
+            while (Constants.INPUT_VALUE)
+            {
+                adminView.PrintBookRevision(book);            //도서 정보 수정 화면 출력
+                keyboard.SetPosition(0, (int)Constants.Registration.FIRST);  //커서 위치 조정
+
                 menu = keyboard.SelectMenu((int)Constants.Registration.FIRST, (int)Constants.Registration.SIXTH, (int)Constants.Registration.STEP);  //수정할 항목 선택
-                if (menu == Constants.ESCAPE) continue;        //메뉴선택 중 Esc -> 검색유형 선택으로 돌아감
-                menu = keyboard.Top;
+                if (menu == (int)Constants.Keyboard.ESCAPE) break;           //메뉴선택 중 Esc -> 도서정보수정 종료
+                menu = keyboard.Top;                                         //수정항목 == 커서의 top값
 
-                InputBook(menu, book, registeringBook);                   //해당 도서정보 수정
-                //editingBookScreen.PrintSuccessMessage(bookVO);     //수정된 정보가 반영된 화면 출력
+                changedItem = InputBookInformation(menu, registeringBook);   //해당 도서정보 수정
+                if (changedItem.Equals(Constants.ESC)) continue;             //도서정보 입력 중 Esc -> 수정할 항목 다시 선택
+
+                ReflectChangeInVO(menu, changedItem, book);  //bookVO에 수정사항 반영
             }
         }
     }

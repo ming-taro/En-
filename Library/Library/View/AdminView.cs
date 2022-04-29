@@ -63,9 +63,9 @@ namespace Library
             logo.PrintLine();
             logo.PrintMessage(0, Console.CursorTop - 1, Constants.ESC_AND_ENTER, ConsoleColor.Yellow);
         }
-        public void PrintBookInputScreen(string menu)   //도서등록 -> 입력할 정보 목록 출력
-        {                                               //도서정보수정 -> 수정할 정보 목록 출력
-            logo.PrintMenu(menu);
+        public void PrintBookRegistration()   //도서등록 -> 입력할 정보 목록 출력
+        {                                               
+            logo.PrintMenu("도서 등록");
             Console.WriteLine(Constants.ESC_MESSAGE);
             logo.PrintMessage(0, (int)Constants.Registration.FIRST, "☞도서번호:\n(0~999사이의 숫자만 입력 가능합니다.(ex: 123))", ConsoleColor.Gray);
             logo.PrintMessage(0, (int)Constants.Registration.SECOND, "☞도서명:\n(50자 이내로 입력해주세요.(ex: 이것이 C#이다))", ConsoleColor.Gray);
@@ -73,6 +73,17 @@ namespace Library
             logo.PrintMessage(0, (int)Constants.Registration.FOURTH, "☞저자:\n(50자 이내의 영어, 한글만 입력 가능합니다.(ex: 박상현)", ConsoleColor.Gray);
             logo.PrintMessage(0, (int)Constants.Registration.FIFTH, "☞가격:\n(숫자만 입력 가능합니다.(ex: 34000)", ConsoleColor.Gray);
             logo.PrintMessage(0, (int)Constants.Registration.SIXTH, "☞수량:\n(1~99사이의 숫자만 입력 가능합니다.(ex: 5))", ConsoleColor.Gray);
+        }
+        public void PrintBookRevision(BookVO book)  //도서정보수정 -> 수정할 정보 목록 출력
+        {                                              
+            logo.PrintMenu("도서 정보 수정");
+            Console.WriteLine(Constants.ESC_MESSAGE);
+            logo.PrintMessage(0, (int)Constants.Registration.FIRST, "☞도서번호: " + book.Id + "\n(0~999사이의 숫자만 입력 가능합니다.(ex: 123))", ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.Registration.SECOND, "☞도서명: " + book.Name + "\n(50자 이내로 입력해주세요.(ex: 이것이 C#이다))", ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.Registration.THIRD, "☞출판사: " + book.Publisher + "\n(50자 이내로 입력해주세요.(ex: 한빛미디어)", ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.Registration.FOURTH, "☞저자: " + book.Author + "\n(50자 이내의 영어, 한글만 입력 가능합니다.(ex: 박상현)", ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.Registration.FIFTH, "☞가격: " + book.Price + "\n(숫자만 입력 가능합니다.(ex: 34000)", ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.Registration.SIXTH, "☞수량: " + book.Quantity + "\n(1~99사이의 숫자만 입력 가능합니다.(ex: 5))", ConsoleColor.Gray);
         }
         public void PrintMemberIdInputScreen(List<MemberVO> memberList)  //회원관리 -> 회원아이디 입력칸 + 회원목록 출력
         {

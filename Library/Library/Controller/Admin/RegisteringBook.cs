@@ -28,6 +28,7 @@ namespace Library
 
             while (Constants.INPUT_VALUE)
             {
+                logo.RemoveLine(left, top);
                 bookId = text.EnterText(left, top, "");        //도서번호를 입력 받음
 
                 if (bookId.Equals(Constants.ESC))//뒤로가기
@@ -47,8 +48,6 @@ namespace Library
                     logo.RemoveLine(0, top + 1);
                     break;
                 }
-
-                logo.RemoveLine(left, top);
             }
 
             return bookId;
@@ -59,6 +58,7 @@ namespace Library
 
             while (Constants.INPUT_VALUE)
             {
+                logo.RemoveLine(left, top);
                 bookName = text.EnterText(left, top, "");        //도서명을 입력 받음
 
                 if (bookName.Equals(Constants.ESC))
@@ -74,23 +74,21 @@ namespace Library
                     logo.RemoveLine(0, top + 1);
                     break;
                 }
-
-                logo.RemoveLine(left, top);
             }
 
             return bookName;
         }
         public void StartRegistration(Keyboard keyboard)
         {
+            BookVO book;
             string id;
             string name;
             string publisher;
             string author;
             string price;
             string quantity;
-            BookVO book;
 
-            adminView.PrintBookInputScreen("도서 등록");   //도서등록화면 출력
+            adminView.PrintBookRegistration();   //도서등록화면 출력
            
             id = InputBookId(12, (int)Constants.Registration.FIRST);  
             if (id.Equals(Constants.ESC)) return;             //도서번호 입력
@@ -114,7 +112,7 @@ namespace Library
             bookDatabaseManager.AddToBookList(book);          //DB에 도서정보 저장
 
             adminView.PrintRegisteredBook(book);              //등록 완료 화면 출력
-            keyboard.PressESC();                              //esc -> 종료(뒤로가기)
+            keyboard.PressESC();                              //Esc -> 종료(뒤로가기)
         }
     }
 }
