@@ -22,22 +22,6 @@ namespace Library
             adminView = new AdminView();
             logo = new Logo();
         }
-        public bool IsDuplicateId(string bookId)   //입력한 도서번호가 중복된 아이디인지 검사
-        {
-            LibraryVO library = LibraryVO.GetLibraryVO();  //도서목록
-
-            MySqlCommand command = new MySqlCommand("select id from book where id='" + bookId + "';", library.Connection);
-            MySqlDataReader table = command.ExecuteReader();
-
-            if (table.HasRows)
-            {
-                table.Close();
-                return Constants.IS_DUPLICATE_ID;  //이미 존재하는 아이디
-            }
-
-            table.Close();
-            return Constants.IS_NON_DUPLICATE_ID;  //중복없는 아이디 -> 입력가능
-        }
         public string InputBookId(int left, int top)
         {
             string bookId;
@@ -54,9 +38,9 @@ namespace Library
                 {
                     logo.PrintMessage(0, top + 1, Constants.MESSAGE_ABOUT_BOOK_ID_NOT_MATCH, ConsoleColor.Red);
                 }
-                else if (IsDuplicateId(bookId))      //입력 양식은 맞지만 도서아이디가 이미 존재하는 경우
+                else if (bookDatabaseManager.IsDuplicateBookId(bookId)) //입력 양식은 맞지만 도서아이디가 이미 존재하는 경우
                 {
-                    logo.PrintMessage(0, top + 1, Constants.MESSAGE_ABOUT_DUPLICATED_BOOK_ID, ConsoleColor.Red);
+                    logo.PrintMessage(0, top + 1, Constants.MESSAGE_ABOUT_DUPLICATE_BOOK_ID, ConsoleColor.Red);
                 }
                 else
                 {
@@ -66,6 +50,7 @@ namespace Library
 
                 logo.RemoveLine(left, top);
             }
+
             return bookId;
         }
         public string InputBookName(int left, int top, string regexText, string errorMessage)
@@ -97,9 +82,8 @@ namespace Library
         }
         public void StartRegistration(Keyboard keyboard)
         {
-            RegisteringScreen screen = new RegisteringScreen();
-            screen.PrintRegistering(); //도서등록 입력화면
-
+            adminView.PrintBookRegistration();   //도서등록화면 출력
+           
             //도서번호
             string id = InputBookId(10, (int)Constants.Registration.FIRST);  
             if (id.Equals(Constants.ESC)) return;
@@ -120,11 +104,10 @@ namespace Library
             if (quantity.Equals(Constants.ESC)) return;
 
 
-            LibraryVO library = LibraryVO.GetLibraryVO();  //도서목록
-            library.InsertBookList(id, name, publisher, author, price, quantity); //도서목록에 등록된 도서정보 추가
+            //book = new BookVO(id, name, publisher, author, price, quantity);
+            //library.InsertBookList(id, name, publisher, author, price, quantity); //도서목록에 등록된 도서정보 추가
 
-            screen = new RegisteringScreen();
-            screen.PrintComplete();                   //등록 완료 화면 출력
+            //screen.PrintComplete();                   //등록 완료 화면 출력
 
             keyboard.PressESC();                      //esc->종료(뒤로가기)
         }

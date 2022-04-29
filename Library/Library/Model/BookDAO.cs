@@ -123,9 +123,9 @@ namespace Library
                 return Constants.IS_NON_EXISTING_MEMBER;
             }
         }
-        public bool IsDuplicatedId(string memberId)  //기존 회원의 아이디와 중복되는지 확인
+        public bool IsDuplicateMemberId(string memberId)  //기존 회원의 아이디와 중복되는지 확인
         {
-            MySqlCommand command = new MySqlCommand(Constants.DUPLICATED_ID, connection);
+            MySqlCommand command = new MySqlCommand(Constants.DUPLICATE_MEMBER_ID, connection);
             command.Parameters.Add(new MySqlParameter("@memberId", memberId));
 
             MySqlDataReader table = command.ExecuteReader();
@@ -158,6 +158,21 @@ namespace Library
                 table.Close();
                 return Constants.IS_MEMBER_NOT_BORROWING_BOOK;
             }
+        }
+        public bool IsDuplicateBookId(string bookId)   //입력한 도서번호가 중복된 아이디인지 검사
+        {
+            MySqlCommand command = new MySqlCommand(Constants.DUPLICATE_BOOK_ID, connection);
+            command.Parameters.Add(new MySqlParameter("@bookId", bookId));
+
+            MySqlDataReader table = command.ExecuteReader();
+            if (table.HasRows)
+            {
+                table.Close();
+                return Constants.IS_DUPLICATE_ID;  //이미 존재하는 아이디
+            }
+
+            table.Close();
+            return Constants.IS_NON_DUPLICATE_ID;  //중복없는 아이디 -> 입력가능
         }
         public bool IsBookOnLoan(string bookId)   //해당 도서를 대여중인 회원이 있는지 확인
         {
@@ -199,7 +214,7 @@ namespace Library
         }
         public void AddToMember(MemberVO member)   //회원목록에 회원정보 추가
         {
-            MySqlCommand command = new MySqlCommand(Constants.ADDITION_TO_MEMBER, connection); 
+            MySqlCommand command = new MySqlCommand(Constants.ADDITION_TO_MEMBER_LIST, connection); 
             command.Parameters.Add(new MySqlParameter("@id", member.Id));
             command.Parameters.Add(new MySqlParameter("@password", member.Password));
             command.Parameters.Add(new MySqlParameter("@name", member.Name));
@@ -238,6 +253,15 @@ namespace Library
             MySqlCommand command = new MySqlCommand(Constants.DELETION_FROM_MEMBER_LIST, connection);
             command.Parameters.Add(new MySqlParameter("@memberId", memberId));
             command.ExecuteNonQuery();
+        }
+        public void AddToBookList(BookVO book)  //책목록에 도서정보 추가
+        {
+            MySqlCommand command = new MySqlCommand(Constants.ADDITION_TO_BOOK_LIST, connection);
+            command.Parameters.Add(new MySqlParameter("@id", book.Id));
+            command.ExecuteNonQuery();
+
+
+            StartNonQuery('" + id + "','" + name + "','" + publisher + "','" + author + "','" + price + "'," + Int32.Parse(quantity) + ");");
         }
 
         public void StartNonQuery(string query)

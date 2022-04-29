@@ -63,8 +63,8 @@ namespace Library
         public const string BOOK_ID_TO_BORROW= "☞대여할 도서 번호:";
         public const string BOOK_ID_TO_DELETE = "☞반납할 도서 번호:";
         public const string NO_SEARCH_RESULT = "[입력하신 검색어를 포함하는 도서가 없습니다.]";
-        public const string ESC_AND_ENTER = "                         [ESC]:뒤로가기    [ENTER]:다시 검색";
-        public const string ESC_MESSAGE = "                                              [ESC]:뒤로가기";
+        public const string ESC_AND_ENTER = "                          [ESC]:뒤로가기    [ENTER]:다시 검색";
+        public const string ESC_MESSAGE = "                                               [ESC]:뒤로가기";
 
         //EnteringText
         public const bool MODIFIERS = true;
@@ -75,8 +75,8 @@ namespace Library
         public const string ENTER = "ENTER";
 
         //정규식
-        public const string BOOK_NAME_REGEX = @"^[\w]{1,1}[^\e]{0,49}$";
         public const string BOOK_ID_REGEX = @"^[0-9]{1,3}$";
+        public const string BOOK_NAME_REGEX = @"^[\w]{1,1}[^\e]{0,49}$";
         public const string PUBLISHER_REGEX = @"^[\w]{1,1}[^\e]{0,49}$";
         public const string AUTHOR_REGEX = @"^[a-zA-Z가-힣]{1,50}$";
         public const string PRICE_REGEX = @"^[1-9]{1}[0-9]{0,9}";
@@ -88,14 +88,13 @@ namespace Library
         public const string PHONE_NUMBER_REGEX = @"010-[0-9]{4}-[0-9]{4}$";
         public const string ADDRESS_REGEX = @"[가-힣]+(시|도)\s[가-힣]+(시|군|구)\s[가-힣]+(읍|면|동)";
 
-
         //입력 오류 메세지
         public const string MESSAGE_ABOUT_BOOK_ID_NOT_MATCH = "(0~999사이의 숫자가 아닙니다.다시 입력해주세요.)               ";
         public const string MESSAGE_ABOUT_BOOK_NOT_IN_LIST = "(현재 조회 목록에 없는 도서입니다. 다시 입력해주세요.)           ";
         public const string MESSAGE_ABOUT_BOOK_I_BORROWED = "(이미 대여중인 도서입니다. 다른 도서를 선택해주세요.)                  ";
         public const string MESSAGE_ABOUT_QUANTITY_ZERO  = "(대여가능한 도서가 0권입니다. 다른 도서를 선택해주세요.)              ";
         public const string MESSAGE_ABOUT_BOOK_I_NEVER_BORROWED = "(대여목록에 없는 도서번호입니다. 다시 입력해주세요.)             ";
-        public const string MESSAGE_ABOUT_DUPLICATED_BOOK_ID = "(이미 사용중인 도서번호입니다. 다시 입력해주세요.)    ";
+        public const string MESSAGE_ABOUT_DUPLICATE_BOOK_ID = "(이미 사용중인 도서번호입니다. 다시 입력해주세요.)    ";
 
         public const string MESSAGE_ABOUT_BOOK_NAME = "(1~50자 이내의 문자를 입력해주세요.)                         ";
         public const string MESSAGE_ABOUT_PUBLISHER = "(1~50자 이내의 문자를 입력해주세요.)                         ";
@@ -104,7 +103,7 @@ namespace Library
         public const string MESSAGE_ABOUT_QUENTITY = "(1~99사이의 숫자만 가능합니다. 다시 입력해주세요.)                            ";
 
         public const string MESSAGE_ABOUT_MEMBER_ID = "(5~10자의 영어, 숫자만 다시 입력해주세요.)         ";
-        public const string MESSAGE_ABOUT_DUPLICATED_ID = "(이미 사용중인 아이디입니다. 다시 입력해주세요.)    ";
+        public const string MESSAGE_ABOUT_DUPLICATE_ID = "(이미 사용중인 아이디입니다. 다시 입력해주세요.)    ";
         public const string MESSAGE_ABOUT_AVAILABLE_ID = "(사용 가능한 아이디입니다.)                          ";
         public const string MESSAGE_ABOUT_PASSWORD = "(비밀번호가 맞지 않습니다. 다시 입력해주세요.)         ";
         public const string MESSAGE_ABOUT_MEMBER_NAME = "(30자 이내의 영어, 한글만 다시 입력해주세요.)             ";
@@ -132,8 +131,8 @@ namespace Library
         public const string MEMBER_ACCOUNT = "select*from member where id = @memberId;";
         public const string MEMBER_CONFIRMATION = "select id from member where id=@memberId and password=@password;";
 
-        public const string ADDITION_TO_MEMBER = "INSERT INTO member VALUES(@id, @password, @name, @age, @phoneNumber, @address)";
-        public const string DUPLICATED_ID = "select id from member where id=@memberId;";
+        public const string ADDITION_TO_MEMBER_LIST = "INSERT INTO member VALUES(@id, @password, @name, @age, @phoneNumber, @address)";
+        public const string DUPLICATE_MEMBER_ID = "select id from member where id=@memberId;";
 
         public const string UPDATE_ON_MEMBER_ID = "UPDATE member SET id='{0}' WHERE id='{1}';";
         public const string UPDATE_ON_PASSWORD = "UPDATE member SET password='{0}' WHERE id='{1}';";
@@ -148,7 +147,8 @@ namespace Library
         public const string DELETION_FROM_MEMBER_LIST = "DELETE FROM member WHERE id = @memberId;";
 
         public const string BOOK_ON_LOAN = "select bookId from borrowBook where bookId = @bookId;";
-
+        public const string DUPLICATE_BOOK_ID = "select id from book where id = @bookId;";
+        public const string ADDITION_TO_BOOK_LIST = "INSERT INTO book VALUES (@id, @name, @publisher, @author, @price, @quantity);";
 
         //Connection
         public const string SERVER = "Server = localhost;";

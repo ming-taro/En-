@@ -65,13 +65,13 @@ namespace Library
                 case (int)Constants.Menu.SECOND:  //도서 등록
                     registeringBook.StartRegistration(keyboard);
                     break;
-                case (int)Constants.Menu.THIRD:  //도서 정보 수정
+                case (int)Constants.Menu.THIRD:   //도서 정보 수정
                     function = editingBook.ControlEditingBook(registeringBook, keyboard);
                     break;
                 case (int)Constants.Menu.FOURTH:  //도서 삭제
                     deletingBook.DeleteBook(searchingBook, keyboard);
                     break;
-                case (int)Constants.Menu.FIFTH:  //회원관리
+                case (int)Constants.Menu.FIFTH:   //회원관리
                     deletingMember.ControlDeletingMember(keyboard);
                     break;
 

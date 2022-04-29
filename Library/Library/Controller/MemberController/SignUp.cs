@@ -38,9 +38,9 @@ namespace Library
                 {
                     logo.PrintMessage(0, top + 1, Constants.MESSAGE_ABOUT_MEMBER_ID, ConsoleColor.Red);
                 }
-                else if (bookDatabaseManager.IsDuplicatedId(id))  //입력형식은 맞지만, 기존회원과 중복된 아이디인 경우
+                else if (bookDatabaseManager.IsDuplicateMemberId(id))  //입력형식은 맞지만, 기존회원과 중복된 아이디인 경우
                 {
-                    logo.PrintMessage(0, top + 1, Constants.MESSAGE_ABOUT_DUPLICATED_ID, ConsoleColor.Red);
+                    logo.PrintMessage(0, top + 1, Constants.MESSAGE_ABOUT_DUPLICATE_ID, ConsoleColor.Red);
                 }
                 else                                 //입력형식에 맞고, 기존에 없는 새로운 아이디 -> 아이디 등록가능
                 {
