@@ -254,9 +254,9 @@ namespace Library
             command.Parameters.Add(new MySqlParameter("@memberId", memberId));
             command.ExecuteNonQuery();
         }
-        public void AddToBookList(BookVO book)  //책목록에 도서정보 추가
+        public void AddToBookList(string query, BookVO book)  //책목록에 도서정보 추가
         {
-            MySqlCommand command = new MySqlCommand(Constants.ADDITION_TO_BOOK_LIST, connection);
+            MySqlCommand command = new MySqlCommand(query, connection);
             command.Parameters.Add(new MySqlParameter("@id", book.Id));
             command.Parameters.Add(new MySqlParameter("@name", book.Name));
             command.Parameters.Add(new MySqlParameter("@publisher", book.Publisher));
@@ -268,6 +268,13 @@ namespace Library
         public void DeleteFromBookList(string bookId)  //도서목록에서 해당 도서 삭제
         {
             MySqlCommand command = new MySqlCommand(Constants.DELETION_FROM_BOOK_LIST, connection);
+            command.Parameters.Add(new MySqlParameter("@bookId", bookId));
+            command.ExecuteNonQuery();
+        }
+        public void UpdateOnBookId(string changedId, string bookId)
+        {
+            MySqlCommand command = new MySqlCommand(Constants.UPDATE_ON_BOOK_ID, connection);
+            command.Parameters.Add(new MySqlParameter("@id", changedId));
             command.Parameters.Add(new MySqlParameter("@bookId", bookId));
             command.ExecuteNonQuery();
         }

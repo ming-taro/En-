@@ -109,7 +109,7 @@ namespace Library
             if (quantity.Equals(Constants.ESC)) return;       //수량 입력
 
             book = new BookVO(id, name, publisher, author, price, quantity);
-            bookDatabaseManager.AddToBookList(book);          //DB에 도서정보 저장
+            bookDatabaseManager.AddToBookList(Constants.ADDITION_TO_BOOK_LIST, book);  //DB에 도서정보 저장
 
             adminView.PrintRegisteredBook(book);              //등록 완료 화면 출력
             keyboard.PressESC();                              //Esc -> 종료(뒤로가기)

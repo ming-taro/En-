@@ -79,11 +79,12 @@ namespace Library
                 return bookId;
             }
         }
-        public void ReflectChangeInVO(int menu, string changedItem, BookVO book)  //수정할 도서정보입력
+        public void ReflectChangeInVO(int menu, string changedItem, BookVO book)  //수정된 항목 VO에 반영
         {
             switch (menu)
             {
                 case (int)Constants.Registration.FIRST:   //도서번호
+                    bookDatabaseManager.UpdateOnBookId(changedItem, book.Id); //DB에 변경된 도서번호 반영(도서번호가 기본키이므로 즉시 DB에 반영해야함)
                     book.Id = changedItem;
                     break;
                 case (int)Constants.Registration.SECOND:  //도서명
@@ -161,7 +162,7 @@ namespace Library
                 keyboard.SetPosition(0, (int)Constants.Registration.FIRST);  //커서 위치 조정
 
                 menu = keyboard.SelectMenu((int)Constants.Registration.FIRST, (int)Constants.Registration.SIXTH, (int)Constants.Registration.STEP);  //수정할 항목 선택
-                if (menu == (int)Constants.Keyboard.ESCAPE) break;           //메뉴선택 중 Esc -> 도서정보수정 종료
+                if (menu == (int)Constants.Keyboard.ESCAPE) break;           //메뉴선택 중 Esc -> DB에 수정사항 반영 후 도서정보수정 종료
                 menu = keyboard.Top;                                         //수정항목 == 커서의 top값
 
                 changedItem = InputBookInformation(menu, registeringBook);   //해당 도서정보 수정
@@ -169,6 +170,8 @@ namespace Library
 
                 ReflectChangeInVO(menu, changedItem, book);  //bookVO에 수정사항 반영
             }
+
+            bookDatabaseManager.AddToBookList(Constants.UPDATE_TO_BOOK_LIST, book); //DB에 수정사항 반영
         }
     }
 }

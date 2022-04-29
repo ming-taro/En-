@@ -154,6 +154,9 @@ namespace Library
         public const string ADDITION_TO_BOOK_LIST = "INSERT INTO book VALUES (@id, @name, @publisher, @author, @price, @quantity);";
         public const string DELETION_FROM_BOOK_LIST = "DELETE FROM book WHERE id = @bookId;";
 
+        public const string UPDATE_TO_BOOK_LIST = "update book set name=@name,publisher=@publisher,author=@author,price=@price,quantity=@quantity where id=@id;";
+        public const string UPDATE_ON_BOOK_ID = "update book set id=@id where id=@bookId;";
+
         //Connection
         public const string SERVER = "Server = localhost;";
         public const string PORT = "Port = 3306;";
