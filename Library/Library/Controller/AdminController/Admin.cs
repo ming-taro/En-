@@ -55,8 +55,6 @@ namespace Library
         
         public void SelectMenu(int menu)       //관리자 메뉴에서 선택
         {
-            int function = 0;  //----->삭제할 코드
-            
             switch (menu)
             {
                 case (int)Constants.Menu.FIRST:  //도서 이름 검색 
@@ -66,7 +64,7 @@ namespace Library
                     registeringBook.StartRegistration(keyboard);
                     break;
                 case (int)Constants.Menu.THIRD:   //도서 정보 수정
-                    function = editingBook.ControlEditingBook(registeringBook, keyboard);
+                    editingBook.EditBook(searchingBook, keyboard);
                     break;
                 case (int)Constants.Menu.FOURTH:  //도서 삭제
                     deletingBook.DeleteBook(searchingBook, keyboard);
@@ -76,17 +74,6 @@ namespace Library
                     break;
 
             }
-
-            //기능을 모두 수행함 : 뒤로가기 입력받음 -> 관리자메뉴로 돌아감
-            if (function == Constants.COMPLETE_FUNCTION) GoBack(); ///---->삭제할 코드
-        }
-        public void GoBack()  //뒤로가기--->삭제할 코드
-        {
-            while (Constants.INPUT_VALUE)
-            {
-                ConsoleKeyInfo keyInfo = Console.ReadKey();
-                if (keyInfo.Key == ConsoleKey.Escape) break;
-            }   //escape키 입력 -> 뒤로가기
         }
     }
 }

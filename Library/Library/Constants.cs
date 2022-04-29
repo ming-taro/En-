@@ -24,6 +24,7 @@ namespace Library
         public const int COMPLETE_FUNCTION = 7; //----->삭제할 코드
 
         public const bool OUT_OF_MENU = true;
+        public const bool MOVEMENT_WITHIN_MENU = false;
         public const bool ADMIN_MODE = true;
         public const bool MEMBER_MODE = true;
         public const bool SIGN_IN = true;
@@ -169,7 +170,7 @@ namespace Library
         }
         public enum SignUp
         {
-            ID = 5,
+            ID = 5,              //left
             PASSWORD = 8,
             RECONFIRM = 11,
             NAME = 14,
@@ -179,7 +180,7 @@ namespace Library
         }
         public enum Menu
         {
-            FIRST = 13,
+            FIRST = 13,          //top
             SECOND = 14,
             THIRD = 15,
             FOURTH = 16,
@@ -188,7 +189,7 @@ namespace Library
         }
         public enum Registration
         {
-            FIRST = 7,
+            FIRST = 7,          //top
             SECOND = 10,
             THIRD = 13,
             FOURTH = 16,
@@ -198,13 +199,23 @@ namespace Library
         }
         public enum ProfileMenu
         {
-            FIRST = 12,
-            SECOND = 15,
+            FIRST = 12,        //top
+            SECOND = 15, 
             THIRD = 18,
             FOURTH = 21,
             FIFTH = 24,
             SIXTH = 27,
             SEVENTH = 30,
+            STEP = 3
+        }
+        public enum BookEditMenu
+        {
+            FIRST = 16,
+            SECOND = 19,
+            THIRD = 22,
+            FOURTH = 25,
+            FIFTH = 28,
+            SIXTH = 31,
             STEP = 3
         }
         public enum SearchMenu

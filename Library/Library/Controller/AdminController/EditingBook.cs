@@ -22,40 +22,40 @@ namespace Library
         }
 
         private BookVO bookVO;
-        public void PrintInputBox(int left, int top, string message)
+        public bool IsBookInList(string bookId, List<BookVO> bookList)
         {
-            Console.SetCursorPosition(left, top);
-            Console.Write(message);
-        }
-        public bool IsBookInList(string bookId)
-        {
-            LibraryVO library = LibraryVO.GetLibraryVO();   //도서목록
-
-            for (int i = 0; i < library.bookList.Count; i++)
+            for (int i = 0; i < bookList.Count; i++)
             {
-                if (library.bookList[i].Id.Equals(bookId))
-                {
-                    bookVO = library.bookList[i]; //도서정보 저장   
-                    return Constants.IS_BOOK_IN_LIST;   //도서명,번호에 해당하는 책을 찾음
-                }
+                if (bookList[i].Id.Equals(bookId)) return Constants.IS_BOOK_IN_LIST;   //현재 조회목록에 있는 도서를 입력함
             }
-            return !Constants.IS_BOOK_IN_LIST;
+            return Constants.IS_BOOK_NOT_IN_LIST;
         }
-        public void InputBookId()
+        public string InputBookId(List<BookVO> bookList)
         {
             string bookId;
 
             while (Constants.INPUT_VALUE)
             {
-                Console.SetCursorPosition(26, 1);
-                bookId = Console.ReadLine();       //도서번호를 입력받음
-                if (string.IsNullOrEmpty(bookId) || !Regex.IsMatch(bookId, @"^[0-9]{1,3}$") || !IsBookInList(bookId))
+                bookId = text.EnterText(26, 1, "");       //도서번호를 입력받음
+
+                if (bookId.Equals(Constants.ESC))
                 {
-                    PrintInputBox(0, 2, "(존재하지 않는 도서번호입니다.다시 입력해주세요.)");
+                    return Constants.ESC;
+                }
+                else if (Regex.IsMatch(bookId, Constants.BOOK_ID_REGEX) == Constants.IS_NOT_MATCH)  //입력형식에 맞지 않은 입력
+                {
+                    logo.PrintMessage(0, 2, Constants.MESSAGE_ABOUT_BOOK_ID_NOT_MATCH, ConsoleColor.Red);
+                }
+                else if (IsBookInList(bookId, bookList) == Constants.IS_BOOK_NOT_IN_LIST)      //현재 조회목록에 없는 도서
+                {
+                    logo.PrintMessage(0, 2, Constants.MESSAGE_ABOUT_BOOK_NOT_IN_LIST, ConsoleColor.Red);
                 }
                 else break;   //도서삭제 가능
-                PrintInputBox(26, 1, Constants.REMOVE_LINE);
+
+                logo.RemoveLine(26, 1);
             }
+
+            return bookId;
         }
         public void InputBook(int menu, RegisteringBook registeringBook)  //도서정보입력
         {
@@ -63,51 +63,66 @@ namespace Library
 
             switch (menu)
             {
-                case 16:   //도서번호
+                case (int)Constants.BookEditMenu.FIRST:   //도서번호
                     book = registeringBook.InputBookId(12, 16);
                     bookVO.Id = book;
                     break;
-                case 19:   //도서명
+                case (int)Constants.BookEditMenu.SECOND:   //도서명
                     book = registeringBook.InputBookName(10, 19, Constants.BOOK_NAME_REGEX, Constants.MESSAGE_ABOUT_BOOK_NAME);
                     bookVO.Name = book;
                     break;
-                case 22:   //출판사
+                case (int)Constants.BookEditMenu.THIRD:   //출판사
                     book = registeringBook.InputBookName(10, 22, Constants.PUBLISHER_REGEX, Constants.MESSAGE_ABOUT_PUBLISHER);
                     bookVO.Publisher = book;
                     break;
-                case 25:   //저자
+                case (int)Constants.BookEditMenu.FOURTH:   //저자
                     book = registeringBook.InputBookName(8, 25, Constants.AUTHOR_REGEX, Constants.MESSAGE_ABOUT_AUTHOR);
                     bookVO.Author = book;
                     break;
-                case 28:   //가격
+                case (int)Constants.BookEditMenu.FIFTH:   //가격
                     book = registeringBook.InputBookName(8, 28, Constants.PRICE_REGEX, Constants.MESSAGE_ABOUT_PRICE);
                     bookVO.Price = book;
                     break;
-                case 31:   //수량
+                case (int)Constants.BookEditMenu.SIXTH:   //수량
                     book = registeringBook.InputBookName(8, 31, Constants.QUENTITY_REGEX, Constants.MESSAGE_ABOUT_QUENTITY);
                     bookVO.Quantity = book;
                     break;
             }
         }
-        public int ControlEditingBook(RegisteringBook registeringBook, Keyboard keyboard)
+        public void EditBook(SearchingBook searchingBook, Keyboard keyboard)
         {
-            EditingBookScreen editingBookScreen = new EditingBookScreen();
-            editingBookScreen.PrintSearchingBookId();    //도서번호검색화면 출력
+            //EditingBookScreen editingBookScreen = new EditingBookScreen();
+            //editingBookScreen.PrintSearchingBookId();    //도서번호검색화면 출력
 
-            InputBookId();  //도서번호를 입력받음
+            //InputBookId();  //도서번호를 입력받음
 
-            editingBookScreen.PrintBook(bookVO);      //해당 도서정보 출력
-            editingBookScreen.PrintQuantityManagement(); //도서정보 수정 화면 출력
-
-            //Keyboard keyboard = new Keyboard(0, 16);
+            //editingBookScreen.PrintBook(bookVO);      //해당 도서정보 출력
+            //editingBookScreen.PrintQuantityManagement(); //도서정보 수정 화면 출력
             int menu;
+            int searchType;
+            string searchWord;
+            string bookId;
+
+            keyboard.SetPosition(0, (int)Constants.BookEditMenu.FIRST);  //커서 위치 조정
 
             while (Constants.INPUT_VALUE)
             {
-                menu = keyboard.SelectMenu(16, 31, 3);
-                if (menu == Constants.ESCAPE) return Constants.ESCAPE;   //메뉴선택 중 뒤로가기를 누르면 종료
-                InputBook(keyboard.Top, registeringBook);                   //해당 도서정보 수정
-                editingBookScreen.PrintSuccessMessage(bookVO);     //수정된 정보가 반영된 화면 출력
+                searchType = searchingBook.SelectSearchType(keyboard);     //검색유형 선택
+                if (searchType == (int)Constants.Keyboard.ESCAPE) break;   //검색유형 선택 중 Esc -> 도서검색 종료
+
+                searchWord = searchingBook.InputSearchWord((int)Constants.SearchMenu.LEFT_VALUE_OF_INPUT, searchType, (int)Constants.SearchMenu.FOURTH);   //검색어 입력받기
+                if (searchWord.Equals(Constants.ESC)) continue;            //검색어 입력 중 Esc -> 검색유형 선택으로 돌아감
+
+                adminView.PrintBookIdInputScreen(searchingBook.BookList, "☞정보를 수정할 도서번호:");  //도서번호 입력창
+                bookId = InputBookId(searchingBook.BookList);  //도서번호를 입력받음
+                if (bookId.Equals(Constants.ESC)) continue;    //도서번호 입력 중 Esc -> 검색유형 선택으로 돌아감
+
+
+                menu = keyboard.SelectMenu((int)Constants.BookEditMenu.FIRST, (int)Constants.BookEditMenu.SIXTH, (int)Constants.BookEditMenu.STEP);  //수정할 항목 선택
+                if (menu == Constants.ESCAPE) break;     //메뉴선택 중 뒤로가기를 누르면 종료
+
+                //InputBook(keyboard.Top, registeringBook);                   //해당 도서정보 수정
+                //editingBookScreen.PrintSuccessMessage(bookVO);     //수정된 정보가 반영된 화면 출력
             }
         }
     }

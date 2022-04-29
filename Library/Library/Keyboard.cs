@@ -38,10 +38,10 @@ namespace Library
         {
             int key;
             
-            while (Constants.KEYBOARD_OPERATION)    //키보드 방향키로 움직이는 동안
+            while (Constants.KEYBOARD_OPERATION)            //키보드 방향키로 움직이는 동안
             {
                 Console.SetCursorPosition(left, top);
-                key = ControlKeyboard(move);            //키보드를 입력받음
+                key = ControlKeyboard(move);                //키보드를 입력받음
                 if (IsOutOfMenu(minTop, maxTop)) continue;  //메뉴를 벗어나는 이동은 X
 
                 if (key == (int)Constants.Keyboard.ENTER || key == (int)Constants.Keyboard.ESCAPE) break;//메뉴입력 -> 해당 메뉴로 이동(1.회원모드   2.관리자모드)
@@ -49,13 +49,14 @@ namespace Library
 
             return key;
         }
-        public int ControlKeyboard(int move) //현재 키보드 입력값 반환
+        public int ControlKeyboard(int move)       //현재 키보드 입력값 반환
         {
             ConsoleKeyInfo keyInfo;
 
             while (Constants.KEYBOARD_OPERATION)   //다른 키를 입력하면 올바른 키를 입력할때까지 무한루프
             {
                 keyInfo = Console.ReadKey(true);   //키를 입력받음 
+
                 switch (keyInfo.Key)
                 {
                     case ConsoleKey.DownArrow:
@@ -73,11 +74,11 @@ namespace Library
                 }
             }
         }
-        public bool IsOutOfMenu(int minTop, int maxTop)
+        public bool IsOutOfMenu(int minTop, int maxTop)   //메뉴 선택 범위를 벗어나는지 확인
         {
             if (top < minTop) top = minTop;
             else if (top > maxTop) top = maxTop;
-            else return !Constants.OUT_OF_MENU;
+            else return Constants.MOVEMENT_WITHIN_MENU;
 
             return Constants.OUT_OF_MENU;
         }
