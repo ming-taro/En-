@@ -30,11 +30,11 @@ namespace Library
         public MemberVO GetMemberAccount(string memberId)   //입력받은 id와 일치하는 회원계정
         {
             MemberVO member;
-            string query = string.Format(Constants.MEMBER_ACCOUNT, memberId.ToString());
 
-            MySqlCommand command = new MySqlCommand(query, connection);
+            MySqlCommand command = new MySqlCommand(Constants.MEMBER_ACCOUNT, connection);
+            command.Parameters.Add(new MySqlParameter("@memberId", memberId));
+
             MySqlDataReader table = command.ExecuteReader();
-
             table.Read();
             member = new MemberVO(table["id"].ToString(), table["password"].ToString(), table["name"].ToString(), table["age"].ToString(), table["phoneNumber"].ToString(), table["address"].ToString());
             table.Close();
@@ -76,11 +76,11 @@ namespace Library
         public List<BookVO> MakeMyBookList(string memberId)    //회원의 도서대여목록
         {
             List<BookVO> borrowList = new List<BookVO>();
-            string query = string.Format(Constants.RENTAL_LIST, memberId.ToString());
 
-            MySqlCommand command = new MySqlCommand(query, connection);
+            MySqlCommand command = new MySqlCommand(Constants.RENTAL_LIST, connection);
+            command.Parameters.Add(new MySqlParameter("@memberId", memberId));
+
             MySqlDataReader table = command.ExecuteReader();
-
             while (table.Read())
             {
                 borrowList.Add(new BookVO(table["id"].ToString(), table["name"].ToString(), table["publisher"].ToString(), table["author"].ToString(), table["price"].ToString(), table["quantity"].ToString()));
@@ -104,13 +104,13 @@ namespace Library
 
             return memberList;
         }
-        public bool IsExistingMember(string id, string password)  //입력된 정보가 존재하는 회원인지 확인
+        public bool IsExistingMember(string memberId, string password)  //입력된 정보가 존재하는 회원인지 확인
         {
-            string query = string.Format(Constants.MEMBER_CONFIRMATION, id.ToString(), password.ToString());
+            MySqlCommand command = new MySqlCommand(Constants.MEMBER_CONFIRMATION, connection);
+            command.Parameters.Add(new MySqlParameter("@memberId", memberId));
+            command.Parameters.Add(new MySqlParameter("@password", password));
 
-            MySqlCommand command = new MySqlCommand(query, connection);
             MySqlDataReader table = command.ExecuteReader();
-
             table.Read();
             if (table.HasRows)
             {
@@ -123,13 +123,12 @@ namespace Library
                 return Constants.IS_NON_EXISTING_MEMBER;
             }
         }
-        public bool IsDuplicatedId(string id)  //기존 회원의 아이디와 중복되는지 확인
+        public bool IsDuplicatedId(string memberId)  //기존 회원의 아이디와 중복되는지 확인
         {
-            string query = string.Format(Constants.DUPLICATED_ID, id.ToString());
+            MySqlCommand command = new MySqlCommand(Constants.DUPLICATED_ID, connection);
+            command.Parameters.Add(new MySqlParameter("@memberId", memberId));
 
-            MySqlCommand command = new MySqlCommand(query, connection);
             MySqlDataReader table = command.ExecuteReader();
-
             table.Read();
             if (table.HasRows)
             {
@@ -142,13 +141,12 @@ namespace Library
                 return Constants.IS_NON_DUPLICATE_ID;
             }
         }
-        public bool IsMemberBorrowingBook(string id)  //회원이 도서를 대여중인지 확인
+        public bool IsMemberBorrowingBook(string memberId)  //회원이 도서를 대여중인지 확인
         {
-            string query = string.Format(Constants.MEMBER_BORROWING_BOOK, id.ToString());
+            MySqlCommand command = new MySqlCommand(Constants.MEMBER_BORROWING_BOOK, connection);
+            command.Parameters.Add(new MySqlParameter("@memberId", memberId));
 
-            MySqlCommand command = new MySqlCommand(query, connection);
             MySqlDataReader table = command.ExecuteReader();
-
             table.Read();
             if (table.HasRows)
             {
@@ -161,20 +159,54 @@ namespace Library
                 return Constants.IS_MEMBER_NOT_BORROWING_BOOK;
             }
         }
+        public bool IsBookOnLoan(string bookId)   //해당 도서를 대여중인 회원이 있는지 확인
+        {
+            MySqlCommand command = new MySqlCommand(Constants.BOOK_ON_LOAN, connection);
+            command.Parameters.Add(new MySqlParameter("@bookId", bookId));
+
+            MySqlDataReader table = command.ExecuteReader();
+            if (table.HasRows)
+            {
+                table.Close();
+                return Constants.BOOK_I_BORROWED;     //대여중인 회원이 있는 도서 -> 삭제 불가
+            }
+
+            table.Close();
+            return Constants.BOOK_I_NEVER_BORROWED;   //대여한 회원이 없는 도서 -> 삭제 가능
+        }
 
         public void AddToRentalList(string memberId, string bookId)  //대여목록 추가
         {
-            StartNonQuery(string.Format(Constants.ADDITION_TO_RENTAL_LIST, memberId.ToString(), bookId.ToString())); //대여목록에 추가
-            StartNonQuery(string.Format(Constants.DECREASE_IN_BOOK_QUANTITY, bookId.ToString()));                    //도서수량 -1
+            MySqlCommand command = new MySqlCommand(Constants.ADDITION_TO_RENTAL_LIST, connection);  //대여목록에 추가
+            command.Parameters.Add(new MySqlParameter("@memberId", memberId));
+            command.Parameters.Add(new MySqlParameter("@bookId", bookId));
+            command.ExecuteNonQuery();
+
+            command = new MySqlCommand(Constants.DECREASE_IN_BOOK_QUANTITY, connection);   //도서수량 -1
+            command.Parameters.Add(new MySqlParameter("@bookId", bookId));                
+            command.ExecuteNonQuery();
         }
         public void DeleteFromRentalList(string memberId, string bookId) //대여도서 반납 후 대여목록에서 삭제
         {
-            StartNonQuery(string.Format(Constants.DELETION_FROM_RENTAL_LIST, memberId.ToString(), bookId.ToString()));  //대여목록에서 삭제
-            StartNonQuery(string.Format(Constants.INCREASE_IN_BOOK_QUANTITY, bookId.ToString()));                                //도서수량 +1
+            MySqlCommand command = new MySqlCommand(Constants.DELETION_FROM_RENTAL_LIST, connection); //대여목록에서 삭제
+            command.Parameters.Add(new MySqlParameter("@memberId", memberId));
+            command.Parameters.Add(new MySqlParameter("@bookId", bookId));
+            command.ExecuteNonQuery();
+
+            command = new MySqlCommand(Constants.INCREASE_IN_BOOK_QUANTITY, connection);   //도서수량 +1
+            command.Parameters.Add(new MySqlParameter("@bookId", bookId));
+            command.ExecuteNonQuery();
         }
-        public void AddToMember(MemberVO memberAccount)   //회원목록에 회원정보 추가
+        public void AddToMember(MemberVO member)   //회원목록에 회원정보 추가
         {
-            StartNonQuery(Constants.ADDITION_TO_MEMBER + memberAccount.PrintMember() + ";");
+            MySqlCommand command = new MySqlCommand(Constants.ADDITION_TO_MEMBER, connection); 
+            command.Parameters.Add(new MySqlParameter("@id", member.Id));
+            command.Parameters.Add(new MySqlParameter("@password", member.Password));
+            command.Parameters.Add(new MySqlParameter("@name", member.Name));
+            command.Parameters.Add(new MySqlParameter("@age", member.Age));
+            command.Parameters.Add(new MySqlParameter("@phoneNumber", member.PhoneNumber));
+            command.Parameters.Add(new MySqlParameter("@address", member.Address));
+            command.ExecuteNonQuery();
         }
         public void UpdateToMember(int menu, string id, string changedItem) //회원정보 수정(menu:수정할 항목, id:회원아이디, changedItem:수정된 정보)
         {
@@ -201,9 +233,11 @@ namespace Library
                     break;
             }
         }
-        public void DeleteFromMemberList(string id)      //회원목록에서 회원정보 삭제
+        public void DeleteFromMemberList(string memberId)      //회원목록에서 회원정보 삭제
         {
-            StartNonQuery(string.Format(Constants.DELETION_FROM_MEMBER_LIST, id.ToString()));
+            MySqlCommand command = new MySqlCommand(Constants.DELETION_FROM_MEMBER_LIST, connection);
+            command.Parameters.Add(new MySqlParameter("@memberId", memberId));
+            command.ExecuteNonQuery();
         }
 
         public void StartNonQuery(string query)

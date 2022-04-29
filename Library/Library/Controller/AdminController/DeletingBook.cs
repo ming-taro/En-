@@ -14,32 +14,12 @@ namespace Library
         private EnteringText text;
         private AdminView adminView;
         private Logo logo;
-
         public DeletingBook(BookDAO bookDatabaseManager)
         {
             this.bookDatabaseManager = bookDatabaseManager;
             text = new EnteringText();
             adminView = new AdminView();
             logo = new Logo();
-        }
-
-        private LibraryVO library = LibraryVO.GetLibraryVO();//-------->삭제할 코드
- 
-        public bool IsBorrowedBook(string bookId)
-        {
-            string query = "select*from borrowBook where bookId='" + bookId + "'";
-
-            MySqlCommand command = new MySqlCommand(query + ";", library.Connection);
-            MySqlDataReader table = command.ExecuteReader();
-
-            if (table.HasRows)
-            {
-                table.Close();
-                return Constants.BOOK_I_BORROWED;     //대여중인 회원이 있는 도서 -> 삭제 불가
-            }
-
-            table.Close();
-            return Constants.BOOK_I_NEVER_BORROWED;   //대여한 회원이 없는 도서 -> 삭제 가능
         }
         public bool IsBookInList(string bookId, List<BookVO> bookList)
         {
@@ -56,7 +36,7 @@ namespace Library
 
             while (Constants.INPUT_VALUE)
             {
-                bookId = text.EnterText(24, 1, "");       //삭제할 도서번호를 입력받음
+                bookId = text.EnterText(20, 1, "");       //삭제할 도서번호를 입력받음
 
                 if (bookId.Equals(Constants.ESC))
                 {
@@ -70,9 +50,9 @@ namespace Library
                 {
                     logo.PrintMessage(0, 2, Constants.MESSAGE_ABOUT_BOOK_NOT_IN_LIST, ConsoleColor.Red);
                 }
-                else if (IsBorrowedBook(bookId))   //도서목록에 있지만 대여중인 회원이 있는 경우 -> 도서 대여 불가
+                else if (bookDatabaseManager.IsBookOnLoan(bookId))   //도서목록에 있지만 대여중인 회원이 있는 경우 -> 도서 삭제 불가
                 {
-                    logo.PrintMessage(0, 2, "(회원이 대여중인 도서는 삭제가 불가능합니다.)                 ", ConsoleColor.Red);
+                    logo.PrintMessage(0, 2, Constants.MESSAGE_ABOUT_BOOK_ON_LOAN, ConsoleColor.Red);
                 }
                 else break;   //도서삭제 가능
 
@@ -81,9 +61,19 @@ namespace Library
 
             return bookId;
         }
+        public BookVO FindBook(string bookId, List<BookVO> bookList)
+        {
+            int i;
+
+            for(i = 0; i<bookList.Count; i++)
+            {
+                if (bookList[i].Id.Equals(bookId)) break;
+            }
+
+            return bookList[i];
+        }
         public void DeleteBook(SearchingBook searchingBook, Keyboard keyboard)
         {
-            //DeletingBookScreen deletingBookScreen = new DeletingBookScreen();//---->삭제할코드
             int searchType;
             string searchWord;
             string bookId;
@@ -98,18 +88,12 @@ namespace Library
 
                 adminView.PrintBookIdInputScreen(searchingBook.BookList);  //도서번호 입력칸 + 도서 검색 결과 출력
 
-                bookId = InputBookId(searchWord, searchingBook.BookList);
+                bookId = InputBookId(searchWord, searchingBook.BookList);  //삭제할 도서번호 입력
+                if (bookId.Equals(Constants.ESC)) continue;                //도서번호 입력 중 Esc -> 도서검색으로 돌아감
 
+                adminView.PrintDeletedBook(FindBook(bookId, searchingBook.BookList));    //삭제 완료 메세지 + 삭제한 도서정보 출력
                 if (keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break; //Esc->뒤로가기, Enter->재검색
             }
-
-            //
-            //if (bookId.Equals(Constants.ESC)) return;
-
-            //deletingBookScreen.PrintSuccessMessage(bookId, library);   //도서삭제 완료 메세지 출력
-            //library.DeleteBookList(bookId);                //리스트에서 도서삭제
-
-            //keyboard.PressESC();
         }
     }
 }

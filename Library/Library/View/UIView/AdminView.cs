@@ -63,6 +63,15 @@ namespace Library
             logo.PrintSearchBox("☞삭제할 도서 번호:");
             PrintBookList(bookList);
         }
+        public void PrintDeletedBook(BookVO book)   //도서삭제 -> 삭제한 도서정보 출력
+        {
+            logo.PrintMenu("도서 삭제 완료");
+            logo.PrintMessage(22, 7, ">삭제한 도서 정보<", ConsoleColor.Gray);
+            Console.SetCursorPosition(0, Console.CursorTop - 1);
+            Console.WriteLine(book);
+            logo.PrintLine();
+            logo.PrintMessage(0, Console.CursorTop - 1, Constants.ESC_AND_ENTER, ConsoleColor.Yellow);
+        }
         public void PrintMemberIdInputScreen(List<MemberVO> memberList)  //회원관리 -> 회원아이디 입력칸 + 회원목록 출력
         {
             logo.PrintSearchBox("☞삭제할 회원 아이디:");

@@ -102,25 +102,25 @@ namespace Library
 
         public const string MESSAGE_ABOUT_MEMBER_NOT_IN_LIST = "(존재하지 않는 회원입니다.)                     ";
         public const string MESSAGE_ABOUT_MEMBER_BORROWING_BOOK = "(도서를 대여중인 회원은 삭제가 불가능합니다.)   ";
-
+        public const string MESSAGE_ABOUT_BOOK_ON_LOAN  = "(회원이 대여중인 도서는 삭제가 불가능합니다.)                 ";
         //쿼리
         public const string BOOK_LIST = "select*from book;";
         public const string BOOK_NAME_SEARCH = "select*from book where name like '%{0}%';";
         public const string PUBLISHER_SEARCH = "select*from book where publisher like '%{0}%';";
         public const string AUTHOR_SEARCH = "select*from book where author like '%{0}%';";
 
-        public const string RENTAL_LIST = "select * from book inner join borrowbook on book.id = borrowbook.bookId and borrowbook.memberId = '{0}';";
-        public const string ADDITION_TO_RENTAL_LIST = "INSERT INTO borrowBook(memberId,bookId) VALUES ('{0}','{1}');";
-        public const string DELETION_FROM_RENTAL_LIST = "DELETE FROM borrowBook WHERE memberId='{0}' and bookId='{1}';";
-        public const string DECREASE_IN_BOOK_QUANTITY = "UPDATE book SET quantity = quantity - 1 WHERE id='{0}';";
-        public const string INCREASE_IN_BOOK_QUANTITY = "UPDATE book SET quantity = quantity + 1 WHERE id='{0}';";
+        public const string RENTAL_LIST = "select * from book inner join borrowbook on book.id = borrowbook.bookId and borrowbook.memberId = @memberId;";
+        public const string ADDITION_TO_RENTAL_LIST = "INSERT INTO borrowBook(memberId,bookId) VALUES (@memberId, @bookId);";
+        public const string DELETION_FROM_RENTAL_LIST = "DELETE FROM borrowBook WHERE memberId = @memberId and bookId = @bookId;";
+        public const string DECREASE_IN_BOOK_QUANTITY = "UPDATE book SET quantity = quantity - 1 WHERE id=@bookId;";
+        public const string INCREASE_IN_BOOK_QUANTITY = "UPDATE book SET quantity = quantity + 1 WHERE id=@bookId;";
 
         public const string ADMIN_ACCOUNT = "select*from admin;";
-        public const string MEMBER_ACCOUNT = "select*from member where id='{0}';";
-        public const string MEMBER_CONFIRMATION = "select id from member where id='{0}' and password='{1}';";
+        public const string MEMBER_ACCOUNT = "select*from member where id = @memberId;";
+        public const string MEMBER_CONFIRMATION = "select id from member where id=@memberId and password=@password;";
 
-        public const string ADDITION_TO_MEMBER = "INSERT INTO member VALUES ";
-        public const string DUPLICATED_ID = "select id from member where id='{0}';";
+        public const string ADDITION_TO_MEMBER = "INSERT INTO member VALUES(@id, @password, @name, @age, @phoneNumber, @address)";
+        public const string DUPLICATED_ID = "select id from member where id=@memberId;";
 
         public const string UPDATE_ON_MEMBER_ID = "UPDATE member SET id='{0}' WHERE id='{1}';";
         public const string UPDATE_ON_PASSWORD = "UPDATE member SET password='{0}' WHERE id='{1}';";
@@ -131,9 +131,10 @@ namespace Library
         public const string UPDATE_ON_RENTAL_LIST = "UPDATE borrowbook SET memberId='{0}' WHERE memberId = '{1}';";
 
         public const string MEMBER_LIST = "select*from member;";
-        public const string MEMBER_BORROWING_BOOK = "select memberId from borrowbook where memberId = '{0}';";
-        public const string DELETION_FROM_MEMBER_LIST = "DELETE FROM member WHERE id='{0}';";
+        public const string MEMBER_BORROWING_BOOK = "select memberId from borrowbook where memberId = @memberId;";
+        public const string DELETION_FROM_MEMBER_LIST = "DELETE FROM member WHERE id = @memberId;";
 
+        public const string BOOK_ON_LOAN = "select bookId from borrowBook where bookId = @bookId;";
 
         //Connection
         public const string SERVER = "Server = localhost;";
