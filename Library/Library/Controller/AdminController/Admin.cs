@@ -26,10 +26,10 @@ namespace Library
             this.menuScreen = menuScreen;
 
             signIn = new SignIn(bookDatabaseManager);                
-            searchingBook = new SearchingBook();
+            searchingBook = new SearchingBook(bookDatabaseManager);
             registeringBook = new RegisteringBook();
             editingBook = new EditingBook();
-            deletingBook = new DeletingBook();
+            deletingBook = new DeletingBook(bookDatabaseManager);
             deletingMember = new DeletingMember(bookDatabaseManager);
         }
         public void StartAdminMode()                      //관리자 모드 관리
@@ -69,7 +69,7 @@ namespace Library
                     function = editingBook.ControlEditingBook();
                     break;
                 case (int)Constants.Menu.FOURTH:  //도서 삭제
-                    deletingBook.DeleteBook();
+                    deletingBook.DeleteBook(searchingBook, keyboard);
                     break;
                 case (int)Constants.Menu.FIFTH:  //회원관리
                     deletingMember.ControlDeletingMember(keyboard);

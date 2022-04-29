@@ -27,7 +27,7 @@ namespace Library
 
             return admin;
         }
-        public MemberVO GetMemberAccount(string memberId)
+        public MemberVO GetMemberAccount(string memberId)   //입력받은 id와 일치하는 회원계정
         {
             MemberVO member;
             string query = string.Format(Constants.MEMBER_ACCOUNT, memberId.ToString());
@@ -41,7 +41,7 @@ namespace Library
 
             return member;
         }
-        public List<BookVO> MakeBookList(int searchType, string searchWord)
+        public List<BookVO> MakeBookList(int searchType, string searchWord)  //검색 결과 도서목록
         {
             List<BookVO> bookList = new List<BookVO>();
             string query = "";
@@ -89,7 +89,7 @@ namespace Library
 
             return borrowList;
         }
-        public List<MemberVO> MakeMemberList()
+        public List<MemberVO> MakeMemberList()  //회원목록
         {
             List<MemberVO> memberList = new List<MemberVO>();
 
@@ -176,7 +176,7 @@ namespace Library
         {
             StartNonQuery(Constants.ADDITION_TO_MEMBER + memberAccount.PrintMember() + ";");
         }
-        public void UpdateToMember(int menu, string id, string changedItem) //회원정보 수정
+        public void UpdateToMember(int menu, string id, string changedItem) //회원정보 수정(menu:수정할 항목, id:회원아이디, changedItem:수정된 정보)
         {
             switch (menu)
             {

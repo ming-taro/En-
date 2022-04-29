@@ -26,7 +26,7 @@ namespace Library
             menuScreen = new Menu();
             signIn = new SignIn(bookDatabaseManager);
             signUp = new SignUp(bookDatabaseManager);
-            searchingBook = new SearchingBook();
+            searchingBook = new SearchingBook(bookDatabaseManager);
             borrowingBook = new BorrowingBook(bookDatabaseManager);
             returningBook = new ReturningBook(bookDatabaseManager);
             editingProfile = new EditingProfile(bookDatabaseManager);

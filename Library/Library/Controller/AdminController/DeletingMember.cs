@@ -66,13 +66,14 @@ namespace Library
         public void ControlDeletingMember(Keyboard keyboard)
         {
             string memberId;
-            List<MemberVO> memberList = bookDatabaseManager.MakeMemberList();    //회원 리스트
+            List<MemberVO> memberList;
 
             while (Constants.INPUT_VALUE)
             {
-                adminView.PrintMemberIdInputScreen(memberList);                      //회원 아이디 검색창 + 회원 리스트 출력
+                memberList = bookDatabaseManager.MakeMemberList();    //회원 리스트
+                adminView.PrintMemberIdInputScreen(memberList);       //회원 아이디 검색창 + 회원 리스트 출력
 
-                memberId = InputMemberId(memberList);                                //삭제할 회원 아이디를 입력받음
+                memberId = InputMemberId(memberList);                 //삭제할 회원 아이디를 입력받음
                 if (memberId.Equals(Constants.ESC)) break;
 
                 adminView.PrintSuccess(bookDatabaseManager.GetMemberAccount(memberId));  //삭제 성공 메세지 출력
@@ -80,8 +81,6 @@ namespace Library
 
                 if(keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break;
             }
-
-
         }
     }
 }

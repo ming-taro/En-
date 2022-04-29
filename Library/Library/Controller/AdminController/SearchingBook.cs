@@ -11,14 +11,14 @@ namespace Library
     class SearchingBook
     {
         private BookDAO bookDatabaseManager;
-        private AdminView adminMenu;
+        private AdminView adminView;
         private Logo logo;
         private EnteringText text;
         private List<BookVO> bookList;
-        public SearchingBook()
+        public SearchingBook(BookDAO bookDatabaseManager)
         {
-            bookDatabaseManager = new BookDAO();
-            adminMenu = new AdminView();
+            this.bookDatabaseManager = bookDatabaseManager;
+            adminView = new AdminView();
             logo = new Logo();
             text = new EnteringText();
         }
@@ -59,7 +59,7 @@ namespace Library
             int searchType;
 
             logo.PrintSearchBox(Constants.SEARCH_TYPE);
-            adminMenu.PrintBookList(bookDatabaseManager.MakeBookList((int)Constants.SearchMenu.ALL, ""));   //전체도서 출력
+            adminView.PrintBookList(bookDatabaseManager.MakeBookList((int)Constants.SearchMenu.ALL, ""));   //전체도서 출력
             
             keyboard.SetPosition(0, (int)Constants.SearchMenu.FIRST);      //커서위치
             searchType = keyboard.SelectMenu((int)Constants.SearchMenu.FIRST, (int)Constants.SearchMenu.THIRD, (int)Constants.SearchMenu.STEP);               //메뉴선택
@@ -81,7 +81,7 @@ namespace Library
                 searchWord = InputSearchWord((int)Constants.SearchMenu.LEFT_VALUE_OF_INPUT, searchType, (int)Constants.SearchMenu.FOURTH);   //검색어 입력받기
                 if (searchWord.Equals(Constants.ESC)) continue;            //검색어 입력 중 esc -> 검색유형 선택으로
 
-                adminMenu.PrintSearchResult(bookList);               //도서 검색 결과 출력
+                adminView.PrintSearchResult(bookList);               //도서 검색 결과 출력
 
                 if (keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break; //Esc->뒤로가기, Enter->재검색
             }
