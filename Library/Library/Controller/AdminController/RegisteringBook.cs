@@ -65,7 +65,7 @@ namespace Library
                 {
                     return Constants.ESC;
                 }
-                else if (Regex.IsMatch(bookName, regexText) == Constants.IS_NOT_MATCH)
+                else if (Regex.IsMatch(bookName, regexText) == Constants.IS_NOT_MATCH)  //입력형식에 맞지 않은 입력
                 {
                     logo.PrintMessage(0, top + 1, errorMessage, ConsoleColor.Red);
                 }
@@ -82,34 +82,39 @@ namespace Library
         }
         public void StartRegistration(Keyboard keyboard)
         {
+            string id;
+            string name;
+            string publisher;
+            string author;
+            string price;
+            string quantity;
+            BookVO book;
+
             adminView.PrintBookRegistration();   //도서등록화면 출력
            
-            //도서번호
-            string id = InputBookId(10, (int)Constants.Registration.FIRST);  
-            if (id.Equals(Constants.ESC)) return;
-            //도서명
-            string name = InputBookName(8, (int)Constants.Registration.SECOND, Constants.BOOK_NAME_REGEX, Constants.MESSAGE_ABOUT_BOOK_NAME);        
-            if (name.Equals(Constants.ESC)) return;
-            //출판사
-            string publisher = InputBookName(8, (int)Constants.Registration.THIRD, Constants.PUBLISHER_REGEX, Constants.MESSAGE_ABOUT_PUBLISHER);      
-            if (publisher.Equals(Constants.ESC)) return;
-            //저자
-            string author = InputBookName(6, (int)Constants.Registration.FOURTH, Constants.AUTHOR_REGEX, Constants.MESSAGE_ABOUT_AUTHOR);          
-            if (author.Equals(Constants.ESC)) return;
-            //가격
-            string price = InputBookName(6, (int)Constants.Registration.FIFTH, Constants.PRICE_REGEX, Constants.MESSAGE_ABOUT_PRICE);             
-            if (price.Equals(Constants.ESC)) return;
-            //수량
-            string quantity = InputBookName(6, (int)Constants.Registration.SIXTH, Constants.QUENTITY_REGEX, Constants.MESSAGE_ABOUT_QUENTITY);      
-            if (quantity.Equals(Constants.ESC)) return;
+            id = InputBookId(10, (int)Constants.Registration.FIRST);  
+            if (id.Equals(Constants.ESC)) return;             //도서번호 입력
 
+            name = InputBookName(8, (int)Constants.Registration.SECOND, Constants.BOOK_NAME_REGEX, Constants.MESSAGE_ABOUT_BOOK_NAME);        
+            if (name.Equals(Constants.ESC)) return;           //도서명 입력
 
-            //book = new BookVO(id, name, publisher, author, price, quantity);
-            //library.InsertBookList(id, name, publisher, author, price, quantity); //도서목록에 등록된 도서정보 추가
+            publisher = InputBookName(8, (int)Constants.Registration.THIRD, Constants.PUBLISHER_REGEX, Constants.MESSAGE_ABOUT_PUBLISHER);      
+            if (publisher.Equals(Constants.ESC)) return;      //출판사 입력
 
-            //screen.PrintComplete();                   //등록 완료 화면 출력
+            author = InputBookName(6, (int)Constants.Registration.FOURTH, Constants.AUTHOR_REGEX, Constants.MESSAGE_ABOUT_AUTHOR);          
+            if (author.Equals(Constants.ESC)) return;         //저자 입력
 
-            keyboard.PressESC();                      //esc->종료(뒤로가기)
+            price = InputBookName(6, (int)Constants.Registration.FIFTH, Constants.PRICE_REGEX, Constants.MESSAGE_ABOUT_PRICE);             
+            if (price.Equals(Constants.ESC)) return;          //가격 입력
+
+            quantity = InputBookName(6, (int)Constants.Registration.SIXTH, Constants.QUENTITY_REGEX, Constants.MESSAGE_ABOUT_QUENTITY);      
+            if (quantity.Equals(Constants.ESC)) return;       //수량 입력
+
+            book = new BookVO(id, name, publisher, author, price, quantity);
+            bookDatabaseManager.AddToBookList(book);          //DB에 도서정보 저장
+
+            adminView.PrintRegisteredBook(book);              //등록 완료 화면 출력
+            keyboard.PressESC();                              //esc -> 종료(뒤로가기)
         }
     }
 }

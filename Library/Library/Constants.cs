@@ -79,7 +79,7 @@ namespace Library
         public const string BOOK_NAME_REGEX = @"^[\w]{1,1}[^\e]{0,49}$";
         public const string PUBLISHER_REGEX = @"^[\w]{1,1}[^\e]{0,49}$";
         public const string AUTHOR_REGEX = @"^[a-zA-Z가-힣]{1,50}$";
-        public const string PRICE_REGEX = @"^[1-9]{1}[0-9]{0,9}";
+        public const string PRICE_REGEX = @"^[1-9]{1}[0-9]{0,9}$";
         public const string QUENTITY_REGEX = @"^[1-9]{1}[0-9]{0,1}$";
 
         public const string MEMBER_ID_REGEX = @"^[a-zA-Z0-9]{5,10}$";

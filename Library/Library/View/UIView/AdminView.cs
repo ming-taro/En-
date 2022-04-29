@@ -69,6 +69,16 @@ namespace Library
             logo.PrintMessage(0, (int)Constants.Registration.FIFTH, "가격:\n(숫자만 입력 가능합니다.(ex: 34000)", ConsoleColor.Gray);
             logo.PrintMessage(0, (int)Constants.Registration.SIXTH, "수량:\n(1~99사이의 숫자만 입력 가능합니다.(ex: 5))", ConsoleColor.Gray);
         }
+        public void PrintRegisteredBook(BookVO book)    //도서등록 -> 등록한 도서정보 출력
+        {
+            logo.PrintMenu("도서 등록 완료");
+            logo.PrintMessage(22, 7, ">등록한 도서 정보<", ConsoleColor.Gray);
+            Console.SetCursorPosition(0, Console.CursorTop - 1);
+            logo.PrintLine();
+            Console.WriteLine(book);
+            logo.PrintLine();
+            logo.PrintMessage(0, Console.CursorTop - 1, Constants.ESC_MESSAGE, ConsoleColor.Yellow);
+        }
         public void PrintBookIdInputScreen(List<BookVO> bookList)        //도서삭제 -> 도서번호 입력칸 + 도서검색결과 출력
         {
             logo.PrintSearchBox("☞삭제할 도서 번호:");
@@ -79,6 +89,7 @@ namespace Library
             logo.PrintMenu("도서 삭제 완료");
             logo.PrintMessage(22, 7, ">삭제한 도서 정보<", ConsoleColor.Gray);
             Console.SetCursorPosition(0, Console.CursorTop - 1);
+            logo.PrintLine();
             Console.WriteLine(book);
             logo.PrintLine();
             logo.PrintMessage(0, Console.CursorTop - 1, Constants.ESC_AND_ENTER, ConsoleColor.Yellow);
@@ -92,7 +103,7 @@ namespace Library
         {
             logo.PrintMenu("회원 삭제 완료");
             logo.PrintMessage(22, 7, ">삭제한 회원 정보<", ConsoleColor.Gray);
-            Console.SetCursorPosition(0,Console.CursorTop - 1);
+            Console.SetCursorPosition(0, Console.CursorTop - 1);
             logo.PrintLine();
             Console.WriteLine(member);
             logo.PrintLine();

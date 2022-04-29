@@ -258,10 +258,12 @@ namespace Library
         {
             MySqlCommand command = new MySqlCommand(Constants.ADDITION_TO_BOOK_LIST, connection);
             command.Parameters.Add(new MySqlParameter("@id", book.Id));
+            command.Parameters.Add(new MySqlParameter("@name", book.Name));
+            command.Parameters.Add(new MySqlParameter("@publisher", book.Publisher));
+            command.Parameters.Add(new MySqlParameter("@author", book.Author));
+            command.Parameters.Add(new MySqlParameter("@price", book.Price));
+            command.Parameters.Add(new MySqlParameter("@quantity", Int32.Parse(book.Quantity)));
             command.ExecuteNonQuery();
-
-
-            StartNonQuery('" + id + "','" + name + "','" + publisher + "','" + author + "','" + price + "'," + Int32.Parse(quantity) + ");");
         }
 
         public void StartNonQuery(string query)
