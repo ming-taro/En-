@@ -28,7 +28,7 @@ namespace Library
             logoScreen.PrintMenu("도서삭제 완료");
 
             Console.WriteLine("\n                       [삭제한 도서정보]\n");
-            searchingScreen.PrintSearchingBook("select*from book where id='" + bookId + "'", library);
+            //searchingScreen.PrintSearchingBook("select*from book where id='" + bookId + "'", library);
         }
     }
 }

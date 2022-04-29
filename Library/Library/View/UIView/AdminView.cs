@@ -9,8 +9,12 @@ namespace Library
 {
     class AdminView
     {
-        Logo logo = new Logo();
-        public void PrintSearchingBook(string sql, LibraryVO library)//------>삭제할코드
+        Logo logo;
+        public AdminView()
+        {
+           logo = new Logo();
+        }
+        /*public void PrintSearchingBook(string sql, LibraryVO library)//------>삭제할코드
         {
             MySqlCommand command = new MySqlCommand(sql + ";", library.Connection);
             MySqlDataReader table = command.ExecuteReader();
@@ -29,7 +33,7 @@ namespace Library
             table.Close();
 
             Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>[ESC]:뒤로가기<<<<<<<<<<<<<<<<<<<<<<<<");
-        }
+        }*/
         public void PrintBookList(List<BookVO> bookList)
         {
             logo.PrintLine();
@@ -48,18 +52,23 @@ namespace Library
                 logo.PrintLine();
             }
         }
-        public void PrintSearchResult(List<BookVO> bookList)
+        public void PrintSearchResult(List<BookVO> bookList)  //도서검색 -> 검색결과로 나온 책목록 출력
         {
             logo.PrintSearchBox(Constants.SEARCH_TYPE);
-            PrintBookList(bookList);                  //검색결과로 나온 책목록 출력
+            PrintBookList(bookList);                  
             logo.PrintMessage(0, Console.CursorTop - 1, Constants.ESC_AND_ENTER, ConsoleColor.Yellow);
         }
-        public void PrintMemberIdInputScreen(List<MemberVO> memberList)
+        public void PrintBookIdInputScreen(List<BookVO> bookList)        //도서삭제 -> 도서번호 입력칸 + 도서검색결과 출력
+        {
+            logo.PrintSearchBox("☞삭제할 도서 번호:");
+            PrintBookList(bookList);
+        }
+        public void PrintMemberIdInputScreen(List<MemberVO> memberList)  //회원관리 -> 회원아이디 입력칸 + 회원목록 출력
         {
             logo.PrintSearchBox("☞삭제할 회원 아이디:");
             PrintMemberList(memberList);
         }
-        public void PrintSuccess(MemberVO member)
+        public void PrintSuccess(MemberVO member)   //회원관리 -> 회원정보 삭제 완료 메세지 + 삭제한 회원정보
         {
             logo.PrintMenu("회원 삭제 완료");
             logo.PrintMessage(22, 7, ">삭제한 회원 정보<", ConsoleColor.Gray);

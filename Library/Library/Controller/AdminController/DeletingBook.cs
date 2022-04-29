@@ -41,37 +41,34 @@ namespace Library
             table.Close();
             return Constants.BOOK_I_NEVER_BORROWED;   //대여한 회원이 없는 도서 -> 삭제 가능
         }
-        public bool IsBookOnList(string searchWord, string bookId)
+        public bool IsBookInList(string bookId, List<BookVO> bookList)
         {
-            string query = searchWord + " and id='" + bookId + "'";
-
-            MySqlCommand command = new MySqlCommand(query + ";", library.Connection);
-            MySqlDataReader table = command.ExecuteReader();
-
-            if (table.HasRows)
+            for(int i=0; i<bookList.Count; i++)
             {
-                table.Close();
-                return Constants.IS_BOOK_IN_LIST;
+                if(bookList[i].Id.Equals(bookId)) return Constants.IS_BOOK_IN_LIST;
             }
 
-            table.Close();
-            return Constants.IS_BOOK_NOT_IN_LIST;   //해당 검색어를 포함하는 도서를 찾지 못함
+            return Constants.IS_BOOK_NOT_IN_LIST;   //현재 조회중인 도서목록에 입력받은 도서번호와 일치하는 도서가 없음
         }
-        public string InputBookId(string searchWord)
+        public string InputBookId(string searchWord, List<BookVO> bookList)
         {
             string bookId;
 
             while (Constants.INPUT_VALUE)
             {
-                bookId = text.EnterText(24, 1, "");       //도서번호를 입력받음
+                bookId = text.EnterText(24, 1, "");       //삭제할 도서번호를 입력받음
 
                 if (bookId.Equals(Constants.ESC))
                 {
                     return Constants.ESC;
                 }
-                else if(string.IsNullOrEmpty(bookId) || Regex.IsMatch(bookId, @"^[0-9]{1,3}$") == Constants.IS_NOT_MATCH || IsBookOnList(searchWord, bookId) == Constants.IS_BOOK_NOT_IN_LIST)
+                else if(Regex.IsMatch(bookId, Constants.BOOK_ID_REGEX) == Constants.IS_NOT_MATCH)  //입력형식에 맞지 않은 입력
                 {
-                    logo.PrintMessage(0, 2, "(현재 조회 목록에 없는 도서번호입니다.다시 입력해주세요.)          ", ConsoleColor.Red);
+                    logo.PrintMessage(0, 2, Constants.MESSAGE_ABOUT_BOOK_ID_NOT_MATCH, ConsoleColor.Red);
+                }
+                else if (IsBookInList(searchWord, bookList) == Constants.IS_BOOK_NOT_IN_LIST)      //현재 조회중인 도서목록에 없는 도서번호를 입력할 경우
+                {
+                    logo.PrintMessage(0, 2, Constants.MESSAGE_ABOUT_BOOK_NOT_IN_LIST, ConsoleColor.Red);
                 }
                 else if (IsBorrowedBook(bookId))   //도서목록에 있지만 대여중인 회원이 있는 경우 -> 도서 대여 불가
                 {
@@ -99,26 +96,20 @@ namespace Library
                 searchWord = searchingBook.InputSearchWord((int)Constants.SearchMenu.LEFT_VALUE_OF_INPUT, searchType, (int)Constants.SearchMenu.FOURTH);   //검색어 입력받기
                 if (searchWord.Equals(Constants.ESC)) continue;            //검색어 입력 중 esc -> 검색유형 선택으로
 
-                adminView.PrintSearchResult(searchingBook.BookList);       //도서 검색 결과 출력
+                adminView.PrintBookIdInputScreen(searchingBook.BookList);  //도서번호 입력칸 + 도서 검색 결과 출력
 
-
+                bookId = InputBookId(searchWord, searchingBook.BookList);
 
                 if (keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break; //Esc->뒤로가기, Enter->재검색
             }
 
-            //searchWord = searchingBook.SearchBook(keyboard); //도서명,출판사, 저자명 검색(리턴값 -> 쿼리문)
-            //if (searchWord.Equals(Constants.ESC)) return;   //입력 중 esc -> 뒤로가기
-
-            //logoScreen.PrintSearchBox("☞삭제할 도서번호 입력: ");
-            //screen.PrintSearchingBook("select*from book", library);   //전체도서 출력
-
-            //bookId = InputBookId(searchWord);
+            //
             //if (bookId.Equals(Constants.ESC)) return;
 
             //deletingBookScreen.PrintSuccessMessage(bookId, library);   //도서삭제 완료 메세지 출력
             //library.DeleteBookList(bookId);                //리스트에서 도서삭제
 
-            keyboard.PressESC();
+            //keyboard.PressESC();
         }
     }
 }
