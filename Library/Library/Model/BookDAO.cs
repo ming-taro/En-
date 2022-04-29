@@ -212,48 +212,6 @@ namespace Library
             command.Parameters.Add(new MySqlParameter("@bookId", bookId));
             command.ExecuteNonQuery();
         }
-        public void AddToMember(MemberVO member)   //회원목록에 회원정보 추가
-        {
-            MySqlCommand command = new MySqlCommand(Constants.ADDITION_TO_MEMBER_LIST, connection); 
-            command.Parameters.Add(new MySqlParameter("@id", member.Id));
-            command.Parameters.Add(new MySqlParameter("@password", member.Password));
-            command.Parameters.Add(new MySqlParameter("@name", member.Name));
-            command.Parameters.Add(new MySqlParameter("@age", member.Age));
-            command.Parameters.Add(new MySqlParameter("@phoneNumber", member.PhoneNumber));
-            command.Parameters.Add(new MySqlParameter("@address", member.Address));
-            command.ExecuteNonQuery();
-        }
-        public void UpdateToMember(int menu, string id, string changedItem) //회원정보 수정(menu:수정할 항목, id:회원아이디, changedItem:수정된 정보)
-        {
-            switch (menu)
-            {
-                case (int)Constants.ProfileMenu.FIRST:    //아이디
-                    StartNonQuery(string.Format(Constants.UPDATE_ON_MEMBER_ID, changedItem.ToString(), id.ToString()));    //회원목록에 회원 아이디 수정
-                    StartNonQuery(string.Format(Constants.UPDATE_ON_RENTAL_LIST, changedItem.ToString(), id.ToString()));  //도서대여목록에서 회원 아이디 수정
-                    break;
-                case (int)Constants.ProfileMenu.SECOND:   //비밀번호
-                    StartNonQuery(string.Format(Constants.UPDATE_ON_PASSWORD, changedItem.ToString(), id.ToString()));
-                    break;
-                case (int)Constants.ProfileMenu.FOURTH:   //이름
-                    StartNonQuery(string.Format(Constants.UPDATE_ON_MEMBER_NAME, changedItem.ToString(), id.ToString()));
-                    break;
-                case (int)Constants.ProfileMenu.FIFTH:   //나이
-                    StartNonQuery(string.Format(Constants.UPDATE_ON_AGE, changedItem.ToString(), id.ToString()));
-                    break;
-                case (int)Constants.ProfileMenu.SIXTH:   //휴대전화
-                    StartNonQuery(string.Format(Constants.UPDATE_ON_PHONE_NUMBER, changedItem.ToString(), id.ToString()));
-                    break;
-                case (int)Constants.ProfileMenu.SEVENTH: //주소
-                    StartNonQuery(string.Format(Constants.UPDATE_ON_ADDRESS, changedItem.ToString(), id.ToString()));
-                    break;
-            }
-        }
-        public void DeleteFromMemberList(string memberId)      //회원목록에서 회원정보 삭제
-        {
-            MySqlCommand command = new MySqlCommand(Constants.DELETION_FROM_MEMBER_LIST, connection);
-            command.Parameters.Add(new MySqlParameter("@memberId", memberId));
-            command.ExecuteNonQuery();
-        }
         public void AddToBookList(string query, BookVO book)  //책목록에 도서정보 추가
         {
             MySqlCommand command = new MySqlCommand(query, connection);
@@ -265,6 +223,32 @@ namespace Library
             command.Parameters.Add(new MySqlParameter("@quantity", Int32.Parse(book.Quantity)));
             command.ExecuteNonQuery();
         }
+        public void AddToMemberList(string query, MemberVO member)   //회원목록에 회원정보 추가
+        {
+            MySqlCommand command = new MySqlCommand(query, connection); 
+            command.Parameters.Add(new MySqlParameter("@id", member.Id));
+            command.Parameters.Add(new MySqlParameter("@password", member.Password));
+            command.Parameters.Add(new MySqlParameter("@name", member.Name));
+            command.Parameters.Add(new MySqlParameter("@age", member.Age));
+            command.Parameters.Add(new MySqlParameter("@phoneNumber", member.PhoneNumber));
+            command.Parameters.Add(new MySqlParameter("@address", member.Address));
+            command.ExecuteNonQuery();
+        }
+        public void UpdateOnMemberId(string changedId, string memberId)
+        {
+            MySqlCommand command = new MySqlCommand(Constants.UPDATE_ON_MEMBER_ID, connection);
+            command.Parameters.Add(new MySqlParameter("@id", changedId));
+            command.Parameters.Add(new MySqlParameter("@memberId", memberId));
+            command.ExecuteNonQuery();
+        }
+
+        public void DeleteFromMemberList(string memberId)      //회원목록에서 회원정보 삭제
+        {
+            MySqlCommand command = new MySqlCommand(Constants.DELETION_FROM_MEMBER_LIST, connection);
+            command.Parameters.Add(new MySqlParameter("@memberId", memberId));
+            command.ExecuteNonQuery();
+        }
+        
         public void DeleteFromBookList(string bookId)  //도서목록에서 해당 도서 삭제
         {
             MySqlCommand command = new MySqlCommand(Constants.DELETION_FROM_BOOK_LIST, connection);
@@ -277,20 +261,6 @@ namespace Library
             command.Parameters.Add(new MySqlParameter("@id", changedId));
             command.Parameters.Add(new MySqlParameter("@bookId", bookId));
             command.ExecuteNonQuery();
-        }
-
-        public void StartNonQuery(string query)
-        {
-            try
-            {
-                MySqlCommand command = new MySqlCommand(query, connection);
-                command.ExecuteNonQuery();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("실패");
-                Console.WriteLine(ex.ToString());
-            }
         }
     }
 }

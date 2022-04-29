@@ -104,7 +104,7 @@ namespace Library
         }
         public void SignUpForLibrary(Keyboard keyboard)
         {
-            MemberVO memberAccount;               //회원계정
+            MemberVO member;               //회원계정
             string id;
             string password;
             string reconfirm;
@@ -136,8 +136,8 @@ namespace Library
             address = InputPassword(6, (int)Constants.SignUp.ADDRESS, Constants.ADDRESS_REGEX, Constants.MESSAGE_ABOUT_ADDRESS);
             if (address.Equals(Constants.ESC)) return;
 
-            memberAccount = new MemberVO(id, password, name, age, phoneNumber, address);   //입력이 완료된 회원 정보
-            bookDatabaseManager.AddToMember(memberAccount);                                //DB에 저장
+            member = new MemberVO(id, password, name, age, phoneNumber, address);   //입력이 완료된 회원 정보
+            bookDatabaseManager.AddToMemberList(Constants.ADDITION_TO_MEMBER_LIST, member);     //DB에 저장
 
             memberView.PrintSuccessMessage();  //회원가입 축하 화면 출력
             keyboard.PressESC();

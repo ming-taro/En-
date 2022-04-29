@@ -18,11 +18,10 @@ namespace Library
         }
         private void ReflectChangedInformation(int menu, string changedItem, MemberVO member)   //수정된 정보 반영
         {
-            bookDatabaseManager.UpdateToMember(menu, member.Id, changedItem);   //DB에 수정된 회원정보 업데이트
-
-            switch (menu)                                 //MemberVO에 수정된 회원정보 업데이트
+            switch (menu)                                 
             {
                 case (int)Constants.ProfileMenu.FIRST:    //아이디
+                    bookDatabaseManager.UpdateOnMemberId(changedItem, member.Id);  //id가 기본키이므로 DB에 먼저 수정된 id로 변경
                     member.Id = changedItem;
                     break;
                 case (int)Constants.ProfileMenu.SECOND:   //비밀번호
@@ -83,7 +82,7 @@ namespace Library
                 memberView.PrintProfile(member);                     //회원정보수정 화면 출력
 
                 menu = keyboard.SelectMenu((int)Constants.ProfileMenu.FIRST, (int)Constants.ProfileMenu.SEVENTH, (int)Constants.ProfileMenu.STEP);  //수정할 항목 선택
-                if (menu == (int)Constants.Keyboard.ESCAPE) return;  //메뉴선택 중 뒤로가기를 누르면 종료
+                if (menu == (int)Constants.Keyboard.ESCAPE) break;   //메뉴선택 중 Esc -> DB에 수정된 정보 업데이트 후 종료
                 menu = keyboard.Top;                                 //커서의 top값 == 수정할 항목
 
                 changedItem = InputProfile(menu, signUp);            //선택한 정보에 해당하는 회원정보 수정
@@ -91,6 +90,8 @@ namespace Library
 
                 ReflectChangedInformation(menu, changedItem, member);//DB, MemberVO에 수정사항 업데이트
             }
+
+            bookDatabaseManager.AddToMemberList(Constants.UPDATE_TO_MEMBER_LIST, member);   //DB에 수정된 회원정보 업데이트
         }
     }
 }

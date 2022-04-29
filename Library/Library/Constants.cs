@@ -137,14 +137,8 @@ namespace Library
         public const string ADDITION_TO_MEMBER_LIST = "INSERT INTO member VALUES(@id, @password, @name, @age, @phoneNumber, @address)";
         public const string DUPLICATE_MEMBER_ID = "select id from member where id=@memberId;";
 
-        public const string UPDATE_ON_MEMBER_ID = "UPDATE member SET id='{0}' WHERE id='{1}';";
-        public const string UPDATE_ON_PASSWORD = "UPDATE member SET password='{0}' WHERE id='{1}';";
-        public const string UPDATE_ON_MEMBER_NAME = "UPDATE member SET name='{0}' WHERE id='{1}';";
-        public const string UPDATE_ON_AGE = "UPDATE member SET age='{0}' WHERE id='{1}';";
-        public const string UPDATE_ON_PHONE_NUMBER = "UPDATE member SET phoneNumber='{0}' WHERE id='{1}';";
-        public const string UPDATE_ON_ADDRESS = "UPDATE member SET address='{0}' WHERE id='{1}';";
-        public const string UPDATE_ON_RENTAL_LIST = "UPDATE borrowbook SET memberId='{0}' WHERE memberId = '{1}';";
-
+        public const string UPDATE_TO_MEMBER_LIST = "UPDATE member SET password=@password, name=@name, age=@age, phoneNumber=@phoneNumber, address=@address WHERE id=@id";
+        public const string UPDATE_ON_MEMBER_ID = "UPDATE member SET id=@id WHERE id=@memberId;";
         public const string MEMBER_LIST = "select*from member;";
         public const string MEMBER_BORROWING_BOOK = "select memberId from borrowbook where memberId = @memberId;";
         public const string DELETION_FROM_MEMBER_LIST = "DELETE FROM member WHERE id = @memberId;";
