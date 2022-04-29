@@ -61,7 +61,7 @@ namespace Library
 
             return bookId;
         }
-        public BookVO FindBook(string bookId, List<BookVO> bookList)
+        public BookVO FindBook(string bookId, List<BookVO> bookList)   //삭제할 도서정보 찾기
         {
             int i;
 
