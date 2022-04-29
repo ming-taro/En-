@@ -27,8 +27,8 @@ namespace Library
 
             signIn = new SignIn(bookDatabaseManager);                
             searchingBook = new SearchingBook(bookDatabaseManager);
-            registeringBook = new RegisteringBook();
-            editingBook = new EditingBook();
+            registeringBook = new RegisteringBook(bookDatabaseManager);
+            editingBook = new EditingBook(bookDatabaseManager);
             deletingBook = new DeletingBook(bookDatabaseManager);
             deletingMember = new DeletingMember(bookDatabaseManager);
         }
@@ -63,10 +63,10 @@ namespace Library
                     searchingBook.ShowSearchResult(keyboard);
                     break;
                 case (int)Constants.Menu.SECOND:  //도서 등록
-                    registeringBook.StartRegistration();
+                    registeringBook.StartRegistration(keyboard);
                     break;
                 case (int)Constants.Menu.THIRD:  //도서 정보 수정
-                    function = editingBook.ControlEditingBook();
+                    function = editingBook.ControlEditingBook(registeringBook, keyboard);
                     break;
                 case (int)Constants.Menu.FOURTH:  //도서 삭제
                     deletingBook.DeleteBook(searchingBook, keyboard);

@@ -9,6 +9,18 @@ namespace Library
 {
     class EditingBook
     {
+        private BookDAO bookDatabaseManager;
+        private EnteringText text;
+        private AdminView adminView;
+        private Logo logo;
+        public EditingBook(BookDAO bookDatabaseManager)
+        {
+            this.bookDatabaseManager = bookDatabaseManager;
+            text = new EnteringText();
+            adminView = new AdminView();
+            logo = new Logo();
+        }
+
         private BookVO bookVO;
         public void PrintInputBox(int left, int top, string message)
         {
@@ -45,9 +57,8 @@ namespace Library
                 PrintInputBox(26, 1, Constants.REMOVE_LINE);
             }
         }
-        public void InputBook(int menu)  //도서정보입력
+        public void InputBook(int menu, RegisteringBook registeringBook)  //도서정보입력
         {
-            RegisteringBook registeringBook = new RegisteringBook();
             string book;
 
             switch (menu)
@@ -57,28 +68,28 @@ namespace Library
                     bookVO.Id = book;
                     break;
                 case 19:   //도서명
-                    book = registeringBook.InputBookName(10, 19);
+                    book = registeringBook.InputBookName(10, 19, Constants.BOOK_NAME_REGEX, Constants.MESSAGE_ABOUT_BOOK_NAME);
                     bookVO.Name = book;
                     break;
                 case 22:   //출판사
-                    book = registeringBook.InputBookName(10, 22);
+                    book = registeringBook.InputBookName(10, 22, Constants.PUBLISHER_REGEX, Constants.MESSAGE_ABOUT_PUBLISHER);
                     bookVO.Publisher = book;
                     break;
                 case 25:   //저자
-                    book = registeringBook.InputAuthor(8, 25);
+                    book = registeringBook.InputBookName(8, 25, Constants.AUTHOR_REGEX, Constants.MESSAGE_ABOUT_AUTHOR);
                     bookVO.Author = book;
                     break;
                 case 28:   //가격
-                    book = registeringBook.InputPrice(8, 28);
+                    book = registeringBook.InputBookName(8, 28, Constants.PRICE_REGEX, Constants.MESSAGE_ABOUT_PRICE);
                     bookVO.Price = book;
                     break;
                 case 31:   //수량
-                    book = registeringBook.InputQuantity(8, 31);
+                    book = registeringBook.InputBookName(8, 31, Constants.QUENTITY_REGEX, Constants.MESSAGE_ABOUT_QUENTITY);
                     bookVO.Quantity = book;
                     break;
             }
         }
-        public int ControlEditingBook()
+        public int ControlEditingBook(RegisteringBook registeringBook, Keyboard keyboard)
         {
             EditingBookScreen editingBookScreen = new EditingBookScreen();
             editingBookScreen.PrintSearchingBookId();    //도서번호검색화면 출력
@@ -88,14 +99,14 @@ namespace Library
             editingBookScreen.PrintBook(bookVO);      //해당 도서정보 출력
             editingBookScreen.PrintQuantityManagement(); //도서정보 수정 화면 출력
 
-            Keyboard keyboard = new Keyboard(0, 16);
+            //Keyboard keyboard = new Keyboard(0, 16);
             int menu;
 
             while (Constants.INPUT_VALUE)
             {
                 menu = keyboard.SelectMenu(16, 31, 3);
                 if (menu == Constants.ESCAPE) return Constants.ESCAPE;   //메뉴선택 중 뒤로가기를 누르면 종료
-                InputBook(keyboard.Top);                   //해당 도서정보 수정
+                InputBook(keyboard.Top, registeringBook);                   //해당 도서정보 수정
                 editingBookScreen.PrintSuccessMessage(bookVO);     //수정된 정보가 반영된 화면 출력
             }
         }

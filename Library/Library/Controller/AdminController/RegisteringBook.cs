@@ -68,21 +68,21 @@ namespace Library
             }
             return bookId;
         }
-        public string InputBookName(int left, int top)
+        public string InputBookName(int left, int top, string regexText, string errorMessage)
         {
             string bookName;
 
             while (Constants.INPUT_VALUE)
             {
-                bookName = text.EnterText(left, top, "");        //(도서명/출판사)를 입력 받음
+                bookName = text.EnterText(left, top, "");        //도서명을 입력 받음
 
                 if (bookName.Equals(Constants.ESC))
                 {
                     return Constants.ESC;
                 }
-                else if (Regex.IsMatch(bookName, Constants.BOOK_NAME_REGEX) == Constants.IS_NOT_MATCH)
+                else if (Regex.IsMatch(bookName, regexText) == Constants.IS_NOT_MATCH)
                 {
-                    logo.PrintMessage(0, top + 1, Constants.MESSAGE_ABOUT_BOOK_NAME, ConsoleColor.Red);
+                    logo.PrintMessage(0, top + 1, errorMessage, ConsoleColor.Red);
                 }
                 else
                 {
@@ -95,103 +95,30 @@ namespace Library
 
             return bookName;
         }
-        public string InputAuthor(int left, int top)
-        {
-            string author;
-
-            while (Constants.INPUT_VALUE)
-            {
-                author = text.EnterText(left, top, "");            //저자를 입력받음
-
-                if (author.Equals(Constants.ESC))
-                {
-                    return Constants.ESC;
-                }
-                else if (Regex.IsMatch(author, Constants.AUTHOR_REGEX) == Constants.IS_NOT_MATCH)   //입력형식에 맞지 않은 입력
-                {
-                    logo.PrintMessage(0, top + 1, Constants.MESSAGE_ABOUT_AUTHOR, ConsoleColor.Red);
-                }
-                else
-                {
-                    logo.RemoveLine(0, top + 1);
-                    break;
-                }
-
-                logo.RemoveLine(left, top);
-            }
-            return author;
-        }
-        public string InputPrice(int left, int top)
-        {
-            string price;
-
-            while (Constants.INPUT_VALUE)
-            {
-                price = text.EnterText(left, top, "");             //가격을 입력받음
-
-                if (price.Equals(Constants.ESC))
-                {
-                    return Constants.ESC;
-                }
-                else if (Regex.IsMatch(price, Constants.PRICE_REGEX) == Constants.IS_NOT_MATCH)
-                {
-                    logo.PrintMessage(0, top + 1, Constants.MESSAGE_ABOUT_PRICE, ConsoleColor.Red);
-                }
-                else
-                {
-                    logo.RemoveLine(0, top + 1);
-                    break;
-                }
-
-                logo.RemoveLine(left, top);
-            }
-
-            return price;
-        }
-        public string InputQuantity(int left, int top)
-        {
-            EnteringText text = new EnteringText();
-            string quantity;
-
-            while (Constants.INPUT_VALUE)
-            {
-                quantity = text.EnterText(left, top, "");                    //수량을 입력받음
-
-                if (quantity.Equals(Constants.ESC))
-                {
-                    return Constants.ESC;
-                }
-                else if (Regex.IsMatch(quantity, Constants.QUENTITY_REGEX) == Constants.IS_NOT_MATCH)
-                {
-                    logo.PrintMessage(0, top + 1, Constants.MESSAGE_ABOUT_QUENTITY, ConsoleColor.Red);
-                }
-                else
-                {
-                    logo.RemoveLine(0, top + 1);
-                    break;
-                }
-                logo.RemoveLine(left, top);
-            }
-
-            return quantity;
-        }
-        public void StartRegistration()
+        public void StartRegistration(Keyboard keyboard)
         {
             RegisteringScreen screen = new RegisteringScreen();
             screen.PrintRegistering(); //도서등록 입력화면
 
-            string id = InputBookId(10, (int)Constants.Registration.FIRST);              //도서번호
-            if (id.Equals(Constants.ESC)) return; 
-            string name = InputBookName(8, (int)Constants.Registration.SECOND);          //도서명
+            //도서번호
+            string id = InputBookId(10, (int)Constants.Registration.FIRST);  
+            if (id.Equals(Constants.ESC)) return;
+            //도서명
+            string name = InputBookName(8, (int)Constants.Registration.SECOND, Constants.BOOK_NAME_REGEX, Constants.MESSAGE_ABOUT_BOOK_NAME);        
             if (name.Equals(Constants.ESC)) return;
-            string publisher = InputBookName(8, (int)Constants.Registration.THIRD);      //출판사
+            //출판사
+            string publisher = InputBookName(8, (int)Constants.Registration.THIRD, Constants.PUBLISHER_REGEX, Constants.MESSAGE_ABOUT_PUBLISHER);      
             if (publisher.Equals(Constants.ESC)) return;
-            string author = InputAuthor(6, (int)Constants.Registration.FOURTH);          //저자
+            //저자
+            string author = InputBookName(6, (int)Constants.Registration.FOURTH, Constants.AUTHOR_REGEX, Constants.MESSAGE_ABOUT_AUTHOR);          
             if (author.Equals(Constants.ESC)) return;
-            string price = InputPrice(6, (int)Constants.Registration.FIFTH);             //가격
+            //가격
+            string price = InputBookName(6, (int)Constants.Registration.FIFTH, Constants.PRICE_REGEX, Constants.MESSAGE_ABOUT_PRICE);             
             if (price.Equals(Constants.ESC)) return;
-            string quantity = InputQuantity(6, (int)Constants.Registration.SIXTH);       //수량
+            //수량
+            string quantity = InputBookName(6, (int)Constants.Registration.SIXTH, Constants.QUENTITY_REGEX, Constants.MESSAGE_ABOUT_QUENTITY);      
             if (quantity.Equals(Constants.ESC)) return;
+
 
             LibraryVO library = LibraryVO.GetLibraryVO();  //도서목록
             library.InsertBookList(id, name, publisher, author, price, quantity); //도서목록에 등록된 도서정보 추가
@@ -199,7 +126,6 @@ namespace Library
             screen = new RegisteringScreen();
             screen.PrintComplete();                   //등록 완료 화면 출력
 
-            Keyboard keyboard = new Keyboard();
             keyboard.PressESC();                      //esc->종료(뒤로가기)
         }
     }

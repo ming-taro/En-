@@ -90,7 +90,6 @@ namespace Library
 
 
         //입력 오류 메세지
-        public const string MESSAGE_ABOUT_BOOK_NAME = "(1~50자 이내의 문자를 입력해주세요.)                         ";
         public const string MESSAGE_ABOUT_BOOK_ID_NOT_MATCH = "(0~999사이의 숫자가 아닙니다.다시 입력해주세요.)               ";
         public const string MESSAGE_ABOUT_BOOK_NOT_IN_LIST = "(현재 조회 목록에 없는 도서입니다. 다시 입력해주세요.)           ";
         public const string MESSAGE_ABOUT_BOOK_I_BORROWED = "(이미 대여중인 도서입니다. 다른 도서를 선택해주세요.)                  ";
@@ -98,6 +97,8 @@ namespace Library
         public const string MESSAGE_ABOUT_BOOK_I_NEVER_BORROWED = "(대여목록에 없는 도서번호입니다. 다시 입력해주세요.)             ";
         public const string MESSAGE_ABOUT_DUPLICATED_BOOK_ID = "(이미 사용중인 도서번호입니다. 다시 입력해주세요.)    ";
 
+        public const string MESSAGE_ABOUT_BOOK_NAME = "(1~50자 이내의 문자를 입력해주세요.)                         ";
+        public const string MESSAGE_ABOUT_PUBLISHER = "(1~50자 이내의 문자를 입력해주세요.)                         ";
         public const string MESSAGE_ABOUT_AUTHOR = "(50자 이내의 영어, 한글만 입력해주세요.)                            ";
         public const string MESSAGE_ABOUT_PRICE = "(0이상의 숫자를 10자 이내로 다시 입력해주세요.)                                 ";
         public const string MESSAGE_ABOUT_QUENTITY = "(1~99사이의 숫자만 가능합니다. 다시 입력해주세요.)                            ";
