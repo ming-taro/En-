@@ -90,24 +90,24 @@ namespace Library
             string quantity;
             BookVO book;
 
-            adminView.PrintBookRegistration();   //도서등록화면 출력
+            adminView.PrintBookInputScreen("도서 등록");   //도서등록화면 출력
            
-            id = InputBookId(10, (int)Constants.Registration.FIRST);  
+            id = InputBookId(12, (int)Constants.Registration.FIRST);  
             if (id.Equals(Constants.ESC)) return;             //도서번호 입력
 
-            name = InputBookName(8, (int)Constants.Registration.SECOND, Constants.BOOK_NAME_REGEX, Constants.MESSAGE_ABOUT_BOOK_NAME);        
+            name = InputBookName(10, (int)Constants.Registration.SECOND, Constants.BOOK_NAME_REGEX, Constants.MESSAGE_ABOUT_BOOK_NAME);        
             if (name.Equals(Constants.ESC)) return;           //도서명 입력
 
-            publisher = InputBookName(8, (int)Constants.Registration.THIRD, Constants.PUBLISHER_REGEX, Constants.MESSAGE_ABOUT_PUBLISHER);      
+            publisher = InputBookName(10, (int)Constants.Registration.THIRD, Constants.PUBLISHER_REGEX, Constants.MESSAGE_ABOUT_PUBLISHER);      
             if (publisher.Equals(Constants.ESC)) return;      //출판사 입력
 
-            author = InputBookName(6, (int)Constants.Registration.FOURTH, Constants.AUTHOR_REGEX, Constants.MESSAGE_ABOUT_AUTHOR);          
+            author = InputBookName(8, (int)Constants.Registration.FOURTH, Constants.AUTHOR_REGEX, Constants.MESSAGE_ABOUT_AUTHOR);          
             if (author.Equals(Constants.ESC)) return;         //저자 입력
 
-            price = InputBookName(6, (int)Constants.Registration.FIFTH, Constants.PRICE_REGEX, Constants.MESSAGE_ABOUT_PRICE);             
+            price = InputBookName(8, (int)Constants.Registration.FIFTH, Constants.PRICE_REGEX, Constants.MESSAGE_ABOUT_PRICE);             
             if (price.Equals(Constants.ESC)) return;          //가격 입력
 
-            quantity = InputBookName(6, (int)Constants.Registration.SIXTH, Constants.QUENTITY_REGEX, Constants.MESSAGE_ABOUT_QUENTITY);      
+            quantity = InputBookName(8, (int)Constants.Registration.SIXTH, Constants.QUENTITY_REGEX, Constants.MESSAGE_ABOUT_QUENTITY);      
             if (quantity.Equals(Constants.ESC)) return;       //수량 입력
 
             book = new BookVO(id, name, publisher, author, price, quantity);

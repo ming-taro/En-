@@ -64,7 +64,7 @@ namespace Library
                     registeringBook.StartRegistration(keyboard);
                     break;
                 case (int)Constants.Menu.THIRD:   //도서 정보 수정
-                    editingBook.EditBook(searchingBook, keyboard);
+                    editingBook.EditBook(searchingBook, registeringBook, keyboard);
                     break;
                 case (int)Constants.Menu.FOURTH:  //도서 삭제
                     deletingBook.DeleteBook(searchingBook, keyboard);

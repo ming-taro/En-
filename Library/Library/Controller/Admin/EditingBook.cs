@@ -57,53 +57,47 @@ namespace Library
 
             return bookId;
         }
-        public void InputBook(int menu, RegisteringBook registeringBook)  //도서정보입력
+        public void InputBook(int menu, BookVO book, RegisteringBook registeringBook)  //도서정보입력
         {
-            string book;
+            string changedItem;
 
             switch (menu)
             {
-                case (int)Constants.BookEditMenu.FIRST:   //도서번호
-                    book = registeringBook.InputBookId(12, 16);
-                    bookVO.Id = book;
+                case (int)Constants.Registration.FIRST:   //도서번호
+                    changedItem = registeringBook.InputBookId(12, (int)Constants.Registration.FIRST);
+                    bookVO.Id = changedItem;
                     break;
-                case (int)Constants.BookEditMenu.SECOND:   //도서명
-                    book = registeringBook.InputBookName(10, 19, Constants.BOOK_NAME_REGEX, Constants.MESSAGE_ABOUT_BOOK_NAME);
-                    bookVO.Name = book;
+                case (int)Constants.Registration.SECOND:   //도서명
+                    changedItem = registeringBook.InputBookName(10, (int)Constants.Registration.SECOND, Constants.BOOK_NAME_REGEX, Constants.MESSAGE_ABOUT_BOOK_NAME);
+                    bookVO.Name = changedItem;
                     break;
-                case (int)Constants.BookEditMenu.THIRD:   //출판사
-                    book = registeringBook.InputBookName(10, 22, Constants.PUBLISHER_REGEX, Constants.MESSAGE_ABOUT_PUBLISHER);
-                    bookVO.Publisher = book;
+                case (int)Constants.Registration.THIRD:   //출판사
+                    changedItem = registeringBook.InputBookName(10, (int)Constants.Registration.THIRD, Constants.PUBLISHER_REGEX, Constants.MESSAGE_ABOUT_PUBLISHER);
+                    bookVO.Publisher = changedItem;
                     break;
-                case (int)Constants.BookEditMenu.FOURTH:   //저자
-                    book = registeringBook.InputBookName(8, 25, Constants.AUTHOR_REGEX, Constants.MESSAGE_ABOUT_AUTHOR);
-                    bookVO.Author = book;
+                case (int)Constants.Registration.FOURTH:   //저자
+                    changedItem = registeringBook.InputBookName(8, (int)Constants.Registration.FOURTH, Constants.AUTHOR_REGEX, Constants.MESSAGE_ABOUT_AUTHOR);
+                    bookVO.Author = changedItem;
                     break;
-                case (int)Constants.BookEditMenu.FIFTH:   //가격
-                    book = registeringBook.InputBookName(8, 28, Constants.PRICE_REGEX, Constants.MESSAGE_ABOUT_PRICE);
-                    bookVO.Price = book;
+                case (int)Constants.Registration.FIFTH:   //가격
+                    changedItem = registeringBook.InputBookName(8, (int)Constants.Registration.FIFTH, Constants.PRICE_REGEX, Constants.MESSAGE_ABOUT_PRICE);
+                    bookVO.Price = changedItem;
                     break;
-                case (int)Constants.BookEditMenu.SIXTH:   //수량
-                    book = registeringBook.InputBookName(8, 31, Constants.QUENTITY_REGEX, Constants.MESSAGE_ABOUT_QUENTITY);
-                    bookVO.Quantity = book;
+                case (int)Constants.Registration.SIXTH:   //수량
+                    changedItem = registeringBook.InputBookName(8, (int)Constants.Registration.SIXTH, Constants.QUENTITY_REGEX, Constants.MESSAGE_ABOUT_QUENTITY);
+                    bookVO.Quantity = changedItem;
                     break;
             }
         }
-        public void EditBook(SearchingBook searchingBook, Keyboard keyboard)
+        public void EditBook(SearchingBook searchingBook, RegisteringBook registeringBook, Keyboard keyboard)
         {
-            //EditingBookScreen editingBookScreen = new EditingBookScreen();
-            //editingBookScreen.PrintSearchingBookId();    //도서번호검색화면 출력
-
-            //InputBookId();  //도서번호를 입력받음
-
-            //editingBookScreen.PrintBook(bookVO);      //해당 도서정보 출력
-            //editingBookScreen.PrintQuantityManagement(); //도서정보 수정 화면 출력
             int menu;
             int searchType;
             string searchWord;
             string bookId;
+            BookVO book;
 
-            keyboard.SetPosition(0, (int)Constants.BookEditMenu.FIRST);  //커서 위치 조정
+            keyboard.SetPosition(0, (int)Constants.Registration.FIRST);  //커서 위치 조정
 
             while (Constants.INPUT_VALUE)
             {
@@ -114,14 +108,18 @@ namespace Library
                 if (searchWord.Equals(Constants.ESC)) continue;            //검색어 입력 중 Esc -> 검색유형 선택으로 돌아감
 
                 adminView.PrintBookIdInputScreen(searchingBook.BookList, "☞정보를 수정할 도서번호:");  //도서번호 입력창
+                
                 bookId = InputBookId(searchingBook.BookList);  //도서번호를 입력받음
                 if (bookId.Equals(Constants.ESC)) continue;    //도서번호 입력 중 Esc -> 검색유형 선택으로 돌아감
 
+                adminView.PrintBookInputScreen("도서 정보 수정");  //도서 정보 수정 화면 출력
 
-                menu = keyboard.SelectMenu((int)Constants.BookEditMenu.FIRST, (int)Constants.BookEditMenu.SIXTH, (int)Constants.BookEditMenu.STEP);  //수정할 항목 선택
-                if (menu == Constants.ESCAPE) break;     //메뉴선택 중 뒤로가기를 누르면 종료
+                keyboard.SetPosition(0, (int)Constants.Registration.FIRST);
+                menu = keyboard.SelectMenu((int)Constants.Registration.FIRST, (int)Constants.Registration.SIXTH, (int)Constants.Registration.STEP);  //수정할 항목 선택
+                if (menu == Constants.ESCAPE) continue;        //메뉴선택 중 Esc -> 검색유형 선택으로 돌아감
+                menu = keyboard.Top;
 
-                //InputBook(keyboard.Top, registeringBook);                   //해당 도서정보 수정
+                InputBook(menu, book, registeringBook);                   //해당 도서정보 수정
                 //editingBookScreen.PrintSuccessMessage(bookVO);     //수정된 정보가 반영된 화면 출력
             }
         }

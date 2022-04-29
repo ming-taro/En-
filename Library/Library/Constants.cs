@@ -208,16 +208,6 @@ namespace Library
             SEVENTH = 30,
             STEP = 3
         }
-        public enum BookEditMenu
-        {
-            FIRST = 16,
-            SECOND = 19,
-            THIRD = 22,
-            FOURTH = 25,
-            FIFTH = 28,
-            SIXTH = 31,
-            STEP = 3
-        }
         public enum SearchMenu
         {
             ALL = 0,
