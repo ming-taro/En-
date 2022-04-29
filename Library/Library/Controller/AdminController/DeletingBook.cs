@@ -30,7 +30,7 @@ namespace Library
 
             return Constants.IS_BOOK_NOT_IN_LIST;   //현재 조회중인 도서목록에 입력받은 도서번호와 일치하는 도서가 없음
         }
-        public string InputBookId(string searchWord, List<BookVO> bookList)
+        public string InputBookId(List<BookVO> bookList)
         {
             string bookId;
 
@@ -46,7 +46,7 @@ namespace Library
                 {
                     logo.PrintMessage(0, 2, Constants.MESSAGE_ABOUT_BOOK_ID_NOT_MATCH, ConsoleColor.Red);
                 }
-                else if (IsBookInList(searchWord, bookList) == Constants.IS_BOOK_NOT_IN_LIST)      //현재 조회중인 도서목록에 없는 도서번호를 입력할 경우
+                else if (IsBookInList(bookId, bookList) == Constants.IS_BOOK_NOT_IN_LIST)      //현재 조회중인 도서목록에 없는 도서번호를 입력할 경우
                 {
                     logo.PrintMessage(0, 2, Constants.MESSAGE_ABOUT_BOOK_NOT_IN_LIST, ConsoleColor.Red);
                 }
@@ -56,7 +56,7 @@ namespace Library
                 }
                 else break;   //도서삭제 가능
 
-                logo.RemoveLine(24, 1);
+                logo.RemoveLine(20, 1);
             }
 
             return bookId;
@@ -88,10 +88,12 @@ namespace Library
 
                 adminView.PrintBookIdInputScreen(searchingBook.BookList);  //도서번호 입력칸 + 도서 검색 결과 출력
 
-                bookId = InputBookId(searchWord, searchingBook.BookList);  //삭제할 도서번호 입력
+                bookId = InputBookId(searchingBook.BookList);              //삭제할 도서번호 입력
                 if (bookId.Equals(Constants.ESC)) continue;                //도서번호 입력 중 Esc -> 도서검색으로 돌아감
-
+                
                 adminView.PrintDeletedBook(FindBook(bookId, searchingBook.BookList));    //삭제 완료 메세지 + 삭제한 도서정보 출력
+                bookDatabaseManager.DeleteFromBookList(bookId);            //DB에서 도서정보 삭제
+
                 if (keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break; //Esc->뒤로가기, Enter->재검색
             }
         }

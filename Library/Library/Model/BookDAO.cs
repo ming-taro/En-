@@ -183,11 +183,11 @@ namespace Library
             if (table.HasRows)
             {
                 table.Close();
-                return Constants.BOOK_I_BORROWED;     //대여중인 회원이 있는 도서 -> 삭제 불가
+                return Constants.IS_BOOK_ON_LOAN;     //대여중인 회원이 있는 도서 -> 삭제 불가
             }
 
             table.Close();
-            return Constants.BOOK_I_NEVER_BORROWED;   //대여한 회원이 없는 도서 -> 삭제 가능
+            return Constants.IS_BOOK_NOT_ON_LOAN;   //대여한 회원이 없는 도서 -> 삭제 가능
         }
 
         public void AddToRentalList(string memberId, string bookId)  //대여목록 추가
@@ -263,6 +263,12 @@ namespace Library
             command.Parameters.Add(new MySqlParameter("@author", book.Author));
             command.Parameters.Add(new MySqlParameter("@price", book.Price));
             command.Parameters.Add(new MySqlParameter("@quantity", Int32.Parse(book.Quantity)));
+            command.ExecuteNonQuery();
+        }
+        public void DeleteFromBookList(string bookId)  //도서목록에서 해당 도서 삭제
+        {
+            MySqlCommand command = new MySqlCommand(Constants.DELETION_FROM_BOOK_LIST, connection);
+            command.Parameters.Add(new MySqlParameter("@bookId", bookId));
             command.ExecuteNonQuery();
         }
 

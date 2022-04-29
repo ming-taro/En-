@@ -46,6 +46,8 @@ namespace Library
 
         public const bool IS_BOOK_IN_LIST = true;
         public const bool IS_BOOK_NOT_IN_LIST = false;
+        public const bool IS_BOOK_ON_LOAN = true;
+        public const bool IS_BOOK_NOT_ON_LOAN = false;
         public const bool IS_MEMBER_IN_LIST = true;
         public const bool IS_MEMBER_NOT_IN_LIST = false;
         public const bool IS_QUANTITY_ZERO = true;
@@ -149,6 +151,7 @@ namespace Library
         public const string BOOK_ON_LOAN = "select bookId from borrowBook where bookId = @bookId;";
         public const string DUPLICATE_BOOK_ID = "select id from book where id = @bookId;";
         public const string ADDITION_TO_BOOK_LIST = "INSERT INTO book VALUES (@id, @name, @publisher, @author, @price, @quantity);";
+        public const string DELETION_FROM_BOOK_LIST = "DELETE FROM book WHERE id = @bookId;";
 
         //Connection
         public const string SERVER = "Server = localhost;";
