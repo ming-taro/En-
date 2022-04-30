@@ -52,7 +52,6 @@ namespace Library
                     break;
                 case (int)Constants.EditMenu.SECOND:   //비밀번호
                     changedItem = signUp.InputPassword(12, (int)Constants.EditMenu.SECOND, Constants.MEMBER_ID_REGEX, Constants.MESSAGE_ABOUT_MEMBER_ID);
-                    changedItem = signUp.ReconfirmPassword(19, (int)Constants.EditMenu.THIRD, changedItem);  //비밀번호 재확인
                     break;
                 case (int)Constants.EditMenu.FOURTH:   //이름
                     changedItem = signUp.InputPassword(8, (int)Constants.EditMenu.FOURTH, Constants.NAME_REGEX, Constants.MESSAGE_ABOUT_MEMBER_NAME);
@@ -87,6 +86,9 @@ namespace Library
 
                 changedItem = InputProfile(menu, signUp);            //선택한 정보에 해당하는 회원정보 수정
                 if (changedItem.Equals(Constants.ESC)) continue;     //입력 중 Esc -> 수정할 항목 다시 선택
+                
+                if(menu == (int)Constants.EditMenu.SECOND) changedItem = signUp.ReconfirmPassword(19, (int)Constants.EditMenu.THIRD, changedItem);  //비밀번호 재확인
+                if (changedItem.Equals(Constants.ESC)) continue;     //비밀번호 재확인 입력 중 Esc -> 수정할 항목 다시 선택
 
                 ReflectChangedInformation(menu, changedItem, member);//DB, MemberVO에 수정사항 업데이트
             }

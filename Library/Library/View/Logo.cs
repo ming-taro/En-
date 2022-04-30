@@ -64,7 +64,7 @@ namespace Library
             PrintTitle();
             for (int i = 0; i < menu.Length; i++)
             {
-                PrintMessage((int)Constants.Menu.LEFT, (int)Constants.Menu.FIRST + i, "☞" + menu[i], ConsoleColor.Gray);
+                PrintMessage((int)Constants.Menu.LEFT, (int)Constants.Menu.FIRST + (int)Constants.Menu.STEP*i, "☞" + menu[i], ConsoleColor.Gray);
             }
             Console.SetCursorPosition((int)Constants.Menu.LEFT, (int)Constants.Menu.FIRST);
         }

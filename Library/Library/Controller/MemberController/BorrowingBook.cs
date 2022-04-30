@@ -36,10 +36,10 @@ namespace Library
         {
             for (int i = 0; i < myBookList.Count; i++)
             {
-                if (myBookList[i].Id.Equals(bookId)) return Constants.BOOK_I_BORROWED;   //입력한 도서를 이미 대여중 -> 대여할 수 없음
+                if (myBookList[i].Id.Equals(bookId)) return Constants.IS_BOOK_I_BORROWED;   //입력한 도서를 이미 대여중 -> 대여할 수 없음
             }
 
-            return Constants.BOOK_I_NEVER_BORROWED;  //대여하지 않은 도서 -> 대여가능
+            return Constants.IS_BOOK_I_NEVER_BORROWED;  //대여하지 않은 도서 -> 대여가능
         }
         public bool IsQuantityZero(string bookId, List<BookVO> bookList)   //대여가능 수량이 있는 지 검사
         {

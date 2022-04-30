@@ -16,18 +16,18 @@ namespace Library
         }
         public bool IsModifiers(ConsoleKeyInfo keyInfo)
         {
-            if ((keyInfo.Modifiers & ConsoleModifiers.Alt) != 0) return Constants.MODIFIERS;
-            if ((keyInfo.Modifiers & ConsoleModifiers.Control) != 0) return Constants.MODIFIERS;
+            if ((keyInfo.Modifiers & ConsoleModifiers.Alt) != 0) return Constants.IS_MODIFIERS;      //Alt키 입력
+            if ((keyInfo.Modifiers & ConsoleModifiers.Control) != 0) return Constants.IS_MODIFIERS;  //Ctrl키 입력
 
-            return Constants.NOT_MODIFIERS;
+            return Constants.IS_NOT_MODIFIERS;
         }
         public bool IsKorean(char oneLetter)   //한글인지 아닌지 확인(uAC00~uD7AF:가~힣, u3130~u314E:ㄱ~ㅎ, u314F~u3163:ㅏ~ㅣ)
         {
             if (oneLetter >= '\uAC00' && oneLetter <= '\uD7AF' || oneLetter >= '\u3130' && oneLetter <= '\u314E' || oneLetter >= '\u314F' && oneLetter <= '\u3163')
             {
-                return Constants.KOREAN;
+                return Constants.IS_KOREAN;
             }
-            return Constants.NOT_KOREAN;
+            return Constants.IS_NOT_KOREAN;
         }
         public string EnterText(int left, int top, string mark)
         {
@@ -60,12 +60,12 @@ namespace Library
                     Console.Write("  ");                      //Console창에서 한글 이외의 문자 하나를 지움
                     Console.SetCursorPosition(Console.CursorLeft - 2, top);
                 }
-                else if (mark.Equals("*") && IsModifiers(keyInfo) == Constants.NOT_MODIFIERS && keyInfo.KeyChar != '\u0000' && keyInfo.Key != ConsoleKey.Backspace)
+                else if (mark.Equals("*") && IsModifiers(keyInfo) == Constants.IS_NOT_MODIFIERS && keyInfo.KeyChar != '\u0000' && keyInfo.Key != ConsoleKey.Backspace)
                 {
                     Console.Write("*");           //비밀번호 입력시
                     text.Append(keyInfo.KeyChar); //입력값 저장
                 }
-                else if(IsModifiers(keyInfo) == Constants.NOT_MODIFIERS && keyInfo.KeyChar != '\u0000' && keyInfo.Key != ConsoleKey.Backspace)
+                else if(IsModifiers(keyInfo) == Constants.IS_NOT_MODIFIERS && keyInfo.KeyChar != '\u0000' && keyInfo.Key != ConsoleKey.Backspace)
                 {      
                     Console.Write(keyInfo.KeyChar);
                     text.Append(keyInfo.KeyChar); //입력값 저장

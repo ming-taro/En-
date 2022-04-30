@@ -86,7 +86,7 @@ namespace Library
                 if (maxTop == (int)Constants.Menu.SECOND) logo.PrintMain(textOfMemberMenu);//1.로그인  2.회원가입
                 else logo.PrintMain(textOfMemberMode);           //1.도서검색  2.도서대여  3.도서반납  4.개인정보수정  5.종료
                 
-                menu = keyboard.SelectMenu(13, maxTop, 1);     //메뉴선택
+                menu = keyboard.SelectMenu((int)Constants.Menu.FIRST, maxTop, (int)Constants.Menu.STEP);     //메뉴선택
                 if (menu == (int)Constants.Keyboard.ESCAPE) break;           //메뉴선택 중 뒤로가기 -> 메인화면으로
                 menu = keyboard.Top;                           //메뉴의 해당 커서값
 

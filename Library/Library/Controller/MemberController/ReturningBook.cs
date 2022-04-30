@@ -26,10 +26,10 @@ namespace Library
         {
             for (int i = 0; i < myBookList.Count; i++)
             {
-                if (myBookList[i].Id.Equals(bookId)) return Constants.BOOK_I_BORROWED;   //대여한 도서를 반납하려고 할 때 -> 반납가능
+                if (myBookList[i].Id.Equals(bookId)) return Constants.IS_BOOK_I_BORROWED;   //대여한 도서를 반납하려고 할 때 -> 반납가능
             }
 
-            return Constants.BOOK_I_NEVER_BORROWED;  //대여하지 않은 도서 -> 반납불가
+            return Constants.IS_BOOK_I_NEVER_BORROWED;  //대여하지 않은 도서 -> 반납불가
         }
         private string InputBookId(string memberId, List<BookVO> myBookList)
         {
@@ -47,7 +47,7 @@ namespace Library
                 {
                     logo.PrintMessage(0, (int)Constants.SearchMenu.SECOND, Constants.MESSAGE_ABOUT_BOOK_ID_NOT_MATCH, ConsoleColor.Red);
                 }
-                else if (IsBookIBorrowed(bookId, myBookList) == Constants.BOOK_I_NEVER_BORROWED)   //양식은 지켰지만, 내가 대여한 도서가 아닌 도서를 반납하려 할 때
+                else if (IsBookIBorrowed(bookId, myBookList) == Constants.IS_BOOK_I_NEVER_BORROWED)   //양식은 지켰지만, 내가 대여한 도서가 아닌 도서를 반납하려 할 때
                 {
                     logo.PrintMessage(0, (int)Constants.SearchMenu.SECOND, Constants.MESSAGE_ABOUT_BOOK_I_NEVER_BORROWED, ConsoleColor.Red);
                 }

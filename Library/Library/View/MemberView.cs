@@ -17,7 +17,7 @@ namespace Library
         }
         public void PrintMyBookList(List<BookVO> myBookList) //회원의 도서 대여 목록 출력
         {
-            logo.PrintMessage(20, Console.CursorTop + 1, ">나의 도서 대여 목록<", ConsoleColor.Gray);
+            logo.PrintMessage(0, Console.CursorTop - 1, ">>>>>>>>>>>>>>>>>>>>> 도서 대여 목록 <<<<<<<<<<<<<<<<<<<<<<<<", ConsoleColor.Gray);
             Console.SetCursorPosition(0, Console.CursorTop - 1);
 
             logo.PrintLine();

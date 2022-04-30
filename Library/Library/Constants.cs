@@ -8,52 +8,49 @@ namespace Library
 {
     class Constants
     {
+        public const bool INPUT_VALUE = true;
         public const bool KEYBOARD_OPERATION = true;
         public const bool OUT_OF_MENU = true;
         public const bool MOVEMENT_WITHIN_MENU = false;
         public const bool ADMIN_MODE = true;
         public const bool MEMBER_MODE = true;
-        public const bool SIGN_IN = true;
-
-        public const bool CORRECT_MEMBERSHIP = true;
-        public const bool WRONG_MEMBERSHIP = false;
 
         public const bool IS_DUPLICATE_ID = true;
         public const bool IS_NON_DUPLICATE_ID = false;
-        public const string REMOVE_LINE = "                                                             ";
-
+        
         public const bool IS_EXISTING_MEMBER = true;
         public const bool IS_NON_EXISTING_MEMBER = false;
 
         public const bool IS_MATCH = true;
         public const bool IS_NOT_MATCH = false;
 
-        public const bool BOOK_I_BORROWED = true;
-        public const bool BOOK_I_NEVER_BORROWED = false;
+        public const bool IS_BOOK_I_BORROWED = true;
+        public const bool IS_BOOK_I_NEVER_BORROWED = false;
 
         public const bool IS_BOOK_IN_LIST = true;
         public const bool IS_BOOK_NOT_IN_LIST = false;
+
         public const bool IS_BOOK_ON_LOAN = true;
         public const bool IS_BOOK_NOT_ON_LOAN = false;
-        public const bool IS_MEMBER_IN_LIST = true;
-        public const bool IS_MEMBER_NOT_IN_LIST = false;
+
         public const bool IS_QUANTITY_ZERO = true;
         public const bool IS_QUANTITY_MORE_THAN_ONE = false;
-        public const string RE_ENTER = "RE_ENTER";
+
+        public const bool IS_MEMBER_IN_LIST = true;
+        public const bool IS_MEMBER_NOT_IN_LIST = false;
 
         public const bool IS_MEMBER_BORROWING_BOOK = true;
         public const bool IS_MEMBER_NOT_BORROWING_BOOK = false;
 
-        public const bool INPUT_VALUE = true;
-        public const string NO_SEARCH_RESULT = "[입력하신 검색어를 포함하는 도서가 없습니다.]";
         public const string ESC_AND_ENTER = "                          [ESC]:뒤로가기    [ENTER]:다시 검색";
-        public const string ESC_MESSAGE = "                                               [ESC]:뒤로가기";
+        public const string ESC_MESSAGE = "                                              [ESC]:뒤로가기";
+        public const string REMOVE_LINE = "                                                             ";
 
         //EnteringText
-        public const bool MODIFIERS = true;
-        public const bool NOT_MODIFIERS = false;
-        public const bool KOREAN = true;
-        public const bool NOT_KOREAN = false;
+        public const bool IS_MODIFIERS = true;
+        public const bool IS_NOT_MODIFIERS = false;
+        public const bool IS_KOREAN = true;
+        public const bool IS_NOT_KOREAN = false;
         public const string ESC = "ESC";
         public const string ENTER = "ENTER";
 
@@ -152,15 +149,15 @@ namespace Library
         }
         public enum Menu
         {
-            FIRST = 13,          //top
-            SECOND = 14,
-            THIRD = 15,
-            FOURTH = 16,
-            FIFTH = 17,
+            FIRST = 15,          //top
+            SECOND = 17,
+            THIRD = 19,
+            FOURTH = 21,
+            FIFTH = 23,
             LEFT = 25,
             CONSOLE_HEIGHT = 40,
             CONSOLE_WIDTH = 61,
-            STEP = 1
+            STEP = 2
         }
         public enum Registration
         {

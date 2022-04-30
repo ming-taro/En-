@@ -9,15 +9,12 @@ namespace Library
 {
     class Keyboard
     {
-        private int left = 25, top = 13;
+        private int left;
+        private int top;
         public Keyboard()
         {
-
-        }
-        public Keyboard(int left, int top)
-        {
-            this.left = left;
-            this.top = top;
+            left = (int)Constants.Menu.LEFT;
+            top = (int)Constants.Menu.FIRST;
         }
         public int Top
         {
@@ -26,8 +23,8 @@ namespace Library
         }
         public void InitCursorPosition()
         {
-            left = 25;
-            top = 13;
+            left = (int)Constants.Menu.LEFT;
+            top = (int)Constants.Menu.FIRST;
         }
         public void SetPosition(int left, int top)
         {
