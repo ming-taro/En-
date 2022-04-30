@@ -22,7 +22,7 @@ namespace Library
             memberView = new MemberView();
             logo = new Logo();
         }
-        public bool IsBookIBorrowed(string bookId, List<BookVO> myBookList)              //회원이 대여중인 도서인지 검사
+        private bool IsBookIBorrowed(string bookId, List<BookVO> myBookList)              //회원이 대여중인 도서인지 검사
         {
             for (int i = 0; i < myBookList.Count; i++)
             {
@@ -61,7 +61,7 @@ namespace Library
 
             return bookId;
         }
-        public BookVO FindBook(string bookId, List<BookVO> myBookList)  //도서번호로 해당 도서정보 찾기
+        private BookVO FindBook(string bookId, List<BookVO> myBookList)  //도서번호로 해당 도서정보 찾기
         {
             int i = 0;
 
@@ -72,7 +72,7 @@ namespace Library
 
             return myBookList[i];
         }
-        public void ShowMyBookList(string memberId, Keyboard keyboard) 
+        public void ReturnBook(string memberId, Keyboard keyboard) 
         {
             List<BookVO> myBookList = bookDatabaseManager.MakeMyBookList(memberId); //현재 로그인한 회원의 도서대여목록
 

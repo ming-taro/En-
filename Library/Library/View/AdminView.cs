@@ -89,6 +89,8 @@ namespace Library
         public void PrintMemberIdInputScreen(List<MemberVO> memberList)  //회원관리 -> 회원아이디 입력칸 + 회원목록 출력
         {
             logo.PrintSearchBox("회원 삭제", "☞삭제할 회원 아이디:");
+            logo.PrintMessage(0, Console.CursorTop, ">>>>>>>>>>>>>>>>>>>>>>>> 회원 목록 <<<<<<<<<<<<<<<<<<<<<<<<<<", ConsoleColor.Gray);
+            Console.SetCursorPosition(0, Console.CursorTop - 1);
             PrintMemberList(memberList);
         }
         public void PrintSuccess(MemberVO member)   //회원관리 -> 회원정보 삭제 완료 메세지 + 삭제한 회원정보

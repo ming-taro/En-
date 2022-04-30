@@ -46,7 +46,7 @@ namespace Library
 
             return key;
         }
-        public int ControlKeyboard(int move)       //현재 키보드 입력값 반환
+        private int ControlKeyboard(int move)       //현재 키보드 입력값 반환
         {
             ConsoleKeyInfo keyInfo;
 
@@ -71,7 +71,7 @@ namespace Library
                 }
             }
         }
-        public bool IsOutOfMenu(int minTop, int maxTop)   //메뉴 선택 범위를 벗어나는지 확인
+        private bool IsOutOfMenu(int minTop, int maxTop)   //메뉴 선택 범위를 벗어나는지 확인
         {
             if (top < minTop) top = minTop;
             else if (top > maxTop) top = maxTop;

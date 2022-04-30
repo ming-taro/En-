@@ -31,7 +31,7 @@ namespace Library
             returningBook = new ReturningBook(bookDatabaseManager);
             editingProfile = new EditingProfile(bookDatabaseManager);
         }
-        public void SelectMenu(int menu)
+        private void SelectMenu(int menu)
         {
             switch (menu)
             {
@@ -42,14 +42,14 @@ namespace Library
                     borrowingBook.SearchBookToBorrow(member.Id, searchingBook, keyboard);
                     break;
                 case (int)Constants.Menu.THIRD:  //도서반납
-                    returningBook.ShowMyBookList(member.Id, keyboard);
+                    returningBook.ReturnBook(member.Id, keyboard);
                     break;
                 case (int)Constants.Menu.FOURTH: //개인정보수정
                     editingProfile.EditProfile(member, signUp, keyboard);  //아이디를 수정했을 수 있음 -> 수정된 아이디를 myId에 저장
                     break;
             }
         }
-        public void SelectMemberMode(int menu)
+        private void SelectMemberMode(int menu)
         {
             string memberId = "";
 

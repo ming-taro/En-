@@ -20,12 +20,7 @@ namespace Library
             adminView = new AdminView();
             logo = new Logo();
         }
-        public void PrintInputBox(int left, int top, string message)
-        {
-            Console.SetCursorPosition(left, top);
-            Console.Write(message);
-        }
-        public bool IsMemberInList(string memberId, List<MemberVO> memberList)  //입력받은 회원아이디가 회원목록에 있는지 확인
+        private bool IsMemberInList(string memberId, List<MemberVO> memberList)  //입력받은 회원아이디가 회원목록에 있는지 확인
         {
             for(int i=0; i<memberList.Count; i++)
             {
@@ -34,7 +29,7 @@ namespace Library
 
             return Constants.IS_MEMBER_NOT_IN_LIST;
         }
-        public string InputMemberId(List<MemberVO> memberList)
+        private string InputMemberId(List<MemberVO> memberList)
         {
             string memberId;
 
@@ -63,7 +58,7 @@ namespace Library
             }
             return memberId;
         }
-        public void ControlDeletingMember(Keyboard keyboard)
+        public void DeleteMember(Keyboard keyboard)
         {
             string memberId;
             List<MemberVO> memberList;

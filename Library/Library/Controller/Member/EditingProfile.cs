@@ -16,7 +16,7 @@ namespace Library
             this.bookDatabaseManager = bookDatabaseManager;
             memberView = new MemberView();
         }
-        private void ReflectChangedInformation(int menu, string changedItem, MemberVO member)   //수정된 정보 반영
+        private void ReflectChangeInVO(int menu, string changedItem, MemberVO member)   //수정된 정보 반영
         {
             switch (menu)                                 
             {
@@ -90,7 +90,7 @@ namespace Library
                 if(menu == (int)Constants.EditMenu.SECOND) changedItem = signUp.ReconfirmPassword(19, (int)Constants.EditMenu.THIRD, changedItem);  //비밀번호 재확인
                 if (changedItem.Equals(Constants.ESC)) continue;     //비밀번호 재확인 입력 중 Esc -> 수정할 항목 다시 선택
 
-                ReflectChangedInformation(menu, changedItem, member);//DB, MemberVO에 수정사항 업데이트
+                ReflectChangeInVO(menu, changedItem, member);//DB, MemberVO에 수정사항 업데이트
             }
 
             bookDatabaseManager.AddToMemberList(Constants.UPDATE_TO_MEMBER_LIST, member);   //DB에 수정된 회원정보 업데이트

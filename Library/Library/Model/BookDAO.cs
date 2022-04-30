@@ -234,7 +234,7 @@ namespace Library
             command.Parameters.Add(new MySqlParameter("@address", member.Address));
             command.ExecuteNonQuery();
         }
-        public void UpdateOnMemberId(string changedId, string memberId)
+        public void UpdateOnMemberId(string changedId, string memberId)  //회원 아이디 수정
         {
             MySqlCommand command = new MySqlCommand(Constants.UPDATE_ON_MEMBER_ID, connection);
             command.Parameters.Add(new MySqlParameter("@id", changedId));
@@ -243,7 +243,7 @@ namespace Library
         }
 
         public void DeleteFromMemberList(string memberId)      //회원목록에서 회원정보 삭제
-        {
+        { 
             MySqlCommand command = new MySqlCommand(Constants.DELETION_FROM_MEMBER_LIST, connection);
             command.Parameters.Add(new MySqlParameter("@memberId", memberId));
             command.ExecuteNonQuery();
@@ -255,7 +255,7 @@ namespace Library
             command.Parameters.Add(new MySqlParameter("@bookId", bookId));
             command.ExecuteNonQuery();
         }
-        public void UpdateOnBookId(string changedId, string bookId)
+        public void UpdateOnBookId(string changedId, string bookId)  //도서번호 수정
         {
             MySqlCommand command = new MySqlCommand(Constants.UPDATE_ON_BOOK_ID, connection);
             command.Parameters.Add(new MySqlParameter("@id", changedId));

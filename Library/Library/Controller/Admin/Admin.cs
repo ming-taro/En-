@@ -32,6 +32,28 @@ namespace Library
             deletingBook = new DeletingBook(bookDatabaseManager);
             deletingMember = new DeletingMember(bookDatabaseManager);
         }
+        private void SelectMenu(int menu)       //관리자 메뉴에서 선택
+        {
+            switch (menu)
+            {
+                case (int)Constants.Menu.FIRST:  //도서 이름 검색 
+                    searchingBook.ShowSearchResult(keyboard);
+                    break;
+                case (int)Constants.Menu.SECOND:  //도서 등록
+                    registeringBook.StartRegistration(keyboard);
+                    break;
+                case (int)Constants.Menu.THIRD:   //도서 정보 수정
+                    editingBook.EditBook(searchingBook, registeringBook, keyboard);
+                    break;
+                case (int)Constants.Menu.FOURTH:  //도서 삭제
+                    deletingBook.DeleteBook(searchingBook, keyboard);
+                    break;
+                case (int)Constants.Menu.FIFTH:   //회원관리
+                    deletingMember.DeleteMember(keyboard);
+                    break;
+
+            }
+        }
         public void StartAdminMode()                      //관리자 모드 관리
         {
             string success;
@@ -51,29 +73,6 @@ namespace Library
                 
                 menu = keyboard.Top;                      //Enter를 눌렀을 때의 커서값 == 선택한 메뉴 
                 SelectMenu(menu);                         //해당 메뉴 기능 실행
-            }
-        }
-        
-        public void SelectMenu(int menu)       //관리자 메뉴에서 선택
-        {
-            switch (menu)
-            {
-                case (int)Constants.Menu.FIRST:  //도서 이름 검색 
-                    searchingBook.ShowSearchResult(keyboard);
-                    break;
-                case (int)Constants.Menu.SECOND:  //도서 등록
-                    registeringBook.StartRegistration(keyboard);
-                    break;
-                case (int)Constants.Menu.THIRD:   //도서 정보 수정
-                    editingBook.EditBook(searchingBook, registeringBook, keyboard);
-                    break;
-                case (int)Constants.Menu.FOURTH:  //도서 삭제
-                    deletingBook.DeleteBook(searchingBook, keyboard);
-                    break;
-                case (int)Constants.Menu.FIFTH:   //회원관리
-                    deletingMember.ControlDeletingMember(keyboard);
-                    break;
-
             }
         }
     }

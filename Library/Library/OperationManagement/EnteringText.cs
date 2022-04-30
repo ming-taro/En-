@@ -14,14 +14,14 @@ namespace Library
         {
             text = new StringBuilder();
         }
-        public bool IsModifiers(ConsoleKeyInfo keyInfo)
+        private bool IsModifiers(ConsoleKeyInfo keyInfo)
         {
             if ((keyInfo.Modifiers & ConsoleModifiers.Alt) != 0) return Constants.IS_MODIFIERS;      //Alt키 입력
             if ((keyInfo.Modifiers & ConsoleModifiers.Control) != 0) return Constants.IS_MODIFIERS;  //Ctrl키 입력
 
             return Constants.IS_NOT_MODIFIERS;
         }
-        public bool IsKorean(char oneLetter)   //한글인지 아닌지 확인(uAC00~uD7AF:가~힣, u3130~u314E:ㄱ~ㅎ, u314F~u3163:ㅏ~ㅣ)
+        private bool IsKorean(char oneLetter)   //한글인지 아닌지 확인(uAC00~uD7AF:가~힣, u3130~u314E:ㄱ~ㅎ, u314F~u3163:ㅏ~ㅣ)
         {
             if (oneLetter >= '\uAC00' && oneLetter <= '\uD7AF' || oneLetter >= '\u3130' && oneLetter <= '\u314E' || oneLetter >= '\u314F' && oneLetter <= '\u3163')
             {

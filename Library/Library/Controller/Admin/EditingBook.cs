@@ -20,7 +20,7 @@ namespace Library
             adminView = new AdminView();
             logo = new Logo();
         }
-        public bool IsBookInList(string bookId, List<BookVO> bookList)
+        private bool IsBookInList(string bookId, List<BookVO> bookList)
         {
             for (int i = 0; i < bookList.Count; i++)
             {
@@ -28,7 +28,7 @@ namespace Library
             }
             return Constants.IS_BOOK_NOT_IN_LIST;
         }
-        public string InputBookId(List<BookVO> bookList)
+        private string InputBookId(List<BookVO> bookList)
         {
             string bookId;
 
@@ -55,7 +55,7 @@ namespace Library
 
             return bookId;
         }
-        public string SelectBookId(SearchingBook searchingBook, Keyboard keyboard)  //수정할 도서번호 입력
+        private string SelectBookId(SearchingBook searchingBook, Keyboard keyboard)  //수정할 도서번호 입력
         {
             int searchType;
             string searchWord;
@@ -79,7 +79,7 @@ namespace Library
                 return bookId;
             }
         }
-        public void ReflectChangeInVO(int menu, string changedItem, BookVO book)  //수정된 항목 VO에 반영
+        private void ReflectChangeInVO(int menu, string changedItem, BookVO book)  //수정된 항목 VO에 반영
         {
             switch (menu)
             {
@@ -104,7 +104,7 @@ namespace Library
                     break;
             }
         }
-        public string InputBookInformation(int menu, RegisteringBook registeringBook)  //수정할 도서정보입력
+        private string InputBookInformation(int menu, RegisteringBook registeringBook)  //수정할 도서정보입력
         {
             string changedItem = "";
 
@@ -132,7 +132,7 @@ namespace Library
 
             return changedItem;
         }
-        public BookVO FindBook(string bookId, List<BookVO> bookList)
+        private BookVO FindBook(string bookId, List<BookVO> bookList)
         {
             int i;
 

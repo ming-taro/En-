@@ -23,7 +23,7 @@ namespace Library
             logo = new Logo();
         }
 
-        public bool IsBookInList(string bookId, List<BookVO> bookList)   //현재 조회중인 도서목록에 있는 도서인지 검사
+        private bool IsBookInList(string bookId, List<BookVO> bookList)   //현재 조회중인 도서목록에 있는 도서인지 검사
         {
             for (int i = 0; i < bookList.Count; i++) 
             {
@@ -32,7 +32,7 @@ namespace Library
 
             return Constants.IS_BOOK_NOT_IN_LIST;    //현재 조회중인 도서목록에 없는 도서를 대여하려고 함
         }
-        public bool IsBookIBorrowed(string bookId, List<BookVO> myBookList)              //회원이 대여중인 도서인지 검사
+        private bool IsBookIBorrowed(string bookId, List<BookVO> myBookList)              //회원이 대여중인 도서인지 검사
         {
             for (int i = 0; i < myBookList.Count; i++)
             {
@@ -41,7 +41,7 @@ namespace Library
 
             return Constants.IS_BOOK_I_NEVER_BORROWED;  //대여하지 않은 도서 -> 대여가능
         }
-        public bool IsQuantityZero(string bookId, List<BookVO> bookList)   //대여가능 수량이 있는 지 검사
+        private bool IsQuantityZero(string bookId, List<BookVO> bookList)   //대여가능 수량이 있는 지 검사
         {
             for (int i = 0; i < bookList.Count; i++)
             {
@@ -50,7 +50,7 @@ namespace Library
 
             return Constants.IS_QUANTITY_MORE_THAN_ONE;   //대여 가능 수량이 남아있음 -> 대여가능
         }
-        public string InputBookId(List<BookVO> bookList, List<BookVO> myBookList)    //도서명 입력 후 도서번호 입력
+        private string InputBookId(List<BookVO> bookList, List<BookVO> myBookList)    //도서명 입력 후 도서번호 입력
         {
             string bookId;
 
