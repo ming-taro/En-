@@ -20,23 +20,23 @@ namespace Library
         {
             switch (menu)                                 
             {
-                case (int)Constants.ProfileMenu.FIRST:    //아이디
+                case (int)Constants.EditMenu.FIRST:    //아이디
                     bookDatabaseManager.UpdateOnMemberId(changedItem, member.Id);  //id가 기본키이므로 DB에 먼저 수정된 id로 변경
                     member.Id = changedItem;
                     break;
-                case (int)Constants.ProfileMenu.SECOND:   //비밀번호
+                case (int)Constants.EditMenu.SECOND:   //비밀번호
                     member.Password = changedItem;
                     break;
-                case (int)Constants.ProfileMenu.FOURTH:   //이름
+                case (int)Constants.EditMenu.FOURTH:   //이름
                     member.Name = changedItem;
                     break;
-                case (int)Constants.ProfileMenu.FIFTH:   //나이
+                case (int)Constants.EditMenu.FIFTH:   //나이
                     member.Age = changedItem;
                     break;
-                case (int)Constants.ProfileMenu.SIXTH:   //휴대전화
+                case (int)Constants.EditMenu.SIXTH:   //휴대전화
                     member.PhoneNumber = changedItem;
                     break;
-                case (int)Constants.ProfileMenu.SEVENTH: //주소
+                case (int)Constants.EditMenu.SEVENTH: //주소
                     member.Address = changedItem;
                     break;
             }
@@ -47,24 +47,24 @@ namespace Library
 
             switch (menu)
             {
-                case (int)Constants.ProfileMenu.FIRST:    //아이디
-                    changedItem = signUp.InputId(10, (int)Constants.ProfileMenu.FIRST);
+                case (int)Constants.EditMenu.FIRST:    //아이디
+                    changedItem = signUp.InputId(10, (int)Constants.EditMenu.FIRST);
                     break;
-                case (int)Constants.ProfileMenu.SECOND:   //비밀번호
-                    changedItem = signUp.InputPassword(12, (int)Constants.ProfileMenu.SECOND, Constants.MEMBER_ID_REGEX, Constants.MESSAGE_ABOUT_MEMBER_ID);
-                    changedItem = signUp.ReconfirmPassword(19, (int)Constants.ProfileMenu.THIRD, changedItem);  //비밀번호 재확인
+                case (int)Constants.EditMenu.SECOND:   //비밀번호
+                    changedItem = signUp.InputPassword(12, (int)Constants.EditMenu.SECOND, Constants.MEMBER_ID_REGEX, Constants.MESSAGE_ABOUT_MEMBER_ID);
+                    changedItem = signUp.ReconfirmPassword(19, (int)Constants.EditMenu.THIRD, changedItem);  //비밀번호 재확인
                     break;
-                case (int)Constants.ProfileMenu.FOURTH:   //이름
-                    changedItem = signUp.InputPassword(8, (int)Constants.ProfileMenu.FOURTH, Constants.NAME_REGEX, Constants.MESSAGE_ABOUT_MEMBER_NAME);
+                case (int)Constants.EditMenu.FOURTH:   //이름
+                    changedItem = signUp.InputPassword(8, (int)Constants.EditMenu.FOURTH, Constants.NAME_REGEX, Constants.MESSAGE_ABOUT_MEMBER_NAME);
                     break;
-                case (int)Constants.ProfileMenu.FIFTH:    //나이
-                    changedItem = signUp.InputPassword(8, (int)Constants.ProfileMenu.FIFTH, Constants.AGE_REGEX, Constants.MESSAGE_ABOUT_AGE);
+                case (int)Constants.EditMenu.FIFTH:    //나이
+                    changedItem = signUp.InputPassword(8, (int)Constants.EditMenu.FIFTH, Constants.AGE_REGEX, Constants.MESSAGE_ABOUT_AGE);
                     break;
-                case (int)Constants.ProfileMenu.SIXTH:    //휴대전화
-                    changedItem = signUp.InputPassword(12, (int)Constants.ProfileMenu.SIXTH, Constants.PHONE_NUMBER_REGEX, Constants.MESSAGE_ABOUT_PHONE_NUMBER);
+                case (int)Constants.EditMenu.SIXTH:    //휴대전화
+                    changedItem = signUp.InputPassword(12, (int)Constants.EditMenu.SIXTH, Constants.PHONE_NUMBER_REGEX, Constants.MESSAGE_ABOUT_PHONE_NUMBER);
                     break;
-                case (int)Constants.ProfileMenu.SEVENTH:  //주소
-                    changedItem = signUp.InputPassword(8, (int)Constants.ProfileMenu.SEVENTH, Constants.ADDRESS_REGEX, Constants.MESSAGE_ABOUT_ADDRESS);
+                case (int)Constants.EditMenu.SEVENTH:  //주소
+                    changedItem = signUp.InputPassword(8, (int)Constants.EditMenu.SEVENTH, Constants.ADDRESS_REGEX, Constants.MESSAGE_ABOUT_ADDRESS);
                     break;
             }
 
@@ -75,13 +75,13 @@ namespace Library
             string changedItem;
             int menu;
 
-            keyboard.SetPosition(0, (int)Constants.ProfileMenu.FIRST);  //커서 위치 조정
+            keyboard.SetPosition(0, (int)Constants.EditMenu.FIRST);  //커서 위치 조정
 
             while (Constants.INPUT_VALUE)
             {
                 memberView.PrintProfile(member);                     //회원정보수정 화면 출력
 
-                menu = keyboard.SelectMenu((int)Constants.ProfileMenu.FIRST, (int)Constants.ProfileMenu.SEVENTH, (int)Constants.ProfileMenu.STEP);  //수정할 항목 선택
+                menu = keyboard.SelectMenu((int)Constants.EditMenu.FIRST, (int)Constants.EditMenu.SEVENTH, (int)Constants.EditMenu.STEP);  //수정할 항목 선택
                 if (menu == (int)Constants.Keyboard.ESCAPE) break;   //메뉴선택 중 Esc -> DB에 수정된 정보 업데이트 후 종료
                 menu = keyboard.Top;                                 //커서의 top값 == 수정할 항목
 

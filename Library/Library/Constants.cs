@@ -8,21 +8,7 @@ namespace Library
 {
     class Constants
     {
-        public enum Keyboard
-        {
-            ESCAPE = -5,
-            MOVING_CURSOR,
-            ENTER
-        }
-        public const int CLOSE_PROGRAM = -3;    //----->삭제할 코드
-        public const int INVALID_INPUT = -2;    //----->삭제할 코드
-        public const int ESCAPE = -1;           //----->삭제할 코드
-        public const int MOVING_CURSOR = 0;     //----->삭제할 코드
-        public const int ENTERING_MENU = 1;     //----->삭제할 코드
         public const bool KEYBOARD_OPERATION = true;
-
-        public const int COMPLETE_FUNCTION = 7; //----->삭제할 코드
-
         public const bool OUT_OF_MENU = true;
         public const bool MOVEMENT_WITHIN_MENU = false;
         public const bool ADMIN_MODE = true;
@@ -58,13 +44,7 @@ namespace Library
         public const bool IS_MEMBER_BORROWING_BOOK = true;
         public const bool IS_MEMBER_NOT_BORROWING_BOOK = false;
 
-        public const bool GOING_NEXT = true;
-        public const bool GOING_BACK = true;
         public const bool INPUT_VALUE = true;
-        public const string SIGN_IN_ERROR = "아이디 또는 비밀번호를 잘못 입력하셨습니다.\n다시 입력해주세요.\n";
-        public const string SEARCH_TYPE = "☞도서명:\n☞출판사:\n☞저자:";
-        public const string BOOK_ID_TO_BORROW= "☞대여할 도서 번호:";
-        public const string BOOK_ID_TO_DELETE = "☞반납할 도서 번호:";
         public const string NO_SEARCH_RESULT = "[입력하신 검색어를 포함하는 도서가 없습니다.]";
         public const string ESC_AND_ENTER = "                          [ESC]:뒤로가기    [ENTER]:다시 검색";
         public const string ESC_MESSAGE = "                                               [ESC]:뒤로가기";
@@ -158,6 +138,12 @@ namespace Library
         public const string ID = "Uid = root;";
         public const string PASSWORD = "Pwd = 0000;";
 
+        public enum Keyboard
+        {
+            ESCAPE = -3,
+            MOVING_CURSOR,
+            ENTER
+        }
         public enum SignIn
         {
             INPUT_ID = 8,         //left
@@ -182,6 +168,9 @@ namespace Library
             THIRD = 15,
             FOURTH = 16,
             FIFTH = 17,
+            LEFT = 25,
+            CONSOLE_HEIGHT = 40,
+            CONSOLE_WIDTH = 61,
             STEP = 1
         }
         public enum Registration
@@ -194,7 +183,7 @@ namespace Library
             SIXTH = 22,
             STEP = 3
         }
-        public enum ProfileMenu
+        public enum EditMenu
         {
             FIRST = 12,        //top
             SECOND = 15, 
@@ -207,7 +196,7 @@ namespace Library
         }
         public enum SearchMenu
         {
-            ALL = 0,
+            ALL = 0,            //top
             FIRST,
             SECOND,
             THIRD,

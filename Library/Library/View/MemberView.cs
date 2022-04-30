@@ -30,7 +30,7 @@ namespace Library
         }
         public void PrintBookIdInputScreen(List<BookVO> bookList)    //전체 도서 목록 출력
         {
-            logo.PrintSearchBox(Constants.BOOK_ID_TO_BORROW);        //도서번호 입력창
+            logo.PrintSearchBox("☞대여할 도서 번호:");        //도서번호 입력창
             adminView.PrintBookList(bookList);                 //도서 검색 결과 출력
         }
         public void PrintBookRentalSuccess(List<BookVO> myBookList)  //도서 대여 완료 메세지 + 회원의 대여 목록 출력
@@ -54,21 +54,21 @@ namespace Library
         {
             logo.PrintMenu("회원정보수정");
             Console.WriteLine(Constants.ESC_MESSAGE);
-            Console.WriteLine("\n\n        >수정하려는 정보를 선택해 [Enter]키를 누르세요<");
+            Console.WriteLine("\n\n        (수정하려는 정보를 선택해 [Enter]키를 누르세요)");
 
-            Console.SetCursorPosition(0, (int)Constants.ProfileMenu.FIRST);
+            Console.SetCursorPosition(0, (int)Constants.EditMenu.FIRST);
             Console.WriteLine("☞아이디: " + member.Id);
-            Console.SetCursorPosition(0, (int)Constants.ProfileMenu.SECOND);
+            Console.SetCursorPosition(0, (int)Constants.EditMenu.SECOND);
             Console.WriteLine("☞비밀번호: " + member.Password);
-            Console.SetCursorPosition(0, (int)Constants.ProfileMenu.THIRD);
+            Console.SetCursorPosition(0, (int)Constants.EditMenu.THIRD);
             Console.WriteLine("  비밀번호 재확인: ");
-            Console.SetCursorPosition(0, (int)Constants.ProfileMenu.FOURTH);
+            Console.SetCursorPosition(0, (int)Constants.EditMenu.FOURTH);
             Console.WriteLine("☞이름: " + member.Name);
-            Console.SetCursorPosition(0, (int)Constants.ProfileMenu.FIFTH);
+            Console.SetCursorPosition(0, (int)Constants.EditMenu.FIFTH);
             Console.WriteLine("☞나이: " + member.Age);
-            Console.SetCursorPosition(0, (int)Constants.ProfileMenu.SIXTH);
+            Console.SetCursorPosition(0, (int)Constants.EditMenu.SIXTH);
             Console.WriteLine("☞휴대전화: " + member.PhoneNumber);
-            Console.SetCursorPosition(0, (int)Constants.ProfileMenu.SEVENTH);
+            Console.SetCursorPosition(0, (int)Constants.EditMenu.SEVENTH);
             Console.WriteLine("☞주소: " + member.Address);
         }
         public void PrintSingUp()

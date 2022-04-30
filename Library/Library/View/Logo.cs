@@ -21,7 +21,7 @@ namespace Library
             Console.WriteLine("┃                                             **          ┃");
             Console.WriteLine("┃                                           **            ┃ ");
             Console.WriteLine("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-            Console.WriteLine("     >>메뉴를 방향키로 이동하고 [Enter]키를 눌러주세요<<");
+            Console.WriteLine(" [ESC]:뒤로가기                                [Enter]:선택");
         }
         public void PrintMenu(string menu)
         {
@@ -34,7 +34,7 @@ namespace Library
         public void PrintSearchBox(string searchWord)
         {
             Console.Clear();
-            Console.SetCursorPosition(0, 1);
+            Console.SetCursorPosition(0, (int)Constants.SearchMenu.FIRST);
             Console.WriteLine(searchWord);
             Console.Write("\n>>>>>>>>>>>>>>>>>>>>>>>[ESC]:뒤로가기<<<<<<<<<<<<<<<<<<<<<<<<");
         }
@@ -57,15 +57,14 @@ namespace Library
         public void PrintMain(string[] menu)
         {
             Console.Clear();
-            Console.SetWindowSize(61, 40);
-            
+            Console.SetWindowSize((int)Constants.Menu.CONSOLE_WIDTH, (int)Constants.Menu.CONSOLE_HEIGHT);
+
             PrintTitle();
             for (int i = 0; i < menu.Length; i++)
             {
-                Console.SetCursorPosition(25, 13 + i);
-                Console.WriteLine("☞" + menu[i]);
+                PrintMessage((int)Constants.Menu.LEFT, (int)Constants.Menu.FIRST + i, "☞" + menu[i], ConsoleColor.Gray);
             }
-            Console.SetCursorPosition(25, 13);
+            Console.SetCursorPosition((int)Constants.Menu.LEFT, (int)Constants.Menu.FIRST);
         }
         public void PrintSignIn()
         {

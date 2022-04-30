@@ -11,7 +11,7 @@ namespace Library
     {
         private BookDAO bookDatabaseManager;
         private Keyboard keyboard;
-        private Menu menuScreen;
+        private Logo logo;
         private SignIn signIn;                         //로그인
         private SearchingBook searchingBook;           //1. 도서검색
         private RegisteringBook registeringBook;       //2. 도서등록
@@ -19,11 +19,11 @@ namespace Library
         private DeletingBook deletingBook;             //4. 도서삭제
         private DeletingMember deletingMember;         //5. 회원관리
 
-        public Admin(Keyboard keyboard, Menu menuScreen)
+        public Admin(Keyboard keyboard)
         {
             bookDatabaseManager = new BookDAO();
             this.keyboard = keyboard;
-            this.menuScreen = menuScreen;
+            logo = new Logo();
 
             signIn = new SignIn(bookDatabaseManager);                
             searchingBook = new SearchingBook(bookDatabaseManager);
@@ -36,13 +36,14 @@ namespace Library
         {
             string success;
             int menu;
+            string[] textOfMemberMode = { "도서 검색", "도서 등록", "도서정보 수정", "도서 삭제", "회원정보 관리" };
 
             success = signIn.SignInAdmin();               //관리자 로그인
             if (success == Constants.ESC) return;         //로그인 도중 esc -> 뒤로가기
 
             while (Constants.ADMIN_MODE)                  //로그인 성공
             {
-                menuScreen.PrintAdminMode();              //관리자 모드 화면 출력
+                logo.PrintMain(textOfMemberMode);         //관리자 모드 화면 출력
                 keyboard.InitCursorPosition();            //커서 위치 조정
 
                 menu = keyboard.SelectMenu((int)Constants.Menu.FIRST, (int)Constants.Menu.FIFTH, (int)Constants.Menu.STEP); //메뉴선택 완료

@@ -6,11 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MySql.Data" Version="8.0.28" />
+    <Compile Remove="View\UIView\**" />
+    <EmbeddedResource Remove="View\UIView\**" />
+    <None Remove="View\UIView\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="View\UIView\" />
+    <PackageReference Include="MySql.Data" Version="8.0.28" />
   </ItemGroup>
 
 </Project>

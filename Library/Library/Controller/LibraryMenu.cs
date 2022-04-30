@@ -10,16 +10,16 @@ namespace Library
     class LibraryMenu
     {
         Keyboard keyboard;
-        Menu menuScreen;
+        Logo logo;
         Member member;
         Admin admin;
 
         public LibraryMenu()
         {
             keyboard = new Keyboard();
-            menuScreen = new Menu();
+            logo = new Logo();
             member = new Member(keyboard);
-            admin = new Admin(keyboard, menuScreen);
+            admin = new Admin(keyboard);
         }
         private void StartMain(int top)
         {
@@ -36,8 +36,9 @@ namespace Library
         public void StartLibrary()  //메인화면
         {
             int key;
+            string[] menu = { "회원 모드", "관리자 모드", "종료" };
 
-            menuScreen.PrintMainMenu();     //메인화면 출력
+            logo.PrintMain(menu);     //메인화면 출력
             keyboard.InitCursorPosition();  //커서 위치 조정
 
             while (Constants.KEYBOARD_OPERATION)
@@ -51,7 +52,7 @@ namespace Library
                 else if (key == (int)Constants.Keyboard.ENTER)   //메뉴입력 -> 해당 메뉴로 이동
                 {
                     StartMain(keyboard.Top);
-                    menuScreen.PrintMainMenu();
+                    logo.PrintMain(menu);
                     keyboard.InitCursorPosition();  //커서 위치 조정
                 }
 

@@ -12,7 +12,7 @@ namespace Library
         private MemberVO member;
         private BookDAO bookDatabaseManager;
         private Keyboard keyboard;
-        private Menu menuScreen;
+        private Logo logo;
         private SignIn signIn;                //로그인
         private SignUp signUp;                //회원가입
         private SearchingBook searchingBook;  //1. 도서검색
@@ -23,7 +23,7 @@ namespace Library
         {
             bookDatabaseManager = new BookDAO();
             this.keyboard = keyboard;
-            menuScreen = new Menu();
+            logo = new Logo();
             signIn = new SignIn(bookDatabaseManager);
             signUp = new SignUp(bookDatabaseManager);
             searchingBook = new SearchingBook(bookDatabaseManager);
@@ -76,13 +76,15 @@ namespace Library
         public void StartMemberMode(int maxTop)   
         {
             int menu;
+            string[] textOfMemberMenu = { "로그인", "회원가입" };
+            string[] textOfMemberMode = { "도서 검색", "도서 대여", "도서 반납", "개인 정보 수정" };
 
             while (Constants.MEMBER_MODE)
             {
                 keyboard.InitCursorPosition();
 
-                if (maxTop == (int)Constants.Menu.SECOND) menuScreen.PrintMemberMenu();//1.로그인  2.회원가입
-                else menuScreen.PrintMemberMode();             //1.도서검색  2.도서대여  3.도서반납  4.개인정보수정  5.종료
+                if (maxTop == (int)Constants.Menu.SECOND) logo.PrintMain(textOfMemberMenu);//1.로그인  2.회원가입
+                else logo.PrintMain(textOfMemberMode);           //1.도서검색  2.도서대여  3.도서반납  4.개인정보수정  5.종료
                 
                 menu = keyboard.SelectMenu(13, maxTop, 1);     //메뉴선택
                 if (menu == (int)Constants.Keyboard.ESCAPE) break;           //메뉴선택 중 뒤로가기 -> 메인화면으로
