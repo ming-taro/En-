@@ -36,7 +36,7 @@ namespace Library
 
             while (Constants.INPUT_VALUE)
             {
-                bookId = text.EnterText(20, 1, "");       //삭제할 도서번호를 입력받음
+                bookId = text.EnterText(20, (int)Constants.SearchMenu.FIRST, "");       //삭제할 도서번호를 입력받음
 
                 if (bookId.Equals(Constants.ESC))
                 {
@@ -44,19 +44,19 @@ namespace Library
                 }
                 else if(Regex.IsMatch(bookId, Constants.BOOK_ID_REGEX) == Constants.IS_NOT_MATCH)  //입력형식에 맞지 않은 입력
                 {
-                    logo.PrintMessage(0, 2, Constants.MESSAGE_ABOUT_BOOK_ID_NOT_MATCH, ConsoleColor.Red);
+                    logo.PrintMessage(0, (int)Constants.SearchMenu.SECOND, Constants.MESSAGE_ABOUT_BOOK_ID_NOT_MATCH, ConsoleColor.Red);
                 }
                 else if (IsBookInList(bookId, bookList) == Constants.IS_BOOK_NOT_IN_LIST)      //현재 조회중인 도서목록에 없는 도서번호를 입력할 경우
                 {
-                    logo.PrintMessage(0, 2, Constants.MESSAGE_ABOUT_BOOK_NOT_IN_LIST, ConsoleColor.Red);
+                    logo.PrintMessage(0, (int)Constants.SearchMenu.SECOND, Constants.MESSAGE_ABOUT_BOOK_NOT_IN_LIST, ConsoleColor.Red);
                 }
                 else if (bookDatabaseManager.IsBookOnLoan(bookId))   //도서목록에 있지만 대여중인 회원이 있는 경우 -> 도서 삭제 불가
                 {
-                    logo.PrintMessage(0, 2, Constants.MESSAGE_ABOUT_BOOK_ON_LOAN, ConsoleColor.Red);
+                    logo.PrintMessage(0, (int)Constants.SearchMenu.SECOND, Constants.MESSAGE_ABOUT_BOOK_ON_LOAN, ConsoleColor.Red);
                 }
                 else break;   //도서삭제 가능
 
-                logo.RemoveLine(20, 1);
+                logo.RemoveLine(20, (int)Constants.SearchMenu.FIRST);
             }
 
             return bookId;
@@ -86,7 +86,7 @@ namespace Library
                 searchWord = searchingBook.InputSearchWord((int)Constants.SearchMenu.LEFT_VALUE_OF_INPUT, searchType, (int)Constants.SearchMenu.FOURTH);   //검색어 입력받기
                 if (searchWord.Equals(Constants.ESC)) continue;            //검색어 입력 중 esc -> 검색유형 선택으로
 
-                adminView.PrintBookIdInputScreen(searchingBook.BookList, "☞삭제할 도서 번호:");  //도서번호 입력칸 + 도서 검색 결과 출력
+                adminView.PrintBookIdInputScreen("도서 삭제", "☞삭제할 도서 번호:", searchingBook.BookList);  //도서번호 입력칸 + 도서 검색 결과 출력
 
                 bookId = InputBookId(searchingBook.BookList);              //삭제할 도서번호 입력
                 if (bookId.Equals(Constants.ESC)) continue;                //도서번호 입력 중 Esc -> 도서검색으로 돌아감

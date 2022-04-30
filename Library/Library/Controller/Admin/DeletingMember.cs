@@ -40,7 +40,7 @@ namespace Library
 
             while (Constants.INPUT_VALUE)
             {
-                memberId = text.EnterText(22, 1, "");     //삭제할 회원 아이디를 입력받음
+                memberId = text.EnterText(22, (int)Constants.SearchMenu.FIRST, "");     //삭제할 회원 아이디를 입력받음
 
                 if (memberId.Equals(Constants.ESC))           //회원아이디 입력 중 Esc -> 뒤로가기
                 {
@@ -48,18 +48,18 @@ namespace Library
                 }
                 else if (IsMemberInList(memberId, memberList) == Constants.IS_MEMBER_NOT_IN_LIST)   //존재하지 않는 회원을 삭제하려고 할 때
                 {
-                    logo.PrintMessage(0, 2, Constants.MESSAGE_ABOUT_MEMBER_NOT_IN_LIST, ConsoleColor.Red);
+                    logo.PrintMessage(0, (int)Constants.SearchMenu.SECOND, Constants.MESSAGE_ABOUT_MEMBER_NOT_IN_LIST, ConsoleColor.Red);
                 }
                 else if (bookDatabaseManager.IsMemberBorrowingBook(memberId))  //해당 회원은 도서를 대여중 -> 삭제불가
                 {
-                    logo.PrintMessage(0, 2, Constants.MESSAGE_ABOUT_MEMBER_BORROWING_BOOK, ConsoleColor.Red);
+                    logo.PrintMessage(0, (int)Constants.SearchMenu.SECOND, Constants.MESSAGE_ABOUT_MEMBER_BORROWING_BOOK, ConsoleColor.Red);
                 }
                 else
                 {
                     break;
                 }
 
-                logo.RemoveLine(22, 1);
+                logo.RemoveLine(22, (int)Constants.SearchMenu.FIRST);
             }
             return memberId;
         }

@@ -25,18 +25,20 @@ namespace Library
         }
         public void PrintMenu(string menu)
         {
+            int left = ((int)Constants.Menu.CONSOLE_WIDTH - (menu.Length * 2)) / 2;
             Console.Clear();
-            Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-            Console.SetCursorPosition(25, 2);
+            Console.WriteLine("◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆");
+            Console.SetCursorPosition(left, 2);
             Console.WriteLine("[" + menu + "]\n");
-            Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+            Console.WriteLine("◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆");
         }
-        public void PrintSearchBox(string searchWord)
+        public void PrintSearchBox(string menu, string searchWord)
         {
-            Console.Clear();
+            PrintMenu(menu);
+            Console.WriteLine(Constants.ESC_MESSAGE);
             Console.SetCursorPosition(0, (int)Constants.SearchMenu.FIRST);
             Console.WriteLine(searchWord);
-            Console.Write("\n>>>>>>>>>>>>>>>>>>>>>>>[ESC]:뒤로가기<<<<<<<<<<<<<<<<<<<<<<<<");
+            Console.Write("\n>>>>>>>>>>>>>>>>>>>>>>>> 도서 목록 <<<<<<<<<<<<<<<<<<<<<<<<<<");
         }
         public void PrintMessage(int left, int top, string message, ConsoleColor color)
         {
@@ -70,7 +72,7 @@ namespace Library
         {
             PrintMenu("로그인");
             PrintMessage(0, Console.CursorTop, Constants.ESC_MESSAGE, ConsoleColor.Gray);
-            PrintMessage(0, (int)Constants.SignIn.ID, "아이디:", ConsoleColor.Gray);
+            PrintMessage(0, (int)Constants.SignIn.ID, "아이디  :", ConsoleColor.Gray);
             PrintMessage(0, (int)Constants.SignIn.PASSWORD, "비밀번호:", ConsoleColor.Gray);
         }
         public void PrintSignInFailure()

@@ -30,7 +30,7 @@ namespace Library
         }
         public void PrintBookIdInputScreen(List<BookVO> bookList)    //전체 도서 목록 출력
         {
-            logo.PrintSearchBox("☞대여할 도서 번호:");        //도서번호 입력창
+            logo.PrintSearchBox("도서 대여", "☞대여할 도서 번호:");        //도서번호 입력창
             adminView.PrintBookList(bookList);                 //도서 검색 결과 출력
         }
         public void PrintBookRentalSuccess(List<BookVO> myBookList)  //도서 대여 완료 메세지 + 회원의 대여 목록 출력
@@ -52,7 +52,7 @@ namespace Library
         }
         public void PrintProfile(MemberVO member) //회원정보수정 화면 출력
         {
-            logo.PrintMenu("회원정보수정");
+            logo.PrintMenu("회원 정보 수정");
             Console.WriteLine(Constants.ESC_MESSAGE);
             Console.WriteLine("\n\n        (수정하려는 정보를 선택해 [Enter]키를 누르세요)");
 
@@ -74,13 +74,14 @@ namespace Library
         public void PrintSingUp()
         {
             logo.PrintMenu("회원가입");
-            logo.PrintMessage(0, (int)Constants.SignUp.ID, "아이디:\n(5~10자의 영어, 숫자만 입력해주세요.)", ConsoleColor.Gray);
-            logo.PrintMessage(0, (int)Constants.SignUp.PASSWORD, "비밀번호:\n(5~10자의 영어, 숫자만 입력해주세요.)", ConsoleColor.Gray);
-            logo.PrintMessage(0, (int)Constants.SignUp.RECONFIRM, "비밀번호 재확인:", ConsoleColor.Gray);
-            logo.PrintMessage(0, (int)Constants.SignUp.NAME, "이름:\n(영어, 한글만 입력해주세요.)", ConsoleColor.Gray);
-            logo.PrintMessage(0, (int)Constants.SignUp.AGE, "나이:\n(숫자만 입력해주세요.)", ConsoleColor.Gray);
-            logo.PrintMessage(0, (int)Constants.SignUp.PHONE_NUMBER, "휴대전화:\n(숫자만 입력해주세요.(입력형식: 010-0000-0000))", ConsoleColor.Gray);
-            logo.PrintMessage(0, (int)Constants.SignUp.ADDRESS, "주소:\n(ex: 서울특별시 광진구 군자동)", ConsoleColor.Gray);
+            Console.WriteLine(Constants.ESC_MESSAGE);
+            logo.PrintMessage(0, (int)Constants.Registration.FIRST, "아이디:\n(5~10자의 영어, 숫자만 입력해주세요.)", ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.Registration.SECOND, "비밀번호:\n(5~10자의 영어, 숫자만 입력해주세요.)", ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.Registration.THIRD, "비밀번호 재확인:", ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.Registration.FOURTH, "이름:\n(영어, 한글만 입력해주세요.)", ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.Registration.FIFTH, "나이:\n(숫자만 입력해주세요.)", ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.Registration.SIXTH, "휴대전화:\n(숫자만 입력해주세요.(입력형식: 010-0000-0000))", ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.Registration.SEVENTH, "주소:\n(ex: 서울특별시 광진구 군자동)", ConsoleColor.Gray);
         }
         public void PrintSuccessMessage()
         {

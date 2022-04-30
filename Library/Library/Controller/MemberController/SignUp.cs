@@ -115,25 +115,25 @@ namespace Library
 
             memberView.PrintSingUp();             //회원가입화면 출력
 
-            id = InputId(8, (int)Constants.SignUp.ID);
+            id = InputId(8, (int)Constants.Registration.FIRST);
             if (id.Equals(Constants.ESC)) return; //esc -> 뒤로가기
 
-            password = InputPassword(10, (int)Constants.SignUp.PASSWORD, Constants.MEMBER_ID_REGEX, Constants.MESSAGE_ABOUT_MEMBER_ID);
+            password = InputPassword(10, (int)Constants.Registration.SECOND, Constants.MEMBER_ID_REGEX, Constants.MESSAGE_ABOUT_MEMBER_ID);
             if (password.Equals(Constants.ESC)) return;
 
-            reconfirm = ReconfirmPassword(17, (int)Constants.SignUp.RECONFIRM, password);
+            reconfirm = ReconfirmPassword(17, (int)Constants.Registration.THIRD, password);
             if (reconfirm.Equals(Constants.ESC)) return;
             
-            name = InputPassword(6, (int)Constants.SignUp.NAME, Constants.NAME_REGEX, Constants.MESSAGE_ABOUT_MEMBER_NAME);
+            name = InputPassword(6, (int)Constants.Registration.FOURTH, Constants.NAME_REGEX, Constants.MESSAGE_ABOUT_MEMBER_NAME);
             if (name.Equals(Constants.ESC)) return;
 
-            age = InputPassword(6, (int)Constants.SignUp.AGE, Constants.AGE_REGEX, Constants.MESSAGE_ABOUT_AGE);
+            age = InputPassword(6, (int)Constants.Registration.FIFTH, Constants.AGE_REGEX, Constants.MESSAGE_ABOUT_AGE);
             if (age.Equals(Constants.ESC)) return;
 
-            phoneNumber = InputPassword(10, (int)Constants.SignUp.PHONE_NUMBER, Constants.PHONE_NUMBER_REGEX, Constants.MESSAGE_ABOUT_PHONE_NUMBER);
+            phoneNumber = InputPassword(10, (int)Constants.Registration.SIXTH, Constants.PHONE_NUMBER_REGEX, Constants.MESSAGE_ABOUT_PHONE_NUMBER);
             if (phoneNumber.Equals(Constants.ESC)) return;
 
-            address = InputPassword(6, (int)Constants.SignUp.ADDRESS, Constants.ADDRESS_REGEX, Constants.MESSAGE_ABOUT_ADDRESS);
+            address = InputPassword(6, (int)Constants.Registration.SEVENTH, Constants.ADDRESS_REGEX, Constants.MESSAGE_ABOUT_ADDRESS);
             if (address.Equals(Constants.ESC)) return;
 
             member = new MemberVO(id, password, name, age, phoneNumber, address);   //입력이 완료된 회원 정보

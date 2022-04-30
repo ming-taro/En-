@@ -34,7 +34,7 @@ namespace Library
         }
         public void PrintSearchResult(List<BookVO> bookList)  //도서검색 -> 검색결과로 나온 책목록 출력
         {
-            logo.PrintSearchBox("☞도서명:\n☞출판사:\n☞저자:");
+            logo.PrintSearchBox("도서 검색", "☞도서명:\n☞출판사:\n☞저자:");
             PrintBookList(bookList);                  
             logo.PrintMessage(0, Console.CursorTop - 1, Constants.ESC_AND_ENTER, ConsoleColor.Yellow);
         }
@@ -48,9 +48,9 @@ namespace Library
             logo.PrintLine();
             logo.PrintMessage(0, Console.CursorTop - 1, Constants.ESC_MESSAGE, ConsoleColor.Yellow);
         }
-        public void PrintBookIdInputScreen(List<BookVO> bookList, string inputType) //도서삭제 -> 삭제할 도서번호 입력칸 + 도서검색결과 출력
+        public void PrintBookIdInputScreen(string menu, string inputType, List<BookVO> bookList) //도서삭제 -> 삭제할 도서번호 입력칸 + 도서검색결과 출력
         {                                                                           //도서정보 수정 -> 수정할 도서번호 입력창 출력 + 도서검색결과 출력
-            logo.PrintSearchBox(inputType);
+            logo.PrintSearchBox(menu, inputType);
             PrintBookList(bookList);
         }
         public void PrintDeletedBook(BookVO book)   //도서삭제 -> 삭제한 도서정보 출력
@@ -88,7 +88,7 @@ namespace Library
         }
         public void PrintMemberIdInputScreen(List<MemberVO> memberList)  //회원관리 -> 회원아이디 입력칸 + 회원목록 출력
         {
-            logo.PrintSearchBox("☞삭제할 회원 아이디:");
+            logo.PrintSearchBox("회원 삭제", "☞삭제할 회원 아이디:");
             PrintMemberList(memberList);
         }
         public void PrintSuccess(MemberVO member)   //회원관리 -> 회원정보 삭제 완료 메세지 + 삭제한 회원정보

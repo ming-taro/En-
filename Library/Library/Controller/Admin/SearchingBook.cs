@@ -58,7 +58,7 @@ namespace Library
         {
             int searchType;
 
-            logo.PrintSearchBox("☞도서명:\n☞출판사:\n☞저자:");
+            logo.PrintSearchBox("도서 검색", "☞도서명:\n☞출판사:\n☞저자:");
             adminView.PrintBookList(bookDatabaseManager.MakeBookList((int)Constants.SearchMenu.ALL, ""));   //전체도서 출력
             
             keyboard.SetPosition(0, (int)Constants.SearchMenu.FIRST);      //커서위치

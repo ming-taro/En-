@@ -77,7 +77,7 @@ namespace Library
         {
             int menu;
             string[] textOfMemberMenu = { "로그인", "회원가입" };
-            string[] textOfMemberMode = { "도서 검색", "도서 대여", "도서 반납", "개인 정보 수정" };
+            string[] textOfMemberMode = { "도서 검색", "도서 대여", "도서 반납", "회원 정보 수정" };
 
             while (Constants.MEMBER_MODE)
             {

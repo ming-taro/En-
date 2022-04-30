@@ -29,10 +29,10 @@ namespace Library
 
             while (Constants.INPUT_VALUE)
             {
-                id = text.EnterText((int)Constants.SignIn.INPUT_ID, (int)Constants.SignIn.ID, "");                    //아이디 입력
+                id = text.EnterText((int)Constants.SignIn.INPUT, (int)Constants.SignIn.ID, "");                    //아이디 입력
                 if (id.Equals(Constants.ESC)) return Constants.ESC;
 
-                password = text.EnterText((int)Constants.SignIn.INPUT_PASSWORD, (int)Constants.SignIn.PASSWORD, "*"); //비밀번호 입력
+                password = text.EnterText((int)Constants.SignIn.INPUT, (int)Constants.SignIn.PASSWORD, "*"); //비밀번호 입력
                 if (password.Equals(Constants.ESC)) return Constants.ESC;
 
                 if (id.Equals(adminAccount.Id) && password.Equals(adminAccount.Password)) break;   //관리자 로그인 완료
@@ -51,10 +51,10 @@ namespace Library
 
             while (Constants.INPUT_VALUE)
             {
-                id = text.EnterText((int)Constants.SignIn.INPUT_ID, (int)Constants.SignIn.ID, "");                     //아이디 입력
+                id = text.EnterText((int)Constants.SignIn.INPUT, (int)Constants.SignIn.ID, "");                     //아이디 입력
                 if (id.Equals(Constants.ESC)) return Constants.ESC;
 
-                password = text.EnterText((int)Constants.SignIn.INPUT_PASSWORD, (int)Constants.SignIn.PASSWORD, "*");  //비밀번호 입력
+                password = text.EnterText((int)Constants.SignIn.INPUT, (int)Constants.SignIn.PASSWORD, "*");  //비밀번호 입력
                 if (password.Equals(Constants.ESC)) return Constants.ESC;
 
                 if (bookDatabaseManager.IsExistingMember(id, password)) break;  //존재하는 회원 -> 로그인 성공

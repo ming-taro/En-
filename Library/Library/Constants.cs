@@ -146,20 +146,9 @@ namespace Library
         }
         public enum SignIn
         {
-            INPUT_ID = 8,         //left
-            INPUT_PASSWORD = 10,  //left
+            INPUT = 10,           //left
             ID = 7,               //top
             PASSWORD = 9          //top
-        }
-        public enum SignUp
-        {
-            ID = 5,              //left
-            PASSWORD = 8,
-            RECONFIRM = 11,
-            NAME = 14,
-            AGE = 17,
-            PHONE_NUMBER = 20,
-            ADDRESS = 23
         }
         public enum Menu
         {
@@ -181,6 +170,7 @@ namespace Library
             FOURTH = 16,
             FIFTH = 19,
             SIXTH = 22,
+            SEVENTH = 25,
             STEP = 3
         }
         public enum EditMenu
@@ -197,7 +187,7 @@ namespace Library
         public enum SearchMenu
         {
             ALL = 0,            //top
-            FIRST,
+            FIRST = 6,
             SECOND,
             THIRD,
             FOURTH,
