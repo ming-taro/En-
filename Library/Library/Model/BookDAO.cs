@@ -73,9 +73,9 @@ namespace Library
 
             return bookList;
         }
-        public List<BookVO> MakeMyBookList(string memberId)    //회원의 도서대여목록
+        public List<BorrowBookVO> MakeMyBookList(string memberId)    //회원의 도서대여목록
         {
-            List<BookVO> borrowList = new List<BookVO>();
+            List<BorrowBookVO> borrowList = new List<BorrowBookVO>();
 
             MySqlCommand command = new MySqlCommand(Constants.RENTAL_LIST, connection);
             command.Parameters.Add(new MySqlParameter("@memberId", memberId));
@@ -83,7 +83,7 @@ namespace Library
             MySqlDataReader table = command.ExecuteReader();
             while (table.Read())
             {
-                borrowList.Add(new BookVO(table["id"].ToString(), table["name"].ToString(), table["publisher"].ToString(), table["author"].ToString(), table["price"].ToString(), table["quantity"].ToString()));
+                borrowList.Add(new BorrowBookVO(table["id"].ToString(), table["name"].ToString(), table["publisher"].ToString(), table["author"].ToString(), table["price"].ToString(), table["rentalPeriod"].ToString()));
             }
             table.Close();
 
@@ -195,6 +195,7 @@ namespace Library
             MySqlCommand command = new MySqlCommand(Constants.ADDITION_TO_RENTAL_LIST, connection);  //대여목록에 추가
             command.Parameters.Add(new MySqlParameter("@memberId", memberId));
             command.Parameters.Add(new MySqlParameter("@bookId", bookId));
+            command.Parameters.Add(new MySqlParameter("@rentalPeriod", DateTime.Now.ToString("yyyy.MM.dd") + " ~ " + DateTime.Now.AddDays(14).ToString("yyyy.MM.dd")));
             command.ExecuteNonQuery();
 
             command = new MySqlCommand(Constants.DECREASE_IN_BOOK_QUANTITY, connection);   //도서수량 -1

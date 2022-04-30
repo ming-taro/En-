@@ -101,8 +101,8 @@ namespace Library
         public const string PUBLISHER_SEARCH = "select*from book where publisher like '%{0}%';";
         public const string AUTHOR_SEARCH = "select*from book where author like '%{0}%';";
 
-        public const string RENTAL_LIST = "select * from book inner join borrowbook on book.id = borrowbook.bookId and borrowbook.memberId = @memberId;";
-        public const string ADDITION_TO_RENTAL_LIST = "INSERT INTO borrowBook(memberId,bookId) VALUES (@memberId, @bookId);";
+        public const string RENTAL_LIST = "select * from book join borrowbook on book.id = borrowbook.bookId and borrowbook.memberId = @memberId;";
+        public const string ADDITION_TO_RENTAL_LIST = "INSERT INTO borrowBook(memberId,bookId,rentalPeriod) VALUES (@memberId, @bookId, @rentalPeriod);";
         public const string DELETION_FROM_RENTAL_LIST = "DELETE FROM borrowBook WHERE memberId = @memberId and bookId = @bookId;";
         public const string DECREASE_IN_BOOK_QUANTITY = "UPDATE book SET quantity = quantity - 1 WHERE id=@bookId;";
         public const string INCREASE_IN_BOOK_QUANTITY = "UPDATE book SET quantity = quantity + 1 WHERE id=@bookId;";
@@ -131,7 +131,7 @@ namespace Library
         //Connection
         public const string SERVER = "Server = localhost;";
         public const string PORT = "Port = 3306;";
-        public const string DATABASE = "Database = booklist;";
+        public const string DATABASE = "Database = ParkMinJi_Library;";
         public const string ID = "Uid = root;";
         public const string PASSWORD = "Pwd = 0000;";
 

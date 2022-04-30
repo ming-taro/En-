@@ -15,7 +15,7 @@ namespace Library
             logo = new Logo();
             adminView = new AdminView();
         }
-        public void PrintMyBookList(List<BookVO> myBookList) //회원의 도서 대여 목록 출력
+        public void PrintMyBookList(List<BorrowBookVO> myBookList) //회원의 도서 대여 목록 출력
         {
             logo.PrintMessage(0, Console.CursorTop - 1, ">>>>>>>>>>>>>>>>>>>>> 도서 대여 목록 <<<<<<<<<<<<<<<<<<<<<<<<", ConsoleColor.Gray);
             Console.SetCursorPosition(0, Console.CursorTop - 1);
@@ -23,8 +23,7 @@ namespace Library
             logo.PrintLine();
             for (int i = 0; i < myBookList.Count; i++)
             {
-                Console.Write(myBookList[i]);
-                logo.RemoveLine(0, Console.CursorTop);    //도서 수량 지움
+                Console.WriteLine(myBookList[i]);
                 logo.PrintLine();
             }
         }
@@ -33,20 +32,19 @@ namespace Library
             logo.PrintSearchBox("도서 대여", "☞대여할 도서 번호:");        //도서번호 입력창
             adminView.PrintBookList(bookList);                 //도서 검색 결과 출력
         }
-        public void PrintBookRentalSuccess(List<BookVO> myBookList)  //도서 대여 완료 메세지 + 회원의 대여 목록 출력
+        public void PrintBookRentalSuccess(List<BorrowBookVO> myBookList)  //도서 대여 완료 메세지 + 회원의 대여 목록 출력
         {
             logo.PrintMenu("도서 대여 완료");
             PrintMyBookList(myBookList);    
             logo.PrintMessage(0, Console.CursorTop - 1, Constants.ESC_AND_ENTER, ConsoleColor.Yellow);
         }
-        public void PrintBookReturnSuccess(BookVO book)              //도서 반납 완료 메세지 + 반납한 도서 정보 출력
+        public void PrintBookReturnSuccess(BorrowBookVO book)              //도서 반납 완료 메세지 + 반납한 도서 정보 출력
         {
             logo.PrintMenu("도서 반납 완료");
             logo.PrintMessage(21, Console.CursorTop + 1, ">반납한 도서 정보<", ConsoleColor.Gray);
             Console.SetCursorPosition(0, Console.CursorTop - 1);
             logo.PrintLine();
-            Console.Write(book);
-            logo.RemoveLine(0, Console.CursorTop);  //수량 지움
+            Console.WriteLine(book);
             logo.PrintLine();
             logo.PrintMessage(0, Console.CursorTop - 1, Constants.ESC_MESSAGE, ConsoleColor.Yellow);
         }

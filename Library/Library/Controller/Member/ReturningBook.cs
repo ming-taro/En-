@@ -22,7 +22,7 @@ namespace Library
             memberView = new MemberView();
             logo = new Logo();
         }
-        private bool IsBookIBorrowed(string bookId, List<BookVO> myBookList)              //회원이 대여중인 도서인지 검사
+        private bool IsBookIBorrowed(string bookId, List<BorrowBookVO> myBookList)          //회원이 대여중인 도서인지 검사
         {
             for (int i = 0; i < myBookList.Count; i++)
             {
@@ -31,7 +31,7 @@ namespace Library
 
             return Constants.IS_BOOK_I_NEVER_BORROWED;  //대여하지 않은 도서 -> 반납불가
         }
-        private string InputBookId(string memberId, List<BookVO> myBookList)
+        private string InputBookId(string memberId, List<BorrowBookVO> myBookList)
         {
             string bookId;
 
@@ -61,7 +61,7 @@ namespace Library
 
             return bookId;
         }
-        private BookVO FindBook(string bookId, List<BookVO> myBookList)  //도서번호로 해당 도서정보 찾기
+        private BorrowBookVO FindBook(string bookId, List<BorrowBookVO> myBookList)  //도서번호로 해당 도서정보 찾기
         {
             int i = 0;
 
@@ -74,7 +74,7 @@ namespace Library
         }
         public void ReturnBook(string memberId, Keyboard keyboard) 
         {
-            List<BookVO> myBookList = bookDatabaseManager.MakeMyBookList(memberId); //현재 로그인한 회원의 도서대여목록
+            List<BorrowBookVO> myBookList = bookDatabaseManager.MakeMyBookList(memberId); //현재 로그인한 회원의 도서대여목록
 
             logo.PrintSearchBox("도서 반납", "☞반납할 도서 번호:");    //도서번호 입력창
             Console.WriteLine();

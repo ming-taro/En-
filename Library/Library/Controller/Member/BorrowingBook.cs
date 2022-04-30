@@ -32,7 +32,7 @@ namespace Library
 
             return Constants.IS_BOOK_NOT_IN_LIST;    //현재 조회중인 도서목록에 없는 도서를 대여하려고 함
         }
-        private bool IsBookIBorrowed(string bookId, List<BookVO> myBookList)              //회원이 대여중인 도서인지 검사
+        private bool IsBookIBorrowed(string bookId, List<BorrowBookVO> myBookList)              //회원이 대여중인 도서인지 검사
         {
             for (int i = 0; i < myBookList.Count; i++)
             {
@@ -50,7 +50,7 @@ namespace Library
 
             return Constants.IS_QUANTITY_MORE_THAN_ONE;   //대여 가능 수량이 남아있음 -> 대여가능
         }
-        private string InputBookId(List<BookVO> bookList, List<BookVO> myBookList)    //도서명 입력 후 도서번호 입력
+        private string InputBookId(List<BookVO> bookList, List<BorrowBookVO> myBookList)    //도서명 입력 후 도서번호 입력
         {
             string bookId;
 
@@ -89,7 +89,7 @@ namespace Library
             int searchType;        //검색유형
             string searchWord;     //검색어
             string bookId;         //도서번호
-            List<BookVO> myBookList = bookDatabaseManager.MakeMyBookList(memberId); //현재 로그인한 회원의 도서대여목록
+            List<BorrowBookVO> myBookList = bookDatabaseManager.MakeMyBookList(memberId); //현재 로그인한 회원의 도서대여목록
 
             while (Constants.INPUT_VALUE)
             {

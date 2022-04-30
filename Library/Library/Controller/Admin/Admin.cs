@@ -58,7 +58,7 @@ namespace Library
         {
             string success;
             int menu;
-            string[] textOfMemberMode = { "도서 검색", "도서 등록", "도서정보 수정", "도서 삭제", "회원정보 관리" };
+            string[] textOfMemberMode = { "도서 검색", "도서 등록", "도서 정보 수정", "도서 삭제", "회원 정보 관리" };
 
             success = signIn.SignInAdmin();               //관리자 로그인
             if (success == Constants.ESC) return;         //로그인 도중 esc -> 뒤로가기
