@@ -90,6 +90,7 @@ namespace Library
             myBookList = bookDatabaseManager.MakeMyBookList(Constants.RENTAL_LIST, memberId);  //도서반납 후 대여목록
 
             keyboard.PressESC(); //도서 반납 후 Esc -> 회원모드로 돌아감
+            Console.CursorVisible = Constants.IS_VISIBLE_CURSOR;
         }
     }
 }

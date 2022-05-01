@@ -42,9 +42,12 @@ namespace Library
         public const bool IS_MEMBER_BORROWING_BOOK = true;
         public const bool IS_MEMBER_NOT_BORROWING_BOOK = false;
 
-        public const string ESC_AND_ENTER = "                          [ESC]:뒤로가기    [ENTER]:다시 검색";
-        public const string ESC_MESSAGE = "                                              [ESC]:뒤로가기";
-        public const string REMOVE_LINE = "                                                             ";
+        public const bool IS_VISIBLE_CURSOR = true;
+        public const bool IS_INVISIBLE_CURSOR = false;
+
+        public const string ESC_AND_ENTER = "                          [ESC]:뒤로가기    [ENTER]:다시 검색";//--->삭제할 코드
+        public const string ESC_MESSAGE = "                                              [ESC]:뒤로가기";//--->삭제할 코드
+        public const string REMOVE_LINE = "                                                             ";//--->삭제할 코드
 
         //EnteringText
         public const bool IS_MODIFIERS = true;
@@ -187,6 +190,8 @@ namespace Library
         }
         public enum SearchMenu
         {
+            ESC_TOP = 7,
+            ESC_LEFT = 65,
             LEFT = 20,
             ALL = 0,            //top
             ZERO = 11,

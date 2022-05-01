@@ -49,7 +49,10 @@ namespace Library
         public void PrintSearchResult(List<BookVO> bookList)  //도서검색 -> 검색결과로 나온 책목록 출력
         {
             PrintBookSearch(bookList);
-            logo.PrintMessage(65, Console.CursorTop - 1, "[ESC]: 뒤로가기     [ENTER]: 재검색", ConsoleColor.Gray);
+            logo.PrintMessage((int)Constants.SearchMenu.ESC_LEFT, (int)Constants.SearchMenu.ESC_TOP, "[ESC]: 뒤로가기     [ENTER]: 재검색", ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.SearchMenu.SIXTH, "검색 결과(총 " + bookList.Count + "건)", ConsoleColor.Gray);
+            Console.WindowTop = 0;
+            Console.CursorVisible = Constants.IS_INVISIBLE_CURSOR;
         }
         public void PrintRegisteredBook(BookVO book)    //도서등록 -> 등록한 도서정보 출력
         {

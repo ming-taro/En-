@@ -43,7 +43,8 @@ namespace Library
             logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.ZERO, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", ConsoleColor.Gray);
             logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.FIRST, "☞대출할 도서 번호:", ConsoleColor.Gray);
             logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.SECOND, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", ConsoleColor.Gray);
-            Console.SetCursorPosition(0, (int)Constants.SearchMenu.FOURTH);
+            logo.PrintMessage(0, (int)Constants.SearchMenu.FOURTH, "검색 결과(총 " + bookList.Count + "건)", ConsoleColor.Gray);
+            Console.SetCursorPosition(0, Console.CursorTop - 1);
             PrintBookList(bookList);    //도서 검색 결과 출력
         }
         public void PrintBookRentalSuccess(List<BorrowBookVO> myBookList)  //도서 대여 완료 메세지 + 회원의 대여 목록 출력
@@ -53,6 +54,7 @@ namespace Library
             logo.PrintMessage(0, (int)Constants.SearchMenu.ZERO, "대출 정보 조회", ConsoleColor.Gray);
             PrintMyBookList(myBookList);
             Console.WindowTop = 0;
+            Console.CursorVisible = Constants.IS_INVISIBLE_CURSOR;
         }
         public void PrintBookReturn(List<BorrowBookVO> myBookList)
         {
@@ -60,7 +62,7 @@ namespace Library
             logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.ZERO, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", ConsoleColor.Gray);
             logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.FIRST, "☞반납할 도서 번호:", ConsoleColor.Gray);
             logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.SECOND, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", ConsoleColor.Gray);
-            Console.SetCursorPosition(0, (int)Constants.SearchMenu.FOURTH);
+            logo.PrintMessage(0, (int)Constants.SearchMenu.FOURTH, "대출 정보 조회", ConsoleColor.Gray);
             PrintMyBookList(myBookList);    //대출 목록 출력
         }
         public void PrintBookReturnSuccess(BorrowBookVO book)              //도서 반납 완료 메세지 + 반납한 도서 정보 출력
@@ -72,6 +74,7 @@ namespace Library
             Console.WriteLine(book);
             logo.PrintLine();
             Console.WindowTop = 0;
+            Console.CursorVisible = Constants.IS_INVISIBLE_CURSOR;
         }
         public void PrintProfile(MemberVO member) //회원정보수정 화면 출력
         {
