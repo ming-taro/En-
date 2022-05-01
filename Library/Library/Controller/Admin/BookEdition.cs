@@ -68,7 +68,7 @@ namespace Library
                 searchType = searchingBook.SelectSearchType(keyboard);     //검색유형 선택
                 if (searchType == (int)Constants.Keyboard.ESCAPE) return Constants.ESC;   //검색유형 선택 중 Esc -> 도서검색 종료
 
-                searchWord = searchingBook.InputSearchWord((int)Constants.SearchMenu.LEFT_VALUE_OF_INPUT, searchType, (int)Constants.SearchMenu.FOURTH);   //검색어 입력받기
+                searchWord = searchingBook.InputSearchWord((int)Constants.InputField.SEARCH, searchType, (int)Constants.Exception.SEARCH);   //검색어 입력받기
                 if (searchWord.Equals(Constants.ESC)) continue;            //검색어 입력 중 Esc -> 검색유형 선택으로 돌아감
 
                 adminView.PrintBookIdInputScreen("도서 정보 수정", "☞정보를 수정할 도서번호:", searchingBook.BookList);  //도서번호 입력창

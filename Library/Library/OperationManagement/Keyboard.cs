@@ -38,6 +38,7 @@ namespace Library
             while (Constants.KEYBOARD_OPERATION)            //키보드 방향키로 움직이는 동안
             {
                 Console.SetCursorPosition(left, top);
+                Console.WindowTop = 0;
                 key = ControlKeyboard(move);                //키보드를 입력받음
                 if (IsOutOfMenu(minTop, maxTop)) continue;  //메뉴를 벗어나는 이동은 X
 

@@ -12,21 +12,21 @@ namespace Library
     {
         private BookDAO bookDatabaseManager;
         private EnteringText text;
-        private Logo logo;
         private AdminView adminView;
+        private Exception exception;
         private List<BookVO> bookList;
-        public BookSearch(BookDAO bookDatabaseManager, EnteringText text, Logo logo, AdminView adminView)
+        public BookSearch(BookDAO bookDatabaseManager, EnteringText text, AdminView adminView, Exception exception)
         {
             this.bookDatabaseManager = bookDatabaseManager;
             this.text = text;
-            this.logo = logo;
             this.adminView = adminView;
+            this.exception = exception;
         }
         public List<BookVO> BookList
         {
             get { return bookList; }
         }
-        public string InputSearchWord(int left, int top, int messageTop)
+        public string InputSearchWord(int left, int top, int exceptionTop)
         {
             string searchWord;
 
@@ -41,15 +41,15 @@ namespace Library
                 }
                 else if(Regex.IsMatch(searchWord, Constants.BOOK_NAME_REGEX) == Constants.IS_NOT_MATCH)  //입력형식에 맞지 않은 검색어 입력
                 {
-                    logo.PrintMessage(0, messageTop, Constants.MESSAGE_ABOUT_BOOK_NAME, ConsoleColor.Red);
+                    exception.PrintBookNameRegex((int)Constants.SearchMenu.LEFT, exceptionTop);
                 }
                 else if(bookList.Count == 0)
                 {
-                    logo.PrintMessage(0, messageTop, Constants.MESSAGE_ABOUT_BOOK_NOT_IN_LIST, ConsoleColor.Red);
+                    exception.PrintBookNotInList((int)Constants.SearchMenu.LEFT, exceptionTop);
                 }
-                else break; 
+                else break;
 
-                logo.PrintMessage(left, top, Constants.REMOVE_LINE, ConsoleColor.Gray);
+                exception.RemoveLine(left, top);
             }
 
             return searchWord;  //검색어 반환
@@ -58,10 +58,9 @@ namespace Library
         {
             int searchType;
 
-            logo.PrintSearchBox("도서 검색", "☞도서명:\n☞출판사:\n☞저자:");
-            adminView.PrintBookList(bookDatabaseManager.MakeBookList((int)Constants.SearchMenu.ALL, ""));   //전체도서 출력
+            adminView.PrintBookSearch(bookDatabaseManager.MakeBookList((int)Constants.SearchMenu.ALL, ""));  //도서검색화면 + 전체 도서목록
             
-            keyboard.SetPosition(0, (int)Constants.SearchMenu.FIRST);      //커서위치
+            keyboard.SetPosition((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.FIRST);    //커서위치
             searchType = keyboard.SelectMenu((int)Constants.SearchMenu.FIRST, (int)Constants.SearchMenu.THIRD, (int)Constants.SearchMenu.STEP);               //메뉴선택
             if (searchType == (int)Constants.Keyboard.ESCAPE) return (int)Constants.Keyboard.ESCAPE;  //검색유형 선택 도중 뒤로가기 -> 관리자 메뉴로 돌아감
 
@@ -77,9 +76,9 @@ namespace Library
                 searchType = SelectSearchType(keyboard);                   //검색유형 선택
                 if (searchType == (int)Constants.Keyboard.ESCAPE) break;   //검색유형 선택 중 esc -> 도서검색 종료
 
-                searchWord = InputSearchWord((int)Constants.SearchMenu.LEFT_VALUE_OF_INPUT, searchType, (int)Constants.SearchMenu.FOURTH);   //검색어 입력받기
+                searchWord = InputSearchWord((int)Constants.InputField.SEARCH, searchType, (int)Constants.Exception.SEARCH);   //검색어 입력받기
                 if (searchWord.Equals(Constants.ESC)) continue;            //검색어 입력 중 esc -> 검색유형 선택으로
-
+                
                 adminView.PrintSearchResult(bookList);               //도서 검색 결과 출력
 
                 if (keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break; //Esc->뒤로가기, Enter->재검색

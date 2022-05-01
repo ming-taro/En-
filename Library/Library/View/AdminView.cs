@@ -20,8 +20,10 @@ namespace Library
             for (int i = 0; i<bookList.Count; i++)
             {
                 Console.WriteLine(bookList[i]);
-                logo.PrintLine();
+                logo.PrintSingleLine();
             }
+            Console.SetCursorPosition(0, Console.CursorTop - 3);
+            logo.PrintLine();
         }
         public void PrintMemberList(List<MemberVO> memberList)  //회원목록 출력
         {
@@ -32,16 +34,27 @@ namespace Library
                 logo.PrintLine();
             }
         }
+        public void PrintBookSearch(List<BookVO> bookList)
+        {
+            logo.PrintMenu("도서 검색");
+            logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.ZERO, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", ConsoleColor.Gray);
+            logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.FIRST, "☞도서명:", ConsoleColor.Gray);
+            logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.SECOND, "☞출판사:", ConsoleColor.Gray);
+            logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.THIRD, "☞저자  :", ConsoleColor.Gray);
+            logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.FOURTH, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", ConsoleColor.Gray);
+            Console.SetCursorPosition(0, (int)Constants.SearchMenu.SIXTH);
+            PrintBookList(bookList);   //전체도서 출력
+        }
+
         public void PrintSearchResult(List<BookVO> bookList)  //도서검색 -> 검색결과로 나온 책목록 출력
         {
-            logo.PrintSearchBox("도서 검색", "☞도서명:\n☞출판사:\n☞저자:");
-            PrintBookList(bookList);                  
-            logo.PrintMessage(0, Console.CursorTop - 1, Constants.ESC_AND_ENTER, ConsoleColor.Yellow);
+            PrintBookSearch(bookList);
+            logo.PrintMessage(65, Console.CursorTop - 1, "[ESC]: 뒤로가기     [ENTER]: 재검색", ConsoleColor.Gray);
         }
         public void PrintRegisteredBook(BookVO book)    //도서등록 -> 등록한 도서정보 출력
         {
             logo.PrintMenu("도서 등록 완료");
-            logo.PrintMessage(22, 7, ">등록한 도서 정보<", ConsoleColor.Gray);
+            logo.PrintMessage(0, 7, ">등록한 도서 정보<", ConsoleColor.Gray);
             Console.SetCursorPosition(0, Console.CursorTop - 1);
             logo.PrintLine();
             Console.WriteLine(book);

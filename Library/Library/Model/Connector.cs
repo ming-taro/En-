@@ -13,15 +13,8 @@ namespace Library
 
         public static MySqlConnection GetConnection()
         {
-            try
-            {
-                connection = new MySqlConnection(Constants.SERVER + Constants.PORT + Constants.DATABASE + Constants.ID + Constants.PASSWORD);
-                connection.Open();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
+            connection = new MySqlConnection(Constants.SERVER + Constants.PORT + Constants.DATABASE + Constants.ID + Constants.PASSWORD);
+            connection.Open();
 
             return connection;
         }

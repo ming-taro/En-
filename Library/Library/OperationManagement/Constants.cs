@@ -17,7 +17,7 @@ namespace Library
 
         public const bool IS_DUPLICATE_ID = true;
         public const bool IS_NON_DUPLICATE_ID = false;
-        
+
         public const bool IS_EXISTING_MEMBER = true;
         public const bool IS_NON_EXISTING_MEMBER = false;
 
@@ -72,7 +72,7 @@ namespace Library
         public const string MESSAGE_ABOUT_BOOK_ID_NOT_MATCH = "(0~999사이의 숫자가 아닙니다.다시 입력해주세요.)               ";
         public const string MESSAGE_ABOUT_BOOK_NOT_IN_LIST = "(현재 조회 목록에 없는 도서입니다. 다시 입력해주세요.)           ";
         public const string MESSAGE_ABOUT_BOOK_I_BORROWED = "(이미 대여중인 도서입니다. 다른 도서를 선택해주세요.)                  ";
-        public const string MESSAGE_ABOUT_QUANTITY_ZERO  = "(대여가능한 도서가 0권입니다. 다른 도서를 선택해주세요.)              ";
+        public const string MESSAGE_ABOUT_QUANTITY_ZERO = "(대여가능한 도서가 0권입니다. 다른 도서를 선택해주세요.)              ";
         public const string MESSAGE_ABOUT_BOOK_I_NEVER_BORROWED = "(대여목록에 없는 도서번호입니다. 다시 입력해주세요.)             ";
         public const string MESSAGE_ABOUT_DUPLICATE_BOOK_ID = "(이미 사용중인 도서번호입니다. 다시 입력해주세요.)    ";
 
@@ -93,8 +93,8 @@ namespace Library
 
         public const string MESSAGE_ABOUT_MEMBER_NOT_IN_LIST = "(존재하지 않는 회원입니다.)                     ";
         public const string MESSAGE_ABOUT_MEMBER_BORROWING_BOOK = "(도서를 대여중인 회원은 삭제가 불가능합니다.)   ";
-        public const string MESSAGE_ABOUT_BOOK_ON_LOAN  = "(회원이 대여중인 도서는 삭제가 불가능합니다.)                 ";
-        
+        public const string MESSAGE_ABOUT_BOOK_ON_LOAN = "(회원이 대여중인 도서는 삭제가 불가능합니다.)                 ";
+
         //쿼리
         public const string BOOK_LIST = "select*from book;";
         public const string BOOK_NAME_SEARCH = "select*from book where name like '%{0}%';";
@@ -144,9 +144,11 @@ namespace Library
         }
         public enum SignIn
         {
-            INPUT = 10,           //left
-            ID = 7,               //top
-            PASSWORD = 9          //top
+            LEFT = 30,
+            INPUT = 40,           //left
+            ID = 15,              //top
+            PASSWORD = 18,        //top
+            MESSAGE = 22
         }
         public enum Menu
         {
@@ -175,7 +177,7 @@ namespace Library
         public enum EditMenu
         {
             FIRST = 12,        //top
-            SECOND = 15, 
+            SECOND = 15,
             THIRD = 18,
             FOURTH = 21,
             FIFTH = 24,
@@ -185,14 +187,28 @@ namespace Library
         }
         public enum SearchMenu
         {
+            LEFT = 20,
             ALL = 0,            //top
-            FIRST = 6,
-            SECOND,
-            THIRD,
-            FOURTH,
-            NO_SEARCH_RESULT_LEFT = 9,
-            LEFT_VALUE_OF_INPUT = 10,     
-            STEP = 1
+            ZERO = 11,
+            FIRST = 13,
+            SECOND = 15,
+            THIRD = 17,
+            FOURTH = 19,
+            FIFTH = 21,
+            SIXTH = 23,
+            NO_SEARCH_RESULT_LEFT = 29,
+            STEP = 2
         }
+        public enum InputField  //left값
+        {
+            SEARCH = 30,
+            RENTAL = 40,
+        }
+        public enum Exception//top값
+        {
+            SEARCH = 20,
+            RENTAL = 16
+        }
+
     }
 }

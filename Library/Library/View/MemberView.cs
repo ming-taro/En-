@@ -9,33 +9,47 @@ namespace Library
     class MemberView
     {
         Logo logo;
-        AdminView adminView;
-        public MemberView()
+        public MemberView(Logo logo)
         {
-            logo = new Logo();
-            adminView = new AdminView();
+            this.logo = logo;
+        }
+        public void PrintBookList(List<BookVO> bookList)   //도서목록 출력
+        {
+            logo.PrintLine();
+            for (int i = 0; i < bookList.Count; i++)
+            {
+                Console.WriteLine(bookList[i]);
+                logo.PrintSingleLine();
+            }
+            Console.SetCursorPosition(0, Console.CursorTop - 3);
+            logo.PrintLine();
         }
         public void PrintMyBookList(List<BorrowBookVO> myBookList) //회원의 도서 대여 목록 출력
         {
-            logo.PrintMessage(0, Console.CursorTop - 1, ">>>>>>>>>>>>>>>>>>>>> 도서 대여 목록 <<<<<<<<<<<<<<<<<<<<<<<<", ConsoleColor.Gray);
             Console.SetCursorPosition(0, Console.CursorTop - 1);
 
             logo.PrintLine();
             for (int i = 0; i < myBookList.Count; i++)
             {
                 Console.WriteLine(myBookList[i]);
-                logo.PrintLine();
+                logo.PrintSingleLine();
             }
+            Console.SetCursorPosition(0, Console.CursorTop - 3);
+            logo.PrintLine();
         }
-        public void PrintBookIdInputScreen(List<BookVO> bookList)    //전체 도서 목록 출력
+        public void PrintBookRental(List<BookVO> bookList)
         {
-            logo.PrintSearchBox("도서 대여", "☞대여할 도서 번호:");        //도서번호 입력창
-            adminView.PrintBookList(bookList);                 //도서 검색 결과 출력
+            logo.PrintMenu("도서 대출");
+            logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.ZERO, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", ConsoleColor.Gray);
+            logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.FIRST, "☞대출할 도서 번호:", ConsoleColor.Gray);
+            logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.SECOND, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", ConsoleColor.Gray);
+            Console.SetCursorPosition(0, (int)Constants.SearchMenu.THIRD);
+            PrintBookList(bookList);    //도서 검색 결과 출력
         }
         public void PrintBookRentalSuccess(List<BorrowBookVO> myBookList)  //도서 대여 완료 메세지 + 회원의 대여 목록 출력
         {
-            logo.PrintMenu("도서 대여 완료");
-            Console.WriteLine("\n\n");
+            logo.PrintMenu("도서 대출 완료");
+            logo.PrintMessage(0, (int)Constants.SearchMenu.ZERO, "대출 정보 조회", ConsoleColor.Gray);
             PrintMyBookList(myBookList);
             logo.PrintMessage(0, Console.CursorTop - 1, Constants.ESC_AND_ENTER, ConsoleColor.Gray);
         }

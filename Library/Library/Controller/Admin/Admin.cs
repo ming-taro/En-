@@ -14,6 +14,7 @@ namespace Library
         private EnteringText text;
         private Logo logo;
         private AdminView adminView;
+        private Exception exception;
 
         private SignIn signIn;                         //로그인
         private BookSearch bookSearch;           //1. 도서검색
@@ -29,9 +30,10 @@ namespace Library
             text = new EnteringText();
             logo = new Logo();
             adminView = new AdminView();
+            exception = new Exception();
 
             signIn = new SignIn(bookDatabaseManager, text, logo);
-            bookSearch = new BookSearch(bookDatabaseManager, text, logo, adminView);
+            bookSearch = new BookSearch(bookDatabaseManager, text, adminView, exception);
             bookRegistration = new BookRegistration(bookDatabaseManager, text, logo, adminView);
             bookEdition = new BookEdition(bookDatabaseManager, text, logo, adminView);
             bookDeletion = new BookDeletion(bookDatabaseManager, text, logo, adminView);

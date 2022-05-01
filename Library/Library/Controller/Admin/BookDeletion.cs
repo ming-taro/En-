@@ -83,7 +83,7 @@ namespace Library
                 searchType = bookSearch.SelectSearchType(keyboard);     //검색유형 선택
                 if (searchType == (int)Constants.Keyboard.ESCAPE) break;   //검색유형 선택 중 esc -> 도서검색 종료
 
-                searchWord = bookSearch.InputSearchWord((int)Constants.SearchMenu.LEFT_VALUE_OF_INPUT, searchType, (int)Constants.SearchMenu.FOURTH);   //검색어 입력받기
+                searchWord = bookSearch.InputSearchWord((int)Constants.InputField.SEARCH, searchType, (int)Constants.Exception.SEARCH);   //검색어 입력받기
                 if (searchWord.Equals(Constants.ESC)) continue;            //검색어 입력 중 esc -> 검색유형 선택으로
 
                 adminView.PrintBookIdInputScreen("도서 삭제", "☞삭제할 도서 번호:", bookSearch.BookList);  //도서번호 입력칸 + 도서 검색 결과 출력

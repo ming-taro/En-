@@ -13,14 +13,14 @@ namespace Library
         private BookDAO bookDatabaseManager;
         private EnteringText text;
         private MemberView memberView;
-        private Logo logo;
+        private Exception exception;
         
-        public BookRental(BookDAO bookDatabaseManager, EnteringText text, Logo logo, MemberView memberView)
+        public BookRental(BookDAO bookDatabaseManager, EnteringText text, MemberView memberView, Exception exception)
         {
             this.bookDatabaseManager = bookDatabaseManager;
             this.text = text;
-            this.logo = logo;
             this.memberView = memberView;
+            this.exception = exception;
         }
 
         private bool IsBookInList(string bookId, List<BookVO> bookList)   //현재 조회중인 도서목록에 있는 도서인지 검사
@@ -52,39 +52,43 @@ namespace Library
         }
         private string InputBookId(List<BookVO> bookList, List<BorrowBookVO> myBookList)    //도서명 입력 후 도서번호 입력
         {
+            int top = (int)Constants.SearchMenu.FIRST;
+            int left = (int)Constants.InputField.RENTAL;
+            int exceptionLeft = (int)Constants.SearchMenu.LEFT;
+            int exceptionTop = (int)Constants.Exception.RENTAL;
             string bookId;
 
             while (Constants.INPUT_VALUE)
             {
-                bookId = text.EnterText(20, (int)Constants.SearchMenu.FIRST, "");           //도서번호를 입력 받음
+                bookId = text.EnterText(left, top, "");       //도서번호를 입력 받음
 
-                if (bookId.Equals(Constants.ESC))  //도서번호 입력 중 esc -> 다시 도서검색으로
+                if (bookId.Equals(Constants.ESC))             
                 {
-                    return Constants.ESC;
+                    return Constants.ESC;                     //도서번호 입력 중 esc -> 다시 도서검색으로
                 }
-                else if (Regex.IsMatch(bookId, Constants.BOOK_ID_REGEX) == Constants.IS_NOT_MATCH)  //형식에 맞지 않는 입력일 경우
+                else if (Regex.IsMatch(bookId, Constants.BOOK_ID_REGEX) == Constants.IS_NOT_MATCH)  
                 {
-                    logo.PrintMessage(0, (int)Constants.SearchMenu.SECOND, Constants.MESSAGE_ABOUT_BOOK_ID_NOT_MATCH, ConsoleColor.Red);
+                    exception.PrintBookIdRegex(exceptionLeft, exceptionTop);    //형식에 맞지 않는 입력일 경우
                 }
-                else if (IsBookInList(bookId, bookList) == Constants.IS_BOOK_NOT_IN_LIST)  //입력형식은 맞지만, 목록에 없는 도서를 빌리려고 했을 때
+                else if (IsBookInList(bookId, bookList) == Constants.IS_BOOK_NOT_IN_LIST)  
                 {
-                    logo.PrintMessage(0, (int)Constants.SearchMenu.SECOND, Constants.MESSAGE_ABOUT_BOOK_NOT_IN_LIST, ConsoleColor.Red);
+                    exception.PrintBookNotInList(exceptionLeft, exceptionTop);  //입력형식은 맞지만, 목록에 없는 도서를 빌리려고 했을 때
                 }
-                else if (IsBookIBorrowed(bookId, myBookList)) //도서목록에 있지만, 이미 대여중인 도서일 때
+                else if (IsBookIBorrowed(bookId, myBookList)) 
                 {
-                    logo.PrintMessage(0, (int)Constants.SearchMenu.SECOND, Constants.MESSAGE_ABOUT_BOOK_I_BORROWED, ConsoleColor.Red);
+                    exception.PrintBookIBorrowed(exceptionLeft, exceptionTop);  //도서목록에 있지만, 이미 대여중인 도서일 때-->같은 도서 대여 가능으로 수정할것
                 }
-                else if (IsQuantityZero(bookId, bookList))   //도서목록에 있고, 대여하지 않은 도서이지만 수량이 0일 때
+                else if (IsQuantityZero(bookId, bookList))   
                 {
-                    logo.PrintMessage(0, (int)Constants.SearchMenu.SECOND, Constants.MESSAGE_ABOUT_QUANTITY_ZERO, ConsoleColor.Red);
+                    exception.PrintQuantityZero(exceptionLeft, exceptionTop);   //도서목록에 있고, 대여하지 않은 도서이지만 수량이 0일 때
                 }
                 else break;  //도서대여가능 -> 해당 도서 아이디 리턴
 
-                logo.RemoveLine(20, (int)Constants.SearchMenu.FIRST);
+                exception.RemoveLine(left, top);
             }
             return bookId;
         }
-        public void SearchBookToBorrow(string memberId, BookSearch searchingBook, Keyboard keyboard)
+        public void SearchBookToBorrow(string memberId, BookSearch bookSearch, Keyboard keyboard)
         {
             int searchType;        //검색유형
             string searchWord;     //검색어
@@ -93,15 +97,15 @@ namespace Library
 
             while (Constants.INPUT_VALUE)
             {
-                searchType = searchingBook.SelectSearchType(keyboard);    //검색유형 선택
+                searchType = bookSearch.SelectSearchType(keyboard);    //검색유형 선택
                 if (searchType == (int)Constants.Keyboard.ESCAPE) break;  //검색유형 선택 중 esc -> 도서검색 종료
 
-                searchWord = searchingBook.InputSearchWord((int)Constants.SearchMenu.LEFT_VALUE_OF_INPUT, searchType, (int)Constants.SearchMenu.FOURTH);   //검색어 입력받기
+                searchWord = bookSearch.InputSearchWord((int)Constants.InputField.SEARCH, searchType, (int)Constants.Exception.SEARCH);   //검색어 입력받기
                 if (searchWord.Equals(Constants.ESC)) continue;           //검색어 입력 중 esc -> 검색유형 선택으로
 
-                memberView.PrintBookIdInputScreen(searchingBook.BookList);//도서검색창 출력
+                memberView.PrintBookRental(bookSearch.BookList);       //도서검색창 출력
 
-                bookId = InputBookId(searchingBook.BookList, myBookList); //도서번호를 입력받음
+                bookId = InputBookId(bookSearch.BookList, myBookList); //도서번호를 입력받음
                 if (bookId.Equals(Constants.ESC)) continue;               //도서번호 입력 중 esc -> 다시 도서검색으로
 
                 bookDatabaseManager.AddToRentalList(memberId, bookId);    //DB에 변경된 정보 저장

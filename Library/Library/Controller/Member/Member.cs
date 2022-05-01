@@ -16,6 +16,7 @@ namespace Library
         private Logo logo;
         private MemberView memberView;
         private AdminView adminView;
+        private Exception exception;
 
         private SignIn signIn;                 //로그인
         private SignUp signUp;                 //회원가입
@@ -29,13 +30,14 @@ namespace Library
             bookDatabaseManager = new BookDAO();
             text = new EnteringText();
             logo = new Logo();
-            memberView = new MemberView();
+            memberView = new MemberView(logo);
             adminView = new AdminView();
+            exception = new Exception();
 
             signIn = new SignIn(bookDatabaseManager, text, logo);
             signUp = new SignUp(bookDatabaseManager, text, logo, memberView);
-            bookSearch = new BookSearch(bookDatabaseManager, text, logo, adminView);
-            bookRental = new BookRental(bookDatabaseManager, text, logo, memberView);
+            bookSearch = new BookSearch(bookDatabaseManager, text, adminView, exception);
+            bookRental = new BookRental(bookDatabaseManager, text, memberView, exception);
             bookReturn = new BookReturn(bookDatabaseManager, text, logo, memberView);
             profileEdition = new ProfileEdition(bookDatabaseManager, memberView);
         }
@@ -46,7 +48,7 @@ namespace Library
                 case (int)Constants.Menu.FIRST:  //도서검색
                     bookSearch.ShowSearchResult(keyboard);
                     break;
-                case (int)Constants.Menu.SECOND: //도서대여
+                case (int)Constants.Menu.SECOND: //도서대출
                     bookRental.SearchBookToBorrow(member.Id, bookSearch, keyboard);
                     break;
                 case (int)Constants.Menu.THIRD:  //도서반납
@@ -85,7 +87,7 @@ namespace Library
         {
             int menu;
             string[] textOfMemberMenu = { "로그인", "회원가입" };
-            string[] textOfMemberMode = { "도서 검색", "도서 대여", "도서 반납", "회원 정보 수정" };
+            string[] textOfMemberMode = { "도서 검색", "도서 대출", "도서 반납", "회원 정보 수정" };
 
             while (Constants.MEMBER_MODE)
             {

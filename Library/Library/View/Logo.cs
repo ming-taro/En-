@@ -31,14 +31,14 @@ namespace Library
             int left = ((int)Constants.Menu.CONSOLE_WIDTH - (menu.Length * 2)) / 2;
             Console.Clear();
             Console.WriteLine("▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧");
-            Console.SetCursorPosition(left, 2);
-            Console.WriteLine("[" + menu + "]\n");
+            Console.SetCursorPosition(left, 3);
+            Console.WriteLine("[ " + menu + " ]\n\n");
             Console.WriteLine("▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨");
+            Console.WriteLine("                                                                                    ☜[ESC]:뒤로가기");
         }
         public void PrintSearchBox(string menu, string searchWord)
         {
             PrintMenu(menu);
-            Console.WriteLine(Constants.ESC_MESSAGE);
             Console.SetCursorPosition(0, (int)Constants.SearchMenu.FIRST);
             Console.WriteLine(searchWord);
             Console.Write("\n>>>>>>>>>>>>>>>>>>>>>>>> 도서 목록 <<<<<<<<<<<<<<<<<<<<<<<<<<");
@@ -52,7 +52,11 @@ namespace Library
         }
         public void PrintLine()
         {
-            Console.WriteLine("\n=============================================================\n");
+            Console.WriteLine("\n====================================================================================================\n");
+        }
+        public void PrintSingleLine()
+        {
+            Console.WriteLine("\n----------------------------------------------------------------------------------------------------\n");
         }
         public void RemoveLine(int left, int top)
         {
@@ -74,14 +78,15 @@ namespace Library
         public void PrintSignIn()
         {
             PrintMenu("로그인");
-            PrintMessage(0, Console.CursorTop, Constants.ESC_MESSAGE, ConsoleColor.Gray);
-            PrintMessage(0, (int)Constants.SignIn.ID, "아이디  :", ConsoleColor.Gray);
-            PrintMessage(0, (int)Constants.SignIn.PASSWORD, "비밀번호:", ConsoleColor.Gray);
+            PrintMessage((int)Constants.SignIn.LEFT - 5, (int)Constants.SignIn.ID - 3, "〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓", ConsoleColor.Gray);
+            PrintMessage((int)Constants.SignIn.LEFT, (int)Constants.SignIn.ID, "아이디  :", ConsoleColor.Gray);
+            PrintMessage((int)Constants.SignIn.LEFT, (int)Constants.SignIn.PASSWORD, "비밀번호:", ConsoleColor.Gray);
+            PrintMessage((int)Constants.SignIn.LEFT - 5, (int)Constants.SignIn.PASSWORD + 3, "〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓", ConsoleColor.Gray);
         }
         public void PrintSignInFailure()
         {
             PrintSignIn();
-            PrintMessage(0, Console.CursorTop + 1, "\n(아이디 또는 비밀번호를 잘못 입력하셨습니다.)", ConsoleColor.Red);
+            PrintMessage((int)Constants.SignIn.LEFT, (int)Constants.SignIn.MESSAGE, "(아이디 또는 비밀번호를 잘못 입력하셨습니다.)", ConsoleColor.Red);
         }
     }
 }
