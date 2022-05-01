@@ -179,6 +179,7 @@ namespace Library
         }
         public enum EditMenu
         {
+            LEFT = 30,
             FIRST = 12,        //top
             SECOND = 15,
             THIRD = 18,
@@ -207,6 +208,8 @@ namespace Library
         public enum InputField  //left값
         {
             MEMBER_DELETION = 42,//회원삭제에서의 입력칸 left값
+            ID_TO_MODIFY = 46,   //도서정보수정에서의 수정할 도서번호 입력칸 left값
+            BOOK_EDITION = 42,   //도서정보수정에서의 입력칸 left값
             SEARCH = 30,         //도서검색에서의 입력칸 left값
             LEFT = 40            //도서반납,대출,삭제에서의 입력칸 left값
         }

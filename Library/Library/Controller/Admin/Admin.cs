@@ -35,7 +35,7 @@ namespace Library
             signIn = new SignIn(bookDatabaseManager, text, logo);
             bookSearch = new BookSearch(bookDatabaseManager, text, adminView, exception);
             bookRegistration = new BookRegistration(bookDatabaseManager, text, logo, adminView);
-            bookEdition = new BookEdition(bookDatabaseManager, text, logo, adminView);
+            bookEdition = new BookEdition(bookDatabaseManager, text, adminView, exception);
             bookDeletion = new BookDeletion(bookDatabaseManager, text, adminView, exception);
             memberDeletion = new MemberDeletion(bookDatabaseManager, text, adminView, exception);
         }
@@ -55,7 +55,7 @@ namespace Library
                 case (int)Constants.Menu.FOURTH:  //도서 삭제
                     bookDeletion.DeleteBook(bookSearch, keyboard);
                     break;
-                case (int)Constants.Menu.FIFTH:   //도서 대여 현황
+                case (int)Constants.Menu.FIFTH:   //도서 대출 현황
                     adminView.PrintRentalList(bookDatabaseManager.MakeMyBookList(Constants.RENTAL_LIST_INQUIRY, ""));
                     keyboard.PressESC();
                     break;
@@ -69,7 +69,7 @@ namespace Library
         {
             string success;
             int menu;
-            string[] textOfMemberMode = { "도서 검색", "도서 등록", "도서 정보 수정", "도서 삭제", "도서 대여 현황", "회원 정보 관리" };
+            string[] textOfMemberMode = { "도서 검색", "도서 등록", "도서 정보 수정", "도서 삭제", "도서 대출 현황", "회원 정보 관리" };
 
             success = signIn.SignInAdmin();               //관리자 로그인
             if (success == Constants.ESC) return;         //로그인 도중 esc -> 뒤로가기

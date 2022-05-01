@@ -64,12 +64,12 @@ namespace Library
             logo.PrintLine();
             logo.PrintMessage(0, Console.CursorTop - 1, Constants.ESC_MESSAGE, ConsoleColor.Yellow);
         }
-        public void PrintBookIdInputScreen(string menu, string inputType, List<BookVO> bookList) //도서삭제 -> 삭제할 도서번호 입력칸 + 도서검색결과 출력
-        {                                                                           //도서정보 수정 -> 수정할 도서번호 입력창 출력 + 도서검색결과 출력
-            logo.PrintSearchBox(menu, inputType);
+        public void PrintBookEdition(List<BookVO> bookList)  //도서정보 수정 -> 수정할 도서번호 입력창 출력 + 도서검색결과 출력
+        {                                                                           
+            logo.PrintSearchBox("도서 정보 수정", "☞정보를 수정할 도서번호:", "검색 결과(총 " + bookList.Count + "건)");
             PrintBookList(bookList);
         }
-        public void PrintBookDeletion(List<BookVO> bookList)
+        public void PrintBookDeletion(List<BookVO> bookList) //도서삭제 -> 삭제할 도서번호 입력칸 + 도서검색결과 출력
         {
             logo.PrintSearchBox("도서 삭제", "☞삭제할 도서 번호:", "검색 결과(총 " + bookList.Count + "건)");
             PrintBookList(bookList);
@@ -89,7 +89,6 @@ namespace Library
         public void PrintBookRegistration()   //도서등록 -> 입력할 정보 목록 출력
         {                                               
             logo.PrintMenu("도서 등록");
-            Console.WriteLine(Constants.ESC_MESSAGE);
             logo.PrintMessage(0, (int)Constants.Registration.FIRST, "☞도서번호:\n(0~999사이의 숫자만 입력 가능합니다.(ex: 123))", ConsoleColor.Gray);
             logo.PrintMessage(0, (int)Constants.Registration.SECOND, "☞도서명:\n(50자 이내로 입력해주세요.(ex: 이것이 C#이다))", ConsoleColor.Gray);
             logo.PrintMessage(0, (int)Constants.Registration.THIRD, "☞출판사:\n(50자 이내로 입력해주세요.(ex: 한빛미디어)", ConsoleColor.Gray);
@@ -100,14 +99,19 @@ namespace Library
         public void PrintBookRevision(BookVO book)  //도서정보수정 -> 수정할 정보 목록 출력
         {                                              
             logo.PrintMenu("도서 정보 수정");
-            Console.WriteLine(Constants.ESC_MESSAGE);
-            Console.WriteLine("\n\n        (수정하려는 정보를 선택해 [Enter]키를 누르세요)");
-            logo.PrintMessage(0, (int)Constants.EditMenu.FIRST, "☞도서번호: " + book.Id + "\n(0~999사이의 숫자만 입력 가능합니다.)", ConsoleColor.Gray);
-            logo.PrintMessage(0, (int)Constants.EditMenu.SECOND, "☞도서명: " + book.Name + "\n(50자 이내로 입력해주세요.)", ConsoleColor.Gray);
-            logo.PrintMessage(0, (int)Constants.EditMenu.THIRD, "☞출판사: " + book.Publisher + "\n(50자 이내로 입력해주세요.)", ConsoleColor.Gray);
-            logo.PrintMessage(0, (int)Constants.EditMenu.FOURTH, "☞저자: " + book.Author + "\n(50자 이내의 영어, 한글만 입력 가능합니다.)", ConsoleColor.Gray);
-            logo.PrintMessage(0, (int)Constants.EditMenu.FIFTH, "☞가격: " + book.Price + "\n(숫자만 입력 가능합니다.)", ConsoleColor.Gray);
-            logo.PrintMessage(0, (int)Constants.EditMenu.SIXTH, "☞수량: " + book.Quantity + "\n(1~99사이의 숫자만 입력 가능합니다.)", ConsoleColor.Gray);
+            //Console.WriteLine("\n\n        (수정하려는 정보를 선택해 [Enter]키를 누르세요)");
+            logo.PrintMessage((int)Constants.EditMenu.LEFT, (int)Constants.EditMenu.FIRST, "☞도서번호: " + book.Id, ConsoleColor.Gray);
+            logo.PrintMessage((int)Constants.InputField.BOOK_EDITION, (int)Constants.EditMenu.FIRST + 1, "(도서번호는 변경이 불가능합니다.)", ConsoleColor.Red);
+            logo.PrintMessage((int)Constants.EditMenu.LEFT, (int)Constants.EditMenu.SECOND, "☞도서명  : " + book.Name, ConsoleColor.Gray);
+            logo.PrintMessage((int)Constants.InputField.BOOK_EDITION, (int)Constants.EditMenu.SECOND + 1, "(50자 이내로 입력해주세요.)", ConsoleColor.Gray);
+            logo.PrintMessage((int)Constants.EditMenu.LEFT, (int)Constants.EditMenu.THIRD, "☞출판사  : " + book.Publisher, ConsoleColor.Gray);
+            logo.PrintMessage((int)Constants.InputField.BOOK_EDITION, (int)Constants.EditMenu.THIRD + 1, "(50자 이내로 입력해주세요.)", ConsoleColor.Gray);
+            logo.PrintMessage((int)Constants.EditMenu.LEFT, (int)Constants.EditMenu.FOURTH, "☞저자    : " + book.Author, ConsoleColor.Gray);
+            logo.PrintMessage((int)Constants.InputField.BOOK_EDITION, (int)Constants.EditMenu.FOURTH + 1, "(50자 이내의 영어, 한글만 입력 가능합니다.)", ConsoleColor.Gray);
+            logo.PrintMessage((int)Constants.EditMenu.LEFT, (int)Constants.EditMenu.FIFTH, "☞가격    : " + book.Price, ConsoleColor.Gray);
+            logo.PrintMessage((int)Constants.InputField.BOOK_EDITION, (int)Constants.EditMenu.FIFTH + 1, "(숫자만 입력 가능합니다.)", ConsoleColor.Gray);
+            logo.PrintMessage((int)Constants.EditMenu.LEFT, (int)Constants.EditMenu.SIXTH, "☞수량    : " + book.Quantity, ConsoleColor.Gray);
+            logo.PrintMessage((int)Constants.InputField.BOOK_EDITION, (int)Constants.EditMenu.SIXTH + 1, "(숫자만 입력 가능합니다.)", ConsoleColor.Gray);
         }
         public void PrintMemberIdInputScreen(List<MemberVO> memberList)  //회원관리 -> 회원아이디 입력칸 + 회원목록 출력
         {
@@ -125,7 +129,7 @@ namespace Library
             Console.WindowTop = 0;
             Console.CursorVisible = Constants.IS_INVISIBLE_CURSOR;
         }
-        public void PrintRentalList(List<BorrowBookVO> rentalList)
+        public void PrintRentalList(List<BorrowBookVO> rentalList)   //도서 대출 현황 리스트
         {
             logo.PrintMenu("도서 대출 현황");
             logo.PrintMessage(0, (int)Constants.SearchMenu.ZERO, "전체 회원의 도서 대출 목록(총 " + rentalList.Count + "건)", ConsoleColor.Gray);
