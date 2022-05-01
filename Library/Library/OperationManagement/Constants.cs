@@ -206,8 +206,9 @@ namespace Library
         }
         public enum InputField  //left값
         {
-            SEARCH = 30,        //도서검색에서의 입력칸 left값
-            LEFT = 40
+            MEMBER_DELETION = 42,//회원삭제에서의 입력칸 left값
+            SEARCH = 30,         //도서검색에서의 입력칸 left값
+            LEFT = 40            //도서반납,대출,삭제에서의 입력칸 left값
         }
         public enum Exception//top값
         {

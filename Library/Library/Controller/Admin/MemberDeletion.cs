@@ -10,15 +10,15 @@ namespace Library
     {
         private BookDAO bookDatabaseManager;
         private EnteringText text;
-        private Logo logo;
         private AdminView adminView;
+        private Exception exception;
 
-        public MemberDeletion(BookDAO bookDatabaseManager, EnteringText text, Logo logo, AdminView adminView)
+        public MemberDeletion(BookDAO bookDatabaseManager, EnteringText text, AdminView adminView, Exception exception)
         {
             this.bookDatabaseManager = bookDatabaseManager;
             this.text = text;
-            this.logo = logo;
             this.adminView = adminView;
+            this.exception = exception;
         }
         private bool IsMemberInList(string memberId, List<MemberVO> memberList)  //입력받은 회원아이디가 회원목록에 있는지 확인
         {
@@ -31,11 +31,15 @@ namespace Library
         }
         private string InputMemberId(List<MemberVO> memberList)
         {
+            int top = (int)Constants.SearchMenu.FIRST;
+            int left = (int)Constants.InputField.MEMBER_DELETION;
+            int exceptionLeft = (int)Constants.SearchMenu.LEFT;
+            int exceptionTop = (int)Constants.Exception.TOP;
             string memberId;
 
             while (Constants.INPUT_VALUE)
             {
-                memberId = text.EnterText(22, (int)Constants.SearchMenu.FIRST, "");     //삭제할 회원 아이디를 입력받음
+                memberId = text.EnterText(left, top, "");     //삭제할 회원 아이디를 입력받음
 
                 if (memberId.Equals(Constants.ESC))           //회원아이디 입력 중 Esc -> 뒤로가기
                 {
@@ -43,18 +47,18 @@ namespace Library
                 }
                 else if (IsMemberInList(memberId, memberList) == Constants.IS_MEMBER_NOT_IN_LIST)   //존재하지 않는 회원을 삭제하려고 할 때
                 {
-                    logo.PrintMessage(0, (int)Constants.SearchMenu.SECOND, Constants.MESSAGE_ABOUT_MEMBER_NOT_IN_LIST, ConsoleColor.Red);
+                    exception.PrintMemberNotInList(exceptionLeft, exceptionTop);
                 }
                 else if (bookDatabaseManager.IsMemberBorrowingBook(memberId))  //해당 회원은 도서를 대여중 -> 삭제불가
                 {
-                    logo.PrintMessage(0, (int)Constants.SearchMenu.SECOND, Constants.MESSAGE_ABOUT_MEMBER_BORROWING_BOOK, ConsoleColor.Red);
+                    exception.PrintMemberBorrowingBook(exceptionLeft, exceptionTop);
                 }
                 else
                 {
                     break;
                 }
 
-                logo.RemoveLine(22, (int)Constants.SearchMenu.FIRST);
+                exception.RemoveLine(left, top);
             }
             return memberId;
         }
@@ -71,11 +75,12 @@ namespace Library
                 memberId = InputMemberId(memberList);                 //삭제할 회원 아이디를 입력받음
                 if (memberId.Equals(Constants.ESC)) break;
 
-                adminView.PrintSuccess(bookDatabaseManager.GetMemberAccount(memberId));  //삭제 성공 메세지 출력
-                bookDatabaseManager.DeleteFromMemberList(memberId);                  //회원리스트에서 회원 정보 삭제
+                adminView.PrintDeletedMember(bookDatabaseManager.GetMemberAccount(memberId));  //삭제 성공 메세지 출력
+                bookDatabaseManager.DeleteFromMemberList(memberId);                      //회원리스트에서 회원 정보 삭제
 
                 if(keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break;
             }
+            Console.CursorVisible = Constants.IS_VISIBLE_CURSOR;
         }
     }
 }

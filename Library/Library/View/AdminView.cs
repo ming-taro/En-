@@ -42,7 +42,8 @@ namespace Library
             logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.SECOND, "☞출판사:", ConsoleColor.Gray);
             logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.THIRD, "☞저자  :", ConsoleColor.Gray);
             logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.FOURTH, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", ConsoleColor.Gray);
-            Console.SetCursorPosition(0, (int)Constants.SearchMenu.SIXTH);
+            logo.PrintMessage(0, (int)Constants.SearchMenu.SIXTH, "검색 결과(총 " + bookList.Count + "건)", ConsoleColor.Gray);
+            Console.SetCursorPosition(0, Console.CursorTop - 1);
             PrintBookList(bookList);   //전체도서 출력
         }
 
@@ -50,7 +51,6 @@ namespace Library
         {
             PrintBookSearch(bookList);
             logo.PrintMessage((int)Constants.SearchMenu.ESC_LEFT, (int)Constants.SearchMenu.ESC_TOP, "[ESC]: 뒤로가기     [ENTER]: 재검색", ConsoleColor.Gray);
-            logo.PrintMessage(0, (int)Constants.SearchMenu.SIXTH, "검색 결과(총 " + bookList.Count + "건)", ConsoleColor.Gray);
             Console.WindowTop = 0;
             Console.CursorVisible = Constants.IS_INVISIBLE_CURSOR;
         }
@@ -111,20 +111,19 @@ namespace Library
         }
         public void PrintMemberIdInputScreen(List<MemberVO> memberList)  //회원관리 -> 회원아이디 입력칸 + 회원목록 출력
         {
-            logo.PrintSearchBox("회원 삭제", "☞삭제할 회원 아이디:");
-            logo.PrintMessage(0, Console.CursorTop, ">>>>>>>>>>>>>>>>>>>>>>>> 회원 목록 <<<<<<<<<<<<<<<<<<<<<<<<<<", ConsoleColor.Gray);
-            Console.SetCursorPosition(0, Console.CursorTop - 1);
+            logo.PrintSearchBox("회원 삭제", "☞삭제할 회원 아이디:", "회원 목록");
             PrintMemberList(memberList);
         }
-        public void PrintSuccess(MemberVO member)   //회원관리 -> 회원정보 삭제 완료 메세지 + 삭제한 회원정보
+        public void PrintDeletedMember(MemberVO member)   //회원관리 -> 회원정보 삭제 완료 메세지 + 삭제한 회원정보
         {
             logo.PrintMenu("회원 삭제 완료");
-            logo.PrintMessage(22, 7, ">삭제한 회원 정보<", ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.SearchMenu.ZERO, "삭제한 회원 정보", ConsoleColor.Gray);
             Console.SetCursorPosition(0, Console.CursorTop - 1);
             logo.PrintLine();
             Console.WriteLine(member);
             logo.PrintLine();
-            logo.PrintMessage(0, Console.CursorTop - 1, Constants.ESC_AND_ENTER, ConsoleColor.Yellow);
+            Console.WindowTop = 0;
+            Console.CursorVisible = Constants.IS_INVISIBLE_CURSOR;
         }
         public void PrintRentalList(List<BorrowBookVO> rentalList)
         {

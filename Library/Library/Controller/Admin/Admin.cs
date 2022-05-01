@@ -37,7 +37,7 @@ namespace Library
             bookRegistration = new BookRegistration(bookDatabaseManager, text, logo, adminView);
             bookEdition = new BookEdition(bookDatabaseManager, text, logo, adminView);
             bookDeletion = new BookDeletion(bookDatabaseManager, text, adminView, exception);
-            memberDeletion = new MemberDeletion(bookDatabaseManager, text, logo, adminView);
+            memberDeletion = new MemberDeletion(bookDatabaseManager, text, adminView, exception);
         }
         private void SelectMenu(int menu)       //관리자 메뉴에서 선택
         {

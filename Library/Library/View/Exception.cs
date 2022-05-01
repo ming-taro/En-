@@ -48,5 +48,13 @@ namespace Library
         {
             PrintMessage(left, top, "(회원이 대여중인 도서는 삭제가 불가능합니다.)                 ");
         }
+        public void PrintMemberNotInList(int left, int top)
+        {
+            PrintMessage(left, top, "(존재하지 않는 회원입니다.)                     ");
+        }
+        public void PrintMemberBorrowingBook(int left, int top)
+        {
+            PrintMessage(left, top, "(도서를 대여중인 회원은 삭제가 불가능합니다.)   ");
+        }
     }
 }
