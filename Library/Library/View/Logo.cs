@@ -36,6 +36,17 @@ namespace Library
             Console.WriteLine("▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨");
             Console.WriteLine("                                                                                    ☜[ESC]:뒤로가기");
         }
+        public void PrintSearchBox(string menu, string inputType, string listName)
+        {
+            PrintMenu(menu);
+            PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.ZERO, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", ConsoleColor.Gray);
+            PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.FIRST, inputType, ConsoleColor.Gray);
+            PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.SECOND, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", ConsoleColor.Gray);
+            PrintMessage(0, (int)Constants.SearchMenu.FOURTH, listName, ConsoleColor.Gray);
+            Console.SetCursorPosition(0, Console.CursorTop - 1);
+        }
+
+
         public void PrintSearchBox(string menu, string searchWord)
         {
             PrintMenu(menu);

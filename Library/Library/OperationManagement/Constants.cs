@@ -206,15 +206,13 @@ namespace Library
         }
         public enum InputField  //left값
         {
-            SEARCH = 30,
-            RENTAL = 40,
-            RETURN = 40
+            SEARCH = 30,        //도서검색에서의 입력칸 left값
+            LEFT = 40
         }
         public enum Exception//top값
         {
-            SEARCH = 20,
-            RENTAL = 16,
-            RETURN = 16
+            SEARCH = 20,     //도서검색에서의 예외메세지 top값
+            TOP = 16         //도서반납,대출,삭제에서의 예외메세지 top값
         }
 
     }

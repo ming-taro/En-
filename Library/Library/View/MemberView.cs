@@ -26,8 +26,6 @@ namespace Library
         }
         public void PrintMyBookList(List<BorrowBookVO> myBookList) //회원의 도서 대여 목록 출력
         {
-            Console.SetCursorPosition(0, Console.CursorTop - 1);
-
             logo.PrintLine();
             for (int i = 0; i < myBookList.Count; i++)
             {
@@ -39,12 +37,7 @@ namespace Library
         }
         public void PrintBookRental(List<BookVO> bookList)
         {
-            logo.PrintMenu("도서 대출");
-            logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.ZERO, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", ConsoleColor.Gray);
-            logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.FIRST, "☞대출할 도서 번호:", ConsoleColor.Gray);
-            logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.SECOND, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", ConsoleColor.Gray);
-            logo.PrintMessage(0, (int)Constants.SearchMenu.FOURTH, "검색 결과(총 " + bookList.Count + "건)", ConsoleColor.Gray);
-            Console.SetCursorPosition(0, Console.CursorTop - 1);
+            logo.PrintSearchBox("도서 대출", "☞대출할 도서 번호:", "검색 결과(총 " + bookList.Count + "건)");
             PrintBookList(bookList);    //도서 검색 결과 출력
         }
         public void PrintBookRentalSuccess(List<BorrowBookVO> myBookList)  //도서 대여 완료 메세지 + 회원의 대여 목록 출력
@@ -52,17 +45,14 @@ namespace Library
             logo.PrintMenu("도서 대출 완료");
             logo.PrintEscAndEnter(0, Console.CursorTop - 1);
             logo.PrintMessage(0, (int)Constants.SearchMenu.ZERO, "대출 정보 조회", ConsoleColor.Gray);
+            Console.SetCursorPosition(0, Console.CursorTop - 1);
             PrintMyBookList(myBookList);
             Console.WindowTop = 0;
             Console.CursorVisible = Constants.IS_INVISIBLE_CURSOR;
         }
         public void PrintBookReturn(List<BorrowBookVO> myBookList)
         {
-            logo.PrintMenu("도서 반납");
-            logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.ZERO, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", ConsoleColor.Gray);
-            logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.FIRST, "☞반납할 도서 번호:", ConsoleColor.Gray);
-            logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.SECOND, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", ConsoleColor.Gray);
-            logo.PrintMessage(0, (int)Constants.SearchMenu.FOURTH, "대출 정보 조회", ConsoleColor.Gray);
+            logo.PrintSearchBox("도서 반납", "☞반납할 도서 번호:", "대출 정보 조회");
             PrintMyBookList(myBookList);    //대출 목록 출력
         }
         public void PrintBookReturnSuccess(BorrowBookVO book)              //도서 반납 완료 메세지 + 반납한 도서 정보 출력

@@ -53,9 +53,9 @@ namespace Library
         private string InputBookId(List<BookVO> bookList, List<BorrowBookVO> myBookList)    //도서명 입력 후 도서번호 입력
         {
             int top = (int)Constants.SearchMenu.FIRST;
-            int left = (int)Constants.InputField.RENTAL;
+            int left = (int)Constants.InputField.LEFT;
             int exceptionLeft = (int)Constants.SearchMenu.LEFT;
-            int exceptionTop = (int)Constants.Exception.RENTAL;
+            int exceptionTop = (int)Constants.Exception.TOP;
             string bookId;
 
             while (Constants.INPUT_VALUE)

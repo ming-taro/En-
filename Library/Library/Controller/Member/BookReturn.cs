@@ -34,9 +34,9 @@ namespace Library
         private string InputBookId(string memberId, List<BorrowBookVO> myBookList)
         {
             int top = (int)Constants.SearchMenu.FIRST;
-            int left = (int)Constants.InputField.RETURN;
+            int left = (int)Constants.InputField.LEFT;
             int exceptionLeft = (int)Constants.SearchMenu.LEFT;
-            int exceptionTop = (int)Constants.Exception.RETURN;
+            int exceptionTop = (int)Constants.Exception.TOP;
             string bookId;
 
             while (Constants.INPUT_VALUE)
