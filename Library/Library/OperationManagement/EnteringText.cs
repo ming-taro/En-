@@ -8,12 +8,6 @@ namespace Library
 {
     class EnteringText
     {
-        StringBuilder text;
-        ConsoleKeyInfo keyInfo;
-        public EnteringText()
-        {
-            text = new StringBuilder();
-        }
         private bool IsModifiers(ConsoleKeyInfo keyInfo)
         {
             if ((keyInfo.Modifiers & ConsoleModifiers.Alt) != 0) return Constants.IS_MODIFIERS;      //Alt키 입력
@@ -31,7 +25,9 @@ namespace Library
         }
         public string EnterText(int left, int top, string mark)
         {
-            text.Clear();  //stringbuilder 초기화
+            StringBuilder text = new StringBuilder();
+            ConsoleKeyInfo keyInfo;
+
             Console.SetCursorPosition(left, top);
 
             while (Constants.INPUT_VALUE)

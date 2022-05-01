@@ -8,19 +8,19 @@ using System.Threading.Tasks;
 
 namespace Library
 {
-    class SearchingBook
+    class BookSearch
     {
         private BookDAO bookDatabaseManager;
-        private AdminView adminView;
-        private Logo logo;
         private EnteringText text;
+        private Logo logo;
+        private AdminView adminView;
         private List<BookVO> bookList;
-        public SearchingBook(BookDAO bookDatabaseManager)
+        public BookSearch(BookDAO bookDatabaseManager, EnteringText text, Logo logo, AdminView adminView)
         {
             this.bookDatabaseManager = bookDatabaseManager;
-            adminView = new AdminView();
-            logo = new Logo();
-            text = new EnteringText();
+            this.text = text;
+            this.logo = logo;
+            this.adminView = adminView;
         }
         public List<BookVO> BookList
         {

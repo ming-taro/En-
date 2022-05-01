@@ -8,18 +8,18 @@ using System.Threading.Tasks;
 
 namespace Library
 {
-    class DeletingBook
+    class BookDeletion
     {
         private BookDAO bookDatabaseManager;
         private EnteringText text;
-        private AdminView adminView;
         private Logo logo;
-        public DeletingBook(BookDAO bookDatabaseManager)
+        private AdminView adminView;
+        public BookDeletion(BookDAO bookDatabaseManager, EnteringText text, Logo logo, AdminView adminView)
         {
             this.bookDatabaseManager = bookDatabaseManager;
-            text = new EnteringText();
-            adminView = new AdminView();
-            logo = new Logo();
+            this.text = text;
+            this.logo = logo;
+            this.adminView = adminView;
         }
         private bool IsBookInList(string bookId, List<BookVO> bookList)
         {
@@ -72,7 +72,7 @@ namespace Library
 
             return bookList[i];
         }
-        public void DeleteBook(SearchingBook searchingBook, Keyboard keyboard)
+        public void DeleteBook(BookSearch bookSearch, Keyboard keyboard)
         {
             int searchType;
             string searchWord;
@@ -80,18 +80,18 @@ namespace Library
 
             while (Constants.INPUT_VALUE)
             {
-                searchType = searchingBook.SelectSearchType(keyboard);     //검색유형 선택
+                searchType = bookSearch.SelectSearchType(keyboard);     //검색유형 선택
                 if (searchType == (int)Constants.Keyboard.ESCAPE) break;   //검색유형 선택 중 esc -> 도서검색 종료
 
-                searchWord = searchingBook.InputSearchWord((int)Constants.SearchMenu.LEFT_VALUE_OF_INPUT, searchType, (int)Constants.SearchMenu.FOURTH);   //검색어 입력받기
+                searchWord = bookSearch.InputSearchWord((int)Constants.SearchMenu.LEFT_VALUE_OF_INPUT, searchType, (int)Constants.SearchMenu.FOURTH);   //검색어 입력받기
                 if (searchWord.Equals(Constants.ESC)) continue;            //검색어 입력 중 esc -> 검색유형 선택으로
 
-                adminView.PrintBookIdInputScreen("도서 삭제", "☞삭제할 도서 번호:", searchingBook.BookList);  //도서번호 입력칸 + 도서 검색 결과 출력
+                adminView.PrintBookIdInputScreen("도서 삭제", "☞삭제할 도서 번호:", bookSearch.BookList);  //도서번호 입력칸 + 도서 검색 결과 출력
 
-                bookId = InputBookId(searchingBook.BookList);              //삭제할 도서번호 입력
+                bookId = InputBookId(bookSearch.BookList);              //삭제할 도서번호 입력
                 if (bookId.Equals(Constants.ESC)) continue;                //도서번호 입력 중 Esc -> 도서검색으로 돌아감
                 
-                adminView.PrintDeletedBook(FindBook(bookId, searchingBook.BookList));    //삭제 완료 메세지 + 삭제한 도서정보 출력
+                adminView.PrintDeletedBook(FindBook(bookId, bookSearch.BookList));    //삭제 완료 메세지 + 삭제한 도서정보 출력
                 bookDatabaseManager.DeleteFromBookList(bookId);            //DB에서 도서정보 삭제
 
                 if (keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break; //Esc->뒤로가기, Enter->재검색

@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 
 namespace Library
 {
-    class EditingBook
+    class BookEdition
     {
         private BookDAO bookDatabaseManager;
         private EnteringText text;
-        private AdminView adminView;
         private Logo logo;
-        public EditingBook(BookDAO bookDatabaseManager)
+        private AdminView adminView;
+        public BookEdition(BookDAO bookDatabaseManager, EnteringText text, Logo logo, AdminView adminView)
         {
             this.bookDatabaseManager = bookDatabaseManager;
-            text = new EnteringText();
-            adminView = new AdminView();
-            logo = new Logo();
+            this.text = text;
+            this.logo = logo;
+            this.adminView = adminView;
         }
         private bool IsBookInList(string bookId, List<BookVO> bookList)
         {
@@ -55,7 +55,7 @@ namespace Library
 
             return bookId;
         }
-        private string SelectBookId(SearchingBook searchingBook, Keyboard keyboard)  //수정할 도서번호 입력
+        private string SelectBookId(BookSearch searchingBook, Keyboard keyboard)  //수정할 도서번호 입력
         {
             int searchType;
             string searchWord;
@@ -104,7 +104,7 @@ namespace Library
                     break;
             }
         }
-        private string InputBookInformation(int menu, RegisteringBook registeringBook)  //수정할 도서정보입력
+        private string InputBookInformation(int menu, BookRegistration registeringBook)  //수정할 도서정보입력
         {
             string changedItem = "";
 
@@ -144,17 +144,17 @@ namespace Library
             return bookList[i];
         }
         
-        public void EditBook(SearchingBook searchingBook, RegisteringBook registeringBook, Keyboard keyboard)
+        public void EditBook(BookSearch bookSearch, BookRegistration bookRegistration, Keyboard keyboard)
         {
             int menu;
             string bookId;
             string changedItem;
             BookVO book;
 
-            bookId = SelectBookId(searchingBook, keyboard);   //도서검색 후 수정할 도서번호 입력
+            bookId = SelectBookId(bookSearch, keyboard);   //도서검색 후 수정할 도서번호 입력
             if (bookId.Equals(Constants.ESC)) return;         //Esc -> 뒤로가기
 
-            book = FindBook(bookId, searchingBook.BookList);  //bookVO에 도서정보 저장
+            book = FindBook(bookId, bookSearch.BookList);  //bookVO에 도서정보 저장
 
             while (Constants.INPUT_VALUE)
             {
@@ -165,7 +165,7 @@ namespace Library
                 if (menu == (int)Constants.Keyboard.ESCAPE) break;           //메뉴선택 중 Esc -> DB에 수정사항 반영 후 도서정보수정 종료
                 menu = keyboard.Top;                                         //수정항목 == 커서의 top값
 
-                changedItem = InputBookInformation(menu, registeringBook);   //해당 도서정보 수정
+                changedItem = InputBookInformation(menu, bookRegistration);  //해당 도서정보 수정
                 if (changedItem.Equals(Constants.ESC)) continue;             //도서정보 입력 중 Esc -> 수정할 항목 다시 선택
 
                 ReflectChangeInVO(menu, changedItem, book);  //bookVO에 수정사항 반영

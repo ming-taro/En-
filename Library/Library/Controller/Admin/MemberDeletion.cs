@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 
 namespace Library
 {
-    class DeletingMember
+    class MemberDeletion
     {
         private BookDAO bookDatabaseManager;
         private EnteringText text;
-        private AdminView adminView;
         private Logo logo;
+        private AdminView adminView;
 
-        public DeletingMember(BookDAO bookDatabaseManager)
+        public MemberDeletion(BookDAO bookDatabaseManager, EnteringText text, Logo logo, AdminView adminView)
         {
             this.bookDatabaseManager = bookDatabaseManager;
-            text = new EnteringText();
-            adminView = new AdminView();
-            logo = new Logo();
+            this.text = text;
+            this.logo = logo;
+            this.adminView = adminView;
         }
         private bool IsMemberInList(string memberId, List<MemberVO> memberList)  //입력받은 회원아이디가 회원목록에 있는지 확인
         {

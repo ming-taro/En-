@@ -8,19 +8,19 @@ using System.Threading.Tasks;
 
 namespace Library
 {
-    class RegisteringBook
+    class BookRegistration
     {
         private BookDAO bookDatabaseManager;
         private EnteringText text;
-        private AdminView adminView;
         private Logo logo;
+        private AdminView adminView;
 
-        public RegisteringBook(BookDAO bookDatabaseManager)
+        public BookRegistration(BookDAO bookDatabaseManager, EnteringText text, Logo logo, AdminView adminView)
         {
             this.bookDatabaseManager = bookDatabaseManager;
-            text = new EnteringText();
-            adminView = new AdminView();
-            logo = new Logo();
+            this.text = text;
+            this.logo = logo;
+            this.adminView = adminView;
         }
         public string InputBookId(int left, int top)
         {

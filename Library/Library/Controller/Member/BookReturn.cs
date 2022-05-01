@@ -12,21 +12,21 @@ namespace Library
     {
         private BookDAO bookDatabaseManager;
         private EnteringText text;
-        private MemberView memberView;
         private Logo logo;
+        private MemberView memberView;
 
-        public ReturningBook(BookDAO bookDatabaseManager)
+        public ReturningBook(BookDAO bookDatabaseManager, EnteringText text, Logo logo, MemberView memberView)
         {
             this.bookDatabaseManager = bookDatabaseManager;
-            text = new EnteringText();
-            memberView = new MemberView();
-            logo = new Logo();
+            this.text = text;
+            this.logo = logo;
+            this.memberView = memberView;
         }
         private bool IsBookIBorrowed(string bookId, List<BorrowBookVO> myBookList)          //회원이 대여중인 도서인지 검사
         {
             for (int i = 0; i < myBookList.Count; i++)
             {
-                if (myBookList[i].Id.Equals(bookId)) return Constants.IS_BOOK_I_BORROWED;   //대여한 도서를 반납하려고 할 때 -> 반납가능
+                if (myBookList[i].BookId.Equals(bookId)) return Constants.IS_BOOK_I_BORROWED;   //대여한 도서를 반납하려고 할 때 -> 반납가능
             }
 
             return Constants.IS_BOOK_I_NEVER_BORROWED;  //대여하지 않은 도서 -> 반납불가
@@ -67,14 +67,14 @@ namespace Library
 
             for(i = 0; i<myBookList.Count; i++)
             {
-                if (myBookList[i].Id.Equals(bookId)) break;
+                if (myBookList[i].BookId.Equals(bookId)) break;
             }
 
             return myBookList[i];
         }
         public void ReturnBook(string memberId, Keyboard keyboard) 
         {
-            List<BorrowBookVO> myBookList = bookDatabaseManager.MakeMyBookList(memberId); //현재 로그인한 회원의 도서대여목록
+            List<BorrowBookVO> myBookList = bookDatabaseManager.MakeMyBookList(Constants.RENTAL_LIST, memberId); //현재 로그인한 회원의 도서대여목록
 
             logo.PrintSearchBox("도서 반납", "☞반납할 도서 번호:");    //도서번호 입력창
             Console.WriteLine();
@@ -85,7 +85,7 @@ namespace Library
 
             memberView.PrintBookReturnSuccess(FindBook(bookId, myBookList));  //반납한 도서정보 출력
             bookDatabaseManager.DeleteFromRentalList(memberId, bookId); //도서대여리스트에서 대여정보 삭제 
-            myBookList = bookDatabaseManager.MakeMyBookList(memberId);  //도서반납 후 대여목록
+            myBookList = bookDatabaseManager.MakeMyBookList(Constants.RENTAL_LIST, memberId);  //도서반납 후 대여목록
 
             keyboard.PressESC(); //도서 반납 후 Esc -> 회원모드로 돌아감
         }

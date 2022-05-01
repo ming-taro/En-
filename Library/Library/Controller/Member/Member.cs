@@ -10,42 +10,50 @@ namespace Library
     class Member
     {
         private MemberVO member;
-        private BookDAO bookDatabaseManager;
         private Keyboard keyboard;
+        private BookDAO bookDatabaseManager;
+        private EnteringText text;
         private Logo logo;
-        private SignIn signIn;                //로그인
-        private SignUp signUp;                //회원가입
-        private SearchingBook searchingBook;  //1. 도서검색
-        private BorrowingBook borrowingBook;  //2. 도서대여
-        private ReturningBook returningBook;  //3. 도서반납
-        private EditingProfile editingProfile;//4.회원정보 수정
+        private MemberView memberView;
+        private AdminView adminView;
+
+        private SignIn signIn;                 //로그인
+        private SignUp signUp;                 //회원가입
+        private BookSearch bookSearch;         //1. 도서검색
+        private BookRental bookRental;         //2. 도서대여
+        private BookReturn bookReturn;         //3. 도서반납
+        private ProfileEdition profileEdition;//4.회원정보 수정
         public Member(Keyboard keyboard)
         {
-            bookDatabaseManager = new BookDAO();
             this.keyboard = keyboard;
+            bookDatabaseManager = new BookDAO();
+            text = new EnteringText();
             logo = new Logo();
-            signIn = new SignIn(bookDatabaseManager);
-            signUp = new SignUp(bookDatabaseManager);
-            searchingBook = new SearchingBook(bookDatabaseManager);
-            borrowingBook = new BorrowingBook(bookDatabaseManager);
-            returningBook = new ReturningBook(bookDatabaseManager);
-            editingProfile = new EditingProfile(bookDatabaseManager);
+            memberView = new MemberView();
+            adminView = new AdminView();
+
+            signIn = new SignIn(bookDatabaseManager, text, logo);
+            signUp = new SignUp(bookDatabaseManager, text, logo, memberView);
+            bookSearch = new BookSearch(bookDatabaseManager, text, logo, adminView);
+            bookRental = new BookRental(bookDatabaseManager, text, logo, memberView);
+            bookReturn = new BookReturn(bookDatabaseManager, text, logo, memberView);
+            profileEdition = new ProfileEdition(bookDatabaseManager, memberView);
         }
         private void SelectMenu(int menu)
         {
             switch (menu)
             {
                 case (int)Constants.Menu.FIRST:  //도서검색
-                    searchingBook.ShowSearchResult(keyboard);
+                    bookSearch.ShowSearchResult(keyboard);
                     break;
                 case (int)Constants.Menu.SECOND: //도서대여
-                    borrowingBook.SearchBookToBorrow(member.Id, searchingBook, keyboard);
+                    bookRental.SearchBookToBorrow(member.Id, bookSearch, keyboard);
                     break;
                 case (int)Constants.Menu.THIRD:  //도서반납
-                    returningBook.ReturnBook(member.Id, keyboard);
+                    bookReturn.ReturnBook(member.Id, keyboard);
                     break;
                 case (int)Constants.Menu.FOURTH: //개인정보수정
-                    editingProfile.EditProfile(member, signUp, keyboard);  //아이디를 수정했을 수 있음 -> 수정된 아이디를 myId에 저장
+                    profileEdition.EditProfile(member, signUp, keyboard);  //아이디를 수정했을 수 있음 -> 수정된 아이디를 myId에 저장
                     break;
             }
         }

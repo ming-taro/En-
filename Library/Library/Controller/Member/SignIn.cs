@@ -13,11 +13,11 @@ namespace Library
         private BookDAO bookDatabaseManager;
         private EnteringText text;
         private Logo logo;
-        public SignIn(BookDAO bookDatabaseManager)
+        public SignIn(BookDAO bookDatabaseManager, EnteringText text, Logo logo)
         {
             this.bookDatabaseManager = bookDatabaseManager;
-            text = new EnteringText();
-            logo = new Logo();
+            this.text = text;
+            this.logo = logo;
         }
         public string SignInAdmin()
         {

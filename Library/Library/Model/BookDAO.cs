@@ -73,17 +73,17 @@ namespace Library
 
             return bookList;
         }
-        public List<BorrowBookVO> MakeMyBookList(string memberId)    //회원의 도서대여목록
+        public List<BorrowBookVO> MakeMyBookList(string query, string memberId)    //회원의 도서대여목록
         {
             List<BorrowBookVO> borrowList = new List<BorrowBookVO>();
 
-            MySqlCommand command = new MySqlCommand(Constants.RENTAL_LIST, connection);
+            MySqlCommand command = new MySqlCommand(query, connection);
             command.Parameters.Add(new MySqlParameter("@memberId", memberId));
 
             MySqlDataReader table = command.ExecuteReader();
             while (table.Read())
             {
-                borrowList.Add(new BorrowBookVO(table["id"].ToString(), table["name"].ToString(), table["publisher"].ToString(), table["author"].ToString(), table["price"].ToString(), table["rentalPeriod"].ToString()));
+                borrowList.Add(new BorrowBookVO(table["memberId"].ToString(), table["id"].ToString(), table["name"].ToString(), table["publisher"].ToString(), table["author"].ToString(), table["price"].ToString(), table["rentalPeriod"].ToString()));
             }
             table.Close();
 

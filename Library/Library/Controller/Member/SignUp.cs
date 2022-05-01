@@ -14,12 +14,12 @@ namespace Library
         private EnteringText text;
         private MemberView memberView;
         private Logo logo;
-        public SignUp(BookDAO bookDatabaseManager)
+        public SignUp(BookDAO bookDatabaseManager, EnteringText text, Logo logo, MemberView memberView)
         {
             this.bookDatabaseManager = bookDatabaseManager;
-            text = new EnteringText();
-            memberView = new MemberView();
-            logo = new Logo();
+            this.text = text;
+            this.logo = logo;
+            this.memberView = memberView;
         }
         public string InputId(int left, int top)  //아이디 입력
         {

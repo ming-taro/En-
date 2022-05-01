@@ -102,6 +102,7 @@ namespace Library
         public const string AUTHOR_SEARCH = "select*from book where author like '%{0}%';";
 
         public const string RENTAL_LIST = "select * from book join borrowbook on book.id = borrowbook.bookId and borrowbook.memberId = @memberId;";
+        public const string RENTAL_LIST_INQUIRY = "select * from book join borrowbook on book.id = borrowbook.bookId;";
         public const string ADDITION_TO_RENTAL_LIST = "INSERT INTO borrowBook(memberId,bookId,rentalPeriod) VALUES (@memberId, @bookId, @rentalPeriod);";
         public const string DELETION_FROM_RENTAL_LIST = "DELETE FROM borrowBook WHERE memberId = @memberId and bookId = @bookId;";
         public const string DECREASE_IN_BOOK_QUANTITY = "UPDATE book SET quantity = quantity - 1 WHERE id=@bookId;";
@@ -154,6 +155,7 @@ namespace Library
             THIRD = 19,
             FOURTH = 21,
             FIFTH = 23,
+            SIXTH = 25,
             LEFT = 25,
             CONSOLE_HEIGHT = 40,
             CONSOLE_WIDTH = 61,

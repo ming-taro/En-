@@ -8,26 +8,33 @@ namespace Library
 {
     class BorrowBookVO
     {
-        private string id;            //도서번호
+        private string memberId;      //회원번호
+        private string bookId;            //도서번호
         private string name;          //도서명
         private string publisher;     //출판사
         private string author;        //저자
         private string price;         //가격
         private string rentalPeriod;  //대여기간
 
-        public BorrowBookVO(string id, string name, string publisher, string author, string price, string rentalPeriod)
+        public BorrowBookVO(string memberId, string bookId, string name, string publisher, string author, string price, string rentalPeriod)
         {
-            this.id = id;
+            this.memberId = memberId;
+            this.bookId = bookId;
             this.name = name;
             this.publisher = publisher;
             this.author = author;
             this.price = price;
             this.rentalPeriod = rentalPeriod;
         }
-        public string Id
+        public string MemberId
         {
-            get { return id; }
-            set { id = value; }
+            get { return memberId; }
+            set { memberId = value; }
+        }
+        public string BookId
+        {
+            get { return bookId; }
+            set { bookId = value; }
         }
         public string Name
         {
@@ -56,7 +63,7 @@ namespace Library
         }
         public override String ToString()
         {
-            return "도서번호: " + id + "\n도서명: " + name + "\n출판사: " + publisher +
+            return "도서번호: " + bookId + "\n도서명: " + name + "\n출판사: " + publisher +
                 "\n저자: " + author + "\n가격: " + price + "\n대여기간: " + rentalPeriod;
         }
     }

@@ -35,8 +35,9 @@ namespace Library
         public void PrintBookRentalSuccess(List<BorrowBookVO> myBookList)  //도서 대여 완료 메세지 + 회원의 대여 목록 출력
         {
             logo.PrintMenu("도서 대여 완료");
-            PrintMyBookList(myBookList);    
-            logo.PrintMessage(0, Console.CursorTop - 1, Constants.ESC_AND_ENTER, ConsoleColor.Yellow);
+            Console.WriteLine("\n\n");
+            PrintMyBookList(myBookList);
+            logo.PrintMessage(0, Console.CursorTop - 1, Constants.ESC_AND_ENTER, ConsoleColor.Gray);
         }
         public void PrintBookReturnSuccess(BorrowBookVO book)              //도서 반납 완료 메세지 + 반납한 도서 정보 출력
         {

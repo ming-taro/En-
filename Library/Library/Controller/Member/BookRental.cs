@@ -8,19 +8,19 @@ using System.Threading.Tasks;
 
 namespace Library
 {
-    class BorrowingBook
+    class BookRental
     {
         private BookDAO bookDatabaseManager;
         private EnteringText text;
         private MemberView memberView;
         private Logo logo;
         
-        public BorrowingBook(BookDAO bookDatabaseManager)
+        public BookRental(BookDAO bookDatabaseManager, EnteringText text, Logo logo, MemberView memberView)
         {
             this.bookDatabaseManager = bookDatabaseManager;
-            text = new EnteringText();
-            memberView = new MemberView();
-            logo = new Logo();
+            this.text = text;
+            this.logo = logo;
+            this.memberView = memberView;
         }
 
         private bool IsBookInList(string bookId, List<BookVO> bookList)   //현재 조회중인 도서목록에 있는 도서인지 검사
@@ -36,7 +36,7 @@ namespace Library
         {
             for (int i = 0; i < myBookList.Count; i++)
             {
-                if (myBookList[i].Id.Equals(bookId)) return Constants.IS_BOOK_I_BORROWED;   //입력한 도서를 이미 대여중 -> 대여할 수 없음
+                if (myBookList[i].BookId.Equals(bookId)) return Constants.IS_BOOK_I_BORROWED;   //입력한 도서를 이미 대여중 -> 대여할 수 없음
             }
 
             return Constants.IS_BOOK_I_NEVER_BORROWED;  //대여하지 않은 도서 -> 대여가능
@@ -84,12 +84,12 @@ namespace Library
             }
             return bookId;
         }
-        public void SearchBookToBorrow(string memberId, SearchingBook searchingBook, Keyboard keyboard)
+        public void SearchBookToBorrow(string memberId, BookSearch searchingBook, Keyboard keyboard)
         {
             int searchType;        //검색유형
             string searchWord;     //검색어
             string bookId;         //도서번호
-            List<BorrowBookVO> myBookList = bookDatabaseManager.MakeMyBookList(memberId); //현재 로그인한 회원의 도서대여목록
+            List<BorrowBookVO> myBookList = bookDatabaseManager.MakeMyBookList(Constants.RENTAL_LIST, memberId); //현재 로그인한 회원의 도서대여목록
 
             while (Constants.INPUT_VALUE)
             {
@@ -105,7 +105,7 @@ namespace Library
                 if (bookId.Equals(Constants.ESC)) continue;               //도서번호 입력 중 esc -> 다시 도서검색으로
 
                 bookDatabaseManager.AddToRentalList(memberId, bookId);    //DB에 변경된 정보 저장
-                myBookList = bookDatabaseManager.MakeMyBookList(memberId);//변경된 현재 로그인한 회원의 도서대여목록
+                myBookList = bookDatabaseManager.MakeMyBookList(Constants.RENTAL_LIST, memberId);//변경된 현재 로그인한 회원의 도서대여목록
                 memberView.PrintBookRentalSuccess(myBookList);            //회원의 대여목록 출력
 
                 if (keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break; //Esc->뒤로가기, Enter->재검색

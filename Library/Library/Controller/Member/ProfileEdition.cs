@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace Library
 {
-    class EditingProfile
+    class ProfileEdition
     {
         private BookDAO bookDatabaseManager;
         private MemberView memberView;
 
-        public EditingProfile(BookDAO bookDatabaseManager)
+        public ProfileEdition(BookDAO bookDatabaseManager, MemberView memberView)
         {
             this.bookDatabaseManager = bookDatabaseManager;
-            memberView = new MemberView();
+            this.memberView = memberView;
         }
         private void ReflectChangeInVO(int menu, string changedItem, MemberVO member)   //수정된 정보 반영
         {
