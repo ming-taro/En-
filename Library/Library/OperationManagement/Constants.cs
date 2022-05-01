@@ -150,15 +150,15 @@ namespace Library
         }
         public enum Menu
         {
-            FIRST = 15,          //top
-            SECOND = 17,
-            THIRD = 19,
-            FOURTH = 21,
-            FIFTH = 23,
-            SIXTH = 25,
-            LEFT = 25,
+            FIRST = 20,          //top
+            SECOND = 22,
+            THIRD = 24,
+            FOURTH = 26,
+            FIFTH = 28,
+            SIXTH = 30,
+            LEFT = 45,
             CONSOLE_HEIGHT = 40,
-            CONSOLE_WIDTH = 61,
+            CONSOLE_WIDTH = 100,
             STEP = 2
         }
         public enum Registration

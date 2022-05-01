@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace Library
 {
-    class ReturningBook
+    class BookReturn
     {
         private BookDAO bookDatabaseManager;
         private EnteringText text;
         private Logo logo;
         private MemberView memberView;
 
-        public ReturningBook(BookDAO bookDatabaseManager, EnteringText text, Logo logo, MemberView memberView)
+        public BookReturn(BookDAO bookDatabaseManager, EnteringText text, Logo logo, MemberView memberView)
         {
             this.bookDatabaseManager = bookDatabaseManager;
             this.text = text;

@@ -10,27 +10,30 @@ namespace Library
     {
         public void PrintTitle()
         {
-            Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-            Console.WriteLine("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-            Console.WriteLine("┃                                                         ┃");
-            Console.WriteLine("┃    **          **                                       ┃");
-            Console.WriteLine("┃    **          **                                       ┃");
-            Console.WriteLine("┃    **      ★  ****   *  **   **     *  **    *    **   ┃");
-            Console.WriteLine("┃    **      **  **☆*  **     *☆*    **       *  **     ┃");
-            Console.WriteLine("┃    ******  **  ****   **      **  *  **       **        ┃");
-            Console.WriteLine("┃                                             **          ┃");
-            Console.WriteLine("┃                                           **            ┃ ");
-            Console.WriteLine("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-            Console.WriteLine(" [ESC]:뒤로가기                                [Enter]:선택");
+            Console.WriteLine("\n\n\n                 〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓");
+            Console.WriteLine("                ┃                                                                 ┃");
+            Console.WriteLine("                ┃                                                                 ┃");
+            Console.WriteLine("                ┃       ■          ■                                            ┃");
+            Console.WriteLine("                ┃       ■          ■                                            ┃");
+            Console.WriteLine("                ┃       ■       ◆ ■                                            ┃");
+            Console.WriteLine("                ┃       ■       ■ ■■■  ■  ■  ■■     ■  ■  ■  ■       ┃");
+            Console.WriteLine("                ┃       ■       ■ ■   ■ ■■   ■  ■    ■■    ■  ■       ┃");
+            Console.WriteLine("                ┃       ■■■■ ■ ■■■  ■      ■■ ■  ■       ■■        ┃");
+            Console.WriteLine("                ┃                                                     ■          ┃");
+            Console.WriteLine("                ┃                                                    ■           ┃ ");
+            Console.WriteLine("                ┃                                                  ■             ┃ ");
+            Console.WriteLine("                ┃                                                                 ┃");
+            Console.WriteLine("                 〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓");
+            Console.WriteLine("                 [ESC]:뒤로가기                                        [Enter]:선택");
         }
         public void PrintMenu(string menu)
         {
             int left = ((int)Constants.Menu.CONSOLE_WIDTH - (menu.Length * 2)) / 2;
             Console.Clear();
-            Console.WriteLine("◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆");
+            Console.WriteLine("▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧");
             Console.SetCursorPosition(left, 2);
             Console.WriteLine("[" + menu + "]\n");
-            Console.WriteLine("◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆");
+            Console.WriteLine("▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨▧▨");
         }
         public void PrintSearchBox(string menu, string searchWord)
         {

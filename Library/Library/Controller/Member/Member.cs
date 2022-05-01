@@ -22,7 +22,7 @@ namespace Library
         private BookSearch bookSearch;         //1. 도서검색
         private BookRental bookRental;         //2. 도서대여
         private BookReturn bookReturn;         //3. 도서반납
-        private ProfileEdition profileEdition;//4.회원정보 수정
+        private ProfileEdition profileEdition; //4.회원정보 수정
         public Member(Keyboard keyboard)
         {
             this.keyboard = keyboard;
