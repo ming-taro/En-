@@ -55,8 +55,8 @@ namespace Library
         }
         public override string ToString()
         {
-            return "아이디: " + id + "\n비밀번호: " + password + "\n이름: " + name + 
-                "\n나이: " + age + "\n휴대전화: " + phoneNumber + "\n주소: " + address;
+            return "  아이디: " + id + "\n비밀번호: " + password + "\n    이름: " + name + 
+                "\n    나이: " + age + "\n휴대전화: " + phoneNumber + "\n    주소: " + address;
         }
     }
 }

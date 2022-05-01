@@ -127,19 +127,20 @@ namespace Library
         }
         public void PrintRentalList(List<BorrowBookVO> rentalList)
         {
-            logo.PrintMenu("도서 대여 현황");
-            Console.WriteLine(Constants.ESC_MESSAGE);
-
-            logo.PrintMessage(0, Console.CursorTop + 1, ">>>>>>>>>>>>>>>>>>>>> 도서 대여 목록 <<<<<<<<<<<<<<<<<<<<<<<<", ConsoleColor.Gray);
+            logo.PrintMenu("도서 대출 현황");
+            logo.PrintMessage(0, (int)Constants.SearchMenu.ZERO, "전체 회원의 도서 대출 목록(총 " + rentalList.Count + "건)", ConsoleColor.Gray);
             Console.SetCursorPosition(0, Console.CursorTop - 1);
 
             logo.PrintLine();
             for (int i = 0; i < rentalList.Count; i++)
             {
-                Console.WriteLine("회원 아이디: " + rentalList[i].MemberId);
+                Console.WriteLine("  회원ID: " + rentalList[i].MemberId);
                 Console.WriteLine(rentalList[i]);
-                logo.PrintLine();
+                logo.PrintSingleLine();
             }
+            Console.SetCursorPosition(0, Console.CursorTop - 3);
+            logo.PrintLine();
+            Console.WindowTop = 0;
         }
     }
 }
