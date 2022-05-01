@@ -28,6 +28,7 @@ namespace Library
             StringBuilder text = new StringBuilder();
             ConsoleKeyInfo keyInfo;
 
+            Console.WindowTop = 0;
             Console.SetCursorPosition(left, top);
 
             while (Constants.INPUT_VALUE)

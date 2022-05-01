@@ -40,5 +40,9 @@ namespace Library
         {
             PrintMessage(left, top, "(대여가능한 도서가 0권입니다. 다른 도서를 선택해주세요.)              ", ConsoleColor.Red);
         }
+        public void PrintBookINeverBorrowed(int left, int top)
+        {
+            PrintMessage(left,top, "(대여목록에 없는 도서번호입니다. 다시 입력해주세요.)             ", ConsoleColor.Red);
+        }
     }
 }

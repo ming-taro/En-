@@ -203,11 +203,13 @@ namespace Library
         {
             SEARCH = 30,
             RENTAL = 40,
+            RETURN = 40
         }
         public enum Exception//top값
         {
             SEARCH = 20,
-            RENTAL = 16
+            RENTAL = 16,
+            RETURN = 16
         }
 
     }

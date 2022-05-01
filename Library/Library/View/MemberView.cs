@@ -43,30 +43,39 @@ namespace Library
             logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.ZERO, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", ConsoleColor.Gray);
             logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.FIRST, "☞대출할 도서 번호:", ConsoleColor.Gray);
             logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.SECOND, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", ConsoleColor.Gray);
-            Console.SetCursorPosition(0, (int)Constants.SearchMenu.THIRD);
+            Console.SetCursorPosition(0, (int)Constants.SearchMenu.FOURTH);
             PrintBookList(bookList);    //도서 검색 결과 출력
         }
         public void PrintBookRentalSuccess(List<BorrowBookVO> myBookList)  //도서 대여 완료 메세지 + 회원의 대여 목록 출력
         {
             logo.PrintMenu("도서 대출 완료");
+            logo.PrintEscAndEnter(0, Console.CursorTop - 1);
             logo.PrintMessage(0, (int)Constants.SearchMenu.ZERO, "대출 정보 조회", ConsoleColor.Gray);
             PrintMyBookList(myBookList);
-            logo.PrintMessage(0, Console.CursorTop - 1, Constants.ESC_AND_ENTER, ConsoleColor.Gray);
+            Console.WindowTop = 0;
+        }
+        public void PrintBookReturn(List<BorrowBookVO> myBookList)
+        {
+            logo.PrintMenu("도서 반납");
+            logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.ZERO, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", ConsoleColor.Gray);
+            logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.FIRST, "☞반납할 도서 번호:", ConsoleColor.Gray);
+            logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.SECOND, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", ConsoleColor.Gray);
+            Console.SetCursorPosition(0, (int)Constants.SearchMenu.FOURTH);
+            PrintMyBookList(myBookList);    //대출 목록 출력
         }
         public void PrintBookReturnSuccess(BorrowBookVO book)              //도서 반납 완료 메세지 + 반납한 도서 정보 출력
         {
             logo.PrintMenu("도서 반납 완료");
-            logo.PrintMessage(21, Console.CursorTop + 1, ">반납한 도서 정보<", ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.SearchMenu.ZERO, "반납한 도서 정보", ConsoleColor.Gray);
             Console.SetCursorPosition(0, Console.CursorTop - 1);
             logo.PrintLine();
             Console.WriteLine(book);
             logo.PrintLine();
-            logo.PrintMessage(0, Console.CursorTop - 1, Constants.ESC_MESSAGE, ConsoleColor.Yellow);
+            Console.WindowTop = 0;
         }
         public void PrintProfile(MemberVO member) //회원정보수정 화면 출력
         {
             logo.PrintMenu("회원 정보 수정");
-            Console.WriteLine(Constants.ESC_MESSAGE);
             Console.WriteLine("\n\n        (수정하려는 정보를 선택해 [Enter]키를 누르세요)");
 
             Console.SetCursorPosition(0, (int)Constants.EditMenu.FIRST);
@@ -87,7 +96,6 @@ namespace Library
         public void PrintSingUp()
         {
             logo.PrintMenu("회원가입");
-            Console.WriteLine(Constants.ESC_MESSAGE);
             logo.PrintMessage(0, (int)Constants.Registration.FIRST, "아이디:\n(5~10자의 영어, 숫자만 입력해주세요.)", ConsoleColor.Gray);
             logo.PrintMessage(0, (int)Constants.Registration.SECOND, "비밀번호:\n(5~10자의 영어, 숫자만 입력해주세요.)", ConsoleColor.Gray);
             logo.PrintMessage(0, (int)Constants.Registration.THIRD, "비밀번호 재확인:", ConsoleColor.Gray);

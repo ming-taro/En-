@@ -50,6 +50,16 @@ namespace Library
             Console.WriteLine(message);
             Console.ForegroundColor = ConsoleColor.Gray;
         }
+        public void PrintEsc(int left, int top)
+        {
+            Console.SetCursorPosition(left, top);
+            Console.WriteLine("                                                                                    ☜[ESC]:뒤로가기");
+        }
+        public void PrintEscAndEnter(int left, int top)
+        {
+            Console.SetCursorPosition(left, top);
+            Console.WriteLine("                                                                  [ESC]:뒤로가기      [ENTER]:재조회");
+        }
         public void PrintLine()
         {
             Console.WriteLine("\n====================================================================================================\n");

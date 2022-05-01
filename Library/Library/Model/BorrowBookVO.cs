@@ -63,8 +63,8 @@ namespace Library
         }
         public override String ToString()
         {
-            return "도서번호: " + bookId + "\n도서명: " + name + "\n출판사: " + publisher +
-                "\n저자: " + author + "\n가격: " + price + "\n대여기간: " + rentalPeriod;
+            return "도서번호: " + bookId + "\n  도서명: " + name + "\n  출판사: " + publisher +
+                "\n    저자: " + author + "\n    가격: " + price + "\n대여기간: " + rentalPeriod;
         }
     }
 }
