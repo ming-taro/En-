@@ -10,6 +10,7 @@ namespace Library
 {
     class BookDeletion
     {
+        private BookDAO bookDAO = BookDAO.GetInstance();
         private EnteringText text;
         private AdminView adminView;
         private Exception exception;
@@ -52,7 +53,7 @@ namespace Library
                 {
                     exception.PrintBookNotInList(exceptionLeft, exceptionTop);
                 }
-                else if (BookDAO.bookDAO.IsBookOnLoan(bookId))   //도서목록에 있지만 대여중인 회원이 있는 경우 -> 도서 삭제 불가
+                else if (bookDAO.IsBookOnLoan(bookId))   //도서목록에 있지만 대여중인 회원이 있는 경우 -> 도서 삭제 불가
                 {
                     exception.PrintBookOnLoan(exceptionLeft, exceptionTop);
                 }
@@ -94,7 +95,7 @@ namespace Library
                 if (bookId.Equals(Constants.ESC)) continue;                //도서번호 입력 중 Esc -> 도서검색으로 돌아감
                 
                 adminView.PrintDeletedBook(FindBook(bookId, bookSearch.BookList));    //삭제 완료 메세지 + 삭제한 도서정보 출력
-                BookDAO.bookDAO.DeleteFromBookList(bookId);            //DB에서 도서정보 삭제
+                bookDAO.DeleteFromBookList(bookId);            //DB에서 도서정보 삭제
 
                 if (keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break; //Esc->뒤로가기, Enter->재검색
             }

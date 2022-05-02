@@ -12,6 +12,7 @@ namespace Library
 {
     class NaverSearch
     {
+        private BookDAO bookDAO = BookDAO.GetInstance();
         private EnteringText text;
         private AdminView adminView;
         private Exception exception;
@@ -182,7 +183,7 @@ namespace Library
 
             book.Id = bookId;
             book.Quantity = quantity;
-            BookDAO.bookDAO.AddToBookList(Constants.ADDITION_TO_BOOK_LIST, book);  //DB에 도서정보 저장
+            bookDAO.AddToBookList(Constants.ADDITION_TO_BOOK_LIST, book);  //DB에 도서정보 저장
 
             adminView.PrintRegisteredBook(book);              //등록 완료 화면 출력
             keyboard.PressESC();                              //Esc -> 종료(뒤로가기)

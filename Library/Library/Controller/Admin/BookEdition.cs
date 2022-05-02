@@ -9,6 +9,7 @@ namespace Library
 {
     class BookEdition
     {
+        private BookDAO bookDAO = BookDAO.GetInstance();
         private EnteringText text;
         private AdminView adminView;
         private Exception exception;
@@ -165,7 +166,7 @@ namespace Library
                 ReflectChangeInVO(menu, changedItem, book);  //bookVO에 수정사항 반영
             }
 
-            BookDAO.bookDAO.AddToBookList(Constants.UPDATE_TO_BOOK_LIST, book); //DB에 수정사항 반영
+            bookDAO.AddToBookList(Constants.UPDATE_TO_BOOK_LIST, book); //DB에 수정사항 반영
         }
     }
 }

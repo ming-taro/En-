@@ -45,26 +45,12 @@ namespace Library
             PrintMessage(0, (int)Constants.SearchMenu.FOURTH, listName, ConsoleColor.Gray);
             Console.SetCursorPosition(0, Console.CursorTop - 1);
         }
-
-
-        public void PrintSearchBox(string menu, string searchWord)
-        {
-            PrintMenu(menu);
-            Console.SetCursorPosition(0, (int)Constants.SearchMenu.FIRST);
-            Console.WriteLine(searchWord);
-            Console.Write("\n>>>>>>>>>>>>>>>>>>>>>>>> 도서 목록 <<<<<<<<<<<<<<<<<<<<<<<<<<");
-        }
         public void PrintMessage(int left, int top, string message, ConsoleColor color)
         {
             Console.SetCursorPosition(left, top);
             Console.ForegroundColor = color;
             Console.WriteLine(message);
             Console.ForegroundColor = ConsoleColor.Gray;
-        }
-        public void PrintEsc(int left, int top)
-        {
-            Console.SetCursorPosition(left, top);
-            Console.WriteLine("                                                                                    ☜[ESC]:뒤로가기");
         }
         public void PrintEscAndEnter(int left, int top)
         {
@@ -82,7 +68,7 @@ namespace Library
         public void RemoveLine(int left, int top)
         {
             Console.SetCursorPosition(left, top);
-            Console.Write("                                                                           ");
+            Console.Write("                                                                                            ");
         }
         public void PrintMain(string[] menu)
         {
@@ -108,6 +94,26 @@ namespace Library
         {
             PrintSignIn();
             PrintMessage((int)Constants.SignIn.LEFT, (int)Constants.SignIn.MESSAGE, "(아이디 또는 비밀번호를 잘못 입력하셨습니다.)", ConsoleColor.Red);
+        }
+        public void PrintAdminMode()  //관리자 모드 화면
+        {
+            string[] menu = { "도서 검색", "도서 등록", "도서 정보 수정", "도서 삭제", "도서 대출 현황", "회원 정보 관리", "네이버 도서 검색", "로그 관리" };
+            PrintMain(menu);
+        }
+        public void PrintLogManagement()
+        {
+            string[] menu = { "로그 기록", "로그 파일 저장", "로그 파일 삭제", "로그 초기화" };
+            PrintMain(menu);
+        }
+        public void PrintMemberMenu()
+        {
+            string[] menu = { "로그인", "회원가입" };
+            PrintMain(menu);
+        }
+        public void PrintMemberMode()
+        {
+            string[] menu = { "도서 검색", "도서 대출", "도서 반납", "회원 정보 수정" };
+            PrintMain(menu);
         }
     }
 }

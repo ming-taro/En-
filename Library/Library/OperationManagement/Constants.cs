@@ -163,6 +163,7 @@ namespace Library
             FIFTH = 28,
             SIXTH = 30,
             SEVENTH = 32,
+            EIGHT = 34,
             LEFT = 45,
             CONSOLE_HEIGHT = 40,
             CONSOLE_WIDTH = 100,

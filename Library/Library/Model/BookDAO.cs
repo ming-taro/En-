@@ -9,11 +9,19 @@ namespace Library
 {
     class BookDAO
     {
-        public static BookDAO bookDAO = new BookDAO();
+        public static BookDAO bookDAO;
         private string connectionString;
         private BookDAO()
         {
             connectionString = Constants.SERVER + Constants.PORT + Constants.DATABASE + Constants.ID + Constants.PASSWORD;
+        }
+        public static BookDAO GetInstance()
+        {
+            if (bookDAO == null)
+            {
+                bookDAO = new BookDAO();
+            }
+            return bookDAO;
         }
         public List<BookVO> MakeBookList(int searchType, string searchWord)  //검색 결과 도서목록
         {

@@ -85,15 +85,13 @@ namespace Library
         public void StartMemberMode(int maxTop)   
         {
             int menu;
-            string[] textOfMemberMenu = { "로그인", "회원가입" };
-            string[] textOfMemberMode = { "도서 검색", "도서 대출", "도서 반납", "회원 정보 수정" };
 
             while (Constants.MEMBER_MODE)
             {
                 keyboard.InitCursorPosition();
 
-                if (maxTop == (int)Constants.Menu.SECOND) logo.PrintMain(textOfMemberMenu);//1.로그인  2.회원가입
-                else logo.PrintMain(textOfMemberMode);           //1.도서검색  2.도서대여  3.도서반납  4.개인정보수정  5.종료
+                if (maxTop == (int)Constants.Menu.SECOND) logo.PrintMemberMenu();//1.로그인  2.회원가입
+                else logo.PrintMemberMode();           //1.도서검색  2.도서대여  3.도서반납  4.개인정보수정  5.종료
                 
                 menu = keyboard.SelectMenu((int)Constants.Menu.FIRST, maxTop, (int)Constants.Menu.STEP);     //메뉴선택
                 if (menu == (int)Constants.Keyboard.ESCAPE) break;           //메뉴선택 중 뒤로가기 -> 메인화면으로

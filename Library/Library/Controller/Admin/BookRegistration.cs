@@ -10,6 +10,7 @@ namespace Library
 {
     class BookRegistration
     {
+        private BookDAO bookDAO = BookDAO.GetInstance();
         private EnteringText text;
         private AdminView adminView;
         private Exception exception;
@@ -37,7 +38,7 @@ namespace Library
                 {
                     exception.PrintBookIdRegex(0, top + 1);
                 }
-                else if (BookDAO.bookDAO.IsDuplicateBookId(bookId)) //입력 양식은 맞지만 도서아이디가 이미 존재하는 경우
+                else if (bookDAO.IsDuplicateBookId(bookId)) //입력 양식은 맞지만 도서아이디가 이미 존재하는 경우
                 {
                     exception.PrintDuplicateBookId(0, top + 1);
                 }
@@ -130,7 +131,7 @@ namespace Library
             if (quantity.Equals(Constants.ESC)) return;       //수량 입력
 
             book = new BookVO(id, name, publisher, author, price, quantity);
-            BookDAO.bookDAO.AddToBookList(Constants.ADDITION_TO_BOOK_LIST, book);  //DB에 도서정보 저장
+            bookDAO.AddToBookList(Constants.ADDITION_TO_BOOK_LIST, book);  //DB에 도서정보 저장
 
             adminView.PrintRegisteredBook(book);              //등록 완료 화면 출력
             keyboard.PressESC();                              //Esc -> 종료(뒤로가기)
