@@ -112,12 +112,10 @@ namespace Library
                 myBookList = bookDatabaseManager.MakeMyBookList(Constants.RENTAL_LIST, memberId);//변경된 현재 로그인한 회원의 도서대여목록
                 memberView.PrintBookRentalSuccess(myBookList);            //회원의 대여목록 출력
 
-                if (keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) //Esc->뒤로가기, Enter->재검색
-                {
-                    Console.CursorVisible = Constants.IS_VISIBLE_CURSOR;
-                    break; 
-                }
+                if (keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break; //Esc->뒤로가기, Enter->재검색
+                Console.CursorVisible = Constants.IS_VISIBLE_CURSOR;
             }
+            Console.CursorVisible = Constants.IS_VISIBLE_CURSOR;
         }
     }
 }

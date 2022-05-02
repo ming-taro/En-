@@ -18,12 +18,14 @@ namespace Library
         { 
             AdminVO admin;
 
+            connection = Connector.GetConnection();
             MySqlCommand command = new MySqlCommand(Constants.ADMIN_ACCOUNT, connection);
             MySqlDataReader table = command.ExecuteReader();
 
             table.Read();
             admin = new AdminVO(table["id"].ToString(), table["password"].ToString());
             table.Close();
+            Connector.CloseConnection();
 
             return admin;
         }
@@ -31,13 +33,14 @@ namespace Library
         {
             MemberVO member;
 
+            connection = Connector.GetConnection();
             MySqlCommand command = new MySqlCommand(Constants.MEMBER_ACCOUNT, connection);
             command.Parameters.Add(new MySqlParameter("@memberId", memberId));
 
             MySqlDataReader table = command.ExecuteReader();
             table.Read();
             member = new MemberVO(table["id"].ToString(), table["password"].ToString(), table["name"].ToString(), table["age"].ToString(), table["phoneNumber"].ToString(), table["address"].ToString());
-            table.Close();
+            Connector.CloseConnection();
 
             return member;
         }
@@ -62,6 +65,7 @@ namespace Library
                     break;
             }
 
+            connection = Connector.GetConnection();
             MySqlCommand command = new MySqlCommand(query, connection);
             MySqlDataReader table = command.ExecuteReader();
 
@@ -70,6 +74,7 @@ namespace Library
                 bookList.Add(new BookVO(table["id"].ToString(), table["name"].ToString(), table["publisher"].ToString(), table["author"].ToString(), table["price"].ToString(), table["quantity"].ToString()));
             }
             table.Close();
+            Connector.CloseConnection();
 
             return bookList;
         }
@@ -77,6 +82,7 @@ namespace Library
         {
             List<BorrowBookVO> borrowList = new List<BorrowBookVO>();
 
+            connection = Connector.GetConnection();
             MySqlCommand command = new MySqlCommand(query, connection);
             command.Parameters.Add(new MySqlParameter("@memberId", memberId));
 
@@ -86,6 +92,7 @@ namespace Library
                 borrowList.Add(new BorrowBookVO(table["memberId"].ToString(), table["id"].ToString(), table["name"].ToString(), table["publisher"].ToString(), table["author"].ToString(), table["price"].ToString(), table["rentalPeriod"].ToString()));
             }
             table.Close();
+            Connector.CloseConnection();
 
             return borrowList;
         }
@@ -93,6 +100,7 @@ namespace Library
         {
             List<MemberVO> memberList = new List<MemberVO>();
 
+            connection = Connector.GetConnection();
             MySqlCommand command = new MySqlCommand(Constants.MEMBER_LIST, connection);
             MySqlDataReader table = command.ExecuteReader();
 
@@ -101,11 +109,13 @@ namespace Library
                 memberList.Add(new MemberVO(table["id"].ToString(), table["password"].ToString(), table["name"].ToString(), table["age"].ToString(), table["phoneNumber"].ToString(), table["address"].ToString()));
             }
             table.Close();
+            Connector.CloseConnection();
 
             return memberList;
         }
         public bool IsExistingMember(string memberId, string password)  //입력된 정보가 존재하는 회원인지 확인
         {
+            connection = Connector.GetConnection();
             MySqlCommand command = new MySqlCommand(Constants.MEMBER_CONFIRMATION, connection);
             command.Parameters.Add(new MySqlParameter("@memberId", memberId));
             command.Parameters.Add(new MySqlParameter("@password", password));
@@ -115,16 +125,19 @@ namespace Library
             if (table.HasRows)
             {
                 table.Close();
+                Connector.CloseConnection();
                 return Constants.IS_EXISTING_MEMBER;
             }
             else
             {
                 table.Close();
+                Connector.CloseConnection();
                 return Constants.IS_NON_EXISTING_MEMBER;
             }
         }
         public bool IsDuplicateMemberId(string memberId)  //기존 회원의 아이디와 중복되는지 확인
         {
+            connection = Connector.GetConnection();
             MySqlCommand command = new MySqlCommand(Constants.DUPLICATE_MEMBER_ID, connection);
             command.Parameters.Add(new MySqlParameter("@memberId", memberId));
 
@@ -133,16 +146,19 @@ namespace Library
             if (table.HasRows)
             {
                 table.Close();
+                Connector.CloseConnection();
                 return Constants.IS_DUPLICATE_ID;
             }
             else
             {
                 table.Close();
+                Connector.CloseConnection();
                 return Constants.IS_NON_DUPLICATE_ID;
             }
         }
         public bool IsMemberBorrowingBook(string memberId)  //회원이 도서를 대여중인지 확인
         {
+            connection = Connector.GetConnection();
             MySqlCommand command = new MySqlCommand(Constants.MEMBER_BORROWING_BOOK, connection);
             command.Parameters.Add(new MySqlParameter("@memberId", memberId));
 
@@ -151,16 +167,19 @@ namespace Library
             if (table.HasRows)
             {
                 table.Close();
+                Connector.CloseConnection();
                 return Constants.IS_MEMBER_BORROWING_BOOK;
             }
             else
             {
                 table.Close();
+                Connector.CloseConnection();
                 return Constants.IS_MEMBER_NOT_BORROWING_BOOK;
             }
         }
         public bool IsDuplicateBookId(string bookId)   //입력한 도서번호가 중복된 아이디인지 검사
         {
+            connection = Connector.GetConnection();
             MySqlCommand command = new MySqlCommand(Constants.DUPLICATE_BOOK_ID, connection);
             command.Parameters.Add(new MySqlParameter("@bookId", bookId));
 
@@ -168,14 +187,17 @@ namespace Library
             if (table.HasRows)
             {
                 table.Close();
+                Connector.CloseConnection();
                 return Constants.IS_DUPLICATE_ID;  //이미 존재하는 아이디
             }
 
             table.Close();
+            Connector.CloseConnection();
             return Constants.IS_NON_DUPLICATE_ID;  //중복없는 아이디 -> 입력가능
         }
         public bool IsBookOnLoan(string bookId)   //해당 도서를 대여중인 회원이 있는지 확인
         {
+            connection = Connector.GetConnection();
             MySqlCommand command = new MySqlCommand(Constants.BOOK_ON_LOAN, connection);
             command.Parameters.Add(new MySqlParameter("@bookId", bookId));
 
@@ -183,15 +205,18 @@ namespace Library
             if (table.HasRows)
             {
                 table.Close();
+                Connector.CloseConnection();
                 return Constants.IS_BOOK_ON_LOAN;     //대여중인 회원이 있는 도서 -> 삭제 불가
             }
 
             table.Close();
+            Connector.CloseConnection();
             return Constants.IS_BOOK_NOT_ON_LOAN;   //대여한 회원이 없는 도서 -> 삭제 가능
         }
 
         public void AddToRentalList(string memberId, string bookId)  //대여목록 추가
         {
+            connection = Connector.GetConnection();
             MySqlCommand command = new MySqlCommand(Constants.ADDITION_TO_RENTAL_LIST, connection);  //대여목록에 추가
             command.Parameters.Add(new MySqlParameter("@memberId", memberId));
             command.Parameters.Add(new MySqlParameter("@bookId", bookId));
@@ -201,9 +226,11 @@ namespace Library
             command = new MySqlCommand(Constants.DECREASE_IN_BOOK_QUANTITY, connection);   //도서수량 -1
             command.Parameters.Add(new MySqlParameter("@bookId", bookId));                
             command.ExecuteNonQuery();
+            Connector.CloseConnection();
         }
         public void DeleteFromRentalList(string memberId, string bookId) //대여도서 반납 후 대여목록에서 삭제
         {
+            connection = Connector.GetConnection();
             MySqlCommand command = new MySqlCommand(Constants.DELETION_FROM_RENTAL_LIST, connection); //대여목록에서 삭제
             command.Parameters.Add(new MySqlParameter("@memberId", memberId));
             command.Parameters.Add(new MySqlParameter("@bookId", bookId));
@@ -212,9 +239,11 @@ namespace Library
             command = new MySqlCommand(Constants.INCREASE_IN_BOOK_QUANTITY, connection);   //도서수량 +1
             command.Parameters.Add(new MySqlParameter("@bookId", bookId));
             command.ExecuteNonQuery();
+            Connector.CloseConnection();
         }
         public void AddToBookList(string query, BookVO book)  //책목록에 도서정보 추가
         {
+            connection = Connector.GetConnection();
             MySqlCommand command = new MySqlCommand(query, connection);
             command.Parameters.Add(new MySqlParameter("@id", book.Id));
             command.Parameters.Add(new MySqlParameter("@name", book.Name));
@@ -223,9 +252,11 @@ namespace Library
             command.Parameters.Add(new MySqlParameter("@price", book.Price));
             command.Parameters.Add(new MySqlParameter("@quantity", Int32.Parse(book.Quantity)));
             command.ExecuteNonQuery();
+            Connector.CloseConnection();
         }
         public void AddToMemberList(string query, MemberVO member)   //회원목록에 회원정보 추가
         {
+            connection = Connector.GetConnection();
             MySqlCommand command = new MySqlCommand(query, connection); 
             command.Parameters.Add(new MySqlParameter("@id", member.Id));
             command.Parameters.Add(new MySqlParameter("@password", member.Password));
@@ -234,34 +265,43 @@ namespace Library
             command.Parameters.Add(new MySqlParameter("@phoneNumber", member.PhoneNumber));
             command.Parameters.Add(new MySqlParameter("@address", member.Address));
             command.ExecuteNonQuery();
+            Connector.CloseConnection();
         }
         public void UpdateOnMemberId(string changedId, string memberId)  //회원 아이디 수정
         {
+            connection = Connector.GetConnection();
             MySqlCommand command = new MySqlCommand(Constants.UPDATE_ON_MEMBER_ID, connection);
             command.Parameters.Add(new MySqlParameter("@id", changedId));
             command.Parameters.Add(new MySqlParameter("@memberId", memberId));
             command.ExecuteNonQuery();
+            Connector.CloseConnection();
         }
 
         public void DeleteFromMemberList(string memberId)      //회원목록에서 회원정보 삭제
-        { 
+        {
+            connection = Connector.GetConnection();
             MySqlCommand command = new MySqlCommand(Constants.DELETION_FROM_MEMBER_LIST, connection);
             command.Parameters.Add(new MySqlParameter("@memberId", memberId));
             command.ExecuteNonQuery();
+            Connector.CloseConnection();
         }
         
         public void DeleteFromBookList(string bookId)  //도서목록에서 해당 도서 삭제
         {
+            connection = Connector.GetConnection();
             MySqlCommand command = new MySqlCommand(Constants.DELETION_FROM_BOOK_LIST, connection);
             command.Parameters.Add(new MySqlParameter("@bookId", bookId));
             command.ExecuteNonQuery();
+            Connector.CloseConnection();
         }
         public void UpdateOnBookId(string changedId, string bookId)  //도서번호 수정
         {
+            connection = Connector.GetConnection();
             MySqlCommand command = new MySqlCommand(Constants.UPDATE_ON_BOOK_ID, connection);
             command.Parameters.Add(new MySqlParameter("@id", changedId));
             command.Parameters.Add(new MySqlParameter("@bookId", bookId));
             command.ExecuteNonQuery();
+            Connector.CloseConnection();
         }
     }
 }

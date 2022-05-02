@@ -34,7 +34,7 @@ namespace Library
 
             signIn = new SignIn(bookDatabaseManager, text, logo);
             bookSearch = new BookSearch(bookDatabaseManager, text, adminView, exception);
-            bookRegistration = new BookRegistration(bookDatabaseManager, text, logo, adminView);
+            bookRegistration = new BookRegistration(bookDatabaseManager, text, adminView, exception);
             bookEdition = new BookEdition(bookDatabaseManager, text, adminView, exception);
             bookDeletion = new BookDeletion(bookDatabaseManager, text, adminView, exception);
             memberDeletion = new MemberDeletion(bookDatabaseManager, text, adminView, exception);

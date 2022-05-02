@@ -81,12 +81,10 @@ namespace Library
                 
                 adminView.PrintSearchResult(bookList);               //도서 검색 결과 출력
 
-                if (keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) //Esc->뒤로가기, Enter->재검색
-                {
-                    Console.CursorVisible = Constants.IS_VISIBLE_CURSOR;
-                    break; 
-                }
+                if (keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break;  //Esc->뒤로가기, Enter->재검색
+                Console.CursorVisible = Constants.IS_VISIBLE_CURSOR;
             }
+            Console.CursorVisible = Constants.IS_VISIBLE_CURSOR;
         }
     }
 }

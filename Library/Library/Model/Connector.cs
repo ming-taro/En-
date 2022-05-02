@@ -13,10 +13,21 @@ namespace Library
 
         public static MySqlConnection GetConnection()
         {
-            connection = new MySqlConnection(Constants.SERVER + Constants.PORT + Constants.DATABASE + Constants.ID + Constants.PASSWORD);
-            connection.Open();
+            if(connection == null)
+            {
+                connection = new MySqlConnection(Constants.SERVER + Constants.PORT + Constants.DATABASE + Constants.ID + Constants.PASSWORD);
+                connection.Open();
+            }
 
             return connection;
+        }
+        public static void CloseConnection()
+        {
+            if (connection != null)
+            {
+                connection.Close();
+            }
+            connection = null;
         }
 
     }

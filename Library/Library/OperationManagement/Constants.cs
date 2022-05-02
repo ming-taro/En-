@@ -79,12 +79,6 @@ namespace Library
         public const string MESSAGE_ABOUT_BOOK_I_NEVER_BORROWED = "(대여목록에 없는 도서번호입니다. 다시 입력해주세요.)             ";
         public const string MESSAGE_ABOUT_DUPLICATE_BOOK_ID = "(이미 사용중인 도서번호입니다. 다시 입력해주세요.)    ";
 
-        public const string MESSAGE_ABOUT_BOOK_NAME = "(1~50자 이내의 문자를 입력해주세요.)                         ";
-        public const string MESSAGE_ABOUT_PUBLISHER = "(1~50자 이내의 문자를 입력해주세요.)                         ";
-        public const string MESSAGE_ABOUT_AUTHOR = "(50자 이내의 영어, 한글만 입력해주세요.)                            ";
-        public const string MESSAGE_ABOUT_PRICE = "(0이상의 숫자를 10자 이내로 다시 입력해주세요.)                                 ";
-        public const string MESSAGE_ABOUT_QUENTITY = "(1~99사이의 숫자만 가능합니다. 다시 입력해주세요.)                            ";
-
         public const string MESSAGE_ABOUT_MEMBER_ID = "(5~10자의 영어, 숫자만 다시 입력해주세요.)         ";
         public const string MESSAGE_ABOUT_DUPLICATE_ID = "(이미 사용중인 아이디입니다. 다시 입력해주세요.)    ";
         public const string MESSAGE_ABOUT_AVAILABLE_ID = "(사용 가능한 아이디입니다.)                          ";
