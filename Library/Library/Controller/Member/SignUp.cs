@@ -10,13 +10,11 @@ namespace Library
 {
     class SignUp  //회원가입
     {
-        private BookDAO bookDatabaseManager;
         private EnteringText text;
         private MemberView memberView;
         private Logo logo;
-        public SignUp(BookDAO bookDatabaseManager, EnteringText text, Logo logo, MemberView memberView)
+        public SignUp(EnteringText text, Logo logo, MemberView memberView)
         {
-            this.bookDatabaseManager = bookDatabaseManager;
             this.text = text;
             this.logo = logo;
             this.memberView = memberView;
@@ -38,7 +36,7 @@ namespace Library
                 {
                     logo.PrintMessage(0, top + 1, Constants.MESSAGE_ABOUT_MEMBER_ID, ConsoleColor.Red);
                 }
-                else if (bookDatabaseManager.IsDuplicateMemberId(id))  //입력형식은 맞지만, 기존회원과 중복된 아이디인 경우
+                else if (MemberDAO.memberDAO.IsDuplicateMemberId(id))  //입력형식은 맞지만, 기존회원과 중복된 아이디인 경우
                 {
                     logo.PrintMessage(0, top + 1, Constants.MESSAGE_ABOUT_DUPLICATE_ID, ConsoleColor.Red);
                 }
@@ -137,7 +135,7 @@ namespace Library
             if (address.Equals(Constants.ESC)) return;
 
             member = new MemberVO(id, password, name, age, phoneNumber, address);   //입력이 완료된 회원 정보
-            bookDatabaseManager.AddToMemberList(Constants.ADDITION_TO_MEMBER_LIST, member);     //DB에 저장
+            MemberDAO.memberDAO.AddToMemberList(Constants.ADDITION_TO_MEMBER_LIST, member);     //DB에 저장
 
             memberView.PrintSuccessMessage();  //회원가입 축하 화면 출력
             keyboard.PressESC();

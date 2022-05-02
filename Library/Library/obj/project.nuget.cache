@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "zBhPQ2WQ4oYdDuvSn3yREoi+OUZyquRuQLnFHh/d22cKlK36Do9zTrvbGeOh5bSXZu5wD9kFpzXj/YxmUFkFHg==",
+  "dgSpecHash": "AAdM/4RuvVFeHFG6nHE5IAW4WP/YITNgTPjbvR2LD5kdZ1YZN/tOumA//uAZsQYfBa664QxC2rcTsC5B8hdMeg==",
   "success": true,
   "projectFilePath": "C:\\Users\\sec\\OneDrive\\바탕 화면\\En#\\Library\\Library\\Library.csproj",
   "expectedPackageFiles": [
@@ -12,6 +12,7 @@
     "C:\\Users\\sec\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Users\\sec\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
     "C:\\Users\\sec\\.nuget\\packages\\mysql.data\\8.0.28\\mysql.data.8.0.28.nupkg.sha512",
+    "C:\\Users\\sec\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\sec\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
     "C:\\Users\\sec\\.nuget\\packages\\system.configuration.configurationmanager\\4.4.1\\system.configuration.configurationmanager.4.4.1.nupkg.sha512",
     "C:\\Users\\sec\\.nuget\\packages\\system.drawing.common\\4.7.0\\system.drawing.common.4.7.0.nupkg.sha512",

@@ -11,7 +11,6 @@ namespace Library
     {
         private MemberVO member;
         private Keyboard keyboard;
-        private BookDAO bookDatabaseManager;
         private EnteringText text;
         private Logo logo;
         private MemberView memberView;
@@ -27,19 +26,18 @@ namespace Library
         public Member(Keyboard keyboard)
         {
             this.keyboard = keyboard;
-            bookDatabaseManager = new BookDAO();
             text = new EnteringText();
             logo = new Logo();
             memberView = new MemberView(logo);
             adminView = new AdminView();
             exception = new Exception();
 
-            signIn = new SignIn(bookDatabaseManager, text, logo);
-            signUp = new SignUp(bookDatabaseManager, text, logo, memberView);
-            bookSearch = new BookSearch(bookDatabaseManager, text, adminView, exception);
-            bookRental = new BookRental(bookDatabaseManager, text, memberView, exception);
-            bookReturn = new BookReturn(bookDatabaseManager, text, memberView, exception);
-            profileEdition = new ProfileEdition(bookDatabaseManager, memberView);
+            signIn = new SignIn(text, logo);
+            signUp = new SignUp(text, logo, memberView);
+            bookSearch = new BookSearch(text, adminView, exception);
+            bookRental = new BookRental(text, memberView, exception);
+            bookReturn = new BookReturn(text, memberView, exception);
+            profileEdition = new ProfileEdition(memberView);
         }
         private void SelectMenu(int menu)
         {
@@ -79,7 +77,7 @@ namespace Library
             }
             else
             {
-                member = bookDatabaseManager.GetMemberAccount(memberId);  //로그인 성공 -> 로그인한 회원VO 생성
+                member = MemberDAO.memberDAO.GetMemberAccount(memberId);  //로그인 성공 -> 로그인한 회원VO 생성
                 StartMemberMode((int)Constants.Menu.FOURTH);     //회원 모드로(1.도서검색  2.도서대여  3.도서반납  4.개인정보수정  5.종료)
             }
         }

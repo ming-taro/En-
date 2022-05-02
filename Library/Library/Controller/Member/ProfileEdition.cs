@@ -8,22 +8,16 @@ namespace Library
 {
     class ProfileEdition
     {
-        private BookDAO bookDatabaseManager;
         private MemberView memberView;
 
-        public ProfileEdition(BookDAO bookDatabaseManager, MemberView memberView)
+        public ProfileEdition(MemberView memberView)
         {
-            this.bookDatabaseManager = bookDatabaseManager;
             this.memberView = memberView;
         }
         private void ReflectChangeInVO(int menu, string changedItem, MemberVO member)   //수정된 정보 반영
         {
             switch (menu)                                 
             {
-                case (int)Constants.EditMenu.FIRST:    //아이디
-                    bookDatabaseManager.UpdateOnMemberId(changedItem, member.Id);  //id가 기본키이므로 DB에 먼저 수정된 id로 변경
-                    member.Id = changedItem;
-                    break;
                 case (int)Constants.EditMenu.SECOND:   //비밀번호
                     member.Password = changedItem;
                     break;
@@ -47,9 +41,6 @@ namespace Library
 
             switch (menu)
             {
-                case (int)Constants.EditMenu.FIRST:    //아이디
-                    changedItem = signUp.InputId(10, (int)Constants.EditMenu.FIRST);
-                    break;
                 case (int)Constants.EditMenu.SECOND:   //비밀번호
                     changedItem = signUp.InputPassword(12, (int)Constants.EditMenu.SECOND, Constants.MEMBER_ID_REGEX, Constants.MESSAGE_ABOUT_MEMBER_ID);
                     break;
@@ -80,7 +71,7 @@ namespace Library
             {
                 memberView.PrintProfile(member);                     //회원정보수정 화면 출력
 
-                menu = keyboard.SelectMenu((int)Constants.EditMenu.FIRST, (int)Constants.EditMenu.SEVENTH, (int)Constants.EditMenu.STEP);  //수정할 항목 선택
+                menu = keyboard.SelectMenu((int)Constants.EditMenu.SECOND, (int)Constants.EditMenu.SEVENTH, (int)Constants.EditMenu.STEP);  //수정할 항목 선택
                 if (menu == (int)Constants.Keyboard.ESCAPE) break;   //메뉴선택 중 Esc -> DB에 수정된 정보 업데이트 후 종료
                 menu = keyboard.Top;                                 //커서의 top값 == 수정할 항목
 
@@ -93,7 +84,7 @@ namespace Library
                 ReflectChangeInVO(menu, changedItem, member);//DB, MemberVO에 수정사항 업데이트
             }
 
-            bookDatabaseManager.AddToMemberList(Constants.UPDATE_TO_MEMBER_LIST, member);   //DB에 수정된 회원정보 업데이트
+            MemberDAO.memberDAO.AddToMemberList(Constants.UPDATE_TO_MEMBER_LIST, member);   //DB에 수정된 회원정보 업데이트
         }
     }
 }

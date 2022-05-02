@@ -10,14 +10,12 @@ namespace Library
 {
     class BookSearch
     {
-        private BookDAO bookDatabaseManager;
         private EnteringText text;
         private AdminView adminView;
         private Exception exception;
         private List<BookVO> bookList;
-        public BookSearch(BookDAO bookDatabaseManager, EnteringText text, AdminView adminView, Exception exception)
+        public BookSearch(EnteringText text, AdminView adminView, Exception exception)
         {
-            this.bookDatabaseManager = bookDatabaseManager;
             this.text = text;
             this.adminView = adminView;
             this.exception = exception;
@@ -33,7 +31,7 @@ namespace Library
             while (Constants.INPUT_VALUE)
             {
                 searchWord = text.EnterText(left, top, "");                           //(도서명/출판사/저자)를 입력 받음
-                bookList = bookDatabaseManager.MakeBookList(top, searchWord);         //검색결과(커서의 top값 == 검색유형)
+                bookList = BookDAO.bookDAO.MakeBookList(top, searchWord);         //검색결과(커서의 top값 == 검색유형)
 
                 if (searchWord.Equals(Constants.ESC))   //검색어 입력도중 ESC -> 뒤로가기
                 {
@@ -58,7 +56,7 @@ namespace Library
         {
             int searchType;
 
-            adminView.PrintBookSearch(bookDatabaseManager.MakeBookList((int)Constants.SearchMenu.ALL, ""));  //도서검색화면 + 전체 도서목록
+            adminView.PrintBookSearch(BookDAO.bookDAO.MakeBookList((int)Constants.SearchMenu.ALL, ""));  //도서검색화면 + 전체 도서목록
             
             keyboard.SetPosition((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.FIRST);    //커서위치
             searchType = keyboard.SelectMenu((int)Constants.SearchMenu.FIRST, (int)Constants.SearchMenu.THIRD, (int)Constants.SearchMenu.STEP);               //메뉴선택

@@ -10,7 +10,6 @@ namespace Library
     class Admin
     {
         private Keyboard keyboard;
-        private BookDAO bookDatabaseManager;
         private EnteringText text;
         private Logo logo;
         private AdminView adminView;
@@ -26,18 +25,17 @@ namespace Library
         public Admin(Keyboard keyboard)
         {
             this.keyboard = keyboard;
-            bookDatabaseManager = new BookDAO();
             text = new EnteringText();
             logo = new Logo();
             adminView = new AdminView();
             exception = new Exception();
 
-            signIn = new SignIn(bookDatabaseManager, text, logo);
-            bookSearch = new BookSearch(bookDatabaseManager, text, adminView, exception);
-            bookRegistration = new BookRegistration(bookDatabaseManager, text, adminView, exception);
-            bookEdition = new BookEdition(bookDatabaseManager, text, adminView, exception);
-            bookDeletion = new BookDeletion(bookDatabaseManager, text, adminView, exception);
-            memberDeletion = new MemberDeletion(bookDatabaseManager, text, adminView, exception);
+            signIn = new SignIn(text, logo);
+            bookSearch = new BookSearch(text, adminView, exception);
+            bookRegistration = new BookRegistration(text, adminView, exception);
+            bookEdition = new BookEdition(text, adminView, exception);
+            bookDeletion = new BookDeletion(text, adminView, exception);
+            memberDeletion = new MemberDeletion(text, adminView, exception);
         }
         private void SelectMenu(int menu)       //관리자 메뉴에서 선택
         {
@@ -56,7 +54,7 @@ namespace Library
                     bookDeletion.DeleteBook(bookSearch, keyboard);
                     break;
                 case (int)Constants.Menu.FIFTH:   //도서 대출 현황
-                    adminView.PrintRentalList(bookDatabaseManager.MakeMyBookList(Constants.RENTAL_LIST_INQUIRY, ""));
+                    adminView.PrintRentalList(BookDAO.bookDAO.MakeMyBookList(Constants.RENTAL_LIST_INQUIRY, ""));
                     keyboard.PressESC();
                     break;
                 case (int)Constants.Menu.SIXTH:   //회원관리

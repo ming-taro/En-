@@ -9,13 +9,11 @@ namespace Library
 {
     class BookEdition
     {
-        private BookDAO bookDatabaseManager;
         private EnteringText text;
         private AdminView adminView;
         private Exception exception;
-        public BookEdition(BookDAO bookDatabaseManager, EnteringText text, AdminView adminView, Exception exception)
+        public BookEdition(EnteringText text, AdminView adminView, Exception exception)
         {
-            this.bookDatabaseManager = bookDatabaseManager;
             this.text = text;
             this.adminView = adminView;
             this.exception = exception;
@@ -167,7 +165,7 @@ namespace Library
                 ReflectChangeInVO(menu, changedItem, book);  //bookVO에 수정사항 반영
             }
 
-            bookDatabaseManager.AddToBookList(Constants.UPDATE_TO_BOOK_LIST, book); //DB에 수정사항 반영
+            BookDAO.bookDAO.AddToBookList(Constants.UPDATE_TO_BOOK_LIST, book); //DB에 수정사항 반영
         }
     }
 }
