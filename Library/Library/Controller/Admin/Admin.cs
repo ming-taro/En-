@@ -16,11 +16,12 @@ namespace Library
         private Exception exception;
 
         private SignIn signIn;                         //로그인
-        private BookSearch bookSearch;           //1. 도서검색
-        private BookRegistration bookRegistration;       //2. 도서등록
+        private BookSearch bookSearch;                 //1. 도서검색
+        private BookRegistration bookRegistration;     //2. 도서등록
         private BookEdition bookEdition;               //3. 도서정보수정
         private BookDeletion bookDeletion;             //4. 도서삭제
         private MemberDeletion memberDeletion;         //5. 회원관리
+        private NaverSearch naverSearch;               //7.네이버 도서 검색
 
         public Admin(Keyboard keyboard)
         {
@@ -36,6 +37,7 @@ namespace Library
             bookEdition = new BookEdition(text, adminView, exception);
             bookDeletion = new BookDeletion(text, adminView, exception);
             memberDeletion = new MemberDeletion(text, adminView, exception);
+            naverSearch = new NaverSearch(text, adminView, exception);
         }
         private void SelectMenu(int menu)       //관리자 메뉴에서 선택
         {
@@ -60,6 +62,9 @@ namespace Library
                 case (int)Constants.Menu.SIXTH:   //회원관리
                     memberDeletion.DeleteMember(keyboard);
                     break;
+                case (int)Constants.Menu.SEVENTH: //네이버 검색
+                    naverSearch.SearchBook(keyboard);
+                    break;
 
             }
         }
@@ -67,7 +72,7 @@ namespace Library
         {
             string success;
             int menu;
-            string[] textOfMemberMode = { "도서 검색", "도서 등록", "도서 정보 수정", "도서 삭제", "도서 대출 현황", "회원 정보 관리" };
+            string[] textOfMemberMode = { "도서 검색", "도서 등록", "도서 정보 수정", "도서 삭제", "도서 대출 현황", "회원 정보 관리", "네이버 도서 검색"};
 
             success = signIn.SignInAdmin();               //관리자 로그인
             if (success == Constants.ESC) return;         //로그인 도중 esc -> 뒤로가기
@@ -77,7 +82,7 @@ namespace Library
                 logo.PrintMain(textOfMemberMode);         //관리자 모드 화면 출력
                 keyboard.InitCursorPosition();            //커서 위치 조정
 
-                menu = keyboard.SelectMenu((int)Constants.Menu.FIRST, (int)Constants.Menu.SIXTH, (int)Constants.Menu.STEP); //메뉴선택 완료
+                menu = keyboard.SelectMenu((int)Constants.Menu.FIRST, (int)Constants.Menu.SEVENTH, (int)Constants.Menu.STEP); //메뉴선택 완료
                 if (menu == (int)Constants.Keyboard.ESCAPE) break;  //관리자 메뉴 선택중 esc -> 관리자 모드 종료(메인으로 돌아감)
                 
                 menu = keyboard.Top;                      //Enter를 눌렀을 때의 커서값 == 선택한 메뉴 

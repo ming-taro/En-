@@ -133,6 +133,13 @@ namespace Library
         public const string ID = "Uid = root;";
         public const string PASSWORD = "Pwd = 0000;";
 
+        //Naver
+        public const string API_URL = "https://openapi.naver.com/v1/search/book.json?query='{0}'";
+        public const string NAVER_CLIENT_ID = "X-Naver-Client-Id";
+        public const string NAVER_CLIENT_SECRET = "X-Naver-Client-Secret";
+        public const string CLIENT_ID = "pKd8QC0tp8T66Lu1Irnj";
+        public const string CLIENT_SECRET = "ey4QHrrt1y";
+
         public enum Keyboard
         {
             ESCAPE = -3,
@@ -155,6 +162,7 @@ namespace Library
             FOURTH = 26,
             FIFTH = 28,
             SIXTH = 30,
+            SEVENTH = 32,
             LEFT = 45,
             CONSOLE_HEIGHT = 40,
             CONSOLE_WIDTH = 100,

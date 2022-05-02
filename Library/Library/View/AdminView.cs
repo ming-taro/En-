@@ -146,5 +146,24 @@ namespace Library
             logo.PrintLine();
             Console.WindowTop = 0;
         }
+        public void PrintNaverSearch()
+        {
+            logo.PrintSearchBox("네이버 도서 검색", "☞검색어:", "");
+            logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.ZERO - 1, "검색결과는 최대 10개까지 조회됩니다.", ConsoleColor.Green);
+        }
+        public void PrintNaverSearchResult(List<BookVO> bookList)
+        {
+            logo.PrintSearchBox("네이버 도서 검색", "☞추가할 도서번호:", "검색결과(총 " + bookList.Count + "건)");
+
+            logo.PrintLine();
+            for (int i = 0; i < bookList.Count; i++)
+            {
+                Console.Write(bookList[i]);
+                logo.RemoveLine(0, Console.CursorTop);   //수량 부분 지움
+                logo.PrintSingleLine();
+            }
+            Console.SetCursorPosition(0, Console.CursorTop - 3);
+            logo.PrintLine();
+        }
     }
 }

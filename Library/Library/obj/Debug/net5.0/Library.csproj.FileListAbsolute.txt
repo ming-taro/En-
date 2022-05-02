@@ -34,3 +34,4 @@ C:\Users\sec\OneDrive\바탕 화면\En#\Library\Library\bin\Debug\net5.0\runtime
 C:\Users\sec\OneDrive\바탕 화면\En#\Library\Library\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\sec\OneDrive\바탕 화면\En#\Library\Library\bin\Debug\net5.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
 C:\Users\sec\OneDrive\바탕 화면\En#\Library\Library\obj\Debug\net5.0\Library.csproj.CopyComplete
+C:\Users\sec\OneDrive\바탕 화면\En#\Library\Library\bin\Debug\net5.0\Newtonsoft.Json.dll
