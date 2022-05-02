@@ -153,7 +153,7 @@ namespace Library
         }
         public void PrintNaverSearchResult(List<BookVO> bookList)
         {
-            logo.PrintSearchBox("네이버 도서 검색", "☞추가할 도서번호:", "검색결과(총 " + bookList.Count + "건)");
+            logo.PrintSearchBox("네이버 도서 검색", "☞추가할 도서 번호:", "검색결과(총 " + bookList.Count + "건)");
 
             logo.PrintLine();
             for (int i = 0; i < bookList.Count; i++)
@@ -174,6 +174,17 @@ namespace Library
             logo.RemoveLine(5, Console.CursorTop);
             logo.PrintMessage(5, Console.CursorTop, "'" + searchWord + "'에 대한 검색결과가 없습니다.", ConsoleColor.Red);
             Console.WriteLine("\n====================================================================================================\n");
+        }
+        public void PrintBookRegistration(BookVO book)
+        {
+            logo.PrintMenu("도서 등록");
+            logo.PrintMessage(0, (int)Constants.EditMenu.FIRST, "☞도서명  : " + book.Name, ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.EditMenu.SECOND, "☞출판사  : " + book.Publisher, ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.EditMenu.THIRD, "☞저자    : " + book.Author, ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.EditMenu.FOURTH, "☞가격    : " + book.Price, ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.EditMenu.FIFTH, "(등록할 도서의 번호와 수량을 입력해주세요.)", ConsoleColor.Yellow);
+            logo.PrintMessage(0, (int)Constants.EditMenu.SIXTH, "☞도서번호: ", ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.EditMenu.SEVENTH, "☞수량    : ", ConsoleColor.Gray);
         }
     }
 }

@@ -52,10 +52,30 @@ namespace Library
                 bookList.Add(new BookVO((i + 1).ToString(), searchResult["items"][i]["title"].ToString(), searchResult["items"][i]["publisher"].ToString(), searchResult["items"][i]["author"].ToString(), searchResult["items"][i]["price"].ToString(), ""));
             }
         }
-        public string InputSearchWord()
+        public void PrintErrorMessage(int left, int top, string regextTect)
+        {
+            switch (regextTect)
+            {
+                case Constants.BOOK_NAME_REGEX:
+                    exception.PrintBookNameRegex(left, top);
+                    break;
+                case Constants.BOOK_ID_REGEX:
+                    exception.PrintBookIdRegex(left, top);
+                    break;
+            }
+        }
+        public BookVO FindBook(string bookId)
+        {
+            int i;
+            for(i = 0; i<bookList.Count; i++)
+            {
+                if (bookList[i].Id.Equals(bookId)) break;
+            }
+            return bookList[i];
+        }
+        public string InputSearchWord(int left, string regexText)
         {
             int top = (int)Constants.SearchMenu.FIRST;
-            int left = (int)Constants.InputField.SEARCH;
             int exceptionTop = top + 1;
             string searchWord;
 
@@ -69,9 +89,9 @@ namespace Library
                     exception.RemoveLine(left, top);
                     return Constants.ESC;
                 }
-                else if (Regex.IsMatch(searchWord, Constants.BOOK_NAME_REGEX) == Constants.IS_NOT_MATCH)
+                else if (Regex.IsMatch(searchWord, regexText) == Constants.IS_NOT_MATCH)  //입력형식에 맞지 않은 입력
                 {
-                    exception.PrintBookNameRegex(left, exceptionTop);
+                    PrintErrorMessage(left, exceptionTop, regexText);
                 }
                 else break;
             }
@@ -81,14 +101,16 @@ namespace Library
         public void SearchBook(Keyboard keyboard)
         {
             string searchWord;
+            string bookId;
+            BookVO book;
 
             adminView.PrintNaverSearch();
 
             while (Constants.INPUT_VALUE)
             {
                 bookList.Clear();
-                searchWord = InputSearchWord();                            //검색어 입력받기
-                if (searchWord.Equals(Constants.ESC)) break;               //검색어 입력 중 esc -> 도서검색 종료
+                searchWord = InputSearchWord((int)Constants.InputField.SEARCH, Constants.BOOK_NAME_REGEX);   //검색어 입력받기
+                if (searchWord.Equals(Constants.ESC)) return;               //검색어 입력 중 esc -> 도서검색 종료
 
                 MakeBookList(searchWord);                                  //도서목록
                 if(bookList.Count == 0)                                    //검색결과가 없을 경우 -> 검색어 다시 입력받기
@@ -98,12 +120,18 @@ namespace Library
                 }
 
                 adminView.PrintNaverSearchResult(bookList);                //도서 검색 결과 출력
-
-                if (keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break;  //Esc->뒤로가기, Enter->재검색
-                Console.CursorVisible = Constants.IS_VISIBLE_CURSOR;
+                bookId = InputSearchWord((int)Constants.InputField.LEFT, Constants.BOOK_ID_REGEX);  //추가할 도서번호 입력받기
+                if (bookId.Equals(Constants.ESC))                          //도서번호 입력 중 Esc -> 도서검색으로 돌아감
+                {
+                    adminView.PrintNaverSearch();
+                    continue;
+                }
+                break;
             }
-            Console.CursorVisible = Constants.IS_VISIBLE_CURSOR;
 
+            book = FindBook(bookId);
+            adminView.PrintBookRegistration(book);   //도서 등록 화면
+            Console.Read();
         }
     }
 }

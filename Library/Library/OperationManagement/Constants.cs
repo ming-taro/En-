@@ -220,6 +220,5 @@ namespace Library
             SEARCH = 20,     //도서검색에서의 예외메세지 top값
             TOP = 16         //도서반납,대출,삭제에서의 예외메세지 top값
         }
-
     }
 }
