@@ -83,15 +83,21 @@ namespace Library
         {
             string searchWord;
 
+            adminView.PrintNaverSearch();
+
             while (Constants.INPUT_VALUE)
             {
-                adminView.PrintNaverSearch();
                 searchWord = InputSearchWord();                            //검색어 입력받기
-                if (searchWord.Equals(Constants.ESC)) continue;            //검색어 입력 중 esc -> 검색유형 선택으로
+                if (searchWord.Equals(Constants.ESC)) break;               //검색어 입력 중 esc -> 도서검색 종료
+
                 MakeBookList(searchWord);                                  //도서목록
+                if(bookList.Count == 0)                                    //검색결과가 없을 경우 -> 검색어 다시 입력받기
+                {
+                    adminView.PrintNoSearchResult(searchWord);
+                    continue;
+                }
 
                 adminView.PrintNaverSearchResult(bookList);                //도서 검색 결과 출력
-                Console.ReadLine();
 
                 if (keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break;  //Esc->뒤로가기, Enter->재검색
                 Console.CursorVisible = Constants.IS_VISIBLE_CURSOR;
