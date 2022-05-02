@@ -63,7 +63,7 @@ namespace Library
                     memberDeletion.DeleteMember(keyboard);
                     break;
                 case (int)Constants.Menu.SEVENTH: //네이버 검색
-                    naverSearch.SearchBook(keyboard);
+                    naverSearch.SearchBook(keyboard, bookRegistration);
                     break;
 
             }

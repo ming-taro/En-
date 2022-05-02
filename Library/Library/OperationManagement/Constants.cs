@@ -170,6 +170,7 @@ namespace Library
         }
         public enum Registration
         {
+            LEFT = 17,
             FIRST = 7,          //top
             SECOND = 10,
             THIRD = 13,
@@ -182,6 +183,7 @@ namespace Library
         public enum EditMenu
         {
             LEFT = 30,
+            ZERO = 10,
             FIRST = 12,        //top
             SECOND = 15,
             THIRD = 18,
@@ -213,7 +215,8 @@ namespace Library
             ID_TO_MODIFY = 46,   //도서정보수정에서의 수정할 도서번호 입력칸 left값
             BOOK_EDITION = 42,   //도서정보수정에서의 입력칸 left값
             SEARCH = 30,         //도서검색에서의 입력칸 left값
-            LEFT = 40            //도서반납,대출,삭제에서의 입력칸 left값
+            LEFT = 40,           //도서반납,대출,삭제에서의 입력칸 left값
+            REGISTRATION = 12    //도서등록에서의 입력칸 left값
         }
         public enum Exception//top값
         {

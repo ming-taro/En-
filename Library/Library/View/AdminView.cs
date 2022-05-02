@@ -57,12 +57,12 @@ namespace Library
         public void PrintRegisteredBook(BookVO book)    //도서등록 -> 등록한 도서정보 출력
         {
             logo.PrintMenu("도서 등록 완료");
-            logo.PrintMessage(0, 7, ">등록한 도서 정보<", ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.SearchMenu.ZERO, "등록한 도서 정보", ConsoleColor.Gray);
             Console.SetCursorPosition(0, Console.CursorTop - 1);
             logo.PrintLine();
             Console.WriteLine(book);
             logo.PrintLine();
-            logo.PrintMessage(0, Console.CursorTop - 1, Constants.ESC_MESSAGE, ConsoleColor.Yellow);
+            Console.CursorVisible = Constants.IS_INVISIBLE_CURSOR;
         }
         public void PrintBookEdition(List<BookVO> bookList)  //도서정보 수정 -> 수정할 도서번호 입력창 출력 + 도서검색결과 출력
         {                                                                           
@@ -178,13 +178,13 @@ namespace Library
         public void PrintBookRegistration(BookVO book)
         {
             logo.PrintMenu("도서 등록");
-            logo.PrintMessage(0, (int)Constants.EditMenu.FIRST, "☞도서명  : " + book.Name, ConsoleColor.Gray);
-            logo.PrintMessage(0, (int)Constants.EditMenu.SECOND, "☞출판사  : " + book.Publisher, ConsoleColor.Gray);
-            logo.PrintMessage(0, (int)Constants.EditMenu.THIRD, "☞저자    : " + book.Author, ConsoleColor.Gray);
-            logo.PrintMessage(0, (int)Constants.EditMenu.FOURTH, "☞가격    : " + book.Price, ConsoleColor.Gray);
-            logo.PrintMessage(0, (int)Constants.EditMenu.FIFTH, "(등록할 도서의 번호와 수량을 입력해주세요.)", ConsoleColor.Yellow);
-            logo.PrintMessage(0, (int)Constants.EditMenu.SIXTH, "☞도서번호: ", ConsoleColor.Gray);
-            logo.PrintMessage(0, (int)Constants.EditMenu.SEVENTH, "☞수량    : ", ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.EditMenu.ZERO, "(등록할 도서의 번호와 수량을 입력해주세요.)", ConsoleColor.Yellow);
+            logo.PrintMessage(0, (int)Constants.EditMenu.FIRST, "☞도서번호: ", ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.EditMenu.SECOND, "☞도서명  : " + book.Name, ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.EditMenu.THIRD, "☞출판사  : " + book.Publisher, ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.EditMenu.FOURTH, "☞저자    : " + book.Author, ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.EditMenu.FIFTH, "☞가격    : " + book.Price, ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.EditMenu.SIXTH, "☞수량    : ", ConsoleColor.Gray);
         }
     }
 }

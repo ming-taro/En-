@@ -31,7 +31,7 @@ namespace Library
             while (Constants.INPUT_VALUE)
             {
                 searchWord = text.EnterText(left, top, "");                           //(도서명/출판사/저자)를 입력 받음
-                bookList = BookDAO.bookDAO.MakeBookList(top, searchWord);         //검색결과(커서의 top값 == 검색유형)
+                bookList = BookDAO.bookDAO.MakeBookList(top, searchWord);             //검색결과(커서의 top값 == 검색유형)
 
                 if (searchWord.Equals(Constants.ESC))   //검색어 입력도중 ESC -> 뒤로가기
                 {
