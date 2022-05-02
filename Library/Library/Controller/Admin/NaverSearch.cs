@@ -61,6 +61,7 @@ namespace Library
 
             while (Constants.INPUT_VALUE)
             {
+                exception.RemoveLine(left, top);
                 searchWord = text.EnterText(left, top, "");                       //(도서명/출판사/저자)를 입력 받음
 
                 if (searchWord.Equals(Constants.ESC))   //검색어 입력도중 ESC -> 뒤로가기
@@ -73,8 +74,6 @@ namespace Library
                     exception.PrintBookNameRegex(left, exceptionTop);
                 }
                 else break;
-
-                exception.RemoveLine(left, top);
             }
 
             return searchWord;  //검색어 반환
@@ -87,6 +86,7 @@ namespace Library
 
             while (Constants.INPUT_VALUE)
             {
+                bookList.Clear();
                 searchWord = InputSearchWord();                            //검색어 입력받기
                 if (searchWord.Equals(Constants.ESC)) break;               //검색어 입력 중 esc -> 도서검색 종료
 

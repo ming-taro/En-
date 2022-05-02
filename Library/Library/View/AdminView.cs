@@ -164,17 +164,15 @@ namespace Library
             }
             Console.SetCursorPosition(0, Console.CursorTop - 3);
             logo.PrintLine();
+            Console.WindowTop = 0;
         }
 
         public void PrintNoSearchResult(string searchWord)
         {
-            string message = "'" + searchWord + "'에 대한 검색결과가 없습니다.";
-            int messageLeft = ((int)Constants.Menu.CONSOLE_WIDTH - (message.Length * 2)) / 2;
-            int top = (int)Constants.SearchMenu.FOURTH;
-
-            Console.SetCursorPosition(0, top);
-            Console.WriteLine("\n====================================================================================================\n");
-            logo.PrintMessage(messageLeft, Console.CursorTop, message, ConsoleColor.Red);
+            logo.PrintMessage(0, (int)Constants.SearchMenu.FOURTH, "검색 결과(총 0건)", ConsoleColor.Gray);
+            Console.WriteLine("====================================================================================================\n");
+            logo.RemoveLine(5, Console.CursorTop);
+            logo.PrintMessage(5, Console.CursorTop, "'" + searchWord + "'에 대한 검색결과가 없습니다.", ConsoleColor.Red);
             Console.WriteLine("\n====================================================================================================\n");
         }
     }
