@@ -10,6 +10,7 @@ namespace Library
 {
     class SignUp  //회원가입
     {
+        private MemberDAO memberDAO = MemberDAO.GetInstance();
         private EnteringText text;
         private MemberView memberView;
         private Logo logo;
@@ -36,7 +37,7 @@ namespace Library
                 {
                     logo.PrintMessage(0, top + 1, Constants.MESSAGE_ABOUT_MEMBER_ID, ConsoleColor.Red);
                 }
-                else if (MemberDAO.memberDAO.IsDuplicateMemberId(id))  //입력형식은 맞지만, 기존회원과 중복된 아이디인 경우
+                else if (memberDAO.IsDuplicateMemberId(id))  //입력형식은 맞지만, 기존회원과 중복된 아이디인 경우
                 {
                     logo.PrintMessage(0, top + 1, Constants.MESSAGE_ABOUT_DUPLICATE_ID, ConsoleColor.Red);
                 }
@@ -135,7 +136,7 @@ namespace Library
             if (address.Equals(Constants.ESC)) return;
 
             member = new MemberVO(id, password, name, age, phoneNumber, address);   //입력이 완료된 회원 정보
-            MemberDAO.memberDAO.AddToMemberList(Constants.ADDITION_TO_MEMBER_LIST, member);     //DB에 저장
+            memberDAO.AddToMemberList(Constants.ADDITION_TO_MEMBER_LIST, member);     //DB에 저장
 
             memberView.PrintSuccessMessage();  //회원가입 축하 화면 출력
             keyboard.PressESC();

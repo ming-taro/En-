@@ -9,11 +9,19 @@ namespace Library
 {
     class MemberDAO
     {
-        public static MemberDAO memberDAO = new MemberDAO();
+        private static MemberDAO memberDAO;
         private string connectionString;
         private MemberDAO()
         {
             connectionString = Constants.SERVER + Constants.PORT + Constants.DATABASE + Constants.ID + Constants.PASSWORD;
+        }
+        public static MemberDAO GetInstance()
+        {
+            if(memberDAO == null)
+            {
+                memberDAO = new MemberDAO();
+            }
+            return memberDAO;
         }
         public AdminVO GetAdminAccount()   //관리자 계정
         {

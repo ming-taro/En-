@@ -8,6 +8,7 @@ namespace Library
 {
     class ProfileEdition
     {
+        private MemberDAO memberDAO = MemberDAO.GetInstance();
         private MemberView memberView;
 
         public ProfileEdition(MemberView memberView)
@@ -84,7 +85,7 @@ namespace Library
                 ReflectChangeInVO(menu, changedItem, member);//DB, MemberVO에 수정사항 업데이트
             }
 
-            MemberDAO.memberDAO.AddToMemberList(Constants.UPDATE_TO_MEMBER_LIST, member);   //DB에 수정된 회원정보 업데이트
+            memberDAO.AddToMemberList(Constants.UPDATE_TO_MEMBER_LIST, member);   //DB에 수정된 회원정보 업데이트
         }
     }
 }

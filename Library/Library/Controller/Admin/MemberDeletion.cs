@@ -8,6 +8,8 @@ namespace Library
 {
     class MemberDeletion
     {
+        private BookDAO bookDAO = BookDAO.GetInstance();
+        private MemberDAO memberDAO = MemberDAO.GetInstance();
         private EnteringText text;
         private AdminView adminView;
         private Exception exception;
@@ -47,7 +49,7 @@ namespace Library
                 {
                     exception.PrintMemberNotInList(exceptionLeft, exceptionTop);
                 }
-                else if (BookDAO.bookDAO.IsMemberBorrowingBook(memberId))  //해당 회원은 도서를 대여중 -> 삭제불가
+                else if (bookDAO.IsMemberBorrowingBook(memberId))  //해당 회원은 도서를 대여중 -> 삭제불가
                 {
                     exception.PrintMemberBorrowingBook(exceptionLeft, exceptionTop);
                 }
@@ -67,14 +69,14 @@ namespace Library
 
             while (Constants.INPUT_VALUE)
             {
-                memberList = MemberDAO.memberDAO.MakeMemberList();    //회원 리스트
+                memberList = memberDAO.MakeMemberList();    //회원 리스트
                 adminView.PrintMemberIdInputScreen(memberList);       //회원 아이디 검색창 + 회원 리스트 출력
 
                 memberId = InputMemberId(memberList);                 //삭제할 회원 아이디를 입력받음
                 if (memberId.Equals(Constants.ESC)) break;
 
-                adminView.PrintDeletedMember(MemberDAO.memberDAO.GetMemberAccount(memberId));  //삭제 성공 메세지 출력
-                MemberDAO.memberDAO.DeleteFromMemberList(memberId);                      //회원리스트에서 회원 정보 삭제
+                adminView.PrintDeletedMember(memberDAO.GetMemberAccount(memberId));  //삭제 성공 메세지 출력
+                memberDAO.DeleteFromMemberList(memberId);                      //회원리스트에서 회원 정보 삭제
 
                 if(keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break;
             }

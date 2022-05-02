@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace Library
 {
-    class Member
+    class MemberManagement
     {
+        private MemberDAO memberDAO = MemberDAO.GetInstance();
         private MemberVO member;
         private Keyboard keyboard;
         private EnteringText text;
@@ -23,7 +24,7 @@ namespace Library
         private BookRental bookRental;         //2. 도서대여
         private BookReturn bookReturn;         //3. 도서반납
         private ProfileEdition profileEdition; //4.회원정보 수정
-        public Member(Keyboard keyboard)
+        public MemberManagement(Keyboard keyboard)
         {
             this.keyboard = keyboard;
             text = new EnteringText();
@@ -77,7 +78,7 @@ namespace Library
             }
             else
             {
-                member = MemberDAO.memberDAO.GetMemberAccount(memberId);  //로그인 성공 -> 로그인한 회원VO 생성
+                member = memberDAO.GetMemberAccount(memberId);  //로그인 성공 -> 로그인한 회원VO 생성
                 StartMemberMode((int)Constants.Menu.FOURTH);     //회원 모드로(1.도서검색  2.도서대여  3.도서반납  4.개인정보수정  5.종료)
             }
         }

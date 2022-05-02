@@ -11,15 +11,15 @@ namespace Library
     {
         Keyboard keyboard;
         Logo logo;
-        Member member;
-        Admin admin;
+        MemberManagement member;
+        AdminManagement admin;
 
         public LibraryMenu()
         {
             keyboard = new Keyboard();
             logo = new Logo();
-            member = new Member(keyboard);
-            admin = new Admin(keyboard);
+            member = new MemberManagement(keyboard);
+            admin = new AdminManagement(keyboard);
         }
         private void StartMain(int top)
         {

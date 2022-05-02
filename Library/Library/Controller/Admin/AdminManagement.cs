@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace Library
 {
-    class Admin
+    class AdminManagement
     {
+        private BookDAO bookDAO = BookDAO.GetInstance();
         private Keyboard keyboard;
         private EnteringText text;
         private Logo logo;
@@ -23,7 +24,7 @@ namespace Library
         private MemberDeletion memberDeletion;         //5. 회원관리
         private NaverSearch naverSearch;               //7.네이버 도서 검색
 
-        public Admin(Keyboard keyboard)
+        public AdminManagement(Keyboard keyboard)
         {
             this.keyboard = keyboard;
             text = new EnteringText();
@@ -56,7 +57,7 @@ namespace Library
                     bookDeletion.DeleteBook(bookSearch, keyboard);
                     break;
                 case (int)Constants.Menu.FIFTH:   //도서 대출 현황
-                    adminView.PrintRentalList(BookDAO.bookDAO.MakeMyBookList(Constants.RENTAL_LIST_INQUIRY, ""));
+                    adminView.PrintRentalList(bookDAO.MakeMyBookList(Constants.RENTAL_LIST_INQUIRY, ""));
                     keyboard.PressESC();
                     break;
                 case (int)Constants.Menu.SIXTH:   //회원관리

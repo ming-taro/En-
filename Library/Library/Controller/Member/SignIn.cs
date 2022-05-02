@@ -10,6 +10,7 @@ namespace Library
 {
     class SignIn
     {
+        private MemberDAO memberDAO = MemberDAO.GetInstance();
         private EnteringText text;
         private Logo logo;
         public SignIn(EnteringText text, Logo logo)
@@ -21,7 +22,7 @@ namespace Library
         {
             string id;
             string password;
-            AdminVO adminAccount = MemberDAO.memberDAO.GetAdminAccount();  //관리자 계정
+            AdminVO adminAccount = memberDAO.GetAdminAccount();  //관리자 계정
 
             logo.PrintSignIn();   //로그인 화면 출력
 
@@ -55,7 +56,7 @@ namespace Library
                 password = text.EnterText((int)Constants.SignIn.INPUT, (int)Constants.SignIn.PASSWORD, "*");  //비밀번호 입력
                 if (password.Equals(Constants.ESC)) return Constants.ESC;
 
-                if (MemberDAO.memberDAO.IsExistingMember(id, password)) break;  //존재하는 회원 -> 로그인 성공
+                if (memberDAO.IsExistingMember(id, password)) break;  //존재하는 회원 -> 로그인 성공
 
                 logo.PrintSignInFailure();      
             }
