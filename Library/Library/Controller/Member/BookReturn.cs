@@ -11,6 +11,7 @@ namespace Library
     class BookReturn
     {
         private BookDAO bookDAO = BookDAO.GetInstance();
+        private LogDAO logDAO = LogDAO.GetInstance();
         private EnteringText text;
         private MemberView memberView;
         private Exception exception;
@@ -77,18 +78,25 @@ namespace Library
         }
         public void ReturnBook(string memberId, Keyboard keyboard) 
         {
+            string bookId;
             List<BorrowBookVO> myBookList = bookDAO.MakeMyBookList(Constants.RENTAL_LIST, memberId); //현재 로그인한 회원의 도서대여목록
 
-            memberView.PrintBookReturn(myBookList);              //나의 대출 목록 출력
+            while (Constants.INPUT_VALUE)
+            {
+                memberView.PrintBookReturn(myBookList);              //나의 대출 목록 출력
 
-            string bookId = InputBookId(memberId, myBookList);   //반납하려는 도서번호 입력
-            if (bookId.Equals(Constants.ESC)) return;            //도서번호 입력 중 Esc -> 회원모드로 돌아감
+                bookId = InputBookId(memberId, myBookList);         //반납하려는 도서번호 입력
+                if (bookId.Equals(Constants.ESC)) break;            //도서번호 입력 중 Esc -> 회원모드로 돌아감
 
-            memberView.PrintBookReturnSuccess(FindBook(bookId, myBookList));  //반납한 도서정보 출력
-            bookDAO.DeleteFromRentalList(memberId, bookId); //도서대여리스트에서 대여정보 삭제 
-            myBookList = bookDAO.MakeMyBookList(Constants.RENTAL_LIST, memberId);  //도서반납 후 대여목록
+                bookDAO.DeleteFromRentalList(memberId, bookId);     //도서대여리스트에서 대여정보 삭제 
+                logDAO.DeleteFromRentalList(memberId, myBookList[myBookList.Count - 1].Name);  //로그에 반납기록 추가
+                
+                memberView.PrintBookReturnSuccess(FindBook(bookId, myBookList));  //반납한 도서정보 출력
+                myBookList.RemoveAt(myBookList.Count - 1);                        //도서반납 후 대여목록
 
-            keyboard.PressESC(); //도서 반납 후 Esc -> 회원모드로 돌아감
+                if(keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break;  //도서 반납 후 Esc -> 회원모드로 돌아감
+                Console.CursorVisible = Constants.IS_VISIBLE_CURSOR;
+            }
             Console.CursorVisible = Constants.IS_VISIBLE_CURSOR;
         }
     }

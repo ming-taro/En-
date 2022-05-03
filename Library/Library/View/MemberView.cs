@@ -58,6 +58,7 @@ namespace Library
         public void PrintBookReturnSuccess(BorrowBookVO book)              //도서 반납 완료 메세지 + 반납한 도서 정보 출력
         {
             logo.PrintMenu("도서 반납 완료");
+            logo.PrintMessage((int)Constants.SearchMenu.ESC_LEFT, (int)Constants.SearchMenu.ESC_TOP, "[ESC]: 뒤로가기     [ENTER]: 재검색", ConsoleColor.Gray);
             logo.PrintMessage(0, (int)Constants.SearchMenu.ZERO, "반납한 도서 정보", ConsoleColor.Gray);
             Console.SetCursorPosition(0, Console.CursorTop - 1);
             logo.PrintLine();

@@ -25,8 +25,13 @@ namespace Library
         }
         public void AddToRentalList(string memberId, string bookName)
         {
-            string query = "INSERT INTO log(user,menu,content, date) VALUES (@user, @menu, @content, @date);";
+            string query = Constants.UPDATE_TO_LOG;
             StartNonQuery(query, memberId, "도서 대출", bookName);
+        }
+        public void DeleteFromRentalList(string memberId, string bookName)
+        {
+            string query = Constants.UPDATE_TO_LOG;
+            StartNonQuery(query, memberId, "도서 반납", bookName);
         }
 
         public void StartNonQuery(string query, string user, string menu, string content)

@@ -125,6 +125,7 @@ namespace Library
 
         public const string UPDATE_TO_BOOK_LIST = "update book set name=@name,publisher=@publisher,author=@author,price=@price,quantity=@quantity where id=@id;";
         public const string UPDATE_ON_BOOK_ID = "update book set id=@id where id=@bookId;";
+        public const string UPDATE_TO_LOG = "INSERT INTO log(user,menu,content, date) VALUES (@user, @menu, @content, @date);";
 
         //Connection
         public const string SERVER = "Server = localhost;";
