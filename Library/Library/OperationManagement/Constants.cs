@@ -45,6 +45,8 @@ namespace Library
         public const bool IS_VISIBLE_CURSOR = true;
         public const bool IS_INVISIBLE_CURSOR = false;
 
+        public const bool IS_EXISTING_FILE = true;
+
         public const string ESC_AND_ENTER = "                          [ESC]:뒤로가기    [ENTER]:다시 검색";//--->삭제할 코드
         public const string ESC_MESSAGE = "                                              [ESC]:뒤로가기";//--->삭제할 코드
         public const string REMOVE_LINE = "                                                             ";//--->삭제할 코드
@@ -170,6 +172,7 @@ namespace Library
             LEFT = 45,
             CONSOLE_HEIGHT = 40,
             CONSOLE_WIDTH = 100,
+            LOG_MESSAGE_LEFT = 29,
             STEP = 2
         }
         public enum Registration

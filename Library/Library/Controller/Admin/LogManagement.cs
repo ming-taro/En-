@@ -39,8 +39,22 @@ namespace Library
             writer.WriteLine("=====================================================================");
             writer.Close();
 
-            logo.PrintLogManagement();                        //로그 관리 화면 출력
-            logo.PrintMessage((int)Constants.Menu.LEFT - 10, (int)Constants.Menu.FIFTH, "(바탕화면에 파일이 저장되었습니다)", ConsoleColor.Green);
+            logo.PrintLogManagement();    //로그 관리 화면 출력
+            logo.PrintMessage((int)Constants.Menu.LOG_MESSAGE_LEFT, (int)Constants.Menu.SIXTH, "(바탕화면에 '로그 기록' 파일이 저장되었습니다)", ConsoleColor.Green);
+        }
+        public void DeleteFile()
+        {
+            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/로그 기록.txt";
+            if (File.Exists(desktopPath) == Constants.IS_EXISTING_FILE)
+            {
+                logo.PrintMessage((int)Constants.Menu.LOG_MESSAGE_LEFT, (int)Constants.Menu.SIXTH, "     ('로그 기록' 파일이 삭제되었습니다)               ", ConsoleColor.Red);
+                File.Delete(desktopPath);
+            }
+            else
+            {
+                logo.PrintMessage((int)Constants.Menu.LOG_MESSAGE_LEFT, (int)Constants.Menu.SIXTH, "   ('로그 기록' 파일이 존재하지 않습니다)               ", ConsoleColor.Red);
+
+            }
         }
         public void SelectMenu(int menu, Keyboard keyboard)
         {
@@ -53,7 +67,7 @@ namespace Library
                     SaveFile();
                     break;
                 case (int)Constants.Menu.THIRD:   //파일 삭제
-
+                    DeleteFile();
                     break;
                 case (int)Constants.Menu.FOURTH:  //초기화
 
