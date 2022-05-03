@@ -28,11 +28,9 @@ namespace Library
         }
         public void SaveFile()
         {
-            //string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            //FileStream file = new FileStream(desktopPath, FileMode.OpenOrCreate, FileAccess.ReadWrite);
-            StreamWriter writer;
+            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/로그 기록.txt";
+            StreamWriter writer = new StreamWriter(desktopPath);
 
-            writer = File.CreateText("로그 기록.txt");        //Text File이 저장될 위치(파일명)
             for(int i= logList.Count - 1; i >= 0; i--)
             {
                 writer.WriteLine("=====================================================================");
@@ -40,7 +38,6 @@ namespace Library
             }
             writer.WriteLine("=====================================================================");
             writer.Close();
-            //file.Close();
 
             logo.PrintLogManagement();                        //로그 관리 화면 출력
             logo.PrintMessage((int)Constants.Menu.LEFT - 10, (int)Constants.Menu.FIFTH, "(바탕화면에 파일이 저장되었습니다)", ConsoleColor.Green);
