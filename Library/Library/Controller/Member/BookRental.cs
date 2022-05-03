@@ -11,6 +11,7 @@ namespace Library
     class BookRental
     {
         private BookDAO bookDAO = BookDAO.GetInstance();
+        private LogDAO logDAO = LogDAO.GetInstance();
         private EnteringText text;
         private MemberView memberView;
         private Exception exception;
@@ -109,6 +110,7 @@ namespace Library
 
                 bookDAO.AddToRentalList(memberId, bookId);    //DB에 변경된 정보 저장
                 myBookList = bookDAO.MakeMyBookList(Constants.RENTAL_LIST, memberId);//변경된 현재 로그인한 회원의 도서대여목록
+                logDAO.AddToRentalList(memberId, myBookList[myBookList.Count - 1].Name);  //도서 대출기록 로그에 저장
                 memberView.PrintBookRentalSuccess(myBookList);            //회원의 대여목록 출력
 
                 if (keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break; //Esc->뒤로가기, Enter->재검색

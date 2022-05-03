@@ -10,6 +10,11 @@ namespace Library
     class LogDAO
     {
         private static LogDAO logDAO;
+        private string connectionString;
+        private LogDAO()
+        {
+            connectionString = Constants.SERVER + Constants.PORT + Constants.DATABASE + Constants.ID + Constants.PASSWORD;
+        }
         public static LogDAO GetInstance()
         {
             if (logDAO == null)
@@ -18,10 +23,21 @@ namespace Library
             }
             return logDAO;
         }
-        public void AddToRentalList(MySqlCommand command, MySqlConnection connection)
+        public void AddToRentalList(string memberId, string bookName)
         {
-            command = new MySqlCommand(Constants.DECREASE_IN_BOOK_QUANTITY, connection); 
-            command.Parameters.Add(new MySqlParameter("@bookId", bookId));
+            string query = "INSERT INTO log(user,menu,content, date) VALUES (@user, @menu, @content, @date);";
+            StartNonQuery(query, memberId, "도서 대출", bookName);
+        }
+
+        public void StartNonQuery(string query, string user, string menu, string content)
+        {
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            connection.Open();
+            MySqlCommand command = new MySqlCommand(query, connection);
+            command.Parameters.Add(new MySqlParameter("@user", user));
+            command.Parameters.Add(new MySqlParameter("@menu", menu));
+            command.Parameters.Add(new MySqlParameter("@content", content));
+            command.Parameters.Add(new MySqlParameter("@date", DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")));
             command.ExecuteNonQuery();
         }
     }
