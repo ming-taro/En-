@@ -11,6 +11,7 @@ namespace Library
     class SignIn
     {
         private MemberDAO memberDAO = MemberDAO.GetInstance();
+        private LogDAO logDAO = LogDAO.GetInstance();
         private EnteringText text;
         private Logo logo;
         public SignIn(EnteringText text, Logo logo)
@@ -34,7 +35,11 @@ namespace Library
                 password = text.EnterText((int)Constants.SignIn.INPUT, (int)Constants.SignIn.PASSWORD, "*"); //비밀번호 입력
                 if (password.Equals(Constants.ESC)) return Constants.ESC;
 
-                if (id.Equals(adminAccount.Id) && password.Equals(adminAccount.Password)) break;   //관리자 로그인 완료
+                if (id.Equals(adminAccount.Id) && password.Equals(adminAccount.Password))   //관리자 로그인 완료
+                {
+                    logDAO.SignInSuccessfully(adminAccount.Id);
+                    break;   
+                }
 
                 logo.PrintSignInFailure();  
             }
@@ -56,7 +61,11 @@ namespace Library
                 password = text.EnterText((int)Constants.SignIn.INPUT, (int)Constants.SignIn.PASSWORD, "*");  //비밀번호 입력
                 if (password.Equals(Constants.ESC)) return Constants.ESC;
 
-                if (memberDAO.IsExistingMember(id, password)) break;  //존재하는 회원 -> 로그인 성공
+                if (memberDAO.IsExistingMember(id, password))  //존재하는 회원 -> 로그인 성공
+                {
+                    logDAO.SignInSuccessfully(id);
+                    break;  
+                }
 
                 logo.PrintSignInFailure();      
             }

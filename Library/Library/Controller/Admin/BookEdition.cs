@@ -10,6 +10,7 @@ namespace Library
     class BookEdition
     {
         private BookDAO bookDAO = BookDAO.GetInstance();
+        private LogDAO logDAO = LogDAO.GetInstance();
         private EnteringText text;
         private AdminView adminView;
         private Exception exception;
@@ -167,6 +168,7 @@ namespace Library
             }
 
             bookDAO.AddToBookList(Constants.UPDATE_TO_BOOK_LIST, book); //DB에 수정사항 반영
+            logDAO.EditBook(book.Name);
         }
     }
 }

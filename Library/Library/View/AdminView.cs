@@ -50,7 +50,7 @@ namespace Library
         public void PrintSearchResult(List<BookVO> bookList)  //도서검색 -> 검색결과로 나온 책목록 출력
         {
             PrintBookSearch(bookList);
-            logo.PrintMessage((int)Constants.SearchMenu.ESC_LEFT, (int)Constants.SearchMenu.ESC_TOP, "[ESC]: 뒤로가기     [ENTER]: 재검색", ConsoleColor.Gray);
+            logo.PrintEscAndEnter(0, (int)Constants.SearchMenu.ESC_TOP); 
             Console.WindowTop = 0;
             Console.CursorVisible = Constants.IS_INVISIBLE_CURSOR;
         }
@@ -121,6 +121,7 @@ namespace Library
         public void PrintDeletedMember(MemberVO member)   //회원관리 -> 회원정보 삭제 완료 메세지 + 삭제한 회원정보
         {
             logo.PrintMenu("회원 삭제 완료");
+            logo.PrintEscAndEnter(0, (int)Constants.SearchMenu.ESC_TOP);
             logo.PrintMessage(0, (int)Constants.SearchMenu.ZERO, "삭제한 회원 정보", ConsoleColor.Gray);
             Console.SetCursorPosition(0, Console.CursorTop - 1);
             logo.PrintLine();

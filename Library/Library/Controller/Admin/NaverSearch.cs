@@ -13,6 +13,7 @@ namespace Library
     class NaverSearch
     {
         private BookDAO bookDAO = BookDAO.GetInstance();
+        private LogDAO logDAO = LogDAO.GetInstance();
         private EnteringText text;
         private AdminView adminView;
         private Exception exception;
@@ -141,7 +142,7 @@ namespace Library
             }
             return bookList[i];
         }
-        public void SearchBook(Keyboard keyboard, BookRegistration bookRegistration)
+        public void SearchBook(Keyboard keyboard, BookRegistration bookRegistration)//---->사용자 메뉴에도 추가 예정
         {
             string searchWord;
             string bookId;
@@ -154,8 +155,8 @@ namespace Library
             {
                 bookList.Clear();
                 searchWord = InputSearchWord();   //검색어 입력받기
-                if (searchWord.Equals(Constants.ESC)) return;               //검색어 입력 중 esc -> 도서검색 종료
-
+                if (searchWord.Equals(Constants.ESC)) return;              //검색어 입력 중 esc -> 도서검색 종료
+                 
                 MakeBookList(searchWord);                                  //도서목록
                 if(bookList.Count == 0)                                    //검색결과가 없을 경우 -> 검색어 다시 입력받기
                 {
@@ -163,7 +164,9 @@ namespace Library
                     continue;
                 }
 
+                logDAO.SearchBookOnNaver("12345", searchWord);             //관리자 검색기록 로그에 저장
                 adminView.PrintNaverSearchResult(bookList);                //도서 검색 결과 출력
+
                 bookId = InputBookId();  //추가할 도서번호 입력받기
                 if (bookId.Equals(Constants.ESC))                          //도서번호 입력 중 Esc -> 도서검색으로 돌아감
                 {
@@ -184,6 +187,7 @@ namespace Library
             book.Id = bookId;
             book.Quantity = quantity;
             bookDAO.AddToBookList(Constants.ADDITION_TO_BOOK_LIST, book);  //DB에 도서정보 저장
+            logDAO.RegisterBook(book.Name);                                //log에 도서등록 기록
 
             adminView.PrintRegisteredBook(book);              //등록 완료 화면 출력
             keyboard.PressESC();                              //Esc -> 종료(뒤로가기)

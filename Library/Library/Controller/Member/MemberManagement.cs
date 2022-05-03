@@ -45,7 +45,7 @@ namespace Library
             switch (menu)
             {
                 case (int)Constants.Menu.FIRST:  //도서검색
-                    bookSearch.ShowSearchResult(keyboard);
+                    bookSearch.SearchBook(member.Id, keyboard);
                     break;
                 case (int)Constants.Menu.SECOND: //도서대출
                     bookRental.SearchBookToBorrow(member.Id, bookSearch, keyboard);

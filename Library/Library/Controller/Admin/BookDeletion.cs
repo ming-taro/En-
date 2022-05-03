@@ -11,6 +11,7 @@ namespace Library
     class BookDeletion
     {
         private BookDAO bookDAO = BookDAO.GetInstance();
+        private LogDAO logDAO = LogDAO.GetInstance();
         private EnteringText text;
         private AdminView adminView;
         private Exception exception;
@@ -80,6 +81,7 @@ namespace Library
             int searchType;
             string searchWord;
             string bookId;
+            BookVO book;
 
             while (Constants.INPUT_VALUE)
             {
@@ -93,9 +95,12 @@ namespace Library
 
                 bookId = InputBookId(bookSearch.BookList);                 //삭제할 도서번호 입력
                 if (bookId.Equals(Constants.ESC)) continue;                //도서번호 입력 중 Esc -> 도서검색으로 돌아감
-                
-                adminView.PrintDeletedBook(FindBook(bookId, bookSearch.BookList));    //삭제 완료 메세지 + 삭제한 도서정보 출력
+
+                book = FindBook(bookId, bookSearch.BookList);
+                adminView.PrintDeletedBook(book);    //삭제 완료 메세지 + 삭제한 도서정보 출력
+
                 bookDAO.DeleteFromBookList(bookId);            //DB에서 도서정보 삭제
+                logDAO.DeleteFromBookList(book.Name);          //log에 도서삭제 기록
 
                 if (keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break; //Esc->뒤로가기, Enter->재검색
             }

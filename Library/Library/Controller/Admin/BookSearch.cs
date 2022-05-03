@@ -11,6 +11,7 @@ namespace Library
     class BookSearch
     {
         private BookDAO bookDAO = BookDAO.GetInstance();
+        private LogDAO logDAO = LogDAO.GetInstance();
         private EnteringText text;
         private AdminView adminView;
         private Exception exception;
@@ -65,7 +66,7 @@ namespace Library
 
             return keyboard.Top;    //Enter를 누른 시점의 커서의 top값으로 선택한 검색유형을 알 수 있음
         }
-        public void ShowSearchResult(Keyboard keyboard)
+        public void SearchBook(string memberId, Keyboard keyboard)
         {
             int searchType;
             string searchWord;
@@ -77,7 +78,8 @@ namespace Library
 
                 searchWord = InputSearchWord((int)Constants.InputField.SEARCH, searchType, (int)Constants.Exception.SEARCH);   //검색어 입력받기
                 if (searchWord.Equals(Constants.ESC)) continue;            //검색어 입력 중 esc -> 검색유형 선택으로
-                
+
+                logDAO.SearchBook(memberId, searchWord);             //로그에 검색기록
                 adminView.PrintSearchResult(bookList);               //도서 검색 결과 출력
 
                 if (keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break;  //Esc->뒤로가기, Enter->재검색

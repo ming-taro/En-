@@ -11,6 +11,7 @@ namespace Library
     class SignUp  //회원가입
     {
         private MemberDAO memberDAO = MemberDAO.GetInstance();
+        private LogDAO logDAO = LogDAO.GetInstance();
         private EnteringText text;
         private MemberView memberView;
         private Logo logo;
@@ -137,6 +138,7 @@ namespace Library
 
             member = new MemberVO(id, password, name, age, phoneNumber, address);   //입력이 완료된 회원 정보
             memberDAO.AddToMemberList(Constants.ADDITION_TO_MEMBER_LIST, member);     //DB에 저장
+            logDAO.SingUpSuccessfully(id);
 
             memberView.PrintSuccessMessage();  //회원가입 축하 화면 출력
             keyboard.PressESC();

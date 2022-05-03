@@ -10,6 +10,7 @@ namespace Library
     {
         private BookDAO bookDAO = BookDAO.GetInstance();
         private MemberDAO memberDAO = MemberDAO.GetInstance();
+        private LogDAO logDAO = LogDAO.GetInstance();
         private EnteringText text;
         private AdminView adminView;
         private Exception exception;
@@ -77,8 +78,10 @@ namespace Library
 
                 adminView.PrintDeletedMember(memberDAO.GetMemberAccount(memberId));  //삭제 성공 메세지 출력
                 memberDAO.DeleteFromMemberList(memberId);                      //회원리스트에서 회원 정보 삭제
+                logDAO.DeleteFromMemberList(memberId);
 
                 if(keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break;
+                Console.CursorVisible = Constants.IS_VISIBLE_CURSOR;
             }
             Console.CursorVisible = Constants.IS_VISIBLE_CURSOR;
         }

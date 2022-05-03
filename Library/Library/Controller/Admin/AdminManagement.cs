@@ -46,10 +46,10 @@ namespace Library
             switch (menu)
             {
                 case (int)Constants.Menu.FIRST:  //도서 이름 검색 
-                    bookSearch.ShowSearchResult(keyboard);
+                    bookSearch.SearchBook("12345", keyboard);
                     break;
                 case (int)Constants.Menu.SECOND:  //도서 등록
-                    bookRegistration.StartRegistration(keyboard);
+                    bookRegistration.RegisterBook(keyboard);
                     break;
                 case (int)Constants.Menu.THIRD:   //도서 정보 수정
                     bookEdition.EditBook(bookSearch, bookRegistration, keyboard);

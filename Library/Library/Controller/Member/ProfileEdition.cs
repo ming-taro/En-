@@ -9,6 +9,7 @@ namespace Library
     class ProfileEdition
     {
         private MemberDAO memberDAO = MemberDAO.GetInstance();
+        private LogDAO logDAO = LogDAO.GetInstance();
         private MemberView memberView;
 
         public ProfileEdition(MemberView memberView)
@@ -86,6 +87,7 @@ namespace Library
             }
 
             memberDAO.AddToMemberList(Constants.UPDATE_TO_MEMBER_LIST, member);   //DB에 수정된 회원정보 업데이트
+            logDAO.EditMemberInformation(member.Id);
         }
     }
 }
