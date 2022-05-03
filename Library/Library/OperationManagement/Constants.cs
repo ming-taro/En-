@@ -126,6 +126,7 @@ namespace Library
         public const string UPDATE_TO_BOOK_LIST = "update book set name=@name,publisher=@publisher,author=@author,price=@price,quantity=@quantity where id=@id;";
         public const string UPDATE_ON_BOOK_ID = "update book set id=@id where id=@bookId;";
         public const string UPDATE_TO_LOG = "INSERT INTO log(user,menu,content, date) VALUES (@user, @menu, @content, @date);";
+        public const string LOG_LIST = "select*from log;";
 
         //Connection
         public const string SERVER = "Server = localhost;";
@@ -149,11 +150,12 @@ namespace Library
         }
         public enum SignIn
         {
-            LEFT = 30,
-            INPUT = 40,           //left
-            ID = 15,              //top
-            PASSWORD = 18,        //top
-            MESSAGE = 22
+            LEFT = 40,
+            INPUT = 50,           //left
+            ID = 17,              //top
+            PASSWORD = 20,        //top
+            MESSAGE = 24,
+            MESSAGE_LEFT = 28
         }
         public enum Menu
         {

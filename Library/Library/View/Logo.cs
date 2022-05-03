@@ -85,15 +85,15 @@ namespace Library
         public void PrintSignIn()
         {
             PrintMenu("로그인");
-            PrintMessage((int)Constants.SignIn.LEFT - 5, (int)Constants.SignIn.ID - 3, "〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓", ConsoleColor.Gray);
+            PrintMessage((int)Constants.SignIn.MESSAGE_LEFT, (int)Constants.SignIn.ID - 3, "〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓", ConsoleColor.Gray);
             PrintMessage((int)Constants.SignIn.LEFT, (int)Constants.SignIn.ID, "아이디  :", ConsoleColor.Gray);
             PrintMessage((int)Constants.SignIn.LEFT, (int)Constants.SignIn.PASSWORD, "비밀번호:", ConsoleColor.Gray);
-            PrintMessage((int)Constants.SignIn.LEFT - 5, (int)Constants.SignIn.PASSWORD + 3, "〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓", ConsoleColor.Gray);
+            PrintMessage((int)Constants.SignIn.MESSAGE_LEFT, (int)Constants.SignIn.PASSWORD + 3, "〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓", ConsoleColor.Gray);
         }
         public void PrintSignInFailure()
         {
             PrintSignIn();
-            PrintMessage((int)Constants.SignIn.LEFT, (int)Constants.SignIn.MESSAGE, "(아이디 또는 비밀번호를 잘못 입력하셨습니다.)", ConsoleColor.Red);
+            PrintMessage((int)Constants.SignIn.MESSAGE_LEFT, (int)Constants.SignIn.MESSAGE, "(아이디 또는 비밀번호를 잘못 입력하셨습니다.)", ConsoleColor.Red);
         }
         public void PrintAdminMode()  //관리자 모드 화면
         {

@@ -23,6 +23,25 @@ namespace Library
             }
             return logDAO;
         }
+        public List<LogVO> GetLogList()
+        {
+            List<LogVO> logList = new List<LogVO>();
+
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            connection.Open();
+            MySqlCommand command = new MySqlCommand(Constants.LOG_LIST, connection);
+            MySqlDataReader table = command.ExecuteReader();
+
+            int number = 1;
+            while (table.Read())
+            {
+                logList.Add(new LogVO(number++, table["user"].ToString(), table["menu"].ToString(), table["content"].ToString(), table["date"].ToString()));
+            }
+            table.Close();
+            connection.Close();
+
+            return logList;
+        }
         public void AddToRentalList(string memberId, string bookName)
         {
             StartNonQuery(memberId, "도서 대출", bookName);

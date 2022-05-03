@@ -34,6 +34,17 @@ namespace Library
                 logo.PrintLine();
             }
         }
+        public void PrintLogList(List<LogVO> logList)
+        {
+            logo.PrintLine();
+            for (int i = logList.Count - 1; i >= 0; i--)   //최근 추가한 값부터 출력
+            {
+                Console.WriteLine(logList[i]);
+                logo.PrintSingleLine();
+            }
+            Console.SetCursorPosition(0, Console.CursorTop - 3);
+            logo.PrintLine();
+        }
         public void PrintBookSearch(List<BookVO> bookList)  //도서 검색
         {
             logo.PrintMenu("도서 검색");
@@ -186,6 +197,12 @@ namespace Library
             logo.PrintMessage(0, (int)Constants.EditMenu.FOURTH, "☞저자    : " + book.Author, ConsoleColor.Gray);
             logo.PrintMessage(0, (int)Constants.EditMenu.FIFTH, "☞가격    : " + book.Price, ConsoleColor.Gray);
             logo.PrintMessage(0, (int)Constants.EditMenu.SIXTH, "☞수량    : ", ConsoleColor.Gray);
+        }
+        public void PrintLogManagemnet(List<LogVO> logList)
+        {
+            logo.PrintMenu("로그 기록");
+            PrintLogList(logList);
+            Console.WindowTop = 0;
         }
     }
 }
