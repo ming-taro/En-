@@ -127,8 +127,10 @@ namespace Library
 
         public const string UPDATE_TO_BOOK_LIST = "update book set name=@name,publisher=@publisher,author=@author,price=@price,quantity=@quantity where id=@id;";
         public const string UPDATE_ON_BOOK_ID = "update book set id=@id where id=@bookId;";
+        
         public const string UPDATE_TO_LOG = "INSERT INTO log(user,menu,content, date) VALUES (@user, @menu, @content, @date);";
         public const string LOG_LIST = "select*from log;";
+        public const string LOG_INITIALIZATION = "TRUNCATE TABLE log;";
 
         //Connection
         public const string SERVER = "Server = localhost;";
@@ -143,6 +145,9 @@ namespace Library
         public const string NAVER_CLIENT_SECRET = "X-Naver-Client-Secret";
         public const string CLIENT_ID = "pKd8QC0tp8T66Lu1Irnj";
         public const string CLIENT_SECRET = "ey4QHrrt1y";
+
+        //로그
+        public const string FILE_NAME = "/로그 기록.txt";
 
         public enum Keyboard
         {

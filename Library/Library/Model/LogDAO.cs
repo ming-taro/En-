@@ -87,6 +87,13 @@ namespace Library
         {
             StartNonQuery(memberId, "회원 정보 수정", memberId);
         }
+        public void InitializeLogTable()
+        {
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            connection.Open();
+            MySqlCommand command = new MySqlCommand(Constants.LOG_INITIALIZATION, connection);
+            command.ExecuteNonQuery();
+        }
         public void StartNonQuery(string user, string menu, string content)
         {
             MySqlConnection connection = new MySqlConnection(connectionString);

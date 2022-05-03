@@ -10,25 +10,27 @@ namespace Library
     class LogManagement
     {
         private LogDAO logDAO = LogDAO.GetInstance();
-        private AdminView adminView;
         private Logo logo;
+        private AdminView adminView;
+        private Exception exception;
         List<LogVO> logList;
 
-        public LogManagement(AdminView adminView, Logo logo)
+        public LogManagement(Logo logo, AdminView adminView, Exception exception)
         {
-            this.adminView = adminView;
             this.logo = logo;
+            this.adminView = adminView;
+            this.exception = exception;
             logList = new List<LogVO>();
         }
         public void ManageLogList(Keyboard keyboard)
         {
-            adminView.PrintLogManagemnet(logList);  //로그리스트 출력
+            adminView.PrintLogManagemnet(logList);    //로그리스트 출력
             keyboard.PressESC();
             logo.PrintLogManagement();                //로그 관리 화면 출력
         }
         public void SaveFile()
         {
-            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/로그 기록.txt";
+            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + Constants.FILE_NAME;
             StreamWriter writer = new StreamWriter(desktopPath);
 
             for(int i= logList.Count - 1; i >= 0; i--)
@@ -40,21 +42,27 @@ namespace Library
             writer.Close();
 
             logo.PrintLogManagement();    //로그 관리 화면 출력
-            logo.PrintMessage((int)Constants.Menu.LOG_MESSAGE_LEFT, (int)Constants.Menu.SIXTH, "(바탕화면에 '로그 기록' 파일이 저장되었습니다)", ConsoleColor.Green);
+            exception.PrintSaveFile();    //파일 저장 메세지 출력
         }
         public void DeleteFile()
         {
-            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/로그 기록.txt";
-            if (File.Exists(desktopPath) == Constants.IS_EXISTING_FILE)
+            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + Constants.FILE_NAME;
+
+            if (File.Exists(desktopPath) == Constants.IS_EXISTING_FILE) //파일 존재여부 확인
             {
-                logo.PrintMessage((int)Constants.Menu.LOG_MESSAGE_LEFT, (int)Constants.Menu.SIXTH, "     ('로그 기록' 파일이 삭제되었습니다)               ", ConsoleColor.Red);
-                File.Delete(desktopPath);
+                exception.PrintFileDeletion();  //파일 삭제 메세지
+                File.Delete(desktopPath);       //바탕화면에서 파일 삭제
             }
             else
             {
-                logo.PrintMessage((int)Constants.Menu.LOG_MESSAGE_LEFT, (int)Constants.Menu.SIXTH, "   ('로그 기록' 파일이 존재하지 않습니다)               ", ConsoleColor.Red);
-
+                exception.PrintNoLogFile();     //파일이 존재하지 않음
             }
+        }
+        public void InitializeLogRecord()
+        {
+            logDAO.InitializeLogTable();        //로그 테이블 초기화
+            exception.PrintLogInitialization(); //로그 초기화 메세지
+            logList.Clear();
         }
         public void SelectMenu(int menu, Keyboard keyboard)
         {
@@ -70,7 +78,7 @@ namespace Library
                     DeleteFile();
                     break;
                 case (int)Constants.Menu.FOURTH:  //초기화
-
+                    InitializeLogRecord();
                     break;
             }
         }
