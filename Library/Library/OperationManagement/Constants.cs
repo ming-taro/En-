@@ -66,7 +66,7 @@ namespace Library
         public const string AUTHOR_REGEX = @"^[a-zA-Z가-힣]{1,50}$";
         public const string PRICE_REGEX = @"^[1-9]{1}[0-9]{0,9}$";
         public const string QUENTITY_REGEX = @"^[1-9]{1}[0-9]{0,1}$";
-        public const string DISPLAY_REGEX = @"(^[1-9]{1}[0-9]{0,1})|(100)$";
+        public const string DISPLAY_REGEX = @"(^[1-9]{1}[0-9]{0,1})$|(100)$";
 
         public const string MEMBER_ID_REGEX = @"^[a-zA-Z0-9]{5,10}$";
         public const string NAME_REGEX = @"^[a-zA-Z가-힣]{1,30}$";
@@ -141,7 +141,7 @@ namespace Library
         public const string PASSWORD = "Pwd = 0000;";
 
         //Naver
-        public const string API_URL = "https://openapi.naver.com/v1/search/book.json?query=@query&display=@display";
+        public const string API_URL = "https://openapi.naver.com/v1/search/book.json?query={0}&display={1}";
         public const string NAVER_CLIENT_ID = "X-Naver-Client-Id";
         public const string NAVER_CLIENT_SECRET = "X-Naver-Client-Secret";
         public const string CLIENT_ID = "pKd8QC0tp8T66Lu1Irnj";

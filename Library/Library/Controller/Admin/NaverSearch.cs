@@ -68,19 +68,20 @@ namespace Library
                 exception.RemoveLine(left, top);
                 searchWord = text.EnterText(left, top, "");                                          //(도서명/출판사/저자)를 입력 받음
 
-                if (numberOfBook.Equals(Constants.ESC))
+                if (searchWord.Equals(Constants.ESC))
                 {
                     logo.RemoveLine(left, top);      //검색어 입력 중 Esc -> 입력값 지움
+                    searchWord = "";
                 }
                 else if (Regex.IsMatch(searchWord, Constants.BOOK_NAME_REGEX) == Constants.IS_NOT_MATCH)  //입력형식에 맞지 않은 입력
                 {
-                    exception.PrintBookNameRegex((int)Constants.SearchMenu.LEFT, top + 1);
+                    exception.PrintBookNameRegex(left, top + 1);
                     continue;
                 }
                 
                 break;    //검색어 입력 중 Esc or 검색어 입력 -> while문 종료
             }
-            exception.RemoveLine(left, top + 1);   //예외메세지 지움
+            logo.RemoveLine(left, top + 1);   //예외처리 문구 지움
         }
         private void InputNumberOfBook()
         {
@@ -96,10 +97,11 @@ namespace Library
                 if (numberOfBook.Equals(Constants.ESC))
                 {
                     logo.RemoveLine(left, top);      //수량 입력 중 Esc -> 입력값 지움
+                    numberOfBook = "";
                 }
                 else if (Regex.IsMatch(numberOfBook, Constants.DISPLAY_REGEX) == Constants.IS_NOT_MATCH)  //입력형식에 맞지 않은 입력
                 {
-                    exception.PrintNumberOfBook((int)Constants.SearchMenu.LEFT, top + 1);   //예외메세지 + 검색어를 다시 입력받음
+                    exception.PrintNumberOfBook(left, top + 1);   //예외메세지 + 검색어를 다시 입력받음
                     continue;
                 }
 
@@ -109,16 +111,16 @@ namespace Library
         }
         public void InquireAboutBook()
         {
-            if (searchWord.Equals(Constants.ESC))
+            if (searchWord == null || searchWord == "")
             {
-                logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.FIRST + 1, "(검색어를 입력해주세요.)                 ", ConsoleColor.Red);                  //검색어를 입력하지 않은 경우
+                logo.PrintMessage((int)Constants.InputField.NAVER_SEARCH, (int)Constants.SearchMenu.FIRST + 1, "(검색어를 입력해주세요.)                 ", ConsoleColor.Red);                  //검색어를 입력하지 않은 경우
                 searchWord = "";
             }
-            if (numberOfBook.Equals(Constants.ESC))
+            if (numberOfBook == null ||  numberOfBook == "")
             {
-                logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.SECOND + 1, "(1~100 이내의 숫자를 입력해주세요.)                 ", ConsoleColor.Red);      //조회수량을 입력하지 않음 경우
+                logo.PrintMessage((int)Constants.InputField.NAVER_SEARCH, (int)Constants.SearchMenu.SECOND + 1, "(1~100 이내의 숫자를 입력해주세요.)                 ", ConsoleColor.Red);      //조회수량을 입력하지 않음 경우
             }
-            if (searchWord.Equals(Constants.ESC) == Constants.IS_NOT_MATCH && numberOfBook.Equals(Constants.ESC) == Constants.IS_NOT_MATCH)
+            if (searchWord != null && numberOfBook != null && searchWord != "" && numberOfBook != "")
             {
                 CreateBookList();   //검색 결과 도서목록 생성
             }
@@ -129,7 +131,6 @@ namespace Library
             {
                 case (int)Constants.SearchMenu.FIRST:     //검색어 입력
                     InputSearchWord();
-                    Console.Read();
                     break;
                 case (int)Constants.SearchMenu.SECOND:    //책 권 수 입력
                     InputNumberOfBook();
@@ -195,18 +196,20 @@ namespace Library
             BookVO book;
 
             adminView.PrintNaverSearch();
-            keyboard.SetPosition((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.FIRST);
             
             while (Constants.INPUT_VALUE)
             {
+                keyboard.SetPosition((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.FIRST);
                 menu = keyboard.SelectMenu((int)Constants.SearchMenu.FIRST, (int)Constants.SearchMenu.THIRD, (int)Constants.SearchMenu.STEP);
                 if (menu == (int)Constants.Keyboard.ESCAPE) return;   //검색어 or 수량 or 조회 선택 중 Esc -> 네이버 검색 종료
 
                 SelectMenu(keyboard.Top);                             //검색어, 조회 수량 입력, 조회 가능 여부 판단
+                if (keyboard.Top != (int)Constants.SearchMenu.THIRD) continue;    //메뉴선택에서 검색어 or 조회수량 입력을 선택했다면 다시 돌아가서 메뉴를 선택함
 
-                if(bookList.Count == 0)                               //검색어나 수량을 입력하지 않고 검색했을 경우 or 검색결과가 없을 경우 -> 검색어 다시 입력받기
+                if (searchWord == "" || searchWord == null || numberOfBook == "" || numberOfBook == null) continue;//검색어나 수량을 입력하지 않고 검색했을 경우
+                if (bookList.Count == 0)                             //검색결과가 없을 경우 -> 검색어 다시 입력받기
                 {
-                    adminView.PrintNoSearchResult(searchWord);        
+                    adminView.PrintNoSearchResult(searchWord);
                     continue;
                 }
 
@@ -217,7 +220,9 @@ namespace Library
                 if (bookId.Equals(Constants.ESC))                   //도서번호 입력 중 Esc -> 도서검색으로 돌아감
                 {
                     adminView.PrintNaverSearch();
-                    bookList.Clear();
+                    bookList.Clear();                 //이전 검색어로 만들어진 도서목록, 검색어, 조회할 수량 초기화
+                    searchWord = "";
+                    numberOfBook = "";
                     continue;
                 }
                 break;

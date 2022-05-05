@@ -186,7 +186,7 @@ namespace Library
 
         public void PrintNoSearchResult(string searchWord)
         {
-            logo.PrintMessage(0, (int)Constants.SearchMenu.FOURTH, "검색 결과(총 0건)", ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.SearchMenu.FIFTH, "검색 결과(총 0건)", ConsoleColor.Gray);
             Console.WriteLine("====================================================================================================\n");
             logo.RemoveLine(5, Console.CursorTop);
             logo.PrintMessage(5, Console.CursorTop, "'" + searchWord + "'에 대한 검색결과가 없습니다.", ConsoleColor.Red);

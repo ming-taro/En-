@@ -14,7 +14,6 @@ namespace Library
         {
             LibraryMenu libraryMenu = new LibraryMenu();
             libraryMenu.StartLibrary();
-
         }
 
     }
