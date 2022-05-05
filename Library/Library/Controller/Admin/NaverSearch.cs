@@ -57,7 +57,7 @@ namespace Library
             for (int i = 0; i < count; i++) 
             {
                 description = searchResult["items"][i]["description"].ToString();
-                if (description.Length > 200) description = description.Substring(0, 200) + "***";
+                if (description.Length > 100) description = description.Substring(0, 100) + "...";
 
                 bookList.Add(new BookVO((i + 1).ToString(), searchResult["items"][i]["title"].ToString(), searchResult["items"][i]["author"].ToString(), searchResult["items"][i]["publisher"].ToString(), searchResult["items"][i]["pubdate"].ToString(),
                     searchResult["items"][i]["isbn"].ToString(), searchResult["items"][i]["price"].ToString(), description, ""));
