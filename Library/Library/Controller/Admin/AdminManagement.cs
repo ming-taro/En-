@@ -58,7 +58,7 @@ namespace Library
                     bookDeletion.DeleteBook(bookSearch, keyboard);
                     break;
                 case (int)Constants.Menu.FIFTH:   //도서 대출 현황
-                    adminView.PrintRentalList(bookDAO.MakeMyBookList(Constants.RENTAL_LIST_INQUIRY, ""));
+                    adminView.PrintRentalList(bookDAO.GetMyBookList(Constants.RENTAL_LIST_INQUIRY, ""));
                     keyboard.PressESC();
                     break;
                 case (int)Constants.Menu.SIXTH:   //회원관리

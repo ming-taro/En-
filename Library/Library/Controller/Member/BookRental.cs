@@ -93,7 +93,7 @@ namespace Library
             int searchType;        //검색유형
             string searchWord;     //검색어
             string bookId;         //도서번호
-            List<BorrowBookVO> myBookList = bookDAO.MakeMyBookList(Constants.RENTAL_LIST, memberId); //현재 로그인한 회원의 도서대여목록
+            List<BorrowBookVO> myBookList = bookDAO.GetMyBookList(Constants.RENTAL_LIST, memberId); //현재 로그인한 회원의 도서대여목록
 
             while (Constants.INPUT_VALUE)
             {
@@ -109,7 +109,7 @@ namespace Library
                 if (bookId.Equals(Constants.ESC)) continue;               //도서번호 입력 중 esc -> 다시 도서검색으로
 
                 bookDAO.AddToRentalList(memberId, bookId);    //DB에 변경된 정보 저장
-                myBookList = bookDAO.MakeMyBookList(Constants.RENTAL_LIST, memberId);//변경된 현재 로그인한 회원의 도서대여목록
+                myBookList = bookDAO.GetMyBookList(Constants.RENTAL_LIST, memberId);//변경된 현재 로그인한 회원의 도서대여목록
                 logDAO.AddToRentalList(memberId, myBookList[myBookList.Count - 1].Name);  //도서 대출기록 로그에 저장
                 memberView.PrintBookRentalSuccess(myBookList);            //회원의 대여목록 출력
 

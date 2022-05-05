@@ -24,7 +24,7 @@ namespace Library
             Console.SetCursorPosition(0, Console.CursorTop - 3);
             logo.PrintLine();
         }
-        public void PrintMyBookList(List<BorrowBookVO> myBookList) //회원의 도서 대여 목록 출력
+        public void PrintMyBookList(List<BookOnLoanDTO> myBookList) //회원의 도서 대여 목록 출력
         {
             logo.PrintLine();
             for (int i = 0; i < myBookList.Count; i++)
@@ -40,7 +40,7 @@ namespace Library
             logo.PrintSearchBox("도서 대출", "☞대출할 도서 번호:", "검색 결과(총 " + bookList.Count + "건)");
             PrintBookList(bookList);    //도서 검색 결과 출력
         }
-        public void PrintBookRentalSuccess(List<BorrowBookVO> myBookList)  //도서 대여 완료 메세지 + 회원의 대여 목록 출력
+        public void PrintBookRentalSuccess(List<BookOnLoanDTO> myBookList)  //도서 대여 완료 메세지 + 회원의 대여 목록 출력
         {
             logo.PrintMenu("도서 대출 완료");
             logo.PrintEscAndEnter(0, Console.CursorTop - 1);
@@ -50,12 +50,12 @@ namespace Library
             Console.WindowTop = 0;
             Console.CursorVisible = Constants.IS_INVISIBLE_CURSOR;
         }
-        public void PrintBookReturn(List<BorrowBookVO> myBookList)
+        public void PrintBookReturn(List<BookOnLoanDTO> myBookList)
         {
             logo.PrintSearchBox("도서 반납", "☞반납할 도서 번호:", "대출 정보 조회");
             PrintMyBookList(myBookList);    //대출 목록 출력
         }
-        public void PrintBookReturnSuccess(BorrowBookVO book)              //도서 반납 완료 메세지 + 반납한 도서 정보 출력
+        public void PrintBookReturnSuccess(BookOnLoanDTO book)              //도서 반납 완료 메세지 + 반납한 도서 정보 출력
         {
             logo.PrintMenu("도서 반납 완료");
             logo.PrintMessage((int)Constants.SearchMenu.ESC_LEFT, (int)Constants.SearchMenu.ESC_TOP, "[ESC]: 뒤로가기     [ENTER]: 재검색", ConsoleColor.Gray);

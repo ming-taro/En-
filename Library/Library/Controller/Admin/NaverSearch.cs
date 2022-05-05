@@ -34,7 +34,6 @@ namespace Library
             int count;
             string text;
             string url;
-            string description;
             string publicationDate;
 
             url = string.Format(Constants.API_URL, searchWord, numberOfBook);            //네이버 도서검색

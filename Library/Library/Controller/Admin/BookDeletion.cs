@@ -21,7 +21,7 @@ namespace Library
             this.adminView = adminView;
             this.exception = exception;
         }
-        private bool IsBookInList(string bookId, List<BookVO> bookList)
+        private bool IsBookInList(string bookId, List<BookDTO> bookList)
         {
             for(int i=0; i<bookList.Count; i++)
             {
@@ -30,7 +30,7 @@ namespace Library
 
             return Constants.IS_BOOK_NOT_IN_LIST;   //현재 조회중인 도서목록에 입력받은 도서번호와 일치하는 도서가 없음
         }
-        private string InputBookId(List<BookVO> bookList)
+        private string InputBookId(List<BookDTO> bookList)
         {
             int top = (int)Constants.SearchMenu.FIRST;
             int left = (int)Constants.InputField.LEFT;
@@ -65,7 +65,7 @@ namespace Library
 
             return bookId;
         }
-        private BookVO FindBook(string bookId, List<BookVO> bookList)   //삭제할 도서정보 찾기
+        private BookDTO FindBook(string bookId, List<BookDTO> bookList)   //삭제할 도서정보 찾기
         {
             int i;
 
@@ -81,7 +81,7 @@ namespace Library
             int searchType;
             string searchWord;
             string bookId;
-            BookVO book;
+            BookDTO book;
 
             while (Constants.INPUT_VALUE)
             {

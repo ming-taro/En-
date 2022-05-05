@@ -23,9 +23,9 @@ namespace Library
             }
             return bookDAO;
         }
-        public List<BookVO> MakeBookList(int searchType, string searchWord)  //검색 결과 도서목록
+        public List<BookDTO> MakeBookList(int searchType, string searchWord)  //검색 결과 도서목록
         {
-            List<BookVO> bookList = new List<BookVO>();
+            List<BookDTO> bookList = new List<BookDTO>();
             string query = "";
             int bookId = 1;
 
@@ -52,7 +52,7 @@ namespace Library
 
             while (table.Read())
             {
-                bookList.Add(new BookVO((bookId++).ToString(), table["name"].ToString(), table["author"].ToString(), table["publisher"].ToString(), table["publicationDate"].ToString(),
+                bookList.Add(new BookDTO((bookId++).ToString(), table["name"].ToString(), table["author"].ToString(), table["publisher"].ToString(), table["publicationDate"].ToString(),
                     table["isbn"].ToString(), table["price"].ToString(), table["bookIntroduction"].ToString(), table["quantity"].ToString()));
             }
             table.Close();
@@ -60,9 +60,11 @@ namespace Library
 
             return bookList;
         }
-        public List<BorrowBookVO> MakeMyBookList(string query, string memberId)    //회원의 도서대여목록
+        public List<BookDTO> GetMyBookList(string query, string memberId)    //회원의 도서대여목록
         {
-            List<BorrowBookVO> borrowList = new List<BorrowBookVO>();
+            List<BookDTO> myBookList = new List<BookDTO>();
+            BookDTO book;
+            int bookId = 1;
 
             MySqlConnection connection = new MySqlConnection(connectionString);
             connection.Open();
@@ -72,12 +74,15 @@ namespace Library
             MySqlDataReader table = command.ExecuteReader();
             while (table.Read())
             {
-                borrowList.Add(new BorrowBookVO(table["memberId"].ToString(), table["id"].ToString(), table["name"].ToString(), table["publisher"].ToString(), table["author"].ToString(), table["price"].ToString(), table["rentalPeriod"].ToString()));
+                book = new BookDTO((bookId++).ToString(), table["name"].ToString(), table["author"].ToString(), table["publisher"].ToString(), table["publicationDate"].ToString(),
+                    table["isbn"].ToString(), table["price"].ToString(), table["bookIntroduction"].ToString(), table["quantity"].ToString());
+                book.LoanPeriod = table["loanPeriod"].ToString();
+                myBookList.Add(book);
             }
             table.Close();
             connection.Close();
 
-            return borrowList;
+            return myBookList;
         }
         public bool IsMemberBorrowingBook(string memberId)  //회원이 도서를 대여중인지 확인
         {
@@ -169,7 +174,7 @@ namespace Library
             command.ExecuteNonQuery();
             connection.Close();
         }
-        public void AddToBookList(string query, BookVO book)  //책목록에 도서정보 추가
+        public void AddToBookList(string query, BookDTO book)  //책목록에 도서정보 추가
         {
             MySqlConnection connection = new MySqlConnection(connectionString);
             connection.Open();

@@ -15,14 +15,14 @@ namespace Library
         private EnteringText text;
         private AdminView adminView;
         private Exception exception;
-        private List<BookVO> bookList;
+        private List<BookDTO> bookList;
         public BookSearch(EnteringText text, AdminView adminView, Exception exception)
         {
             this.text = text;
             this.adminView = adminView;
             this.exception = exception;
         }
-        public List<BookVO> BookList
+        public List<BookDTO> BookList
         {
             get { return bookList; }
         }

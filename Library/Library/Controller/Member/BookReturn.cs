@@ -79,7 +79,7 @@ namespace Library
         public void ReturnBook(string memberId, Keyboard keyboard) 
         {
             string bookId;
-            List<BorrowBookVO> myBookList = bookDAO.MakeMyBookList(Constants.RENTAL_LIST, memberId); //현재 로그인한 회원의 도서대여목록
+            List<BorrowBookVO> myBookList = bookDAO.GetMyBookList(Constants.RENTAL_LIST, memberId); //현재 로그인한 회원의 도서대여목록
 
             while (Constants.INPUT_VALUE)
             {

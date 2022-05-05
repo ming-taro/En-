@@ -103,7 +103,7 @@ namespace Library
         }
         public void RegisterBook(Keyboard keyboard)
         {
-            BookVO book;
+            BookDTO book;
             //string id;
             string name;              //도서명
             string author;            //저자
@@ -134,7 +134,7 @@ namespace Library
             quantity = InputBookName(8, (int)Constants.Registration.SIXTH, Constants.QUENTITY_REGEX);      
             if (quantity.Equals(Constants.ESC)) return;       //수량 입력
 
-            book = new BookVO("", name, author, publisher, publicationDate, isbn, price, bookIntroduction, quantity);
+            book = new BookDTO("", name, author, publisher, publicationDate, isbn, price, bookIntroduction, quantity);
             bookDAO.AddToBookList(Constants.ADDITION_TO_BOOK_LIST, book);  //DB에 도서정보 저장
             logDAO.RegisterBook(name);                                     //로그에 도서등록 기록
 

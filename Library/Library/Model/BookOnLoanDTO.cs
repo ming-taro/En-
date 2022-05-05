@@ -9,7 +9,7 @@ namespace Library
     class BorrowBookVO
     {
         private string memberId;      //회원번호
-        private string bookId;            //도서번호
+        private string bookId;        //도서번호
         private string name;          //도서명
         private string publisher;     //출판사
         private string author;        //저자
