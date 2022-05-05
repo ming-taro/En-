@@ -35,6 +35,7 @@ namespace Library
             string text;
             string url;
             string description;
+            string publicationDate;
 
             url = string.Format(Constants.API_URL, searchWord, numberOfBook);            //네이버 도서검색
             WebRequest request = WebRequest.Create(url);
@@ -56,11 +57,11 @@ namespace Library
 
             for (int i = 0; i < count; i++) 
             {
-                description = searchResult["items"][i]["description"].ToString();
-                if (description.Length > 100) description = description.Substring(0, 100) + "...";
+                publicationDate = searchResult["items"][i]["pubdate"].ToString();
+                publicationDate = publicationDate.Insert(6, ".").Insert(4, ".");
 
-                bookList.Add(new BookVO((i + 1).ToString(), searchResult["items"][i]["title"].ToString(), searchResult["items"][i]["author"].ToString(), searchResult["items"][i]["publisher"].ToString(), searchResult["items"][i]["pubdate"].ToString(),
-                    searchResult["items"][i]["isbn"].ToString(), searchResult["items"][i]["price"].ToString(), description, ""));
+                bookList.Add(new BookVO((i + 1).ToString(), searchResult["items"][i]["title"].ToString(), searchResult["items"][i]["author"].ToString(), searchResult["items"][i]["publisher"].ToString(), publicationDate,
+                    searchResult["items"][i]["isbn"].ToString(), searchResult["items"][i]["price"].ToString(), searchResult["items"][i]["description"].ToString(), ""));
             }
         }
         private void InputSearchWord()
@@ -236,7 +237,7 @@ namespace Library
             book = FindBook(bookId);
             adminView.PrintBookRegistration(book);   //도서 등록 화면
 
-            quantity = bookRegistration.InputBookName((int)Constants.InputField.REGISTRATION, (int)Constants.EditMenu.SIXTH, Constants.QUENTITY_REGEX);
+            quantity = bookRegistration.InputBookName((int)Constants.InputField.REGISTRATION, (int)Constants.EditMenu.EIGHT, Constants.QUENTITY_REGEX);
             if (quantity.Equals(Constants.ESC)) return;
 
             book.Quantity = quantity;

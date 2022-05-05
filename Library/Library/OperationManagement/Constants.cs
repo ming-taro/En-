@@ -204,6 +204,7 @@ namespace Library
             FIFTH = 24,
             SIXTH = 27,
             SEVENTH = 30,
+            EIGHT = 33,
             STEP = 3
         }
         public enum SearchMenu

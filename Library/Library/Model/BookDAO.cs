@@ -27,6 +27,7 @@ namespace Library
         {
             List<BookVO> bookList = new List<BookVO>();
             string query = "";
+            int bookId = 1;
 
             switch (searchType)
             {
@@ -51,7 +52,7 @@ namespace Library
 
             while (table.Read())
             {
-                bookList.Add(new BookVO(table["id"].ToString(), table["name"].ToString(), table["author"].ToString(), table["publisher"].ToString(), table["publicationDate"].ToString(),
+                bookList.Add(new BookVO((bookId++).ToString(), table["name"].ToString(), table["author"].ToString(), table["publisher"].ToString(), table["publicationDate"].ToString(),
                     table["isbn"].ToString(), table["price"].ToString(), table["bookIntroduction"].ToString(), table["quantity"].ToString()));
             }
             table.Close();

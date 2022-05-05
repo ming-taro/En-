@@ -196,11 +196,14 @@ namespace Library
         {
             logo.PrintMenu("도서 등록");
             logo.PrintMessage(0, (int)Constants.EditMenu.ZERO, "(등록할 도서의 수량을 입력해주세요.)", ConsoleColor.Yellow);
-            logo.PrintMessage(0, (int)Constants.EditMenu.SECOND, "☞도서명  : " + book.Name, ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.EditMenu.FIRST, "☞도서명  : " + book.Name, ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.EditMenu.SECOND, "☞저자    : " + book.Author, ConsoleColor.Gray);
             logo.PrintMessage(0, (int)Constants.EditMenu.THIRD, "☞출판사  : " + book.Publisher, ConsoleColor.Gray);
-            logo.PrintMessage(0, (int)Constants.EditMenu.FOURTH, "☞저자    : " + book.Author, ConsoleColor.Gray);
-            logo.PrintMessage(0, (int)Constants.EditMenu.FIFTH, "☞가격    : " + book.Price, ConsoleColor.Gray);
-            logo.PrintMessage(0, (int)Constants.EditMenu.SIXTH, "☞수량    : ", ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.EditMenu.FOURTH, "☞출판일  : " + book.PublicationDate, ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.EditMenu.FIFTH, "☞ISBN    : " + book.Isbn, ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.EditMenu.SIXTH, "☞가격    : " + book.Price, ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.EditMenu.SEVENTH, "☞책소개  : " + book.BookIntroduction.Substring(0,40) + "...", ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.EditMenu.EIGHT, "☞수량    : ", ConsoleColor.Gray);
         }
         public void PrintLogManagemnet(List<LogVO> logList)
         {

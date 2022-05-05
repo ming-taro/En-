@@ -16,8 +16,8 @@ namespace Library
         private string publicationDate;//출판일
         private string isbn;           //isbn
         private string price;          //가격
-        private string quantity;       //수량
         private string bookIntroduction; //책소개
+        private string quantity;       //수량
 
         public BookVO(string id, string name, string author, string publisher, string publicationDate, string isbn, string price, string bookIntroduction, string quantity)
         {
