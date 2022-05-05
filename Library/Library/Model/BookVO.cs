@@ -9,20 +9,26 @@ namespace Library
 {
     class BookVO
     {
-        private string id;            //도서번호
-        private string name;          //도서명
-        private string publisher;     //출판사
-        private string author;        //저자
-        private string price;         //가격
-        private string quantity;      //수량
-        
-        public BookVO(string id, string name, string publisher, string author, string price, string quantity)
+        private string id;             //도서번호
+        private string name;           //도서명
+        private string author;         //저자
+        private string publisher;      //출판사
+        private string publicationDate;//출판일
+        private string isbn;           //isbn
+        private string price;          //가격
+        private string quantity;       //수량
+        private string bookIntroduction; //책소개
+
+        public BookVO(string id, string name, string author, string publisher, string publicationDate, string isbn, string price, string bookIntroduction, string quantity)
         {
             this.id = id;
             this.name = name;
-            this.publisher = publisher;
             this.author = author;
+            this.publisher = publisher;
+            this.publicationDate = publicationDate;
+            this.isbn = isbn;
             this.price = price;
+            this.bookIntroduction = bookIntroduction;
             this.quantity = quantity;
         }
         public string Id
@@ -35,15 +41,25 @@ namespace Library
             get { return name; }
             set { name = value; }
         }
+        public string Author
+        {
+            get { return author; }
+            set { author = value; }
+        }
         public string Publisher
         {
             get { return publisher; }
             set { publisher = value; }
         }
-        public string Author
+        public string PublicationDate
         {
-            get { return author; }
-            set { author = value; }
+            get { return publicationDate; }
+            set { publicationDate = value; }
+        }
+        public string Isbn
+        {
+            get { return isbn; }
+            set { isbn = value; }
         }
         public string Price
         {
@@ -55,10 +71,15 @@ namespace Library
             get { return quantity; }
             set { quantity = value; }
         }
+        public string BookIntroduction
+        {
+            get { return bookIntroduction; }
+            set { bookIntroduction = value; }
+        }
         public override String ToString()
         {
-            return "도서번호: " + id + "\n  도서명: " + name + "\n  출판사: " + publisher +
-                "\n    저자: " + author + "\n    가격: " + price + "\n    수량: " + quantity;
+            return "도서번호: " + id + "\n  도서명: " + name + "\n    저자: " + author + "\n  출판사: " + publisher + "\n  출판일:" + publicationDate 
+                + "\n    ISBN:" + "\n    가격: " + price + "\n  책소개:" + bookIntroduction + "\n    수량: " + quantity;
         }
     }
 }

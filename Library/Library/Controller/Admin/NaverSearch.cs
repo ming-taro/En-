@@ -34,6 +34,7 @@ namespace Library
             int count;
             string text;
             string url;
+            string description;
 
             url = string.Format(Constants.API_URL, searchWord, numberOfBook);            //네이버 도서검색
             WebRequest request = WebRequest.Create(url);
@@ -55,7 +56,11 @@ namespace Library
 
             for (int i = 0; i < count; i++) 
             {
-                bookList.Add(new BookVO((i + 1).ToString(), searchResult["items"][i]["title"].ToString(), searchResult["items"][i]["publisher"].ToString(), searchResult["items"][i]["author"].ToString(), searchResult["items"][i]["price"].ToString(), ""));
+                description = searchResult["items"][i]["description"].ToString();
+                if (description.Length > 200) description = description.Substring(0, 200) + "***";
+
+                bookList.Add(new BookVO((i + 1).ToString(), searchResult["items"][i]["title"].ToString(), searchResult["items"][i]["author"].ToString(), searchResult["items"][i]["publisher"].ToString(), searchResult["items"][i]["pubdate"].ToString(),
+                    searchResult["items"][i]["isbn"].ToString(), searchResult["items"][i]["price"].ToString(), description, ""));
             }
         }
         private void InputSearchWord()

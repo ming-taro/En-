@@ -104,17 +104,20 @@ namespace Library
         public void RegisterBook(Keyboard keyboard)
         {
             BookVO book;
-            string id;
-            string name;
-            string publisher;
-            string author;
-            string price;
-            string quantity;
+            //string id;
+            string name;              //도서명
+            string author;            //저자
+            string publisher;         //출판사
+            string publicationDate="";   //출판일
+            string isbn="";              //ISBN
+            string price;             //가격
+            string quantity;          //수량
+            string bookIntroduction="";  //책소개
 
             adminView.PrintBookRegistration();   //도서등록화면 출력
            
-            id = InputBookId(12, (int)Constants.Registration.FIRST);  
-            if (id.Equals(Constants.ESC)) return;             //도서번호 입력
+            //id = InputBookId(12, (int)Constants.Registration.FIRST);  
+            //if (id.Equals(Constants.ESC)) return;             //도서번호 입력
 
             name = InputBookName(10, (int)Constants.Registration.SECOND, Constants.BOOK_NAME_REGEX);        
             if (name.Equals(Constants.ESC)) return;           //도서명 입력
@@ -131,7 +134,7 @@ namespace Library
             quantity = InputBookName(8, (int)Constants.Registration.SIXTH, Constants.QUENTITY_REGEX);      
             if (quantity.Equals(Constants.ESC)) return;       //수량 입력
 
-            book = new BookVO(id, name, publisher, author, price, quantity);
+            book = new BookVO("", name, author, publisher, publicationDate, isbn, price, bookIntroduction, quantity);
             bookDAO.AddToBookList(Constants.ADDITION_TO_BOOK_LIST, book);  //DB에 도서정보 저장
             logDAO.RegisterBook(name);                                     //로그에 도서등록 기록
 
