@@ -123,7 +123,7 @@ namespace Library
 
         public const string BOOK_ON_LOAN = "select bookId from borrowBook where bookId = @bookId;";
         public const string DUPLICATE_BOOK_ID = "select id from book where id = @bookId;";
-        public const string ADDITION_TO_BOOK_LIST = "INSERT INTO book VALUES (@id, @name, @publisher, @author, @price, @quantity);";
+        public const string ADDITION_TO_BOOK_LIST = "INSERT INTO book VALUES (@name, @author, @publisher, @publicationDate, @isbn, @price, @quantity, @bookIntroduction);";
         public const string DELETION_FROM_BOOK_LIST = "DELETE FROM book WHERE id = @bookId;";
 
         public const string UPDATE_TO_BOOK_LIST = "update book set name=@name,publisher=@publisher,author=@author,price=@price,quantity=@quantity where id=@id;";

@@ -174,11 +174,13 @@ namespace Library
             MySqlConnection connection = new MySqlConnection(connectionString);
             connection.Open();
             MySqlCommand command = new MySqlCommand(query, connection);
-            command.Parameters.Add(new MySqlParameter("@id", book.Id));
             command.Parameters.Add(new MySqlParameter("@name", book.Name));
-            command.Parameters.Add(new MySqlParameter("@publisher", book.Publisher));
             command.Parameters.Add(new MySqlParameter("@author", book.Author));
+            command.Parameters.Add(new MySqlParameter("@publisher", book.Publisher));
+            command.Parameters.Add(new MySqlParameter("@publicationDate", book.PublicationDate));
+            command.Parameters.Add(new MySqlParameter("@isbn", book.Isbn));
             command.Parameters.Add(new MySqlParameter("@price", book.Price));
+            command.Parameters.Add(new MySqlParameter("@bookIntroduction", book.BookIntroduction));
             command.Parameters.Add(new MySqlParameter("@quantity", Int32.Parse(book.Quantity)));
             command.ExecuteNonQuery();
             connection.Close();
