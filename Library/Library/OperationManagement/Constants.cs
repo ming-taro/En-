@@ -66,13 +66,14 @@ namespace Library
         public const string AUTHOR_REGEX = @"^[a-zA-Z가-힣]{1,50}$";
         public const string PRICE_REGEX = @"^[1-9]{1}[0-9]{0,9}$";
         public const string QUENTITY_REGEX = @"^[1-9]{1}[0-9]{0,1}$";
+        public const string DISPLAY_REGEX = @"(^[1-9]{1}[0-9]{0,1})|(100)$";
 
         public const string MEMBER_ID_REGEX = @"^[a-zA-Z0-9]{5,10}$";
         public const string NAME_REGEX = @"^[a-zA-Z가-힣]{1,30}$";
         public const string AGE_REGEX = @"^[1-9]{1}[0-9]{0,1}$";
         public const string PHONE_NUMBER_REGEX = @"010-[0-9]{4}-[0-9]{4}$";
-        public const string ADDRESS_REGEX = @"[가-힣]+(시|도)\s[가-힣]+(시|군|구)\s[가-힣]+(읍|면|동)";
-
+        public const string ADDRESS_REGEX = @"([가-힣]+(시|도)\s[가-힣]+(시|군|구)\s[가-힣]+(읍|면)\s[가-힣0-9]+(로|길)\s[0-9])|([가-힣]+(시|도)\s[가-힣]+(시|군|구)\s[가-힣0-9]+(로|길)\s[0-9])";
+        
         //입력 오류 메세지
         public const string MESSAGE_ABOUT_BOOK_ID_NOT_MATCH = "(0~999사이의 숫자가 아닙니다.다시 입력해주세요.)               ";
         public const string MESSAGE_ABOUT_BOOK_NOT_IN_LIST = "(현재 조회 목록에 없는 도서입니다. 다시 입력해주세요.)           ";
@@ -140,7 +141,7 @@ namespace Library
         public const string PASSWORD = "Pwd = 0000;";
 
         //Naver
-        public const string API_URL = "https://openapi.naver.com/v1/search/book.json?query='{0}'";
+        public const string API_URL = "https://openapi.naver.com/v1/search/book.json?query=@query&display=@display";
         public const string NAVER_CLIENT_ID = "X-Naver-Client-Id";
         public const string NAVER_CLIENT_SECRET = "X-Naver-Client-Secret";
         public const string CLIENT_ID = "pKd8QC0tp8T66Lu1Irnj";
@@ -227,6 +228,7 @@ namespace Library
             ID_TO_MODIFY = 46,   //도서정보수정에서의 수정할 도서번호 입력칸 left값
             BOOK_EDITION = 42,   //도서정보수정에서의 입력칸 left값
             SEARCH = 30,         //도서검색에서의 입력칸 left값
+            NAVER_SEARCH = 34,   //네이버검색에서의 입력칸 left값
             LEFT = 40,           //도서반납,대출,삭제에서의 입력칸 left값
             REGISTRATION = 12    //도서등록에서의 입력칸 left값
         }

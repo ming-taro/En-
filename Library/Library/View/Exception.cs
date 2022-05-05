@@ -84,6 +84,10 @@ namespace Library
         {
             PrintMessage(left, top, "(이미 사용중인 도서번호입니다. 다시 입력해주세요.)    ");
         }
+        public void PrintNumberOfBook(int left, int top)
+        {
+            PrintMessage(left, top, "(1~100 사이의 숫자를 입력해주세요.)                    ");
+        }
         public void PrintNoLogFile()
         {
             PrintMessage((int)Constants.Menu.LOG_MESSAGE_LEFT, (int)Constants.Menu.SIXTH, "   ('로그 기록' 파일이 존재하지 않습니다)               ");

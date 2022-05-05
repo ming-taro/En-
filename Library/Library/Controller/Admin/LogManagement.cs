@@ -22,13 +22,16 @@ namespace Library
             this.exception = exception;
             logList = new List<LogVO>();
         }
-        public void ManageLogList(Keyboard keyboard)
+        private void ManageLogList(Keyboard keyboard)
         {
-            adminView.PrintLogManagemnet(logList);    //로그리스트 출력
+            if (logList.Count == 0) adminView.PrintNoLogRecord();
+            else adminView.PrintLogManagemnet(logList);    //로그리스트 출력
+
             keyboard.PressESC();
-            logo.PrintLogManagement();                //로그 관리 화면 출력
+            Console.CursorVisible = Constants.IS_VISIBLE_CURSOR;
+            logo.PrintLogManagement();                     //로그 관리 화면 출력
         }
-        public void SaveFile()
+        private void SaveFile()
         {
             string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + Constants.FILE_NAME;
             StreamWriter writer = new StreamWriter(desktopPath);
@@ -44,7 +47,7 @@ namespace Library
             logo.PrintLogManagement();    //로그 관리 화면 출력
             exception.PrintSaveFile();    //파일 저장 메세지 출력
         }
-        public void DeleteFile()
+        private void DeleteFile()
         {
             string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + Constants.FILE_NAME;
 
@@ -58,7 +61,7 @@ namespace Library
                 exception.PrintNoLogFile();     //파일이 존재하지 않음
             }
         }
-        public void InitializeLogRecord()
+        private void InitializeLogRecord()
         {
             logDAO.InitializeLogTable();        //로그 테이블 초기화
             exception.PrintLogInitialization(); //로그 초기화 메세지

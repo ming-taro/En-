@@ -160,8 +160,13 @@ namespace Library
         }
         public void PrintNaverSearch()
         {
-            logo.PrintSearchBox("네이버 도서 검색", "☞검색어:", "");
-            logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.ZERO - 1, "검색결과는 최대 10개까지 조회됩니다.", ConsoleColor.Green);
+            logo.PrintMenu("네이버 도서 검색");
+            logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.ZERO, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", ConsoleColor.Gray);
+            logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.FIRST, "☞검색어    :", ConsoleColor.Gray);
+            logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.SECOND, "☞조회 권 수:", ConsoleColor.Gray);
+            logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.THIRD, "▶조회", ConsoleColor.Gray);
+            logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.FOURTH, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", ConsoleColor.Gray);
+            logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.ZERO - 1, "검색어와 조회할 책 권 수를 입력하고 조회버튼을 눌러주세요.", ConsoleColor.Green);
         }
         public void PrintNaverSearchResult(List<BookVO> bookList)
         {
@@ -190,8 +195,7 @@ namespace Library
         public void PrintBookRegistration(BookVO book)
         {
             logo.PrintMenu("도서 등록");
-            logo.PrintMessage(0, (int)Constants.EditMenu.ZERO, "(등록할 도서의 번호와 수량을 입력해주세요.)", ConsoleColor.Yellow);
-            logo.PrintMessage(0, (int)Constants.EditMenu.FIRST, "☞도서번호: ", ConsoleColor.Gray);
+            logo.PrintMessage(0, (int)Constants.EditMenu.ZERO, "(등록할 도서의 수량을 입력해주세요.)", ConsoleColor.Yellow);
             logo.PrintMessage(0, (int)Constants.EditMenu.SECOND, "☞도서명  : " + book.Name, ConsoleColor.Gray);
             logo.PrintMessage(0, (int)Constants.EditMenu.THIRD, "☞출판사  : " + book.Publisher, ConsoleColor.Gray);
             logo.PrintMessage(0, (int)Constants.EditMenu.FOURTH, "☞저자    : " + book.Author, ConsoleColor.Gray);
@@ -203,6 +207,15 @@ namespace Library
             logo.PrintMenu("로그 기록");
             PrintLogList(logList);
             Console.WindowTop = 0;
+            Console.CursorVisible = Constants.IS_INVISIBLE_CURSOR;
+        }
+        public void PrintNoLogRecord()
+        {
+            logo.PrintMenu("로그 기록");
+            logo.PrintLine();
+            logo.PrintMessage((int)Constants.Menu.LOG_MESSAGE_LEFT, Console.CursorTop, "          기록된 로그 내역이 없습니다", ConsoleColor.Red);
+            logo.PrintLine();
+            Console.CursorVisible = Constants.IS_INVISIBLE_CURSOR;
         }
     }
 }

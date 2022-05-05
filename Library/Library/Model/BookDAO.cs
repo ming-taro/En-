@@ -9,7 +9,7 @@ namespace Library
 {
     class BookDAO
     {
-        public static BookDAO bookDAO;
+        private static BookDAO bookDAO;
         private string connectionString;
         private BookDAO()
         {
