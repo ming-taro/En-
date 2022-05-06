@@ -52,7 +52,7 @@ namespace Library
                     bookRegistration.ManageBookRegistration(keyboard);
                     break;
                 case (int)Constants.Menu.THIRD:   //도서 정보 수정
-                    bookEdition.EditBook(bookSearch, bookRegistration, keyboard);
+                    bookEdition.ManageBookEdition(bookSearch, bookRegistration, keyboard);
                     break;
                 case (int)Constants.Menu.FOURTH:  //도서 삭제
                     bookDeletion.DeleteBook(bookSearch, keyboard);

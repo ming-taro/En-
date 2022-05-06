@@ -48,11 +48,11 @@ namespace Library
                 }
                 else if(Regex.IsMatch(bookId, Constants.BOOK_ID_REGEX) == Constants.IS_NOT_MATCH || Int32.Parse(bookId) < 1 || Int32.Parse(bookId) > bookList.Count)  //입력형식에 맞지 않은 입력
                 {
-                    logo.PrintMessage(exceptionLeft, exceptionTop, "(대여목록에 없는 도서번호입니다. 다시 입력해주세요.)", ConsoleColor.Red);
+                    logo.PrintMessage(exceptionLeft, exceptionTop, "(현재 조회 목록에 없는 도서번호입니다. 다시 입력해주세요.)", ConsoleColor.Red);
                 }
                 else if (bookDAO.IsBookOnLoan(bookList[Int32.Parse(bookId) - 1].Isbn))   //도서목록에 있지만 대여중인 회원이 있는 경우 -> 도서 삭제 불가
                 {
-                    logo.PrintMessage(exceptionLeft, exceptionTop, "(회원이 대여중인 도서는 삭제가 불가능합니다.)          ", ConsoleColor.Red);
+                    logo.PrintMessage(exceptionLeft, exceptionTop, "(회원이 대여중인 도서는 삭제가 불가능합니다.)               ", ConsoleColor.Red);
                 }
                 else break;   //도서삭제 가능
 

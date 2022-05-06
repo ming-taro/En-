@@ -107,9 +107,9 @@ namespace Library
             logo.PrintMessage(0, (int)Constants.Registration.FIFTH, "☞가격:\n(숫자만 입력 가능합니다.(ex: 34000)", ConsoleColor.Gray);
             logo.PrintMessage(0, (int)Constants.Registration.SIXTH, "☞수량:\n(1~99사이의 숫자만 입력 가능합니다.(ex: 5))", ConsoleColor.Gray);
         }
-        public void PrintBookRevision(BookDTO book, string saveButton)  //도서정보수정 -> 수정할 정보 목록 출력
+        public void PrintBookRevision(BookDTO book, string menu, string saveButton)  //도서정보수정 -> 수정할 정보 목록 출력
         {
-            logo.PrintMenu("도서 정보 수정");
+            logo.PrintMenu(menu);
             logo.PrintMessage((int)Constants.EditMenu.LEFT, (int)Constants.EditMenu.FIRST, "☞도서명  : " + book.Name, ConsoleColor.Gray);
             logo.PrintMessage((int)Constants.InputField.BOOK_EDITION, (int)Constants.EditMenu.FIRST + 1, "(50자 이내로 입력해주세요.)", ConsoleColor.Gray);
             logo.PrintMessage((int)Constants.EditMenu.LEFT, (int)Constants.EditMenu.SECOND,  "☞저자    : " + book.Author, ConsoleColor.Gray);
@@ -203,7 +203,7 @@ namespace Library
         public void PrintBookRegistration(BookDTO book)
         {
             logo.PrintMenu("도서 등록");
-            logo.PrintMessage(0, (int)Constants.EditMenu.ZERO, "(등록할 도서의 수량을 입력해주세요.)", ConsoleColor.Yellow);
+            logo.PrintMessage((int)Constants.EditMenu.MESSAGE, (int)Constants.EditMenu.ZERO, "                         (등록할 도서의 수량을 입력해주세요.)", ConsoleColor.Green);
             logo.PrintMessage(0, (int)Constants.EditMenu.FIRST, "☞도서명  : " + book.Name, ConsoleColor.Gray);
             logo.PrintMessage(0, (int)Constants.EditMenu.SECOND, "☞저자    : " + book.Author, ConsoleColor.Gray);
             logo.PrintMessage(0, (int)Constants.EditMenu.THIRD, "☞출판사  : " + book.Publisher, ConsoleColor.Gray);

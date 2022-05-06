@@ -22,7 +22,7 @@ namespace Library
             this.adminView = adminView;
             this.logo = logo;
         } 
-        public void PrintErrorMessage(int left, int top, string regexText)  //예외메세지
+        private void PrintErrorMessage(int left, int top, string regexText)  //예외메세지
         {
             switch (regexText)
             {
@@ -36,7 +36,7 @@ namespace Library
                     logo.PrintMessage(left, top, "(날짜 형식에 맞춰 입력해주세요.(ex: 2022.05.06))", ConsoleColor.Red);
                     break;
                 case Constants.ISBN_REGEX:    //isbn
-                    logo.PrintMessage(left, top, "(1~99사이의 숫자만 가능합니다. 다시 입력해주세요.)", ConsoleColor.Red);
+                    logo.PrintMessage(left, top, "(50자 이내의 숫자를 입력해주세요.)", ConsoleColor.Red);
                     break;
                 case Constants.PRICE_REGEX:    //가격
                     logo.PrintMessage(left, top, "(1~1,000,000,000원 이내의 숫자를 입력해주세요.)", ConsoleColor.Red);
@@ -75,7 +75,7 @@ namespace Library
 
             return bookName;
         }
-        private void ReflectChangeInDTO(int menu, string changedItem, BookDTO book)  //수정된 항목 VO에 반영
+        public void ReflectChangeInDTO(int menu, string changedItem, BookDTO book)  //수정된 항목 VO에 반영
         {
             switch (menu)
             {
@@ -105,7 +105,7 @@ namespace Library
                     break;
             }
         }
-        private string InputBookInformation(int menu, BookDTO book)  //수정할 도서정보입력
+        public string InputBookInformation(int menu, BookDTO book)  //수정할 도서정보입력
         {
             int left = (int)Constants.InputField.BOOK_EDITION;
             string changedItem = "";
@@ -144,7 +144,7 @@ namespace Library
         {
             if(book.Name == "" || book.Author == "" || book.Publisher == "" || book.PublicationDate == "" || book.Isbn == "" || book.Price == "" || book.Quantity == "")
             {
-                logo.PrintMessage((int)Constants.EditMenu.LEFT, (int)Constants.EditMenu.NINTH + 1, "(책소개 외의 항목은 필수입력정보입니다.)", ConsoleColor.Red);
+                logo.PrintMessage((int)Constants.EditMenu.MESSAGE, (int)Constants.EditMenu.ZERO, "                              (책소개 외의 항목은 필수입력정보입니다.)", ConsoleColor.Red);
                 return Constants.IS_NOT_REGISTERABLE;
             }
 
@@ -157,7 +157,7 @@ namespace Library
             string changedItem;
             bool isRegisterable = Constants.IS_NOT_REGISTERABLE;
 
-            adminView.PrintBookRevision(book, "등록");   //도서등록화면 출력
+            adminView.PrintBookRevision(book, "도서 등록", "등록");   //도서등록화면 출력
 
             while (Constants.INPUT_VALUE)
             {
