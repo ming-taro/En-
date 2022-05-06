@@ -59,7 +59,7 @@ namespace Library
         public const string ESC = "ESC";
         public const string ENTER = "ENTER";
 
-        //정규식 1162243074 9791162243077
+        //정규식
         public const string BOOK_ID_REGEX = @"^[0-9]{1,3}$";
         public const string BOOK_NAME_REGEX = @"[^\s]{1,1}.{0,49}$";
         public const string PUBLISHER_REGEX = @"[^\s]{1,1}.{0,49}$";

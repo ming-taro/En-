@@ -90,7 +90,7 @@ namespace Library
                 }
                 else if (Regex.IsMatch(bookName, regexText) == Constants.IS_NOT_MATCH)  //입력형식에 맞지 않은 입력
                 {
-                    PrintErrorMessage(left, top);
+                    PrintErrorMessage(left, top + 1);
                 }
                 else
                 {
@@ -114,7 +114,7 @@ namespace Library
             string quantity;          //수량
             string bookIntroduction="";  //책소개
 
-            adminView.PrintBookRegistration();   //도서등록화면 출력
+            adminView.PrintBookRevision(new BookDTO("","","","","","","","",""));   //도서등록화면 출력
            
             //id = InputBookId(12, (int)Constants.Registration.FIRST);  
             //if (id.Equals(Constants.ESC)) return;             //도서번호 입력

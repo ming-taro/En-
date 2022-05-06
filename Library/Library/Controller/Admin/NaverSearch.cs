@@ -166,30 +166,30 @@ namespace Library
             int top = (int)Constants.SearchMenu.FIRST;
             int exceptionLeft = (int)Constants.SearchMenu.LEFT;
             int exceptionTop = (int)Constants.SearchMenu.SECOND + 1;
-            string searchWord;
+            string bookId;
 
             while (Constants.INPUT_VALUE)
             {
                 exception.RemoveLine(left, top);
-                searchWord = text.EnterText(left, top, "");                       //(도서명/출판사/저자)를 입력 받음
+                bookId = text.EnterText(left, top, "");                       //(도서명/출판사/저자)를 입력 받음
 
-                if (searchWord.Equals(Constants.ESC))   //검색어 입력도중 ESC -> 뒤로가기
+                if (bookId.Equals(Constants.ESC))   //검색어 입력도중 ESC -> 뒤로가기
                 {
                     exception.RemoveLine(left, top);
                     return Constants.ESC;
                 }
-                else if (Regex.IsMatch(searchWord, Constants.BOOK_ID_REGEX) == Constants.IS_NOT_MATCH)  //입력형식에 맞지 않은 입력
+                else if (Regex.IsMatch(bookId, Constants.BOOK_ID_REGEX) == Constants.IS_NOT_MATCH)  //입력형식에 맞지 않은 입력
                 {
                     exception.PrintBookIdRegex(exceptionLeft, exceptionTop);
                 }
-                else if (IsBookInList(searchWord) == Constants.IS_BOOK_NOT_IN_LIST)
+                else if (IsBookInList(bookId) == Constants.IS_BOOK_NOT_IN_LIST)
                 {
-                    exception.PrintBookNotInList(exceptionLeft, exceptionTop);/////////----->모듈화로빼기(다)
+                    exception.PrintBookNotInList(exceptionLeft, exceptionTop);
                 }
                 else break;
             }
 
-            return searchWord;  //검색어 반환
+            return bookId;  //검색어 반환
         }
         private BookDTO FindBook(string bookId)
         {
@@ -200,6 +200,7 @@ namespace Library
             }
             return bookList[i];
         }
+
         public void RegisterBook(string bookId, Keyboard keyboard,  BookRegistration bookRegistration)
         {
             string quantity;
@@ -208,7 +209,7 @@ namespace Library
             book = FindBook(bookId);
             adminView.PrintBookRegistration(book);   //도서 등록 화면
 
-            quantity = bookRegistration.InputBookName((int)Constants.InputField.REGISTRATION, (int)Constants.EditMenu.EIGHT, Constants.QUENTITY_REGEX);
+            quantity = bookRegistration.InputBookName((int)Constants.InputField.BOOK_EDITION, (int)Constants.EditMenu.EIGHT, Constants.QUENTITY_REGEX);
             if (quantity.Equals(Constants.ESC)) return;  //도서수량 입력 중 Esc -> 종료
 
             book.Quantity = quantity;
