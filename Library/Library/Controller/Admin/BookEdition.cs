@@ -133,7 +133,7 @@ namespace Library
                     changedItem = registeringBook.InputBookName(left, (int)Constants.EditMenu.SEVENTH, Constants.BOOK_INTRODUCTION_REGEX);//
                     break;
                 case (int)Constants.EditMenu.EIGHT:     //수량
-                    changedItem = registeringBook.InputBookName(left, (int)Constants.EditMenu.EIGHT, Constants.QUENTITY_REGEX);
+                    changedItem = registeringBook.InputBookName(left, (int)Constants.EditMenu.EIGHT, Constants.QUANTITY_REGEX);
                     break;
                 case (int)Constants.EditMenu.NINTH:     //저장
                     SaveChanges(isbn, book);
@@ -160,7 +160,7 @@ namespace Library
             while (Constants.INPUT_VALUE)
             {
                 keyboard.SetPosition(0, (int)Constants.EditMenu.FIRST);  //커서 위치 조정
-                adminView.PrintBookRevision(book);         //도서 정보 수정 화면 출력
+                adminView.PrintBookRevision(book, "변경 사항 저장");         //도서 정보 수정 화면 출력
 
                 menu = keyboard.SelectMenu((int)Constants.EditMenu.FIRST, (int)Constants.EditMenu.NINTH, (int)Constants.EditMenu.STEP);  //수정할 항목 선택
                 if (menu == (int)Constants.Keyboard.ESCAPE) break;           //메뉴선택 중 Esc -> DB에 수정사항 반영 후 도서정보수정 종료

@@ -34,7 +34,7 @@ namespace Library
 
             signIn = new SignIn(text, logo);
             bookSearch = new BookSearch(text, adminView, exception);
-            bookRegistration = new BookRegistration(text, adminView, exception);
+            bookRegistration = new BookRegistration(text, adminView, logo);
             bookEdition = new BookEdition(text, adminView, logo);
             bookDeletion = new BookDeletion(text, adminView, logo);
             memberDeletion = new MemberDeletion(text, adminView, logo);
@@ -49,7 +49,7 @@ namespace Library
                     bookSearch.SearchBook("12345", keyboard);
                     break;
                 case (int)Constants.Menu.SECOND:  //도서 등록
-                    bookRegistration.RegisterBook(keyboard);
+                    bookRegistration.ManageBookRegistration(keyboard);
                     break;
                 case (int)Constants.Menu.THIRD:   //도서 정보 수정
                     bookEdition.EditBook(bookSearch, bookRegistration, keyboard);

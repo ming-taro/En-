@@ -209,7 +209,7 @@ namespace Library
             book = FindBook(bookId);
             adminView.PrintBookRegistration(book);   //도서 등록 화면
 
-            quantity = bookRegistration.InputBookName((int)Constants.InputField.BOOK_EDITION, (int)Constants.EditMenu.EIGHT, Constants.QUENTITY_REGEX);
+            quantity = bookRegistration.InputBookName((int)Constants.InputField.BOOK_EDITION, (int)Constants.EditMenu.EIGHT, Constants.QUANTITY_REGEX);
             if (quantity.Equals(Constants.ESC)) return;  //도서수량 입력 중 Esc -> 종료
 
             book.Quantity = quantity;

@@ -47,6 +47,9 @@ namespace Library
 
         public const bool IS_EXISTING_FILE = true;
 
+        public const bool IS_REGISTERABLE = true;
+        public const bool IS_NOT_REGISTERABLE = false;
+
         public const string ESC_AND_ENTER = "                          [ESC]:뒤로가기    [ENTER]:다시 검색";//--->삭제할 코드
         public const string ESC_MESSAGE = "                                              [ESC]:뒤로가기";//--->삭제할 코드
         public const string REMOVE_LINE = "                                                             ";//--->삭제할 코드
@@ -68,7 +71,7 @@ namespace Library
         public const string PRICE_REGEX = @"^[1-9]{1}[0-9]{0,9}$";
         public const string BOOK_INTRODUCTION_REGEX = @"^.{0,100}$";
         public const string ISBN_REGEX = @"^[0-9]{1,1}[0-9\s]{0,49}$";
-        public const string QUENTITY_REGEX = @"^[1-9]{1}[0-9]{0,1}$";
+        public const string QUANTITY_REGEX = @"^[1-9]{1}[0-9]{0,1}$";
         public const string DISPLAY_REGEX = @"(^[1-9]{1}[0-9]{0,1})$|(100)$";
         
         public const string MEMBER_ID_REGEX = @"^[a-zA-Z0-9]{5,10}$";

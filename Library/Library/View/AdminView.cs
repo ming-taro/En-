@@ -107,7 +107,7 @@ namespace Library
             logo.PrintMessage(0, (int)Constants.Registration.FIFTH, "☞가격:\n(숫자만 입력 가능합니다.(ex: 34000)", ConsoleColor.Gray);
             logo.PrintMessage(0, (int)Constants.Registration.SIXTH, "☞수량:\n(1~99사이의 숫자만 입력 가능합니다.(ex: 5))", ConsoleColor.Gray);
         }
-        public void PrintBookRevision(BookDTO book)  //도서정보수정 -> 수정할 정보 목록 출력
+        public void PrintBookRevision(BookDTO book, string saveButton)  //도서정보수정 -> 수정할 정보 목록 출력
         {
             logo.PrintMenu("도서 정보 수정");
             logo.PrintMessage((int)Constants.EditMenu.LEFT, (int)Constants.EditMenu.FIRST, "☞도서명  : " + book.Name, ConsoleColor.Gray);
@@ -117,7 +117,7 @@ namespace Library
             logo.PrintMessage((int)Constants.EditMenu.LEFT, (int)Constants.EditMenu.THIRD, "☞출판사  : " + book.Publisher, ConsoleColor.Gray);
             logo.PrintMessage((int)Constants.InputField.BOOK_EDITION, (int)Constants.EditMenu.THIRD + 1, "(50자 이내로 입력해주세요.)", ConsoleColor.Gray);
             logo.PrintMessage((int)Constants.EditMenu.LEFT, (int)Constants.EditMenu.FOURTH,  "☞출판일  : " + book.PublicationDate, ConsoleColor.Gray);
-            logo.PrintMessage((int)Constants.InputField.BOOK_EDITION, (int)Constants.EditMenu.FOURTH + 1, "(날짜 형식으로 입력해주세요.(ex: 2022.05.06))", ConsoleColor.Gray);
+            logo.PrintMessage((int)Constants.InputField.BOOK_EDITION, (int)Constants.EditMenu.FOURTH + 1, "(날짜 형식에 맞춰 입력해주세요.(ex: 2022.05.06))", ConsoleColor.Gray);
             logo.PrintMessage((int)Constants.EditMenu.LEFT, (int)Constants.EditMenu.FIFTH,  "☞ISBN    : " + book.Isbn, ConsoleColor.Gray);
             logo.PrintMessage((int)Constants.InputField.BOOK_EDITION, (int)Constants.EditMenu.FIFTH + 1, "(50자 이내의 숫자를 입력해주세요.)", ConsoleColor.Gray);
             logo.PrintMessage((int)Constants.EditMenu.LEFT, (int)Constants.EditMenu.SIXTH, "☞가격    : " + book.Price, ConsoleColor.Gray);
@@ -126,7 +126,7 @@ namespace Library
             logo.PrintMessage((int)Constants.InputField.BOOK_EDITION, (int)Constants.EditMenu.SEVENTH + 2, "(100자 이내로 입력해주세요.)", ConsoleColor.Gray);
             logo.PrintMessage((int)Constants.EditMenu.LEFT, (int)Constants.EditMenu.EIGHT, "☞수량    : " + book.Quantity, ConsoleColor.Gray);
             logo.PrintMessage((int)Constants.InputField.BOOK_EDITION, (int)Constants.EditMenu.EIGHT + 1, "(1~99권 이내의 숫자를 입력해주세요.)", ConsoleColor.Gray);
-            logo.PrintMessage((int)Constants.EditMenu.LEFT, (int)Constants.EditMenu.NINTH, "▶변경 사항 저장", ConsoleColor.Gray);
+            logo.PrintMessage((int)Constants.EditMenu.LEFT, (int)Constants.EditMenu.NINTH, "▶" + saveButton, ConsoleColor.Gray);
         }
         public void PrintMemberIdInputScreen(List<MemberVO> memberList)  //회원관리 -> 회원아이디 입력칸 + 회원목록 출력
         {
