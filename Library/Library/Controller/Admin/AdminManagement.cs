@@ -35,7 +35,7 @@ namespace Library
             signIn = new SignIn(text, logo);
             bookSearch = new BookSearch(text, adminView, exception);
             bookRegistration = new BookRegistration(text, adminView, exception);
-            bookEdition = new BookEdition(text, adminView, exception);
+            bookEdition = new BookEdition(text, adminView, logo);
             bookDeletion = new BookDeletion(text, adminView, logo);
             memberDeletion = new MemberDeletion(text, adminView, logo);
             naverSearch = new NaverSearch(text, adminView, exception, logo);

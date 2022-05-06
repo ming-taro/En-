@@ -200,15 +200,5 @@ namespace Library
             command.ExecuteNonQuery();
             connection.Close();
         }
-        public void UpdateOnBookId(string changedId, string bookId)  //도서번호 수정
-        {
-            MySqlConnection connection = new MySqlConnection(connectionString);
-            connection.Open();
-            MySqlCommand command = new MySqlCommand(Constants.UPDATE_ON_BOOK_ID, connection);
-            command.Parameters.Add(new MySqlParameter("@id", changedId));
-            command.Parameters.Add(new MySqlParameter("@bookId", bookId));
-            command.ExecuteNonQuery();
-            connection.Close();
-        }
     }
 }

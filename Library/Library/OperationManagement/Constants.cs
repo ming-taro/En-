@@ -59,15 +59,17 @@ namespace Library
         public const string ESC = "ESC";
         public const string ENTER = "ENTER";
 
-        //정규식
+        //정규식 1162243074 9791162243077
         public const string BOOK_ID_REGEX = @"^[0-9]{1,3}$";
         public const string BOOK_NAME_REGEX = @"^[\w]{1,1}[^\e]{0,49}$";
         public const string PUBLISHER_REGEX = @"^[\w]{1,1}[^\e]{0,49}$";
+        public const string PUBLICATION_DATE_REGEX = @"^(1|2)[0-9]{3}.(0[1-9]|1[0-2]).(0[1-9]|(1|2)[0-9]|3[0-1])";
         public const string AUTHOR_REGEX = @"^[a-zA-Z가-힣]{1,50}$";
         public const string PRICE_REGEX = @"^[1-9]{1}[0-9]{0,9}$";
+        public const string BOOK_INTRODUCTION_REGEX = "";
         public const string QUENTITY_REGEX = @"^[1-9]{1}[0-9]{0,1}$";
         public const string DISPLAY_REGEX = @"(^[1-9]{1}[0-9]{0,1})$|(100)$";
-
+        
         public const string MEMBER_ID_REGEX = @"^[a-zA-Z0-9]{5,10}$";
         public const string NAME_REGEX = @"^[a-zA-Z가-힣]{1,30}$";
         public const string AGE_REGEX = @"^[1-9]{1}[0-9]{0,1}$";
@@ -126,8 +128,7 @@ namespace Library
         public const string ADDITION_TO_BOOK_LIST = "INSERT INTO book VALUES (@name, @author, @publisher, @publicationDate, @isbn, @price, @quantity, @bookIntroduction);";
         public const string DELETION_FROM_BOOK_LIST = "DELETE FROM book WHERE isbn = @isbn;";
 
-        public const string UPDATE_TO_BOOK_LIST = "update book set name=@name,publisher=@publisher,author=@author,price=@price,quantity=@quantity where id=@id;";
-        public const string UPDATE_ON_BOOK_ID = "update book set id=@id where id=@bookId;";
+        public const string UPDATE_TO_BOOK_LIST = "update book set name=@name,author=@author, publisher=@publisher, publicationDate=@publicationDate, isbn=@isbn, price=@price ,quantity=@quantity, bookIntroduction=@bookIntroduction where isbn='{0}';";
         
         public const string UPDATE_TO_LOG = "INSERT INTO log(user,menu,content, date) VALUES (@user, @menu, @content, @date);";
         public const string LOG_LIST = "select*from log;";
@@ -228,11 +229,11 @@ namespace Library
         {
             MEMBER_DELETION = 42,//회원삭제에서의 입력칸 left값
             ID_TO_MODIFY = 46,   //도서정보수정에서의 수정할 도서번호 입력칸 left값
-            BOOK_EDITION = 42,   //도서정보수정에서의 입력칸 left값
+            BOOK_EDITION = 12,   //도서정보수정에서의 입력칸 left값
             SEARCH = 30,         //도서검색에서의 입력칸 left값
             NAVER_SEARCH = 34,   //네이버검색에서의 입력칸 left값
             LEFT = 40,           //도서반납,대출,삭제에서의 입력칸 left값
-            REGISTRATION = 12    //도서등록에서의 입력칸 left값
+            REGISTRATION = 12,   //도서등록에서의 입력칸 left값
         }
         public enum Exception//top값
         {
