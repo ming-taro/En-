@@ -126,12 +126,12 @@ namespace Library
             connection.Close();
             return Constants.IS_NON_DUPLICATE_ID;  //중복없는 아이디 -> 입력가능
         }
-        public bool IsBookOnLoan(string bookId)   //해당 도서를 대여중인 회원이 있는지 확인
+        public bool IsBookOnLoan(string isbn)   //해당 도서를 대여중인 회원이 있는지 확인
         {
             MySqlConnection connection = new MySqlConnection(connectionString);
             connection.Open();
             MySqlCommand command = new MySqlCommand(Constants.BOOK_ON_LOAN, connection);
-            command.Parameters.Add(new MySqlParameter("@bookId", bookId));
+            command.Parameters.Add(new MySqlParameter("@isbn", isbn));
 
             MySqlDataReader table = command.ExecuteReader();
             if (table.HasRows)
@@ -191,12 +191,12 @@ namespace Library
             command.ExecuteNonQuery();
             connection.Close();
         }
-        public void DeleteFromBookList(string bookId)  //도서목록에서 해당 도서 삭제
+        public void DeleteFromBookList(string isbn)  //도서목록에서 해당 도서 삭제
         {
             MySqlConnection connection = new MySqlConnection(connectionString);
             connection.Open();
             MySqlCommand command = new MySqlCommand(Constants.DELETION_FROM_BOOK_LIST, connection);
-            command.Parameters.Add(new MySqlParameter("@bookId", bookId));
+            command.Parameters.Add(new MySqlParameter("@isbn", isbn));
             command.ExecuteNonQuery();
             connection.Close();
         }

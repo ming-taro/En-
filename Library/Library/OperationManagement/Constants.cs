@@ -121,10 +121,10 @@ namespace Library
         public const string MEMBER_BORROWING_BOOK = "select memberId from borrowbook where memberId = @memberId;";
         public const string DELETION_FROM_MEMBER_LIST = "DELETE FROM member WHERE id = @memberId;";
 
-        public const string BOOK_ON_LOAN = "select bookId from borrowBook where bookId = @bookId;";
+        public const string BOOK_ON_LOAN = "select isbn from bookRentalList where isbn = @isbn;";
         public const string DUPLICATE_BOOK_ID = "select id from book where id = @bookId;";
         public const string ADDITION_TO_BOOK_LIST = "INSERT INTO book VALUES (@name, @author, @publisher, @publicationDate, @isbn, @price, @quantity, @bookIntroduction);";
-        public const string DELETION_FROM_BOOK_LIST = "DELETE FROM book WHERE id = @bookId;";
+        public const string DELETION_FROM_BOOK_LIST = "DELETE FROM book WHERE isbn = @isbn;";
 
         public const string UPDATE_TO_BOOK_LIST = "update book set name=@name,publisher=@publisher,author=@author,price=@price,quantity=@quantity where id=@id;";
         public const string UPDATE_ON_BOOK_ID = "update book set id=@id where id=@bookId;";

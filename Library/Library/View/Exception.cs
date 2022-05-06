@@ -56,14 +56,6 @@ namespace Library
         {
             PrintMessage(left, top, "(현재 조회 목록에 없는 도서입니다. 다시 입력해주세요.)           ");
         }
-        public void PrintBookIBorrowed(int left, int top)
-        {
-            PrintMessage(left, top, "(이미 대여중인 도서입니다. 다른 도서를 선택해주세요.)                  ");
-        }
-        public void PrintBookOnLoan(int left, int top)
-        {
-            PrintMessage(left, top, "(회원이 대여중인 도서는 삭제가 불가능합니다.)                 ");
-        }
         public void PrintMemberNotInList(int left, int top)
         {
             PrintMessage(left, top, "(존재하지 않는 회원입니다.)                     ");

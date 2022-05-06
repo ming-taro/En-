@@ -49,7 +49,7 @@ namespace Library
                 }
                 else if (Regex.IsMatch(bookId, Constants.BOOK_ID_REGEX) == Constants.IS_NOT_MATCH || Int32.Parse(bookId) < 1 || Int32.Parse(bookId) > bookList.Count)  
                 {
-                    logo.PrintMessage(exceptionLeft, exceptionTop, "(1~" + bookList.Count + "사이의 숫자를 입력해주세요.)                             ", ConsoleColor.Red);    //형식에 맞지 않는 입력일 경우
+                    logo.PrintMessage(exceptionLeft, exceptionTop, "(현재 조회목록에 없는 도서번호입니다.)     ", ConsoleColor.Red);    //형식에 맞지 않는 입력일 경우
                 }
                 else if (IsQuantityZero(Int32.Parse(bookId), bookList))   
                 {

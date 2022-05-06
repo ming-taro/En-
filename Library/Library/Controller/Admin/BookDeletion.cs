@@ -14,12 +14,12 @@ namespace Library
         private LogDAO logDAO = LogDAO.GetInstance();
         private EnteringText text;
         private AdminView adminView;
-        private Exception exception;
-        public BookDeletion(EnteringText text, AdminView adminView, Exception exception)
+        private Logo logo;
+        public BookDeletion(EnteringText text, AdminView adminView, Logo logo)
         {
             this.text = text;
             this.adminView = adminView;
-            this.exception = exception;
+            this.logo = logo;
         }
         private bool IsBookInList(string bookId, List<BookDTO> bookList)
         {
@@ -46,21 +46,17 @@ namespace Library
                 {
                     return Constants.ESC;
                 }
-                else if(Regex.IsMatch(bookId, Constants.BOOK_ID_REGEX) == Constants.IS_NOT_MATCH)  //입력형식에 맞지 않은 입력
+                else if(Regex.IsMatch(bookId, Constants.BOOK_ID_REGEX) == Constants.IS_NOT_MATCH || Int32.Parse(bookId) < 1 || Int32.Parse(bookId) > bookList.Count)  //입력형식에 맞지 않은 입력
                 {
-                    exception.PrintBookIdRegex(exceptionLeft, exceptionTop);
+                    logo.PrintMessage(exceptionLeft, exceptionTop, "(대여목록에 없는 도서번호입니다. 다시 입력해주세요.)", ConsoleColor.Red);
                 }
-                else if (IsBookInList(bookId, bookList) == Constants.IS_BOOK_NOT_IN_LIST)      //현재 조회중인 도서목록에 없는 도서번호를 입력할 경우
+                else if (bookDAO.IsBookOnLoan(bookList[Int32.Parse(bookId) - 1].Isbn))   //도서목록에 있지만 대여중인 회원이 있는 경우 -> 도서 삭제 불가
                 {
-                    exception.PrintBookNotInList(exceptionLeft, exceptionTop);
-                }
-                else if (bookDAO.IsBookOnLoan(bookId))   //도서목록에 있지만 대여중인 회원이 있는 경우 -> 도서 삭제 불가
-                {
-                    exception.PrintBookOnLoan(exceptionLeft, exceptionTop);
+                    logo.PrintMessage(exceptionLeft, exceptionTop, "(회원이 대여중인 도서는 삭제가 불가능합니다.)          ", ConsoleColor.Red);
                 }
                 else break;   //도서삭제 가능
 
-                exception.RemoveLine(left, top);
+                logo.RemoveLine(left, top);
             }
 
             return bookId;
@@ -78,10 +74,11 @@ namespace Library
         }
         public void DeleteBook(BookSearch bookSearch, Keyboard keyboard)
         {
+            int bookIndex;
             int searchType;
             string searchWord;
             string bookId;
-            BookDTO book;
+            List<BookDTO> bookList;
 
             while (Constants.INPUT_VALUE)
             {
@@ -91,16 +88,17 @@ namespace Library
                 searchWord = bookSearch.InputSearchWord((int)Constants.InputField.SEARCH, searchType, (int)Constants.Exception.SEARCH);   //검색어 입력받기
                 if (searchWord.Equals(Constants.ESC)) continue;            //검색어 입력 중 esc -> 검색유형 선택으로
 
-                adminView.PrintBookDeletion(bookSearch.BookList);          //도서번호 입력칸 + 도서 검색 결과 출력
+                bookList = bookSearch.BookList;
+                adminView.PrintBookDeletion(bookList);          //도서번호 입력칸 + 도서 검색 결과 출력
 
-                bookId = InputBookId(bookSearch.BookList);                 //삭제할 도서번호 입력
-                if (bookId.Equals(Constants.ESC)) continue;                //도서번호 입력 중 Esc -> 도서검색으로 돌아감
+                bookId = InputBookId(bookList);                 //삭제할 도서번호 입력
+                if (bookId.Equals(Constants.ESC)) continue;     //도서번호 입력 중 Esc -> 도서검색으로 돌아감
 
-                book = FindBook(bookId, bookSearch.BookList);
-                adminView.PrintDeletedBook(book);    //삭제 완료 메세지 + 삭제한 도서정보 출력
+                bookIndex = Int32.Parse(bookId) - 1;
+                adminView.PrintDeletedBook(bookList[bookIndex]);      //삭제 완료 메세지 + 삭제한 도서정보 출력
 
-                bookDAO.DeleteFromBookList(bookId);            //DB에서 도서정보 삭제
-                logDAO.DeleteFromBookList(book.Name);          //log에 도서삭제 기록
+                bookDAO.DeleteFromBookList(bookList[bookIndex].Isbn); //DB에서 도서정보 삭제
+                logDAO.DeleteFromBookList(bookList[bookIndex].Name);  //log에 도서삭제 기록
 
                 if (keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break; //Esc->뒤로가기, Enter->재검색
             }
