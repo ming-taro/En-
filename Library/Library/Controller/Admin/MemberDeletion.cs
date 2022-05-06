@@ -13,13 +13,13 @@ namespace Library
         private LogDAO logDAO = LogDAO.GetInstance();
         private EnteringText text;
         private AdminView adminView;
-        private Exception exception;
+        private Logo logo;
 
-        public MemberDeletion(EnteringText text, AdminView adminView, Exception exception)
+        public MemberDeletion(EnteringText text, AdminView adminView, Logo logo)
         {
             this.text = text;
             this.adminView = adminView;
-            this.exception = exception;
+            this.logo = logo;
         }
         private bool IsMemberInList(string memberId, List<MemberVO> memberList)  //입력받은 회원아이디가 회원목록에 있는지 확인
         {
@@ -48,18 +48,18 @@ namespace Library
                 }
                 else if (IsMemberInList(memberId, memberList) == Constants.IS_MEMBER_NOT_IN_LIST)   //존재하지 않는 회원을 삭제하려고 할 때
                 {
-                    exception.PrintMemberNotInList(exceptionLeft, exceptionTop);
+                    logo.PrintMessage(exceptionLeft, exceptionTop, "(존재하지 않는 회원입니다.)                     ", ConsoleColor.Red);
                 }
                 else if (bookDAO.IsMemberBorrowingBook(memberId))  //해당 회원은 도서를 대여중 -> 삭제불가
                 {
-                    exception.PrintMemberBorrowingBook(exceptionLeft, exceptionTop);
+                    logo.PrintMessage(exceptionLeft, exceptionTop, "(도서를 대여중인 회원은 삭제가 불가능합니다.)", ConsoleColor.Red);
                 }
                 else
                 {
                     break;
                 }
 
-                exception.RemoveLine(left, top);
+                logo.RemoveLine(left, top);
             }
             return memberId;
         }

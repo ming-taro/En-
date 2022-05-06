@@ -240,11 +240,14 @@ namespace Library
             if (quantity.Equals(Constants.ESC)) return;
 
             book.Quantity = quantity;
+            if (book.BookIntroduction.Length > 120) book.BookIntroduction = book.BookIntroduction.Substring(0,100) + "...";
             bookDAO.AddToBookList(Constants.ADDITION_TO_BOOK_LIST, book);  //DB에 도서정보 저장
             logDAO.RegisterBook(book.Name);                                //log에 도서등록 기록
 
             adminView.PrintRegisteredBook(book);              //등록 완료 화면 출력
             keyboard.PressESC();                              //Esc -> 종료(뒤로가기)
+            searchWord = "";
+            numberOfBook = "";
             Console.CursorVisible = Constants.IS_VISIBLE_CURSOR;
         }
     }
