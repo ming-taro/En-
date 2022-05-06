@@ -29,9 +29,11 @@ namespace Library
             logo.PrintLine();
             for (int i = 0; i < myBookList.Count; i++)
             {
-                Console.WriteLine(myBookList[i]);
-                logo.RemoveLine(0, Console.CursorTop - 1);
-                Console.WriteLine("\n대여기간: " + myBookList[i].RentalPeriod);
+                Console.WriteLine("도서번호: " + myBookList[i].Id);
+                Console.WriteLine("  도서명: " + myBookList[i].Name);
+                Console.WriteLine("    저자: " + myBookList[i].Author);
+                Console.WriteLine("  출판사: " + myBookList[i].Publisher);
+                Console.WriteLine("대여기간: " + myBookList[i].RentalPeriod);
                 logo.PrintSingleLine();
             }
             Console.SetCursorPosition(0, Console.CursorTop - 3);
@@ -57,14 +59,18 @@ namespace Library
             logo.PrintSearchBox("도서 반납", "☞반납할 도서 번호:", "대출 정보 조회");
             PrintMyBookList(myBookList);    //대출 목록 출력
         }
-        public void PrintBookReturnSuccess(BookOnLoanDTO book)              //도서 반납 완료 메세지 + 반납한 도서 정보 출력
+        public void PrintBookReturnSuccess(BookDTO book)              //도서 반납 완료 메세지 + 반납한 도서 정보 출력
         {
             logo.PrintMenu("도서 반납 완료");
             logo.PrintMessage((int)Constants.SearchMenu.ESC_LEFT, (int)Constants.SearchMenu.ESC_TOP, "[ESC]: 뒤로가기     [ENTER]: 재검색", ConsoleColor.Gray);
             logo.PrintMessage(0, (int)Constants.SearchMenu.ZERO, "반납한 도서 정보", ConsoleColor.Gray);
             Console.SetCursorPosition(0, Console.CursorTop - 1);
             logo.PrintLine();
-            Console.WriteLine(book);
+            Console.WriteLine("도서번호: " + book.Id);
+            Console.WriteLine("  도서명: " + book.Name);
+            Console.WriteLine("    저자: " + book.Author);
+            Console.WriteLine("  출판사: " + book.Publisher);
+            Console.WriteLine("대여기간: " + book.RentalPeriod);
             logo.PrintLine();
             Console.WindowTop = 0;
             Console.CursorVisible = Constants.IS_INVISIBLE_CURSOR;

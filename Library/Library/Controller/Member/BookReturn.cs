@@ -14,22 +14,13 @@ namespace Library
         private LogDAO logDAO = LogDAO.GetInstance();
         private EnteringText text;
         private MemberView memberView;
-        private Exception exception;
+        private Logo logo;
 
-        public BookReturn(EnteringText text, MemberView memberView, Exception exception)
+        public BookReturn(EnteringText text, MemberView memberView, Logo logo)
         {
             this.text = text;
             this.memberView = memberView;
-            this.exception = exception;
-        }
-        private bool IsBookIBorrowed(string isbn, List<BookDTO> myBookList)          //회원이 대여중인 도서인지 검사
-        {
-            for (int i = 0; i < myBookList.Count; i++)
-            {
-                if (myBookList[i].Isbn.Equals(isbn)) return Constants.IS_BOOK_I_BORROWED;   //대여한 도서를 반납하려고 할 때 -> 반납가능
-            }
-
-            return Constants.IS_BOOK_I_NEVER_BORROWED;  //대여하지 않은 도서 -> 반납불가
+            this.logo = logo;
         }
         private string InputBookId(string memberId, List<BookDTO> myBookList)
         {
@@ -47,52 +38,39 @@ namespace Library
                 {
                     return Constants.ESC;
                 }
-                else if (Regex.IsMatch(bookId, Constants.BOOK_ID_REGEX) == Constants.IS_NOT_MATCH)  //양식에 맞지 않는 입력
+                else if (Regex.IsMatch(bookId, Constants.BOOK_ID_REGEX) == Constants.IS_NOT_MATCH || Int32.Parse(bookId) < 1 || Int32.Parse(bookId) > myBookList.Count)    //양식에 맞지 않는 입력
                 {
-                    exception.PrintBookIdRegex(exceptionLeft, exceptionTop);
-                }
-                else if (IsBookIBorrowed(bookId, myBookList) == Constants.IS_BOOK_I_NEVER_BORROWED)   //양식은 지켰지만, 내가 대여한 도서가 아닌 도서를 반납하려 할 때
-                {
-                    exception.PrintBookINeverBorrowed(exceptionLeft, exceptionTop);
+                    logo.PrintMessage(exceptionLeft, exceptionTop, "(대여목록에 없는 도서번호입니다. 다시 입력해주세요.)   ", ConsoleColor.Red);
                 }
                 else
                 {
                     break;   //반납 성공
                 }
 
-                exception.RemoveLine(left, (int)Constants.SearchMenu.FIRST);
+                logo.RemoveLine(left, (int)Constants.SearchMenu.FIRST);
             }
 
             return bookId;
         }
-        private BookDTO FindBook(string isbn, List<BookDTO> myBookList)  //도서번호로 해당 도서정보 찾기
-        {
-            int i = 0;
-
-            for(i = 0; i<myBookList.Count; i++)
-            {
-                if (myBookList[i].Isbn.Equals(isbn)) break;
-            }
-
-            return myBookList[i];
-        }
         public void ReturnBook(string memberId, Keyboard keyboard) 
         {
+            int bookIndex;
             string bookId;
             List<BookDTO> myBookList = bookDAO.GetMyBookList(Constants.RENTAL_LIST, memberId); //현재 로그인한 회원의 도서대여목록
 
             while (Constants.INPUT_VALUE)
             {
-                memberView.PrintBookReturn(myBookList);              //나의 대출 목록 출력
+                memberView.PrintBookReturn(myBookList);             //나의 대출 목록 출력
 
                 bookId = InputBookId(memberId, myBookList);         //반납하려는 도서번호 입력
                 if (bookId.Equals(Constants.ESC)) break;            //도서번호 입력 중 Esc -> 회원모드로 돌아감
 
-                bookDAO.DeleteFromRentalList(memberId, bookId);     //도서대여리스트에서 대여정보 삭제 
-                logDAO.DeleteFromRentalList(memberId, myBookList[myBookList.Count - 1].Name);  //로그에 반납기록 추가
+                bookIndex = Int32.Parse(bookId) - 1;
+                bookDAO.DeleteFromRentalList(memberId, myBookList[bookIndex].Isbn);     //도서대여리스트에서 대여정보 삭제 
+                logDAO.DeleteFromRentalList(memberId, myBookList[bookIndex].Name);      //로그에 반납기록 추가
                 
-                //memberView.PrintBookReturnSuccess(FindBook(bookId, myBookList));  //반납한 도서정보 출력
-                myBookList.RemoveAt(myBookList.Count - 1);                        //도서반납 후 대여목록
+                memberView.PrintBookReturnSuccess(myBookList[bookIndex]);  //반납한 도서정보 출력
+                myBookList.RemoveAt(bookIndex);                            //도서반납 후 대여목록
 
                 if(keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break;  //도서 반납 후 Esc -> 회원모드로 돌아감
                 Console.CursorVisible = Constants.IS_VISIBLE_CURSOR;

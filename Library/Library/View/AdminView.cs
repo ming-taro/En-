@@ -150,10 +150,12 @@ namespace Library
             logo.PrintLine();
             for (int i = 0; i < rentalList.Count; i++)
             {
+                Console.WriteLine("    순번: " + rentalList[i].Id);
                 Console.WriteLine("  회원ID: " + rentalList[i].MemberId);
-                Console.WriteLine(rentalList[i]);
-                logo.RemoveLine(0, Console.CursorTop - 1);
-                Console.WriteLine("\n대여기간: " + rentalList[i].RentalPeriod);
+                Console.WriteLine("  도서명: " + rentalList[i].Name);
+                Console.WriteLine("    저자: " + rentalList[i].Author);
+                Console.WriteLine("  출판사: " + rentalList[i].Publisher);
+                Console.WriteLine("대여기간: " + rentalList[i].RentalPeriod);
                 logo.PrintSingleLine();
             }
             Console.SetCursorPosition(0, Console.CursorTop - 3);

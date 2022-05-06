@@ -104,9 +104,9 @@ namespace Library
         public const string RENTAL_LIST = "select * from book join bookRentalList on book.isbn = bookRentalList.isbn and bookRentalList.memberId = @memberId;";
         public const string RENTAL_LIST_INQUIRY = "select * from book join bookRentalList on book.isbn = bookRentalList.isbn;";
         public const string ADDITION_TO_RENTAL_LIST = "INSERT INTO bookRentalList(memberId, isbn, rentalPeriod) VALUES (@memberId, @isbn, @rentalPeriod);";
-        public const string DELETION_FROM_RENTAL_LIST = "DELETE FROM borrowBook WHERE memberId = @memberId and bookId = @bookId;";
+        public const string DELETION_FROM_RENTAL_LIST = "DELETE FROM bookRentalList WHERE memberId = @memberId and isbn = @isbn;";
         public const string DECREASE_IN_BOOK_QUANTITY = "UPDATE book SET quantity = quantity - 1 WHERE isbn=@isbn;";
-        public const string INCREASE_IN_BOOK_QUANTITY = "UPDATE book SET quantity = quantity + 1 WHERE id=@bookId;";
+        public const string INCREASE_IN_BOOK_QUANTITY = "UPDATE book SET quantity = quantity + 1 WHERE isbn=@isbn;";
 
         public const string ADMIN_ACCOUNT = "select*from admin;";
         public const string MEMBER_ACCOUNT = "select*from member where id = @memberId;";

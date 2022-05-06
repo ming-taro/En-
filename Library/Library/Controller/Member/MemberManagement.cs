@@ -37,7 +37,7 @@ namespace Library
             signUp = new SignUp(text, logo, memberView);
             bookSearch = new BookSearch(text, adminView, exception);
             bookRental = new BookRental(text, memberView, logo);
-            bookReturn = new BookReturn(text, memberView, exception);
+            bookReturn = new BookReturn(text, memberView, logo);
             profileEdition = new ProfileEdition(memberView);
         }
         private void SelectMenu(int menu)

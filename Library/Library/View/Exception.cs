@@ -60,10 +60,6 @@ namespace Library
         {
             PrintMessage(left, top, "(이미 대여중인 도서입니다. 다른 도서를 선택해주세요.)                  ");
         }
-        public void PrintBookINeverBorrowed(int left, int top)
-        {
-            PrintMessage(left,top, "(대여목록에 없는 도서번호입니다. 다시 입력해주세요.)             ");
-        }
         public void PrintBookOnLoan(int left, int top)
         {
             PrintMessage(left, top, "(회원이 대여중인 도서는 삭제가 불가능합니다.)                 ");

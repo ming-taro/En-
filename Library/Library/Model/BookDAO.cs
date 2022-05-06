@@ -161,17 +161,17 @@ namespace Library
             command.ExecuteNonQuery();
             connection.Close();
         }
-        public void DeleteFromRentalList(string memberId, string bookId) //대여도서 반납 후 대여목록에서 삭제
+        public void DeleteFromRentalList(string memberId, string isbn) //대여도서 반납 후 대여목록에서 삭제
         {
             MySqlConnection connection = new MySqlConnection(connectionString);
             connection.Open();
             MySqlCommand command = new MySqlCommand(Constants.DELETION_FROM_RENTAL_LIST, connection); //대여목록에서 삭제
             command.Parameters.Add(new MySqlParameter("@memberId", memberId));
-            command.Parameters.Add(new MySqlParameter("@bookId", bookId));
+            command.Parameters.Add(new MySqlParameter("@isbn", isbn));
             command.ExecuteNonQuery();
 
             command = new MySqlCommand(Constants.INCREASE_IN_BOOK_QUANTITY, connection);   //도서수량 +1
-            command.Parameters.Add(new MySqlParameter("@bookId", bookId));
+            command.Parameters.Add(new MySqlParameter("@isbn", isbn));
             command.ExecuteNonQuery();
             connection.Close();
         }
