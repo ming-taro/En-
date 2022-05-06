@@ -108,21 +108,25 @@ namespace Library
             logo.PrintMessage(0, (int)Constants.Registration.SIXTH, "☞수량:\n(1~99사이의 숫자만 입력 가능합니다.(ex: 5))", ConsoleColor.Gray);
         }
         public void PrintBookRevision(BookDTO book)  //도서정보수정 -> 수정할 정보 목록 출력
-        {                                              
+        {   
             logo.PrintMenu("도서 정보 수정");
             //Console.WriteLine("\n\n        (수정하려는 정보를 선택해 [Enter]키를 누르세요)");
-            logo.PrintMessage((int)Constants.EditMenu.LEFT, (int)Constants.EditMenu.FIRST, "☞도서번호: " + book.Id, ConsoleColor.Gray);
-            logo.PrintMessage((int)Constants.InputField.BOOK_EDITION, (int)Constants.EditMenu.FIRST + 1, "(도서번호는 변경이 불가능합니다.)", ConsoleColor.Red);
-            logo.PrintMessage((int)Constants.EditMenu.LEFT, (int)Constants.EditMenu.SECOND, "☞도서명  : " + book.Name, ConsoleColor.Gray);
-            logo.PrintMessage((int)Constants.InputField.BOOK_EDITION, (int)Constants.EditMenu.SECOND + 1, "(50자 이내로 입력해주세요.)", ConsoleColor.Gray);
+            logo.PrintMessage((int)Constants.EditMenu.LEFT, (int)Constants.EditMenu.FIRST, "☞도서명  : " + book.Name, ConsoleColor.Gray);
+            logo.PrintMessage((int)Constants.InputField.BOOK_EDITION, (int)Constants.EditMenu.FIRST + 1, "(50자 이내로 입력해주세요.)", ConsoleColor.Gray);
+            logo.PrintMessage((int)Constants.EditMenu.LEFT, (int)Constants.EditMenu.SECOND,  "☞저자    : " + book.Author, ConsoleColor.Gray);
+            logo.PrintMessage((int)Constants.InputField.BOOK_EDITION, (int)Constants.EditMenu.SECOND + 1, "(50자 이내의 영어, 한글을 입력해주세요.)", ConsoleColor.Gray);
             logo.PrintMessage((int)Constants.EditMenu.LEFT, (int)Constants.EditMenu.THIRD, "☞출판사  : " + book.Publisher, ConsoleColor.Gray);
             logo.PrintMessage((int)Constants.InputField.BOOK_EDITION, (int)Constants.EditMenu.THIRD + 1, "(50자 이내로 입력해주세요.)", ConsoleColor.Gray);
-            logo.PrintMessage((int)Constants.EditMenu.LEFT, (int)Constants.EditMenu.FOURTH, "☞저자    : " + book.Author, ConsoleColor.Gray);
-            logo.PrintMessage((int)Constants.InputField.BOOK_EDITION, (int)Constants.EditMenu.FOURTH + 1, "(50자 이내의 영어, 한글만 입력 가능합니다.)", ConsoleColor.Gray);
-            logo.PrintMessage((int)Constants.EditMenu.LEFT, (int)Constants.EditMenu.FIFTH, "☞가격    : " + book.Price, ConsoleColor.Gray);
-            logo.PrintMessage((int)Constants.InputField.BOOK_EDITION, (int)Constants.EditMenu.FIFTH + 1, "(숫자만 입력 가능합니다.)", ConsoleColor.Gray);
-            logo.PrintMessage((int)Constants.EditMenu.LEFT, (int)Constants.EditMenu.SIXTH, "☞수량    : " + book.Quantity, ConsoleColor.Gray);
-            logo.PrintMessage((int)Constants.InputField.BOOK_EDITION, (int)Constants.EditMenu.SIXTH + 1, "(숫자만 입력 가능합니다.)", ConsoleColor.Gray);
+            logo.PrintMessage((int)Constants.EditMenu.LEFT, (int)Constants.EditMenu.FOURTH,  "☞출판일  : " + book.PublicationDate, ConsoleColor.Gray);
+            logo.PrintMessage((int)Constants.InputField.BOOK_EDITION, (int)Constants.EditMenu.FOURTH + 1, "(날짜 형식으로 입력해주세요.(ex: 2022.05.06))", ConsoleColor.Gray);
+            logo.PrintMessage((int)Constants.EditMenu.LEFT, (int)Constants.EditMenu.FIFTH,  "☞ISBN    : " + book.Isbn, ConsoleColor.Gray);
+            logo.PrintMessage((int)Constants.InputField.BOOK_EDITION, (int)Constants.EditMenu.FIFTH + 1, "(50자 이내의 숫자를 입력해주세요.)", ConsoleColor.Gray);
+            logo.PrintMessage((int)Constants.EditMenu.LEFT, (int)Constants.EditMenu.SIXTH, "☞가격  : " + book.Price, ConsoleColor.Gray);
+            logo.PrintMessage((int)Constants.InputField.BOOK_EDITION, (int)Constants.EditMenu.SIXTH + 1, "(숫자를 입력해주세요.)", ConsoleColor.Gray);
+            logo.PrintMessage((int)Constants.EditMenu.LEFT, (int)Constants.EditMenu.SEVENTH, "☞책소개  : " + book.Isbn, ConsoleColor.Gray);
+            logo.PrintMessage((int)Constants.InputField.BOOK_EDITION, (int)Constants.EditMenu.SEVENTH + 1, "(100자 이내로 입력해주세요.)", ConsoleColor.Gray);
+            logo.PrintMessage((int)Constants.EditMenu.LEFT, (int)Constants.EditMenu.EIGHT, "☞수량  : " + book.Isbn, ConsoleColor.Gray);
+            logo.PrintMessage((int)Constants.InputField.BOOK_EDITION, (int)Constants.EditMenu.EIGHT + 1, "(50자 이내의 영어, 한글을 입력해주세요.)", ConsoleColor.Gray);
         }
         public void PrintMemberIdInputScreen(List<MemberVO> memberList)  //회원관리 -> 회원아이디 입력칸 + 회원목록 출력
         {

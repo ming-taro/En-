@@ -195,7 +195,7 @@ namespace Library
         }
         public enum EditMenu
         {
-            LEFT = 30,
+            LEFT = 0,
             ZERO = 10,
             FIRST = 12,        //top
             SECOND = 15,
@@ -205,6 +205,7 @@ namespace Library
             SIXTH = 27,
             SEVENTH = 30,
             EIGHT = 33,
+            NINTH = 36,
             STEP = 3
         }
         public enum SearchMenu

@@ -29,6 +29,12 @@ namespace Library
             this.logo = logo;
             bookList = new List<BookDTO>();
         }
+        public void InitBookList()
+        {
+            bookList.Clear();
+            searchWord = "";
+            numberOfBook = "";
+        }
         private void CreateBookList()
         {
             int count;
@@ -124,6 +130,7 @@ namespace Library
             if (numberOfBook == null ||  numberOfBook == "")
             {
                 logo.PrintMessage((int)Constants.InputField.NAVER_SEARCH, (int)Constants.SearchMenu.SECOND + 1, "(1~100 이내의 숫자를 입력해주세요.)                 ", ConsoleColor.Red);      //조회수량을 입력하지 않음 경우
+                numberOfBook = "";
             }
             if (searchWord != null && numberOfBook != null && searchWord != "" && numberOfBook != "")
             {
@@ -193,13 +200,36 @@ namespace Library
             }
             return bookList[i];
         }
+        public void RegisterBook(string bookId, Keyboard keyboard,  BookRegistration bookRegistration)
+        {
+            string quantity;
+            BookDTO book;
+
+            book = FindBook(bookId);
+            adminView.PrintBookRegistration(book);   //도서 등록 화면
+
+            quantity = bookRegistration.InputBookName((int)Constants.InputField.REGISTRATION, (int)Constants.EditMenu.EIGHT, Constants.QUENTITY_REGEX);
+            if (quantity.Equals(Constants.ESC)) return;  //도서수량 입력 중 Esc -> 종료
+
+            book.Quantity = quantity;
+            if (book.BookIntroduction.Length > 120) book.BookIntroduction = book.BookIntroduction.Substring(0, 100) + "...";
+            
+            bookDAO.AddToBookList(Constants.ADDITION_TO_BOOK_LIST, book);  //DB에 도서정보 저장
+            logDAO.RegisterBook(book.Name);                                //log에 도서등록 기록
+
+            adminView.PrintRegisteredBook(book);              //등록 완료 화면 출력
+            keyboard.PressESC();                              //Esc -> 종료(뒤로가기)
+
+            InitBookList();
+
+            Console.CursorVisible = Constants.IS_VISIBLE_CURSOR;
+        }
         public void SearchBook(Keyboard keyboard, BookRegistration bookRegistration)
         {
             string bookId;
-            string quantity;
             int menu;
-            BookDTO book;
 
+            bookList.Clear();
             adminView.PrintNaverSearch();
             
             while (Constants.INPUT_VALUE)
@@ -215,6 +245,7 @@ namespace Library
                 if (bookList.Count == 0)                             //검색결과가 없을 경우 -> 검색어 다시 입력받기
                 {
                     adminView.PrintNoSearchResult(searchWord);
+                    InitBookList();
                     continue;
                 }
 
@@ -225,30 +256,13 @@ namespace Library
                 if (bookId.Equals(Constants.ESC))                   //도서번호 입력 중 Esc -> 도서검색으로 돌아감
                 {
                     adminView.PrintNaverSearch();
-                    bookList.Clear();                 //이전 검색어로 만들어진 도서목록, 검색어, 조회할 수량 초기화
-                    searchWord = "";
-                    numberOfBook = "";
+                    InitBookList();
                     continue;
                 }
                 break;
             }
 
-            book = FindBook(bookId);
-            adminView.PrintBookRegistration(book);   //도서 등록 화면
-
-            quantity = bookRegistration.InputBookName((int)Constants.InputField.REGISTRATION, (int)Constants.EditMenu.EIGHT, Constants.QUENTITY_REGEX);
-            if (quantity.Equals(Constants.ESC)) return;
-
-            book.Quantity = quantity;
-            if (book.BookIntroduction.Length > 120) book.BookIntroduction = book.BookIntroduction.Substring(0,100) + "...";
-            bookDAO.AddToBookList(Constants.ADDITION_TO_BOOK_LIST, book);  //DB에 도서정보 저장
-            logDAO.RegisterBook(book.Name);                                //log에 도서등록 기록
-
-            adminView.PrintRegisteredBook(book);              //등록 완료 화면 출력
-            keyboard.PressESC();                              //Esc -> 종료(뒤로가기)
-            searchWord = "";
-            numberOfBook = "";
-            Console.CursorVisible = Constants.IS_VISIBLE_CURSOR;
+            RegisterBook(bookId, keyboard, bookRegistration);
         }
     }
 }
