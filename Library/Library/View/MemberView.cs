@@ -13,7 +13,7 @@ namespace Library
         {
             this.logo = logo;
         }
-        public void PrintBookList(List<BookVO> bookList)   //도서목록 출력
+        public void PrintBookList(List<BookDTO> bookList)   //도서목록 출력
         {
             logo.PrintLine();
             for (int i = 0; i < bookList.Count; i++)
@@ -24,23 +24,25 @@ namespace Library
             Console.SetCursorPosition(0, Console.CursorTop - 3);
             logo.PrintLine();
         }
-        public void PrintMyBookList(List<BookOnLoanDTO> myBookList) //회원의 도서 대여 목록 출력
+        public void PrintMyBookList(List<BookDTO> myBookList) //회원의 도서 대여 목록 출력
         {
             logo.PrintLine();
             for (int i = 0; i < myBookList.Count; i++)
             {
                 Console.WriteLine(myBookList[i]);
+                logo.RemoveLine(0, Console.CursorTop - 1);
+                Console.WriteLine("\n대여기간: " + myBookList[i].RentalPeriod);
                 logo.PrintSingleLine();
             }
             Console.SetCursorPosition(0, Console.CursorTop - 3);
             logo.PrintLine();
         }
-        public void PrintBookRental(List<BookVO> bookList)
+        public void PrintBookRental(List<BookDTO> bookList)
         {
             logo.PrintSearchBox("도서 대출", "☞대출할 도서 번호:", "검색 결과(총 " + bookList.Count + "건)");
             PrintBookList(bookList);    //도서 검색 결과 출력
         }
-        public void PrintBookRentalSuccess(List<BookOnLoanDTO> myBookList)  //도서 대여 완료 메세지 + 회원의 대여 목록 출력
+        public void PrintBookRentalSuccess(List<BookDTO> myBookList)  //도서 대여 완료 메세지 + 회원의 대여 목록 출력
         {
             logo.PrintMenu("도서 대출 완료");
             logo.PrintEscAndEnter(0, Console.CursorTop - 1);
@@ -50,7 +52,7 @@ namespace Library
             Console.WindowTop = 0;
             Console.CursorVisible = Constants.IS_INVISIBLE_CURSOR;
         }
-        public void PrintBookReturn(List<BookOnLoanDTO> myBookList)
+        public void PrintBookReturn(List<BookDTO> myBookList)
         {
             logo.PrintSearchBox("도서 반납", "☞반납할 도서 번호:", "대출 정보 조회");
             PrintMyBookList(myBookList);    //대출 목록 출력

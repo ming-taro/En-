@@ -76,7 +76,8 @@ namespace Library
             {
                 book = new BookDTO((bookId++).ToString(), table["name"].ToString(), table["author"].ToString(), table["publisher"].ToString(), table["publicationDate"].ToString(),
                     table["isbn"].ToString(), table["price"].ToString(), table["bookIntroduction"].ToString(), table["quantity"].ToString());
-                book.LoanPeriod = table["loanPeriod"].ToString();
+                book.MemberId = table["memberId"].ToString();          //회원아이디 추가
+                book.RentalPeriod = table["rentalPeriod"].ToString();  //대여기간 추가
                 myBookList.Add(book);
             }
             table.Close();
@@ -145,18 +146,18 @@ namespace Library
             return Constants.IS_BOOK_NOT_ON_LOAN;   //대여한 회원이 없는 도서 -> 삭제 가능
         }
 
-        public void AddToRentalList(string memberId, string bookId)  //대여목록 추가
+        public void AddToRentalList(string memberId, string isbn)  //대여목록 추가
         {
             MySqlConnection connection = new MySqlConnection(connectionString);
             connection.Open();
             MySqlCommand command = new MySqlCommand(Constants.ADDITION_TO_RENTAL_LIST, connection);  //대여목록에 추가
             command.Parameters.Add(new MySqlParameter("@memberId", memberId));
-            command.Parameters.Add(new MySqlParameter("@bookId", bookId));
+            command.Parameters.Add(new MySqlParameter("@isbn", isbn));
             command.Parameters.Add(new MySqlParameter("@rentalPeriod", DateTime.Now.ToString("yyyy.MM.dd") + " ~ " + DateTime.Now.AddDays(14).ToString("yyyy.MM.dd")));
             command.ExecuteNonQuery();
 
             command = new MySqlCommand(Constants.DECREASE_IN_BOOK_QUANTITY, connection);   //도서수량 -1
-            command.Parameters.Add(new MySqlParameter("@bookId", bookId));                
+            command.Parameters.Add(new MySqlParameter("@isbn", isbn));                
             command.ExecuteNonQuery();
             connection.Close();
         }

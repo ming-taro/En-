@@ -14,7 +14,7 @@ namespace Library
         {
            logo = new Logo();
         }
-        public void PrintBookList(List<BookVO> bookList)   //도서목록 출력
+        public void PrintBookList(List<BookDTO> bookList)   //도서목록 출력
         {
             logo.PrintLine();
             for (int i = 0; i<bookList.Count; i++)
@@ -45,7 +45,7 @@ namespace Library
             Console.SetCursorPosition(0, Console.CursorTop - 3);
             logo.PrintLine();
         }
-        public void PrintBookSearch(List<BookVO> bookList)  //도서 검색
+        public void PrintBookSearch(List<BookDTO> bookList)  //도서 검색
         {
             logo.PrintMenu("도서 검색");
             logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.ZERO, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", ConsoleColor.Gray);
@@ -58,14 +58,14 @@ namespace Library
             PrintBookList(bookList);   //전체도서 출력
         }
 
-        public void PrintSearchResult(List<BookVO> bookList)  //도서검색 -> 검색결과로 나온 책목록 출력
+        public void PrintSearchResult(List<BookDTO> bookList)  //도서검색 -> 검색결과로 나온 책목록 출력
         {
             PrintBookSearch(bookList);
             logo.PrintEscAndEnter(0, (int)Constants.SearchMenu.ESC_TOP); 
             Console.WindowTop = 0;
             Console.CursorVisible = Constants.IS_INVISIBLE_CURSOR;
         }
-        public void PrintRegisteredBook(BookVO book)    //도서등록 -> 등록한 도서정보 출력
+        public void PrintRegisteredBook(BookDTO book)    //도서등록 -> 등록한 도서정보 출력
         {
             logo.PrintMenu("도서 등록 완료");
             logo.PrintMessage(0, (int)Constants.SearchMenu.ZERO, "등록한 도서 정보", ConsoleColor.Gray);
@@ -75,17 +75,17 @@ namespace Library
             logo.PrintLine();
             Console.CursorVisible = Constants.IS_INVISIBLE_CURSOR;
         }
-        public void PrintBookEdition(List<BookVO> bookList)  //도서정보 수정 -> 수정할 도서번호 입력창 출력 + 도서검색결과 출력
+        public void PrintBookEdition(List<BookDTO> bookList)  //도서정보 수정 -> 수정할 도서번호 입력창 출력 + 도서검색결과 출력
         {                                                                           
             logo.PrintSearchBox("도서 정보 수정", "☞정보를 수정할 도서번호:", "검색 결과(총 " + bookList.Count + "건)");
             PrintBookList(bookList);
         }
-        public void PrintBookDeletion(List<BookVO> bookList) //도서삭제 -> 삭제할 도서번호 입력칸 + 도서검색결과 출력
+        public void PrintBookDeletion(List<BookDTO> bookList) //도서삭제 -> 삭제할 도서번호 입력칸 + 도서검색결과 출력
         {
             logo.PrintSearchBox("도서 삭제", "☞삭제할 도서 번호:", "검색 결과(총 " + bookList.Count + "건)");
             PrintBookList(bookList);
         }
-        public void PrintDeletedBook(BookVO book)   //도서삭제 -> 삭제한 도서정보 출력
+        public void PrintDeletedBook(BookDTO book)   //도서삭제 -> 삭제한 도서정보 출력
         {
             logo.PrintMenu("도서 삭제 완료");
             logo.PrintEscAndEnter(0, (int)Constants.SearchMenu.ESC_TOP);
@@ -107,7 +107,7 @@ namespace Library
             logo.PrintMessage(0, (int)Constants.Registration.FIFTH, "☞가격:\n(숫자만 입력 가능합니다.(ex: 34000)", ConsoleColor.Gray);
             logo.PrintMessage(0, (int)Constants.Registration.SIXTH, "☞수량:\n(1~99사이의 숫자만 입력 가능합니다.(ex: 5))", ConsoleColor.Gray);
         }
-        public void PrintBookRevision(BookVO book)  //도서정보수정 -> 수정할 정보 목록 출력
+        public void PrintBookRevision(BookDTO book)  //도서정보수정 -> 수정할 정보 목록 출력
         {                                              
             logo.PrintMenu("도서 정보 수정");
             //Console.WriteLine("\n\n        (수정하려는 정보를 선택해 [Enter]키를 누르세요)");
@@ -141,7 +141,7 @@ namespace Library
             Console.WindowTop = 0;
             Console.CursorVisible = Constants.IS_INVISIBLE_CURSOR;
         }
-        public void PrintRentalList(List<BorrowBookVO> rentalList)   //도서 대출 현황 리스트
+        public void PrintRentalList(List<BookDTO> rentalList)   //도서 대출 현황 리스트
         {
             logo.PrintMenu("도서 대출 현황");
             logo.PrintMessage(0, (int)Constants.SearchMenu.ZERO, "전체 회원의 도서 대출 목록(총 " + rentalList.Count + "건)", ConsoleColor.Gray);
@@ -152,6 +152,8 @@ namespace Library
             {
                 Console.WriteLine("  회원ID: " + rentalList[i].MemberId);
                 Console.WriteLine(rentalList[i]);
+                logo.RemoveLine(0, Console.CursorTop - 1);
+                Console.WriteLine("\n대여기간: " + rentalList[i].RentalPeriod);
                 logo.PrintSingleLine();
             }
             Console.SetCursorPosition(0, Console.CursorTop - 3);
@@ -168,7 +170,7 @@ namespace Library
             logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.FOURTH, "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", ConsoleColor.Gray);
             logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.ZERO - 1, "검색어와 조회할 책 권 수를 입력하고 조회버튼을 눌러주세요.", ConsoleColor.Green);
         }
-        public void PrintNaverSearchResult(List<BookVO> bookList)
+        public void PrintNaverSearchResult(List<BookDTO> bookList)
         {
             logo.PrintSearchBox("네이버 도서 검색", "☞추가할 도서 번호:", "검색결과(총 " + bookList.Count + "건)");
 
@@ -192,7 +194,7 @@ namespace Library
             logo.PrintMessage(5, Console.CursorTop, "'" + searchWord + "'에 대한 검색결과가 없습니다.", ConsoleColor.Red);
             Console.WriteLine("\n====================================================================================================\n");
         }
-        public void PrintBookRegistration(BookVO book)
+        public void PrintBookRegistration(BookDTO book)
         {
             logo.PrintMenu("도서 등록");
             logo.PrintMessage(0, (int)Constants.EditMenu.ZERO, "(등록할 도서의 수량을 입력해주세요.)", ConsoleColor.Yellow);

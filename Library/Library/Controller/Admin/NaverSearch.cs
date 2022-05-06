@@ -18,7 +18,7 @@ namespace Library
         private AdminView adminView;
         private Exception exception;
         private Logo logo;
-        private List<BookVO> bookList;
+        private List<BookDTO> bookList;
         private string searchWord;
         private string numberOfBook;
         public NaverSearch(EnteringText text, AdminView adminView, Exception exception, Logo logo)
@@ -27,7 +27,7 @@ namespace Library
             this.adminView = adminView;
             this.exception = exception;
             this.logo = logo;
-            bookList = new List<BookVO>();
+            bookList = new List<BookDTO>();
         }
         private void CreateBookList()
         {
@@ -59,7 +59,7 @@ namespace Library
                 publicationDate = searchResult["items"][i]["pubdate"].ToString();
                 publicationDate = publicationDate.Insert(6, ".").Insert(4, ".");
 
-                bookList.Add(new BookVO((i + 1).ToString(), searchResult["items"][i]["title"].ToString(), searchResult["items"][i]["author"].ToString(), searchResult["items"][i]["publisher"].ToString(), publicationDate,
+                bookList.Add(new BookDTO((i + 1).ToString(), searchResult["items"][i]["title"].ToString(), searchResult["items"][i]["author"].ToString(), searchResult["items"][i]["publisher"].ToString(), publicationDate,
                     searchResult["items"][i]["isbn"].ToString(), searchResult["items"][i]["price"].ToString(), searchResult["items"][i]["description"].ToString(), ""));
             }
         }
@@ -184,7 +184,7 @@ namespace Library
 
             return searchWord;  //검색어 반환
         }
-        private BookVO FindBook(string bookId)
+        private BookDTO FindBook(string bookId)
         {
             int i;
             for (i = 0; i < bookList.Count; i++)
@@ -198,7 +198,7 @@ namespace Library
             string bookId;
             string quantity;
             int menu;
-            BookVO book;
+            BookDTO book;
 
             adminView.PrintNaverSearch();
             

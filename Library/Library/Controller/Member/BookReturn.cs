@@ -22,16 +22,16 @@ namespace Library
             this.memberView = memberView;
             this.exception = exception;
         }
-        private bool IsBookIBorrowed(string bookId, List<BorrowBookVO> myBookList)          //회원이 대여중인 도서인지 검사
+        private bool IsBookIBorrowed(string isbn, List<BookDTO> myBookList)          //회원이 대여중인 도서인지 검사
         {
             for (int i = 0; i < myBookList.Count; i++)
             {
-                if (myBookList[i].BookId.Equals(bookId)) return Constants.IS_BOOK_I_BORROWED;   //대여한 도서를 반납하려고 할 때 -> 반납가능
+                if (myBookList[i].Isbn.Equals(isbn)) return Constants.IS_BOOK_I_BORROWED;   //대여한 도서를 반납하려고 할 때 -> 반납가능
             }
 
             return Constants.IS_BOOK_I_NEVER_BORROWED;  //대여하지 않은 도서 -> 반납불가
         }
-        private string InputBookId(string memberId, List<BorrowBookVO> myBookList)
+        private string InputBookId(string memberId, List<BookDTO> myBookList)
         {
             int top = (int)Constants.SearchMenu.FIRST;
             int left = (int)Constants.InputField.LEFT;
@@ -65,13 +65,13 @@ namespace Library
 
             return bookId;
         }
-        private BorrowBookVO FindBook(string bookId, List<BorrowBookVO> myBookList)  //도서번호로 해당 도서정보 찾기
+        private BookDTO FindBook(string isbn, List<BookDTO> myBookList)  //도서번호로 해당 도서정보 찾기
         {
             int i = 0;
 
             for(i = 0; i<myBookList.Count; i++)
             {
-                if (myBookList[i].BookId.Equals(bookId)) break;
+                if (myBookList[i].Isbn.Equals(isbn)) break;
             }
 
             return myBookList[i];
@@ -79,7 +79,7 @@ namespace Library
         public void ReturnBook(string memberId, Keyboard keyboard) 
         {
             string bookId;
-            List<BorrowBookVO> myBookList = bookDAO.GetMyBookList(Constants.RENTAL_LIST, memberId); //현재 로그인한 회원의 도서대여목록
+            List<BookDTO> myBookList = bookDAO.GetMyBookList(Constants.RENTAL_LIST, memberId); //현재 로그인한 회원의 도서대여목록
 
             while (Constants.INPUT_VALUE)
             {
@@ -91,7 +91,7 @@ namespace Library
                 bookDAO.DeleteFromRentalList(memberId, bookId);     //도서대여리스트에서 대여정보 삭제 
                 logDAO.DeleteFromRentalList(memberId, myBookList[myBookList.Count - 1].Name);  //로그에 반납기록 추가
                 
-                memberView.PrintBookReturnSuccess(FindBook(bookId, myBookList));  //반납한 도서정보 출력
+                //memberView.PrintBookReturnSuccess(FindBook(bookId, myBookList));  //반납한 도서정보 출력
                 myBookList.RemoveAt(myBookList.Count - 1);                        //도서반납 후 대여목록
 
                 if(keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break;  //도서 반납 후 Esc -> 회원모드로 돌아감

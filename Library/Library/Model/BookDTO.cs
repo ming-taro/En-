@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace Library
 {
-    class BookVO
+    class BookDTO
     {
+        private string memberId;       //회원번호
         private string id;             //도서번호
         private string name;           //도서명
         private string author;         //저자
@@ -18,8 +19,9 @@ namespace Library
         private string price;          //가격
         private string bookIntroduction; //책소개
         private string quantity;       //수량
+        private string rentalPeriod;   //대여기간
 
-        public BookVO(string id, string name, string author, string publisher, string publicationDate, string isbn, string price, string bookIntroduction, string quantity)
+        public BookDTO(string id, string name, string author, string publisher, string publicationDate, string isbn, string price, string bookIntroduction, string quantity)
         {
             this.id = id;
             this.name = name;
@@ -30,6 +32,11 @@ namespace Library
             this.price = price;
             this.bookIntroduction = bookIntroduction;
             this.quantity = quantity;
+        }
+        public string MemberId
+        {
+            get { return memberId; }
+            set { memberId = value; }
         }
         public string Id
         {
@@ -75,6 +82,11 @@ namespace Library
         {
             get { return bookIntroduction; }
             set { bookIntroduction = value; }
+        }
+        public string RentalPeriod
+        {
+            get { return rentalPeriod; }
+            set { rentalPeriod = value; }
         }
         public override String ToString()
         {

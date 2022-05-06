@@ -14,43 +14,24 @@ namespace Library
         private LogDAO logDAO = LogDAO.GetInstance();
         private EnteringText text;
         private MemberView memberView;
-        private Exception exception;
+        private Logo logo;
         
-        public BookRental(EnteringText text, MemberView memberView, Exception exception)
+        public BookRental(EnteringText text, MemberView memberView, Logo logo)
         {
             this.text = text;
             this.memberView = memberView;
-            this.exception = exception;
+            this.logo = logo;
         }
-
-        private bool IsBookInList(string bookId, List<BookVO> bookList)   //현재 조회중인 도서목록에 있는 도서인지 검사
-        {
-            for (int i = 0; i < bookList.Count; i++) 
-            {
-                if (bookList[i].Id.Equals(bookId)) return Constants.IS_BOOK_IN_LIST;  //목록에 존재하는 도서
-            }
-
-            return Constants.IS_BOOK_NOT_IN_LIST;    //현재 조회중인 도서목록에 없는 도서를 대여하려고 함
-        }
-        private bool IsBookIBorrowed(string bookId, List<BorrowBookVO> myBookList)              //회원이 대여중인 도서인지 검사
-        {
-            for (int i = 0; i < myBookList.Count; i++)
-            {
-                if (myBookList[i].BookId.Equals(bookId)) return Constants.IS_BOOK_I_BORROWED;   //입력한 도서를 이미 대여중 -> 대여할 수 없음
-            }
-
-            return Constants.IS_BOOK_I_NEVER_BORROWED;  //대여하지 않은 도서 -> 대여가능
-        }
-        private bool IsQuantityZero(string bookId, List<BookVO> bookList)   //대여가능 수량이 있는 지 검사
+        private bool IsQuantityZero(int bookId, List<BookDTO> bookList)   //대여가능 수량이 있는 지 검사
         {
             for (int i = 0; i < bookList.Count; i++)
             {
-                if (bookList[i].Id.Equals(bookId) && bookList[i].Quantity.Equals("0")) return Constants.IS_QUANTITY_ZERO;  //대여 가능 수량이 0권 -> 대여 불가
+                if (bookList[bookId - 1].Quantity.Equals("0")) return Constants.IS_QUANTITY_ZERO;  //대여 가능 수량이 0권 -> 대여 불가
             }
 
             return Constants.IS_QUANTITY_MORE_THAN_ONE;   //대여 가능 수량이 남아있음 -> 대여가능
         }
-        private string InputBookId(List<BookVO> bookList, List<BorrowBookVO> myBookList)    //도서명 입력 후 도서번호 입력
+        private string InputBookId(List<BookDTO> bookList, List<BookDTO> myBookList)    //도서명 입력 후 도서번호 입력(bookList:검색결과 도서목록)
         {
             int top = (int)Constants.SearchMenu.FIRST;
             int left = (int)Constants.InputField.LEFT;
@@ -66,25 +47,17 @@ namespace Library
                 {
                     return Constants.ESC;                     //도서번호 입력 중 esc -> 다시 도서검색으로
                 }
-                else if (Regex.IsMatch(bookId, Constants.BOOK_ID_REGEX) == Constants.IS_NOT_MATCH)  
+                else if (Regex.IsMatch(bookId, Constants.BOOK_ID_REGEX) == Constants.IS_NOT_MATCH || Int32.Parse(bookId) < 1 || Int32.Parse(bookId) > bookList.Count)  
                 {
-                    exception.PrintBookIdRegex(exceptionLeft, exceptionTop);    //형식에 맞지 않는 입력일 경우
+                    logo.PrintMessage(exceptionLeft, exceptionTop, "(1~" + bookList.Count + "사이의 숫자를 입력해주세요.)                             ", ConsoleColor.Red);    //형식에 맞지 않는 입력일 경우
                 }
-                else if (IsBookInList(bookId, bookList) == Constants.IS_BOOK_NOT_IN_LIST)  
+                else if (IsQuantityZero(Int32.Parse(bookId), bookList))   
                 {
-                    exception.PrintBookNotInList(exceptionLeft, exceptionTop);  //입력형식은 맞지만, 목록에 없는 도서를 빌리려고 했을 때
+                    logo.PrintMessage(exceptionLeft, exceptionTop, "(대여가능한 수량이 없습니다.)              ", ConsoleColor.Red);   //도서 수량이 0일 때
                 }
-                else if (IsBookIBorrowed(bookId, myBookList)) 
-                {
-                    exception.PrintBookIBorrowed(exceptionLeft, exceptionTop);  //도서목록에 있지만, 이미 대여중인 도서일 때-->같은 도서 대여 가능으로 수정할것
-                }
-                else if (IsQuantityZero(bookId, bookList))   
-                {
-                    exception.PrintQuantityZero(exceptionLeft, exceptionTop);   //도서목록에 있고, 대여하지 않은 도서이지만 수량이 0일 때
-                }
-                else break;  //도서대여가능 -> 해당 도서 아이디 리턴
+                else break;  //도서대여가능 -> 해당 도서번호 리턴
 
-                exception.RemoveLine(left, top);
+                logo.RemoveLine(left, top);
             }
             return bookId;
         }
@@ -93,25 +66,27 @@ namespace Library
             int searchType;        //검색유형
             string searchWord;     //검색어
             string bookId;         //도서번호
-            List<BorrowBookVO> myBookList = bookDAO.GetMyBookList(Constants.RENTAL_LIST, memberId); //현재 로그인한 회원의 도서대여목록
+            List<BookDTO> bookList;
+            List<BookDTO> myBookList = bookDAO.GetMyBookList(Constants.RENTAL_LIST, memberId); //현재 로그인한 회원의 도서대여목록
 
             while (Constants.INPUT_VALUE)
             {
-                searchType = bookSearch.SelectSearchType(keyboard);    //검색유형 선택
+                searchType = bookSearch.SelectSearchType(keyboard);       //검색유형 선택
                 if (searchType == (int)Constants.Keyboard.ESCAPE) break;  //검색유형 선택 중 esc -> 도서검색 종료
 
                 searchWord = bookSearch.InputSearchWord((int)Constants.InputField.SEARCH, searchType, (int)Constants.Exception.SEARCH);   //검색어 입력받기
                 if (searchWord.Equals(Constants.ESC)) continue;           //검색어 입력 중 esc -> 검색유형 선택으로
 
-                memberView.PrintBookRental(bookSearch.BookList);          //도서검색창 출력
+                bookList = bookSearch.BookList;                //도서검색결과 도서목록
+                memberView.PrintBookRental(bookList);          //도서검색창 출력
 
-                bookId = InputBookId(bookSearch.BookList, myBookList);    //도서번호를 입력받음
-                if (bookId.Equals(Constants.ESC)) continue;               //도서번호 입력 중 esc -> 다시 도서검색으로
+                bookId = InputBookId(bookList, myBookList);    //도서번호를 입력받음
+                if (bookId.Equals(Constants.ESC)) continue;    //도서번호 입력 중 esc -> 다시 도서검색으로
 
-                bookDAO.AddToRentalList(memberId, bookId);    //DB에 변경된 정보 저장
-                myBookList = bookDAO.GetMyBookList(Constants.RENTAL_LIST, memberId);//변경된 현재 로그인한 회원의 도서대여목록
-                logDAO.AddToRentalList(memberId, myBookList[myBookList.Count - 1].Name);  //도서 대출기록 로그에 저장
-                memberView.PrintBookRentalSuccess(myBookList);            //회원의 대여목록 출력
+                bookDAO.AddToRentalList(memberId, bookList[Int32.Parse(bookId) - 1].Isbn);   //도서대출목록DB에 회원아이디,대출도서isbn,대출기간 저장
+                myBookList = bookDAO.GetMyBookList(Constants.RENTAL_LIST, memberId);         //변경된 현재 로그인한 회원의 도서대여목록
+                logDAO.AddToRentalList(memberId, myBookList[myBookList.Count - 1].Name);     //도서 대출기록 로그에 저장
+                memberView.PrintBookRentalSuccess(myBookList); //회원의 대여목록 출력
 
                 if (keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break; //Esc->뒤로가기, Enter->재검색
                 Console.CursorVisible = Constants.IS_VISIBLE_CURSOR;
