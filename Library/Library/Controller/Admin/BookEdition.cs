@@ -111,7 +111,7 @@ namespace Library
 
             switch (menu)
             {
-                case (int)Constants.EditMenu.FIRST:   //도서명
+                case (int)Constants.EditMenu.FIRST:     //도서명
                     changedItem = registeringBook.InputBookName(left, (int)Constants.EditMenu.FIRST, Constants.BOOK_NAME_REGEX);
                     break;
                 case (int)Constants.EditMenu.SECOND:    //저자
@@ -124,13 +124,13 @@ namespace Library
                     changedItem = registeringBook.InputBookName(left, (int)Constants.EditMenu.FOURTH, Constants.PUBLICATION_DATE_REGEX);//
                     break;
                 case (int)Constants.EditMenu.FIFTH:     //isbn  
-                    changedItem = registeringBook.InputBookName(left, (int)Constants.EditMenu.FIFTH, Constants.QUENTITY_REGEX);//
+                    changedItem = registeringBook.InputBookName(left, (int)Constants.EditMenu.FIFTH, Constants.ISBN_REGEX);//
                     break;
                 case (int)Constants.EditMenu.SIXTH:     //가격 
                     changedItem = registeringBook.InputBookName(left, (int)Constants.EditMenu.SIXTH, Constants.PRICE_REGEX);
                     break;
                 case (int)Constants.EditMenu.SEVENTH:   //책소개
-                    changedItem = registeringBook.InputBookName(left, (int)Constants.EditMenu.SEVENTH, Constants.QUENTITY_REGEX);//
+                    changedItem = registeringBook.InputBookName(left, (int)Constants.EditMenu.SEVENTH, Constants.BOOK_INTRODUCTION_REGEX);//
                     break;
                 case (int)Constants.EditMenu.EIGHT:     //수량
                     changedItem = registeringBook.InputBookName(left, (int)Constants.EditMenu.EIGHT, Constants.QUENTITY_REGEX);

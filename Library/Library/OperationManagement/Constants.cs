@@ -61,12 +61,13 @@ namespace Library
 
         //정규식 1162243074 9791162243077
         public const string BOOK_ID_REGEX = @"^[0-9]{1,3}$";
-        public const string BOOK_NAME_REGEX = @"^[\w]{1,1}[^\e]{0,49}$";
-        public const string PUBLISHER_REGEX = @"^[\w]{1,1}[^\e]{0,49}$";
-        public const string PUBLICATION_DATE_REGEX = @"^(1|2)[0-9]{3}.(0[1-9]|1[0-2]).(0[1-9]|(1|2)[0-9]|3[0-1])";
+        public const string BOOK_NAME_REGEX = @"[^\s]{1,1}.{0,49}$";
+        public const string PUBLISHER_REGEX = @"[^\s]{1,1}.{0,49}$";
+        public const string PUBLICATION_DATE_REGEX = @"^(1|2)[0-9]{3}\.(0[1-9]|1[0-2])\.(0[1-9]|(1|2)[0-9]|3[0-1])$";
         public const string AUTHOR_REGEX = @"^[a-zA-Z가-힣]{1,50}$";
         public const string PRICE_REGEX = @"^[1-9]{1}[0-9]{0,9}$";
-        public const string BOOK_INTRODUCTION_REGEX = "";
+        public const string BOOK_INTRODUCTION_REGEX = @"^.{0,100}$";
+        public const string ISBN_REGEX = @"^[0-9]{1,1}[0-9\s]{0,49}$";
         public const string QUENTITY_REGEX = @"^[1-9]{1}[0-9]{0,1}$";
         public const string DISPLAY_REGEX = @"(^[1-9]{1}[0-9]{0,1})$|(100)$";
         

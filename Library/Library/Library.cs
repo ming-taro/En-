@@ -11,15 +11,7 @@ namespace Library
     class Library
     {
         static void Main(string[] args)
-        {
-            while (true)
-            {
-                string s = Console.ReadLine();
-                if (Regex.IsMatch(s, @"^\w{0,4}$")) Console.WriteLine("맞아");
-            }
-
-
-            LibraryMenu libraryMenu = new LibraryMenu();
+        {LibraryMenu libraryMenu = new LibraryMenu();
             libraryMenu.StartLibrary();
         }
 
