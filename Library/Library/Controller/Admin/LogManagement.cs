@@ -14,16 +14,16 @@ namespace Library
         private EnteringText text;
         private AdminView adminView;
         private Logo logo;
-        List<LogVO> logList;
+        List<LogDTO> logList;
 
         public LogManagement(EnteringText text, AdminView adminView, Logo logo)
         {
             this.text = text;
             this.adminView = adminView;
             this.logo = logo;
-            logList = new List<LogVO>();
+            logList = new List<LogDTO>();
         }
-        public string InputLogId()
+        public string InputLogId()   //삭제할 로그 아이디 입력
         {
             string logId;
 
@@ -40,25 +40,40 @@ namespace Library
             }
             return logId;
         }
+        public void DeleteFromLogList(int logIndex)
+        {
+            logList.RemoveAt(logIndex);                  //로그 리스트에서 삭제
+            for(int index = logIndex; index < logList.Count; index++)   //로그 리스트의 로그아이디 다시 설정
+            {
+                logList[index].Id = index + 1;
+            }
+        }
         
-        private void RemoveLogRecord(Keyboard keyboard)
+        private void DeleteLog(Keyboard keyboard)
         {
             string logId;
+            int logIndex;
 
             if (logList.Count == 0)             //로그기록이 없는 경우 기록 없음 문구만 출력
             {
                 adminView.PrintNoLogRecord();
                 return;
             }
-            
+
             adminView.PrintLogManagemnet(logList);    //로그리스트 출력
 
-            logId = InputLogId();
-            if (logId.Equals(Constants.ESC)) return;  //로그번호 입력 중 Esc -> 종료
+            while (Constants.INPUT_VALUE)
+            {
+                logId = InputLogId();
+                if (logId.Equals(Constants.ESC)) return;  //로그번호 입력 중 Esc -> 종료
 
-            keyboard.PressESC();
-            Console.CursorVisible = Constants.IS_VISIBLE_CURSOR;
-            logo.PrintLogManagement();                     //로그 관리 화면 출력
+                logIndex = Int32.Parse(logId) - 1;
+                logDAO.DeleteFromLogList(logList[logIndex].Date);
+                DeleteFromLogList(logIndex);
+
+                adminView.PrintLogManagemnet(logList);    //로그리스트 출력
+                logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.Exception.TOP, "("+Int32.Parse(logId)+"번 로그가 삭제되었습니다.)", ConsoleColor.Red);
+            }
         }
         private void SaveFile()
         {
@@ -101,7 +116,7 @@ namespace Library
             switch (menu)
             {
                 case (int)Constants.Menu.FIRST:   //로그 기록
-                    RemoveLogRecord(keyboard);
+                    DeleteLog(keyboard);
                     logo.PrintLogManagement();
                     break;
                 case (int)Constants.Menu.SECOND:  //파일 저장

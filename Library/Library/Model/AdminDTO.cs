@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Library
 {
-    class AdminVO
+    class AdminDTO
     {
         private string id;
         private string password;
 
-        public AdminVO(string id, string password)
+        public AdminDTO(string id, string password)
         {
             this.id = id;
             this.password = password;

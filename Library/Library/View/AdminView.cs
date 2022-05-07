@@ -34,7 +34,7 @@ namespace Library
                 logo.PrintLine();
             }
         }
-        public void PrintLogList(List<LogVO> logList)
+        public void PrintLogList(List<LogDTO> logList)
         {
             logo.PrintLine();
             for (int i = logList.Count - 1; i >= 0; i--)   //최근 추가한 값부터 출력
@@ -213,7 +213,7 @@ namespace Library
             logo.PrintMessage(0, (int)Constants.EditMenu.SEVENTH, "☞책소개  : " + book.BookIntroduction.Substring(0,40) + "...", ConsoleColor.Gray);
             logo.PrintMessage(0, (int)Constants.EditMenu.EIGHT, "☞수량    : ", ConsoleColor.Gray);
         }
-        public void PrintLogManagemnet(List<LogVO> logList)
+        public void PrintLogManagemnet(List<LogDTO> logList)
         {
             logo.PrintSearchBox("로그 기록", "☞삭제할 로그 번호:", "로그 기록 조회");
             PrintLogList(logList);

@@ -36,9 +36,9 @@ namespace Library
 
             }
         }
-        public List<LogVO> GetLogList()
+        public List<LogDTO> GetLogList()
         {
-            List<LogVO> logList = new List<LogVO>();
+            List<LogDTO> logList = new List<LogDTO>();
 
             OpenConnection();
             command = new MySqlCommand(Constants.LOG_LIST, connection);
@@ -47,7 +47,7 @@ namespace Library
             int number = 1;
             while (table.Read())
             {
-                logList.Add(new LogVO(number++, table["user"].ToString(), table["menu"].ToString(), table["content"].ToString(), table["date"].ToString()));
+                logList.Add(new LogDTO(number++, table["user"].ToString(), table["menu"].ToString(), table["content"].ToString(), table["date"].ToString()));
             }
             table.Close();
             connection.Close();
@@ -104,6 +104,14 @@ namespace Library
             OpenConnection();
             command = new MySqlCommand(Constants.LOG_INITIALIZATION, connection);
             command.ExecuteNonQuery();
+        }
+        public void DeleteFromLogList(string date)
+        {
+            OpenConnection();
+            command = new MySqlCommand(Constants.DELETION_FROM_LOG_LIST, connection);
+            command.Parameters.Add(new MySqlParameter("@date", date));
+            command.ExecuteNonQuery();
+            connection.Close();
         }
         public void StartNonQuery(string user, string menu, string content)
         {

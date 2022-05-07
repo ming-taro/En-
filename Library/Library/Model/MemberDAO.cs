@@ -35,16 +35,16 @@ namespace Library
 
             }
         }
-        public AdminVO GetAdminAccount()   //관리자 계정
+        public AdminDTO GetAdminAccount()   //관리자 계정
         {
-            AdminVO admin;
+            AdminDTO admin;
 
             OpenConnection();
             command = new MySqlCommand(Constants.ADMIN_ACCOUNT, connection);
             MySqlDataReader table = command.ExecuteReader();
 
             table.Read();
-            admin = new AdminVO(table["id"].ToString(), table["password"].ToString());
+            admin = new AdminDTO(table["id"].ToString(), table["password"].ToString());
             table.Close();
             connection.Close();
 

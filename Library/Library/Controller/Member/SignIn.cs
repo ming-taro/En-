@@ -23,7 +23,7 @@ namespace Library
         {
             string id;
             string password;
-            AdminVO adminAccount = memberDAO.GetAdminAccount();  //관리자 계정
+            AdminDTO adminAccount = memberDAO.GetAdminAccount();  //관리자 계정
 
             logo.PrintSignIn();   //로그인 화면 출력
 

@@ -137,6 +137,7 @@ namespace Library
         public const string UPDATE_TO_LOG = "INSERT INTO log(user,menu,content, date) VALUES (@user, @menu, @content, @date);";
         public const string LOG_LIST = "select*from log;";
         public const string LOG_INITIALIZATION = "TRUNCATE TABLE log;";
+        public const string DELETION_FROM_LOG_LIST = "DELETE FROM log WHERE date = @date;";
 
         //Connection
         public const string SERVER = "Server = localhost;";
