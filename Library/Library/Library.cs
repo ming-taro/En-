@@ -11,7 +11,8 @@ namespace Library
     class Library
     {
         static void Main(string[] args)
-        {LibraryMenu libraryMenu = new LibraryMenu();
+        {
+            LibraryMenu libraryMenu = new LibraryMenu();
             libraryMenu.StartLibrary();
         }
 

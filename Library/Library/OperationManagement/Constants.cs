@@ -201,7 +201,7 @@ namespace Library
         public enum EditMenu
         {
             LEFT = 0,
-            MESSAGE = 9,
+            MESSAGE = 8,
             ZERO = 10,
             FIRST = 12,        //top
             SECOND = 15,

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Library
@@ -10,22 +11,50 @@ namespace Library
     class LogManagement
     {
         private LogDAO logDAO = LogDAO.GetInstance();
-        private Logo logo;
+        private EnteringText text;
         private AdminView adminView;
-        private Exception exception;
+        private Logo logo;
         List<LogVO> logList;
 
-        public LogManagement(Logo logo, AdminView adminView, Exception exception)
+        public LogManagement(EnteringText text, AdminView adminView, Logo logo)
         {
-            this.logo = logo;
+            this.text = text;
             this.adminView = adminView;
-            this.exception = exception;
+            this.logo = logo;
             logList = new List<LogVO>();
         }
-        private void ManageLogList(Keyboard keyboard)
+        public string InputLogId()
         {
-            if (logList.Count == 0) adminView.PrintNoLogRecord();
-            else adminView.PrintLogManagemnet(logList);    //로그리스트 출력
+            string logId;
+
+            while (Constants.INPUT_VALUE)
+            {
+                logId = text.EnterText((int)Constants.InputField.LEFT, (int)Constants.SearchMenu.FIRST, "");
+
+                if (logId.Equals(Constants.ESC) == Constants.IS_NOT_MATCH && (Regex.IsMatch(logId, Constants.BOOK_ID_REGEX) == Constants.IS_NOT_MATCH || Int32.Parse(logId) < 1 || Int32.Parse(logId) > logList.Count))
+                {
+                    logo.PrintMessage((int)Constants.SearchMenu.LEFT, (int)Constants.Exception.TOP, "(현재 조회목록에 없는 로그 아이디입니다.)", ConsoleColor.Red);
+                    logo.RemoveLine((int)Constants.InputField.LEFT, (int)Constants.SearchMenu.FIRST);
+                }
+                else break;
+            }
+            return logId;
+        }
+        
+        private void RemoveLogRecord(Keyboard keyboard)
+        {
+            string logId;
+
+            if (logList.Count == 0)             //로그기록이 없는 경우 기록 없음 문구만 출력
+            {
+                adminView.PrintNoLogRecord();
+                return;
+            }
+            
+            adminView.PrintLogManagemnet(logList);    //로그리스트 출력
+
+            logId = InputLogId();
+            if (logId.Equals(Constants.ESC)) return;  //로그번호 입력 중 Esc -> 종료
 
             keyboard.PressESC();
             Console.CursorVisible = Constants.IS_VISIBLE_CURSOR;
@@ -45,7 +74,7 @@ namespace Library
             writer.Close();
 
             logo.PrintLogManagement();    //로그 관리 화면 출력
-            exception.PrintSaveFile();    //파일 저장 메세지 출력
+            logo.PrintMessage((int)Constants.Menu.LOG_MESSAGE_LEFT, (int)Constants.Menu.SIXTH, "(바탕화면에 '로그 기록' 파일이 저장되었습니다)", ConsoleColor.Green);    //파일 저장 메세지 출력
         }
         private void DeleteFile()
         {
@@ -53,18 +82,18 @@ namespace Library
 
             if (File.Exists(desktopPath) == Constants.IS_EXISTING_FILE) //파일 존재여부 확인
             {
-                exception.PrintFileDeletion();  //파일 삭제 메세지
+                logo.PrintMessage((int)Constants.Menu.LOG_MESSAGE_LEFT, (int)Constants.Menu.SIXTH, "     ('로그 기록' 파일이 삭제되었습니다)               ", ConsoleColor.Green);  //파일 삭제 메세지
                 File.Delete(desktopPath);       //바탕화면에서 파일 삭제
             }
             else
             {
-                exception.PrintNoLogFile();     //파일이 존재하지 않음
+                logo.PrintMessage((int)Constants.Menu.LOG_MESSAGE_LEFT, (int)Constants.Menu.SIXTH, "   ('로그 기록' 파일이 존재하지 않습니다)               ", ConsoleColor.Red);     //파일이 존재하지 않음
             }
         }
         private void InitializeLogRecord()
         {
             logDAO.InitializeLogTable();        //로그 테이블 초기화
-            exception.PrintLogInitialization(); //로그 초기화 메세지
+            logo.PrintMessage((int)Constants.Menu.LOG_MESSAGE_LEFT, (int)Constants.Menu.SIXTH, "       (로그 기록이 초기화되었습니다.)               ", ConsoleColor.Green); //로그 초기화 메세지
             logList.Clear();
         }
         public void SelectMenu(int menu, Keyboard keyboard)
@@ -72,7 +101,8 @@ namespace Library
             switch (menu)
             {
                 case (int)Constants.Menu.FIRST:   //로그 기록
-                    ManageLogList(keyboard);
+                    RemoveLogRecord(keyboard);
+                    logo.PrintLogManagement();
                     break;
                 case (int)Constants.Menu.SECOND:  //파일 저장
                     SaveFile();

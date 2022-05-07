@@ -39,7 +39,7 @@ namespace Library
             bookDeletion = new BookDeletion(text, adminView, logo);
             memberDeletion = new MemberDeletion(text, adminView, logo);
             naverSearch = new NaverSearch(text, adminView, exception, logo);
-            logManagement = new LogManagement(logo, adminView, exception);
+            logManagement = new LogManagement(text, adminView, logo);
         }
         private void SelectMenu(int menu)       //관리자 메뉴에서 선택
         {

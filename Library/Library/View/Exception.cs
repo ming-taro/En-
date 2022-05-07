@@ -64,21 +64,5 @@ namespace Library
         {
             PrintMessage(left, top, "(1~100 사이의 숫자를 입력해주세요.)                    ");
         }
-        public void PrintNoLogFile()
-        {
-            PrintMessage((int)Constants.Menu.LOG_MESSAGE_LEFT, (int)Constants.Menu.SIXTH, "   ('로그 기록' 파일이 존재하지 않습니다)               ");
-        }
-        public void PrintSaveFile()
-        {
-            PrintNodificationMessage((int)Constants.Menu.LOG_MESSAGE_LEFT, (int)Constants.Menu.SIXTH, "(바탕화면에 '로그 기록' 파일이 저장되었습니다)");
-        }
-        public void PrintFileDeletion()
-        {
-            PrintMessage((int)Constants.Menu.LOG_MESSAGE_LEFT, (int)Constants.Menu.SIXTH, "     ('로그 기록' 파일이 삭제되었습니다)               ");
-        }
-        public void PrintLogInitialization()
-        {
-            PrintMessage((int)Constants.Menu.LOG_MESSAGE_LEFT, (int)Constants.Menu.SIXTH, "       (로그 기록이 초기화되었습니다.)               ");
-        }
     }
 }

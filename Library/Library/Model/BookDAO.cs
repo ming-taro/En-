@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,9 +12,12 @@ namespace Library
     {
         private static BookDAO bookDAO;
         private string connectionString;
+        private MySqlConnection connection;
+        private MySqlCommand command;
         private BookDAO()
         {
             connectionString = Constants.SERVER + Constants.PORT + Constants.DATABASE + Constants.ID + Constants.PASSWORD;
+            connection = new MySqlConnection(connectionString);
         }
         public static BookDAO GetInstance()
         {
@@ -22,6 +26,15 @@ namespace Library
                 bookDAO = new BookDAO();
             }
             return bookDAO;
+        }
+        private void OpenConnection()
+        {
+            if (connection == null || connection.State != ConnectionState.Open)
+            {
+                connection = new MySqlConnection(connectionString);
+                connection.Open();
+
+            }
         }
         public List<BookDTO> MakeBookList(int searchType, string searchWord)  //검색 결과 도서목록
         {
@@ -45,9 +58,8 @@ namespace Library
                     break;
             }
 
-            MySqlConnection connection = new MySqlConnection(connectionString);
-            connection.Open();
-            MySqlCommand command = new MySqlCommand(query, connection);
+            OpenConnection();
+            command = new MySqlCommand(query, connection);
             MySqlDataReader table = command.ExecuteReader();
 
             while (table.Read())
@@ -66,9 +78,8 @@ namespace Library
             BookDTO book;
             int bookId = 1;
 
-            MySqlConnection connection = new MySqlConnection(connectionString);
-            connection.Open();
-            MySqlCommand command = new MySqlCommand(query, connection);
+            OpenConnection();
+            command = new MySqlCommand(query, connection);
             command.Parameters.Add(new MySqlParameter("@memberId", memberId));
 
             MySqlDataReader table = command.ExecuteReader();
@@ -87,9 +98,8 @@ namespace Library
         }
         public bool IsMemberBorrowingBook(string memberId)  //회원이 도서를 대여중인지 확인
         {
-            MySqlConnection connection = new MySqlConnection(connectionString);
-            connection.Open();
-            MySqlCommand command = new MySqlCommand(Constants.MEMBER_BORROWING_BOOK, connection);
+            OpenConnection();
+            command = new MySqlCommand(Constants.MEMBER_BORROWING_BOOK, connection);
             command.Parameters.Add(new MySqlParameter("@memberId", memberId));
 
             MySqlDataReader table = command.ExecuteReader();
@@ -107,11 +117,10 @@ namespace Library
                 return Constants.IS_MEMBER_NOT_BORROWING_BOOK;
             }
         }
-        public bool IsDuplicateBookId(string bookId)   //입력한 도서번호가 중복된 아이디인지 검사
+        public bool IsDuplicateBookId(string bookId)   //입력한 도서번호가 중복된 아이디인지 검사---->isbn으로 수정해야함
         {
-            MySqlConnection connection = new MySqlConnection(connectionString);
-            connection.Open();
-            MySqlCommand command = new MySqlCommand(Constants.DUPLICATE_BOOK_ID, connection);
+            OpenConnection();
+            command = new MySqlCommand(Constants.DUPLICATE_BOOK_ID, connection);
             command.Parameters.Add(new MySqlParameter("@bookId", bookId));
 
             MySqlDataReader table = command.ExecuteReader();
@@ -128,9 +137,8 @@ namespace Library
         }
         public bool IsBookOnLoan(string isbn)   //해당 도서를 대여중인 회원이 있는지 확인
         {
-            MySqlConnection connection = new MySqlConnection(connectionString);
-            connection.Open();
-            MySqlCommand command = new MySqlCommand(Constants.BOOK_ON_LOAN, connection);
+            OpenConnection();
+            command = new MySqlCommand(Constants.BOOK_ON_LOAN, connection);
             command.Parameters.Add(new MySqlParameter("@isbn", isbn));
 
             MySqlDataReader table = command.ExecuteReader();
@@ -148,9 +156,8 @@ namespace Library
 
         public void AddToRentalList(string memberId, string isbn)  //대여목록 추가
         {
-            MySqlConnection connection = new MySqlConnection(connectionString);
-            connection.Open();
-            MySqlCommand command = new MySqlCommand(Constants.ADDITION_TO_RENTAL_LIST, connection);  //대여목록에 추가
+            OpenConnection();
+            command = new MySqlCommand(Constants.ADDITION_TO_RENTAL_LIST, connection);  //대여목록에 추가
             command.Parameters.Add(new MySqlParameter("@memberId", memberId));
             command.Parameters.Add(new MySqlParameter("@isbn", isbn));
             command.Parameters.Add(new MySqlParameter("@rentalPeriod", DateTime.Now.ToString("yyyy.MM.dd") + " ~ " + DateTime.Now.AddDays(14).ToString("yyyy.MM.dd")));
@@ -163,9 +170,8 @@ namespace Library
         }
         public void DeleteFromRentalList(string memberId, string isbn) //대여도서 반납 후 대여목록에서 삭제
         {
-            MySqlConnection connection = new MySqlConnection(connectionString);
-            connection.Open();
-            MySqlCommand command = new MySqlCommand(Constants.DELETION_FROM_RENTAL_LIST, connection); //대여목록에서 삭제
+            OpenConnection();
+            command = new MySqlCommand(Constants.DELETION_FROM_RENTAL_LIST, connection); //대여목록에서 삭제
             command.Parameters.Add(new MySqlParameter("@memberId", memberId));
             command.Parameters.Add(new MySqlParameter("@isbn", isbn));
             command.ExecuteNonQuery();
@@ -177,9 +183,8 @@ namespace Library
         }
         public void AddToBookList(string query, BookDTO book)  //책목록에 도서정보 추가
         {
-            MySqlConnection connection = new MySqlConnection(connectionString);
-            connection.Open();
-            MySqlCommand command = new MySqlCommand(query, connection);
+            OpenConnection();
+            command = new MySqlCommand(query, connection);
             command.Parameters.Add(new MySqlParameter("@name", book.Name));
             command.Parameters.Add(new MySqlParameter("@author", book.Author));
             command.Parameters.Add(new MySqlParameter("@publisher", book.Publisher));
@@ -193,9 +198,8 @@ namespace Library
         }
         public void DeleteFromBookList(string isbn)  //도서목록에서 해당 도서 삭제
         {
-            MySqlConnection connection = new MySqlConnection(connectionString);
-            connection.Open();
-            MySqlCommand command = new MySqlCommand(Constants.DELETION_FROM_BOOK_LIST, connection);
+            OpenConnection();
+            command = new MySqlCommand(Constants.DELETION_FROM_BOOK_LIST, connection);
             command.Parameters.Add(new MySqlParameter("@isbn", isbn));
             command.ExecuteNonQuery();
             connection.Close();

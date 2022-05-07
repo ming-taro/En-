@@ -203,7 +203,7 @@ namespace Library
         public void PrintBookRegistration(BookDTO book)
         {
             logo.PrintMenu("도서 등록");
-            logo.PrintMessage((int)Constants.EditMenu.MESSAGE, (int)Constants.EditMenu.ZERO, "                         (등록할 도서의 수량을 입력해주세요.)", ConsoleColor.Green);
+            logo.PrintMessage((int)Constants.EditMenu.LEFT, (int)Constants.EditMenu.MESSAGE, "                                (등록할 도서의 수량을 입력해주세요.)", ConsoleColor.Green);
             logo.PrintMessage(0, (int)Constants.EditMenu.FIRST, "☞도서명  : " + book.Name, ConsoleColor.Gray);
             logo.PrintMessage(0, (int)Constants.EditMenu.SECOND, "☞저자    : " + book.Author, ConsoleColor.Gray);
             logo.PrintMessage(0, (int)Constants.EditMenu.THIRD, "☞출판사  : " + book.Publisher, ConsoleColor.Gray);
@@ -215,10 +215,9 @@ namespace Library
         }
         public void PrintLogManagemnet(List<LogVO> logList)
         {
-            logo.PrintMenu("로그 기록");
+            logo.PrintSearchBox("로그 기록", "☞삭제할 로그 번호:", "로그 기록 조회");
             PrintLogList(logList);
             Console.WindowTop = 0;
-            Console.CursorVisible = Constants.IS_INVISIBLE_CURSOR;
         }
         public void PrintNoLogRecord()
         {

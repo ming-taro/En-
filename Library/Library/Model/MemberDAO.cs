@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,8 @@ namespace Library
     {
         private static MemberDAO memberDAO;
         private string connectionString;
+        private MySqlConnection connection;
+        private MySqlCommand command;
         private MemberDAO()
         {
             connectionString = Constants.SERVER + Constants.PORT + Constants.DATABASE + Constants.ID + Constants.PASSWORD;
@@ -23,13 +26,21 @@ namespace Library
             }
             return memberDAO;
         }
+        private void OpenConnection()
+        {
+            if(connection == null || connection.State != ConnectionState.Open)
+            {
+                connection = new MySqlConnection(connectionString);
+                connection.Open();
+
+            }
+        }
         public AdminVO GetAdminAccount()   //관리자 계정
         {
             AdminVO admin;
 
-            MySqlConnection connection = new MySqlConnection(connectionString);
-            connection.Open();
-            MySqlCommand command = new MySqlCommand(Constants.ADMIN_ACCOUNT, connection);
+            OpenConnection();
+            command = new MySqlCommand(Constants.ADMIN_ACCOUNT, connection);
             MySqlDataReader table = command.ExecuteReader();
 
             table.Read();
@@ -43,9 +54,8 @@ namespace Library
         {
             MemberVO member;
 
-            MySqlConnection connection = new MySqlConnection(connectionString);
-            connection.Open();
-            MySqlCommand command = new MySqlCommand(Constants.MEMBER_ACCOUNT, connection);
+            OpenConnection();
+            command = new MySqlCommand(Constants.MEMBER_ACCOUNT, connection);
             command.Parameters.Add(new MySqlParameter("@memberId", memberId));
 
             MySqlDataReader table = command.ExecuteReader();
@@ -59,9 +69,8 @@ namespace Library
         {
             List<MemberVO> memberList = new List<MemberVO>();
 
-            MySqlConnection connection = new MySqlConnection(connectionString);
-            connection.Open();
-            MySqlCommand command = new MySqlCommand(Constants.MEMBER_LIST, connection);
+            OpenConnection();
+            command = new MySqlCommand(Constants.MEMBER_LIST, connection);
             MySqlDataReader table = command.ExecuteReader();
 
             while (table.Read())
@@ -75,9 +84,8 @@ namespace Library
         }
         public bool IsExistingMember(string memberId, string password)  //입력된 정보가 존재하는 회원인지 확인
         {
-            MySqlConnection connection = new MySqlConnection(connectionString);
-            connection.Open();
-            MySqlCommand command = new MySqlCommand(Constants.MEMBER_CONFIRMATION, connection);
+            OpenConnection();
+            command = new MySqlCommand(Constants.MEMBER_CONFIRMATION, connection);
             command.Parameters.Add(new MySqlParameter("@memberId", memberId));
             command.Parameters.Add(new MySqlParameter("@password", password));
 
@@ -98,9 +106,8 @@ namespace Library
         }
         public bool IsDuplicateMemberId(string memberId)  //기존 회원의 아이디와 중복되는지 확인
         {
-            MySqlConnection connection = new MySqlConnection(connectionString);
-            connection.Open();
-            MySqlCommand command = new MySqlCommand(Constants.DUPLICATE_MEMBER_ID, connection);
+            OpenConnection();
+            command = new MySqlCommand(Constants.DUPLICATE_MEMBER_ID, connection);
             command.Parameters.Add(new MySqlParameter("@memberId", memberId));
 
             MySqlDataReader table = command.ExecuteReader();
@@ -120,9 +127,8 @@ namespace Library
         }
         public void AddToMemberList(string query, MemberVO member)   //회원목록에 회원정보 추가
         {
-            MySqlConnection connection = new MySqlConnection(connectionString);
-            connection.Open();
-            MySqlCommand command = new MySqlCommand(query, connection);
+            OpenConnection();
+            command = new MySqlCommand(query, connection);
             command.Parameters.Add(new MySqlParameter("@id", member.Id));
             command.Parameters.Add(new MySqlParameter("@password", member.Password));
             command.Parameters.Add(new MySqlParameter("@name", member.Name));
@@ -134,9 +140,8 @@ namespace Library
         }
         public void DeleteFromMemberList(string memberId)      //회원목록에서 회원정보 삭제
         {
-            MySqlConnection connection = new MySqlConnection(connectionString);
-            connection.Open();
-            MySqlCommand command = new MySqlCommand(Constants.DELETION_FROM_MEMBER_LIST, connection);
+            OpenConnection();
+            command = new MySqlCommand(Constants.DELETION_FROM_MEMBER_LIST, connection);
             command.Parameters.Add(new MySqlParameter("@memberId", memberId));
             command.ExecuteNonQuery();
             connection.Close();

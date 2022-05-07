@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,9 +12,12 @@ namespace Library
     {
         private static LogDAO logDAO;
         private string connectionString;
+        private MySqlConnection connection;
+        private MySqlCommand command;
         private LogDAO()
         {
             connectionString = Constants.SERVER + Constants.PORT + Constants.DATABASE + Constants.ID + Constants.PASSWORD;
+            connection = new MySqlConnection(connectionString);
         }
         public static LogDAO GetInstance()
         {
@@ -23,13 +27,21 @@ namespace Library
             }
             return logDAO;
         }
+        private void OpenConnection()
+        {
+            if (connection == null || connection.State != ConnectionState.Open)
+            {
+                connection = new MySqlConnection(connectionString);
+                connection.Open();
+
+            }
+        }
         public List<LogVO> GetLogList()
         {
             List<LogVO> logList = new List<LogVO>();
 
-            MySqlConnection connection = new MySqlConnection(connectionString);
-            connection.Open();
-            MySqlCommand command = new MySqlCommand(Constants.LOG_LIST, connection);
+            OpenConnection();
+            command = new MySqlCommand(Constants.LOG_LIST, connection);
             MySqlDataReader table = command.ExecuteReader();
 
             int number = 1;
@@ -89,16 +101,14 @@ namespace Library
         }
         public void InitializeLogTable()
         {
-            MySqlConnection connection = new MySqlConnection(connectionString);
-            connection.Open();
-            MySqlCommand command = new MySqlCommand(Constants.LOG_INITIALIZATION, connection);
+            OpenConnection();
+            command = new MySqlCommand(Constants.LOG_INITIALIZATION, connection);
             command.ExecuteNonQuery();
         }
         public void StartNonQuery(string user, string menu, string content)
         {
-            MySqlConnection connection = new MySqlConnection(connectionString);
-            connection.Open();
-            MySqlCommand command = new MySqlCommand(Constants.UPDATE_TO_LOG, connection);
+            OpenConnection();
+            command = new MySqlCommand(Constants.UPDATE_TO_LOG, connection);
             command.Parameters.Add(new MySqlParameter("@user", user));
             command.Parameters.Add(new MySqlParameter("@menu", menu));
             command.Parameters.Add(new MySqlParameter("@content", content));

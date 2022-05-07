@@ -144,8 +144,8 @@ namespace Library
         {
             if(book.Name == "" || book.Author == "" || book.Publisher == "" || book.PublicationDate == "" || book.Isbn == "" || book.Price == "" || book.Quantity == "")
             {
-                logo.PrintMessage((int)Constants.EditMenu.MESSAGE, (int)Constants.EditMenu.ZERO, "                              (책소개 외의 항목은 필수입력정보입니다.)", ConsoleColor.Red);
-                return Constants.IS_NOT_REGISTERABLE;
+                logo.PrintMessage((int)Constants.EditMenu.LEFT, (int)Constants.EditMenu.MESSAGE, "                               (책소개 외의 항목은 필수입력정보입니다.)", ConsoleColor.Red);
+                return Constants.IS_NOT_REGISTERABLE; 
             }
 
             return Constants.IS_REGISTERABLE;
