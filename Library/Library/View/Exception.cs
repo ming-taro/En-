@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Library
 {
-    class Exception
+    class Exception//---------->삭제할 클래스
     {
         public void PrintMessage(int left, int top, string message)
         {
@@ -36,29 +36,9 @@ namespace Library
         {
             PrintMessage(left, top, "(1~50자 이내의 문자를 입력해주세요.)                         ");
         }
-        public void PrintPublisherRegex(int left, int top)
-        {
-            PrintMessage(left, top, "(1~50자 이내의 문자를 입력해주세요.)                         ");
-        }
-        public void PrintAuthorRegex(int left, int top)
-        {
-            PrintMessage(left, top , "(50자 이내의 영어, 한글만 입력해주세요.)                            ");
-        }
-        public void PrintPriceRegex(int left, int top)
-        {
-            PrintMessage(left, top, "(0이상의 숫자를 10자 이내로 다시 입력해주세요.)                    )");
-        }
-        public void PrintQuantityRegex(int left, int top)
-        {
-            PrintMessage(left, top, "(1~99사이의 숫자만 가능합니다. 다시 입력해주세요.)                            ");
-        }
         public void PrintBookNotInList(int left, int top)
         {
             PrintMessage(left, top, "(현재 조회 목록에 없는 도서입니다. 다시 입력해주세요.)           ");
-        }
-        public void PrintDuplicateBookId(int left, int top)
-        {
-            PrintMessage(left, top, "(이미 사용중인 도서번호입니다. 다시 입력해주세요.)    ");
         }
         public void PrintNumberOfBook(int left, int top)
         {
