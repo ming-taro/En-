@@ -35,7 +35,7 @@ namespace Library
 
             signIn = new SignIn(text, logo);
             signUp = new SignUp(text, logo, memberView);
-            bookSearch = new BookSearch(text, adminView, exception);
+            bookSearch = new BookSearch(text, adminView, logo);
             bookRental = new BookRental(text, memberView, logo);
             bookReturn = new BookReturn(text, memberView, logo);
             profileEdition = new ProfileEdition(memberView);
@@ -45,7 +45,7 @@ namespace Library
             switch (menu)
             {
                 case (int)Constants.Menu.FIRST:  //도서검색
-                    bookSearch.SearchBook(member.Id, keyboard);
+                    bookSearch.ManageBookSearch(member.Id, keyboard);
                     break;
                 case (int)Constants.Menu.SECOND: //도서대출
                     bookRental.SearchBookToBorrow(member.Id, bookSearch, keyboard);

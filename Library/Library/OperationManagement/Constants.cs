@@ -50,9 +50,8 @@ namespace Library
         public const bool IS_REGISTERABLE = true;
         public const bool IS_NOT_REGISTERABLE = false;
 
-        public const string ESC_AND_ENTER = "                          [ESC]:뒤로가기    [ENTER]:다시 검색";//--->삭제할 코드
-        public const string ESC_MESSAGE = "                                              [ESC]:뒤로가기";//--->삭제할 코드
-        public const string REMOVE_LINE = "                                                             ";//--->삭제할 코드
+        public const bool HAS_ROW = true;
+        public const bool NOT_HAS_ROW = false;
 
         //EnteringText
         public const bool IS_MODIFIERS = true;
@@ -110,7 +109,7 @@ namespace Library
         public const string RENTAL_LIST = "select * from book join bookRentalList on book.isbn = bookRentalList.isbn and bookRentalList.memberId = @memberId;";
         public const string RENTAL_LIST_INQUIRY = "select * from book join bookRentalList on book.isbn = bookRentalList.isbn;";
         public const string ADDITION_TO_RENTAL_LIST = "INSERT INTO bookRentalList(memberId, isbn, rentalPeriod) VALUES (@memberId, @isbn, @rentalPeriod);";
-        public const string DELETION_FROM_RENTAL_LIST = "DELETE FROM bookRentalList WHERE memberId = @memberId and isbn = @isbn;";
+        public const string DELETION_FROM_RENTAL_LIST = "DELETE FROM bookRentalList WHERE memberId = @memberId and rentalPeriod = @rentalPeriod;";
         public const string DECREASE_IN_BOOK_QUANTITY = "UPDATE book SET quantity = quantity - 1 WHERE isbn=@isbn;";
         public const string INCREASE_IN_BOOK_QUANTITY = "UPDATE book SET quantity = quantity + 1 WHERE isbn=@isbn;";
 
@@ -124,7 +123,7 @@ namespace Library
         public const string UPDATE_TO_MEMBER_LIST = "UPDATE member SET password=@password, name=@name, age=@age, phoneNumber=@phoneNumber, address=@address WHERE id=@id";
         public const string UPDATE_ON_MEMBER_ID = "UPDATE member SET id=@id WHERE id=@memberId;";
         public const string MEMBER_LIST = "select*from member;";
-        public const string MEMBER_BORROWING_BOOK = "select memberId from borrowbook where memberId = @memberId;";
+        public const string MEMBER_WHO_BORROWED_BOOK = "select memberId from bookRentalList where memberId = @memberId;";
         public const string DELETION_FROM_MEMBER_LIST = "DELETE FROM member WHERE id = @memberId;";
 
         public const string BOOK_ON_LOAN = "select isbn from bookRentalList where isbn = @isbn;";

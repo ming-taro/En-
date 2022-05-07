@@ -14,13 +14,13 @@ namespace Library
         private LogDAO logDAO = LogDAO.GetInstance();
         private EnteringText text;
         private AdminView adminView;
-        private Exception exception;
+        private Logo logo;
         private List<BookDTO> bookList;
-        public BookSearch(EnteringText text, AdminView adminView, Exception exception)
+        public BookSearch(EnteringText text, AdminView adminView, Logo logo)
         {
             this.text = text;
             this.adminView = adminView;
-            this.exception = exception;
+            this.logo = logo;
         }
         public List<BookDTO> BookList
         {
@@ -32,24 +32,20 @@ namespace Library
 
             while (Constants.INPUT_VALUE)
             {
-                searchWord = text.EnterText(left, top, "");                           //(도서명/출판사/저자)를 입력 받음
-                bookList = bookDAO.MakeBookList(top, searchWord);             //검색결과(커서의 top값 == 검색유형)
+                searchWord = text.EnterText(left, top, "");                  //(도서명/출판사/저자)를 입력 받음
+                bookList = bookDAO.GetBookList(top, searchWord);             //검색결과(커서의 top값 == 검색유형)
 
-                if (searchWord.Equals(Constants.ESC))   //검색어 입력도중 ESC -> 뒤로가기
+                if(searchWord.Equals(Constants.ESC) == Constants.IS_NOT_MATCH && Regex.IsMatch(searchWord, Constants.BOOK_NAME_REGEX) == Constants.IS_NOT_MATCH)  //입력형식에 맞지 않은 검색어 입력
                 {
-                    return Constants.ESC;
+                    logo.PrintMessage((int)Constants.SearchMenu.LEFT, exceptionTop, "(1~50자 이내의 문자를 입력해주세요.)                         ", ConsoleColor.Red);
                 }
-                else if(Regex.IsMatch(searchWord, Constants.BOOK_NAME_REGEX) == Constants.IS_NOT_MATCH)  //입력형식에 맞지 않은 검색어 입력
+                else if(searchWord.Equals(Constants.ESC) == Constants.IS_NOT_MATCH && bookList.Count == 0)
                 {
-                    exception.PrintBookNameRegex((int)Constants.SearchMenu.LEFT, exceptionTop);
-                }
-                else if(bookList.Count == 0)
-                {
-                    exception.PrintBookNotInList((int)Constants.SearchMenu.LEFT, exceptionTop);
+                    logo.PrintMessage((int)Constants.SearchMenu.LEFT, exceptionTop, "(현재 조회 목록에 없는 도서입니다. 다시 입력해주세요.)           ", ConsoleColor.Red);
                 }
                 else break;
 
-                exception.RemoveLine(left, top);
+                logo.RemoveLine(left, top);
             }
 
             return searchWord;  //검색어 반환
@@ -58,7 +54,7 @@ namespace Library
         {
             int searchType;
 
-            adminView.PrintBookSearch(bookDAO.MakeBookList((int)Constants.SearchMenu.ALL, ""));  //도서검색화면 + 전체 도서목록
+            adminView.PrintBookSearch(bookDAO.GetBookList((int)Constants.SearchMenu.ALL, ""));  //도서검색화면 + 전체 도서목록
             
             keyboard.SetPosition((int)Constants.SearchMenu.LEFT, (int)Constants.SearchMenu.FIRST);    //커서위치
             searchType = keyboard.SelectMenu((int)Constants.SearchMenu.FIRST, (int)Constants.SearchMenu.THIRD, (int)Constants.SearchMenu.STEP);               //메뉴선택
@@ -66,7 +62,7 @@ namespace Library
 
             return keyboard.Top;    //Enter를 누른 시점의 커서의 top값으로 선택한 검색유형을 알 수 있음
         }
-        public void SearchBook(string memberId, Keyboard keyboard)
+        public void ManageBookSearch(string memberId, Keyboard keyboard)
         {
             int searchType;
             string searchWord;

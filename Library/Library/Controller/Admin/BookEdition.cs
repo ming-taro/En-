@@ -32,11 +32,7 @@ namespace Library
             {
                 bookId = text.EnterText(left, top, "");       //도서번호를 입력받음
 
-                if (bookId.Equals(Constants.ESC))
-                {
-                    return Constants.ESC;
-                }
-                else if (Regex.IsMatch(bookId, Constants.BOOK_ID_REGEX) == Constants.IS_NOT_MATCH || Int32.Parse(bookId) < 1 || Int32.Parse(bookId) > bookList.Count)  //입력형식에 맞지 않은 입력
+                if (bookId.Equals(Constants.ESC) == Constants.IS_NOT_MATCH && (Regex.IsMatch(bookId, Constants.BOOK_ID_REGEX) == Constants.IS_NOT_MATCH || Int32.Parse(bookId) < 1 || Int32.Parse(bookId) > bookList.Count))  //입력형식에 맞지 않은 입력
                 {
                     logo.PrintMessage(exceptionLeft, exceptionTop, "(현재 조회 목록에 없는 도서입니다. 다시 입력해주세요.)", ConsoleColor.Red);
                 }

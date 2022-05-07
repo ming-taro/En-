@@ -33,7 +33,7 @@ namespace Library
             exception = new Exception();
 
             signIn = new SignIn(text, logo);
-            bookSearch = new BookSearch(text, adminView, exception);
+            bookSearch = new BookSearch(text, adminView, logo);
             bookRegistration = new BookRegistration(text, adminView, logo);
             bookEdition = new BookEdition(text, adminView, logo);
             bookDeletion = new BookDeletion(text, adminView, logo);
@@ -46,7 +46,7 @@ namespace Library
             switch (menu)
             {
                 case (int)Constants.Menu.FIRST:  //도서 이름 검색 
-                    bookSearch.SearchBook("12345", keyboard);
+                    bookSearch.ManageBookSearch("12345", keyboard);
                     break;
                 case (int)Constants.Menu.SECOND:  //도서 등록
                     bookRegistration.ManageBookRegistration(keyboard);

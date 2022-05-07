@@ -42,22 +42,15 @@ namespace Library
             {
                 memberId = text.EnterText(left, top, "");     //삭제할 회원 아이디를 입력받음
 
-                if (memberId.Equals(Constants.ESC))           //회원아이디 입력 중 Esc -> 뒤로가기
-                {
-                    return Constants.ESC;
-                }
-                else if (IsMemberInList(memberId, memberList) == Constants.IS_MEMBER_NOT_IN_LIST)   //존재하지 않는 회원을 삭제하려고 할 때
+                if (memberId.Equals(Constants.ESC) == Constants.IS_NOT_MATCH && IsMemberInList(memberId, memberList) == Constants.IS_MEMBER_NOT_IN_LIST)   //존재하지 않는 회원을 삭제하려고 할 때
                 {
                     logo.PrintMessage(exceptionLeft, exceptionTop, "(존재하지 않는 회원입니다.)                     ", ConsoleColor.Red);
                 }
-                else if (bookDAO.IsMemberBorrowingBook(memberId))  //해당 회원은 도서를 대여중 -> 삭제불가
+                else if (memberId.Equals(Constants.ESC) == Constants.IS_NOT_MATCH && bookDAO.IsMemberWhoBorrowedBook(memberId))  //해당 회원은 도서를 대여중 -> 삭제불가
                 {
                     logo.PrintMessage(exceptionLeft, exceptionTop, "(도서를 대여중인 회원은 삭제가 불가능합니다.)", ConsoleColor.Red);
                 }
-                else
-                {
-                    break;
-                }
+                else break;
 
                 logo.RemoveLine(left, top);
             }

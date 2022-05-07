@@ -58,20 +58,15 @@ namespace Library
                 logo.RemoveLine(left, top);
                 bookName = text.EnterText(left, top, "");        //도서명을 입력 받음
 
-                if (bookName.Equals(Constants.ESC))
-                {
-                    return Constants.ESC;
-                }
-                else if (Regex.IsMatch(bookName, regexText) == Constants.IS_NOT_MATCH)  //입력형식에 맞지 않은 입력
+                if (bookName.Equals(Constants.ESC) == Constants.IS_NOT_MATCH && Regex.IsMatch(bookName, regexText) == Constants.IS_NOT_MATCH)  //입력형식에 맞지 않은 입력
                 {
                     PrintErrorMessage(left, top + 1, regexText);
                 }
-                else
-                {
-                    logo.RemoveLine(0, top + 1);
-                    break;
-                }
+                else break;
             }
+
+            if (bookName.Equals(Constants.ESC)) logo.RemoveLine(left, top); //입력 중 Esc -> 입력값 지움
+            else logo.RemoveLine(left, top + 1);  //알맞은 값 입력 -> 예외메세지 지움
 
             return bookName;
         }

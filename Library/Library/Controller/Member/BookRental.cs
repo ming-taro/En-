@@ -15,7 +15,8 @@ namespace Library
         private EnteringText text;
         private MemberView memberView;
         private Logo logo;
-        
+        private List<BookDTO> myBookList;
+
         public BookRental(EnteringText text, MemberView memberView, Logo logo)
         {
             this.text = text;
@@ -61,13 +62,22 @@ namespace Library
             }
             return bookId;
         }
+        private void SaveRentalBook(string memberId, string bookId, List<BookDTO> bookList)
+        {
+            int bookIndex = Int32.Parse(bookId) - 1;
+
+            bookDAO.AddToRentalList(memberId, bookList[bookIndex].Isbn);   //도서대출목록DB에 회원아이디,대출도서isbn,대출기간 저장
+            myBookList = bookDAO.GetMyBookList(Constants.RENTAL_LIST, memberId);         //변경된 현재 로그인한 회원의 도서대여목록
+            logDAO.AddToRentalList(memberId, myBookList[myBookList.Count - 1].Name);     //로그DB에 도서 대출기록 저장
+        }
         public void SearchBookToBorrow(string memberId, BookSearch bookSearch, Keyboard keyboard)
         {
             int searchType;        //검색유형
             string searchWord;     //검색어
             string bookId;         //도서번호
             List<BookDTO> bookList;
-            List<BookDTO> myBookList = bookDAO.GetMyBookList(Constants.RENTAL_LIST, memberId); //현재 로그인한 회원의 도서대여목록
+            
+            myBookList = bookDAO.GetMyBookList(Constants.RENTAL_LIST, memberId); //현재 로그인한 회원의 도서대여목록
 
             while (Constants.INPUT_VALUE)
             {
@@ -83,11 +93,9 @@ namespace Library
                 bookId = InputBookId(bookList, myBookList);    //도서번호를 입력받음
                 if (bookId.Equals(Constants.ESC)) continue;    //도서번호 입력 중 esc -> 다시 도서검색으로
 
-                bookDAO.AddToRentalList(memberId, bookList[Int32.Parse(bookId) - 1].Isbn);   //도서대출목록DB에 회원아이디,대출도서isbn,대출기간 저장
-                myBookList = bookDAO.GetMyBookList(Constants.RENTAL_LIST, memberId);         //변경된 현재 로그인한 회원의 도서대여목록
-                logDAO.AddToRentalList(memberId, myBookList[myBookList.Count - 1].Name);     //도서 대출기록 로그에 저장
-                memberView.PrintBookRentalSuccess(myBookList); //회원의 대여목록 출력
+                SaveRentalBook(memberId, bookId, bookList);    //도서 대여 정보 저장
 
+                memberView.PrintBookRentalSuccess(myBookList);                           //회원의 대여목록 출력
                 if (keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break; //Esc->뒤로가기, Enter->재검색
                 Console.CursorVisible = Constants.IS_VISIBLE_CURSOR;
             }

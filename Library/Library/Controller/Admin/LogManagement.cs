@@ -57,6 +57,8 @@ namespace Library
             if (logList.Count == 0)             //로그기록이 없는 경우 기록 없음 문구만 출력
             {
                 adminView.PrintNoLogRecord();
+                keyboard.PressESC();
+                Console.CursorVisible = Constants.IS_VISIBLE_CURSOR;
                 return;
             }
 

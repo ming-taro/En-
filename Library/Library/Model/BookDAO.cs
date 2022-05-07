@@ -36,7 +36,7 @@ namespace Library
 
             }
         }
-        public List<BookDTO> MakeBookList(int searchType, string searchWord)  //검색 결과 도서목록
+        public List<BookDTO> GetBookList(int searchType, string searchWord)  //검색 결과 도서목록
         {
             List<BookDTO> bookList = new List<BookDTO>();
             string query = "";
@@ -96,44 +96,37 @@ namespace Library
 
             return myBookList;
         }
-        public bool IsMemberBorrowingBook(string memberId)  //회원이 도서를 대여중인지 확인
+        public bool HasRows()
         {
-            OpenConnection();
-            command = new MySqlCommand(Constants.MEMBER_BORROWING_BOOK, connection);
-            command.Parameters.Add(new MySqlParameter("@memberId", memberId));
-
+            bool has_rows = Constants.NOT_HAS_ROW;
             MySqlDataReader table = command.ExecuteReader();
             table.Read();
-            if (table.HasRows)
-            {
-                table.Close();
-                connection.Close();
-                return Constants.IS_MEMBER_BORROWING_BOOK;
-            }
-            else
-            {
-                table.Close();
-                connection.Close();
-                return Constants.IS_MEMBER_NOT_BORROWING_BOOK;
-            }
+
+            if (table.HasRows) has_rows = Constants.HAS_ROW;
+
+            table.Close();
+            connection.Close();
+
+            return has_rows;
         }
+        public bool IsMemberWhoBorrowedBook(string memberId)  //회원이 도서를 대여중인지 확인
+        {
+            OpenConnection();
+            command = new MySqlCommand(Constants.MEMBER_WHO_BORROWED_BOOK, connection);
+            command.Parameters.Add(new MySqlParameter("@memberId", memberId));
+
+            if(HasRows()) return Constants.IS_MEMBER_BORROWING_BOOK;
+            return Constants.IS_MEMBER_NOT_BORROWING_BOOK;
+        }
+        
         public bool IsDuplicateBookId(string bookId)   //입력한 도서번호가 중복된 아이디인지 검사---->isbn으로 수정해야함
         {
             OpenConnection();
             command = new MySqlCommand(Constants.DUPLICATE_BOOK_ID, connection);
             command.Parameters.Add(new MySqlParameter("@bookId", bookId));
 
-            MySqlDataReader table = command.ExecuteReader();
-            if (table.HasRows)
-            {
-                table.Close();
-                connection.Close();
-                return Constants.IS_DUPLICATE_ID;  //이미 존재하는 아이디
-            }
-
-            table.Close();
-            connection.Close();
-            return Constants.IS_NON_DUPLICATE_ID;  //중복없는 아이디 -> 입력가능
+            if (HasRows()) return Constants.IS_DUPLICATE_ID;  //이미 존재하는 아이디
+            return Constants.IS_NON_DUPLICATE_ID;             //중복없는 아이디 -> 입력가능
         }
         public bool IsBookOnLoan(string isbn)   //해당 도서를 대여중인 회원이 있는지 확인
         {
@@ -141,17 +134,8 @@ namespace Library
             command = new MySqlCommand(Constants.BOOK_ON_LOAN, connection);
             command.Parameters.Add(new MySqlParameter("@isbn", isbn));
 
-            MySqlDataReader table = command.ExecuteReader();
-            if (table.HasRows)
-            {
-                table.Close();
-                connection.Close();
-                return Constants.IS_BOOK_ON_LOAN;     //대여중인 회원이 있는 도서 -> 삭제 불가
-            }
-
-            table.Close();
-            connection.Close();
-            return Constants.IS_BOOK_NOT_ON_LOAN;   //대여한 회원이 없는 도서 -> 삭제 가능
+            if (HasRows()) return Constants.IS_BOOK_ON_LOAN;    //대여중인 회원이 있는 도서 -> 삭제 불가
+            return Constants.IS_BOOK_NOT_ON_LOAN;               //대여한 회원이 없는 도서 -> 삭제 가능
         }
 
         public void AddToRentalList(string memberId, string isbn)  //대여목록 추가
@@ -160,7 +144,7 @@ namespace Library
             command = new MySqlCommand(Constants.ADDITION_TO_RENTAL_LIST, connection);  //대여목록에 추가
             command.Parameters.Add(new MySqlParameter("@memberId", memberId));
             command.Parameters.Add(new MySqlParameter("@isbn", isbn));
-            command.Parameters.Add(new MySqlParameter("@rentalPeriod", DateTime.Now.ToString("yyyy.MM.dd") + " ~ " + DateTime.Now.AddDays(14).ToString("yyyy.MM.dd")));
+            command.Parameters.Add(new MySqlParameter("@rentalPeriod", DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + " ~ " + DateTime.Now.AddDays(14).ToString("yyyy/MM/dd HH:mm:ss")));
             command.ExecuteNonQuery();
 
             command = new MySqlCommand(Constants.DECREASE_IN_BOOK_QUANTITY, connection);   //도서수량 -1
@@ -168,12 +152,12 @@ namespace Library
             command.ExecuteNonQuery();
             connection.Close();
         }
-        public void DeleteFromRentalList(string memberId, string isbn) //대여도서 반납 후 대여목록에서 삭제
+        public void DeleteFromRentalList(string memberId, string rentalPeriod, string isbn) //대여도서 반납 후 대여목록에서 삭제
         {
             OpenConnection();
             command = new MySqlCommand(Constants.DELETION_FROM_RENTAL_LIST, connection); //대여목록에서 삭제
             command.Parameters.Add(new MySqlParameter("@memberId", memberId));
-            command.Parameters.Add(new MySqlParameter("@isbn", isbn));
+            command.Parameters.Add(new MySqlParameter("@rentalPeriod", rentalPeriod));
             command.ExecuteNonQuery();
 
             command = new MySqlCommand(Constants.INCREASE_IN_BOOK_QUANTITY, connection);   //도서수량 +1
