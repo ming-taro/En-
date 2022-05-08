@@ -2,45 +2,49 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class MainPage extends JFrame {
+public class SearchResult extends JFrame {
 	private JButton searchButton;
-	private JButton searchRecordButton;
+	private JButton homeButton;
 	private JTextField searchField;
 	private MyListener listener;
 	
-	public MainPage() {
-		Font font = new Font("SansSerif", Font.BOLD, 20);
-		listener = new MyListener();
-
+	public SearchResult() {
 		setTitle("Image Search");
 		setBounds(450, 150, 800, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+		listener = new MyListener();
+		addSearchPanel();
+		setVisible(true);
+	}
+	
+	public void addSearchPanel() {
+
+		Font font = new Font("SansSerif", Font.BOLD, 20);
+
 		JPanel searchPanel = new JPanel();
 		searchPanel.setLayout(null);
 		searchPanel.setBackground(Color.white);
 		add(searchPanel);
 		
 		searchField = new JTextField();   //검색어 입력창
-		searchField.setBounds(150, 270, 450, 50);
+		searchField.setBounds(70, 10, 650, 50);
 		searchField.setFont(font);
 		
 		searchButton = new JButton();
-		searchButton.setBounds(600, 270, 50, 50);
+		searchButton.setBounds(730, 10, 50, 50);
 		
-		searchRecordButton = new JButton("검색 기록");
-		searchRecordButton.setBounds(620, 480, 130, 40);
-		searchRecordButton.setFont(font);
+		homeButton = new JButton("H");
+		homeButton.setBounds(10, 10, 50, 50);
+		homeButton.setFont(font);
 		
 		searchPanel.add(searchField);
 		searchPanel.add(searchButton);
-		searchPanel.add(searchRecordButton);
+		searchPanel.add(homeButton);
 
 		searchField.addActionListener(listener);
 		searchButton.addActionListener(listener);
-		searchRecordButton.addActionListener(listener);
+		homeButton.addActionListener(listener);
 		
-		setVisible(true);
 	}
 	
 	private class MyListener implements ActionListener{
