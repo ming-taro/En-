@@ -17,7 +17,6 @@ namespace Library
         private LogDAO()
         {
             connectionString = Constants.SERVER + Constants.PORT + Constants.DATABASE + Constants.ID + Constants.PASSWORD;
-            connection = new MySqlConnection(connectionString);
         }
         public static LogDAO GetInstance()
         {

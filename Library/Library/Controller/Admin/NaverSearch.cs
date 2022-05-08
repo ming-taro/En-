@@ -16,16 +16,14 @@ namespace Library
         private LogDAO logDAO = LogDAO.GetInstance();
         private EnteringText text;
         private AdminView adminView;
-        private Exception exception;
         private Logo logo;
         private List<BookDTO> bookList;
         private string searchWord;
         private string numberOfBook;
-        public NaverSearch(EnteringText text, AdminView adminView, Exception exception, Logo logo)
+        public NaverSearch(EnteringText text, AdminView adminView, Logo logo)
         {
             this.text = text;
             this.adminView = adminView;
-            this.exception = exception;
             this.logo = logo;
             bookList = new List<BookDTO>();
         }
@@ -76,7 +74,7 @@ namespace Library
 
             while (Constants.INPUT_VALUE)
             {
-                exception.RemoveLine(left, top);
+                logo.RemoveLine(left, top);
                 searchWord = text.EnterText(left, top, "");                                          //(도서명/출판사/저자)를 입력 받음
 
                 if (searchWord.Equals(Constants.ESC))
@@ -86,7 +84,7 @@ namespace Library
                 }
                 else if (Regex.IsMatch(searchWord, Constants.BOOK_NAME_REGEX) == Constants.IS_NOT_MATCH)  //입력형식에 맞지 않은 입력
                 {
-                    exception.PrintBookNameRegex(left, top + 1);
+                    logo.PrintMessage(left, top + 1, "(1~50자 이내의 문자를 입력해주세요.)                         ", ConsoleColor.Red);
                     continue;
                 }
                 
@@ -112,7 +110,7 @@ namespace Library
                 }
                 else if (Regex.IsMatch(numberOfBook, Constants.DISPLAY_REGEX) == Constants.IS_NOT_MATCH)  //입력형식에 맞지 않은 입력
                 {
-                    exception.PrintNumberOfBook(left, top + 1);   //예외메세지 + 검색어를 다시 입력받음
+                    logo.PrintMessage(left, top + 1, "(1~100 사이의 숫자를 입력해주세요.)                    ", ConsoleColor.Red);   //예외메세지 + 검색어를 다시 입력받음
                     continue;
                 }
 
@@ -152,14 +150,6 @@ namespace Library
                     break;
             }
         }
-        private bool IsBookInList(string bookId)
-        {
-            for (int i = 0; i < bookList.Count; i++)
-            {
-                if (bookList[i].Id.Equals(bookId)) return Constants.IS_BOOK_IN_LIST;
-            }
-            return Constants.IS_BOOK_NOT_IN_LIST;
-        }
         private string InputBookId()
         {
             int left = (int)Constants.InputField.LEFT;
@@ -170,21 +160,21 @@ namespace Library
 
             while (Constants.INPUT_VALUE)
             {
-                exception.RemoveLine(left, top);
+                logo.RemoveLine(left, top);
                 bookId = text.EnterText(left, top, "");                       //(도서명/출판사/저자)를 입력 받음
 
                 if (bookId.Equals(Constants.ESC))   //검색어 입력도중 ESC -> 뒤로가기
                 {
-                    exception.RemoveLine(left, top);
+                    logo.RemoveLine(left, top);
                     return Constants.ESC;
                 }
-                else if (Regex.IsMatch(bookId, Constants.BOOK_ID_REGEX) == Constants.IS_NOT_MATCH)  //입력형식에 맞지 않은 입력
+                else if (Regex.IsMatch(bookId, Constants.BOOK_ID_REGEX) == Constants.IS_NOT_MATCH || Int32.Parse(bookId) < 1 || Int32.Parse(bookId) > bookList.Count)  //입력형식에 맞지 않은 입력
                 {
-                    exception.PrintBookIdRegex(exceptionLeft, exceptionTop);
+                    logo.PrintMessage(exceptionLeft, exceptionTop, "(현재 조회목록에 없는 도서번호입니다.)", ConsoleColor.Red);
                 }
-                else if (IsBookInList(bookId) == Constants.IS_BOOK_NOT_IN_LIST)
+                else if(bookDAO.IsAlreadyExistingISBN(bookList[Int32.Parse(bookId) - 1].Isbn))
                 {
-                    exception.PrintBookNotInList(exceptionLeft, exceptionTop);
+                    logo.PrintMessage(exceptionLeft, exceptionTop, "(이미 등록된 도서입니다.)               ", ConsoleColor.Red);
                 }
                 else break;
             }
@@ -213,7 +203,6 @@ namespace Library
             if (quantity.Equals(Constants.ESC)) return;  //도서수량 입력 중 Esc -> 종료
 
             book.Quantity = quantity;
-            Console.Read();
             if (book.BookIntroduction.Length > 120) book.BookIntroduction = book.BookIntroduction.Substring(0, 100) + "...";
             
             bookDAO.AddToBookList(Constants.ADDITION_TO_BOOK_LIST, book);  //DB에 도서정보 저장

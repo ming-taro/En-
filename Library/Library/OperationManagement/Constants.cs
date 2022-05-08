@@ -53,6 +53,9 @@ namespace Library
         public const bool HAS_ROW = true;
         public const bool NOT_HAS_ROW = false;
 
+        public const bool IS_DUPLICATE_ISBN = true;
+        public const bool IS_AVAILABLE_ISBN = false;
+
         //EnteringText
         public const bool IS_MODIFIERS = true;
         public const bool IS_NOT_MODIFIERS = false;
@@ -80,12 +83,6 @@ namespace Library
         public const string ADDRESS_REGEX = @"([가-힣]+(시|도)\s[가-힣]+(시|군|구)\s[가-힣]+(읍|면)\s[가-힣0-9]+(로|길)\s[0-9])|([가-힣]+(시|도)\s[가-힣]+(시|군|구)\s[가-힣0-9]+(로|길)\s[0-9])";
         
         //입력 오류 메세지
-        public const string MESSAGE_ABOUT_BOOK_ID_NOT_MATCH = "(0~999사이의 숫자가 아닙니다.다시 입력해주세요.)               ";
-        public const string MESSAGE_ABOUT_BOOK_NOT_IN_LIST = "(현재 조회 목록에 없는 도서입니다. 다시 입력해주세요.)           ";
-        public const string MESSAGE_ABOUT_BOOK_I_BORROWED = "(이미 대여중인 도서입니다. 다른 도서를 선택해주세요.)                  ";
-        public const string MESSAGE_ABOUT_QUANTITY_ZERO = "(대여가능한 도서가 0권입니다. 다른 도서를 선택해주세요.)              ";
-        public const string MESSAGE_ABOUT_BOOK_I_NEVER_BORROWED = "(대여목록에 없는 도서번호입니다. 다시 입력해주세요.)             ";
-        public const string MESSAGE_ABOUT_DUPLICATE_BOOK_ID = "(이미 사용중인 도서번호입니다. 다시 입력해주세요.)    ";
 
         public const string MESSAGE_ABOUT_MEMBER_ID = "(5~10자의 영어, 숫자만 다시 입력해주세요.)         ";
         public const string MESSAGE_ABOUT_DUPLICATE_ID = "(이미 사용중인 아이디입니다. 다시 입력해주세요.)    ";
@@ -95,10 +92,6 @@ namespace Library
         public const string MESSAGE_ABOUT_AGE = "(1~99세까지 입력 가능합니다.)                ";
         public const string MESSAGE_ABOUT_PHONE_NUMBER = "(양식에 맞춰 다시 입력해주세요.(ex: 010-0000-0000))              ";
         public const string MESSAGE_ABOUT_ADDRESS = "(양식에 맞춰 입력해주세요.(ex: 서울특별시 광진구 군자동))       ";
-
-        public const string MESSAGE_ABOUT_MEMBER_NOT_IN_LIST = "(존재하지 않는 회원입니다.)                     ";
-        public const string MESSAGE_ABOUT_MEMBER_BORROWING_BOOK = "(도서를 대여중인 회원은 삭제가 불가능합니다.)   ";
-        public const string MESSAGE_ABOUT_BOOK_ON_LOAN = "(회원이 대여중인 도서는 삭제가 불가능합니다.)                 ";
 
         //쿼리
         public const string BOOK_LIST = "select*from book;";
@@ -127,7 +120,7 @@ namespace Library
         public const string DELETION_FROM_MEMBER_LIST = "DELETE FROM member WHERE id = @memberId;";
 
         public const string BOOK_ON_LOAN = "select isbn from bookRentalList where isbn = @isbn;";
-        public const string DUPLICATE_BOOK_ID = "select id from book where id = @bookId;";
+        public const string ISBN = "select isbn from book where isbn = @isbn;";
         public const string ADDITION_TO_BOOK_LIST = "INSERT INTO book VALUES (@name, @author, @publisher, @publicationDate, @isbn, @price, @quantity, @bookIntroduction);";
         public const string DELETION_FROM_BOOK_LIST = "DELETE FROM book WHERE isbn = @isbn;";
 

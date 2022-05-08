@@ -56,6 +56,12 @@ namespace Library
             }
             return memberId;
         }
+        public void SaveChanges(string memberId)
+        {
+            adminView.PrintDeletedMember(memberDAO.GetMemberAccount(memberId));  //삭제 성공 메세지 출력
+            memberDAO.DeleteFromMemberList(memberId);                            //회원리스트에서 회원 정보 삭제
+            logDAO.DeleteFromMemberList(memberId);                               //로그에 회원 삭제 기록 저장
+        }
         public void DeleteMember(Keyboard keyboard)
         {
             string memberId;
@@ -69,10 +75,8 @@ namespace Library
                 memberId = InputMemberId(memberList);                 //삭제할 회원 아이디를 입력받음
                 if (memberId.Equals(Constants.ESC)) break;
 
-                adminView.PrintDeletedMember(memberDAO.GetMemberAccount(memberId));  //삭제 성공 메세지 출력
-                memberDAO.DeleteFromMemberList(memberId);                      //회원리스트에서 회원 정보 삭제
-                logDAO.DeleteFromMemberList(memberId);
-
+                SaveChanges(memberId);  //변경사항 저장
+                
                 if(keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break;
                 Console.CursorVisible = Constants.IS_VISIBLE_CURSOR;
             }

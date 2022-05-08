@@ -36,23 +36,22 @@ namespace Library
         public void StartLibrary()  //메인화면
         {
             int key;
-            string[] menu = { "회원 모드", "관리자 모드", "종료" };
 
-            logo.PrintMain(menu);     //메인화면 출력
+            logo.PrintStartScreen();
             keyboard.InitCursorPosition();  //커서 위치 조정
 
             while (Constants.KEYBOARD_OPERATION)
             {
                 key = keyboard.SelectMenu((int)Constants.Menu.FIRST, (int)Constants.Menu.THIRD, (int)Constants.Menu.STEP);      //입력받은 키값
                 
-                if (key == (int)Constants.Keyboard.ESCAPE || key == (int)Constants.Keyboard.ENTER && keyboard.Top == (int)Constants.Menu.THIRD)     //프로그램 종료
+                if (key == (int)Constants.Keyboard.ENTER && keyboard.Top == (int)Constants.Menu.THIRD)     //프로그램 종료
                 {
                     break;
                 }
                 else if (key == (int)Constants.Keyboard.ENTER)   //메뉴입력 -> 해당 메뉴로 이동
                 {
                     StartMain(keyboard.Top);
-                    logo.PrintMain(menu);
+                    logo.PrintStartScreen();
                     keyboard.InitCursorPosition();  //커서 위치 조정
                 }
 

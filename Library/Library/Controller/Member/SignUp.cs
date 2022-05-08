@@ -59,11 +59,7 @@ namespace Library
                 logo.RemoveLine(left, top);
                 password = text.EnterText(left, top, "");  //비밀번호 입력
 
-                if (password.Equals(Constants.ESC))        //비밀번호 입력 중 Esc -> 뒤로가기
-                {
-                    return Constants.ESC;
-                }
-                else if (Regex.IsMatch(password, regexText) == Constants.IS_NOT_MATCH)   //입력형식에 맞지 않은 경우 -> 비밀번호 다시 입력
+                if (password.Equals(Constants.ESC) == Constants.IS_NOT_MATCH && Regex.IsMatch(password, regexText) == Constants.IS_NOT_MATCH)   //입력형식에 맞지 않은 경우 -> 비밀번호 다시 입력
                 {
                     logo.PrintMessage(0, top + 1, errorMessage, ConsoleColor.Red);
                 }
@@ -83,11 +79,7 @@ namespace Library
             {
                 reconfirm = text.EnterText(left, top, "");  //비밀번호 입력
 
-                if (reconfirm.Equals(Constants.ESC))        //비밀번호 확인 중 뒤로가기
-                {
-                    return Constants.ESC;
-                }
-                else if (password.Equals(reconfirm) == Constants.IS_NOT_MATCH)   //입력형식에 맞지 않은 경우 -> 비밀번호 다시 입력
+                if (reconfirm.Equals(Constants.ESC) == Constants.IS_NOT_MATCH && password.Equals(reconfirm) == Constants.IS_NOT_MATCH)   //입력형식에 맞지 않은 경우 -> 비밀번호 다시 입력
                 {
                     logo.PrintMessage(0, top + 1, Constants.MESSAGE_ABOUT_PASSWORD, ConsoleColor.Red);
                 }

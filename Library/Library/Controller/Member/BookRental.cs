@@ -70,7 +70,7 @@ namespace Library
             myBookList = bookDAO.GetMyBookList(Constants.RENTAL_LIST, memberId);         //변경된 현재 로그인한 회원의 도서대여목록
             logDAO.AddToRentalList(memberId, myBookList[myBookList.Count - 1].Name);     //로그DB에 도서 대출기록 저장
         }
-        public void SearchBookToBorrow(string memberId, BookSearch bookSearch, Keyboard keyboard)
+        public void ManageBookRental(string memberId, BookSearch bookSearch, Keyboard keyboard)
         {
             int searchType;        //검색유형
             string searchWord;     //검색어

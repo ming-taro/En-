@@ -95,6 +95,12 @@ namespace Library
             PrintSignIn();
             PrintMessage((int)Constants.SignIn.MESSAGE_LEFT, (int)Constants.SignIn.MESSAGE, "(아이디 또는 비밀번호를 잘못 입력하셨습니다.)", ConsoleColor.Red);
         }
+        public void PrintStartScreen()
+        {
+            string[] menu = { "회원 모드", "관리자 모드", "종료" };
+            PrintMain(menu);     //메인화면 출력
+            PrintMessage(0, 17, "                                                                       [Enter]:선택", ConsoleColor.Gray);
+        }
         public void PrintAdminMode()  //관리자 모드 화면
         {
             string[] menu = { "도서 검색", "도서 등록", "도서 정보 수정", "도서 삭제", "도서 대출 현황", "회원 정보 관리", "네이버 도서 검색", "로그 관리" };

@@ -14,7 +14,6 @@ namespace Library
         private EnteringText text;
         private Logo logo;
         private AdminView adminView;
-        private Exception exception;
 
         private SignIn signIn;                         //로그인
         private BookSearch bookSearch;                 //1. 도서검색
@@ -30,7 +29,6 @@ namespace Library
             text = new EnteringText();
             logo = new Logo();
             adminView = new AdminView();
-            exception = new Exception();
 
             signIn = new SignIn(text, logo);
             bookSearch = new BookSearch(text, adminView, logo);
@@ -38,7 +36,7 @@ namespace Library
             bookEdition = new BookEdition(text, adminView, logo);
             bookDeletion = new BookDeletion(text, adminView, logo);
             memberDeletion = new MemberDeletion(text, adminView, logo);
-            naverSearch = new NaverSearch(text, adminView, exception, logo);
+            naverSearch = new NaverSearch(text, adminView, logo);
             logManagement = new LogManagement(text, adminView, logo);
         }
         private void SelectMenu(int menu)       //관리자 메뉴에서 선택

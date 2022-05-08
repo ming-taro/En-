@@ -17,7 +17,6 @@ namespace Library
         private BookDAO()
         {
             connectionString = Constants.SERVER + Constants.PORT + Constants.DATABASE + Constants.ID + Constants.PASSWORD;
-            connection = new MySqlConnection(connectionString);
         }
         public static BookDAO GetInstance()
         {
@@ -119,14 +118,14 @@ namespace Library
             return Constants.IS_MEMBER_NOT_BORROWING_BOOK;
         }
         
-        public bool IsDuplicateBookId(string bookId)   //입력한 도서번호가 중복된 아이디인지 검사---->isbn으로 수정해야함
+        public bool IsAlreadyExistingISBN(string isbn)   //입력한 isbn이 중복된 isbn인지 검사
         {
             OpenConnection();
-            command = new MySqlCommand(Constants.DUPLICATE_BOOK_ID, connection);
-            command.Parameters.Add(new MySqlParameter("@bookId", bookId));
+            command = new MySqlCommand(Constants.ISBN, connection);
+            command.Parameters.Add(new MySqlParameter("@isbn", isbn));
 
-            if (HasRows()) return Constants.IS_DUPLICATE_ID;  //이미 존재하는 아이디
-            return Constants.IS_NON_DUPLICATE_ID;             //중복없는 아이디 -> 입력가능
+            if (HasRows()) return Constants.IS_DUPLICATE_ISBN;  //이미 존재하는 isbn
+            return Constants.IS_AVAILABLE_ISBN;                 //중복없는 isbn -> 입력가능
         }
         public bool IsBookOnLoan(string isbn)   //해당 도서를 대여중인 회원이 있는지 확인
         {

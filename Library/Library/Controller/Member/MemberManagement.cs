@@ -16,7 +16,6 @@ namespace Library
         private Logo logo;
         private MemberView memberView;
         private AdminView adminView;
-        private Exception exception;
 
         private SignIn signIn;                 //로그인
         private SignUp signUp;                 //회원가입
@@ -31,7 +30,6 @@ namespace Library
             logo = new Logo();
             memberView = new MemberView(logo);
             adminView = new AdminView();
-            exception = new Exception();
 
             signIn = new SignIn(text, logo);
             signUp = new SignUp(text, logo, memberView);
@@ -48,13 +46,13 @@ namespace Library
                     bookSearch.ManageBookSearch(member.Id, keyboard);
                     break;
                 case (int)Constants.Menu.SECOND: //도서대출
-                    bookRental.SearchBookToBorrow(member.Id, bookSearch, keyboard);
+                    bookRental.ManageBookRental(member.Id, bookSearch, keyboard);
                     break;
                 case (int)Constants.Menu.THIRD:  //도서반납
-                    bookReturn.ReturnBook(member.Id, keyboard);
+                    bookReturn.ManageBookReturn(member.Id, keyboard);
                     break;
                 case (int)Constants.Menu.FOURTH: //개인정보수정
-                    profileEdition.EditProfile(member, signUp, keyboard);  //아이디를 수정했을 수 있음 -> 수정된 아이디를 myId에 저장
+                    profileEdition.ManageProfileEdition(member, signUp, keyboard);  //아이디를 수정했을 수 있음 -> 수정된 아이디를 myId에 저장
                     break;
             }
         }

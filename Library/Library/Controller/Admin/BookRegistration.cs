@@ -137,7 +137,12 @@ namespace Library
         }
         public bool IsRegisterable(BookDTO book)
         {
-            if(book.Name == "" || book.Author == "" || book.Publisher == "" || book.PublicationDate == "" || book.Isbn == "" || book.Price == "" || book.Quantity == "")
+            if (bookDAO.IsAlreadyExistingISBN(book.Isbn))
+            {
+                logo.PrintMessage((int)Constants.EditMenu.LEFT, (int)Constants.EditMenu.MESSAGE, "                                   (이미 등록되어있는 도서입니다.)", ConsoleColor.Red);
+                return Constants.IS_NOT_REGISTERABLE;
+            }
+            else if(book.Name == "" || book.Author == "" || book.Publisher == "" || book.PublicationDate == "" || book.Isbn == "" || book.Price == "" || book.Quantity == "")
             {
                 logo.PrintMessage((int)Constants.EditMenu.LEFT, (int)Constants.EditMenu.MESSAGE, "                               (책소개 외의 항목은 필수입력정보입니다.)", ConsoleColor.Red);
                 return Constants.IS_NOT_REGISTERABLE; 

@@ -86,6 +86,7 @@ namespace Library
                 logDAO.DeleteFromBookList(bookList[bookIndex].Name);  //log에 도서삭제 기록
 
                 if (keyboard.PressEnterOrESC() == (int)Constants.Keyboard.ESCAPE) break; //Esc->뒤로가기, Enter->재검색
+                Console.CursorVisible = Constants.IS_VISIBLE_CURSOR;
             }
             Console.CursorVisible = Constants.IS_VISIBLE_CURSOR;
         }

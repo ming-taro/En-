@@ -63,7 +63,7 @@ namespace Library
                 myBookList[index].Id = (index + 1).ToString();         //도서번호 수정
             }
         }
-        public void ReturnBook(string memberId, Keyboard keyboard) 
+        public void ManageBookReturn(string memberId, Keyboard keyboard) 
         {
             string bookId;
             List<BookDTO> myBookList = bookDAO.GetMyBookList(Constants.RENTAL_LIST, memberId); //현재 로그인한 회원의 도서대여목록

@@ -62,7 +62,7 @@ namespace Library
 
             return changedItem;
         }
-        public void EditProfile(MemberVO member, SignUp signUp, Keyboard keyboard)
+        public void ManageProfileEdition(MemberVO member, SignUp signUp, Keyboard keyboard)
         {
             string changedItem;
             int menu;
