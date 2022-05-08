@@ -10,6 +10,9 @@ public class Main {
 		System.out.println("HelloWord!");	
 		System.out.println("HelloWord!");	
 		System.out.println("HelloWord!");	
+		System.out.println("HelloWord!");	
+		System.out.println("HelloWord!");	
+		System.out.println("HelloWord!");	
 		
 	}
 
