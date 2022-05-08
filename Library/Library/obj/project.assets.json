@@ -895,11 +895,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\sec\\OneDrive\\바탕 화면\\En#\\Library\\Library\\Library.csproj",
+      "projectUniqueName": "C:\\Users\\sec\\git\\En-\\Library\\Library\\Library.csproj",
       "projectName": "Library",
-      "projectPath": "C:\\Users\\sec\\OneDrive\\바탕 화면\\En#\\Library\\Library\\Library.csproj",
+      "projectPath": "C:\\Users\\sec\\git\\En-\\Library\\Library\\Library.csproj",
       "packagesPath": "C:\\Users\\sec\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\sec\\OneDrive\\바탕 화면\\En#\\Library\\Library\\obj\\",
+      "outputPath": "C:\\Users\\sec\\git\\En-\\Library\\Library\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\sec\\AppData\\Roaming\\NuGet\\NuGet.Config",
