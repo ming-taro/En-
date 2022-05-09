@@ -22,7 +22,6 @@ public class SearchResult extends JPanel{
 		setSize(800, 600);
 		addSearchPanel();   //°Ë»öÃ¢
 		addResultPanel();  
-		setVisible(true);
 	}
 	public void addSearchPanel() {
 

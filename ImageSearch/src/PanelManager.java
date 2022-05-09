@@ -19,14 +19,12 @@ public class PanelManager extends JFrame {
 	}
 	
 	public void ChangeToMainPage() {
-		mainPage = new MainPage(this);
 		getContentPane().removeAll();
 		getContentPane().add(mainPage);
 		revalidate();
 		repaint();
 	}
 	public void ChangeToSearchResult() {
-		searchResult = new SearchResult(this);
 		getContentPane().removeAll();
 		getContentPane().add(searchResult);
 		revalidate();

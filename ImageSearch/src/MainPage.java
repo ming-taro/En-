@@ -18,7 +18,6 @@ public class MainPage extends JPanel{
 		
 		setLayout(null);
 		setSize(800, 600);
-		setVisible(true);
 		setComponents();
 	}
 	public void setComponents() {
