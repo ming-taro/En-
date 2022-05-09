@@ -2,25 +2,32 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class MainPage{
+public class MainPage extends JPanel{
 	private JButton searchButton;
 	private JButton searchRecordButton;
 	private JTextField searchField;
 	private MyListener listener;
 	private PanelManager panelManager;
 	
-	public MainPage(JFrame frame) {
+	public MainPage(PanelManager panelManager) {
 		searchField = new JTextField();   //검색어 입력창
 		searchButton = new JButton();
 		searchRecordButton = new JButton("검색 기록");
+		listener = new MyListener();
+		this.panelManager = panelManager;
+		
+		setLayout(null);
+		setSize(800, 600);
+		setVisible(true);
+		setComponents();
 	}
 	public void setComponents() {
 		Font font = new Font("SansSerif", Font.BOLD, 20);
-		//setLayout(null);
 
 		JPanel searchPanel = new JPanel();
 		searchPanel.setLayout(null);
 		searchPanel.setBackground(Color.white);
+		searchPanel.setBounds(0, 0, 800, 600);
 		
 		searchField.setBounds(150, 270, 450, 50); //검색창
 		searchField.setFont(font);
@@ -30,6 +37,7 @@ public class MainPage{
 		searchRecordButton.setBounds(620, 480, 130, 40);  //검색기록 버튼
 		searchRecordButton.setFont(font);
 
+		add(searchPanel);
 		searchPanel.add(searchField);
 		searchPanel.add(searchButton);
 		searchPanel.add(searchRecordButton);

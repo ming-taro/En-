@@ -8,15 +8,18 @@ public class ImageSearch {
 		//PanelManager panelManager = new PanelManager();
 		//panelManager.setVisible(true);
 		//MainPage mainPage = new MainPage();
-		JFrame frame = new JFrame();
+		/*JFrame frame = new JFrame();
 		frame.setTitle("Image Search");
 		frame.setBounds(450, 150, 800, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		frame.setLayout(null);
 		SearchResult panel = new SearchResult();
-		frame.setContentPane(panel);
-	
+		frame.setContentPane(panel);*/
+		
+		PanelManager panelManager = new PanelManager();
+		panelManager.ChangeToMainPage();
+		
 		/*JPanel top = new JPanel();
 		top.setBounds(0, 0, 800, 600);
 		top.setLayout(null);

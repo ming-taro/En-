@@ -10,10 +10,16 @@ public class SearchResult extends JPanel{
 	private MyListener listener;
 	private PanelManager panelManager;
 	
-	public SearchResult() {
+	public SearchResult(PanelManager panelManager) {
 		listener = new MyListener();
+		searchField = new JTextField();   //검색어 입력창
+		searchButton = new JButton();
+		homeButton = new JButton("H");
+		numberBox = new JComboBox();
+		this.panelManager = panelManager;
+
 		setLayout(null);
-		setBounds(0,0,800,600);
+		setSize(800, 600);
 		addSearchPanel();   //검색창
 		addResultPanel();  
 		setVisible(true);
@@ -27,14 +33,11 @@ public class SearchResult extends JPanel{
 		searchPanel.setBackground(Color.yellow);
 		searchPanel.setBounds(0,0,800,70);
 		
-		searchField = new JTextField();   //검색어 입력창
 		searchField.setBounds(70, 10, 660, 50);
 		searchField.setFont(font);
 		
-		searchButton = new JButton();
 		searchButton.setBounds(730, 10, 50, 50);
 		
-		homeButton = new JButton("H");
 		homeButton.setBounds(10, 10, 50, 50);
 		homeButton.setFont(font);
 		
@@ -63,7 +66,6 @@ public class SearchResult extends JPanel{
 		listLabel.setBounds(10, 10, 150, 30);
 		resultPanel.add(listLabel);
 		
-		numberBox = new JComboBox();
 		numberBox.setBounds(730, 10, 50, 30);
 		numberBox.addItem("10");
 		numberBox.addItem("20");
