@@ -2,25 +2,22 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class SearchResult extends JFrame {
+public class SearchResult extends JPanel{
 	private JButton searchButton;
 	private JButton homeButton;
 	private JTextField searchField;
 	private JComboBox<String> numberBox;
 	private MyListener listener;
+	private PanelManager panelManager;
 	
 	public SearchResult() {
-		setTitle("Image Search");
-		setBounds(450, 150, 800, 600);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		listener = new MyListener();
 		setLayout(null);
-		
-		addSearchPanel();
-		addResultPanel();
+		setBounds(0,0,800,600);
+		addSearchPanel();   //검색창
+		addResultPanel();  
 		setVisible(true);
 	}
-	
 	public void addSearchPanel() {
 
 		Font font = new Font("SansSerif", Font.BOLD, 20);
@@ -29,10 +26,9 @@ public class SearchResult extends JFrame {
 		searchPanel.setLayout(null);
 		searchPanel.setBackground(Color.yellow);
 		searchPanel.setBounds(0,0,800,70);
-		add(searchPanel);
 		
 		searchField = new JTextField();   //검색어 입력창
-		searchField.setBounds(70, 10, 650, 50);
+		searchField.setBounds(70, 10, 660, 50);
 		searchField.setFont(font);
 		
 		searchButton = new JButton();
@@ -49,7 +45,8 @@ public class SearchResult extends JFrame {
 		searchField.addActionListener(listener);
 		searchButton.addActionListener(listener);
 		homeButton.addActionListener(listener);
-		
+
+		add(searchPanel);
 	}
 	
 	public void addResultPanel() {
@@ -63,18 +60,21 @@ public class SearchResult extends JFrame {
 
 		JLabel listLabel = new JLabel("이미지");
 		listLabel.setFont(font);
-		listLabel.setBounds(10, 0, 150, 50);
+		listLabel.setBounds(10, 10, 150, 30);
 		resultPanel.add(listLabel);
 		
 		numberBox = new JComboBox();
-		numberBox.setBounds(680, 10, 100, 30);
+		numberBox.setBounds(730, 10, 50, 30);
 		numberBox.addItem("10");
 		numberBox.addItem("20");
 		numberBox.addItem("30");
 		resultPanel.add(numberBox);
 		
-		numberBox.addActionListener(listener);
+		JScrollPane imageScrollPane = new JScrollPane();
+		imageScrollPane.setBounds(0, 50, 800, 480);
+		resultPanel.add(imageScrollPane);
 		
+		numberBox.addActionListener(listener);
 	}
 	
 	private class MyListener implements ActionListener{
@@ -82,11 +82,15 @@ public class SearchResult extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent event) {
 			
-			if(event.getSource() == searchField || event.getSource() == searchButton) {   //검색어 필드 enter or 검색버튼 클릭
+			if(event.getSource() == homeButton) {
+				panelManager.ChangeToMainPage();
+			}
+			else if(event.getSource() == searchField || event.getSource() == searchButton) {   //검색어 필드 enter or 검색버튼 클릭
 				
 			}
 			else if(event.getSource() == numberBox) {
 				System.out.println("콤보"); 
+				
 			}
 			else {
 				System.out.println("기록조회버튼"); 

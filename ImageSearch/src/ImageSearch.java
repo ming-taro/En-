@@ -1,22 +1,44 @@
-import javax.swing.JFrame;
+import java.awt.Color;
+
+import javax.swing.*;
 
 public class ImageSearch {
 
 	public static void main(String[] args) {
-		/*JFrame frame = new JFrame("Image Search");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setResizable(false);  //기본값은 true, 창을 크게 키워도 frame의 크기가 보존됨(고정크기)
-		frame.setTitle("검색결과");
+		//PanelManager panelManager = new PanelManager();
+		//panelManager.setVisible(true);
+		//MainPage mainPage = new MainPage();
+		JFrame frame = new JFrame();
+		frame.setTitle("Image Search");
 		frame.setBounds(450, 150, 800, 600);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-		//frame.setLayout(null);
+		frame.setLayout(null);
+		SearchResult panel = new SearchResult();
+		frame.setContentPane(panel);
+	
+		/*JPanel top = new JPanel();
+		top.setBounds(0, 0, 800, 600);
+		top.setLayout(null);
+		top.setBackground(Color.red);
 		
-		//MainPage mainPage = new MainPage(); 
-		//frame.getContentPane().add(mainPage);*/
-		SearchResult searchResult = new SearchResult();
-		//frame.getContentPane().add(searchResult);
-		//MainPage mainPage = new MainPage(); 
-
+		JPanel bottom = new JPanel();
+		bottom.setBounds(0, 100, 800, 50);
+		bottom.setLayout(null);
+		JButton btn = new JButton("아옥");
+		btn.setBounds(0,0,100,30);
+		bottom.add(btn);
+		top.add(bottom);
+		
+		frame.add(top);*/
+		
+		/*JFrame frame = new JFrame();
+		frame.setTitle("Image Search");
+		frame.setBounds(450, 150, 800, 600);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		frame.add(mainPage);
+		frame.setVisible(true);*/
 	}
 
 }
