@@ -14,6 +14,7 @@ public class SearchResult extends JPanel{
 	private JTextField searchField;
 	private JComboBox<String> numberBox;
 	private JPanel resultPanel, imagePanel;
+	private JButton[] imageButton;
 	private MyListener listener;
 	private PanelManager panelManager;
 	
@@ -23,6 +24,7 @@ public class SearchResult extends JPanel{
 		searchButton = new JButton();
 		homeButton = new JButton("H");
 		numberBox = new JComboBox();
+		imageButton = new JButton[30];
 		this.panelManager = panelManager;
 
 		setLayout(null);
@@ -79,7 +81,12 @@ public class SearchResult extends JPanel{
 		resultPanel.add(numberBox);
 		
 		imagePanel = new JPanel();
-		imagePanel.setLayout(new GridLayout(2,5));
+		imagePanel.setLayout(new GridLayout(6, 5));
+		for(int i=0; i<30; i++) {
+			imageButton[i] = new JButton();
+			imagePanel.add(imageButton[i]);
+			imageButton[i].setVisible(false);
+		}
 		imagePanel.setBounds(0, 50, 800, 480);
 		
 		numberBox.addActionListener(listener);
@@ -92,7 +99,8 @@ public class SearchResult extends JPanel{
 		for(int i=0; i<10; i++) {
 			ImageIcon image = new ImageIcon(new URL(urlList.get(i)));
 			JLabel label = new JLabel("", image, JLabel.CENTER);
-			imagePanel.add(label);
+			imageButton[i].setIcon(image);
+			imageButton[i].setVisible(true);
 		}
 		
 		resultPanel.add(imagePanel);

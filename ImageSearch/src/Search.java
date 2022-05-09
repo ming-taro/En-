@@ -18,6 +18,7 @@ import org.json.simple.parser.ParseException;
 import netscape.javascript.JSObject;
 
 public class Search {
+	private String searchWord;
 	private ArrayList<String> urlList;
 	public Search() {
         urlList = new ArrayList<String>();
@@ -35,7 +36,7 @@ public class Search {
 	    int connTimeout = 5000;
 	    int readTimeout = 3000;
 			
-	    String apiUrl = "https://dapi.kakao.com/v2/search/image?query='"+ searchWord +"'&size=10";			
+	    String apiUrl = "https://dapi.kakao.com/v2/search/image?sort=accuracy&query='"+ searchWord +"'&size=10";			
 	    url = new URL(apiUrl);
         connection = (HttpURLConnection)url.openConnection();
         
@@ -43,7 +44,7 @@ public class Search {
         connection.setConnectTimeout(connTimeout);
         connection.setReadTimeout(readTimeout);
         connection.setRequestProperty("Authorization", "KakaoAK e7340e1df71abf4e5a6ef4aa3fcb7fbb");
-        connection.setRequestProperty("content-type", "application/json");
+        connection.setRequestProperty("content-type", "application/json; charset=utf-8");
         connection.setRequestProperty("Accept", "application/json;");
         connection.setDoOutput(true);
         
