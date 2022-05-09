@@ -36,7 +36,7 @@ public class Search {
 	    int connTimeout = 5000;
 	    int readTimeout = 3000;
 			
-	    String apiUrl = "https://dapi.kakao.com/v2/search/image?sort=accuracy&query='"+ searchWord +"'&size=10";			
+	    String apiUrl = "https://dapi.kakao.com/v2/search/image?sort=accuracy&query='"+ searchWord +"'&size=30";			
 	    url = new URL(apiUrl);
         connection = (HttpURLConnection)url.openConnection();
         
@@ -59,7 +59,7 @@ public class Search {
             	JSONObject data = (JSONObject)jsonParse.parse(readLine);
             	JSONArray array = (JSONArray)data.get("documents");//  get("document");
             	
-            	for(int i=0; i<10; i++) {
+            	for(int i=0; i<30; i++) {
             		JSONObject document = (JSONObject)array.get(i);
 	            	buffer.append(document.get("image_url")).append("\n");
 	            	urlList.add(document.get("image_url").toString());
@@ -73,19 +73,7 @@ public class Search {
             buffer.append(connection.getResponseCode()).append("\n");
             buffer.append("message : ");
             buffer.append(connection.getResponseMessage()).append("\n");
-        }	
-			
-		/*JFrame frame = new JFrame();
-		frame.setBounds(10,10,800,800);
-		frame.setVisible(true);
-		JPanel panel = new JPanel(new GridLayout(2,5,5,5));
-		for(int i=0; i<10; i++) {
-			ImageIcon image = new ImageIcon(new URL(urlList.get(i)));
-			JLabel label = new JLabel("", image, JLabel.CENTER);
-			panel.add(label, BorderLayout.CENTER );
-		}
-		panel.setBounds(0,0,800,800);
-		frame.setContentPane(panel);*/
+        }
 
 	}
 }

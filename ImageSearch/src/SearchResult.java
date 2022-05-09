@@ -85,27 +85,23 @@ public class SearchResult extends JPanel{
 		for(int i=0; i<30; i++) {
 			imageButton[i] = new JButton();
 			imagePanel.add(imageButton[i]);
-			imageButton[i].setVisible(false);
 		}
 		imagePanel.setBounds(0, 50, 800, 480);
+		resultPanel.add(imagePanel);
 		
 		numberBox.addActionListener(listener);
 	}
-	public void ShowResult(String searchWord) throws IOException, ParseException {
+	public void setResult(String searchWord) throws IOException, ParseException {
 		Search search = new Search();
 		search.searchImage(searchWord);  //이미지 검색
 		ArrayList<String> urlList = search.getUrlList();   //검색결과 이미지 url 리스트
 		
-		for(int i=0; i<10; i++) {
+		for(int i=0; i<30; i++) {
 			ImageIcon image = new ImageIcon(new URL(urlList.get(i)));
-			JLabel label = new JLabel("", image, JLabel.CENTER);
 			imageButton[i].setIcon(image);
 			imageButton[i].setVisible(true);
 		}
-		
-		resultPanel.add(imagePanel);
 	}
-	
 	private class MyListener implements ActionListener{
 
 		@Override

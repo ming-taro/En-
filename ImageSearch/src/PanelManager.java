@@ -31,9 +31,9 @@ public class PanelManager extends JFrame {
 	public void ChangeToSearchResult(String searchWord) throws IOException, ParseException {
 		getContentPane().removeAll();
 		getContentPane().add(searchResult);
-		searchResult.ShowResult(searchWord);
 		revalidate();
 		repaint();
+		searchResult.setResult(searchWord);
 	}
 	
 }
