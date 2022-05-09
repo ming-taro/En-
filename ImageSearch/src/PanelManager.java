@@ -1,10 +1,14 @@
 
+import java.io.IOException;
+
 import javax.swing.JFrame;
+
+import org.json.simple.parser.ParseException;
 
 public class PanelManager extends JFrame {
 	private MainPage mainPage;
 	private SearchResult searchResult;
-	public PanelManager() {
+	public PanelManager() throws IOException, ParseException {
 		mainPage = new MainPage(this);
 		searchResult = new SearchResult(this);
 		
@@ -24,9 +28,10 @@ public class PanelManager extends JFrame {
 		revalidate();
 		repaint();
 	}
-	public void ChangeToSearchResult() {
+	public void ChangeToSearchResult(String searchWord) throws IOException, ParseException {
 		getContentPane().removeAll();
 		getContentPane().add(searchResult);
+		searchResult.ShowResult(searchWord);
 		revalidate();
 		repaint();
 	}

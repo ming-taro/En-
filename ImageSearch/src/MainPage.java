@@ -1,6 +1,10 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
+
 import javax.swing.*;
+
+import org.json.simple.parser.ParseException;
 
 public class MainPage extends JPanel{
 	private JButton searchButton;
@@ -49,10 +53,15 @@ public class MainPage extends JPanel{
 	private class MyListener implements ActionListener{
 
 		@Override
-		public void actionPerformed(ActionEvent event) {
+		public void actionPerformed(ActionEvent event){
 			
 			if(event.getSource() == searchField || event.getSource() == searchButton) {   //검색어 필드 enter or 검색버튼 클릭
-				panelManager.ChangeToSearchResult();
+				System.out.print(searchField.getText());
+				try {
+					panelManager.ChangeToSearchResult(searchField.getText());
+				} catch (IOException | ParseException e) {
+					e.printStackTrace();
+				}
 			}
 			else {
 				System.out.println("기록조회버튼"); 

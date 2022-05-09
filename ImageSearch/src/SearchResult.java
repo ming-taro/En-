@@ -1,16 +1,23 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+
 import javax.swing.*;
+
+import org.json.simple.parser.ParseException;
 
 public class SearchResult extends JPanel{
 	private JButton searchButton;
 	private JButton homeButton;
 	private JTextField searchField;
 	private JComboBox<String> numberBox;
+	private JPanel resultPanel, imagePanel;
 	private MyListener listener;
 	private PanelManager panelManager;
 	
-	public SearchResult(PanelManager panelManager) {
+	public SearchResult(PanelManager panelManager) throws IOException, ParseException {
 		listener = new MyListener();
 		searchField = new JTextField();   //검색어 입력창
 		searchButton = new JButton();
@@ -51,8 +58,8 @@ public class SearchResult extends JPanel{
 		add(searchPanel);
 	}
 	
-	public void addResultPanel() {
-		JPanel resultPanel = new JPanel();
+	public void addResultPanel() throws IOException, ParseException {
+		resultPanel = new JPanel();
 		resultPanel.setLayout(null);
 		resultPanel.setBackground(Color.white);
 		resultPanel.setBounds(0,70,800,530);
@@ -71,11 +78,24 @@ public class SearchResult extends JPanel{
 		numberBox.addItem("30");
 		resultPanel.add(numberBox);
 		
-		JScrollPane imageScrollPane = new JScrollPane();
-		imageScrollPane.setBounds(0, 50, 800, 480);
-		resultPanel.add(imageScrollPane);
+		imagePanel = new JPanel();
+		imagePanel.setLayout(new GridLayout(2,5));
+		imagePanel.setBounds(0, 50, 800, 480);
 		
 		numberBox.addActionListener(listener);
+	}
+	public void ShowResult(String searchWord) throws IOException, ParseException {
+		Search search = new Search();
+		search.searchImage(searchWord);  //이미지 검색
+		ArrayList<String> urlList = search.getUrlList();   //검색결과 이미지 url 리스트
+		
+		for(int i=0; i<10; i++) {
+			ImageIcon image = new ImageIcon(new URL(urlList.get(i)));
+			JLabel label = new JLabel("", image, JLabel.CENTER);
+			imagePanel.add(label);
+		}
+		
+		resultPanel.add(imagePanel);
 	}
 	
 	private class MyListener implements ActionListener{
