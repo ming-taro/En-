@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -18,6 +19,7 @@ public class SearchResult extends JPanel{
 	private MyListener listener;
 	private PanelManager panelManager;
 	private ImageFrame imageFrame;
+	private SearchRecordDAO searchRecordDAO;
 	
 	public SearchResult(PanelManager panelManager) throws IOException, ParseException {
 		listener = new MyListener();
@@ -27,6 +29,7 @@ public class SearchResult extends JPanel{
 		numberBox = new JComboBox();
 		imageButton = new JButton[30];
 		imageFrame = new ImageFrame();
+		searchRecordDAO = new SearchRecordDAO();
 		this.panelManager = panelManager;
 
 		setLayout(null);
@@ -95,7 +98,7 @@ public class SearchResult extends JPanel{
 		numberBox.addActionListener(listener);
 		
 	}
-	public void setResult(String searchWord) throws IOException, ParseException {
+	public void setResult(String searchWord) throws IOException, ParseException, SQLException {
 		Search search = new Search();
 		search.searchImage(searchWord);  //이미지 검색
 		ArrayList<String> urlList = search.getUrlList();   //검색결과 이미지 url 리스트
@@ -106,6 +109,7 @@ public class SearchResult extends JPanel{
 			imageButton[i].setVisible(true);
 		}
 		showResult(10);
+		searchRecordDAO.AddSearchRecord(searchWord);
 	}
 	public void showResult(int number) {
 		for(int i=0; i<30; i++) {
@@ -126,6 +130,9 @@ public class SearchResult extends JPanel{
 					setResult(searchField.getText());
 					numberBox.setSelectedIndex(0);
 				} catch (IOException | ParseException e) {
+					e.printStackTrace();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}

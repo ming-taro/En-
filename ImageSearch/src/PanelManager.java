@@ -1,5 +1,7 @@
 
 import java.io.IOException;
+import java.sql.SQLException;
+
 import javax.swing.JFrame;
 import org.json.simple.parser.ParseException;
 
@@ -29,7 +31,7 @@ public class PanelManager extends JFrame {
 		revalidate();
 		repaint();
 	}
-	public void ChangeToSearchResult(String searchWord) throws IOException, ParseException {
+	public void ChangeToSearchResult(String searchWord) throws IOException, ParseException, SQLException {
 		getContentPane().removeAll();
 		getContentPane().add(searchResult);
 		revalidate();

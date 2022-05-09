@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.swing.*;
 
@@ -62,6 +63,9 @@ public class MainPage extends JPanel{
 				try {
 					panelManager.ChangeToSearchResult(searchField.getText());
 				} catch (IOException | ParseException e) {
+					e.printStackTrace();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
