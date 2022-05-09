@@ -101,6 +101,7 @@ public class SearchResult extends JPanel{
 			imageButton[i].setIcon(image);
 			imageButton[i].setVisible(true);
 		}
+		showResult(10);
 	}
 	public void showResult(int number) {
 		for(int i=0; i<30; i++) {
@@ -119,6 +120,7 @@ public class SearchResult extends JPanel{
 			else if(event.getSource() == searchField || event.getSource() == searchButton) {   //검색어 필드 enter or 검색버튼 클릭
 				 try {
 					setResult(searchField.getText());
+					numberBox.setSelectedIndex(0);
 				} catch (IOException | ParseException e) {
 					e.printStackTrace();
 				}
@@ -129,6 +131,8 @@ public class SearchResult extends JPanel{
 			else {
 				System.out.println("기록조회버튼"); 
 			}
+			
+			searchField.setText("");
 		}
 	}
 }

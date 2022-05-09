@@ -14,7 +14,7 @@ public class MainPage extends JPanel{
 	private PanelManager panelManager;
 	
 	public MainPage(PanelManager panelManager) {
-		searchField = new JTextField();   //검색어 입력창
+		searchField = new JTextField("");   //검색어 입력창
 		searchButton = new JButton();
 		searchRecordButton = new JButton("검색 기록");
 		listener = new MyListener();
@@ -54,8 +54,10 @@ public class MainPage extends JPanel{
 
 		@Override
 		public void actionPerformed(ActionEvent event){
-			
-			if(event.getSource() == searchField || event.getSource() == searchButton) {   //검색어 필드 enter or 검색버튼 클릭
+			if(event.getSource() == searchField && searchField.getText().equals("")) {
+				
+			}
+			else if(event.getSource() == searchField || event.getSource() == searchButton) {   //검색어 필드 enter or 검색버튼 클릭
 				System.out.print(searchField.getText());
 				try {
 					panelManager.ChangeToSearchResult(searchField.getText());
@@ -66,6 +68,7 @@ public class MainPage extends JPanel{
 			else {
 				System.out.println("기록조회버튼"); 
 			}
+			searchField.setText("");
 		}
 	}
 }
