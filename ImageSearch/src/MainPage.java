@@ -54,7 +54,7 @@ public class MainPage extends JPanel{
 
 		@Override
 		public void actionPerformed(ActionEvent event){
-			if(event.getSource() == searchField && searchField.getText().equals("")) {
+			if((event.getSource() == searchField || event.getSource() == searchButton)&& searchField.getText().equals("")) {
 				
 			}
 			else if(event.getSource() == searchField || event.getSource() == searchButton) {   //검색어 필드 enter or 검색버튼 클릭
@@ -66,7 +66,7 @@ public class MainPage extends JPanel{
 				}
 			}
 			else {
-				System.out.println("기록조회버튼"); 
+				panelManager.ChangeToSearchRecord();
 			}
 			searchField.setText("");
 		}

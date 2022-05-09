@@ -17,6 +17,7 @@ public class SearchResult extends JPanel{
 	private JButton[] imageButton;
 	private MyListener listener;
 	private PanelManager panelManager;
+	private ImageFrame imageFrame;
 	
 	public SearchResult(PanelManager panelManager) throws IOException, ParseException {
 		listener = new MyListener();
@@ -25,6 +26,7 @@ public class SearchResult extends JPanel{
 		homeButton = new JButton("H");
 		numberBox = new JComboBox();
 		imageButton = new JButton[30];
+		imageFrame = new ImageFrame();
 		this.panelManager = panelManager;
 
 		setLayout(null);
@@ -85,11 +87,13 @@ public class SearchResult extends JPanel{
 		for(int i=0; i<30; i++) {
 			imageButton[i] = new JButton();
 			imagePanel.add(imageButton[i]);
+			imageButton[i].addActionListener(listener);
 		}
 		imagePanel.setBounds(0, 50, 800, 480);
 		resultPanel.add(imagePanel);
 		
 		numberBox.addActionListener(listener);
+		
 	}
 	public void setResult(String searchWord) throws IOException, ParseException {
 		Search search = new Search();
@@ -129,7 +133,7 @@ public class SearchResult extends JPanel{
 				showResult(Integer.parseInt(numberBox.getSelectedItem().toString()));
 			}
 			else {
-				System.out.println("기록조회버튼"); 
+				//imageFrame.showImage();
 			}
 			
 			searchField.setText("");
