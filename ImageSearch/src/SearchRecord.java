@@ -27,6 +27,9 @@ public class SearchRecord extends JPanel implements ActionListener{
 		homeButton.addActionListener(this);
 		resetButton.addActionListener(this);
 	}
+	public void showSearchRecord() {
+		
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent event) {
