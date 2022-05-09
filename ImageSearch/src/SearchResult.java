@@ -38,7 +38,7 @@ public class SearchResult extends JPanel{
 
 		JPanel searchPanel = new JPanel();
 		searchPanel.setLayout(null);
-		searchPanel.setBackground(Color.yellow);
+		searchPanel.setBackground(Color.white);
 		searchPanel.setBounds(0,0,800,70);
 		
 		searchField.setBounds(70, 10, 660, 50);
@@ -81,7 +81,7 @@ public class SearchResult extends JPanel{
 		resultPanel.add(numberBox);
 		
 		imagePanel = new JPanel();
-		imagePanel.setLayout(new GridLayout(6, 5));
+		imagePanel.setLayout(new GridLayout(6, 5, 5, 5));
 		for(int i=0; i<30; i++) {
 			imageButton[i] = new JButton();
 			imagePanel.add(imageButton[i]);
@@ -102,6 +102,12 @@ public class SearchResult extends JPanel{
 			imageButton[i].setVisible(true);
 		}
 	}
+	public void showResult(int number) {
+		for(int i=0; i<30; i++) {
+			if(i<number) imageButton[i].setVisible(true);
+			else imageButton[i].setVisible(false);
+		}
+	}
 	private class MyListener implements ActionListener{
 
 		@Override
@@ -111,11 +117,14 @@ public class SearchResult extends JPanel{
 				panelManager.ChangeToMainPage();
 			}
 			else if(event.getSource() == searchField || event.getSource() == searchButton) {   //검색어 필드 enter or 검색버튼 클릭
-				
+				 try {
+					setResult(searchField.getText());
+				} catch (IOException | ParseException e) {
+					e.printStackTrace();
+				}
 			}
 			else if(event.getSource() == numberBox) {
-				System.out.println("콤보"); 
-				
+				showResult(Integer.parseInt(numberBox.getSelectedItem().toString()));
 			}
 			else {
 				System.out.println("기록조회버튼"); 
