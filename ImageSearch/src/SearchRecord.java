@@ -20,7 +20,7 @@ public class SearchRecord extends JPanel implements ActionListener{
 	private SearchRecordDAO searchRecordDAO;
 	
 	public SearchRecord(SearchRecordDAO searchRecordDAO, PanelManager panelManager) throws SQLException {
-		homeButton = new JButton();
+		homeButton = new JButton("H");
 		resetButton = new JButton("초기화");
 		searchRecordPanel = new JPanel();
 		searchRecordList = new ArrayList<SearchRecordDTO>();
@@ -43,8 +43,6 @@ public class SearchRecord extends JPanel implements ActionListener{
 		
 		homeButton.addActionListener(this);
 		resetButton.addActionListener(this);
-		
-		setSearchRecord();
 	}
 	public void setSearchRecord() throws SQLException {
 		searchRecordList = searchRecordDAO.getSearchRecord();
@@ -58,6 +56,7 @@ public class SearchRecord extends JPanel implements ActionListener{
 		
 		DefaultTableModel model = new DefaultTableModel(record, header);
 		searchRecordTable = new JTable(model);
+		model.fireTableDataChanged();
 		searchRecordTable.setRowHeight(50);
 		searchRecordTable.setFont(new Font("SansSerif", Font.BOLD, 17));
 		searchRecordTableScroll = new JScrollPane(searchRecordTable);
@@ -71,7 +70,16 @@ public class SearchRecord extends JPanel implements ActionListener{
 			panelManager.ChangeToMainPage(); 
 		}
 		else {  //초기화
-			
+			int reset = JOptionPane.showConfirmDialog(this, "검색기록을 초기화하시겠습니까?", "확인", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
+			if(reset == 0)
+				try {
+					DefaultTableModel model = (DefaultTableModel)searchRecordTable.getModel();
+					model.setNumRows(0);
+					searchRecordDAO.ResetSearchRecord();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		}
 		
 	}

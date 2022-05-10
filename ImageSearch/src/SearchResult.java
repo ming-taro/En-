@@ -101,6 +101,7 @@ public class SearchResult extends JPanel{
 	public void setResult(String searchWord) throws IOException, ParseException, SQLException {
 		Search search = new Search();
 		search.searchImage(searchWord);  //이미지 검색
+		
 		ArrayList<String> urlList = search.getUrlList();   //검색결과 이미지 url 리스트
 		
 		for(int i=0; i<30; i++) {
@@ -125,7 +126,7 @@ public class SearchResult extends JPanel{
 			if(event.getSource() == homeButton) {
 				panelManager.ChangeToMainPage();
 			}
-			else if(event.getSource() == searchField || event.getSource() == searchButton) {   //검색어 필드 enter or 검색버튼 클릭
+			else if((event.getSource() == searchField || event.getSource() == searchButton) && searchField.getText().equals("") == false) {   //검색어 필드 enter or 검색버튼 클릭
 				 try {
 					setResult(searchField.getText());
 					numberBox.setSelectedIndex(0);

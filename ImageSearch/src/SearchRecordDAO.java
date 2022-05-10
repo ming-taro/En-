@@ -65,8 +65,18 @@ public class SearchRecordDAO {
 		sql = "insert into searchrecord(searchWord,date) values('" + searchWord + "', '" + formatedNow + "');";
 		System.out.print(sql);
 		statement = connection.createStatement();
+		statement.execute(sql);
+		statement.close();
+		connection.close();
+	}
+	public void ResetSearchRecord() throws SQLException {
+		String sql;
+		
+		setConnection();
+		sql = "delete from searchrecord;";
+		System.out.print(sql);
+		statement = connection.createStatement();
 		statement.execute(sql); 
-
 		statement.close();
 		connection.close();
 	}
