@@ -65,12 +65,15 @@ public class MainPage extends JPanel{
 				} catch (IOException | ParseException e) {
 					e.printStackTrace();
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 			else {
-				panelManager.ChangeToSearchRecord();
+				try {
+					panelManager.ChangeToSearchRecord();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
 			searchField.setText("");
 		}

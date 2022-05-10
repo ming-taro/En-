@@ -40,11 +40,12 @@ public class PanelManager extends JFrame {
 		repaint();
 		searchResult.setResult(searchWord);
 	}
-	public void ChangeToSearchRecord() {
+	public void ChangeToSearchRecord() throws SQLException {
 		getContentPane().removeAll();
 		getContentPane().add(searchRecord);
 		revalidate();
 		repaint();
+		searchRecord.setSearchRecord();
 	}
 	
 }

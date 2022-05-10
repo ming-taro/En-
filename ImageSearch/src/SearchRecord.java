@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,7 +31,7 @@ public class SearchRecord extends JPanel implements ActionListener{
 		resetButton.setBounds(350, 450, 100, 50);
 		searchRecordPanel.setBounds(150, 80, 500, 350);
 		
-		//searchRecordPanel.setLayout(null);
+		searchRecordPanel.setLayout(null);
 		
 		setLayout(null);
 		setBounds(0, 0, 800, 600);
@@ -42,6 +43,7 @@ public class SearchRecord extends JPanel implements ActionListener{
 		
 		homeButton.addActionListener(this);
 		resetButton.addActionListener(this);
+		
 		setSearchRecord();
 	}
 	public void setSearchRecord() throws SQLException {
@@ -49,14 +51,17 @@ public class SearchRecord extends JPanel implements ActionListener{
 		String[] header =  {"검색어", "검색 시간"};
 		String[][] record = new String[searchRecordList.size()][2];
 		
-		for(int i=searchRecordList.size()-1; i>=0; i--) {
-			record[i][0] = searchRecordList.get(i).getSearchWord();
-			record[i][1] = searchRecordList.get(i).getDate();
+		for(int i=0, j=searchRecordList.size()-1; i<searchRecordList.size(); i++,j--) {
+			record[i][0] = searchRecordList.get(j).getSearchWord();
+			record[i][1] = searchRecordList.get(j).getDate();
 		}
 		
 		DefaultTableModel model = new DefaultTableModel(record, header);
 		searchRecordTable = new JTable(model);
+		searchRecordTable.setRowHeight(50);
+		searchRecordTable.setFont(new Font("SansSerif", Font.BOLD, 17));
 		searchRecordTableScroll = new JScrollPane(searchRecordTable);
+		searchRecordTableScroll.setBounds(0, 0, 500, 350);
 		searchRecordPanel.add(searchRecordTableScroll);
 	}
 
