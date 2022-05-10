@@ -63,7 +63,6 @@ public class SearchRecordDAO {
 
 		setConnection();
 		sql = "insert into searchrecord(searchWord,date) values('" + searchWord + "', '" + formatedNow + "');";
-		System.out.print(sql);
 		statement = connection.createStatement();
 		statement.execute(sql);
 		statement.close();
@@ -74,7 +73,6 @@ public class SearchRecordDAO {
 		
 		setConnection();
 		sql = "delete from searchrecord;";
-		System.out.print(sql);
 		statement = connection.createStatement();
 		statement.execute(sql); 
 		statement.close();

@@ -45,9 +45,9 @@ public class SearchRecord extends JPanel implements ActionListener{
 		
 		homeButton.addActionListener(this);
 		resetButton.addActionListener(this);
-		setSearchRecord();
+		setInitialSearchRecord();
 	}
-	public void setSearchRecord() throws SQLException {
+	public void setInitialSearchRecord() throws SQLException {
 		searchRecordList = searchRecordDAO.getSearchRecord();	
 
 		String[] header =  {"검색어", "검색 시간"};
@@ -56,7 +56,6 @@ public class SearchRecord extends JPanel implements ActionListener{
 		for(int i=0, j=searchRecordList.size()-1; i<searchRecordList.size(); i++,j--) {
 			record[i][0] = searchRecordList.get(j).getSearchWord();
 			record[i][1] = searchRecordList.get(j).getDate();
-			System.out.println(record[i][0] + "/" + record[i][1]);
 		}
 
 		model = new DefaultTableModel(record, header);
@@ -69,14 +68,14 @@ public class SearchRecord extends JPanel implements ActionListener{
 		searchRecordPanel.add(searchRecordTableScroll);
 
 	}
-	public void setSearch() throws SQLException {
+	public void setSearchRecord() throws SQLException {
 		DefaultTableModel tableModel = (DefaultTableModel) searchRecordTable.getModel();
 		tableModel.setRowCount(0);
 		
 		searchRecordList = searchRecordDAO.getSearchRecord();
 		String[][] record = new String[searchRecordList.size()][2];
 		
-		for(int i=0, j=searchRecordList.size()-1; i<searchRecordList.size(); i++,j--) {
+		for(int i=0, j=searchRecordList.size()-1; i<searchRecordList.size(); i++,j--) {  //
 			record[i][0] = searchRecordList.get(j).getSearchWord();
 			record[i][1] = searchRecordList.get(j).getDate();
 			model.addRow(record[i]);

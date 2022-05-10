@@ -45,7 +45,7 @@ public class PanelManager extends JFrame {
 		getContentPane().add(searchRecord);
 		revalidate();
 		repaint();
-		searchRecord.setSearch();
+		searchRecord.setSearchRecord();
 	}
 	
 }

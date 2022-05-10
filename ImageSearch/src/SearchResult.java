@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,7 +16,9 @@ public class SearchResult extends JPanel{
 	private JTextField searchField;
 	private JComboBox<String> numberBox;
 	private JPanel resultPanel, imagePanel;
+	private JScrollPane panelScroll;
 	private JButton[] imageButton;
+	private ArrayList<String> urlList;
 	private MyListener listener;
 	private PanelManager panelManager;
 	private ImageFrame imageFrame;
@@ -28,7 +31,8 @@ public class SearchResult extends JPanel{
 		homeButton = new JButton("뒤로가기");    //뒤로가기
 		numberBox = new JComboBox();      //이미지 개수
 		imageButton = new JButton[30];    //이미지 버튼
-		imageFrame = new ImageFrame();    
+		imageFrame = new ImageFrame();  		
+		panelScroll = new JScrollPane();  
 		this.searchRecordDAO = searchRecordDAO;
 		this.panelManager = panelManager;
 
@@ -69,8 +73,12 @@ public class SearchResult extends JPanel{
 		resultPanel = new JPanel();
 		resultPanel.setLayout(null);
 		resultPanel.setBackground(Color.white);
-		resultPanel.setBounds(0,70,800,530);
-		add(resultPanel);
+		//resultPanel.setBounds(0,70,800,530);
+
+		resultPanel.setPreferredSize(new Dimension(800, 530));
+		panelScroll.setViewportView(resultPanel);
+		panelScroll.setBounds(0,70,800,530);
+		add(panelScroll);
 		
 		Font font = new Font("SansSerif", Font.BOLD, 20);
 
@@ -100,18 +108,21 @@ public class SearchResult extends JPanel{
 		
 	}
 	public void setResult(String searchWord) throws IOException, ParseException, SQLException {
+		searchField.setText(searchWord); //검색어 입력칸에 방금 입력한 검색어 표시
+		
 		Search search = new Search();
 		search.searchImage(searchWord);  //검색어 입력 결과
 		
-		ArrayList<String> urlList = search.getUrlList();   //검색어 입력 결과 url 리스트
+		urlList = search.getUrlList();   //검색어 입력 결과 url 리스트
 		
 		for(int i=0; i<30; i++) {
 			ImageIcon image = new ImageIcon(new URL(urlList.get(i))); //버튼에 이미지를 넣음
 			imageButton[i].setIcon(image);
 			imageButton[i].setVisible(true);
 		}
+		
 		showResult(10);  //이미지 개수 기본값 10개
-		searchRecordDAO.AddSearchRecord(searchWord);
+		searchRecordDAO.AddSearchRecord(searchWord);  //검색기록 DB에 저장
 	}
 	public void showResult(int number) {  //콤보박스에서 선택한 숫자만큼 이미지를 보여줌
 		for(int i=0; i<30; i++) {
@@ -123,8 +134,8 @@ public class SearchResult extends JPanel{
 
 		@Override
 		public void actionPerformed(ActionEvent event) {
-			
-			if(event.getSource() == homeButton) {
+			  
+			if(event.getSource() == homeButton) {  //뒤로가기
 				panelManager.ChangeToMainPage();
 			}
 			else if((event.getSource() == searchField || event.getSource() == searchButton) && searchField.getText().equals("") == false) {   //enter or 검색버튼
@@ -137,14 +148,27 @@ public class SearchResult extends JPanel{
 					e.printStackTrace();
 				}
 			}
-			else if(event.getSource() == numberBox) {
+			else if(event.getSource() == numberBox) {  //이미지 수량 선택
 				showResult(Integer.parseInt(numberBox.getSelectedItem().toString()));
 			}
 			else {
-				//imageFrame.showImage();
+				showImage(event.getSource());          //이미지 버튼 클릭시
 			}
 			
-			searchField.setText("");//검색 후 입력값 지우기
+			
+		}
+	}
+	private void showImage(Object obj) {
+		int buttonIndex;
+		for(buttonIndex=0; buttonIndex<Integer.parseInt(numberBox.getSelectedItem().toString()); buttonIndex++) {
+			if(obj == imageButton[buttonIndex]) break;
+		}
+		
+		try {
+			imageFrame.showImage(urlList.get(buttonIndex));
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }
