@@ -23,35 +23,35 @@ public class SearchResult extends JPanel{
 	
 	public SearchResult(SearchRecordDAO searchRecordDAO, PanelManager panelManager) throws IOException, ParseException {
 		listener = new MyListener();
-		searchField = new JTextField();   //�˻��� �Է�â
-		searchButton = new JButton();
-		homeButton = new JButton("H");
-		numberBox = new JComboBox();
-		imageButton = new JButton[30];
-		imageFrame = new ImageFrame();
+		searchField = new JTextField();   //검색어 입력창
+		searchButton = new JButton();     //검색버튼
+		homeButton = new JButton("뒤로가기");    //뒤로가기
+		numberBox = new JComboBox();      //이미지 개수
+		imageButton = new JButton[30];    //이미지 버튼
+		imageFrame = new ImageFrame();    
 		this.searchRecordDAO = searchRecordDAO;
 		this.panelManager = panelManager;
 
 		setLayout(null);
 		setSize(800, 600);
-		addSearchPanel();   //�˻�â
+		addSearchPanel();  
 		addResultPanel();  
 	}
 	public void addSearchPanel() {
 
 		Font font = new Font("SansSerif", Font.BOLD, 20);
-
 		JPanel searchPanel = new JPanel();
+		
 		searchPanel.setLayout(null);
 		searchPanel.setBackground(Color.white);
 		searchPanel.setBounds(0,0,800,70);
 		
-		searchField.setBounds(70, 10, 660, 50);
+		searchField.setBounds(150, 10, 570, 50);
 		searchField.setFont(font);
 		
 		searchButton.setBounds(730, 10, 50, 50);
 		
-		homeButton.setBounds(10, 10, 50, 50);
+		homeButton.setBounds(10, 10, 130, 50);
 		homeButton.setFont(font);
 		
 		searchPanel.add(searchField);
@@ -74,7 +74,7 @@ public class SearchResult extends JPanel{
 		
 		Font font = new Font("SansSerif", Font.BOLD, 20);
 
-		JLabel listLabel = new JLabel("�̹���");
+		JLabel listLabel = new JLabel("이미지");
 		listLabel.setFont(font);
 		listLabel.setBounds(10, 10, 150, 30);
 		resultPanel.add(listLabel);
@@ -86,11 +86,12 @@ public class SearchResult extends JPanel{
 		resultPanel.add(numberBox);
 		
 		imagePanel = new JPanel();
-		imagePanel.setLayout(new GridLayout(6, 5, 5, 5));
+		imagePanel.setLayout(new GridLayout(6, 5, 5, 5));  //사진 출력 패널
+		
 		for(int i=0; i<30; i++) {
 			imageButton[i] = new JButton();
 			imagePanel.add(imageButton[i]);
-			imageButton[i].addActionListener(listener);
+			imageButton[i].addActionListener(listener);    //사진을 버튼이미지로 담음
 		}
 		imagePanel.setBounds(0, 50, 800, 480);
 		resultPanel.add(imagePanel);
@@ -100,19 +101,19 @@ public class SearchResult extends JPanel{
 	}
 	public void setResult(String searchWord) throws IOException, ParseException, SQLException {
 		Search search = new Search();
-		search.searchImage(searchWord);  //�̹��� �˻�
+		search.searchImage(searchWord);  //검색어 입력 결과
 		
-		ArrayList<String> urlList = search.getUrlList();   //�˻���� �̹��� url ����Ʈ
+		ArrayList<String> urlList = search.getUrlList();   //검색어 입력 결과 url 리스트
 		
 		for(int i=0; i<30; i++) {
-			ImageIcon image = new ImageIcon(new URL(urlList.get(i)));
+			ImageIcon image = new ImageIcon(new URL(urlList.get(i))); //버튼에 이미지를 넣음
 			imageButton[i].setIcon(image);
 			imageButton[i].setVisible(true);
 		}
-		showResult(10);
+		showResult(10);  //이미지 개수 기본값 10개
 		searchRecordDAO.AddSearchRecord(searchWord);
 	}
-	public void showResult(int number) {
+	public void showResult(int number) {  //콤보박스에서 선택한 숫자만큼 이미지를 보여줌
 		for(int i=0; i<30; i++) {
 			if(i<number) imageButton[i].setVisible(true);
 			else imageButton[i].setVisible(false);
@@ -126,14 +127,13 @@ public class SearchResult extends JPanel{
 			if(event.getSource() == homeButton) {
 				panelManager.ChangeToMainPage();
 			}
-			else if((event.getSource() == searchField || event.getSource() == searchButton) && searchField.getText().equals("") == false) {   //�˻��� �ʵ� enter or �˻���ư Ŭ��
+			else if((event.getSource() == searchField || event.getSource() == searchButton) && searchField.getText().equals("") == false) {   //enter or 검색버튼
 				 try {
 					setResult(searchField.getText());
 					numberBox.setSelectedIndex(0);
 				} catch (IOException | ParseException e) {
 					e.printStackTrace();
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -144,7 +144,7 @@ public class SearchResult extends JPanel{
 				//imageFrame.showImage();
 			}
 			
-			searchField.setText("");
+			searchField.setText("");//검색 후 입력값 지우기
 		}
 	}
 }

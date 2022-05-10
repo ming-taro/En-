@@ -18,16 +18,18 @@ public class SearchRecord extends JPanel implements ActionListener{
 	private ArrayList<SearchRecordDTO> searchRecordList;
 	private PanelManager panelManager;
 	private SearchRecordDAO searchRecordDAO;
+	private DefaultTableModel model;
 	
 	public SearchRecord(SearchRecordDAO searchRecordDAO, PanelManager panelManager) throws SQLException {
-		homeButton = new JButton("H");
-		resetButton = new JButton("�ʱ�ȭ");
+		homeButton = new JButton("뒤로가기");
+		resetButton = new JButton("초기화");
 		searchRecordPanel = new JPanel();
 		searchRecordList = new ArrayList<SearchRecordDTO>();
 		this.searchRecordDAO = searchRecordDAO;
 		this.panelManager = panelManager;
+		model = new DefaultTableModel(0,0);
 		
-		homeButton.setBounds(10, 10, 50, 50);
+		homeButton.setBounds(10, 10, 100, 50);
 		resetButton.setBounds(350, 450, 100, 50);
 		searchRecordPanel.setBounds(150, 80, 500, 350);
 		
@@ -43,41 +45,57 @@ public class SearchRecord extends JPanel implements ActionListener{
 		
 		homeButton.addActionListener(this);
 		resetButton.addActionListener(this);
+		setSearchRecord();
 	}
 	public void setSearchRecord() throws SQLException {
-		searchRecordList = searchRecordDAO.getSearchRecord();
-		String[] header =  {"�˻���", "�˻� �ð�"};
+		searchRecordList = searchRecordDAO.getSearchRecord();	
+
+		String[] header =  {"검색어", "검색 시간"};
 		String[][] record = new String[searchRecordList.size()][2];
 		
 		for(int i=0, j=searchRecordList.size()-1; i<searchRecordList.size(); i++,j--) {
 			record[i][0] = searchRecordList.get(j).getSearchWord();
 			record[i][1] = searchRecordList.get(j).getDate();
+			System.out.println(record[i][0] + "/" + record[i][1]);
 		}
-		
-		DefaultTableModel model = new DefaultTableModel(record, header);
+
+		model = new DefaultTableModel(record, header);
 		searchRecordTable = new JTable(model);
-		model.fireTableDataChanged();
 		searchRecordTable.setRowHeight(50);
 		searchRecordTable.setFont(new Font("SansSerif", Font.BOLD, 17));
+		searchRecordTable.repaint();
 		searchRecordTableScroll = new JScrollPane(searchRecordTable);
 		searchRecordTableScroll.setBounds(0, 0, 500, 350);
 		searchRecordPanel.add(searchRecordTableScroll);
+
+	}
+	public void setSearch() throws SQLException {
+		DefaultTableModel tableModel = (DefaultTableModel) searchRecordTable.getModel();
+		tableModel.setRowCount(0);
+		
+		searchRecordList = searchRecordDAO.getSearchRecord();
+		String[][] record = new String[searchRecordList.size()][2];
+		
+		for(int i=0, j=searchRecordList.size()-1; i<searchRecordList.size(); i++,j--) {
+			record[i][0] = searchRecordList.get(j).getSearchWord();
+			record[i][1] = searchRecordList.get(j).getDate();
+			model.addRow(record[i]);
+		}
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		if(event.getSource() == homeButton) {   //�ڷΰ���
-			panelManager.ChangeToMainPage(); 
+		if(event.getSource() == homeButton) {   //뒤로가기 버튼
+			panelManager.ChangeToMainPage();    //홈으로 돌아옴
 		}
-		else {  //�ʱ�ȭ
-			int reset = JOptionPane.showConfirmDialog(this, "�˻������ �ʱ�ȭ�Ͻðڽ��ϱ�?", "Ȯ��", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
-			if(reset == 0)
+		else {  //�ʱ�ȭ
+			int reset = JOptionPane.showConfirmDialog(this, "검색 기록을 초기화하시겠습니까?", "초기화", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
+			if(reset == 0)  //확인버튼을 누른 경우
 				try {
-					DefaultTableModel model = (DefaultTableModel)searchRecordTable.getModel();
+					DefaultTableModel model = (DefaultTableModel)searchRecordTable.getModel();  //테이블 내용 지움
 					model.setNumRows(0);
-					searchRecordDAO.ResetSearchRecord();
+					searchRecordDAO.ResetSearchRecord();  //DB에서 기록 삭제
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 		}

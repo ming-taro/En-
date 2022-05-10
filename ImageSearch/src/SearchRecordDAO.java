@@ -21,7 +21,7 @@ public class SearchRecordDAO {
 	public void connectionDB() {
 	      try {
 	         Class.forName("com.mysql.cj.jdbc.Driver");
-	         System.out.println("µå¶óÀÌ¹ö ·Îµå ¼º°ø");
+	         System.out.println("ë“œë¼ì´ë¸Œ ì—°ê²° ì„±ê³µ...");
 	      } catch (ClassNotFoundException e) {
 	         e.printStackTrace();
 	      }
@@ -31,7 +31,7 @@ public class SearchRecordDAO {
 	public void setConnection() {
 		try { 
 	          connection = DriverManager.getConnection(url, userid, pwd);
-	          System.out.println("µ¥ÀÌÅÍº£ÀÌ½º ¿¬°á ¼º°ø");
+	          System.out.println("ë°ì´í„° ë² ì´ìŠ¤ ì—°ê²° ì„±ê³µ...");
 	    } catch (SQLException e1) {
 	          e1.printStackTrace();
 	    }
@@ -44,7 +44,7 @@ public class SearchRecordDAO {
 		setConnection();
 		qeury = "select * from searchrecord";
 		statement = connection.createStatement();
-		ResultSet rs = statement.executeQuery(qeury); //SQL¹®À» Àü´ŞÇÏ¿© ½ÇÇà
+		ResultSet rs = statement.executeQuery(qeury); //SQLì¿¼ë¦¬ë¬¸
 
 		while(rs.next()){
 			searchRecordList.add(new SearchRecordDTO(rs.getString("searchWord"), rs.getString("date")));

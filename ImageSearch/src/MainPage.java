@@ -15,9 +15,9 @@ public class MainPage extends JPanel{
 	private PanelManager panelManager;
 	
 	public MainPage(PanelManager panelManager) {
-		searchField = new JTextField("");   //°Ë»ö¾î ÀÔ·ÂÃ¢
+		searchField = new JTextField("");   //ì…ë ¥ê°’ ì´ˆê¸°í™”
 		searchButton = new JButton();
-		searchRecordButton = new JButton("°Ë»ö ±â·Ï");
+		searchRecordButton = new JButton("ê²€ìƒ‰ê¸°ë¡");
 		listener = new MyListener();
 		this.panelManager = panelManager;
 		
@@ -33,12 +33,12 @@ public class MainPage extends JPanel{
 		searchPanel.setBackground(Color.white);
 		searchPanel.setBounds(0, 0, 800, 600);
 		
-		searchField.setBounds(150, 270, 450, 50); //°Ë»öÃ¢
+		searchField.setBounds(150, 270, 450, 50); //ê²€ìƒ‰ì–´ ì…ë ¥
 		searchField.setFont(font);
 		
-		searchButton.setBounds(600, 270, 50, 50); //°Ë»ö¹öÆ°
+		searchButton.setBounds(600, 270, 50, 50); //ê²€ìƒ‰ë²„íŠ¼
 		
-		searchRecordButton.setBounds(620, 480, 130, 40);  //°Ë»ö±â·Ï ¹öÆ°
+		searchRecordButton.setBounds(620, 480, 130, 40);  //ê²€ìƒ‰ê¸°ë¡ë²„íŠ¼
 		searchRecordButton.setFont(font);
 
 		add(searchPanel);
@@ -58,10 +58,10 @@ public class MainPage extends JPanel{
 			if((event.getSource() == searchField || event.getSource() == searchButton) && searchField.getText().equals("")) {
 				
 			}
-			else if(event.getSource() == searchField || event.getSource() == searchButton) {   //°Ë»ö¾î ÇÊµå enter or °Ë»ö¹öÆ° Å¬¸¯
+			else if(event.getSource() == searchField || event.getSource() == searchButton) {   //ê²€ìƒ‰ì–´ ì…ë ¥ í›„ enter or ê²€ìƒ‰ë²„íŠ¼ í´ë¦­
 				System.out.print(searchField.getText());
 				try {
-					panelManager.ChangeToSearchResult(searchField.getText());
+					panelManager.ChangeToSearchResult(searchField.getText());  //ê²€ìƒ‰ê²°ê³¼ì°½
 				} catch (IOException | ParseException e) {
 					e.printStackTrace();
 				} catch (SQLException e) {

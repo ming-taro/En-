@@ -27,16 +27,16 @@ public class Search {
 		return urlList;
 	}
 	public void searchImage(String searchWord) throws IOException, ParseException {
-		URL url = null;
-	    String readLine = null;
-	    StringBuilder buffer = null;
-	    BufferedReader bufferedReader = null;
-	    HttpURLConnection connection = null;
+		URL url;
+	    String readLine;
+	    StringBuilder buffer;
+	    BufferedReader bufferedReader;
+	    HttpURLConnection connection;
 	    	
 	    int connTimeout = 5000;
 	    int readTimeout = 3000;
 			
-	    String apiUrl = "https://dapi.kakao.com/v2/search/image?sort=accuracy&query='"+ searchWord +"'&size=30";			
+	    String apiUrl = "https://dapi.kakao.com/v2/search/image?query='"+ searchWord +"'&size=30";			
 	    url = new URL(apiUrl);
         connection = (HttpURLConnection)url.openConnection();
         
@@ -44,23 +44,29 @@ public class Search {
         connection.setConnectTimeout(connTimeout);
         connection.setReadTimeout(readTimeout);
         connection.setRequestProperty("Authorization", "KakaoAK e7340e1df71abf4e5a6ef4aa3fcb7fbb");
-        connection.setRequestProperty("content-type", "application/json; charset=utf-8");
-        connection.setRequestProperty("Accept", "application/json;");
+        connection.setRequestProperty("content-type", "application/json; charset=utf-8;");
+        connection.setRequestProperty("Accept", "application/json; charset=utf-8;");
         connection.setDoOutput(true);
         
         buffer = new StringBuilder();
+        
+        JSONParser jsonParse;
+        JSONObject data;
+        JSONArray array;
+        JSONObject document;
+        
         if(connection.getResponseCode() == HttpURLConnection.HTTP_OK) 
         {
             bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream(),"UTF-8"));
             
             while((readLine = bufferedReader.readLine()) != null) 
     	    {
-            	JSONParser jsonParse = new JSONParser();
-            	JSONObject data = (JSONObject)jsonParse.parse(readLine);
-            	JSONArray array = (JSONArray)data.get("documents");//  get("document");
+            	jsonParse = new JSONParser();
+            	data = (JSONObject)jsonParse.parse(readLine);
+            	array = (JSONArray)data.get("documents");
             	
             	for(int i=0; i<30; i++) {
-            		JSONObject document = (JSONObject)array.get(i);
+            		document = (JSONObject)array.get(i);
 	            	buffer.append(document.get("image_url")).append("\n");
 	            	urlList.add(document.get("image_url").toString());
             	}
