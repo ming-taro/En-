@@ -37,8 +37,9 @@ public class SearchRecordDAO {
 	    }
 	}
 
-	public void createSearchRecord(ArrayList<SearchRecordDTO> searchRecordList) throws SQLException {
+	public ArrayList<SearchRecordDTO> getSearchRecord() throws SQLException {
 		String 	qeury; 
+		ArrayList<SearchRecordDTO> searchRecordList = new ArrayList<SearchRecordDTO>();
 		
 		setConnection();
 		qeury = "select * from searchrecord";
@@ -52,6 +53,8 @@ public class SearchRecordDAO {
 		rs.close();
 		statement.close();
 		connection.close();
+		
+		return searchRecordList;
 	}
 	public void AddSearchRecord(String searchWord) throws SQLException {
 		String sql; 

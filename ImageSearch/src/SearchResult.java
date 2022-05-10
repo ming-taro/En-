@@ -21,7 +21,7 @@ public class SearchResult extends JPanel{
 	private ImageFrame imageFrame;
 	private SearchRecordDAO searchRecordDAO;
 	
-	public SearchResult(PanelManager panelManager) throws IOException, ParseException {
+	public SearchResult(SearchRecordDAO searchRecordDAO, PanelManager panelManager) throws IOException, ParseException {
 		listener = new MyListener();
 		searchField = new JTextField();   //검색어 입력창
 		searchButton = new JButton();
@@ -29,7 +29,7 @@ public class SearchResult extends JPanel{
 		numberBox = new JComboBox();
 		imageButton = new JButton[30];
 		imageFrame = new ImageFrame();
-		searchRecordDAO = new SearchRecordDAO();
+		this.searchRecordDAO = searchRecordDAO;
 		this.panelManager = panelManager;
 
 		setLayout(null);

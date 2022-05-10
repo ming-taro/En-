@@ -9,11 +9,13 @@ public class PanelManager extends JFrame {
 	private MainPage mainPage;
 	private SearchResult searchResult;
 	private SearchRecord searchRecord;
+	private SearchRecordDAO searchRecordDAO;
 	
-	public PanelManager() throws IOException, ParseException {
+	public PanelManager() throws IOException, ParseException, SQLException {
+		searchRecordDAO = new SearchRecordDAO();
 		mainPage = new MainPage(this);
-		searchResult = new SearchResult(this);
-		searchRecord = new SearchRecord(this);
+		searchResult = new SearchResult(searchRecordDAO, this);
+		searchRecord = new SearchRecord(searchRecordDAO, this);
 		
 		setTitle("Image Search");
 		setBounds(450, 150, 800, 600);
