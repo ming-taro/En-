@@ -13,12 +13,8 @@ public class SearchRecordDAO {
 	private String url = "jdbc:mysql://localhost:3306/parkminji?&serverTimezone=Asia/Seoul&useSSL=false";
 	private String userid = "root";
 	private String pwd = "0000";
-	private ArrayList<String> searchWord;
-	private ArrayList<String> date;
 	
 	public SearchRecordDAO() {
-		searchWord = new ArrayList<String>();
-		date = new ArrayList<String>();
 		connectionDB();
 	}
 	
@@ -41,17 +37,16 @@ public class SearchRecordDAO {
 	    }
 	}
 
-	public void createSearchRecord() throws SQLException {
-		String sql; //SQL문을 저장할 String
+	public void createSearchRecord(ArrayList<SearchRecordDTO> searchRecordList) throws SQLException {
+		String 	qeury; 
 		
 		setConnection();
-		sql = "select * from searchrecord";
+		qeury = "select * from searchrecord";
 		statement = connection.createStatement();
-		ResultSet rs = statement.executeQuery(sql); //SQL문을 전달하여 실행
+		ResultSet rs = statement.executeQuery(qeury); //SQL문을 전달하여 실행
 
 		while(rs.next()){
-			searchWord.add(rs.getString("searchWord"));
-			date.add(rs.getString("date"));
+			searchRecordList.add(new SearchRecordDTO(rs.getString("searchWord"), rs.getString("date")));
 		}
 		   
 		rs.close();

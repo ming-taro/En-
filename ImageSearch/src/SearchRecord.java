@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -8,10 +9,13 @@ public class SearchRecord extends JPanel implements ActionListener{
 	private JButton homeButton;
 	private JButton resetButton;
 	private PanelManager panelManager;
+	private ArrayList<String> searchRecordList;
+	private SearchRecord searchRecord;
 	
 	public SearchRecord(PanelManager panelManager) {
 		homeButton = new JButton();
 		resetButton = new JButton("√ ±‚»≠");
+		searchRecordList = new ArrayList<String>();
 		this.panelManager = panelManager;
 		
 		homeButton.setBounds(10, 10, 50, 50);
@@ -26,6 +30,9 @@ public class SearchRecord extends JPanel implements ActionListener{
 		
 		homeButton.addActionListener(this);
 		resetButton.addActionListener(this);
+	}
+	public void setSearchRecord() {
+		sear.crea
 	}
 
 	@Override
