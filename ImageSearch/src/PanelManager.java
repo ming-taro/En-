@@ -18,10 +18,7 @@ public class PanelManager extends JFrame {
 		searchRecord = new SearchRecord(searchRecordDAO, this);
 		
 		setTitle("Image Search");
-		setBounds(450, 150, 800, 600);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("Image Search");
-		setBounds(450, 150, 800, 600);
+		setBounds(450, 150, 810, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 		setLayout(null);

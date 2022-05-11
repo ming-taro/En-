@@ -62,9 +62,14 @@ public class SearchRecordDAO {
 		String formatedNow = now.format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss"));
 
 		setConnection();
+		sql = "delete from searchrecord where searchword='"+ searchWord +"';";
+		statement = connection.createStatement();
+		statement.execute(sql);
+		
 		sql = "insert into searchrecord(searchWord,date) values('" + searchWord + "', '" + formatedNow + "');";
 		statement = connection.createStatement();
 		statement.execute(sql);
+
 		statement.close();
 		connection.close();
 	}

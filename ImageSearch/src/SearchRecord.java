@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -21,7 +22,7 @@ public class SearchRecord extends JPanel implements ActionListener{
 	private DefaultTableModel model;
 	
 	public SearchRecord(SearchRecordDAO searchRecordDAO, PanelManager panelManager) throws SQLException {
-		homeButton = new JButton("뒤로가기");
+		homeButton = new JButton();
 		resetButton = new JButton("초기화");
 		searchRecordPanel = new JPanel();
 		searchRecordList = new ArrayList<SearchRecordDTO>();
@@ -29,11 +30,18 @@ public class SearchRecord extends JPanel implements ActionListener{
 		this.panelManager = panelManager;
 		model = new DefaultTableModel(0,0);
 		
-		homeButton.setBounds(10, 10, 100, 50);
+		homeButton.setBounds(10, 10, 50, 50);
 		resetButton.setBounds(350, 450, 100, 50);
 		searchRecordPanel.setBounds(150, 80, 500, 350);
-		
 		searchRecordPanel.setLayout(null);
+		
+		ImageIcon imageIcon = new ImageIcon("image\\back.png"); //버튼에 이미지를 넣음
+		Image image = imageIcon.getImage();
+		imageIcon = new ImageIcon(image.getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+		homeButton.setIcon(imageIcon);
+		homeButton.setBorderPainted(false);
+		homeButton.setFocusPainted(false);
+		homeButton.setContentAreaFilled(false);
 		
 		setLayout(null);
 		setBounds(0, 0, 800, 600);

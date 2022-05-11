@@ -35,17 +35,18 @@ public class Search {
 	    	
 	    int connTimeout = 5000;
 	    int readTimeout = 3000;
-			
+	    
+	    searchWord = searchWord.trim().replace(" ", "");
 	    String apiUrl = "https://dapi.kakao.com/v2/search/image?query='"+ searchWord +"'&size=30";			
 	    url = new URL(apiUrl);
-        connection = (HttpURLConnection)url.openConnection();
         
+	    connection = (HttpURLConnection)url.openConnection();
         connection.setRequestMethod("GET");	     
         connection.setConnectTimeout(connTimeout);
         connection.setReadTimeout(readTimeout);
         connection.setRequestProperty("Authorization", "KakaoAK e7340e1df71abf4e5a6ef4aa3fcb7fbb");
-        connection.setRequestProperty("content-type", "application/json; charset=utf-8;");
-        connection.setRequestProperty("Accept", "application/json; charset=utf-8;");
+        connection.setRequestProperty("content-type", "application/json;charset=UTF-8;");
+        connection.setRequestProperty("Accept", "application/json;charset=UTF-8;");
         connection.setDoOutput(true);
         
         buffer = new StringBuilder();

@@ -28,7 +28,7 @@ public class SearchResult extends JPanel{
 		listener = new MyListener();
 		searchField = new JTextField();   //검색어 입력창
 		searchButton = new JButton();     //검색버튼
-		homeButton = new JButton("뒤로가기");    //뒤로가기
+		homeButton = new JButton();    //뒤로가기
 		numberBox = new JComboBox();      //이미지 개수
 		imageButton = new JButton[30];    //이미지 버튼
 		imageFrame = new ImageFrame();  		
@@ -50,13 +50,16 @@ public class SearchResult extends JPanel{
 		searchPanel.setBackground(Color.white);
 		searchPanel.setBounds(0,0,800,70);
 		
-		searchField.setBounds(150, 10, 570, 50);
+		searchField.setBounds(80, 10, 650, 50);
 		searchField.setFont(font);
 		
 		searchButton.setBounds(730, 10, 50, 50);
+		searchButton.setFont(font);
+		setButtonImage(searchButton, "image\\magnifyingGlass.png");
 		
-		homeButton.setBounds(10, 10, 130, 50);
+		homeButton.setBounds(10, 10, 50, 50);
 		homeButton.setFont(font);
+		setButtonImage(homeButton, "image\\back.png");
 		
 		searchPanel.add(searchField);
 		searchPanel.add(searchButton);
@@ -68,12 +71,20 @@ public class SearchResult extends JPanel{
 
 		add(searchPanel);
 	}
+	public void setButtonImage(JButton button, String imageString) {
+		ImageIcon imageIcon = new ImageIcon(imageString); //버튼에 이미지를 넣음
+		Image image = imageIcon.getImage();
+		imageIcon = new ImageIcon(image.getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+		button.setIcon(imageIcon);
+		button.setBorderPainted(false);
+		button.setFocusPainted(false);
+		button.setContentAreaFilled(false);
+	}
 	
 	public void addResultPanel() throws IOException, ParseException {
 		resultPanel = new JPanel();
 		resultPanel.setLayout(null);
 		resultPanel.setBackground(Color.white);
-		//resultPanel.setBounds(0,70,800,530);
 
 		resultPanel.setPreferredSize(new Dimension(800, 530));
 		panelScroll.setViewportView(resultPanel);

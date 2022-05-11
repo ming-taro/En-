@@ -13,6 +13,7 @@ public class MainPage extends JPanel{
 	private JTextField searchField;
 	private MyListener listener;
 	private PanelManager panelManager;
+	private JButton logo;
 	
 	public MainPage(PanelManager panelManager) {
 		searchField = new JTextField("");   //입력값 초기화
@@ -37,14 +38,32 @@ public class MainPage extends JPanel{
 		searchField.setFont(font);
 		
 		searchButton.setBounds(600, 270, 50, 50); //검색버튼
+		ImageIcon imageIcon = new ImageIcon("image\\magnifyingGlass.png"); //버튼에 이미지를 넣음
+		Image image = imageIcon.getImage();
+		imageIcon = new ImageIcon(image.getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+		searchButton.setIcon(imageIcon);
+		searchButton.setBorderPainted(false);
+		searchButton.setFocusPainted(false);
+		searchButton.setContentAreaFilled(false);
 		
 		searchRecordButton.setBounds(620, 480, 130, 40);  //검색기록버튼
 		searchRecordButton.setFont(font);
 
+		logo = new JButton();
+		logo.setBounds(250, 100, 300,200);
+		imageIcon = new ImageIcon("image\\daum.jpg"); //버튼에 이미지를 넣음
+		image = imageIcon.getImage();
+		imageIcon = new ImageIcon(image.getScaledInstance(300, 100, Image.SCALE_SMOOTH));
+		logo.setIcon(imageIcon);
+		logo.setBorderPainted(false);
+		logo.setFocusPainted(false);
+		logo.setContentAreaFilled(false);
+		
 		add(searchPanel);
 		searchPanel.add(searchField);
 		searchPanel.add(searchButton);
 		searchPanel.add(searchRecordButton);
+		searchPanel.add(logo);
 		
 		searchField.addActionListener(listener);
 		searchButton.addActionListener(listener);
