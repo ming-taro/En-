@@ -12,7 +12,7 @@ public class ImageFrame extends JFrame {
 	
 	public ImageFrame() {
 		setTitle("Image");
-		setBounds(200, 200, 500, 500);
+		setBounds(200, 200, 500, 500);  
 		setVisible(false);
 	}
 	public void showImage(String url) throws MalformedURLException {
