@@ -2,22 +2,26 @@ package View;
 
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import operationManagement.Constants;
 
-public class CalculationButtonPanel extends JPanel {
+public class CalculationButtonPanel extends JPanel implements ActionListener{
 	private JButton[][] calculationButton;
+	private ResultPanel resultPanel;
 	
-	public CalculationButtonPanel(){
+	public CalculationButtonPanel(ResultPanel resultPanel){
 		calculationButton = new JButton[5][4];
+		this.resultPanel = resultPanel;
 		addButtonPanel();
 	}
 	
-	public void addButtonPanel() {
-		setLayout(new GridLayout(5, 4));
+	private void addButtonPanel() {  //계산버튼패널
+		setLayout(new GridLayout(5, 4, 2, 2));
 		String[][] buttonName = {{"CE", "C", "←", "÷"}, {"7", "8", "9", "×"}, {"4", "5", "6", "－"}, {"1", "2", "3", "＋"}, {"±", "0", ".", "＝"}};
 		Font font = new Font("SansSerif", Font.BOLD, Constants.BUTTON_FONT_SIZE);
 
@@ -25,9 +29,18 @@ public class CalculationButtonPanel extends JPanel {
 			for(int j=0; j<4; j++) {
 				calculationButton[i][j] = new JButton();
 				add(calculationButton[i][j]);
-				calculationButton[i][j].setText(buttonName[i][j]);   
-				calculationButton[i][j].setFont(font);               
+				calculationButton[i][j].addActionListener(this);     //버튼클릭이벤트 연결
+				calculationButton[i][j].setText(buttonName[i][j]);   //버튼이름 설정
+				calculationButton[i][j].setFont(font);  
+				calculationButton[i][j].setFocusPainted(false);
+				calculationButton[i][j].setContentAreaFilled(false);             
 			}
 		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent event) {
+		JButton button = (JButton) event.getSource();
+		resultPanel.setInputLabel(button.getText());
 	}
 }

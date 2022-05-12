@@ -16,7 +16,7 @@ public class CalculatorFrame extends JFrame {
 		setVisible(true);
 		
 		resultPanel = new ResultPanel();
-		calculationButtonPanel = new CalculationButtonPanel();
+		calculationButtonPanel = new CalculationButtonPanel(resultPanel);
 		
 		getContentPane().add(resultPanel);   //계산기 frame에 계산결과 패널 추가
 		getContentPane().add(calculationButtonPanel);   //계산기 frame에 계산버튼 패널 추가

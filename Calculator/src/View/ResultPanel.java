@@ -8,11 +8,11 @@ import operationManagement.Constants;
 public class ResultPanel extends JPanel implements ActionListener{
 	private JButton recordButton;
 	private JLabel expressionLabel;
-	private JLabel inputValueLabel;
+	private JLabel inputLabel;
 	public ResultPanel() {
 		recordButton = new JButton("T");
 		expressionLabel = new JLabel("");
-		inputValueLabel = new JLabel("");
+		inputLabel = new JLabel("");
 		
 		setLayout(new GridLayout(3, 0));
 
@@ -21,7 +21,7 @@ public class ResultPanel extends JPanel implements ActionListener{
 		addInputPanel();
 	}
 	
-	public void addRecordPanel() {
+	private void addRecordPanel() {
 		JPanel recordPanel = new JPanel();
 		JLabel label = new JLabel("표준                                                                                     ");
 		
@@ -35,7 +35,7 @@ public class ResultPanel extends JPanel implements ActionListener{
 		
 		add(recordPanel);
 	}
-	public void addExpressionPanel() {
+	private void addExpressionPanel() {
 		JPanel expressionPanel = new JPanel();
 
 		expressionLabel.setFont(new Font("SansSerif", Font.PLAIN, Constants.EXPRESSION_FONT_SIZE));
@@ -44,20 +44,22 @@ public class ResultPanel extends JPanel implements ActionListener{
 		
 		add(expressionPanel);
 	}
-	public void addInputPanel() {
+	private void addInputPanel() {
 		JPanel inputPanel = new JPanel();
 
-		inputValueLabel.setFont(new Font("SansSerif", Font.BOLD, Constants.INPUT_FONT_SIZE));
+		inputLabel.setFont(new Font("SansSerif", Font.BOLD, Constants.INPUT_FONT_SIZE));
 		inputPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		inputPanel.add(inputValueLabel);
+		inputPanel.add(inputLabel);
 		
 		add(inputPanel);
 	}
-
+	public void setInputLabel(String input) {
+		inputLabel.setText(inputLabel.getText() + input);
+	}
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		expressionLabel.setText(expressionLabel.getText() + "d");
-		inputValueLabel.setText(inputValueLabel.getText() + "d");
+	public void actionPerformed(ActionEvent e) { //계산기록보기
+		//expressionLabel.setText(expressionLabel.getText() + "d");
+		//inputValueLabel.setText(inputValueLabel.getText() + "d");
 		
 	}
 }
