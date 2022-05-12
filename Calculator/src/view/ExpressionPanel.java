@@ -8,13 +8,13 @@ import javax.swing.*;
 
 import operationmanagement.Constants;
 
-public class ResultPanel extends JPanel implements ActionListener{
+public class ExpressionPanel extends JPanel implements ActionListener{
 	private JButton recordButton;
 	private JLabel expressionLabel;
 	private JLabel inputLabel;
 	private StringBuilder number;
 	
-	public ResultPanel() {
+	public ExpressionPanel() {
 		recordButton = new JButton("T");
 		expressionLabel = new JLabel("");
 		inputLabel = new JLabel("0");

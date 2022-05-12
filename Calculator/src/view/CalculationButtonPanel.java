@@ -11,10 +11,10 @@ import operationmanagement.ButtonOnCalculator.Button;
 
 public class CalculationButtonPanel extends JPanel implements ActionListener{
 	private JButton[] calculationButton;
-	private ResultPanel resultPanel;
-	public CalculationButtonPanel(ResultPanel resultPanel){
+	private ExpressionPanel expressionPanel;
+	public CalculationButtonPanel(ExpressionPanel resultPanel){
 		calculationButton = new JButton[20];
-		this.resultPanel = resultPanel;
+		this.expressionPanel = resultPanel;
 		addButtonPanel();
 	}
 	
@@ -43,14 +43,14 @@ public class CalculationButtonPanel extends JPanel implements ActionListener{
 
 		System.out.print(buttonClicked);
 		if(buttonClicked.charAt(0) >= '0' && buttonClicked.charAt(0) <= '9') {
-			resultPanel.setInputLabel(buttonClicked);
+			expressionPanel.setInputLabel(buttonClicked);
 		}
 		else if(buttonClicked.equals(calculationButton[0].getText())) {
-			resultPanel.setZero();
+			expressionPanel.setZero();
 		}
 		else if(buttonClicked.equals(calculationButton[1].getText())) {
 			System.out.print(buttonClicked);
-			resultPanel.removeInputLabel();
+			expressionPanel.removeInputLabel();
 		}
 	}
 
