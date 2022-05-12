@@ -60,17 +60,23 @@ public class ResultPanel extends JPanel implements ActionListener{
 		add(inputPanel);
 	}
 	public void setInputLabel(String input) {
+		if(number.length() == 16) return;
 		
 		number.append(input);
 		inputLabel.setText(number.toString().replaceAll("\\B(?=(\\d{3})+(?!\\d))", ","));
 	}
 	public void removeInputLabel() {
 		inputLabel.setText("");
+		number.setLength(0);
+	}
+	public void setZero() {
+		number.setLength(0);
+		inputLabel.setText("0");
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) { //계산기록보기
-		//expressionLabel.setText(expressionLabel.getText() + "d");
-		//inputValueLabel.setText(inputValueLabel.getText() + "d");
+		
+		
 		
 	}
 }

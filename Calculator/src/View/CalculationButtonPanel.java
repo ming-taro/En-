@@ -49,6 +49,9 @@ public class CalculationButtonPanel extends JPanel implements ActionListener{
 		if(buttonClicked.charAt(0) >= '0' && buttonClicked.charAt(0) <= '9') {
 			resultPanel.setInputLabel(buttonClicked);
 		}
+		else if(buttonClicked.equals(buttonName[0][0])) {
+			resultPanel.setZero();
+		}
 		else if(buttonClicked.equals(buttonName[0][1])) {
 			System.out.print(buttonClicked);
 			resultPanel.removeInputLabel();
