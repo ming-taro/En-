@@ -1,4 +1,4 @@
-import View.CalculatorFrame;
+import view.CalculatorFrame;
 
 public class Calculator {
 

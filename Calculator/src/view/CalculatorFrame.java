@@ -1,7 +1,8 @@
-package View;
+package view;
 import java.awt.*;
 import javax.swing.*;
-import operationManagement.*;
+
+import operationmanagement.*;
 
 public class CalculatorFrame extends JFrame {
 	private ResultPanel resultPanel;
@@ -14,7 +15,7 @@ public class CalculatorFrame extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(new GridLayout(2, 0));
 		setVisible(true);
-		
+
 		resultPanel = new ResultPanel();
 		calculationButtonPanel = new CalculationButtonPanel(resultPanel);
 		

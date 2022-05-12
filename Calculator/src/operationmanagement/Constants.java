@@ -1,4 +1,4 @@
-package operationManagement;
+package operationmanagement;
 
 public class Constants {
 	public static final int HEIGHT = 700;

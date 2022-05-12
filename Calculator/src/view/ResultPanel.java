@@ -1,23 +1,23 @@
-package View;
+package view;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.text.NumberFormat;
 
 import javax.swing.*;
-import operationManagement.Constants;
+
+import operationmanagement.Constants;
 
 public class ResultPanel extends JPanel implements ActionListener{
 	private JButton recordButton;
 	private JLabel expressionLabel;
 	private JLabel inputLabel;
 	private StringBuilder number;
-	private NumberFormat nf = NumberFormat.getInstance();
 	
 	public ResultPanel() {
 		recordButton = new JButton("T");
 		expressionLabel = new JLabel("");
-		inputLabel = new JLabel("");
+		inputLabel = new JLabel("0");
 		number = new StringBuilder();
 		
 		setLayout(new GridLayout(3, 0));
@@ -60,14 +60,13 @@ public class ResultPanel extends JPanel implements ActionListener{
 		add(inputPanel);
 	}
 	public void setInputLabel(String input) {
-		if(number.length() == 16) return;
-		
+		if(number.length() == 16 || number.length() == 0 && input.equals("0")) return;
 		number.append(input);
 		inputLabel.setText(number.toString().replaceAll("\\B(?=(\\d{3})+(?!\\d))", ","));
 	}
 	public void removeInputLabel() {
-		inputLabel.setText("");
 		number.setLength(0);
+		inputLabel.setText("0");
 	}
 	public void setZero() {
 		number.setLength(0);

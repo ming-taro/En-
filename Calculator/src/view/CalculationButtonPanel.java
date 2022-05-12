@@ -1,4 +1,4 @@
-package View;
+package view;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -6,8 +6,8 @@ import java.awt.event.*;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import operationManagement.Constants;
-import operationManagement.ButtonOnCalculator.Button;
+import operationmanagement.Constants;
+import operationmanagement.ButtonOnCalculator.Button;
 
 public class CalculationButtonPanel extends JPanel implements ActionListener{
 	private JButton[] calculationButton;
@@ -52,8 +52,6 @@ public class CalculationButtonPanel extends JPanel implements ActionListener{
 			System.out.print(buttonClicked);
 			resultPanel.removeInputLabel();
 		}
-		
-		//System.out.print(Constants.ButtonnOnCalculator.valueOf("CE"));
-		
 	}
+
 }

@@ -1,4 +1,4 @@
-package operationManagement;
+package operationmanagement;
 
 public class ButtonOnCalculator {
 	public enum Button {
@@ -22,8 +22,10 @@ public class ButtonOnCalculator {
 	    ZERO(17, "0"),
 	    POINT(18, "."),
 	    EQUAL(19, "＝");
-	    private final int index; // 정수를 저장할 필드(인스턴스 변수) 추가
+		
+	    private final int index; 
 	    private final String symbol;
+	    
 	    Button(int index, String symbol) {
 	        this.index = index;
 	        this.symbol = symbol;
