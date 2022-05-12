@@ -9,10 +9,13 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import operationManagement.Constants;
+import operationManagement.Constants.ButtonnOnCalculator;
 
 public class CalculationButtonPanel extends JPanel implements ActionListener{
 	private JButton[][] calculationButton;
 	private ResultPanel resultPanel;
+	private String[][] buttonName = {{"CE", "C", "←", "÷"}, {"7", "8", "9", "×"}, {"4", "5", "6", "－"}, {"1", "2", "3", "＋"}, {"±", "0", ".", "＝"}};
+	
 	
 	public CalculationButtonPanel(ResultPanel resultPanel){
 		calculationButton = new JButton[5][4];
@@ -22,7 +25,6 @@ public class CalculationButtonPanel extends JPanel implements ActionListener{
 	
 	private void addButtonPanel() {  //계산버튼패널
 		setLayout(new GridLayout(5, 4, 2, 2));
-		String[][] buttonName = {{"CE", "C", "←", "÷"}, {"7", "8", "9", "×"}, {"4", "5", "6", "－"}, {"1", "2", "3", "＋"}, {"±", "0", ".", "＝"}};
 		Font font = new Font("SansSerif", Font.BOLD, Constants.BUTTON_FONT_SIZE);
 
 		for(int i=0; i<5; i++) {
@@ -41,6 +43,18 @@ public class CalculationButtonPanel extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		JButton button = (JButton) event.getSource();
-		resultPanel.setInputLabel(button.getText());
+		String buttonClicked = button.getText();
+
+		System.out.print(buttonClicked);
+		if(buttonClicked.charAt(0) >= '0' && buttonClicked.charAt(0) <= '9') {
+			resultPanel.setInputLabel(buttonClicked);
+		}
+		else if(buttonClicked.equals(buttonName[0][1])) {
+			System.out.print(buttonClicked);
+			resultPanel.removeInputLabel();
+		}
+		
+		//System.out.print(Constants.ButtonnOnCalculator.valueOf("CE"));
+		
 	}
 }
