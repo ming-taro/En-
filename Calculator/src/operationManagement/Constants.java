@@ -5,6 +5,8 @@ public class Constants {
 	public static final int WIDTH = 500;
 	public static final int RESULT_PANEL = 200;
 	public static final int BUTTON_PANEL = 500;
+	public static final int BUTTON_FONT_SIZE = 20;
+	public static final int RECORD_BUTTON_SIZE = 50;
 	
 	public enum ButtonnOnCalculator {
 		CE("CE"),
