@@ -11,7 +11,7 @@ public class ExpressionDTO {
 		InitValue();
 	}
 	public void InitValue() {
-		firstValue = "";
+		firstValue = "0";
 		secondValue = "";
 		operator = ' ';
 		result = "";
