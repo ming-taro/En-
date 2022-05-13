@@ -9,4 +9,6 @@ public class Constants {
 	public static final int RECORD_BUTTON_SIZE = 50;
 	public static final int INPUT_FONT_SIZE = 45;
 	public static final int EXPRESSION_FONT_SIZE = 20;
+	
+	public static final boolean IS_CALCULATION_OVER = false;
 }

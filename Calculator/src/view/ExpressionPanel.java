@@ -57,9 +57,9 @@ public class ExpressionPanel extends JPanel implements ActionListener{
 		
 		add(inputPanel);
 	}
-	public void setExpressionLabel(StringBuilder expression, StringBuilder number) {
-		expressionLabel.setText(expression.toString());   //계산식 누적값 출력
-		inputLabel.setText(number.toString().replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",")); //숫자입력 누적값 출력
+	public void setExpressionLabel(String expression, String number) {
+		expressionLabel.setText(expression);   //계산식 누적값 출력
+		inputLabel.setText(number.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",")); //숫자입력 누적값 출력
 	}
 	public void removeInputLabel(StringBuilder number) {
 		number.setLength(0);

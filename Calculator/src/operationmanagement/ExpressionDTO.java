@@ -7,13 +7,13 @@ public class ExpressionDTO {
 	private String result;
 	
 	public ExpressionDTO() {
-		firstValue = "";
-		secondValue = "";
+		result = "";
 	}
 	public void InitValue() {
 		firstValue = "";
 		secondValue = "";
 		operator = ' ';
+		result = "";
 	}
 	public void setFirstValue(String number) {
 		firstValue = number;
