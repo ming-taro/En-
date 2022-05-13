@@ -4,6 +4,7 @@ public class ExpressionDTO {
 	private String firstValue;
 	private String secondValue;
 	private char operator;
+	private String expression;
 	private String result;
 	
 	public ExpressionDTO() {

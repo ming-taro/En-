@@ -17,7 +17,7 @@ public class ExpressionCalculation implements ActionListener{
 	private ExpressionDTO expressionDTO;
 	private String expression;        //입력한 계산식 누적
 	private StringBuilder numberBuilder;            //숫자 입력값 누적
-	private ArithmeticOperation arithmeticOperation;
+	private EqualSign equalSign;
 	
 	public ExpressionCalculation() {
 		expressionPanel = new ExpressionPanel();                     //계산식 출력 패널
@@ -25,14 +25,14 @@ public class ExpressionCalculation implements ActionListener{
 		CalculatorFrame calculatorFrame =  new CalculatorFrame(expressionPanel, calculationButtonPanel);
 		expressionDTO = new ExpressionDTO();
 		numberBuilder = new StringBuilder();
-		arithmeticOperation = new ArithmeticOperation();
+		equalSign = new EqualSign(expressionDTO);
 	}
-	public void setNumber(String number) {
+	public void setNumber(String number) {         //숫자입력
 		if(numberBuilder.length() == 16 || numberBuilder.length() == 0 && number.equals("0") ) return;  //숫자 16자리 초과 or 처음부터 0을 입력하는 경우 -> 입력값을 더이상 누적하지 않음
 	
 		numberBuilder.append(number);   //숫자 입력값 누적
 	}
-	public void setExpression(String operator) {
+	public void setExpression(String operator) {  //연산자 입력
 		expressionDTO.setFirstValue(numberBuilder.toString());   //연산자 이전에 입력한 첫번째 값 저장
 		expressionDTO.setOperator(operator.charAt(0));           //연산자 저장
 		expression = expressionDTO.getFirstValue()+expressionDTO.getOperator();
@@ -46,35 +46,30 @@ public class ExpressionCalculation implements ActionListener{
 			expressionDTO.InitValue();         //계산식, DTO 저장값 초기화
 		}
 	}
-	public void calculateExpression() {
-		expressionDTO.setSecondValue(numberBuilder.toString());   //연산자 입력 후 누적된 두번째 숫자값 저장
-		expression += expressionDTO.getSecondValue() + "＝";
-		arithmeticOperation.calculateExpression(expressionDTO);   //현재까지 입력한 값 계산
-		numberBuilder.setLength(0);
-		numberBuilder.append(expressionDTO.getResult());
-		System.out.println(expressionDTO.getResult());
-	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		JButton button = (JButton) event.getSource();
 		String buttonClicked = button.getText();
 
-		if(buttonClicked.charAt(0) >= '0' && buttonClicked.charAt(0) <= '9') {
-			setNumber(buttonClicked);
-			expressionPanel.setExpressionLabel(expression, numberBuilder.toString());   //계산식 출력 패널에 누적된 계산식 갑과 입력값 출력
-		}
-		else if(buttonClicked.charAt(0) == 'C') {   
+		switch(buttonClicked.charAt(0)) {
+		case 'C':
 			setZero(buttonClicked);
 			expressionPanel.setExpressionLabel(expression, "0");   //계산식 출력 패널에 누적된 계산식 갑과 입력값 출력
-		}
-		else if(buttonClicked.equals("＝")) {
-			calculateExpression();
+			break;
+		case '=':
+			expression = equalSign.calculateExpression(expression, numberBuilder);
 			expressionPanel.setExpressionLabel(expression, expressionDTO.getResult());
-		}
-		else{  
-			setExpression(buttonClicked);     //+, -, *, /
+			break;
+		case '+':case '-':case '×':case '÷':
+			setExpression(buttonClicked);   
 			expressionPanel.setExpressionLabel(expression, expressionDTO.getFirstValue());   //계산식 출력 패널에 누적된 계산식 갑과 입력값 출력
+			break;
+		case '.':case '±':
+			break;
+		default:    //숫자입력
+			setNumber(buttonClicked);
+			expressionPanel.setExpressionLabel(expression, numberBuilder.toString());   //계산식 출력 패널에 누적된 계산식 갑과 입력값 출력
 		}
 	}
 }

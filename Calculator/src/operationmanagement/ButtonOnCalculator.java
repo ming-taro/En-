@@ -21,7 +21,7 @@ public class ButtonOnCalculator {
 	    PLUS_MINUS(16, "±"),
 	    ZERO(17, "0"),
 	    POINT(18, "."),
-	    EQUAL(19, "＝");
+	    EQUAL(19, "=");
 		
 	    private final int index; 
 	    private final String symbol;
