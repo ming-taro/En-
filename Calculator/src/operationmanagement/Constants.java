@@ -13,5 +13,7 @@ public class Constants {
 	public static final boolean IS_CALCULATION_OVER = true;
 	public static final boolean IS_NOT_CALCULATION_OVER = false;
 	
-	public static final boolean IS_NO_OPERATOR = true;
+	public static final boolean IS_FIRST_INPUT = true;
+	public static final boolean IS_NOT_FIRST_INPUT = false;
+	
 }

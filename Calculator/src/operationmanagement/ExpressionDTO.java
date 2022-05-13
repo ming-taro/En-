@@ -3,7 +3,7 @@ package operationmanagement;
 public class ExpressionDTO {
 	private String firstValue;
 	private String secondValue;
-	private char operator;
+	private String operator;
 	private String expression;
 	private String result;
 	
@@ -13,7 +13,7 @@ public class ExpressionDTO {
 	public void InitValue() {
 		firstValue = "0";
 		secondValue = "";
-		operator = ' ';
+		operator = "";
 		result = "";
 	}
 	public void setFirstValue(String number) {
@@ -22,7 +22,7 @@ public class ExpressionDTO {
 	public void setSecondValue(String number) {
 		secondValue = number;
 	}
-	public void setOperator(char operator) {
+	public void setOperator(String operator) {
 		this.operator = operator;
 	}
 	public String getFirstValue() {
@@ -31,7 +31,7 @@ public class ExpressionDTO {
 	public String getSecondValue() {
 		return secondValue;
 	}
-	public char getOperator() {
+	public String getOperator() {
 		return operator;
 	}
 	public void setResult(String result) {
@@ -41,7 +41,7 @@ public class ExpressionDTO {
 		return result;
 	}
 	public void setExpression() {
-		expression = firstValue +  operator + secondValue + "=";
+		expression = firstValue + " " + operator + " " + secondValue + " = ";
 	}
 	public String getExpression() {
 		return expression;

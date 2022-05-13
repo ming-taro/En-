@@ -10,16 +10,16 @@ public class ArithmeticOperation {
 		double result = 0;
 		
 		switch(expressionDTO.getOperator()) {    //연산자에 따라 계산
-		case '+':
+		case "+":
 			result = firstValue + secondValue;
 			break;
-		case '-':
+		case "-":
 			result = firstValue - secondValue;
 			break;
-		case '×':
+		case "×":
 			result = firstValue * secondValue;
 			break;
-		case '÷':
+		case "÷":
 			result = firstValue / secondValue;
 			break;
 		}

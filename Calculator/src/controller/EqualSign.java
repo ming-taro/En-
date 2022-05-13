@@ -21,7 +21,7 @@ public class EqualSign {
 		return Constants.IS_CALCULATION_OVER;  //"="을 입력받았지만 이미 결과값이 있음 -> 첫번째 숫자를 현재의 결과값으로 두고 다시 계산
 	}
 	public void calculateExpression(String number) { 
-		if(expressionDTO.getOperator() == ' ') {  //첫번째 숫자 입력 후 연산자 입력없이 바로 '='입력시 -> 결과 : 첫번째 입력값
+		if(expressionDTO.getOperator() == "") {  //첫번째 숫자 입력 후 연산자 입력없이 바로 '='입력시 -> 결과 : 첫번째 입력값
 			expressionDTO.setFirstValue(number);
 			expressionDTO.setResult(expressionDTO.getFirstValue());
 		}

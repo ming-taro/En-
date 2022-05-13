@@ -25,16 +25,27 @@ public class ExpressionCalculation implements ActionListener{
 		CalculatorFrame calculatorFrame =  new CalculatorFrame(expressionPanel, calculationButtonPanel);
 		expressionDTO = new ExpressionDTO();
 		numberBuilder = new StringBuilder();
+		numberBuilder.append("0");
 		equalSign = new EqualSign(expressionDTO);
 	}
+	public boolean isFirstInputForSecondNumber() {
+		if(expressionDTO.getOperator().equals("") || numberBuilder.toString().equals("0") == false) {  //연산자가 없거나(아직 첫번째값 입력중) 연산자 입력 후 두번째값을 이미 입력중인 경우 
+			return Constants.IS_NOT_FIRST_INPUT; 
+		}
+		return Constants.IS_FIRST_INPUT;
+	}
 	public void setNumber(String number) {         //숫자입력
-		if(numberBuilder.length() == 16 || numberBuilder.length() == 0 && number.equals("0") ) return;  //숫자 16자리 초과 or 처음부터 0을 입력하는 경우 -> 입력값을 더이상 누적하지 않음
-	
+		if(numberBuilder.length() == 16 || numberBuilder.toString().equals("0") && number.equals("0")) return;  //숫자 16자리 초과 or 처음부터 0을 입력하는 경우 -> 입력값을 더이상 누적하지 않음
+		
+		//처음 입력시 0이 아닌 숫자를 입력할 경우  or 연산자 입력 후 처음 숫자를 입력할 때(두번째 숫자입력 시작) -> stringBuilder를 비우고 입력값을 누적해나감
+		if(numberBuilder.toString().equals("0") || isFirstInputForSecondNumber()) numberBuilder.setLength(0);   
 		numberBuilder.append(number);   //숫자 입력값 누적
 	}
 	public void setExpression(String operator) {  //연산자 입력
 		expressionDTO.setFirstValue(numberBuilder.toString());   //연산자 이전에 입력한 첫번째 값 저장
-		expressionDTO.setOperator(operator.charAt(0));           //연산자 저장
+		expressionDTO.setOperator(operator);                     //연산자 저장
+		numberBuilder.setLength(0);                              //숫자 누적값 초기화
+		numberBuilder.append("0");
 		expression = expressionDTO.getFirstValue() + expressionDTO.getOperator();
 	}
 	public void setZero(String buttonClicked) {//CE: 현재 숫자 입력값만 삭제, C: 입력값, 수식 누적값 삭제
@@ -57,7 +68,7 @@ public class ExpressionCalculation implements ActionListener{
 			expressionPanel.setExpressionLabel(expression, "0");   //계산식 출력 패널에 누적된 계산식 갑과 입력값 출력
 			break;
 		case '=':
-			equalSign.calculateExpression(numberBuilder);
+			equalSign.calculateExpression(numberBuilder.toString());  //등호 계산
 			expressionPanel.setExpressionLabel(expressionDTO.getExpression(), expressionDTO.getResult());  //완성된 계산식과 계산결과값 출력
 			break;
 		case '+':case '-':case '×':case '÷':
