@@ -1,9 +1,9 @@
-import view.CalculatorFrame;
+import controller.ExpressionCalculation;
 
 public class Calculator {
 
 	public static void main(String[] args) {
-		new CalculatorFrame();
+		new ExpressionCalculation();
 	}
 
 }
