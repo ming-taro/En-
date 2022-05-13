@@ -15,19 +15,23 @@ public class ExpressionCalculation implements ActionListener{
 	private ExpressionPanel expressionPanel;
 	private CalculationButtonPanel calculationButtonPanel;
 	private ExpressionDTO expressionDTO;
-	private String expression;                      //입력한 계산식 누적
-	private StringBuilder numberBuilder;            //숫자 입력값 누적
-	private EqualSign equalSign;            //'=' -> 등호계산
-	private NumberDeletion numberDeletion;  //'C', 'CE', '←' -> 숫자 or 계산식 삭제
+	private String expression;                       //입력한 계산식 누적
+	private StringBuilder numberBuilder;             //숫자 입력값 누적
+	private ArithmeticOperation arithmeticOperation; //'+', '-', '×', '÷' -> 사칙연산
+	private EqualSign equalSign;                     //'=' -> 등호계산
+	private NumberDeletion numberDeletion;           //'C', 'CE', '←' -> 숫자 or 계산식 삭제
 	
 	public ExpressionCalculation() {
 		expressionPanel = new ExpressionPanel();                     //계산식 출력 패널
 		calculationButtonPanel = new CalculationButtonPanel(this);   //버튼 클릭 패널
 		CalculatorFrame calculatorFrame =  new CalculatorFrame(expressionPanel, calculationButtonPanel);
+		
 		expressionDTO = new ExpressionDTO();
 		numberBuilder = new StringBuilder();
 		numberBuilder.append("0");
-		equalSign = new EqualSign(expressionDTO);
+		
+		arithmeticOperation = new ArithmeticOperation(expressionDTO);
+		equalSign = new EqualSign(expressionDTO, arithmeticOperation);
 		numberDeletion = new NumberDeletion(expressionDTO);
 	}
 	public boolean isFirstInputForSecondNumber() {
@@ -38,17 +42,15 @@ public class ExpressionCalculation implements ActionListener{
 	}
 	public void setNumber(String number) {         //숫자입력
 		if(numberBuilder.length() == 16 || numberBuilder.toString().equals("0") && number.equals("0")) return;  //숫자 16자리 초과 or 처음부터 0을 입력하는 경우 -> 입력값을 더이상 누적하지 않음
+		if(expressionDTO.getResult().equals("") == false) {
+			expressionDTO.InitValue();  //계산결과 출력 후 새로운 숫자 입력시 DTO초기화
+			numberBuilder.setLength(0); //입력값 누적결과 초기화
+			expression = "";
+		}
 		
 		//처음 입력시 0이 아닌 숫자를 입력할 경우  or 연산자 입력 후 처음 숫자를 입력할 때(두번째 숫자입력 시작) -> stringBuilder를 비우고 입력값을 누적해나감
 		if(numberBuilder.toString().equals("0") || isFirstInputForSecondNumber()) numberBuilder.setLength(0);   
 		numberBuilder.append(number);   //숫자 입력값 누적
-	}
-	public void setExpression(String operator) {  //연산자 입력
-		expressionDTO.setFirstValue(numberBuilder.toString());   //연산자 이전에 입력한 첫번째 값 저장
-		expressionDTO.setOperator(operator);                     //연산자 저장
-		numberBuilder.setLength(0);                              //숫자 누적값 초기화
-		numberBuilder.append("0");
-		expression = expressionDTO.getFirstValue() + expressionDTO.getOperator();
 	}
 	
 	@Override
@@ -70,7 +72,8 @@ public class ExpressionCalculation implements ActionListener{
 			expressionPanel.setExpressionLabel(expressionDTO.getExpression(), expressionDTO.getResult());  //완성된 계산식과 계산결과값 출력
 			break;
 		case '+':case '-':case '×':case '÷':
-			setExpression(buttonClicked);   
+			expression = arithmeticOperation.manageArithmeticOperation(numberBuilder, buttonClicked);
+			//setExpression(buttonClicked);   
 			expressionPanel.setExpressionLabel(expression, expressionDTO.getFirstValue());   //계산식 출력 패널에 누적된 계산식 갑과 입력값 출력
 			break;
 		case '.':case '±':
