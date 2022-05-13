@@ -15,9 +15,10 @@ public class ExpressionCalculation implements ActionListener{
 	private ExpressionPanel expressionPanel;
 	private CalculationButtonPanel calculationButtonPanel;
 	private ExpressionDTO expressionDTO;
-	private String expression;        //입력한 계산식 누적
+	private String expression;                      //입력한 계산식 누적
 	private StringBuilder numberBuilder;            //숫자 입력값 누적
-	private EqualSign equalSign;
+	private EqualSign equalSign;            //'=' -> 등호계산
+	private NumberDeletion numberDeletion;  //'C', 'CE', '←' -> 숫자 or 계산식 삭제
 	
 	public ExpressionCalculation() {
 		expressionPanel = new ExpressionPanel();                     //계산식 출력 패널
@@ -27,6 +28,7 @@ public class ExpressionCalculation implements ActionListener{
 		numberBuilder = new StringBuilder();
 		numberBuilder.append("0");
 		equalSign = new EqualSign(expressionDTO);
+		numberDeletion = new NumberDeletion(expressionDTO);
 	}
 	public boolean isFirstInputForSecondNumber() {
 		if(expressionDTO.getOperator().equals("") || numberBuilder.toString().equals("0") == Constants.IS_VALUE) {  //연산자가 없거나(아직 첫번째값 입력중) 연산자 입력 후 두번째값을 이미 입력중인 경우 
@@ -48,20 +50,7 @@ public class ExpressionCalculation implements ActionListener{
 		numberBuilder.append("0");
 		expression = expressionDTO.getFirstValue() + expressionDTO.getOperator();
 	}
-	public boolean isCalculationOver() {
-		if(expressionDTO.getResult().equals("")) return Constants.IS_NOT_CALCULATION_OVER;  //결과값이 없음 -> 아직 계산이 끝나지 않음
-		return Constants.IS_CALCULATION_OVER;
-	}
-	public void setZero(String buttonClicked) {//CE: 현재 숫자 입력값만 삭제, C: 입력값, 수식 누적값 삭제
-		numberBuilder.setLength(0);            //누적된 입력값 삭제
-		numberBuilder.append("0");
-		
-		if(buttonClicked.equals("CE") && isCalculationOver() || buttonClicked.equals("C")) {  //계산결과 후 CE or C클릭  
-			expressionDTO.InitValue();         //계산식, DTO 저장값 초기화
-			expression = "";
-		}
-	}
-
+	
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		JButton button = (JButton) event.getSource();
@@ -69,8 +58,12 @@ public class ExpressionCalculation implements ActionListener{
 
 		switch(buttonClicked.charAt(0)) {
 		case 'C':
-			setZero(buttonClicked);
+			expression = numberDeletion.manageDeletion(numberBuilder, buttonClicked, expression);
 			expressionPanel.setExpressionLabel(expression, "0");   //계산식 출력 패널에 누적된 계산식 갑과 입력값 출력
+			break;
+		case '←':
+			numberDeletion.manageBackSpace(numberBuilder);
+			expressionPanel.setExpressionLabel(expression, numberBuilder.toString());
 			break;
 		case '=':
 			equalSign.calculateExpression(numberBuilder.toString());  //등호 계산

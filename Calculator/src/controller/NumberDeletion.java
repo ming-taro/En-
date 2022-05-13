@@ -1,0 +1,32 @@
+package controller;
+
+import operationmanagement.Constants;
+import operationmanagement.ExpressionDTO;
+
+public class NumberDeletion {
+	private ExpressionDTO expressionDTO;
+	public NumberDeletion(ExpressionDTO expressionDTO) {
+		this.expressionDTO = expressionDTO;
+	}
+	public boolean isCalculationOver() {
+		if(expressionDTO.getResult().equals("")) return Constants.IS_NOT_CALCULATION_OVER;  //결과값이 없음 -> 아직 계산이 끝나지 않음
+		return Constants.IS_CALCULATION_OVER;
+	}
+	public String manageDeletion(StringBuilder numberBuilder, String buttonClicked, String expression) {//CE: 현재 숫자 입력값만 삭제, C: 입력값, 수식 누적값 삭제
+		numberBuilder.setLength(0);            //누적된 입력값 삭제
+		numberBuilder.append("0");
+		
+		if(buttonClicked.equals("CE") && isCalculationOver() || buttonClicked.equals("C")) {  //계산결과 후 CE or C클릭  
+			expressionDTO.InitValue();         //계산식, DTO 저장값 초기화
+			expression = "";                   
+		}
+		
+		return expression;
+	}
+	public void manageBackSpace(StringBuilder numberBuilder) {  //'←' : 방금 입력한 숫자 하나 지우기
+		if(numberBuilder.toString().equals("0")) return;  //입력값이 없는데도 지우려고 할 경우
+		
+		numberBuilder.deleteCharAt(numberBuilder.length() - 1);  //마지막에 입력한 숫자 하나 지우기
+		if(numberBuilder.length() == 0) numberBuilder.append("0");//입력값을 모두 지웠다면 초기값인 0을 stringbuilder에 넣음 
+	}
+}
