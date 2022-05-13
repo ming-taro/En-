@@ -19,5 +19,8 @@ public class Constants {
 	public static final boolean IS_VALUE = false;
 	
 	public static final boolean IS_ALREADY_ENTERED_OPERATOR = true;
-	public static final boolean  IS_NOT_ENTERED_OPERATOR = false;
+	public static final boolean IS_NOT_ENTERED_OPERATOR = false;
+	
+	public static final boolean IS_ALREADY_ENTERED_SECOND_VALUE = true;
+	public static final boolean IS_NOT_ENTERED_SECOND_VALUE = false;
 }

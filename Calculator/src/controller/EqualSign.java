@@ -1,7 +1,7 @@
 package controller;
 
+import Model.ExpressionDTO;
 import operationmanagement.Constants;
-import operationmanagement.ExpressionDTO;
 
 public class EqualSign {
 	private ExpressionDTO expressionDTO;                //현재 입력한 값들
