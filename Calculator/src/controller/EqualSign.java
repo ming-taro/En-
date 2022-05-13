@@ -17,7 +17,6 @@ public class EqualSign {
 	}
 	public void calculateExpression(StringBuilder numberbuilder) { 
 		String number = numberbuilder.toString();
-		System.out.print("[" + number + "]" + number.equals(""));
 		
 		if(expressionDTO.getOperator() == "") {  //첫번째 숫자 입력 후 연산자 입력없이 바로 '='입력시 -> 결과 : 첫번째 입력값
 			expressionDTO.setFirstValue(number);

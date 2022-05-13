@@ -55,8 +55,11 @@ public class ArithmeticOperation {
 			expressionDTO.InitValue();                    //이전 계산결과값이 저장되어있는 DTO정보 초기화
 			setExpression(numberBuilder, fristValue, operator); 
 		}
-		if(isAlreadyEnteredOperator() == Constants.IS_NOT_ENTERED_OPERATOR) {   
-			setExpression(numberBuilder, numberBuilder.toString(), operator);   //첫번째 값 입력 후 연산자 입력시 -> 연산자 정보 저장(이미 연산자를 입력했는데 또 입력하는 경우는 연산자 정보 저장을 생략함)
+		else if(isAlreadyEnteredOperator()) {             //첫번째값, 연산자까지 입력 후 연산자 다시 입력 -> 연산자만 변경
+			expressionDTO.setOperator(operator);
+		}
+		else {   
+			setExpression(numberBuilder, numberBuilder.toString(), operator);   //첫번째 값 입력 후 연산자 입력시 -> 연산자 정보 저장
 		}
 		
 		return expressionDTO.getFirstValue() + expressionDTO.getOperator();  //연산자 입력 후 계산식 반환
