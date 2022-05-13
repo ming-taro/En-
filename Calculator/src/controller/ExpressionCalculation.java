@@ -29,7 +29,7 @@ public class ExpressionCalculation implements ActionListener{
 		equalSign = new EqualSign(expressionDTO);
 	}
 	public boolean isFirstInputForSecondNumber() {
-		if(expressionDTO.getOperator().equals("") || numberBuilder.toString().equals("0") == false) {  //연산자가 없거나(아직 첫번째값 입력중) 연산자 입력 후 두번째값을 이미 입력중인 경우 
+		if(expressionDTO.getOperator().equals("") || numberBuilder.toString().equals("0") == Constants.IS_VALUE) {  //연산자가 없거나(아직 첫번째값 입력중) 연산자 입력 후 두번째값을 이미 입력중인 경우 
 			return Constants.IS_NOT_FIRST_INPUT; 
 		}
 		return Constants.IS_FIRST_INPUT;
@@ -48,12 +48,17 @@ public class ExpressionCalculation implements ActionListener{
 		numberBuilder.append("0");
 		expression = expressionDTO.getFirstValue() + expressionDTO.getOperator();
 	}
+	public boolean isCalculationOver() {
+		if(expressionDTO.getResult().equals("")) return Constants.IS_NOT_CALCULATION_OVER;  //결과값이 없음 -> 아직 계산이 끝나지 않음
+		return Constants.IS_CALCULATION_OVER;
+	}
 	public void setZero(String buttonClicked) {//CE: 현재 숫자 입력값만 삭제, C: 입력값, 수식 누적값 삭제
 		numberBuilder.setLength(0);            //누적된 입력값 삭제
+		numberBuilder.append("0");
 		
-		if(buttonClicked.equals("CE") && expressionDTO.getResult().equals("") == Constants.IS_CALCULATION_OVER || buttonClicked.equals("C")) {  //계산결과 후 CE or C클릭 
-			expression = "";  
+		if(buttonClicked.equals("CE") && isCalculationOver() || buttonClicked.equals("C")) {  //계산결과 후 CE or C클릭  
 			expressionDTO.InitValue();         //계산식, DTO 저장값 초기화
+			expression = "";
 		}
 	}
 

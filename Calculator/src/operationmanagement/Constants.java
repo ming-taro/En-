@@ -16,4 +16,6 @@ public class Constants {
 	public static final boolean IS_FIRST_INPUT = true;
 	public static final boolean IS_NOT_FIRST_INPUT = false;
 	
+	public static final boolean IS_VALUE = false;
+	
 }
