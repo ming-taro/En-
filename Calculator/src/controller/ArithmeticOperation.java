@@ -22,6 +22,8 @@ public class ArithmeticOperation {
 		case '÷':
 			result = firstValue / secondValue;
 			break;
+		default:
+			return;
 		}
 		
 		if(result%1 == 0) expressionDTO.setResult(Integer.toString((int)result));

@@ -10,5 +10,8 @@ public class Constants {
 	public static final int INPUT_FONT_SIZE = 45;
 	public static final int EXPRESSION_FONT_SIZE = 20;
 	
-	public static final boolean IS_CALCULATION_OVER = false;
+	public static final boolean IS_CALCULATION_OVER = true;
+	public static final boolean IS_NOT_CALCULATION_OVER = false;
+	
+	public static final boolean IS_NO_OPERATOR = true;
 }

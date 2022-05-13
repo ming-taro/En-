@@ -35,8 +35,7 @@ public class ExpressionCalculation implements ActionListener{
 	public void setExpression(String operator) {  //연산자 입력
 		expressionDTO.setFirstValue(numberBuilder.toString());   //연산자 이전에 입력한 첫번째 값 저장
 		expressionDTO.setOperator(operator.charAt(0));           //연산자 저장
-		expression = expressionDTO.getFirstValue()+expressionDTO.getOperator();
-		numberBuilder.setLength(0);                              //숫가입력값 누적 초기화
+		expression = expressionDTO.getFirstValue() + expressionDTO.getOperator();
 	}
 	public void setZero(String buttonClicked) {//CE: 현재 숫자 입력값만 삭제, C: 입력값, 수식 누적값 삭제
 		numberBuilder.setLength(0);            //누적된 입력값 삭제
@@ -58,8 +57,8 @@ public class ExpressionCalculation implements ActionListener{
 			expressionPanel.setExpressionLabel(expression, "0");   //계산식 출력 패널에 누적된 계산식 갑과 입력값 출력
 			break;
 		case '=':
-			expression = equalSign.calculateExpression(expression, numberBuilder);
-			expressionPanel.setExpressionLabel(expression, expressionDTO.getResult());
+			equalSign.calculateExpression(numberBuilder);
+			expressionPanel.setExpressionLabel(expressionDTO.getExpression(), expressionDTO.getResult());  //완성된 계산식과 계산결과값 출력
 			break;
 		case '+':case '-':case '×':case '÷':
 			setExpression(buttonClicked);   

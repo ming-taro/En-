@@ -8,7 +8,7 @@ public class ExpressionDTO {
 	private String result;
 	
 	public ExpressionDTO() {
-		result = "";
+		InitValue();
 	}
 	public void InitValue() {
 		firstValue = "";
@@ -39,6 +39,12 @@ public class ExpressionDTO {
 	}
 	public String getResult() {
 		return result;
+	}
+	public void setExpression() {
+		expression = firstValue +  operator + secondValue + "=";
+	}
+	public String getExpression() {
+		return expression;
 	}
 	@Override
     public String toString() {
