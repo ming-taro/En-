@@ -10,6 +10,11 @@ public class ExpressionDTO {
 		firstValue = "";
 		secondValue = "";
 	}
+	public void InitValue() {
+		firstValue = "";
+		secondValue = "";
+		operator = ' ';
+	}
 	public void setFirstValue(String number) {
 		firstValue = number;
 	}
@@ -28,7 +33,12 @@ public class ExpressionDTO {
 	public char getOperator() {
 		return operator;
 	}
-	
+	public void setResult(String result) {
+		this.result = result;
+	}
+	public String getResult() {
+		return result;
+	}
 	@Override
     public String toString() {
         return firstValue + " " + operator + " " + secondValue + " =\n" + result;
