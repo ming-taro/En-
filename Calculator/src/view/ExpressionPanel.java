@@ -12,13 +12,11 @@ public class ExpressionPanel extends JPanel implements ActionListener{
 	private JButton recordButton;
 	private JLabel expressionLabel;
 	private JLabel inputLabel;
-	private StringBuilder number;
 	
 	public ExpressionPanel() {
 		recordButton = new JButton("T");
 		expressionLabel = new JLabel("");
 		inputLabel = new JLabel("0");
-		number = new StringBuilder();
 		
 		setLayout(new GridLayout(3, 0));
 
@@ -59,16 +57,15 @@ public class ExpressionPanel extends JPanel implements ActionListener{
 		
 		add(inputPanel);
 	}
-	public void setInputLabel(String input) {
-		if(number.length() == 16 || number.length() == 0 && input.equals("0")) return;
-		number.append(input);
-		inputLabel.setText(number.toString().replaceAll("\\B(?=(\\d{3})+(?!\\d))", ","));
+	public void setExpressionLabel(StringBuilder expression, StringBuilder number) {
+		expressionLabel.setText(expression.toString());   //계산식 누적값 출력
+		inputLabel.setText(number.toString().replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",")); //숫자입력 누적값 출력
 	}
-	public void removeInputLabel() {
+	public void removeInputLabel(StringBuilder number) {
 		number.setLength(0);
 		inputLabel.setText("0");
 	}
-	public void setZero() {
+	public void setZero(StringBuilder number) {
 		number.setLength(0);
 		inputLabel.setText("0");
 	}

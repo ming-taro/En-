@@ -6,6 +6,10 @@ public class ExpressionDTO {
 	private char operator;
 	private String result;
 	
+	public ExpressionDTO() {
+		firstValue = "";
+		secondValue = "";
+	}
 	public void setFirstValue(String number) {
 		firstValue = number;
 	}
