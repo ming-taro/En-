@@ -15,10 +15,18 @@ public class EqualSign {
 		if(expressionDTO.getResult().equals("")) return Constants.IS_NOT_CALCULATION_OVER;   //결과값이 없음 
 		return Constants.IS_CALCULATION_OVER;  //"="을 입력받았지만 이미 결과값이 있음 -> 첫번째 숫자를 현재의 결과값으로 두고 다시 계산
 	}
-	public void calculateExpression(String number) { 
+	public void calculateExpression(StringBuilder numberbuilder) { 
+		String number = numberbuilder.toString();
+		System.out.print("[" + number + "]" + number.equals(""));
+		
 		if(expressionDTO.getOperator() == "") {  //첫번째 숫자 입력 후 연산자 입력없이 바로 '='입력시 -> 결과 : 첫번째 입력값
 			expressionDTO.setFirstValue(number);
 			expressionDTO.setResult(expressionDTO.getFirstValue());
+		}
+		else if(number.equals("")) {   //첫번째 숫자, 연산자 입력 후 두번째 숫자 입력 없이 바로 '='입력시 -> 결과 : 첫번째 숫자 (연산자) 첫번째 숫자
+			expressionDTO.setSecondValue(expressionDTO.getFirstValue());
+			arithmeticOperation.calculateExpression();
+			numberbuilder.append(expressionDTO.getFirstValue());
 		}
 		else if(isCalculationOver()) {            //현재 저장된 값에 대한 결과가 한번이라도 완료가 되었는지 확인(한번 이상 완료 후 '='을 또 입력하면 결과값이 달라지기 때문)
 			expressionDTO.setFirstValue(expressionDTO.getResult());   //계산완료 후 '='버튼 클릭시 현재 결과값에 두번째 숫자를 한번 더 계산한다(첫번째 숫자가 현재의 결과값)

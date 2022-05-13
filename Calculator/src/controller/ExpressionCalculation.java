@@ -40,13 +40,14 @@ public class ExpressionCalculation implements ActionListener{
 		}
 		return Constants.IS_FIRST_INPUT;
 	}
+	public boolean isCalculationOver() {  //계산식을 모두 입력하고 결과출력까지 끝났는지 확인
+		if(expressionDTO.getResult().equals("")) return Constants.IS_NOT_CALCULATION_OVER; 
+		return Constants.IS_CALCULATION_OVER;
+	}
 	public void setNumber(String number) {         //숫자입력
 		if(numberBuilder.length() == 16 || numberBuilder.toString().equals("0") && number.equals("0")) return;  //숫자 16자리 초과 or 처음부터 0을 입력하는 경우 -> 입력값을 더이상 누적하지 않음
-		if(expressionDTO.getResult().equals("") == false) {
-			expressionDTO.InitValue();  //계산결과 출력 후 새로운 숫자 입력시 DTO초기화
-			numberBuilder.setLength(0); //입력값 누적결과 초기화
-			expression = "";
-		}
+		
+		if(isCalculationOver()) expression = numberDeletion.manageDeletion(numberBuilder, "C", expression);  //이전 입력까지의 계산이 끝나고 새로운 숫자를 입력하려고 할 때 -> 'C'기능 수행 후 입력값을 stringBuilder에 저장
 		
 		//처음 입력시 0이 아닌 숫자를 입력할 경우  or 연산자 입력 후 처음 숫자를 입력할 때(두번째 숫자입력 시작) -> stringBuilder를 비우고 입력값을 누적해나감
 		if(numberBuilder.toString().equals("0") || isFirstInputForSecondNumber()) numberBuilder.setLength(0);   
@@ -57,6 +58,7 @@ public class ExpressionCalculation implements ActionListener{
 	public void actionPerformed(ActionEvent event) {
 		JButton button = (JButton) event.getSource();
 		String buttonClicked = button.getText();
+		String number;
 
 		switch(buttonClicked.charAt(0)) {
 		case 'C':
@@ -64,16 +66,15 @@ public class ExpressionCalculation implements ActionListener{
 			expressionPanel.setExpressionLabel(expression, "0");   //계산식 출력 패널에 누적된 계산식 갑과 입력값 출력
 			break;
 		case '←':
-			numberDeletion.manageBackSpace(numberBuilder);
-			expressionPanel.setExpressionLabel(expression, numberBuilder.toString());
+			number = numberDeletion.manageBackSpace(numberBuilder);
+			expressionPanel.setExpressionLabel(expression, number);
 			break;
 		case '=':
-			equalSign.calculateExpression(numberBuilder.toString());  //등호 계산
+			equalSign.calculateExpression(numberBuilder);  //등호 계산
 			expressionPanel.setExpressionLabel(expressionDTO.getExpression(), expressionDTO.getResult());  //완성된 계산식과 계산결과값 출력
 			break;
 		case '+':case '-':case '×':case '÷':
-			expression = arithmeticOperation.manageArithmeticOperation(numberBuilder, buttonClicked);
-			//setExpression(buttonClicked);   
+			expression = arithmeticOperation.manageArithmeticOperation(numberBuilder, buttonClicked); 
 			expressionPanel.setExpressionLabel(expression, expressionDTO.getFirstValue());   //계산식 출력 패널에 누적된 계산식 갑과 입력값 출력
 			break;
 		case '.':case '±':

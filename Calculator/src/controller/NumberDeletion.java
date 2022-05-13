@@ -23,10 +23,11 @@ public class NumberDeletion {
 		
 		return expression;
 	}
-	public void manageBackSpace(StringBuilder numberBuilder) {  //'←' : 방금 입력한 숫자 하나 지우기
-		if(numberBuilder.toString().equals("0")) return;  //입력값이 없는데도 지우려고 할 경우
+	public String manageBackSpace(StringBuilder numberBuilder) {  //'←' : 방금 입력한 숫자 하나 지우기
+		if(numberBuilder.toString().equals("0")) return expressionDTO.getFirstValue();  //입력값이 없는데도 지우려고 할 경우
 		
 		numberBuilder.deleteCharAt(numberBuilder.length() - 1);  //마지막에 입력한 숫자 하나 지우기
 		if(numberBuilder.length() == 0) numberBuilder.append("0");//입력값을 모두 지웠다면 초기값인 0을 stringbuilder에 넣음 
+		return numberBuilder.toString();
 	}
 }
