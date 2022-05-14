@@ -15,6 +15,7 @@ import view.EquationPanel;
 public class EquationCalculation implements ActionListener{
 	private EquationPanel expressionPanel;
 	private CalculationButtonPanel calculationButtonPanel;
+	private CalculatorFrame calculatorFrame;
 	private EquationDTO equationDTO;
 	private ArrayList<String> recordList; //계산기록 저장
 	private String expression;                       //입력한 계산식 누적
@@ -24,14 +25,15 @@ public class EquationCalculation implements ActionListener{
 	private NumberDeletion numberDeletion;           //'C', 'CE', '←' -> 숫자 or 계산식 삭제
 	
 	public EquationCalculation() {
-		expressionPanel = new EquationPanel();                     //계산식 출력 패널
+		expressionPanel = new EquationPanel();                       //계산식 출력 패널
 		calculationButtonPanel = new CalculationButtonPanel(this);   //버튼 클릭 패널
-		CalculatorFrame calculatorFrame =  new CalculatorFrame(expressionPanel, calculationButtonPanel);
 		
 		equationDTO = new EquationDTO();
 		recordList = new ArrayList<String>();
 		numberBuilder = new StringBuilder();
 		numberBuilder.append("0");
+		
+		calculatorFrame =  new CalculatorFrame(expressionPanel, calculationButtonPanel, recordList); //프레임에 패널 부착, 계산기록 리스트 연결
 		
 		arithmeticOperation = new ArithmeticOperation(equationDTO);
 		equalSign = new EqualSign(equationDTO, arithmeticOperation);
@@ -77,7 +79,7 @@ public class EquationCalculation implements ActionListener{
 			break;
 		case '=':
 			equalSign.calculateExpression(numberBuilder);  //등호 계산
-			recordList.add(equationDTO.getExpression());
+			recordList.add(equationDTO.toString());
 			expressionPanel.setExpressionLabel(equationDTO.getExpression(), equationDTO.getResult());  //완성된 계산식과 계산결과값 출력
 			break;
 		case '+':case '-':case '×':case '÷':  //사칙연산
