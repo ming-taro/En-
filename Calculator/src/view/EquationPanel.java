@@ -8,7 +8,7 @@ import javax.swing.*;
 
 import utility.Constants;
 
-public class EquationPanel extends JPanel implements ActionListener{
+public class EquationPanel extends JPanel{
 	private JButton recordButton;
 	private JLabel expressionLabel;
 	private JLabel inputLabel;
@@ -24,7 +24,9 @@ public class EquationPanel extends JPanel implements ActionListener{
 		addExpressionPanel();
 		addInputPanel();
 	}
-	
+	public void setActionListener(ActionListener listener) {
+		recordButton.addActionListener(listener);
+	}
 	private void addRecordPanel() {
 		JPanel recordPanel = new JPanel();
 		JPanel labelPanel = new JPanel();
@@ -34,7 +36,6 @@ public class EquationPanel extends JPanel implements ActionListener{
 		label.setFont(new Font("SansSerif", Font.BOLD, Constants.BUTTON_FONT_SIZE));  //'표준'
 		
 		recordButton.setPreferredSize(new Dimension(Constants.RECORD_BUTTON_SIZE,Constants.RECORD_BUTTON_SIZE));  //계산기록 버튼
-		recordButton.addActionListener((ActionListener) this);
 		
 		recordPanel.setLayout(new GridLayout(0,2));
 		labelPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -77,11 +78,5 @@ public class EquationPanel extends JPanel implements ActionListener{
 	public void setZero(StringBuilder number) {
 		number.setLength(0);
 		inputLabel.setText("0");
-	}
-	@Override
-	public void actionPerformed(ActionEvent e) { //계산기록보기
-		
-		
-		
 	}
 }
