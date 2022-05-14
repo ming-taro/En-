@@ -2,6 +2,7 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 
@@ -15,6 +16,7 @@ public class EquationCalculation implements ActionListener{
 	private EquationPanel expressionPanel;
 	private CalculationButtonPanel calculationButtonPanel;
 	private EquationDTO equationDTO;
+	private ArrayList<String> recordList; //계산기록 저장
 	private String expression;                       //입력한 계산식 누적
 	private StringBuilder numberBuilder;             //숫자 입력값 누적
 	private ArithmeticOperation arithmeticOperation; //'+', '-', '×', '÷' -> 사칙연산
@@ -27,12 +29,16 @@ public class EquationCalculation implements ActionListener{
 		CalculatorFrame calculatorFrame =  new CalculatorFrame(expressionPanel, calculationButtonPanel);
 		
 		equationDTO = new EquationDTO();
+		recordList = new ArrayList<String>();
 		numberBuilder = new StringBuilder();
 		numberBuilder.append("0");
 		
 		arithmeticOperation = new ArithmeticOperation(equationDTO);
 		equalSign = new EqualSign(equationDTO, arithmeticOperation);
 		numberDeletion = new NumberDeletion(equationDTO);
+	}
+	public ArrayList<String> getRecordList(){
+		return recordList;
 	}
 	public boolean isFirstInputForSecondNumber() {
 		if(equationDTO.getOperator().equals("") || numberBuilder.toString().equals("0") == Constants.IS_VALUE) {  //연산자가 없거나(아직 첫번째값 입력중) 연산자 입력 후 두번째값을 이미 입력중인 경우 
@@ -71,6 +77,7 @@ public class EquationCalculation implements ActionListener{
 			break;
 		case '=':
 			equalSign.calculateExpression(numberBuilder);  //등호 계산
+			recordList.add(equationDTO.getExpression());
 			expressionPanel.setExpressionLabel(equationDTO.getExpression(), equationDTO.getResult());  //완성된 계산식과 계산결과값 출력
 			break;
 		case '+':case '-':case '×':case '÷':  //사칙연산
