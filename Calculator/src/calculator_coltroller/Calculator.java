@@ -1,3 +1,4 @@
+package calculator_coltroller;
 import controller.EquationCalculation;
 
 public class Calculator {

@@ -48,6 +48,6 @@ public class EquationDTO {
 	}
 	@Override
     public String toString() {
-        return firstValue + " " + operator + " " + secondValue + " =\n" + result;
+        return firstValue + " " + operator + " " + secondValue + " = " + result;
     }
 }

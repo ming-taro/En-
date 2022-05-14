@@ -37,6 +37,7 @@ public class CalculatorFrame extends JFrame implements ActionListener{
 		
 		equationRecordPanel = new JPanel();
 		deletionButton = new JButton();
+		deletionButton.addActionListener(this);
 		recordPanel = new JPanel();
 		setequationRecordPanel();
 
@@ -71,6 +72,12 @@ public class CalculatorFrame extends JFrame implements ActionListener{
 	}
 	@Override
 	public void actionPerformed(ActionEvent event) {
+		if(event.getSource() == deletionButton) {
+			recordList.clear();
+			recordTextArea.setText("");
+			return;
+		}
+		
 		getContentPane().removeAll();
 		getContentPane().add(equationPanel); 
 		
