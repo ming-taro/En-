@@ -6,8 +6,8 @@ import java.awt.event.*;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import operationmanagement.Constants;
-import operationmanagement.ButtonOnCalculator.Button;
+import utility.Constants;
+import utility.ButtonOnCalculator.Button;
 
 public class CalculationButtonPanel extends JPanel{
 	private JButton[] calculationButton;

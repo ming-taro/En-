@@ -1,9 +1,9 @@
-import controller.ExpressionCalculation;
+import controller.EquationCalculation;
 
 public class Calculator {
 
 	public static void main(String[] args) {
-		new ExpressionCalculation();
+		EquationCalculation equationCalculation = new EquationCalculation();
 	}
 
 }

@@ -6,14 +6,14 @@ import java.text.NumberFormat;
 
 import javax.swing.*;
 
-import operationmanagement.Constants;
+import utility.Constants;
 
-public class ExpressionPanel extends JPanel implements ActionListener{
+public class EquationPanel extends JPanel implements ActionListener{
 	private JButton recordButton;
 	private JLabel expressionLabel;
 	private JLabel inputLabel;
 	
-	public ExpressionPanel() {
+	public EquationPanel() {
 		recordButton = new JButton("T");
 		expressionLabel = new JLabel("");
 		inputLabel = new JLabel("0");
@@ -27,15 +27,24 @@ public class ExpressionPanel extends JPanel implements ActionListener{
 	
 	private void addRecordPanel() {
 		JPanel recordPanel = new JPanel();
-		JLabel label = new JLabel("표준                                                                                     ");
+		JPanel labelPanel = new JPanel();
+		JPanel buttonPanel = new JPanel();
+		JLabel label = new JLabel("표준");
 		
-		label.setFont(new Font("SansSerif", Font.BOLD, Constants.BUTTON_FONT_SIZE));
-		recordButton.setPreferredSize(new Dimension(Constants.RECORD_BUTTON_SIZE,Constants.RECORD_BUTTON_SIZE));
+		label.setFont(new Font("SansSerif", Font.BOLD, Constants.BUTTON_FONT_SIZE));  //'표준'
+		
+		recordButton.setPreferredSize(new Dimension(Constants.RECORD_BUTTON_SIZE,Constants.RECORD_BUTTON_SIZE));  //계산기록 버튼
 		recordButton.addActionListener((ActionListener) this);
 		
-		recordPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		recordPanel.add(label);
-		recordPanel.add(recordButton);
+		recordPanel.setLayout(new GridLayout(0,2));
+		labelPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		
+		labelPanel.add(label);
+		buttonPanel.add(recordButton);
+		
+		recordPanel.add(labelPanel);
+		recordPanel.add(buttonPanel);
 		
 		add(recordPanel);
 	}

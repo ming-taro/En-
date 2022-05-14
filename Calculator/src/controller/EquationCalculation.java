@@ -5,43 +5,43 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-import Model.ExpressionDTO;
-import operationmanagement.Constants;
+import Model.EquationDTO;
+import utility.Constants;
 import view.CalculationButtonPanel;
 import view.CalculatorFrame;
-import view.ExpressionPanel;
+import view.EquationPanel;
 
-public class ExpressionCalculation implements ActionListener{
-	private ExpressionPanel expressionPanel;
+public class EquationCalculation implements ActionListener{
+	private EquationPanel expressionPanel;
 	private CalculationButtonPanel calculationButtonPanel;
-	private ExpressionDTO expressionDTO;
+	private EquationDTO equationDTO;
 	private String expression;                       //입력한 계산식 누적
 	private StringBuilder numberBuilder;             //숫자 입력값 누적
 	private ArithmeticOperation arithmeticOperation; //'+', '-', '×', '÷' -> 사칙연산
 	private EqualSign equalSign;                     //'=' -> 등호계산
 	private NumberDeletion numberDeletion;           //'C', 'CE', '←' -> 숫자 or 계산식 삭제
 	
-	public ExpressionCalculation() {
-		expressionPanel = new ExpressionPanel();                     //계산식 출력 패널
+	public EquationCalculation() {
+		expressionPanel = new EquationPanel();                     //계산식 출력 패널
 		calculationButtonPanel = new CalculationButtonPanel(this);   //버튼 클릭 패널
 		CalculatorFrame calculatorFrame =  new CalculatorFrame(expressionPanel, calculationButtonPanel);
 		
-		expressionDTO = new ExpressionDTO();
+		equationDTO = new EquationDTO();
 		numberBuilder = new StringBuilder();
 		numberBuilder.append("0");
 		
-		arithmeticOperation = new ArithmeticOperation(expressionDTO);
-		equalSign = new EqualSign(expressionDTO, arithmeticOperation);
-		numberDeletion = new NumberDeletion(expressionDTO);
+		arithmeticOperation = new ArithmeticOperation(equationDTO);
+		equalSign = new EqualSign(equationDTO, arithmeticOperation);
+		numberDeletion = new NumberDeletion(equationDTO);
 	}
 	public boolean isFirstInputForSecondNumber() {
-		if(expressionDTO.getOperator().equals("") || numberBuilder.toString().equals("0") == Constants.IS_VALUE) {  //연산자가 없거나(아직 첫번째값 입력중) 연산자 입력 후 두번째값을 이미 입력중인 경우 
+		if(equationDTO.getOperator().equals("") || numberBuilder.toString().equals("0") == Constants.IS_VALUE) {  //연산자가 없거나(아직 첫번째값 입력중) 연산자 입력 후 두번째값을 이미 입력중인 경우 
 			return Constants.IS_NOT_FIRST_INPUT; 
 		}
 		return Constants.IS_FIRST_INPUT;
 	}
 	public boolean isCalculationOver() {  //계산식을 모두 입력하고 결과출력까지 끝났는지 확인
-		if(expressionDTO.getResult().equals("")) return Constants.IS_NOT_CALCULATION_OVER; 
+		if(equationDTO.getResult().equals("")) return Constants.IS_NOT_CALCULATION_OVER; 
 		return Constants.IS_CALCULATION_OVER;
 	}
 	public void setNumber(String number) {         //숫자입력
@@ -71,13 +71,13 @@ public class ExpressionCalculation implements ActionListener{
 			break;
 		case '=':
 			equalSign.calculateExpression(numberBuilder);  //등호 계산
-			expressionPanel.setExpressionLabel(expressionDTO.getExpression(), expressionDTO.getResult());  //완성된 계산식과 계산결과값 출력
+			expressionPanel.setExpressionLabel(equationDTO.getExpression(), equationDTO.getResult());  //완성된 계산식과 계산결과값 출력
 			break;
-		case '+':case '-':case '×':case '÷':
+		case '+':case '-':case '×':case '÷':  //사칙연산
 			expression = arithmeticOperation.manageArithmeticOperation(numberBuilder, buttonClicked); 
-			expressionPanel.setExpressionLabel(expression, expressionDTO.getFirstValue());   //계산식 출력 패널에 누적된 계산식 갑과 입력값 출력
+			expressionPanel.setExpressionLabel(expression, equationDTO.getFirstValue());   //계산식 출력 패널에 누적된 계산식 갑과 입력값 출력
 			break;
-		case '.':case '±':
+		case '.':case '±':  //미완성 기능
 			break;
 		default:    //숫자입력
 			setNumber(buttonClicked);
