@@ -3,9 +3,9 @@ package controller;
 import Model.EquationDTO;
 import utility.Constants;
 
-public class NumberDeletion {
+public class Deletion {
 	private EquationDTO equationDTO;
-	public NumberDeletion(EquationDTO equationDTO) {
+	public Deletion(EquationDTO equationDTO) {
 		this.equationDTO = equationDTO;
 	}
 	public boolean isCalculationOver() {

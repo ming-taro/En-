@@ -12,7 +12,7 @@ import view.CalculationButtonPanel;
 import view.CalculatorFrame;
 import view.EquationPanel;
 
-public class EquationCalculation implements ActionListener{
+public class Calculation implements ActionListener{
 	private EquationPanel expressionPanel;
 	private CalculationButtonPanel calculationButtonPanel;
 	private CalculatorFrame calculatorFrame;
@@ -22,9 +22,9 @@ public class EquationCalculation implements ActionListener{
 	private StringBuilder numberBuilder;             //숫자 입력값 누적
 	private ArithmeticOperation arithmeticOperation; //'+', '-', '×', '÷' -> 사칙연산
 	private EqualSign equalSign;                     //'=' -> 등호계산
-	private NumberDeletion numberDeletion;           //'C', 'CE', '←' -> 숫자 or 계산식 삭제
+	private Deletion numberDeletion;           //'C', 'CE', '←' -> 숫자 or 계산식 삭제
 	
-	public EquationCalculation() {
+	public Calculation() {
 		expressionPanel = new EquationPanel();                       //계산식 출력 패널
 		calculationButtonPanel = new CalculationButtonPanel(this);   //버튼 클릭 패널
 		
@@ -37,7 +37,7 @@ public class EquationCalculation implements ActionListener{
 		
 		arithmeticOperation = new ArithmeticOperation(equationDTO);
 		equalSign = new EqualSign(equationDTO, arithmeticOperation);
-		numberDeletion = new NumberDeletion(equationDTO);
+		numberDeletion = new Deletion(equationDTO);
 	}
 	public ArrayList<String> getRecordList(){
 		return recordList;
@@ -61,7 +61,13 @@ public class EquationCalculation implements ActionListener{
 		if(numberBuilder.toString().equals("0") || isFirstInputForSecondNumber()) numberBuilder.setLength(0);   
 		numberBuilder.append(number);   //숫자 입력값 누적
 	}
-	
+	public void MultiplyNumberBySign() {
+		if(numberBuilder.toString().charAt(0) == '-') numberBuilder.replace(0, 1, "");  //현재 입력값이 음수인 경우 -> 음의 부호를 지움
+		else numberBuilder.insert(0, "-");   //현재 입력값이 양수인 경우 -> 숫자 앞에 음의 부호를 붙임
+	}
+	public void AddDot() {
+		numberBuilder.append(".");
+	}
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		JButton button = (JButton) event.getSource();
@@ -83,10 +89,16 @@ public class EquationCalculation implements ActionListener{
 			expressionPanel.setExpressionLabel(equationDTO.getExpression(), equationDTO.getResult());  //완성된 계산식과 계산결과값 출력
 			break;
 		case '+':case '-':case '×':case '÷':  //사칙연산
-			expression = arithmeticOperation.manageArithmeticOperation(numberBuilder, buttonClicked); 
+			expression = arithmeticOperation.manageArithmeticOperation(numberBuilder, buttonClicked, recordList); 
 			expressionPanel.setExpressionLabel(expression, equationDTO.getFirstValue());   //계산식 출력 패널에 누적된 계산식 갑과 입력값 출력
 			break;
-		case '.':case '±':  //미완성 기능
+		case '.': 
+			AddDot();
+			expressionPanel.setExpressionLabel(expression, numberBuilder.toString());
+			break;
+		case '±':  
+			MultiplyNumberBySign();
+			expressionPanel.setExpressionLabel(expression, numberBuilder.toString());   //계산식 출력 패널에 누적된 계산식 갑과 입력값 출력
 			break;
 		default:    //숫자입력
 			setNumber(buttonClicked);

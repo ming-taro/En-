@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.ArrayList;
+
 import Model.EquationDTO;
 import utility.Constants;
 
@@ -47,7 +49,7 @@ public class ArithmeticOperation {
 		if(equationDTO.getResult().equals("")) return Constants.IS_NOT_CALCULATION_OVER; //계산이 아직 끝나지 않은 경우(현재 저장된 계산결과값이 없음)
 		return Constants.IS_CALCULATION_OVER;  //이전 계산결과값이 남아있음
 	}
-	public String manageArithmeticOperation(StringBuilder numberBuilder, String operator) {
+	public String manageArithmeticOperation(StringBuilder numberBuilder, String operator, ArrayList<String> recordList) {
 		String fristValue;
 		
 		if(isCalculationOver()) {    //계산완료 후 연산자 입력시 -> 현재 계산결과값이 첫번째값이 되고, 연산자도 바꿈
@@ -60,7 +62,8 @@ public class ArithmeticOperation {
 		}
 		else if (isAlreadyEnteredOperator()){    //첫번째값, 연산자, 두번째값까지 입력했지만 '='이 아닌 연산자 입력 -> 첫번째값이 연산결과값, 연산자 그대로, 두번째값 초기화
 			equationDTO.setSecondValue(numberBuilder.toString());   //현재까지 입력한 두번째 값 DTO에 저장
-			calculateExpression();                                    //현재까지 입력값 계산 후 DTO에 저장
+			calculateExpression();                                  //현재까지 입력값 계산 후 DTO에 저장
+			recordList.add(equationDTO.toString());                 //현재까지 완성된 계산식 계산기록리스트에 저장
 			fristValue = equationDTO.getResult();                   //첫번째값 -> 현재 계산식의 계산결과
 			equationDTO.InitValue();
 			setExpression(numberBuilder, fristValue, operator);

@@ -25,6 +25,9 @@ public class CalculatorFrame extends JFrame implements ActionListener{
 		setTitle("Calculator");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(new GridLayout(2, 0));
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
+		Image img = toolkit.getImage("calculator.png");
+		setIconImage(img); 
 		setVisible(true);
 
 		this.equationPanel = equationPanel;
@@ -36,7 +39,15 @@ public class CalculatorFrame extends JFrame implements ActionListener{
 		getContentPane().add(calculationButtonPanel);   //계산기 frame에 계산버튼 패널 추가
 		
 		equationRecordPanel = new JPanel();
-		deletionButton = new JButton();
+		
+		ImageIcon icon = new ImageIcon("image\\wastebasket.png");
+		Image image = icon.getImage();
+		Image changeImage = image.getScaledInstance(Constants.RECORD_BUTTON_SIZE, Constants.RECORD_BUTTON_SIZE, Image.SCALE_SMOOTH);
+		ImageIcon changeIcon = new ImageIcon(changeImage);
+		deletionButton = new JButton(changeIcon);
+		deletionButton.setBorderPainted(false);
+		deletionButton.setFocusPainted(false);
+		deletionButton.setContentAreaFilled(false);
 		deletionButton.addActionListener(this);
 		recordPanel = new JPanel();
 		setequationRecordPanel();
