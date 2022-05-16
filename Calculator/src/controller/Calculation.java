@@ -120,13 +120,18 @@ public class Calculation implements ActionListener, KeyListener{
 	}
 	@Override
 	public void keyPressed(KeyEvent event) {
-		if(calculatorFrame.getPanelNumber() == Constants.RECORD_PANEL_MODE) {
+		String keyChar = event.getKeyChar() + "";
+		
+		if(event.getKeyCode() == 10) keyChar = "=";
+		if(event.getKeyCode() == 8) keyChar = "←";
+		
+		if(calculatorFrame.getPanelNumber() == Constants.RECORD_PANEL_MODE) {   //계산기록을 볼 때는 키보드입력X
 			calculatorFrame.setFocusable(false);
 		}
 		else {
 			calculatorFrame.requestFocus();
 			calculatorFrame.setFocusable(true);
-			setCalculator(event.getKeyChar() + "");
+			setCalculator(keyChar);
 		}
 	}
 	@Override
