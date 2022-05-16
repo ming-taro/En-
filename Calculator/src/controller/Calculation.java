@@ -78,15 +78,13 @@ public class Calculation implements ActionListener, KeyListener{
 		numberBuilder.append(".");
 	}
 	public String FormatNumber(String numberToChange) {
-		if(numberToChange.indexOf(".") == -1) return numberToChange.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+		if(numberToChange.indexOf(".") == -1) return numberToChange.replaceAll(Constants.THOUSAND_SEPARATOR_REGEX, ","); //입력받은 
 
-		String[] number = numberToChange.split("\\.");
+		String[] numberArray = numberToChange.split("\\.");  //소수점을 입력함
+		String number = numberArray[0].replaceAll(Constants.THOUSAND_SEPARATOR_REGEX, ",") + ".";
 		
-		if(number.length == 2) {
-			//System.out.println(number[0] + "/" + number[1]);
-			return number[0].replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",") + "." + number[1];
-		}
-		return number[0].replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",") + ".";
+		if(numberArray.length == 2) number += numberArray[1];   //소수점 입력 후 숫자를 1개 이상 입력한 경우 -> 소수점 부분에는 콤마가 붙지 않는다
+		return number;
 	}
 	public void setCalculator(String buttonText) {
 		String number;
@@ -136,11 +134,17 @@ public class Calculation implements ActionListener, KeyListener{
 		String keyChar = event.getKeyChar() + "";
 		
 		switch(event.getKeyCode()) {
-		case 10:
-			keyChar = "=";
+		case Constants.EQUAL_SIGN:
+			keyChar = "=";      //키보드 입력 -> '='
 			break;
-		case 8:
-			keyChar = "←";
+		case Constants.BACKSPACE:
+			keyChar = "←";      //키보드 입력 -> 'BackSpace'
+			break;
+		case Constants.DIVISION:
+			keyChar = "÷";      //키보드 입력 -> '/'
+			break;
+		case Constants.MULTIPLICATION:
+			keyChar = "×";      //키보드 입력 -> '*'
 			break;
 		}
 		
