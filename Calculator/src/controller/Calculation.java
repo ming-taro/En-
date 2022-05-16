@@ -66,6 +66,7 @@ public class Calculation implements ActionListener{
 		else numberBuilder.insert(0, "-");   //현재 입력값이 양수인 경우 -> 숫자 앞에 음의 부호를 붙임
 	}
 	public void AddDot() {
+		if(numberBuilder.indexOf(".") != -1) return;
 		numberBuilder.append(".");
 	}
 	@Override

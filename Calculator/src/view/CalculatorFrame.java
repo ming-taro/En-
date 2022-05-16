@@ -24,7 +24,7 @@ public class CalculatorFrame extends JFrame implements ActionListener{
 		setSize(Constants.WIDTH, Constants.HEIGHT);
 		setTitle("Calculator");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setLayout(new GridLayout(2, 0));
+		setLayout(new GridLayout(3, 0));
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Image img = toolkit.getImage("calculator.png");
 		setIconImage(img); 
