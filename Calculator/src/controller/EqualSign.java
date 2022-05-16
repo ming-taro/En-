@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.ArrayList;
+
 import Model.EquationDTO;
 import utility.Constants;
 
@@ -11,19 +13,31 @@ public class EqualSign {
 		this.equationDTO = equationDTO;
 		this.arithmeticOperation = arithmeticOperation;
 	}
+	public String setNumber(String numberToChange) {
+		double number = Double.parseDouble(numberToChange);
+		
+		if(number%1 == 0) return Long.toString((long)number);
+		else return Double.toString(number);
+	}
 	public boolean isCalculationOver() {
 		if(equationDTO.getResult().equals("")) return Constants.IS_NOT_CALCULATION_OVER;   //결과값이 없음 
 		return Constants.IS_CALCULATION_OVER;  //"="을 입력받았지만 이미 결과값이 있음 -> 첫번째 숫자를 현재의 결과값으로 두고 다시 계산
 	}
-	public void calculateExpression(StringBuilder numberbuilder) { 
+	public void addToRecordList(ArrayList<String> recordList) {
+		if(equationDTO.getOperator().equals("÷") && equationDTO.getSecondValue().equals("0")) {
+			equationDTO.setResult("0으로 나눌 수 없습니다.");
+		}
+		else recordList.add(equationDTO.toString());
+	}
+	public void calculateExpression(StringBuilder numberbuilder, ArrayList<String> recordList) { 
 		String number = numberbuilder.toString();
 		
 		if(equationDTO.getOperator() == "") {  //첫번째 숫자 입력 후 연산자 입력없이 바로 '='입력시 -> 결과 : 첫번째 입력값
-			equationDTO.setFirstValue(number);
+			equationDTO.setFirstValue(setNumber(number));
 			equationDTO.setResult(equationDTO.getFirstValue());
 		}
 		else if(number.equals("")) {   //첫번째 숫자, 연산자 입력 후 두번째 숫자 입력 없이 바로 '='입력시 -> 결과 : 첫번째 숫자 (연산자) 첫번째 숫자
-			equationDTO.setSecondValue(equationDTO.getFirstValue());
+			equationDTO.setSecondValue(setNumber(equationDTO.getFirstValue()));
 			arithmeticOperation.calculateExpression();
 			numberbuilder.append(equationDTO.getFirstValue());
 		}
@@ -32,12 +46,11 @@ public class EqualSign {
 			arithmeticOperation.calculateExpression();   //현재까지 입력한 값 계산 후 DTO에 저장
 		}
 		else {
-			equationDTO.setSecondValue(number); //계산완료된 적이 없음 -> 연산자 입력 후 누적된 두번째 숫자값 저장          예외) 3+=입력시 첫번째값=두번째값 -> 3+3=6
+			equationDTO.setSecondValue(setNumber(number)); //계산완료된 적이 없음 -> 연산자 입력 후 누적된 두번째 숫자값 저장          예외) 3+=입력시 첫번째값=두번째값 -> 3+3=6
 			arithmeticOperation.calculateExpression();   //현재까지 입력한 값 계산 후 DTO에 저장
 		}
-
-		//equationDTO.setExpression();   //완성된 수학식 DTO에 저장
-
+		
+		addToRecordList(recordList);
 		System.out.println(equationDTO.getFirstValue() + equationDTO.getOperator() + equationDTO.getSecondValue() + "=" + equationDTO.getResult());
 	}
 	

@@ -69,7 +69,8 @@ public class Calculation implements ActionListener, KeyListener{
 		numberBuilder.append(number);   //숫자 입력값 누적
 	}
 	public void MultiplyNumberBySign() {
-		if(numberBuilder.toString().charAt(0) == '-') numberBuilder.replace(0, 1, "");  //현재 입력값이 음수인 경우 -> 음의 부호를 지움
+		if(numberBuilder.toString().equals("0")) return;
+		else if(numberBuilder.toString().charAt(0) == '-') numberBuilder.replace(0, 1, "");  //현재 입력값이 음수인 경우 -> 음의 부호를 지움
 		else numberBuilder.insert(0, "-");   //현재 입력값이 양수인 경우 -> 숫자 앞에 음의 부호를 붙임
 	}
 	public void AddDot() {
@@ -92,8 +93,7 @@ public class Calculation implements ActionListener, KeyListener{
 			expressionPanel.setExpressionLabel(expression, number);
 			break;
 		case '=':
-			equalSign.calculateExpression(numberBuilder);  //등호 계산
-			recordList.add(equationDTO.toString());
+			equalSign.calculateExpression(numberBuilder, recordList);  //등호 계산
 			expressionPanel.setExpressionLabel(equationDTO.toString(), equationDTO.getResult());  //완성된 계산식과 계산결과값 출력
 			break;
 		case '+':case '-':case '×':case '÷':  //사칙연산

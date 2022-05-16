@@ -11,7 +11,10 @@ public class ArithmeticOperation {
 	public ArithmeticOperation(EquationDTO equationDTO) {
 		this.equationDTO = equationDTO;
 	}
-	
+	public String setNumber(double number) {
+		if(number%1 == 0) return Long.toString((long)number);
+		else return Double.toString(number);
+	}
 	public void calculateExpression() {
 		double firstValue = Double.parseDouble(equationDTO.getFirstValue());      //첫번째 입력값
 		double secondValue = Double.parseDouble(equationDTO.getSecondValue());    //두번째 입력값
@@ -32,11 +35,10 @@ public class ArithmeticOperation {
 			break;
 		}
 		
-		if(result%1 == 0) equationDTO.setResult(Long.toString((long)result));
-		else equationDTO.setResult(Double.toString(result));
+		equationDTO.setResult(setNumber(result));
 	}
 	public void setExpression(StringBuilder numberBuilder, String firstValue, String operator) {  //연산자 입력
-		equationDTO.setFirstValue(firstValue);   //연산자 이전에 입력한 첫번째 값 저장
+		equationDTO.setFirstValue(setNumber(Double.parseDouble(firstValue)));   //연산자 이전에 입력한 첫번째 값 저장
 		equationDTO.setOperator(operator);                     //연산자 저장
 		numberBuilder.setLength(0);                              //숫자 누적값 초기화
 		numberBuilder.append("");                                //두번째 숫자 입력부터는 stringBuilder값을 0으로 초기화하지 않고 비움 -> ex)9+=입력값과 9+0=입력값을 다르게 구별하기 위함

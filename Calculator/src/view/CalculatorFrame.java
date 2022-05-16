@@ -1,24 +1,16 @@
 package view;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 import java.util.ArrayList;
-
-import java.net.URL;
 import javax.swing.*;
 import utility.*;
 
 public class CalculatorFrame extends JFrame implements ActionListener, ComponentListener{
-	private static final ActionEvent ActionEvent = null;
 	private JPanel equationRecordPanel;       //계산기록 출력 패널
 	private JPanel recordPanel;               //계산기록 출력 패널 -> 계산수식 출력 패널
 	private EquationPanel equationPanel;                    //프레임 -> 계산수식, 현재 입력값 출력 패널
 	private CalculationButtonPanel calculationButtonPanel;  //프레임 -> 계산기 버튼 패널
-	private JScrollPane recordPanelScroll;  //계산기록 출력 패널 -> 계산수식 출력 패널에 달  스크롤
+	private JScrollPane recordPanelScroll;    //계산기록 출력 패널 -> 계산수식 출력 패널에 달  스크롤
 	private JButton deletionButton;           //계산기록 출력 패널 -> 휴지통 버튼
 	private int panelNumber;   //equationRecordPanel : 0, calculationButtonPanel = 1
 	private ArrayList<String> recordList;     //계산기록 출력 패널 -> 계산수식 출력 패널 -> 계산기록 리스트
@@ -31,8 +23,8 @@ public class CalculatorFrame extends JFrame implements ActionListener, Component
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
 		setLocationRelativeTo(null);   //윈도우 가운데에 계산기 띄우기
-		//ImageIcon img = new ImageIcon("image/calculator.png");
-		//setIconImage(img.getImage());
+		ImageIcon img = new ImageIcon("calculator.png");  //frame 아이콘.. 왜안될까
+		setIconImage(img.getImage());
 		addComponentListener(this);
 		setVisible(true);
 
@@ -122,7 +114,7 @@ public class CalculatorFrame extends JFrame implements ActionListener, Component
 		ConvertPanel();
 	}
 	@Override
-	public void componentResized(ComponentEvent e) {
+	public void componentResized(ComponentEvent e) {    //frame 최소크기 설정
 		Dimension frameSize = this.getSize();
    
         if(frameSize.width < Constants.MIN_WIDTH) {
