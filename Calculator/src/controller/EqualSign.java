@@ -36,7 +36,7 @@ public class EqualSign {
 			arithmeticOperation.calculateExpression();   //현재까지 입력한 값 계산 후 DTO에 저장
 		}
 
-		equationDTO.setExpression();   //완성된 수학식 DTO에 저장
+		//equationDTO.setExpression();   //완성된 수학식 DTO에 저장
 
 		System.out.println(equationDTO.getFirstValue() + equationDTO.getOperator() + equationDTO.getSecondValue() + "=" + equationDTO.getResult());
 	}

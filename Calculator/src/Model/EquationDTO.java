@@ -40,14 +40,8 @@ public class EquationDTO {
 	public String getResult() {
 		return result;
 	}
-	public void setExpression() {///---->dto에서 빼기(grt,set만)
-		expression = firstValue + " " + operator + " " + secondValue + " = ";
-	}
-	public String getExpression() {
-		return expression;
-	}
 	@Override
     public String toString() {
-        return firstValue + " " + operator + " " + secondValue + " = " + result;
+        return firstValue + " " + operator + " " + secondValue + " = ";
     }
 }

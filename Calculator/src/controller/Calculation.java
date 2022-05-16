@@ -78,6 +78,9 @@ public class Calculation implements ActionListener, KeyListener{
 	}
 	public void setCalculator(String buttonText) {
 		String number;
+
+		calculatorFrame.requestFocus();
+		calculatorFrame.setFocusable(true);
 		
 		switch(buttonText.charAt(0)) {
 		case 'C':
@@ -91,7 +94,7 @@ public class Calculation implements ActionListener, KeyListener{
 		case '=':
 			equalSign.calculateExpression(numberBuilder);  //등호 계산
 			recordList.add(equationDTO.toString());
-			expressionPanel.setExpressionLabel(equationDTO.getExpression(), equationDTO.getResult());  //완성된 계산식과 계산결과값 출력
+			expressionPanel.setExpressionLabel(equationDTO.toString(), equationDTO.getResult());  //완성된 계산식과 계산결과값 출력
 			break;
 		case '+':case '-':case '×':case '÷':  //사칙연산
 			expression = arithmeticOperation.manageArithmeticOperation(numberBuilder, buttonText, recordList); 
@@ -115,22 +118,22 @@ public class Calculation implements ActionListener, KeyListener{
 		JButton button = (JButton) event.getSource();
 		String buttonText = button.getText();
 		
-		System.out.println("test");
 		setCalculator(buttonText);
 	}
 	@Override
 	public void keyPressed(KeyEvent event) {
 		String keyChar = event.getKeyChar() + "";
 		
-		if(event.getKeyCode() == 10) keyChar = "=";
-		if(event.getKeyCode() == 8) keyChar = "←";
-		
-		if(calculatorFrame.getPanelNumber() == Constants.RECORD_PANEL_MODE) {   //계산기록을 볼 때는 키보드입력X
-			calculatorFrame.setFocusable(false);
+		switch(event.getKeyCode()) {
+		case 10:
+			keyChar = "=";
+			break;
+		case 8:
+			keyChar = "←";
+			break;
 		}
-		else {
-			calculatorFrame.requestFocus();
-			calculatorFrame.setFocusable(true);
+		
+		if(calculatorFrame.getPanelNumber() == Constants.BUTTON_PANEL_MODE) {   //계산기록을 볼 때는 키보드입력X
 			setCalculator(keyChar);
 		}
 	}

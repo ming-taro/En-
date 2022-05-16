@@ -14,7 +14,7 @@ public class Constants {
 	public static final int BUTTON_PANEL = 500;
 	public static final int BUTTON_FONT_SIZE = 20;
 	public static final int BUTTON_SIZE = 25;
-	public static final int INPUT_FONT_SIZE = 45;
+	public static final int INPUT_FONT_SIZE = 40;
 	public static final int EXPRESSION_FONT_SIZE = 14;
 	
 	public static final boolean IS_CALCULATION_OVER = true;
@@ -30,4 +30,7 @@ public class Constants {
 	
 	public static final boolean IS_ALREADY_ENTERED_SECOND_VALUE = true;
 	public static final boolean IS_NOT_ENTERED_SECOND_VALUE = false;
+	
+	public static final boolean IS_ZERO = true;
+	public static final boolean IS_NOT_ZERO = false;
 }

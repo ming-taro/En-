@@ -91,6 +91,26 @@ public class CalculatorFrame extends JFrame implements ActionListener, Component
 
 		recordPanel.add(recordTextArea);
 	}
+	public void ConvertPanel() {
+		getContentPane().removeAll();
+		getContentPane().add(equationPanel, BorderLayout.NORTH); 
+		
+		if(panelNumber == Constants.BUTTON_PANEL_MODE) {
+			getContentPane().add(equationRecordPanel, BorderLayout.CENTER);       //계산기록보기
+			setFocusable(false);
+			setRecordList();
+			panelNumber = Constants.RECORD_PANEL_MODE;
+		}
+		else {
+			getContentPane().add(calculationButtonPanel, BorderLayout.CENTER);    //계산버튼 입력
+			requestFocus();
+			setFocusable(true);
+			panelNumber = Constants.BUTTON_PANEL_MODE;
+		}
+			
+		revalidate();
+		repaint();
+	}
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		if(event.getSource() == deletionButton) {
@@ -99,21 +119,7 @@ public class CalculatorFrame extends JFrame implements ActionListener, Component
 			return;
 		}
 		
-		getContentPane().removeAll();
-		getContentPane().add(equationPanel, BorderLayout.NORTH); 
-		
-		if(panelNumber == Constants.BUTTON_PANEL_MODE) {
-			getContentPane().add(equationRecordPanel, BorderLayout.CENTER); 
-			setRecordList();
-			panelNumber = Constants.RECORD_PANEL_MODE;
-		}
-		else {
-			getContentPane().add(calculationButtonPanel, BorderLayout.CENTER);
-			panelNumber = Constants.BUTTON_PANEL_MODE;
-		}
-			
-		revalidate();
-		repaint();
+		ConvertPanel();
 	}
 	@Override
 	public void componentResized(ComponentEvent e) {
