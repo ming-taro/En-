@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -59,7 +61,7 @@ public class Calculation implements ActionListener, KeyListener{
 		if(equationDTO.getResult().equals("")) return Constants.IS_NOT_CALCULATION_OVER; 
 		return Constants.IS_CALCULATION_OVER;
 	}
-	public void setNumber(String number) {         //숫자입력
+	public void addNumber(String number) {         //숫자입력
 		if(numberBuilder.length() == 16 || numberBuilder.indexOf(".") != -1 && numberBuilder.length() == 17 || numberBuilder.toString().equals("0") && number.equals("0")) return;  //숫자 16자리 초과 or 처음부터 0을 입력하는 경우 -> 입력값을 더이상 누적하지 않음
 		
 		if(isCalculationOver()) expression = numberDeletion.manageDeletion(numberBuilder, "C", expression);  //이전 입력까지의 계산이 끝나고 새로운 숫자를 입력하려고 할 때 -> 'C'기능 수행 후 입력값을 stringBuilder에 저장
@@ -77,11 +79,27 @@ public class Calculation implements ActionListener, KeyListener{
 		if(numberBuilder.indexOf(".") != -1) return;
 		numberBuilder.append(".");
 	}
+	public String setNumber(BigDecimal number) {  //bigdecimal
+		if(number.remainder(new BigDecimal(1)).compareTo(new BigDecimal(0)) == 0) {
+			return Long.toString(number.longValue());   //결과값이 정수인 경우
+		}
+		if(number.toString().length() <= 17) {
+			return number.toString(); //결과값이 실수이면서 숫자의 최대길이인 16(소수점 포함 17)을 초과하지 않은 경우 -> 결과 그대로 저장
+		}
+		System.out.print("[" + number + "]");
+		
+		String[] numberArray = number.toString().split("\\.");   //소수점 기준 -> 정수부분과 소수부분으로 나눔
+		int length = 16 - numberArray[0].length();
+		BigDecimal result = number.setScale(length, RoundingMode.HALF_UP);
+		return result.toString();
+	}
 	public String FormatNumber(String numberToChange) {
-		if(numberToChange.indexOf(".") == -1) return numberToChange.replaceAll(Constants.THOUSAND_SEPARATOR_REGEX, ","); //입력받은 
+		String number = setNumber(new BigDecimal(numberToChange));
+		
+		if(number.indexOf(".") == -1) return number.replaceAll(Constants.THOUSAND_SEPARATOR_REGEX, ","); //입력받은 
 
-		String[] numberArray = numberToChange.split("\\.");  //소수점을 입력함
-		String number = numberArray[0].replaceAll(Constants.THOUSAND_SEPARATOR_REGEX, ",") + ".";
+		String[] numberArray = number.split("\\.");  //소수점을 입력함
+		number = numberArray[0].replaceAll(Constants.THOUSAND_SEPARATOR_REGEX, ",") + ".";
 		
 		if(numberArray.length == 2) number += numberArray[1];   //소수점 입력 후 숫자를 1개 이상 입력한 경우 -> 소수점 부분에는 콤마가 붙지 않는다
 		return number;
@@ -118,7 +136,7 @@ public class Calculation implements ActionListener, KeyListener{
 			expressionPanel.setExpressionLabel(expression, FormatNumber(numberBuilder.toString()));   //계산식 출력 패널에 누적된 계산식 갑과 입력값 출력
 			break;
 		case '0':case '1':case '2':case '3':case '4':case '5':case '6':case '7':case '8':case '9':
-			setNumber(buttonText);
+			addNumber(buttonText);
 			expressionPanel.setExpressionLabel(expression, FormatNumber(numberBuilder.toString()));   //계산식 출력 패널에 누적된 계산식 갑과 입력값 출력
 		}
 	}

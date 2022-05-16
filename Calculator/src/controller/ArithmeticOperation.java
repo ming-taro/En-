@@ -17,12 +17,7 @@ public class ArithmeticOperation {
 		if(number.remainder(new BigDecimal(1)).compareTo(new BigDecimal(0)) == 0) {
 			return Long.toString(number.longValue());   //결과값이 정수인 경우
 		}
-		if(number.precision() <= 16) return number.toString(); //결과값이 실수이면서 숫자의 최대길이인 16을 초과하지 않은 경우 -> 결과 그대로 저장
-		
-		String[] numberArray = number.toString().split("\\.");
-		int length = 16 - numberArray[0].length();
-		BigDecimal result = number.setScale(length, RoundingMode.HALF_UP);
-		return result.toString();
+		return number.toString(); //결과값이 실수이면서 숫자의 최대길이인 16(소수점 포함 17)을 초과하지 않은 경우 -> 결과 그대로 저장
 	}
 	public void calculateExpression() {
 		BigDecimal firstValue = new BigDecimal(equationDTO.getFirstValue());      //첫번째 입력값
@@ -40,7 +35,7 @@ public class ArithmeticOperation {
 			result = firstValue.multiply(secondValue);
 			break;
 		case "÷":
-			result = firstValue.divide(secondValue, 15, RoundingMode.HALF_EVEN);//a.divide(b, 3, RoundingMode.HALF_EVEN);
+			result = firstValue.divide(secondValue, 16, RoundingMode.HALF_EVEN);
 			break;
 		default:
 			result = new BigDecimal("");
