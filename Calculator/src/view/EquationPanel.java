@@ -13,10 +13,13 @@ public class EquationPanel extends JPanel{
 	private JLabel expressionLabel;
 	private JLabel inputLabel;
 	
+	public JLabel getInputLabel() {
+		return inputLabel;
+	}
 	public EquationPanel() {		
 		ImageIcon icon = new ImageIcon("image\\clock.png");
 		Image img = icon.getImage();
-		Image changeImg = img.getScaledInstance(Constants.RECORD_BUTTON_SIZE, Constants.RECORD_BUTTON_SIZE, Image.SCALE_SMOOTH);
+		Image changeImg = img.getScaledInstance(Constants.BUTTON_SIZE, Constants.BUTTON_SIZE, Image.SCALE_SMOOTH);
 		ImageIcon changeIcon = new ImageIcon(changeImg);
 
 		recordButton = new JButton(changeIcon);
@@ -32,32 +35,21 @@ public class EquationPanel extends JPanel{
 	public void setActionListener(ActionListener listener) {
 		recordButton.addActionListener(listener);
 	}
+	public void setComponentListener(ComponentListener listener) {
+		inputLabel.addComponentListener(listener);
+		expressionLabel.addComponentListener(listener);
+	}
 	private void addRecordPanel() {
 		JPanel recordPanel = new JPanel();
-		JPanel labelPanel = new JPanel();
-		JPanel buttonPanel = new JPanel();
-		JLabel label = new JLabel("표준");
 		
-		label.setFont(new Font("SansSerif", Font.BOLD, Constants.BUTTON_FONT_SIZE));  //'표준'
-
-		recordButton.setPreferredSize(new Dimension(Constants.RECORD_BUTTON_SIZE,Constants.RECORD_BUTTON_SIZE));  //계산기록 버튼	
+		recordButton.setPreferredSize(new Dimension(Constants.BUTTON_SIZE,Constants.BUTTON_SIZE));  //계산기록 버튼	
 		recordButton.setBorderPainted(false);
 		recordButton.setFocusPainted(false);
 		recordButton.setContentAreaFilled(false);
 		
 		recordPanel.setBackground(new Color(230, 230, 230));
-		labelPanel.setBackground(new Color(230, 230, 230));
-		buttonPanel.setBackground(new Color(230, 230, 230));
-		
-		recordPanel.setLayout(new GridLayout(0,2));
-		labelPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		
-		labelPanel.add(label);
-		buttonPanel.add(recordButton);
-		
-		recordPanel.add(labelPanel);
-		recordPanel.add(buttonPanel);
+		recordPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		recordPanel.add(recordButton);
 		
 		add(recordPanel);
 	}

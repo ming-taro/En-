@@ -2,6 +2,9 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -12,7 +15,7 @@ import view.CalculationButtonPanel;
 import view.CalculatorFrame;
 import view.EquationPanel;
 
-public class Calculation implements ActionListener{
+public class Calculation implements ActionListener, KeyListener{
 	private EquationPanel expressionPanel;
 	private CalculationButtonPanel calculationButtonPanel;
 	private CalculatorFrame calculatorFrame;
@@ -23,7 +26,10 @@ public class Calculation implements ActionListener{
 	private ArithmeticOperation arithmeticOperation; //'+', '-', '×', '÷' -> 사칙연산
 	private EqualSign equalSign;                     //'=' -> 등호계산
 	private Deletion numberDeletion;           //'C', 'CE', '←' -> 숫자 or 계산식 삭제
-	
+
+	public KeyListener getKeyListener() {
+		return this;
+	}
 	public Calculation() {
 		expressionPanel = new EquationPanel();                       //계산식 출력 패널
 		calculationButtonPanel = new CalculationButtonPanel(this);   //버튼 클릭 패널
@@ -38,6 +44,10 @@ public class Calculation implements ActionListener{
 		arithmeticOperation = new ArithmeticOperation(equationDTO);
 		equalSign = new EqualSign(equationDTO, arithmeticOperation);
 		numberDeletion = new Deletion(equationDTO);
+		
+		calculatorFrame.addKeyListener(this);
+		calculatorFrame.requestFocus();
+		calculatorFrame.setFocusable(true);
 	}
 	public ArrayList<String> getRecordList(){
 		return recordList;
@@ -74,7 +84,9 @@ public class Calculation implements ActionListener{
 		JButton button = (JButton) event.getSource();
 		String buttonClicked = button.getText();
 		String number;
-
+		
+		System.out.println("test");
+		
 		switch(buttonClicked.charAt(0)) {
 		case 'C':
 			expression = numberDeletion.manageDeletion(numberBuilder, buttonClicked, expression);
@@ -105,5 +117,19 @@ public class Calculation implements ActionListener{
 			setNumber(buttonClicked);
 			expressionPanel.setExpressionLabel(expression, numberBuilder.toString());   //계산식 출력 패널에 누적된 계산식 갑과 입력값 출력
 		}
+	}
+	@Override
+	public void keyPressed(KeyEvent event) {
+		System.out.println("와");
+	}
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

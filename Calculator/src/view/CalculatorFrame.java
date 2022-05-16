@@ -2,13 +2,18 @@ package view;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
+import java.net.URL;
 import javax.swing.*;
-
 import utility.*;
 
-public class CalculatorFrame extends JFrame implements ActionListener{
+public class CalculatorFrame extends JFrame implements ActionListener, ComponentListener{
+	private static final ActionEvent ActionEvent = null;
 	private JPanel equationRecordPanel;       //계산기록 출력 패널
 	private JPanel recordPanel;               //계산기록 출력 패널 -> 계산수식 출력 패널
 	private EquationPanel equationPanel;                    //프레임 -> 계산수식, 현재 입력값 출력 패널
@@ -24,10 +29,11 @@ public class CalculatorFrame extends JFrame implements ActionListener{
 		setSize(Constants.WIDTH, Constants.HEIGHT);
 		setTitle("Calculator");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setLayout(new GridLayout(3, 0));
-		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		Image img = toolkit.getImage("calculator.png");
-		setIconImage(img); 
+		setLayout(new BorderLayout());
+		setLocationRelativeTo(null);   //윈도우 가운데에 계산기 띄우기
+		//ImageIcon img = new ImageIcon("image/calculator.png");
+		//setIconImage(img.getImage());
+		addComponentListener(this);
 		setVisible(true);
 
 		this.equationPanel = equationPanel;
@@ -35,14 +41,15 @@ public class CalculatorFrame extends JFrame implements ActionListener{
 		this.recordList = recordList;
 		
 		equationPanel.setActionListener(this);          //계산식 출력 패널의 기록보기 버튼에 event연결
-		getContentPane().add(equationPanel);            //계산기 frame에 계산식 출력 패널 추가
-		getContentPane().add(calculationButtonPanel);   //계산기 frame에 계산버튼 패널 추가
+		equationPanel.setComponentListener(this);
+		getContentPane().add(equationPanel, BorderLayout.NORTH);            //계산기 frame에 계산식 출력 패널 추가
+		getContentPane().add(calculationButtonPanel, BorderLayout.CENTER);   //계산기 frame에 계산버튼 패널 추가
 		
 		equationRecordPanel = new JPanel();
 		
 		ImageIcon icon = new ImageIcon("image\\wastebasket.png");
 		Image image = icon.getImage();
-		Image changeImage = image.getScaledInstance(Constants.RECORD_BUTTON_SIZE, Constants.RECORD_BUTTON_SIZE, Image.SCALE_SMOOTH);
+		Image changeImage = image.getScaledInstance(Constants.BUTTON_SIZE, Constants.BUTTON_SIZE, Image.SCALE_SMOOTH);
 		ImageIcon changeIcon = new ImageIcon(changeImage);
 		deletionButton = new JButton(changeIcon);
 		deletionButton.setBorderPainted(false);
@@ -65,7 +72,7 @@ public class CalculatorFrame extends JFrame implements ActionListener{
 		deletionButtonPanel.setBackground(Color.white);
 		
 		deletionButtonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		deletionButton.setPreferredSize(new Dimension(Constants.RECORD_BUTTON_SIZE,Constants.RECORD_BUTTON_SIZE));  //계산기록 버튼
+		deletionButton.setPreferredSize(new Dimension(Constants.BUTTON_SIZE,Constants.BUTTON_SIZE));  //계산기록 버튼
 		deletionButtonPanel.add(deletionButton);
 		
 		equationRecordPanel.setLayout(new BorderLayout());
@@ -90,21 +97,40 @@ public class CalculatorFrame extends JFrame implements ActionListener{
 		}
 		
 		getContentPane().removeAll();
-		getContentPane().add(equationPanel); 
+		getContentPane().add(equationPanel, BorderLayout.NORTH); 
 		
 		if(panelNumber == 0) {
-			getContentPane().add(equationRecordPanel); 
+			getContentPane().add(equationRecordPanel, BorderLayout.CENTER); 
 			setRecordList();
 			panelNumber = 1;
 		}
 		else {
-			getContentPane().add(calculationButtonPanel);
+			getContentPane().add(calculationButtonPanel, BorderLayout.CENTER);
 			panelNumber = 0;
 		}
 			
 		revalidate();
 		repaint();
 	}
-	
-	
+	@Override
+	public void componentResized(ComponentEvent e) {
+		Dimension frameSize = this.getSize();
+   
+        if(frameSize.width < Constants.MIN_WIDTH) {
+        	frameSize.width = Constants.MIN_WIDTH;
+        }
+        if(frameSize.height < Constants.MIN_HEIGHT) {
+        	frameSize.height = Constants.MIN_HEIGHT;
+        }
+        setSize(frameSize);
+	}
+	@Override
+	public void componentMoved(ComponentEvent e) {
+	}
+	@Override
+	public void componentShown(ComponentEvent e) {
+	}
+	@Override
+	public void componentHidden(ComponentEvent e) {
+	}
 }
