@@ -75,7 +75,7 @@ public class EquationPanel extends JPanel{
 	}
 	public void setExpressionLabel(String expression, String number) {
 		expressionLabel.setText(expression);   //계산식 누적값 출력
-		inputLabel.setText(number.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",")); //숫자입력 누적값 출력
+		inputLabel.setText(number); //숫자입력 누적값 출력
 	}
 	public void removeInputLabel(StringBuilder number) {
 		number.setLength(0);

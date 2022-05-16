@@ -6,10 +6,11 @@ import javax.swing.*;
 import utility.*;
 
 public class CalculatorFrame extends JFrame implements ActionListener, ComponentListener{
-	private JPanel recordPanel;               //계산기록 출력 패널 -> 계산수식 출력 패널
-	private EquationPanel equationPanel;                    //프레임 -> 계산수식, 현재 입력값 출력 패널
+	private RecordPanel recordPanel;               //계산기록 출력 패널 -> 계산수식 출력 패널
+	private EquationPanel equationPanel;                   //프레임 -> 계산수식, 현재 입력값 출력 패널
 	private CalculatorButtonPanel calculationButtonPanel;  //프레임 -> 계산기 버튼 패널
-	private int panelNumber;   //equationRecordPanel : 0, calculationButtonPanel = 1
+	private int panelNumber;  
+	private Dimension frameSize;
 	
 	public CalculatorFrame(EquationPanel equationPanel, CalculatorButtonPanel calculationButtonPanel, ArrayList<String> recordList) {
 		setPreferredSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
@@ -32,7 +33,7 @@ public class CalculatorFrame extends JFrame implements ActionListener, Component
 		getContentPane().add(calculationButtonPanel, BorderLayout.CENTER);   //계산기 frame에 계산버튼 패널 추가
 		
 		recordPanel = new RecordPanel(recordList);
-		panelNumber = 0;
+		panelNumber = Constants.BUTTON_PANEL_MODE;
 	}
 	public int getPanelNumber() {
 		return panelNumber;
@@ -42,12 +43,13 @@ public class CalculatorFrame extends JFrame implements ActionListener, Component
 		getContentPane().add(equationPanel, BorderLayout.NORTH); 
 		
 		if(panelNumber == Constants.BUTTON_PANEL_MODE) {
-			getContentPane().add(recordPanel, BorderLayout.CENTER);       //계산기록보기
+			getContentPane().add(recordPanel, BorderLayout.CENTER);       //계산기록보기 패널로 전환
+			recordPanel.setRecordList();
 			setFocusable(false);
 			panelNumber = Constants.RECORD_PANEL_MODE;
 		}
 		else {
-			getContentPane().add(calculationButtonPanel, BorderLayout.CENTER);    //계산버튼 입력
+			getContentPane().add(calculationButtonPanel, BorderLayout.CENTER);    //계산버튼 입력 패널로 전환
 			requestFocus();
 			setFocusable(true);
 			panelNumber = Constants.BUTTON_PANEL_MODE;
@@ -62,8 +64,8 @@ public class CalculatorFrame extends JFrame implements ActionListener, Component
 	}
 	@Override
 	public void componentResized(ComponentEvent e) {    //frame 최소크기 설정
-		Dimension frameSize = this.getSize();
-   
+		frameSize = this.getSize();
+		
         if(frameSize.width < Constants.MIN_WIDTH) {
         	frameSize.width = Constants.MIN_WIDTH;
         }

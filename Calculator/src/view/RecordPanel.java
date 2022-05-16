@@ -27,8 +27,8 @@ public class RecordPanel extends JPanel implements ActionListener{
 	
 	public RecordPanel(ArrayList<String> recordList) {
 		this.recordList = recordList;
-		setequationRecordPanel();
 
+		resultPanel = new JPanel();
 		recordTextArea = new JTextArea();
 		recordTextArea.setFont(new Font("SansSerif", Font.BOLD, Constants.BUTTON_FONT_SIZE));
 		
@@ -42,22 +42,26 @@ public class RecordPanel extends JPanel implements ActionListener{
 		deletionButton.setFocusPainted(false);
 		deletionButton.setContentAreaFilled(false);
 		deletionButton.addActionListener(this);
+		
+		setRecordPanel();
 	}
 	
-	public void setequationRecordPanel() {
+	public void setRecordPanel() {
 		JPanel deletionButtonPanel = new JPanel();
-		recordPanelScroll = new JScrollPane(this);
 		
-		setBackground(Color.white);
+		setRecordList();
+		recordPanelScroll = new JScrollPane(resultPanel);
+		
+		resultPanel.setBackground(Color.white);
 		deletionButtonPanel.setBackground(Color.white);
 		
 		deletionButtonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		deletionButton.setPreferredSize(new Dimension(Constants.BUTTON_SIZE,Constants.BUTTON_SIZE));  //계산기록 버튼
 		deletionButtonPanel.add(deletionButton);
 		
-		resultPanel.setLayout(new BorderLayout());
-		resultPanel.add(recordPanelScroll, "Center");
-		resultPanel.add(deletionButtonPanel, "South");
+		setLayout(new BorderLayout());
+		add(recordPanelScroll, "Center");
+		add(deletionButtonPanel, "South");
 	}
 	public void setRecordList() {
 		recordTextArea.setText("");  //먼저 이전에 저장된 계산기록을 초기화 
@@ -66,7 +70,7 @@ public class RecordPanel extends JPanel implements ActionListener{
 			recordTextArea.append(recordList.get(index) + "\n\n");
 		}
 
-		add(recordTextArea);
+		resultPanel.add(recordTextArea);
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
