@@ -28,6 +28,7 @@ public class EqualSign {
 		System.out.println(length + "//" + new BigDecimal(number).setScale(length, RoundingMode.HALF_UP));
 		return result.toString();
 	}
+	
 	public boolean isCalculationOver() {
 		if(equationDTO.getResult().equals("")) return Constants.IS_NOT_CALCULATION_OVER;   //결과값이 없음 
 		return Constants.IS_CALCULATION_OVER;  //"="을 입력받았지만 이미 결과값이 있음 -> 첫번째 숫자를 현재의 결과값으로 두고 다시 계산

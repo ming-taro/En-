@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -81,6 +82,13 @@ public class Calculation implements ActionListener, KeyListener{
 	}
 	public String setNumber(BigDecimal number) {  //bigdecimal
 		if(number.remainder(new BigDecimal(1)).compareTo(new BigDecimal(0)) == 0) {
+			
+			if(number.toString().length() > 16) {
+				DecimalFormat format=new DecimalFormat();
+				format.applyPattern("#.###############E0");
+				System.out.println(format.format(number));
+				return format.format(number);
+			}
 			return Long.toString(number.longValue());   //결과값이 정수인 경우
 		}
 		if(number.toString().length() <= 17) {
