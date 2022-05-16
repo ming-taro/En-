@@ -1,4 +1,6 @@
 package calculator_controller;
+import java.math.BigDecimal;
+
 import controller.Calculation;
 
 public class Calculator {

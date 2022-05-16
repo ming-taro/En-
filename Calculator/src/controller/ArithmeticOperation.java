@@ -1,5 +1,7 @@
 package controller;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 
 import Model.EquationDTO;
@@ -11,34 +13,45 @@ public class ArithmeticOperation {
 	public ArithmeticOperation(EquationDTO equationDTO) {
 		this.equationDTO = equationDTO;
 	}
-	public String setNumber(double number) {
-		if(number%1 == 0) return Long.toString((long)number);
-		else return Double.toString(number);
+	public String setNumber(BigDecimal number) {
+		if(number.remainder(new BigDecimal(1)).compareTo(new BigDecimal(0)) == 0) {
+			return Long.toString(number.longValue());   //결과값이 정수인 경우
+		}
+		if(number.precision() <= 16) return number.toString(); //결과값이 실수이면서 숫자의 최대길이인 16을 초과하지 않은 경우 -> 결과 그대로 저장
+		
+		String[] numberArray = number.toString().split("\\.");
+		int length = 16 - numberArray[0].length();
+		BigDecimal result = number.setScale(length, RoundingMode.HALF_UP);
+		return result.toString();
 	}
 	public void calculateExpression() {
-		double firstValue = Double.parseDouble(equationDTO.getFirstValue());      //첫번째 입력값
-		double secondValue = Double.parseDouble(equationDTO.getSecondValue());    //두번째 입력값
-		double result = 0;
+		BigDecimal firstValue = new BigDecimal(equationDTO.getFirstValue());      //첫번째 입력값
+		BigDecimal secondValue = new BigDecimal(equationDTO.getSecondValue());    //두번째 입력값
+		BigDecimal result;
 		
 		switch(equationDTO.getOperator()) {    //연산자에 따라 계산
 		case "+":
-			result = firstValue + secondValue;
+			result = firstValue.add(secondValue);
 			break;
 		case "-":
-			result = firstValue - secondValue;
+			result = firstValue.subtract(secondValue);
 			break;
 		case "×":
-			result = firstValue * secondValue;
+			result = firstValue.multiply(secondValue);
 			break;
 		case "÷":
-			result = firstValue / secondValue;
+			result = firstValue.divide(secondValue, 15, RoundingMode.HALF_EVEN);//a.divide(b, 3, RoundingMode.HALF_EVEN);
+			break;
+		default:
+			result = new BigDecimal("");
 			break;
 		}
 		
 		equationDTO.setResult(setNumber(result));
+		System.out.println("{" +equationDTO.getResult()  +"}");
 	}
 	public void setExpression(StringBuilder numberBuilder, String firstValue, String operator) {  //연산자 입력
-		equationDTO.setFirstValue(setNumber(Double.parseDouble(firstValue)));   //연산자 이전에 입력한 첫번째 값 저장
+		equationDTO.setFirstValue(setNumber(new BigDecimal(firstValue)));   //연산자 이전에 입력한 첫번째 값 저장
 		equationDTO.setOperator(operator);                     //연산자 저장
 		numberBuilder.setLength(0);                              //숫자 누적값 초기화
 		numberBuilder.append("");                                //두번째 숫자 입력부터는 stringBuilder값을 0으로 초기화하지 않고 비움 -> ex)9+=입력값과 9+0=입력값을 다르게 구별하기 위함

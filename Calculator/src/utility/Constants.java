@@ -1,8 +1,8 @@
 package utility;
 
 public class Constants {
-	public static final int HEIGHT = 500;
-	public static final int WIDTH = 300;
+	public static final int HEIGHT = 600;
+	public static final int WIDTH = 400;
 	
 	public static final int MIN_HEIGHT = 507;
 	public static final int MIN_WIDTH = 335; 
@@ -21,7 +21,6 @@ public class Constants {
 	public static final int EQUAL_SIGN = 10;
 	public static final int BACKSPACE = 8;
 	public static final int DIVISION = 47;
-	public static final int MULTIPLICATION = 56;
 	
 	public static final boolean IS_CALCULATION_OVER = true;
 	public static final boolean IS_NOT_CALCULATION_OVER = false;

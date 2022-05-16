@@ -60,7 +60,7 @@ public class Calculation implements ActionListener, KeyListener{
 		return Constants.IS_CALCULATION_OVER;
 	}
 	public void setNumber(String number) {         //숫자입력
-		if(numberBuilder.length() == 16 || numberBuilder.toString().equals("0") && number.equals("0")) return;  //숫자 16자리 초과 or 처음부터 0을 입력하는 경우 -> 입력값을 더이상 누적하지 않음
+		if(numberBuilder.length() == 16 || numberBuilder.indexOf(".") != -1 && numberBuilder.length() == 17 || numberBuilder.toString().equals("0") && number.equals("0")) return;  //숫자 16자리 초과 or 처음부터 0을 입력하는 경우 -> 입력값을 더이상 누적하지 않음
 		
 		if(isCalculationOver()) expression = numberDeletion.manageDeletion(numberBuilder, "C", expression);  //이전 입력까지의 계산이 끝나고 새로운 숫자를 입력하려고 할 때 -> 'C'기능 수행 후 입력값을 stringBuilder에 저장
 		
@@ -143,10 +143,8 @@ public class Calculation implements ActionListener, KeyListener{
 		case Constants.DIVISION:
 			keyChar = "÷";      //키보드 입력 -> '/'
 			break;
-		case Constants.MULTIPLICATION:
-			keyChar = "×";      //키보드 입력 -> '*'
-			break;
 		}
+		if(keyChar.equals("*")) keyChar = "×";      //키보드 입력 -> '*'
 		
 		if(calculatorFrame.getPanelNumber() == Constants.BUTTON_PANEL_MODE) {   //계산기록을 볼 때는 키보드입력X
 			setCalculator(keyChar);
