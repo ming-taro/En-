@@ -64,6 +64,9 @@ public class CalculatorFrame extends JFrame implements ActionListener, Component
 		
 		panelNumber = 0;
 	}
+	public int getPanelNumber() {
+		return panelNumber;
+	}
 	public void setequationRecordPanel() {
 		JPanel deletionButtonPanel = new JPanel();
 		recordPanelScroll = new JScrollPane(recordPanel);
@@ -99,14 +102,14 @@ public class CalculatorFrame extends JFrame implements ActionListener, Component
 		getContentPane().removeAll();
 		getContentPane().add(equationPanel, BorderLayout.NORTH); 
 		
-		if(panelNumber == 0) {
+		if(panelNumber == Constants.BUTTON_PANEL_MODE) {
 			getContentPane().add(equationRecordPanel, BorderLayout.CENTER); 
 			setRecordList();
-			panelNumber = 1;
+			panelNumber = Constants.RECORD_PANEL_MODE;
 		}
 		else {
 			getContentPane().add(calculationButtonPanel, BorderLayout.CENTER);
-			panelNumber = 0;
+			panelNumber = Constants.BUTTON_PANEL_MODE;
 		}
 			
 		revalidate();

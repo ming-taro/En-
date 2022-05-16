@@ -27,9 +27,6 @@ public class Calculation implements ActionListener, KeyListener{
 	private EqualSign equalSign;                     //'=' -> 등호계산
 	private Deletion numberDeletion;           //'C', 'CE', '←' -> 숫자 or 계산식 삭제
 
-	public KeyListener getKeyListener() {
-		return this;
-	}
 	public Calculation() {
 		expressionPanel = new EquationPanel();                       //계산식 출력 패널
 		calculationButtonPanel = new CalculationButtonPanel(this);   //버튼 클릭 패널
@@ -79,17 +76,12 @@ public class Calculation implements ActionListener, KeyListener{
 		if(numberBuilder.indexOf(".") != -1) return;
 		numberBuilder.append(".");
 	}
-	@Override
-	public void actionPerformed(ActionEvent event) {
-		JButton button = (JButton) event.getSource();
-		String buttonClicked = button.getText();
+	public void setCalculator(String buttonText) {
 		String number;
 		
-		System.out.println("test");
-		
-		switch(buttonClicked.charAt(0)) {
+		switch(buttonText.charAt(0)) {
 		case 'C':
-			expression = numberDeletion.manageDeletion(numberBuilder, buttonClicked, expression);
+			expression = numberDeletion.manageDeletion(numberBuilder, buttonText, expression);
 			expressionPanel.setExpressionLabel(expression, "0");   //계산식 출력 패널에 누적된 계산식 갑과 입력값 출력
 			break;
 		case '←':
@@ -102,7 +94,7 @@ public class Calculation implements ActionListener, KeyListener{
 			expressionPanel.setExpressionLabel(equationDTO.getExpression(), equationDTO.getResult());  //완성된 계산식과 계산결과값 출력
 			break;
 		case '+':case '-':case '×':case '÷':  //사칙연산
-			expression = arithmeticOperation.manageArithmeticOperation(numberBuilder, buttonClicked, recordList); 
+			expression = arithmeticOperation.manageArithmeticOperation(numberBuilder, buttonText, recordList); 
 			expressionPanel.setExpressionLabel(expression, equationDTO.getFirstValue());   //계산식 출력 패널에 누적된 계산식 갑과 입력값 출력
 			break;
 		case '.': 
@@ -113,23 +105,34 @@ public class Calculation implements ActionListener, KeyListener{
 			MultiplyNumberBySign();
 			expressionPanel.setExpressionLabel(expression, numberBuilder.toString());   //계산식 출력 패널에 누적된 계산식 갑과 입력값 출력
 			break;
-		default:    //숫자입력
-			setNumber(buttonClicked);
+		case '0':case '1':case '2':case '3':case '4':case '5':case '6':case '7':case '8':case '9':
+			setNumber(buttonText);
 			expressionPanel.setExpressionLabel(expression, numberBuilder.toString());   //계산식 출력 패널에 누적된 계산식 갑과 입력값 출력
 		}
 	}
 	@Override
+	public void actionPerformed(ActionEvent event) {
+		JButton button = (JButton) event.getSource();
+		String buttonText = button.getText();
+		
+		System.out.println("test");
+		setCalculator(buttonText);
+	}
+	@Override
 	public void keyPressed(KeyEvent event) {
-		System.out.println("와");
+		if(calculatorFrame.getPanelNumber() == Constants.RECORD_PANEL_MODE) {
+			calculatorFrame.setFocusable(false);
+		}
+		else {
+			calculatorFrame.requestFocus();
+			calculatorFrame.setFocusable(true);
+			setCalculator(event.getKeyChar() + "");
+		}
 	}
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 }
