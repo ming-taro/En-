@@ -11,13 +11,13 @@ import javax.swing.JButton;
 
 import Model.EquationDTO;
 import utility.Constants;
-import view.CalculationButtonPanel;
+import view.CalculatorButtonPanel;
 import view.CalculatorFrame;
 import view.EquationPanel;
 
 public class Calculation implements ActionListener, KeyListener{
 	private EquationPanel expressionPanel;
-	private CalculationButtonPanel calculationButtonPanel;
+	private CalculatorButtonPanel calculationButtonPanel;
 	private CalculatorFrame calculatorFrame;
 	private EquationDTO equationDTO;
 	private ArrayList<String> recordList; //계산기록 저장
@@ -29,7 +29,7 @@ public class Calculation implements ActionListener, KeyListener{
 
 	public Calculation() {
 		expressionPanel = new EquationPanel();                       //계산식 출력 패널
-		calculationButtonPanel = new CalculationButtonPanel(this);   //버튼 클릭 패널
+		calculationButtonPanel = new CalculatorButtonPanel(this);   //버튼 클릭 패널
 		
 		equationDTO = new EquationDTO();
 		recordList = new ArrayList<String>();
@@ -68,7 +68,7 @@ public class Calculation implements ActionListener, KeyListener{
 		if(numberBuilder.toString().equals("0") || isFirstInputForSecondNumber()) numberBuilder.setLength(0);   
 		numberBuilder.append(number);   //숫자 입력값 누적
 	}
-	public void MultiplyNumberBySign() {
+	public void MultiplyNegativeNumber() {
 		if(numberBuilder.toString().equals("0")) return;
 		else if(numberBuilder.toString().charAt(0) == '-') numberBuilder.replace(0, 1, "");  //현재 입력값이 음수인 경우 -> 음의 부호를 지움
 		else numberBuilder.insert(0, "-");   //현재 입력값이 양수인 경우 -> 숫자 앞에 음의 부호를 붙임
@@ -105,7 +105,7 @@ public class Calculation implements ActionListener, KeyListener{
 			expressionPanel.setExpressionLabel(expression, numberBuilder.toString());
 			break;
 		case '±':  
-			MultiplyNumberBySign();
+			MultiplyNegativeNumber();
 			expressionPanel.setExpressionLabel(expression, numberBuilder.toString());   //계산식 출력 패널에 누적된 계산식 갑과 입력값 출력
 			break;
 		case '0':case '1':case '2':case '3':case '4':case '5':case '6':case '7':case '8':case '9':

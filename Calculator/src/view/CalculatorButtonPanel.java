@@ -10,11 +10,11 @@ import javax.swing.border.LineBorder;
 import utility.Constants;
 import utility.ButtonOnCalculator.Button;
 
-public class CalculationButtonPanel extends JPanel{
+public class CalculatorButtonPanel extends JPanel{
 	private JButton[] calculationButton;
 	private ActionListener buttonListener;
 	
-	public CalculationButtonPanel(ActionListener buttonListener){
+	public CalculatorButtonPanel(ActionListener buttonListener){
 		calculationButton = new JButton[20];
 		this.buttonListener = buttonListener;
 		setBackground(new Color(230, 230, 230));
