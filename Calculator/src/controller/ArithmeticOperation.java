@@ -13,12 +13,16 @@ public class ArithmeticOperation {
 	public ArithmeticOperation(EquationDTO equationDTO) {
 		this.equationDTO = equationDTO;
 	}
-	public String setNumber(BigDecimal number) {
-		if(number.remainder(new BigDecimal(1)).compareTo(new BigDecimal(0)) == 0) {
-			if(number.toString().length() > 16) return String.format("%.15e", number);
-			return Long.toString(number.longValue());   //결과값이 정수인 경우
+	public String setResult(BigDecimal number) {
+		String numberString = number.toString();
+		
+		if(number.remainder(new BigDecimal(1)).compareTo(new BigDecimal(0)) == 0) { //결과값이 정수인 경우
+			if(number.toString().length() > 16) return String.format("%.15e", number);  //16자리 초과 -> 지수표현식
+			return Long.toString(number.longValue());   
 		}
-		return number.toString(); //결과값이 실수이면서 숫자의 최대길이인 16(소수점 포함 17)을 초과하지 않은 경우 -> 결과 그대로 저장
+		else if (numberString.substring(numberString.indexOf(".") + 1).equals("999999999999999")) return Integer.toString((Integer.parseInt(numberString.substring(0, numberString.indexOf("."))) + 1)); //결과값이 실수이면서 숫자의 최대길이인 16(소수점 포함 17)을 초과
+		else if (number.toString().length() <= 17) return number.toString(); //결과값이 실수이면서 숫자의 최대길이인 16(소수점 포함 17)을 초과하지 않은 경우 -> 결과 그대로 저장
+		else return String.format("%.15e", number); //결과값이 실수이면서 숫자의 최대길이인 16(소수점 포함 17)을 초과
 	}
 	public void calculateExpression() {
 		BigDecimal firstValue = new BigDecimal(equationDTO.getFirstValue());      //첫번째 입력값
@@ -43,10 +47,10 @@ public class ArithmeticOperation {
 			break;
 		}
 		
-		equationDTO.setResult(setNumber(result));
+		equationDTO.setResult(setResult(result));
 	}
 	public void setExpression(StringBuilder numberBuilder, String firstValue, String operator) {  //연산자 입력
-		equationDTO.setFirstValue(setNumber(new BigDecimal(firstValue)));   //연산자 이전에 입력한 첫번째 값 저장
+		equationDTO.setFirstValue(firstValue);   //연산자 이전에 입력한 첫번째 값 저장
 		equationDTO.setOperator(operator);                     //연산자 저장
 		numberBuilder.setLength(0);                              //숫자 누적값 초기화
 		numberBuilder.append("");                                //두번째 숫자 입력부터는 stringBuilder값을 0으로 초기화하지 않고 비움 -> ex)9+=입력값과 9+0=입력값을 다르게 구별하기 위함
