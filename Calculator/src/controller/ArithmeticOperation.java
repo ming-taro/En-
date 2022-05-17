@@ -44,7 +44,6 @@ public class ArithmeticOperation {
 		}
 		
 		equationDTO.setResult(setNumber(result));
-		System.out.println("{" +equationDTO.getResult()  +"}");
 	}
 	public void setExpression(StringBuilder numberBuilder, String firstValue, String operator) {  //연산자 입력
 		equationDTO.setFirstValue(setNumber(new BigDecimal(firstValue)));   //연산자 이전에 입력한 첫번째 값 저장

@@ -56,11 +56,12 @@ public class EqualSign {
 			arithmeticOperation.calculateExpression();   //현재까지 입력한 값 계산 후 DTO에 저장
 		}
 		else {
-			equationDTO.setSecondValue(setNumber(number)); //계산완료된 적이 없음 -> 연산자 입력 후 누적된 두번째 숫자값 저장          예외) 3+=입력시 첫번째값=두번째값 -> 3+3=6
+			equationDTO.setSecondValue(number); //계산완료된 적이 없음 -> 연산자 입력 후 누적된 두번째 숫자값 저장          예외) 3+=입력시 첫번째값=두번째값 -> 3+3=6
 			arithmeticOperation.calculateExpression();   //현재까지 입력한 값 계산 후 DTO에 저장
 		}
 		
 		addToRecordList(recordList);
+		
 		System.out.println(equationDTO.getFirstValue() + equationDTO.getOperator() + equationDTO.getSecondValue() + "=" + equationDTO.getResult());
 	}
 	
