@@ -18,11 +18,16 @@ public class ArithmeticOperation {
 		
 		if(number.remainder(new BigDecimal(1)).compareTo(new BigDecimal(0)) == 0) { //결과값이 정수인 경우
 			if(number.toString().length() > 16) return String.format("%.15e", number);  //16자리 초과 -> 지수표현식
-			return Long.toString(number.longValue());   
+			return Integer.toString(number.intValue()); 
 		}
-		else if (numberString.substring(numberString.indexOf(".") + 1).equals("999999999999999")) return Integer.toString((Integer.parseInt(numberString.substring(0, numberString.indexOf("."))) + 1)); //결과값이 실수이면서 숫자의 최대길이인 16(소수점 포함 17)을 초과
-		else if (number.toString().length() <= 17) return number.toString(); //결과값이 실수이면서 숫자의 최대길이인 16(소수점 포함 17)을 초과하지 않은 경우 -> 결과 그대로 저장
-		else return String.format("%.15e", number); //결과값이 실수이면서 숫자의 최대길이인 16(소수점 포함 17)을 초과
+		else if (numberString.substring(numberString.indexOf(".") + 1).equals("999999999999999")) return Integer.toString((Integer.parseInt(numberString.substring(0, numberString.indexOf("."))) + 1)); //순환소수 -> 반올림
+		else return number.toString(); 
+	}
+	public String divideNumber(BigDecimal firstValue, BigDecimal secondValue) {
+		double result = firstValue.divide(secondValue, 15, RoundingMode.HALF_EVEN).doubleValue();
+		
+		if(Double.toString(result).length() <= 16) return Double.toString(result);
+		return firstValue.divide(secondValue, 15, RoundingMode.HALF_EVEN).toString();
 	}
 	public void calculateExpression() {
 		BigDecimal firstValue = new BigDecimal(equationDTO.getFirstValue());      //첫번째 입력값
@@ -40,13 +45,13 @@ public class ArithmeticOperation {
 			result = firstValue.multiply(secondValue);
 			break;
 		case "÷":
-			result = firstValue.divide(secondValue, 16, RoundingMode.HALF_EVEN);
+			result = new BigDecimal(divideNumber(firstValue, secondValue));
 			break;
 		default:
 			result = new BigDecimal("");
 			break;
 		}
-		
+		System.out.println("<" + result + ">");
 		equationDTO.setResult(setResult(result));
 	}
 	public void setExpression(StringBuilder numberBuilder, String firstValue, String operator) {  //연산자 입력
