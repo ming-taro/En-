@@ -63,7 +63,7 @@ public class Calculation implements ActionListener, KeyListener{
 		return Constants.IS_CALCULATION_OVER;
 	}
 	public void addNumber(String number) {         //숫자입력
-		if(numberBuilder.length() == 16 || numberBuilder.indexOf(".") != -1 && numberBuilder.length() == 17 || numberBuilder.toString().equals("0") && number.equals("0")) return;  //숫자 16자리 초과 or 처음부터 0을 입력하는 경우 -> 입력값을 더이상 누적하지 않음
+		if(numberBuilder.indexOf(".") != -1 && numberBuilder.length() == 17 || numberBuilder.indexOf(".") == -1 && numberBuilder.length() == 16 || numberBuilder.toString().equals("0") && number.equals("0")) return;  //숫자 16자리 초과 or 처음부터 0을 입력하는 경우 -> 입력값을 더이상 누적하지 않음
 		
 		if(isCalculationOver()) expression = numberDeletion.manageDeletion(numberBuilder, "C", expression);  //이전 입력까지의 계산이 끝나고 새로운 숫자를 입력하려고 할 때 -> 'C'기능 수행 후 입력값을 stringBuilder에 저장
 		
@@ -80,12 +80,10 @@ public class Calculation implements ActionListener, KeyListener{
 		if(numberBuilder.indexOf(".") != -1) return;
 		numberBuilder.append(".");
 	}
-	public String setNumber(BigDecimal number) {  //bigdecimal
-		if(number.remainder(new BigDecimal(1)).compareTo(new BigDecimal(0)) == 0) {
-			if(number.toString().length() > 16) {
-				return String.format("%.15e", number);
-			}
-			return Long.toString(number.longValue());   //결과값이 정수인 경우
+	public String setNumber(BigDecimal number) { 
+		if(number.remainder(new BigDecimal(1)).compareTo(new BigDecimal(0)) == 0) { //결과값이 정수인 경우
+			if(number.toString().length() > 16) return String.format("%.15e", number);
+			return Long.toString(number.longValue());   
 		}
 		if(number.toString().length() <= 17) {
 			return number.toString(); //결과값이 실수이면서 숫자의 최대길이인 16(소수점 포함 17)을 초과하지 않은 경우 -> 결과 그대로 저장
@@ -96,8 +94,8 @@ public class Calculation implements ActionListener, KeyListener{
 		BigDecimal result = number.setScale(length, RoundingMode.HALF_UP);
 		return result.toString();
 	}
-	public String FormatNumber(String numberToChange) {
-		String number = setNumber(new BigDecimal(numberToChange));
+	public String FormatNumber(String number) {
+		//String number = setNumber(new BigDecimal(numberToChange));
 		
 		if(number.indexOf(".") == -1) return number.replaceAll(Constants.THOUSAND_SEPARATOR_REGEX, ","); //입력받은 
 
