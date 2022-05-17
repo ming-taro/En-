@@ -80,7 +80,9 @@ public class Calculation implements ActionListener, KeyListener{
 		if(numberBuilder.indexOf(".") != -1) return;
 		numberBuilder.append(".");
 	}
-	public String setNumber(BigDecimal number) { 
+	public String setNumber(String numberToChange) { 
+		BigDecimal number = new BigDecimal(numberToChange);
+		
 		if(number.remainder(new BigDecimal(1)).compareTo(new BigDecimal(0)) == 0) { //결과값이 정수인 경우
 			if(number.toString().length() > 16) return String.format("%.15e", number);
 			return Long.toString(number.longValue());   
@@ -94,6 +96,19 @@ public class Calculation implements ActionListener, KeyListener{
 		BigDecimal result = number.setScale(length, RoundingMode.HALF_UP);
 		return result.toString();
 	}
+	/*public String setNumber(String numberToChange) {
+		double number = Double.parseDouble(numberToChange);
+		
+		if(number%1 == 0) return Long.toString((long)number);   //결과값이 정수인 경우
+		if(Double.toString(number).length() <= 16) return Double.toString(number); //결과값이 실수이면서 숫자의 최대길이인 16을 초과하지 않은 경우 -> 결과 그대로 저장
+		
+		String[] numberArray = Double.toString(number).split("\\.");
+		int length = 16 - numberArray[0].length();
+		BigDecimal result = new BigDecimal(number).setScale(length, RoundingMode.HALF_UP);
+		
+		System.out.println(length + "//" + new BigDecimal(number).setScale(length, RoundingMode.HALF_UP));
+		return result.toString();
+	}*/
 	public String FormatNumber(String number) {
 		//String number = setNumber(new BigDecimal(numberToChange));
 		
@@ -105,6 +120,15 @@ public class Calculation implements ActionListener, KeyListener{
 		if(numberArray.length == 2) number += numberArray[1];   //소수점 입력 후 숫자를 1개 이상 입력한 경우 -> 소수점 부분에는 콤마가 붙지 않는다
 		return number;
 	}
+	public String getExpression() {
+		String firstValue = equationDTO.getFirstValue();
+		String secondeValue = equationDTO.getSecondValue();
+		
+		if(firstValue.equals("0")) return "";
+		else if (equationDTO.getOperator().equals("")) return setNumber(equationDTO.getFirstValue()) + " = ";
+		else if (secondeValue.equals("")) return setNumber(firstValue) + equationDTO.getOperator();
+		else return setNumber(equationDTO.getFirstValue()) + " " + equationDTO.getOperator() + " " + setNumber(equationDTO.getSecondValue()) + " = ";
+	}
 	public void setCalculator(String buttonText) {
 		String number;
 
@@ -114,31 +138,31 @@ public class Calculation implements ActionListener, KeyListener{
 		switch(buttonText.charAt(0)) {
 		case 'C':
 			expression = numberDeletion.manageDeletion(numberBuilder, buttonText, expression);
-			expressionPanel.setExpressionLabel(expression, "0");   //계산식 출력 패널에 누적된 계산식 갑과 입력값 출력
+			expressionPanel.setExpressionLabel(getExpression(), "0");   //계산식 출력 패널에 누적된 계산식 갑과 입력값 출력
 			break;
 		case '←':
 			number = numberDeletion.manageBackSpace(numberBuilder);
-			expressionPanel.setExpressionLabel(expression, FormatNumber(number));
+			expressionPanel.setExpressionLabel(getExpression(), FormatNumber(number));
 			break;
 		case '=':
 			equalSign.calculateExpression(numberBuilder, recordList);  //등호 계산
-			expressionPanel.setExpressionLabel(equationDTO.toString(), FormatNumber(equationDTO.getResult()));  //완성된 계산식과 계산결과값 출력
+			expressionPanel.setExpressionLabel(getExpression(), setNumber(equationDTO.getResult()));  //완성된 계산식과 계산결과값 출력
 			break;
 		case '+':case '-':case '×':case '÷':  //사칙연산
 			expression = arithmeticOperation.manageArithmeticOperation(numberBuilder, buttonText, recordList); 
-			expressionPanel.setExpressionLabel(expression, FormatNumber(equationDTO.getFirstValue()));   //계산식 출력 패널에 누적된 계산식 갑과 입력값 출력
+			expressionPanel.setExpressionLabel(getExpression(), setNumber(equationDTO.getFirstValue()));   //계산식 출력 패널에 누적된 계산식 갑과 입력값 출력
 			break;
 		case '.': 
 			AddDot();
-			expressionPanel.setExpressionLabel(expression, FormatNumber(numberBuilder.toString()));
+			expressionPanel.setExpressionLabel(getExpression(), FormatNumber(numberBuilder.toString()));
 			break;
 		case '±':  
 			MultiplyNegativeNumber();
-			expressionPanel.setExpressionLabel(expression, FormatNumber(numberBuilder.toString()));   //계산식 출력 패널에 누적된 계산식 갑과 입력값 출력
+			expressionPanel.setExpressionLabel(getExpression(), FormatNumber(numberBuilder.toString()));   //계산식 출력 패널에 누적된 계산식 갑과 입력값 출력
 			break;
 		case '0':case '1':case '2':case '3':case '4':case '5':case '6':case '7':case '8':case '9':
 			addNumber(buttonText);
-			expressionPanel.setExpressionLabel(expression, FormatNumber(numberBuilder.toString()));   //계산식 출력 패널에 누적된 계산식 갑과 입력값 출력
+			expressionPanel.setExpressionLabel(getExpression(), FormatNumber(numberBuilder.toString()));   //계산식 출력 패널에 누적된 계산식 갑과 입력값 출력
 		}
 	}
 	@Override

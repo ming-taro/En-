@@ -2,7 +2,7 @@ package utility;
 
 public class Constants {
 	public static final int HEIGHT = 600;
-	public static final int WIDTH = 400;
+	public static final int WIDTH = 500;
 	
 	public static final int MIN_HEIGHT = 507;
 	public static final int MIN_WIDTH = 335; 

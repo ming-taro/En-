@@ -13,7 +13,7 @@ public class ArithmeticOperation {
 	public ArithmeticOperation(EquationDTO equationDTO) {
 		this.equationDTO = equationDTO;
 	}
-	public String setResult(BigDecimal number) {
+	public String setNumber(BigDecimal number) {
 		String numberString = number.toString();
 		
 		if(number.remainder(new BigDecimal(1)).compareTo(new BigDecimal(0)) == 0) { //결과값이 정수인 경우
@@ -21,13 +21,13 @@ public class ArithmeticOperation {
 			return Integer.toString(number.intValue()); 
 		}
 		else if (numberString.substring(numberString.indexOf(".") + 1).equals("999999999999999")) return Integer.toString((Integer.parseInt(numberString.substring(0, numberString.indexOf("."))) + 1)); //순환소수 -> 반올림
-		else return number.toString(); 
+		else return number.divide(new BigDecimal(1), 15, RoundingMode.HALF_EVEN).toString(); //number.toString(); 
 	}
 	public String divideNumber(BigDecimal firstValue, BigDecimal secondValue) {
-		double result = firstValue.divide(secondValue, 15, RoundingMode.HALF_EVEN).doubleValue();
+		double result = firstValue.divide(secondValue, 16, RoundingMode.HALF_EVEN).doubleValue();
 		
 		if(Double.toString(result).length() <= 16) return Double.toString(result);
-		return firstValue.divide(secondValue, 15, RoundingMode.HALF_EVEN).toString();
+		return firstValue.divide(secondValue, 16, RoundingMode.HALF_EVEN).toString();
 	}
 	public void calculateExpression() {
 		BigDecimal firstValue = new BigDecimal(equationDTO.getFirstValue());      //첫번째 입력값
@@ -52,7 +52,7 @@ public class ArithmeticOperation {
 			break;
 		}
 		System.out.println("<" + result + ">");
-		equationDTO.setResult(setResult(result));
+		equationDTO.setResult(result.toString());
 	}
 	public void setExpression(StringBuilder numberBuilder, String firstValue, String operator) {  //연산자 입력
 		equationDTO.setFirstValue(firstValue);   //연산자 이전에 입력한 첫번째 값 저장
@@ -91,6 +91,6 @@ public class ArithmeticOperation {
 			setExpression(numberBuilder, numberBuilder.toString(), operator);   //첫번째 값 입력 후 연산자 입력시 -> 연산자 정보 저장
 		}
 
-		return equationDTO.getFirstValue() + equationDTO.getOperator();  //연산자 입력 후 계산식 반환
+		return setNumber(new BigDecimal(equationDTO.getFirstValue())) + equationDTO.getOperator();  //연산자 입력 후 계산식 반환
 	}
 }

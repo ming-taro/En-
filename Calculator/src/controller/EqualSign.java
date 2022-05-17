@@ -28,7 +28,6 @@ public class EqualSign {
 		System.out.println(length + "//" + new BigDecimal(number).setScale(length, RoundingMode.HALF_UP));
 		return result.toString();
 	}
-	
 	public boolean isCalculationOver() {
 		if(equationDTO.getResult().equals("")) return Constants.IS_NOT_CALCULATION_OVER;   //결과값이 없음 
 		return Constants.IS_CALCULATION_OVER;  //"="을 입력받았지만 이미 결과값이 있음 -> 첫번째 숫자를 현재의 결과값으로 두고 다시 계산
@@ -43,11 +42,11 @@ public class EqualSign {
 		String number = numberbuilder.toString();
 		
 		if(equationDTO.getOperator() == "") {  //첫번째 숫자 입력 후 연산자 입력없이 바로 '='입력시 -> 결과 : 첫번째 입력값
-			equationDTO.setFirstValue(setNumber(number));
+			equationDTO.setFirstValue(number);
 			equationDTO.setResult(equationDTO.getFirstValue());
 		}
 		else if(number.equals("")) {   //첫번째 숫자, 연산자 입력 후 두번째 숫자 입력 없이 바로 '='입력시 -> 결과 : 첫번째 숫자 (연산자) 첫번째 숫자
-			equationDTO.setSecondValue(setNumber(equationDTO.getFirstValue()));
+			equationDTO.setSecondValue(equationDTO.getFirstValue());
 			arithmeticOperation.calculateExpression();
 			numberbuilder.append(equationDTO.getFirstValue());
 		}
@@ -62,7 +61,7 @@ public class EqualSign {
 		
 		addToRecordList(recordList);
 		
-		System.out.println(equationDTO.getFirstValue() + equationDTO.getOperator() + equationDTO.getSecondValue() + "=" + equationDTO.getResult());
+		System.out.println(setNumber(equationDTO.getFirstValue()) + equationDTO.getOperator() + setNumber(equationDTO.getSecondValue()) + "=" + setNumber(equationDTO.getResult()));
 	}
 	
 }
