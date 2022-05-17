@@ -11,7 +11,7 @@ public class EquationDTO {
 		InitValue();
 	}
 	public void InitValue() {
-		firstValue = "0";
+		firstValue = "";
 		secondValue = "";
 		operator = "";
 		result = "";

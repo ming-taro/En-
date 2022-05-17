@@ -19,8 +19,9 @@ public class CalculatorFrame extends JFrame implements ActionListener, Component
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
 		setLocationRelativeTo(null);   //윈도우 가운데에 계산기 띄우기
-		ImageIcon img = new ImageIcon("calculator.png");  //frame 아이콘.. 왜안될까
-		setIconImage(img.getImage());
+		Toolkit kit = Toolkit.getDefaultToolkit();
+		Image img = kit.getImage("image\\calculator.png");  //계산기 frame 아이콘
+		setIconImage(img);
 		addComponentListener(this);
 		setVisible(true);
 

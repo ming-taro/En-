@@ -68,7 +68,7 @@ public class ArithmeticOperation {
 		if(equationDTO.getResult().equals("")) return Constants.IS_NOT_CALCULATION_OVER; //계산이 아직 끝나지 않은 경우(현재 저장된 계산결과값이 없음)
 		return Constants.IS_CALCULATION_OVER;  //이전 계산결과값이 남아있음
 	}
-	public String manageArithmeticOperation(StringBuilder numberBuilder, String operator, ArrayList<String> recordList) {
+	public void manageArithmeticOperation(StringBuilder numberBuilder, String operator, ArrayList<String> recordList) {
 		String fristValue;
 		
 		if(isCalculationOver()) {    //계산완료 후 연산자 입력시 -> 현재 계산결과값이 첫번째값이 되고, 연산자도 바꿈
@@ -90,7 +90,5 @@ public class ArithmeticOperation {
 		else {   
 			setExpression(numberBuilder, numberBuilder.toString(), operator);   //첫번째 값 입력 후 연산자 입력시 -> 연산자 정보 저장
 		}
-
-		return setNumber(new BigDecimal(equationDTO.getFirstValue())) + equationDTO.getOperator();  //연산자 입력 후 계산식 반환
 	}
 }

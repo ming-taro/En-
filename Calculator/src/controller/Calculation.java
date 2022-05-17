@@ -124,7 +124,7 @@ public class Calculation implements ActionListener, KeyListener{
 		String firstValue = equationDTO.getFirstValue();
 		String secondeValue = equationDTO.getSecondValue();
 		
-		if(firstValue.equals("0")) return "";
+		if(firstValue.equals("")) return "";
 		else if (equationDTO.getOperator().equals("")) return setNumber(equationDTO.getFirstValue()) + " = ";
 		else if (secondeValue.equals("")) return setNumber(firstValue) + equationDTO.getOperator();
 		else return setNumber(equationDTO.getFirstValue()) + " " + equationDTO.getOperator() + " " + setNumber(equationDTO.getSecondValue()) + " = ";
@@ -149,7 +149,7 @@ public class Calculation implements ActionListener, KeyListener{
 			expressionPanel.setExpressionLabel(getExpression(), setNumber(equationDTO.getResult()));  //완성된 계산식과 계산결과값 출력
 			break;
 		case '+':case '-':case '×':case '÷':  //사칙연산
-			expression = arithmeticOperation.manageArithmeticOperation(numberBuilder, buttonText, recordList); 
+			arithmeticOperation.manageArithmeticOperation(numberBuilder, buttonText, recordList); 
 			expressionPanel.setExpressionLabel(getExpression(), setNumber(equationDTO.getFirstValue()));   //계산식 출력 패널에 누적된 계산식 갑과 입력값 출력
 			break;
 		case '.': 
