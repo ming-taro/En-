@@ -15,6 +15,7 @@ public class ArithmeticOperation {
 	}
 	public String setNumber(BigDecimal number) {
 		if(number.remainder(new BigDecimal(1)).compareTo(new BigDecimal(0)) == 0) {
+			if(number.toString().length() > 16) return String.format("%.15e", number);
 			return Long.toString(number.longValue());   //결과값이 정수인 경우
 		}
 		return number.toString(); //결과값이 실수이면서 숫자의 최대길이인 16(소수점 포함 17)을 초과하지 않은 경우 -> 결과 그대로 저장

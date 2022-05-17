@@ -82,19 +82,14 @@ public class Calculation implements ActionListener, KeyListener{
 	}
 	public String setNumber(BigDecimal number) {  //bigdecimal
 		if(number.remainder(new BigDecimal(1)).compareTo(new BigDecimal(0)) == 0) {
-			
 			if(number.toString().length() > 16) {
-				DecimalFormat format=new DecimalFormat();
-				format.applyPattern("#.###############E0");
-				System.out.println(format.format(number));
-				return format.format(number);
+				return String.format("%.15e", number);
 			}
 			return Long.toString(number.longValue());   //결과값이 정수인 경우
 		}
 		if(number.toString().length() <= 17) {
 			return number.toString(); //결과값이 실수이면서 숫자의 최대길이인 16(소수점 포함 17)을 초과하지 않은 경우 -> 결과 그대로 저장
 		}
-		System.out.print("[" + number + "]");
 		
 		String[] numberArray = number.toString().split("\\.");   //소수점 기준 -> 정수부분과 소수부분으로 나눔
 		int length = 16 - numberArray[0].length();
