@@ -19,7 +19,7 @@ public class Calculation {
 	public String setNumber(String numberToChange) {
 		double number = Double.parseDouble(numberToChange);
 		
-		if(number%1 == 0) return Long.toString((long)number);   //결과값이 정수인 경우
+		if(number%1 == 0) return numberToChange;   //결과값이 정수인 경우
 		return Double.toString(number); //결과값이 실수
 	}
 	public boolean isThereCalculationResult() {

@@ -13,16 +13,6 @@ public class ArithmeticOperation {
 	public ArithmeticOperation(ExpressionDTO expressionDTO) {
 		this.expressionDTO = expressionDTO;
 	}
-	public String setNumber(BigDecimal number) {
-		String numberString = number.toString();
-		
-		if(number.remainder(new BigDecimal(1)).compareTo(new BigDecimal(0)) == 0) { //결과값이 정수인 경우
-			if(number.toString().length() > 16) return String.format("%.15e", number);  //16자리 초과 -> 지수표현식
-			return Integer.toString(number.intValue()); 
-		}
-		else if (numberString.substring(numberString.indexOf(".") + 1).equals("999999999999999")) return Integer.toString((Integer.parseInt(numberString.substring(0, numberString.indexOf("."))) + 1)); //순환소수 -> 반올림
-		else return number.divide(new BigDecimal(1), 15, RoundingMode.HALF_EVEN).toString(); //number.toString(); 
-	}
 	public String divideNumber(BigDecimal firstValue, BigDecimal secondValue) {
 		if(secondValue.doubleValue() == 0) {
 			expressionDTO.setSecondValue("");
@@ -85,11 +75,11 @@ public class ArithmeticOperation {
 	public String setNumber(String numberToChange) {
 		double number = Double.parseDouble(numberToChange);
 		
-		if(number%1 == 0) return Long.toString((long)number);   //결과값이 정수인 경우
+		if(number%1 == 0) return numberToChange;   //결과값이 정수인 경우
 		return Double.toString(number); //결과값이 실수
 	}
 	public void manageArithmeticOperation(StringBuilder numberBuilder, String operator, ArrayList<String> recordList) {
-		String number = numberBuilder.toString();
+		String number = setNumber(numberBuilder.toString());
 		String fristValue;
 		
 		if(isCalculationOver()) {    //계산완료 후 연산자 입력시 -> 현재 계산결과값이 첫번째값이 되고, 연산자도 바꿈
@@ -101,12 +91,12 @@ public class ArithmeticOperation {
 			expressionDTO.setOperator(operator);
 		}
 		else if (isAlreadyEnteredOperator()){    //첫번째값, 연산자, 두번째값까지 입력했지만 '='이 아닌 연산자 입력 -> 첫번째값이 연산결과값, 연산자 그대로, 두번째값 초기화
-			expressionDTO.setSecondValue(numberBuilder.toString());   //현재까지 입력한 두번째 값 DTO에 저장
+			expressionDTO.setSecondValue(number);   //현재까지 입력한 두번째 값 DTO에 저장
 			calculateExpression();                                  //현재까지 입력값 계산 후 DTO에 저장	
 			addToRecordList(numberBuilder, operator, recordList);   //계산기록 저장
 		}
 		else {   
-			setExpression(numberBuilder, numberBuilder.toString(), operator);   //첫번째 값 입력 후 연산자 입력시 -> 연산자 정보 저장
+			setExpression(numberBuilder, number, operator);   //첫번째 값 입력 후 연산자 입력시 -> 연산자 정보 저장
 		}
 	}
 }
