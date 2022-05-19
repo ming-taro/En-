@@ -14,7 +14,7 @@ public class Deletion {
 	}
 	public void manageDeletion(StringBuilder numberBuilder, String buttonClicked) {//CE: 현재 숫자 입력값만 삭제, C: 입력값, 수식 누적값 삭제
 		numberBuilder.setLength(0);            //누적된 입력값 삭제
-		numberBuilder.append("");
+		numberBuilder.append("0");
 		
 		if(buttonClicked.equals("CE") && isCalculationOver() || buttonClicked.equals("C")) {  //계산결과 후 CE or C클릭  
 			expressionDTO.InitValue();         //계산식, DTO 저장값 초기화                 

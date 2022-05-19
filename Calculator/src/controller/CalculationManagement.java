@@ -36,7 +36,7 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		expressionDTO = new ExpressionDTO();
 		recordList = new ArrayList<String>();
 		numberBuilder = new StringBuilder();
-		numberBuilder.append("");
+		numberBuilder.append("0");
 		
 		calculatorFrame =  new CalculatorFrame(expressionPanel, calculationButtonPanel, recordList); //프레임에 패널 부착, 계산기록 리스트 연결
 		
@@ -60,8 +60,8 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		return Constants.IS_CALCULATION_OVER;
 	}
 	private boolean isMaximumInputRangeExceeded(String number) {
-		if(numberBuilder.indexOf(".") != -1 && numberBuilder.length() == 17) return true;
-		if(numberBuilder.indexOf(".") == -1 && numberBuilder.length() == 16) return true;
+		if(numberBuilder.indexOf(".") != -1 && numberBuilder.length() == 17) return true;  //소수입력 -> 소수점 포함 최대길이 17
+		if(numberBuilder.indexOf(".") == -1 && numberBuilder.length() == 16) return true;  //자연수입력 -> 최대길이 16
 		if(numberBuilder.toString().equals("0") && number.equals("0")) return true;
 		return false;
 	}
@@ -71,11 +71,12 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		if(isCalculationOver()) setCalculator("C");      //이전 입력까지의 계산이 끝나고 새로운 숫자를 입력하려고 할 때 -> 'C'기능 수행
 		if(isFirstInput()) numberBuilder.setLength(0);   //숫자를 처음 입력할 때 -> stringBuilder를 비움
 		
-		numberBuilder.append(number);   //숫자 입력값 누적
+		numberBuilder.append(number);                    //숫자 입력값 누적
 	}
 	private void multiplyNegativeNumber() {
-		if(numberBuilder.toString().equals("")) return;
-		else if(numberBuilder.toString().charAt(0) == '-') numberBuilder.replace(0, 1, "");  //현재 입력값이 음수인 경우 -> 음의 부호를 지움
+		if(numberBuilder.toString().equals("0")) return;
+		
+		if(numberBuilder.toString().charAt(0) == '-') numberBuilder.replace(0, 1, "");  //현재 입력값이 음수인 경우 -> 음의 부호를 지움
 		else numberBuilder.insert(0, "-");   //현재 입력값이 양수인 경우 -> 숫자 앞에 음의 부호를 붙임
 	}
 	private void addPoint() {
