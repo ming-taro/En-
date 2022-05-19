@@ -38,7 +38,7 @@ public class ArithmeticOperation {
 		BigDecimal firstValue = new BigDecimal(expressionDTO.getFirstValue());      //첫번째 입력값
 		BigDecimal secondValue = new BigDecimal(expressionDTO.getSecondValue());    //두번째 입력값
 		BigDecimal result;
-		
+	
 		switch(expressionDTO.getOperator()) {    //연산자에 따라 계산
 		case "+":
 			result = firstValue.add(secondValue);
@@ -82,7 +82,14 @@ public class ArithmeticOperation {
 		if(expressionDTO.getResult().equals("")) return Constants.IS_NOT_CALCULATION_OVER; //계산이 아직 끝나지 않은 경우(현재 저장된 계산결과값이 없음)
 		return Constants.IS_CALCULATION_OVER;  //이전 계산결과값이 남아있음
 	}
+	public String setNumber(String numberToChange) {
+		double number = Double.parseDouble(numberToChange);
+		
+		if(number%1 == 0) return Long.toString((long)number);   //결과값이 정수인 경우
+		return Double.toString(number); //결과값이 실수
+	}
 	public void manageArithmeticOperation(StringBuilder numberBuilder, String operator, ArrayList<String> recordList) {
+		String number = numberBuilder.toString();
 		String fristValue;
 		
 		if(isCalculationOver()) {    //계산완료 후 연산자 입력시 -> 현재 계산결과값이 첫번째값이 되고, 연산자도 바꿈

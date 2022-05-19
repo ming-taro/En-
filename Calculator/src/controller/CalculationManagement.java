@@ -27,7 +27,7 @@ public class CalculationManagement implements ActionListener, KeyListener{
 	private String expression;                       //입력한 계산식 누적--->삭제할 코드
 	private StringBuilder numberBuilder;             //숫자 입력값 누적
 	private ArithmeticOperation arithmeticOperation; //'+', '-', '×', '÷' -> 사칙연산
-	private Calculation equalSign;                   //'=' -> 등호계산
+	private Calculation calculation;                   //'=' -> 등호계산
 	private Deletion numberDeletion;                 //'C', 'CE', '←' -> 숫자 or 계산식 삭제
 
 	public CalculationManagement() {
@@ -42,7 +42,7 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		calculatorFrame =  new CalculatorFrame(expressionPanel, calculationButtonPanel, recordList); //프레임에 패널 부착, 계산기록 리스트 연결
 		
 		arithmeticOperation = new ArithmeticOperation(expressionDTO);
-		equalSign = new Calculation(expressionDTO, arithmeticOperation);
+		calculation = new Calculation(expressionDTO, arithmeticOperation);
 		numberDeletion = new Deletion(expressionDTO);
 		
 		calculatorFrame.addKeyListener(this);
@@ -128,7 +128,7 @@ public class CalculationManagement implements ActionListener, KeyListener{
 			number = numberDeletion.manageBackSpace(numberBuilder);
 			break;
 		case '=':
-			equalSign.calculateExpression(numberBuilder, recordList);  //등호 계산
+			calculation.calculateExpression(numberBuilder, recordList);  //등호 계산
 			number = setNumber(expressionDTO.getResult());
 			break;
 		case '+':case '-':case '×':case '÷':  //사칙연산
