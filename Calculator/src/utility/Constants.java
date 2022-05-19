@@ -39,4 +39,14 @@ public class Constants {
 	
 	public static final boolean IS_ZERO = true;
 	public static final boolean IS_NOT_ZERO = false;
+	
+	public static final boolean IS_THERE_CALCULATION_RESULT = true;
+	public static final boolean IS_THERE_NO_CALCULATION_RESULT = false;
+	
+	public static final boolean IS_THERE_OPERATOR = true;
+	public static final boolean IS_THERE_NO_OPERATOR = false;
+
+	public static final boolean IS_THERE_SECOND_VALUE = true;
+	public static final boolean IS_THERE_NO_SECOND_VALUE = false;
+	
 }

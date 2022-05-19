@@ -98,34 +98,31 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		BigDecimal result = number.setScale(length, RoundingMode.HALF_UP);
 		return result.toString();
 	}
-	private String FormatNumber(String number) {
-		if(number.indexOf(".") == -1) return number.replaceAll(Constants.THOUSAND_SEPARATOR_REGEX, ","); //입력받은 
+	private String formatNumber(String number) {
+		if(number.indexOf(".") == -1) return number.replaceAll(Constants.THOUSAND_SEPARATOR_REGEX, ","); //소수점을 입력하지 않은 경우 -> 1000단위 콤마만 표시
 
-		String[] numberArray = number.split("\\.");  //소수점을 입력함
-		number = numberArray[0].replaceAll(Constants.THOUSAND_SEPARATOR_REGEX, ",") + ".";
+		String[] numberArray = number.split("\\.");  //소수점을 입력함(소수점 기준으로 문자열 분리(numberArray[0] : 정수부분 / numberArray[1] : 소수부분))
+		number = numberArray[0].replaceAll(Constants.THOUSAND_SEPARATOR_REGEX, ",") + ".";  //정수 부분만 콤마 표시
 		
-		if(numberArray.length == 2) number += numberArray[1];   //소수점 입력 후 숫자를 1개 이상 입력한 경우 -> 소수점 부분에는 콤마가 붙지 않는다
+		if(numberArray.length == 2) number += numberArray[1];   //소수점 입력 후 숫자를 1개 이상 입력한 경우 -> 소수점 뒤에 소수부분을 붙임
 		return number;
 	}
-	private String getExpression() {
-		String firstValue = expressionDTO.getFirstValue();
-		String secondeValue = expressionDTO.getSecondValue();
+	private String getExpression() {   //입력중인 숫자 위에 출력할 계산식
+		String firstValue = expressionDTO.getFirstValue();     //첫 번째 입력값
+		String secondeValue = expressionDTO.getSecondValue();  //두 번째 입력값
 		
-		if(firstValue.equals("")) return "";   //첫번째값 입력중 -> 아직 작성된 계산식 없음
-		else if (expressionDTO.getOperator().equals("")) return setNumber(expressionDTO.getFirstValue()) + " = ";  
-		else if (secondeValue.equals("")) return setNumber(firstValue) + expressionDTO.getOperator();   //첫번째값 입력 후 연산자를 입력함 -> 계산식 : (첫번째값) (연산자) 
-		else return setNumber(expressionDTO.getFirstValue()) + " " + expressionDTO.getOperator() + " " + setNumber(expressionDTO.getSecondValue()) + " = "; //모든 값 입력 완료 -> 계산식 : (첫번째값) (연산자) (두번째값)
+		if(firstValue.equals("")) return "";   //첫번째값 입력중 -> 아직 작성된 계산식 없음(빈 문자열 리턴)
+		if (expressionDTO.getOperator().equals("")) return setNumber(expressionDTO.getFirstValue()) + " = ";  //첫번째값 입력 후 '=' 입력 -> 계산식 : (첫번째값) (=)
+		if (secondeValue.equals("")) return setNumber(firstValue) + expressionDTO.getOperator();   //첫번째값 입력 후 연산자를 입력함 -> 계산식 : (첫번째값) (연산자) 
+		return setNumber(expressionDTO.getFirstValue()) + " " + expressionDTO.getOperator() + " " + setNumber(expressionDTO.getSecondValue()) + " = "; //모든 값 입력 완료 -> 계산식 : (첫번째값) (연산자) (두번째값)
 	}
 	private void setCalculator(String buttonText) {
 		String number = "";    //계산식 패널에 출력할 입력중인 숫자값
 
-		calculatorFrame.requestFocus();
-		calculatorFrame.setFocusable(true);
-		
 		switch(buttonText.charAt(0)) {
 		case 'C':
 			expression = numberDeletion.manageDeletion(numberBuilder, buttonText, expression);
-			number = "0";
+			number = "0";  //입력값을 지움 -> 입력칸에는 항상 기본값으로 '0'표기
 			break;
 		case '←':
 			number = numberDeletion.manageBackSpace(numberBuilder);
@@ -152,7 +149,7 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		}
 		
 		if(expressionDTO.getResult().equals("0으로 나눌 수 없습니다.")) expressionPanel.setExpressionLabel(getExpression(), number);
-		if(number != "") expressionPanel.setExpressionLabel(getExpression(), FormatNumber(number));   //계산식 패널에 계산식, 입력값 출력
+		if(number != "") expressionPanel.setExpressionLabel(getExpression(), formatNumber(number));   //계산식 패널에 계산식, 입력값 출력
 	}
 	@Override
 	public void actionPerformed(ActionEvent event) {
@@ -165,6 +162,8 @@ public class CalculationManagement implements ActionListener, KeyListener{
 	public void keyPressed(KeyEvent event) {
 		String keyChar = event.getKeyChar() + "";
 		
+		if(calculatorFrame.getPanelNumber() == Constants.RECORD_PANEL_MODE) return;   //계산기록을 볼 때는 키보드입력X
+
 		switch(event.getKeyCode()) {
 		case Constants.EQUAL_SIGN:
 			keyChar = "=";      //키보드 입력 -> '='
@@ -175,15 +174,13 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		case Constants.DIVISION:
 			keyChar = "÷";      //키보드 입력 -> '/'
 			break;
-		case Constants.ESC:
+		case Constants.ESC:     //키보드 입력 -> 'Esc'(='C'기능)
 			keyChar = "C";
 			break;
 		}
 		if(keyChar.equals("*")) keyChar = "×";      //키보드 입력 -> '*'
 		
-		if(calculatorFrame.getPanelNumber() == Constants.BUTTON_PANEL_MODE) {   //계산기록을 볼 때는 키보드입력X
-			setCalculator(keyChar);
-		}
+		setCalculator(keyChar);
 	}
 	@Override
 	public void keyTyped(KeyEvent e) {

@@ -46,13 +46,10 @@ public class CalculatorFrame extends JFrame implements ActionListener, Component
 		if(panelNumber == Constants.BUTTON_PANEL_MODE) {
 			getContentPane().add(recordPanel, BorderLayout.CENTER);       //계산기록보기 패널로 전환
 			recordPanel.setRecordList();
-			setFocusable(false);
 			panelNumber = Constants.RECORD_PANEL_MODE;
 		}
 		else {
 			getContentPane().add(calculationButtonPanel, BorderLayout.CENTER);    //계산버튼 입력 패널로 전환
-			requestFocus();
-			setFocusable(true);
 			panelNumber = Constants.BUTTON_PANEL_MODE;
 		}
 			

@@ -53,7 +53,7 @@ public class ArithmeticOperation {
 			expressionDTO.setResult(divideNumber(firstValue, secondValue));
 			return;
 		default:
-			result = new BigDecimal("");
+			result = firstValue;    //'2='입력시(두번째값X,연산자X) -> 결과값 = 첫번째입력값 
 			break;
 		}
 		expressionDTO.setResult(result.toString());
