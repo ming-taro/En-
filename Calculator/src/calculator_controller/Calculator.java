@@ -1,9 +1,9 @@
 package calculator_controller;
-import controller.Calculation;
+import controller.CalculationManagement;
 
 public class Calculator {
 
 	public static void main(String[] args) {
-		Calculation equationCalculation = new Calculation();
+		CalculationManagement equationCalculation = new CalculationManagement();
 	}
 }

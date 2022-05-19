@@ -7,12 +7,12 @@ import utility.*;
 
 public class CalculatorFrame extends JFrame implements ActionListener, ComponentListener{
 	private RecordPanel recordPanel;               //계산기록 출력 패널 -> 계산수식 출력 패널
-	private EquationPanel equationPanel;                   //프레임 -> 계산수식, 현재 입력값 출력 패널
+	private ExpressionPanel expressionPanel;                   //프레임 -> 계산수식, 현재 입력값 출력 패널
 	private CalculatorButtonPanel calculationButtonPanel;  //프레임 -> 계산기 버튼 패널
 	private int panelNumber;  
 	private Dimension frameSize;
 	
-	public CalculatorFrame(EquationPanel equationPanel, CalculatorButtonPanel calculationButtonPanel, ArrayList<String> recordList) {
+	public CalculatorFrame(ExpressionPanel equationPanel, CalculatorButtonPanel calculationButtonPanel, ArrayList<String> recordList) {
 		setPreferredSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
 		setSize(Constants.WIDTH, Constants.HEIGHT);
 		setTitle("Calculator");
@@ -25,7 +25,7 @@ public class CalculatorFrame extends JFrame implements ActionListener, Component
 		addComponentListener(this);
 		setVisible(true);
 
-		this.equationPanel = equationPanel;
+		this.expressionPanel = equationPanel;
 		this.calculationButtonPanel = calculationButtonPanel;
 		
 		equationPanel.setActionListener(this);          //계산식 출력 패널의 기록보기 버튼에 event연결
@@ -41,7 +41,7 @@ public class CalculatorFrame extends JFrame implements ActionListener, Component
 	}
 	public void ConvertPanel() {
 		getContentPane().removeAll();
-		getContentPane().add(equationPanel, BorderLayout.NORTH); 
+		getContentPane().add(expressionPanel, BorderLayout.NORTH); 
 		
 		if(panelNumber == Constants.BUTTON_PANEL_MODE) {
 			getContentPane().add(recordPanel, BorderLayout.CENTER);       //계산기록보기 패널로 전환

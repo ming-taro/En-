@@ -8,7 +8,7 @@ import javax.swing.*;
 
 import utility.Constants;
 
-public class EquationPanel extends JPanel{
+public class ExpressionPanel extends JPanel{
 	private JButton recordButton;
 	private JLabel expressionLabel;
 	private JLabel inputLabel;
@@ -16,7 +16,7 @@ public class EquationPanel extends JPanel{
 	public JLabel getInputLabel() {
 		return inputLabel;
 	}
-	public EquationPanel() {		
+	public ExpressionPanel() {		
 		ImageIcon icon = new ImageIcon("image\\clock.png");
 		Image img = icon.getImage();
 		Image changeImg = img.getScaledInstance(Constants.BUTTON_SIZE, Constants.BUTTON_SIZE, Image.SCALE_SMOOTH);

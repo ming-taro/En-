@@ -1,13 +1,12 @@
 package Model;
 
-public class EquationDTO {
+public class ExpressionDTO {
 	private String firstValue;
 	private String secondValue;
 	private String operator;
-	private String expression;
 	private String result;
 	
-	public EquationDTO() {
+	public ExpressionDTO() {
 		InitValue();
 	}
 	public void InitValue() {

@@ -18,9 +18,10 @@ public class Constants {
 	public static final int EXPRESSION_FONT_SIZE = 14;
 	public static final String THOUSAND_SEPARATOR_REGEX = "\\B(?=(\\d{3})+(?!\\d))";
 	
-	public static final int EQUAL_SIGN = 10;
+	public static final int EQUAL_SIGN = 10;    //키보드 아스크코드값
 	public static final int BACKSPACE = 8;
 	public static final int DIVISION = 47;
+	public static final int ESC = 27;
 	
 	public static final boolean IS_CALCULATION_OVER = true;
 	public static final boolean IS_NOT_CALCULATION_OVER = false;
