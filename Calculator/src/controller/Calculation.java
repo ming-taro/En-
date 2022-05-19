@@ -1,12 +1,7 @@
 package controller;
-
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
-
 import Model.ExpressionDTO;
 import utility.Constants;
-
 
 public class Calculation {
 	private ExpressionDTO expressionDTO;                //현재 입력한 값들
@@ -34,7 +29,7 @@ public class Calculation {
 		if(isThereOperator() == Constants.IS_THERE_NO_OPERATOR || secondValue.equals("")) { 
 			return Constants.IS_THERE_NO_SECOND_VALUE;   
 		}
-		return Constants.IS_THERE_SECOND_VALUE;  //두번째 값을 입력함 -> 입력받은 연산자가 있고, numberbuilder에 입력중인 값(=두번째값)이 있다
+		return Constants.IS_THERE_SECOND_VALUE;  //두번째 값을 입력함 -> 입력받은 연산자가 있고, 현재 입력중인 값(=두번째값)이 있다
 	}
 	public void addToRecordList(ArrayList<String> recordList) {
 		if(expressionDTO.getOperator().equals("÷") && expressionDTO.getSecondValue().equals("")) {
@@ -42,22 +37,19 @@ public class Calculation {
 		}
 		else recordList.add(expressionDTO.toString());
 	}
-	public void calculateExpression(StringBuilder numberbuilder, ArrayList<String> recordList) { 
-		String number = numberbuilder.toString();
-		
+	public void calculateExpression(String number, ArrayList<String> recordList) { 
 		if(isThereCalculationResult()) {                              //이전 계산값이 남아있음(ex '2+3='입력 후 '5'라는 결과값이 남아있는 상태에서 '='을 입력함)
 			expressionDTO.setFirstValue(expressionDTO.getResult());   //현재 결과값에 두번째 숫자를 한번 더 계산한다(첫번째 숫자가 현재의 결과값)
 		}
-		else if(isThereSecondValue(number)) {            //두번째 숫자(numberbuilder) 입력중 '='을 입력함(ex '2+3'입력 후 '='을 입력함)
-			expressionDTO.setSecondValue(setNumber(number));        //numberbuilder에 누적된 두번째 숫자값 저장
+		else if(isThereSecondValue(number)) {            //두번째 숫자 입력중 '='을 입력함(ex '2+3'입력 후 '='을 입력함)
+			expressionDTO.setSecondValue(setNumber(number));        //누적된 두번째 숫자값 저장
 		}
 		else if(isThereOperator()) {                     //연산자입력 후 '='을 입력함(ex '2+'입력 후 '='을 입력함)
-			expressionDTO.setSecondValue(expressionDTO.getFirstValue());    
-			numberbuilder.append(expressionDTO.getFirstValue());
+			expressionDTO.setSecondValue(expressionDTO.getFirstValue());  
 		}
 		else {                                           //숫자입력 후 '='을 입력함(ex '2'입력 후 '='을 입력함)
 			expressionDTO.setFirstValue(setNumber(number)); 
-			expressionDTO.setSecondValue("0");          
+			expressionDTO.setSecondValue("0");         
 		}
 
 		arithmeticOperation.calculateExpression();        //현재까지 입력한 값 계산 후 DTO에 저장

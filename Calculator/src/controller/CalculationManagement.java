@@ -24,7 +24,6 @@ public class CalculationManagement implements ActionListener, KeyListener{
 	private CalculatorFrame calculatorFrame;
 	private ExpressionDTO expressionDTO;
 	private ArrayList<String> recordList; //계산기록 저장
-	private String expression;                       //입력한 계산식 누적--->삭제할 코드
 	private StringBuilder numberBuilder;             //숫자 입력값 누적
 	private ArithmeticOperation arithmeticOperation; //'+', '-', '×', '÷' -> 사칙연산
 	private Calculation calculation;                   //'=' -> 등호계산
@@ -52,22 +51,26 @@ public class CalculationManagement implements ActionListener, KeyListener{
 	public ArrayList<String> getRecordList(){
 		return recordList;
 	}
-	private boolean isFirstInputForSecondNumber() {
-		if(expressionDTO.getFirstValue().equals(numberBuilder.toString())) {  //첫번째값, 연산자까지 입력 후 : (DTO에 저장된 첫번째값 == 현재 stringbuilder에 남아있는 값) -> 두번째 입력을 시작함
-			return Constants.IS_FIRST_INPUT;
-		}
+	private boolean isFirstInput() {
+		if(numberBuilder.toString().equals("0")) return Constants.IS_FIRST_INPUT;
 		return Constants.IS_NOT_FIRST_INPUT; 
 	}
 	private boolean isCalculationOver() {  //계산식을 모두 입력하고 결과출력까지 끝났는지 확인
 		if(expressionDTO.getResult().equals("")) return Constants.IS_NOT_CALCULATION_OVER; //계산값이 아직 없음 -> 계산이 완료되지 않음
 		return Constants.IS_CALCULATION_OVER;
 	}
+	private boolean isMaximumInputRangeExceeded(String number) {
+		if(numberBuilder.indexOf(".") != -1 && numberBuilder.length() == 17) return true;
+		if(numberBuilder.indexOf(".") == -1 && numberBuilder.length() == 16) return true;
+		if(numberBuilder.toString().equals("0") && number.equals("0")) return true;
+		return false;
+	}
 	private void addNumber(String number) {         //숫자입력
-		if(numberBuilder.indexOf(".") != -1 && numberBuilder.length() == 17 || numberBuilder.indexOf(".") == -1 && numberBuilder.length() == 16 || numberBuilder.toString().equals("0") && number.equals("0")) return;  //숫자 16자리 초과 or 0을 계속 입력하려는 경우 -> 입력값을 더이상 누적하지 않음
+		if(isMaximumInputRangeExceeded(number)) return;  //숫자입력범위를 넘어서는 경우 -> 더이상 숫자를 누적하지 않음
 		
-		if(isCalculationOver()) expression = numberDeletion.manageDeletion(numberBuilder, "C", expression);  //이전 입력까지의 계산이 끝나고 새로운 숫자를 입력하려고 할 때 -> 'C'기능 수행 후 입력값을 stringBuilder에 저장
+		if(isCalculationOver()) setCalculator("C");      //이전 입력까지의 계산이 끝나고 새로운 숫자를 입력하려고 할 때 -> 'C'기능 수행
+		if(isFirstInput()) numberBuilder.setLength(0);   //숫자를 처음 입력할 때 -> stringBuilder를 비움
 		
-		if(isFirstInputForSecondNumber() || numberBuilder.toString().equals("0")) numberBuilder.setLength(0);   //연산자 입력 후 처음 숫자를 입력할 때(=두번째 숫자입력 시작) or 입력값을 모두 지운 후 첫 입력 -> stringBuilder를 비우고 입력값을 누적해나감
 		numberBuilder.append(number);   //숫자 입력값 누적
 	}
 	private void multiplyNegativeNumber() {
@@ -118,17 +121,20 @@ public class CalculationManagement implements ActionListener, KeyListener{
 	}
 	private void setCalculator(String buttonText) {
 		String number = "";    //계산식 패널에 출력할 입력중인 숫자값
-
+		
+		calculatorFrame.requestFocus();
+		calculatorFrame.setFocusable(true);
+		
 		switch(buttonText.charAt(0)) {
 		case 'C':
-			expression = numberDeletion.manageDeletion(numberBuilder, buttonText, expression);
+			numberDeletion.manageDeletion(numberBuilder, buttonText);
 			number = "0";  //입력값을 지움 -> 입력칸에는 항상 기본값으로 '0'표기
 			break;
 		case '←':
 			number = numberDeletion.manageBackSpace(numberBuilder);
 			break;
 		case '=':
-			calculation.calculateExpression(numberBuilder, recordList);  //등호 계산
+			calculation.calculateExpression(numberBuilder.toString(), recordList);  //등호 계산
 			number = setNumber(expressionDTO.getResult());
 			break;
 		case '+':case '-':case '×':case '÷':  //사칙연산
@@ -163,7 +169,7 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		String keyChar = event.getKeyChar() + "";
 		
 		if(calculatorFrame.getPanelNumber() == Constants.RECORD_PANEL_MODE) return;   //계산기록을 볼 때는 키보드입력X
-
+		
 		switch(event.getKeyCode()) {
 		case Constants.EQUAL_SIGN:
 			keyChar = "=";      //키보드 입력 -> '='
