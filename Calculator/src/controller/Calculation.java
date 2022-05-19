@@ -49,7 +49,6 @@ public class Calculation {
 		}
 		else {                                           //숫자입력 후 '='을 입력함(ex '2'입력 후 '='을 입력함)
 			expressionDTO.setFirstValue(setNumber(number)); 
-			expressionDTO.setSecondValue("0");         
 		}
 
 		arithmeticOperation.calculateExpression();        //현재까지 입력한 값 계산 후 DTO에 저장

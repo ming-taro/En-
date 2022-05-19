@@ -24,10 +24,16 @@ public class ArithmeticOperation {
 		if(Double.toString(result).length() <= 16) return Double.toString(result);
 		return firstValue.divide(secondValue, 16, RoundingMode.HALF_EVEN).toString();
 	}
+	public BigDecimal getValue(String value) {
+		if(value.equals("")) return new BigDecimal("0");
+		return new BigDecimal(value);
+	}
 	public void calculateExpression() {
-		BigDecimal firstValue = new BigDecimal(expressionDTO.getFirstValue());      //첫번째 입력값
-		BigDecimal secondValue = new BigDecimal(expressionDTO.getSecondValue());    //두번째 입력값
+		BigDecimal firstValue = getValue(expressionDTO.getFirstValue());      //첫번째 입력값
+		BigDecimal secondValue = getValue(expressionDTO.getSecondValue());    //두번째 입력값
 		BigDecimal result;
+		
+		if(firstValue.toString().equals("0")) return; 
 	
 		switch(expressionDTO.getOperator()) {    //연산자에 따라 계산
 		case "+":
@@ -59,18 +65,21 @@ public class ArithmeticOperation {
 		setExpression(numberBuilder, fristValue, operator);     //DTO값 재설정
 	}
 	public void setExpression(StringBuilder numberBuilder, String firstValue, String operator) {  //연산자 입력
-		expressionDTO.setFirstValue(firstValue);   //연산자 이전에 입력한 첫번째 값 저장
-		expressionDTO.setOperator(operator);                     //연산자 저장
-		numberBuilder.setLength(0);                              //숫자 누적값 초기화
-		numberBuilder.append("");                                //두번째 숫자 입력부터는 stringBuilder값을 0으로 초기화하지 않고 비움 -> ex)9+=입력값과 9+0=입력값을 다르게 구별하기 위함
+		expressionDTO.InitValue();                    //이전 계산결과값이 저장되어있는 DTO정보 초기화
+		expressionDTO.setFirstValue(firstValue);      //첫번째 값 저장
+		expressionDTO.setOperator(operator);          //연산자 저장
+		numberBuilder.setLength(0);                   //숫자 누적값 초기화
+		numberBuilder.append("");                     
 	}
-	public boolean isAlreadyEnteredOperator() {     //이미 연산자를 입력했는지 확인
-		if(expressionDTO.getOperator().equals("")) return Constants.IS_NOT_ENTERED_OPERATOR;
-		return Constants.IS_ALREADY_ENTERED_OPERATOR;
+	private boolean isThereOperator() {
+		if(expressionDTO.getOperator().equals("")) return Constants.IS_THERE_NO_OPERATOR;    
+		return Constants.IS_THERE_OPERATOR;  
 	}
-	public boolean isCalculationOver() {
-		if(expressionDTO.getResult().equals("")) return Constants.IS_NOT_CALCULATION_OVER; //계산이 아직 끝나지 않은 경우(현재 저장된 계산결과값이 없음)
-		return Constants.IS_CALCULATION_OVER;  //이전 계산결과값이 남아있음
+	private boolean isThereSecondValue(String secondValue) {
+		if(isThereOperator() == Constants.IS_THERE_NO_OPERATOR || secondValue.equals("")) { 
+			return Constants.IS_THERE_NO_SECOND_VALUE;   
+		}
+		return Constants.IS_THERE_SECOND_VALUE;  //두번째 값을 입력함 -> 입력받은 연산자가 있고, 현재 입력중인 값(=두번째값)이 있다
 	}
 	public String setNumber(String numberToChange) {
 		double number = Double.parseDouble(numberToChange);
@@ -79,24 +88,18 @@ public class ArithmeticOperation {
 		return Double.toString(number); //결과값이 실수
 	}
 	public void manageArithmeticOperation(StringBuilder numberBuilder, String operator, ArrayList<String> recordList) {
-		String number = setNumber(numberBuilder.toString());
-		String fristValue;
+		String number = numberBuilder.toString();
+		String firstValue = number;
 		
-		if(isCalculationOver()) {    //계산완료 후 연산자 입력시 -> 현재 계산결과값이 첫번째값이 되고, 연산자도 바꿈
-			fristValue = expressionDTO.getResult();
-			expressionDTO.InitValue();                    //이전 계산결과값이 저장되어있는 DTO정보 초기화
-			setExpression(numberBuilder, fristValue, operator); 
-		}
-		else if(isAlreadyEnteredOperator() && numberBuilder.toString().equals("")) {  //첫번째값, 연산자까지 입력 후 연산자 다시 입력 -> 연산자만 변경
+		if(number.equals("")) {                                                  //연산자 변경(ex '2-'입력 후 '+'입력 -> '2+')
 			expressionDTO.setOperator(operator);
+			return;
 		}
-		else if (isAlreadyEnteredOperator()){    //첫번째값, 연산자, 두번째값까지 입력했지만 '='이 아닌 연산자 입력 -> 첫번째값이 연산결과값, 연산자 그대로, 두번째값 초기화
-			expressionDTO.setSecondValue(number);   //현재까지 입력한 두번째 값 DTO에 저장
-			calculateExpression();                                  //현재까지 입력값 계산 후 DTO에 저장	
-			addToRecordList(numberBuilder, operator, recordList);   //계산기록 저장
-		}
-		else {   
-			setExpression(numberBuilder, number, operator);   //첫번째 값 입력 후 연산자 입력시 -> 연산자 정보 저장
-		}
+
+		if(isThereSecondValue(number)) expressionDTO.setSecondValue(number);     //두번째값 입력 중 연산자 입력 -> 현재 계산결과값이 첫번째값(ex '2+3'입력 중 '-'입력 => '5-'
+		calculateExpression();           
+		
+		if(isThereSecondValue(number)) firstValue = expressionDTO.getResult();   
+		setExpression(numberBuilder, firstValue, operator);                      //계산식(첫번째값,연산자) 저장 및 누적된 입력값 초기화
 	}
 }

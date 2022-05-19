@@ -87,7 +87,7 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		if(isCalculationOver()) setCalculator("C");     //계산완료 후 첫 입력부터 '.'입력 -> ex)2+3=5 출력 후 '.'입력 => 'C'기능 수행 후 '0.'
 		else if(isPointEntered()) return;               //계산은 아직 끝나지 않았지만 현재 입력중인 숫자가 이미 실수
 		
-		numberBuilder.append(".");  //소수점을 처음 입력
+		numberBuilder.append("."); 
 	}
 	private String setNumber(String numberToChange) { 
 		if(expressionDTO.getResult().equals("0으로 나눌 수 없습니다.")) return "0으로 나눌 수 없습니다.";
