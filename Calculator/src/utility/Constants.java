@@ -49,4 +49,9 @@ public class Constants {
 	public static final boolean IS_THERE_SECOND_VALUE = true;
 	public static final boolean IS_THERE_NO_SECOND_VALUE = false;
 	
+	public static final boolean IS_RANGE_EXCEEDED = true;
+	public static final boolean IS_RANGE_NOT_EXCEEDED = false;
+
+	public static final boolean IS_POINT_ENTERED = true;
+	public static final boolean IS_POINT_NOT_ENTERED = false;
 }

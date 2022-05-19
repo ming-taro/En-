@@ -60,12 +60,16 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		return Constants.IS_CALCULATION_OVER;
 	}
 	private boolean isMaximumInputRangeExceeded(String number) {
-		if(numberBuilder.indexOf(".") != -1 && numberBuilder.length() == 17) return true;  //소수입력 -> 소수점 포함 최대길이 17
-		if(numberBuilder.indexOf(".") == -1 && numberBuilder.length() == 16) return true;  //자연수입력 -> 최대길이 16
-		if(numberBuilder.toString().equals("0") && number.equals("0")) return true;
-		return false;
+		if(numberBuilder.indexOf(".") != -1 && numberBuilder.length() == 17) return Constants.IS_RANGE_EXCEEDED;  //소수입력 -> 소수점 포함 최대길이 17
+		if(numberBuilder.indexOf(".") == -1 && numberBuilder.length() == 16) return Constants.IS_RANGE_EXCEEDED;  //자연수입력 -> 최대길이 16
+		if(numberBuilder.toString().equals("0") && number.equals("0")) return Constants.IS_RANGE_EXCEEDED;
+		return Constants.IS_RANGE_NOT_EXCEEDED;
 	}
-	private void addNumber(String number) {         //숫자입력
+	private boolean isPointEntered() {
+		if(numberBuilder.indexOf(".") != -1) return Constants.IS_POINT_ENTERED;
+		return Constants.IS_POINT_NOT_ENTERED;
+	}
+	private void addNumber(String number) {              //숫자입력
 		if(isMaximumInputRangeExceeded(number)) return;  //숫자입력범위를 넘어서는 경우 -> 더이상 숫자를 누적하지 않음
 		
 		if(isCalculationOver()) setCalculator("C");      //이전 입력까지의 계산이 끝나고 새로운 숫자를 입력하려고 할 때 -> 'C'기능 수행
@@ -80,9 +84,10 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		else numberBuilder.insert(0, "-");   //현재 입력값이 양수인 경우 -> 숫자 앞에 음의 부호를 붙임
 	}
 	private void addPoint() {
-		if(numberBuilder.toString().equals("")) numberBuilder.append("0.");    //첫 입력부터 '.'입력 -> '0.'으로 시작
-		else if(numberBuilder.indexOf(".") != -1) return;   //소수점을 이미 입력한적 있는 경우 -> 소수점은 1번만 입력 가능
-		else numberBuilder.append(".");  //소수점을 처음 입력
+		if(isCalculationOver()) setCalculator("C");     //계산완료 후 첫 입력부터 '.'입력 -> ex)2+3=5 출력 후 '.'입력 => 'C'기능 수행 후 '0.'
+		else if(isPointEntered()) return;               //계산은 아직 끝나지 않았지만 현재 입력중인 숫자가 이미 실수
+		
+		numberBuilder.append(".");  //소수점을 처음 입력
 	}
 	private String setNumber(String numberToChange) { 
 		if(expressionDTO.getResult().equals("0으로 나눌 수 없습니다.")) return "0으로 나눌 수 없습니다.";
