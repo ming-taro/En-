@@ -96,7 +96,12 @@ public class CalculationManagement implements ActionListener, KeyListener{
 	private void addPoint() {
 		if(isCalculationOver()) setCalculator("C");     //계산완료 후 첫 입력부터 '.'입력 -> ex)2+3=5 출력 후 '.'입력 => 'C'기능 수행 후 '0.'
 		else if(isPointEntered()) return;               //계산은 아직 끝나지 않았지만 현재 입력중인 숫자가 이미 실수
-		
+
+		if(isNegateOperation(expressionDTO.getSecondValue())) {
+			expressionDTO.setSecondValue("");
+			numberBuilder.setLength(0);
+		}
+			
 		if(numberBuilder.length() == 0) numberBuilder.append("0"); 
 		numberBuilder.append("."); 
 	}
@@ -136,9 +141,9 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		
 		if (firstValue.equals("")) return "";   //첫번째값 입력중 -> 아직 작성된 계산식 없음(빈 문자열 리턴)
 		if (expressionDTO.getOperator().equals("")) return setNumber(expressionDTO.getFirstValue()) + " = ";  //첫번째값 입력 후 '=' 입력 -> 계산식 : (첫번째값) (=)
-		if (secondeValue.equals("")) return setNumber(firstValue) + expressionDTO.getOperator();   //첫번째값 입력 후 연산자를 입력함 -> 계산식 : (첫번째값) (연산자) 
-		if (isNegateOperation(expressionDTO.getSecondValue())) return setNumber(expressionDTO.getFirstValue()) + " " + expressionDTO.getOperator() + " " + setNumber(expressionDTO.getSecondValue());
-		return setNumber(expressionDTO.getFirstValue()) + " " + expressionDTO.getOperator() + " " + setNumber(expressionDTO.getSecondValue()) + " = "; //모든 값 입력 완료 -> 계산식 : (첫번째값) (연산자) (두번째값)
+		if (secondeValue.equals("")) return setNumber(firstValue) + expressionDTO.getOperator();              //첫번째값 입력 후 연산자를 입력함 -> 계산식 : (첫번째값) (연산자) 
+		if(isCalculationOver()) return setNumber(expressionDTO.getFirstValue()) + " " + expressionDTO.getOperator() + " " + setNumber(expressionDTO.getSecondValue()) + " = "; //모든 값 입력 완료 -> 계산식 : (첫번째값) (연산자) (두번째값)
+		return setNumber(expressionDTO.getFirstValue()) + " " + expressionDTO.getOperator() + " " + setNumber(expressionDTO.getSecondValue()); //두번째값으로 negate입력시
 	}
 	private void takeButtonOnCalculator(String buttonText) {
 		String number = "";    //계산식 패널에 출력할 입력중인 숫자값
