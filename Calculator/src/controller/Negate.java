@@ -22,6 +22,7 @@ public class Negate {
 		//'2+'입력 후 negate입력 -> '2+negate(2)'(-2) -> '3'입력 -> '2+'(3)
 		//'2+'입력 후 negate입력 -> '2+negate(negate(2))'(2) -> '+'입력 -> '4+'(4)
 		
+		
 		if(numberBuilder.toString().equals("0")) return;  //0은 negative연산 X
 		
 		if(expressionDTO.getFirstValue().equals("") || expressionDTO.getSecondValue().equals("") && numberBuilder.toString().equals("") == false) { //첫번째값입력시 or 두번째값 입력시 -> 숫자앞에 '+' or '-'
@@ -29,13 +30,20 @@ public class Negate {
 			return;
 		}
 		
-		if(expressionDTO.getSecondValue().equals("")) {
+		String firstValue;
+		
+		if(expressionDTO.getResult().equals("") == false) {   //계산완료 후 negate -> 결과값이 첫번째값이 되고 negate연산 적용(ex '2+3=5'입력 후 negate -> 'negate(5)') 
+			firstValue = expressionDTO.getResult();
+			expressionDTO.InitValue();
+			expressionDTO.setFirstValue("negate(" + firstValue + ")");
+			numberBuilder.setLength(0);
+			numberBuilder.append(firstValue);
+		}
+		else if(expressionDTO.getSecondValue().equals("")) {
 			expressionDTO.setSecondValue("negate(" + expressionDTO.getFirstValue() + ")");
 			numberBuilder.append(expressionDTO.getFirstValue());
 		}
 		else {
-
-			System.out.print("오");
 			expressionDTO.setSecondValue("negate(" + expressionDTO.getSecondValue() + ")");
 		}
 		

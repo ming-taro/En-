@@ -54,7 +54,9 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		return recordList;
 	}
 	private boolean isFirstInput() {
-		if(numberBuilder.toString().equals("0")) return Constants.IS_FIRST_INPUT;
+		if(numberBuilder.toString().equals("0") || isNegateOperation(numberBuilder.toString())) {
+			return Constants.IS_FIRST_INPUT;
+		}
 		return Constants.IS_NOT_FIRST_INPUT; 
 	}
 	private boolean isCalculationOver() {  //계산식을 모두 입력하고 결과출력까지 끝났는지 확인
@@ -169,7 +171,7 @@ public class CalculationManagement implements ActionListener, KeyListener{
 			addNumber(buttonText);
 			number = numberBuilder.toString();
 		}
-		
+		System.out.println("<>" + expressionDTO.getSecondValue());
 		if(number != "") expressionPanel.setExpressionLabel(getExpression(), formatNumber(number));   //계산식 패널에 계산식, 입력값 출력
 	}
 	private void setCalculator(String buttonText) {

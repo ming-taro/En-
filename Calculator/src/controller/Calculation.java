@@ -11,6 +11,18 @@ public class Calculation {
 		this.expressionDTO = expressionDTO;
 		this.arithmeticOperation = arithmeticOperation;
 	}
+	private boolean isNegateOperation(String value) {
+		if(value.indexOf("negate") != -1) return Constants.IS_NEGATE_OPERATION;
+		return Constants.IS_NOT_NEGATE_OPERATION;
+	}
+	public void setFirstValue(String number) {
+		if(isNegateOperation(expressionDTO.getFirstValue())) return;
+		expressionDTO.setFirstValue(setNumber(number));
+	}
+	public void setSecondValue(String number) {
+		if(isNegateOperation(expressionDTO.getSecondValue())) return;
+		expressionDTO.setSecondValue(setNumber(number));
+	}
 	public String setNumber(String numberToChange) {
 		double number = Double.parseDouble(numberToChange);
 		
@@ -43,7 +55,7 @@ public class Calculation {
 			expressionDTO.setFirstValue(expressionDTO.getResult());   //현재 결과값에 두번째 숫자를 한번 더 계산한다(첫번째 숫자가 현재의 결과값)
 		}
 		else if(isThereSecondValue(number)) {            //두번째 숫자 입력중 '='을 입력함(ex '2+3'입력 후 '='을 입력함)
-			expressionDTO.setSecondValue(setNumber(number));        //누적된 두번째 숫자값 저장
+			setSecondValue(number);        //누적된 두번째 숫자값 저장
 		}
 		else if(isThereOperator()) {                     //연산자입력 후 '='을 입력함(ex '2+'입력 후 '='을 입력함)
 			expressionDTO.setSecondValue(expressionDTO.getFirstValue());  
@@ -51,7 +63,7 @@ public class Calculation {
 		else {                                           //숫자입력 후 '='을 입력함(ex '2'입력 후 '='을 입력함)
 			expressionDTO.setFirstValue(setNumber(number)); 
 		}
-
+		
 		arithmeticOperation.calculateExpression();        //현재까지 입력한 값 계산 후 DTO에 저장
 		addToRecordList(recordList);
 	}

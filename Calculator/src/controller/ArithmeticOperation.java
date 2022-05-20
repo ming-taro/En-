@@ -24,13 +24,30 @@ public class ArithmeticOperation {
 		if(Double.toString(result).length() <= 16) return Double.toString(result);
 		return firstValue.divide(secondValue, 16, RoundingMode.HALF_EVEN).toString();
 	}
-	public BigDecimal getSecondValue(String secondValue) {  
-		if(secondValue.equals("")) return new BigDecimal("0");   //'2='계산시 secondValue가 없는 상황에서 bigDecimal에대한 nullPointer오류가 나기 때문에 기본값'0'으로 초기화
-		return new BigDecimal(secondValue);
+	private boolean isNegateOperation(String value) {
+		if(value.indexOf("negate") != -1) return Constants.IS_NEGATE_OPERATION;
+		return Constants.IS_NOT_NEGATE_OPERATION;
+	}
+	public String setNegateOperation(String value) {
+		int numberOfNegateOperation = value.length() - value.replace("(", "").length();    //negate연산 횟수
+		int beginIndex = value.lastIndexOf("(") + 1;
+		int endIndex = value.indexOf(")");
+		
+		if(numberOfNegateOperation%2 == 0) value = value.substring(beginIndex, endIndex);  //연산횟수가 짝수 -> '+'
+		else value = '-' + value.substring(beginIndex, endIndex);                          //연산횟수가 홀수 -> '-'
+		
+		return value;
+	}
+	public BigDecimal getValue(String value) {  
+		if(value.equals("")) return new BigDecimal("0");   //'2='계산시 secondValue가 없는 상황에서 bigDecimal에대한 nullPointer오류가 나기 때문에 기본값'0'으로 초기화
+		
+		if(isNegateOperation(value)) value = setNegateOperation(value);   //negate연산입력이 있었다면 괄호를 풀고 적절한 부호를 붙임
+			
+		return new BigDecimal(value);
 	}
 	public void calculateExpression() {
-		BigDecimal firstValue = new BigDecimal(expressionDTO.getFirstValue());      //첫번째 입력값
-		BigDecimal secondValue = getSecondValue(expressionDTO.getSecondValue());    //두번째 입력값
+		BigDecimal firstValue = getValue(expressionDTO.getFirstValue());      //첫번째 입력값
+		BigDecimal secondValue = getValue(expressionDTO.getSecondValue());    //두번째 입력값
 		BigDecimal result;
 		
 		switch(expressionDTO.getOperator()) {    //연산자에 따라 계산
