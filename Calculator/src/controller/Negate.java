@@ -24,13 +24,20 @@ public class Negate {
 		
 		if(numberBuilder.toString().equals("0")) return;  //0은 negative연산 X
 		
-		if(expressionDTO.getFirstValue().equals("") || numberBuilder.toString().equals("") == false) { //첫번째값입력시 or 두번째값 입력시 -> 숫자앞에 '+' or '-'
+		if(expressionDTO.getFirstValue().equals("") || expressionDTO.getSecondValue().equals("") && numberBuilder.toString().equals("") == false) { //첫번째값입력시 or 두번째값 입력시 -> 숫자앞에 '+' or '-'
 			multiplyNegativeNumber(numberBuilder);
 			return;
 		}
 		
-		if(expressionDTO.getSecondValue().equals("")) expressionDTO.setSecondValue("negate(" + expressionDTO.getFirstValue() + ")");
-		else expressionDTO.setSecondValue("negate(" + expressionDTO.getSecondValue() + ")");
+		if(expressionDTO.getSecondValue().equals("")) {
+			expressionDTO.setSecondValue("negate(" + expressionDTO.getFirstValue() + ")");
+			numberBuilder.append(expressionDTO.getFirstValue());
+		}
+		else {
+
+			System.out.print("오");
+			expressionDTO.setSecondValue("negate(" + expressionDTO.getSecondValue() + ")");
+		}
 		
 		multiplyNegativeNumber(numberBuilder);
 	}
