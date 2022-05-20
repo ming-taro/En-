@@ -10,7 +10,7 @@ public class Negate {
 	}
 	
 	public void multiplyNegativeNumber(StringBuilder numberBuilder) {
-		if(numberBuilder.toString().equals("0")) return;
+		if(numberBuilder.toString().equals("0")) return;  
 		
 		if(numberBuilder.toString().charAt(0) == '-') numberBuilder.replace(0, 1, "");  //현재 입력값이 음수인 경우 -> 음의 부호를 지움
 		else numberBuilder.insert(0, "-");   //현재 입력값이 양수인 경우 -> 숫자 앞에 음의 부호를 붙임
@@ -21,7 +21,6 @@ public class Negate {
 		//'2+'입력 후 negate입력 -> '2+negate(2)'(-2) -> '2+negate(negate(2))'(2) -> ...
 		//'2+'입력 후 negate입력 -> '2+negate(2)'(-2) -> '3'입력 -> '2+'(3)
 		//'2+'입력 후 negate입력 -> '2+negate(negate(2))'(2) -> '+'입력 -> '4+'(4)
-		
 		
 		if(numberBuilder.toString().equals("0")) return;  //0은 negative연산 X
 		

@@ -97,7 +97,7 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		if(isCalculationOver()) setCalculator("C");     //계산완료 후 첫 입력부터 '.'입력 -> ex)2+3=5 출력 후 '.'입력 => 'C'기능 수행 후 '0.'
 		else if(isPointEntered()) return;               //계산은 아직 끝나지 않았지만 현재 입력중인 숫자가 이미 실수
 
-		if(isNegateOperation(expressionDTO.getSecondValue())) {
+		if(isNegateOperation(expressionDTO.getSecondValue())) {   //negate연산중에 '.'입력시 negate연산값 초기화 -> '0.'으로 바뀜
 			expressionDTO.setSecondValue("");
 			numberBuilder.setLength(0);
 		}
@@ -176,7 +176,7 @@ public class CalculationManagement implements ActionListener, KeyListener{
 			addNumber(buttonText);
 			number = numberBuilder.toString();
 		}
-		System.out.println("<>" + expressionDTO.getSecondValue());
+		
 		if(number != "") expressionPanel.setExpressionLabel(getExpression(), formatNumber(number));   //계산식 패널에 계산식, 입력값 출력
 	}
 	private void setCalculator(String buttonText) {

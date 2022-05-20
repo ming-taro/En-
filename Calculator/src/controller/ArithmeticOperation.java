@@ -106,6 +106,10 @@ public class ArithmeticOperation {
 		}
 		return Constants.IS_OPERATOR_NOT_CHANGED;
 	}
+	private boolean isDividedByZero() {
+		if(expressionDTO.getResult().equals("0으로 나눌 수 없습니다.")) return Constants.IS_DIVIDED_BY_ZERO;
+		return Constants.IS_NOT_DIVIDED_BY_ZERO;
+	}
 	public String setNumber(String numberToChange) {   //DTO에 숫자 저장시 사용 -> '12.2200'입력시 의미없는 '00'을 없애기 위함
 		double number = Double.parseDouble(numberToChange);
 		
@@ -132,8 +136,14 @@ public class ArithmeticOperation {
 			expressionDTO.setSecondValue(setNumber(number));     //두번째값 입력 중 연산자 입력시  누적된 두번째값 DTO에 저장 후 계산
 			calculateExpression();                    
 		}	
-		if(isThereCalculationResult()) firstValue = expressionDTO.getResult();   //계산 결과값이 첫번째 값이 됨 (ex '2+3'입력 후 '-'입력 => '5-' / ex '2+3=5'입력 후 '-'입력 => '5-')
 		
+		if(isDividedByZero()) {
+			expressionDTO.setFirstValue(expressionDTO.getFirstValue() + "÷0");
+			return;
+		}
+		if(isThereCalculationResult()) firstValue = expressionDTO.getResult();   //계산 결과값이 첫번째 값이 됨 (ex '2+3'입력 후 '-'입력 => '5-' / ex '2+3=5'입력 후 '-'입력 => '5-')
+
+				
 		setExpression(numberBuilder, firstValue, operator);                      //계산식(첫번째값,연산자) 저장 및 누적된 입력값 초기화
 	}
 }
