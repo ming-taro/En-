@@ -93,16 +93,17 @@ public class ArithmeticOperation {
 		String number = numberBuilder.toString();
 		String firstValue = number;                   //첫 연산자 입력시 첫번째값은 현재까지 numberBuilder에 누적된 값
 		
-		if(number.equals("")) {                       //연산자 변경(ex '2-'입력 후 '+'입력 -> '2+')
+		if(isThereCalculationResult() == false && number.equals("")) {    //연산자 변경(ex '2-'입력 후 '+'입력 -> '2+')
 			expressionDTO.setOperator(operator);
 			return;
 		}
-
-		if(isThereSecondValue(number)) {         //첫 연산자 입력(=저장된 연산자,두번째값이 없음)시 if문을 실행하지 않고 setExpression만 실행(ex '2'입력 후 '+'입력 => '2+')
-			expressionDTO.setSecondValue(number);     //두번째값 입력 중 연산자 입력 -> 누적된 두번째값 DTO에 저장 후 계산
+		
+		if(isThereSecondValue(number)) {              //첫 연산자 입력(=저장된 연산자,두번째값이 없음)시 if문을 실행하지 않고 setExpression만 실행(ex '2'입력 후 '+'입력 => '2+')
+			expressionDTO.setSecondValue(number);     //두번째값 입력 중 연산자 입력시  누적된 두번째값 DTO에 저장 후 계산
 			calculateExpression();                    
-			firstValue = expressionDTO.getResult();   //계산 결과값이 첫번째 값이 됨 (ex '2+3'입력 후 '-'입력 => '5-' / ex '2+3=5'입력 후 '-'입력 => '5-')
-		}
-		setExpression(numberBuilder, firstValue, operator);     //계산식(첫번째값,연산자) 저장 및 누적된 입력값 초기화
+		}	
+		if(isThereCalculationResult()) firstValue = expressionDTO.getResult();   //계산 결과값이 첫번째 값이 됨 (ex '2+3'입력 후 '-'입력 => '5-' / ex '2+3=5'입력 후 '-'입력 => '5-')
+		
+		setExpression(numberBuilder, firstValue, operator);                      //계산식(첫번째값,연산자) 저장 및 누적된 입력값 초기화
 	}
 }
