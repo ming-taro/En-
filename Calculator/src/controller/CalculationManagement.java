@@ -95,6 +95,7 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		if(isCalculationOver()) setCalculator("C");     //계산완료 후 첫 입력부터 '.'입력 -> ex)2+3=5 출력 후 '.'입력 => 'C'기능 수행 후 '0.'
 		else if(isPointEntered()) return;               //계산은 아직 끝나지 않았지만 현재 입력중인 숫자가 이미 실수
 		
+		if(numberBuilder.length() == 0) numberBuilder.append("0"); 
 		numberBuilder.append("."); 
 	}
 	private String setNumber(String numberToChange) { 
@@ -135,11 +136,8 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		if (secondeValue.equals("")) return setNumber(firstValue) + expressionDTO.getOperator();   //첫번째값 입력 후 연산자를 입력함 -> 계산식 : (첫번째값) (연산자) 
 		return setNumber(expressionDTO.getFirstValue()) + " " + expressionDTO.getOperator() + " " + setNumber(expressionDTO.getSecondValue()) + " = "; //모든 값 입력 완료 -> 계산식 : (첫번째값) (연산자) (두번째값)
 	}
-	private void setCalculator(String buttonText) {
+	private void takeButtonOnCalculator(String buttonText) {
 		String number = "";    //계산식 패널에 출력할 입력중인 숫자값
-		
-		calculatorFrame.requestFocus();
-		calculatorFrame.setFocusable(true);
 		
 		switch(buttonText.charAt(0)) {
 		case 'C':
@@ -171,8 +169,14 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		}
 		
 		if(number != "") expressionPanel.setExpressionLabel(getExpression(), formatNumber(number));   //계산식 패널에 계산식, 입력값 출력
+	}
+	private void setCalculator(String buttonText) {
+		calculatorFrame.requestFocus();
+		calculatorFrame.setFocusable(true);   //키보드입력 활성화
 		
-		if(isDividedByZero()) calculationButtonPanel.deactivateOperatorButton();
+		takeButtonOnCalculator(buttonText);   //버튼기능 수행
+
+		if(isDividedByZero()) calculationButtonPanel.deactivateOperatorButton();  //'÷0'실행시 연산자버튼 비활성화
 		else calculationButtonPanel.activateOperatorButton();
 	}
 	@Override
