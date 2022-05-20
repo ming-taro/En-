@@ -24,17 +24,15 @@ public class ArithmeticOperation {
 		if(Double.toString(result).length() <= 16) return Double.toString(result);
 		return firstValue.divide(secondValue, 16, RoundingMode.HALF_EVEN).toString();
 	}
-	public BigDecimal getValue(String value) {
-		if(value.equals("")) return new BigDecimal("0");
-		return new BigDecimal(value);
+	public BigDecimal getSecondValue(String secondValue) {  
+		if(secondValue.equals("")) return new BigDecimal("0");   //'2='계산시 secondValue가 없는 상황에서 bigDecimal에대한 nullPointer오류가 나기 때문에 기본값'0'으로 초기화
+		return new BigDecimal(secondValue);
 	}
 	public void calculateExpression() {
-		BigDecimal firstValue = getValue(expressionDTO.getFirstValue());      //첫번째 입력값
-		BigDecimal secondValue = getValue(expressionDTO.getSecondValue());    //두번째 입력값
+		BigDecimal firstValue = new BigDecimal(expressionDTO.getFirstValue());      //첫번째 입력값
+		BigDecimal secondValue = getSecondValue(expressionDTO.getSecondValue());    //두번째 입력값
 		BigDecimal result;
 		
-		if(firstValue.toString().equals("0")) return; 
-	
 		switch(expressionDTO.getOperator()) {    //연산자에 따라 계산
 		case "+":
 			result = firstValue.add(secondValue);
@@ -71,6 +69,10 @@ public class ArithmeticOperation {
 		numberBuilder.setLength(0);                   //숫자 누적값 초기화
 		numberBuilder.append("");                     
 	}
+	private boolean isThereCalculationResult() {
+		if(expressionDTO.getResult().equals("")) return Constants.IS_THERE_NO_CALCULATION_RESULT; 
+		return Constants.IS_THERE_CALCULATION_RESULT;
+	}
 	private boolean isThereOperator() {
 		if(expressionDTO.getOperator().equals("")) return Constants.IS_THERE_NO_OPERATOR;    
 		return Constants.IS_THERE_OPERATOR;  
@@ -89,17 +91,18 @@ public class ArithmeticOperation {
 	}
 	public void manageArithmeticOperation(StringBuilder numberBuilder, String operator, ArrayList<String> recordList) {
 		String number = numberBuilder.toString();
-		String firstValue = number;
+		String firstValue = number;                   //첫 연산자 입력시 첫번째값은 현재까지 numberBuilder에 누적된 값
 		
-		if(number.equals("")) {                                                  //연산자 변경(ex '2-'입력 후 '+'입력 -> '2+')
+		if(number.equals("")) {                       //연산자 변경(ex '2-'입력 후 '+'입력 -> '2+')
 			expressionDTO.setOperator(operator);
 			return;
 		}
 
-		if(isThereSecondValue(number)) expressionDTO.setSecondValue(number);     //두번째값 입력 중 연산자 입력 -> 현재 계산결과값이 첫번째값(ex '2+3'입력 중 '-'입력 => '5-'
-		calculateExpression();           
-		
-		if(isThereSecondValue(number)) firstValue = expressionDTO.getResult();   
-		setExpression(numberBuilder, firstValue, operator);                      //계산식(첫번째값,연산자) 저장 및 누적된 입력값 초기화
+		if(isThereSecondValue(number)) {         //첫 연산자 입력(=저장된 연산자,두번째값이 없음)시 if문을 실행하지 않고 setExpression만 실행(ex '2'입력 후 '+'입력 => '2+')
+			expressionDTO.setSecondValue(number);     //두번째값 입력 중 연산자 입력 -> 누적된 두번째값 DTO에 저장 후 계산
+			calculateExpression();                    
+			firstValue = expressionDTO.getResult();   //계산 결과값이 첫번째 값이 됨 (ex '2+3'입력 후 '-'입력 => '5-' / ex '2+3=5'입력 후 '-'입력 => '5-')
+		}
+		setExpression(numberBuilder, firstValue, operator);     //계산식(첫번째값,연산자) 저장 및 누적된 입력값 초기화
 	}
 }
