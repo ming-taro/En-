@@ -69,6 +69,10 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		if(numberBuilder.indexOf(".") != -1) return Constants.IS_POINT_ENTERED;
 		return Constants.IS_POINT_NOT_ENTERED;
 	}
+	private boolean isDividedByZero() {
+		if(expressionDTO.getResult().equals("0으로 나눌 수 없습니다.")) return Constants.IS_DIVIDED_BY_ZERO;
+		return Constants.IS_NOT_DIVIDED_BY_ZERO;
+	}
 	private void addNumber(String number) {              //숫자입력
 		if(isMaximumInputRangeExceeded(number)) return;  //숫자입력범위를 넘어서는 경우 -> 더이상 숫자를 누적하지 않음
 		
@@ -90,7 +94,7 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		numberBuilder.append("."); 
 	}
 	private String setNumber(String numberToChange) { 
-		if(expressionDTO.getResult().equals("0으로 나눌 수 없습니다.")) return "0으로 나눌 수 없습니다.";
+		if(isDividedByZero()) return expressionDTO.getFirstValue();
 		
 		BigDecimal number = new BigDecimal(numberToChange);
 		
@@ -108,9 +112,11 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		return result.toString();
 	}
 	private String formatNumber(String number) {
+		if(isDividedByZero()) return expressionDTO.getResult();
+		
 		if(number.indexOf(".") == -1) return number.replaceAll(Constants.THOUSAND_SEPARATOR_REGEX, ","); //소수점을 입력하지 않은 경우 -> 1000단위 콤마만 표시
 
-		String[] numberArray = number.split("\\.");  //소수점을 입력함(소수점 기준으로 문자열 분리(numberArray[0] : 정수부분 / numberArray[1] : 소수부분))
+		String[] numberArray = number.split("\\.");             //소수점을 입력함(소수점 기준으로 문자열 분리(numberArray[0] : 정수부분 / numberArray[1] : 소수부분))
 		number = numberArray[0].replaceAll(Constants.THOUSAND_SEPARATOR_REGEX, ",") + ".";  //정수 부분만 콤마 표시
 		
 		if(numberArray.length == 2) number += numberArray[1];   //소수점 입력 후 숫자를 1개 이상 입력한 경우 -> 소수점 뒤에 소수부분을 붙임
@@ -160,22 +166,26 @@ public class CalculationManagement implements ActionListener, KeyListener{
 			number = numberBuilder.toString();
 		}
 		
-		if(expressionDTO.getResult().equals("0으로 나눌 수 없습니다.")) expressionPanel.setExpressionLabel(getExpression(), number);
 		if(number != "") expressionPanel.setExpressionLabel(getExpression(), formatNumber(number));   //계산식 패널에 계산식, 입력값 출력
+		
+		if(isDividedByZero()) calculationButtonPanel.deactivateOperatorButton();
+		else calculationButtonPanel.activateOperatorButton();
 	}
 	@Override
-	public void actionPerformed(ActionEvent event) {
+	public void actionPerformed(ActionEvent event) {  //계산기 버튼 이벤트
 		JButton button = (JButton) event.getSource();
 		String buttonText = button.getText();
+		
+		if(isDividedByZero() && buttonText.equals("=")) buttonText = "C";   //'÷0'실행 후 '='클릭 == 'C'버튼
 		
 		setCalculator(buttonText);
 	}
 	@Override
-	public void keyPressed(KeyEvent event) {
+	public void keyPressed(KeyEvent event) {         //키보드 이벤트
 		String keyChar = event.getKeyChar() + "";
 		
 		if(calculatorFrame.getPanelNumber() == Constants.RECORD_PANEL_MODE) return;   //계산기록을 볼 때는 키보드입력X
-		
+
 		switch(event.getKeyCode()) {
 		case Constants.EQUAL_SIGN:
 			keyChar = "=";      //키보드 입력 -> '='
@@ -192,6 +202,7 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		}
 		if(keyChar.equals("*")) keyChar = "×";      //키보드 입력 -> '*'
 		
+		if(isDividedByZero() && keyChar.equals("=")) keyChar = "C";   //'÷0'실행 후 '='입력 == 'C'버튼
 		setCalculator(keyChar);
 	}
 	@Override

@@ -38,6 +38,7 @@ public class Calculation {
 		else recordList.add(expressionDTO.toString());
 	}
 	public void calculateExpression(String number, ArrayList<String> recordList) { 
+
 		if(isThereCalculationResult()) {                              //이전 계산값이 남아있음(ex '2+3='입력 후 '5'라는 결과값이 남아있는 상태에서 '='을 입력함)
 			expressionDTO.setFirstValue(expressionDTO.getResult());   //현재 결과값에 두번째 숫자를 한번 더 계산한다(첫번째 숫자가 현재의 결과값)
 		}

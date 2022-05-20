@@ -57,4 +57,7 @@ public class Constants {
 
 	public static final boolean IS_OPERATOR_CHANGED = true;
 	public static final boolean IS_OPERATOR_NOT_CHANGED = false;
+
+	public static final boolean IS_DIVIDED_BY_ZERO = true;
+	public static final boolean IS_NOT_DIVIDED_BY_ZERO = false;
 }

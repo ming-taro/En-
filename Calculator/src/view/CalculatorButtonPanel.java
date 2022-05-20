@@ -20,7 +20,18 @@ public class CalculatorButtonPanel extends JPanel{
 		setBackground(new Color(230, 230, 230));
 		addButtonPanel();
 	}
-	
+	public void deactivateOperatorButton() {
+		calculationButton[3].setEnabled(false);
+		calculationButton[7].setEnabled(false);
+		calculationButton[11].setEnabled(false);
+		calculationButton[15].setEnabled(false);
+	}
+	public void activateOperatorButton() {
+		calculationButton[3].setEnabled(true);
+		calculationButton[7].setEnabled(true);
+		calculationButton[11].setEnabled(true);
+		calculationButton[15].setEnabled(true);
+	}
 	private void addButtonPanel() {  //계산버튼패널
 		setLayout(new GridLayout(5, 4, 2, 2));
 		Font font = new Font("SansSerif", Font.BOLD, Constants.BUTTON_FONT_SIZE);

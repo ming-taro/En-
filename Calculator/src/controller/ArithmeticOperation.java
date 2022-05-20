@@ -95,13 +95,18 @@ public class ArithmeticOperation {
 		if(number%1 == 0) return numberToChange;       //결과값이 정수인 경우
 		
 		String[] numberArray = numberToChange.split("\\.");
-		String decimal = Double.toString(Double.parseDouble("."+numberArray[1])).replaceFirst("0", "");
+		String decimal;
+		
+		if(numberArray[1].charAt(0) == '0') decimal = "." + numberArray[1]; 
+		else decimal = Double.toString(Double.parseDouble("."+numberArray[1])).replaceFirst("0", "");
+		
 		return numberArray[0] + decimal;
 	}
 	public void manageArithmeticOperation(StringBuilder numberBuilder, String operator, ArrayList<String> recordList) {
 		String number = numberBuilder.toString();
 		String firstValue = number;         //첫 연산자 입력시 첫번째값은 현재까지 numberBuilder에 누적된 값
-		
+		System.out.println(firstValue);
+		System.out.println(setNumber(firstValue));
 		if(isOperatorChanged(number)) {               //연산자 변경 발생(ex '2-'입력 후 '+'입력 -> '2+')
 			expressionDTO.setOperator(operator);
 			return;
