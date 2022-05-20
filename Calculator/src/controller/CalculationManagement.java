@@ -121,6 +121,9 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		
 		String[] numberArray = number.toString().split("\\.");   //소수점 기준 -> 정수부분과 소수부분으로 나눔
 		int length = 16 - numberArray[0].length();
+		
+		if(numberArray[0].equals("0") && numberArray[1].length() >= 16) return String.format("%.15e", number);
+		
 		BigDecimal result = number.setScale(length, RoundingMode.HALF_UP);
 		return result.toString();
 	}
