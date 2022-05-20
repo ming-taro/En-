@@ -60,4 +60,7 @@ public class Constants {
 
 	public static final boolean IS_DIVIDED_BY_ZERO = true;
 	public static final boolean IS_NOT_DIVIDED_BY_ZERO = false;
+
+	public static final boolean IS_NEGATE_OPERATION = true;
+	public static final boolean IS_NOT_NEGATE_OPERATION = false;
 }

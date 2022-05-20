@@ -26,8 +26,9 @@ public class CalculationManagement implements ActionListener, KeyListener{
 	private ArrayList<String> recordList; //계산기록 저장
 	private StringBuilder numberBuilder;             //숫자 입력값 누적
 	private ArithmeticOperation arithmeticOperation; //'+', '-', '×', '÷' -> 사칙연산
-	private Calculation calculation;                   //'=' -> 등호계산
+	private Calculation calculation;                 //'=' -> 등호계산
 	private Deletion numberDeletion;                 //'C', 'CE', '←' -> 숫자 or 계산식 삭제
+	private Negate negate;
 
 	public CalculationManagement() {
 		expressionPanel = new ExpressionPanel();                       //계산식 출력 패널
@@ -43,6 +44,7 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		arithmeticOperation = new ArithmeticOperation(expressionDTO);
 		calculation = new Calculation(expressionDTO, arithmeticOperation);
 		numberDeletion = new Deletion(expressionDTO);
+		negate = new Negate(expressionDTO);
 		
 		calculatorFrame.addKeyListener(this);
 		calculatorFrame.requestFocus();
@@ -77,6 +79,10 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		if(buttonText.equals("=") || buttonText.equals("←")) return true;
 		return false;
 	}
+	private boolean isNegateOperation(String value) {
+		if(value.indexOf("negate") != -1) return Constants.IS_NEGATE_OPERATION;
+		return Constants.IS_NOT_NEGATE_OPERATION;
+	}
 	private void addNumber(String number) {              //숫자입력
 		if(isMaximumInputRangeExceeded(number)) return;  //숫자입력범위를 넘어서는 경우 -> 더이상 숫자를 누적하지 않음
 		
@@ -84,12 +90,6 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		if(isFirstInput()) numberBuilder.setLength(0);   //숫자를 처음 입력할 때 -> stringBuilder를 비움
 		
 		numberBuilder.append(number);                    //숫자 입력값 누적
-	}
-	private void multiplyNegativeNumber() {
-		if(numberBuilder.toString().equals("0")) return;
-		
-		if(numberBuilder.toString().charAt(0) == '-') numberBuilder.replace(0, 1, "");  //현재 입력값이 음수인 경우 -> 음의 부호를 지움
-		else numberBuilder.insert(0, "-");   //현재 입력값이 양수인 경우 -> 숫자 앞에 음의 부호를 붙임
 	}
 	private void addPoint() {
 		if(isCalculationOver()) setCalculator("C");     //계산완료 후 첫 입력부터 '.'입력 -> ex)2+3=5 출력 후 '.'입력 => 'C'기능 수행 후 '0.'
@@ -100,6 +100,7 @@ public class CalculationManagement implements ActionListener, KeyListener{
 	}
 	private String setNumber(String numberToChange) { 
 		if(isDividedByZero()) return expressionDTO.getFirstValue();
+		if(isNegateOperation(numberToChange)) return numberToChange;
 		
 		BigDecimal number = new BigDecimal(numberToChange);
 		
@@ -131,9 +132,10 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		String firstValue = expressionDTO.getFirstValue();     //첫 번째 입력값
 		String secondeValue = expressionDTO.getSecondValue();  //두 번째 입력값
 		
-		if(firstValue.equals("")) return "";   //첫번째값 입력중 -> 아직 작성된 계산식 없음(빈 문자열 리턴)
+		if (firstValue.equals("")) return "";   //첫번째값 입력중 -> 아직 작성된 계산식 없음(빈 문자열 리턴)
 		if (expressionDTO.getOperator().equals("")) return setNumber(expressionDTO.getFirstValue()) + " = ";  //첫번째값 입력 후 '=' 입력 -> 계산식 : (첫번째값) (=)
 		if (secondeValue.equals("")) return setNumber(firstValue) + expressionDTO.getOperator();   //첫번째값 입력 후 연산자를 입력함 -> 계산식 : (첫번째값) (연산자) 
+		if (isNegateOperation(expressionDTO.getSecondValue())) return setNumber(expressionDTO.getFirstValue()) + " " + expressionDTO.getOperator() + " " + setNumber(expressionDTO.getSecondValue());
 		return setNumber(expressionDTO.getFirstValue()) + " " + expressionDTO.getOperator() + " " + setNumber(expressionDTO.getSecondValue()) + " = "; //모든 값 입력 완료 -> 계산식 : (첫번째값) (연산자) (두번째값)
 	}
 	private void takeButtonOnCalculator(String buttonText) {
@@ -160,7 +162,7 @@ public class CalculationManagement implements ActionListener, KeyListener{
 			number = numberBuilder.toString();
 			break;
 		case '±':  
-			multiplyNegativeNumber();
+			negate.manageNegate(numberBuilder);
 			number = numberBuilder.toString();
 			break;
 		case '0':case '1':case '2':case '3':case '4':case '5':case '6':case '7':case '8':case '9':
