@@ -64,7 +64,7 @@ public class ArithmeticOperation {
 	}
 	public void setExpression(StringBuilder numberBuilder, String firstValue, String operator) {  //연산자 입력
 		expressionDTO.InitValue();                    //이전 계산결과값이 저장되어있는 DTO정보 초기화
-		expressionDTO.setFirstValue(firstValue);      //첫번째 값 저장
+		expressionDTO.setFirstValue(setNumber(firstValue));  //첫번째 값 저장
 		expressionDTO.setOperator(operator);          //연산자 저장
 		numberBuilder.setLength(0);                   //숫자 누적값 초기화
 		numberBuilder.append("");                     
@@ -81,25 +81,34 @@ public class ArithmeticOperation {
 		if(isThereOperator() == Constants.IS_THERE_NO_OPERATOR || secondValue.equals("")) { 
 			return Constants.IS_THERE_NO_SECOND_VALUE;   
 		}
-		return Constants.IS_THERE_SECOND_VALUE;  //두번째 값을 입력함 -> 입력받은 연산자가 있고, 현재 입력중인 값(=두번째값)이 있다
+		return Constants.IS_THERE_SECOND_VALUE;   //두번째 값을 입력함 -> 입력받은 연산자가 있고, 현재 입력중인 값(=두번째값)이 있다
 	}
-	public String setNumber(String numberToChange) {
+	private boolean isOperatorChanged(String secondValue) {
+		if(isThereCalculationResult() == Constants.IS_THERE_NO_CALCULATION_RESULT && secondValue.equals("")) {   
+			return Constants.IS_OPERATOR_CHANGED; //결과값이 없고, 연산자 변경은 두번째값 입력 전(numberBuilder에 누적된 값이 없음)에만 가능
+		}
+		return Constants.IS_OPERATOR_NOT_CHANGED;
+	}
+	public String setNumber(String numberToChange) {   //DTO에 숫자 저장시 사용 -> '12.2200'입력시 의미없는 '00'을 없애기 위함
 		double number = Double.parseDouble(numberToChange);
 		
-		if(number%1 == 0) return numberToChange;   //결과값이 정수인 경우
-		return Double.toString(number); //결과값이 실수
+		if(number%1 == 0) return numberToChange;       //결과값이 정수인 경우
+		
+		String[] numberArray = numberToChange.split("\\.");
+		String decimal = Double.toString(Double.parseDouble("."+numberArray[1])).replaceFirst("0", "");
+		return numberArray[0] + decimal;
 	}
 	public void manageArithmeticOperation(StringBuilder numberBuilder, String operator, ArrayList<String> recordList) {
 		String number = numberBuilder.toString();
-		String firstValue = number;                   //첫 연산자 입력시 첫번째값은 현재까지 numberBuilder에 누적된 값
+		String firstValue = number;         //첫 연산자 입력시 첫번째값은 현재까지 numberBuilder에 누적된 값
 		
-		if(isThereCalculationResult() == false && number.equals("")) {    //연산자 변경(ex '2-'입력 후 '+'입력 -> '2+')
+		if(isOperatorChanged(number)) {               //연산자 변경 발생(ex '2-'입력 후 '+'입력 -> '2+')
 			expressionDTO.setOperator(operator);
 			return;
 		}
 		
-		if(isThereSecondValue(number)) {              //첫 연산자 입력(=저장된 연산자,두번째값이 없음)시 if문을 실행하지 않고 setExpression만 실행(ex '2'입력 후 '+'입력 => '2+')
-			expressionDTO.setSecondValue(number);     //두번째값 입력 중 연산자 입력시  누적된 두번째값 DTO에 저장 후 계산
+		if(isThereSecondValue(number)) {              //첫 연산자 입력(=저장된 연산자,두번째값이 없음)시 if문을 실행하지 않고 setExpression만 실행(ex '2'입력 후 '+'입력  => '2+')
+			expressionDTO.setSecondValue(setNumber(number));     //두번째값 입력 중 연산자 입력시  누적된 두번째값 DTO에 저장 후 계산
 			calculateExpression();                    
 		}	
 		if(isThereCalculationResult()) firstValue = expressionDTO.getResult();   //계산 결과값이 첫번째 값이 됨 (ex '2+3'입력 후 '-'입력 => '5-' / ex '2+3=5'입력 후 '-'입력 => '5-')

@@ -54,4 +54,7 @@ public class Constants {
 
 	public static final boolean IS_POINT_ENTERED = true;
 	public static final boolean IS_POINT_NOT_ENTERED = false;
+
+	public static final boolean IS_OPERATOR_CHANGED = true;
+	public static final boolean IS_OPERATOR_NOT_CHANGED = false;
 }
