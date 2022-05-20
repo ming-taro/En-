@@ -73,6 +73,10 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		if(expressionDTO.getResult().equals("0으로 나눌 수 없습니다.")) return Constants.IS_DIVIDED_BY_ZERO;
 		return Constants.IS_NOT_DIVIDED_BY_ZERO;
 	}
+	private boolean isDeletionButtonPressed(String buttonText) {
+		if(buttonText.equals("=") || buttonText.equals("←")) return true;
+		return false;
+	}
 	private void addNumber(String number) {              //숫자입력
 		if(isMaximumInputRangeExceeded(number)) return;  //숫자입력범위를 넘어서는 경우 -> 더이상 숫자를 누적하지 않음
 		
@@ -176,7 +180,7 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		JButton button = (JButton) event.getSource();
 		String buttonText = button.getText();
 		
-		if(isDividedByZero() && buttonText.equals("=")) buttonText = "C";   //'÷0'실행 후 '='클릭 == 'C'버튼
+		if(isDividedByZero() && isDeletionButtonPressed(buttonText)) buttonText = "C";   //'÷0'실행 후 '=' or '←'클릭 == 'C'버튼
 		
 		setCalculator(buttonText);
 	}
@@ -202,7 +206,7 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		}
 		if(keyChar.equals("*")) keyChar = "×";      //키보드 입력 -> '*'
 		
-		if(isDividedByZero() && keyChar.equals("=")) keyChar = "C";   //'÷0'실행 후 '='입력 == 'C'버튼
+		if(isDividedByZero() && isDeletionButtonPressed(keyChar)) keyChar = "C";   //'÷0'실행 후 '='입력 == 'C'버튼
 		setCalculator(keyChar);
 	}
 	@Override
