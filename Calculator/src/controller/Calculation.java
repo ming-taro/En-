@@ -1,4 +1,5 @@
 package controller;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import Model.ExpressionDTO;
 import utility.Constants;
@@ -14,6 +15,19 @@ public class Calculation {
 	private boolean isNegateOperation(String value) {
 		if(value.indexOf("negate") != -1) return Constants.IS_NEGATE_OPERATION;
 		return Constants.IS_NOT_NEGATE_OPERATION;
+	}
+	private void checkStackOverflow() {
+		String result = expressionDTO.getResult();
+		int beginIndex;
+		
+		if(result.equals("")) return;
+		
+		result = String.format("%.15e", new BigDecimal(result));
+		beginIndex = result.indexOf("e");
+		
+		if(beginIndex != -1 && Integer.parseInt(result.substring(beginIndex + 1)) >= 10000) {
+			expressionDTO.setResult("오버플로");
+		}
 	}
 	public void setFirstValue(String number) {
 		if(isNegateOperation(expressionDTO.getFirstValue())) return;
@@ -65,6 +79,8 @@ public class Calculation {
 		}
 		
 		arithmeticOperation.calculateExpression();        //현재까지 입력한 값 계산 후 DTO에 저장
+		
+		checkStackOverflow();
 		addToRecordList(recordList);
 	}
 }

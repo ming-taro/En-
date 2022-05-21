@@ -78,12 +78,16 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		return Constants.IS_NOT_DIVIDED_BY_ZERO;
 	}
 	private boolean isDeletionButtonPressed(String buttonText) {
-		if(buttonText.equals("=") || buttonText.equals("←")) return true;
-		return false;
+		if(buttonText.equals("=") || buttonText.equals("←")) return Constants.IS_DELETION_BUTTON_PRESSED;
+		return Constants.IS_NOT_DELETION_BUTTON_PRESSED;
 	}
 	private boolean isNegateOperation(String value) {
 		if(value.indexOf("negate") != -1) return Constants.IS_NEGATE_OPERATION;
 		return Constants.IS_NOT_NEGATE_OPERATION;
+	}
+	private boolean isStackOverflow() {
+		if(expressionDTO.getResult().equals("오버플로")) return true;
+		return false;
 	}
 	private void addNumber(String number) {              //숫자입력
 		if(isMaximumInputRangeExceeded(number)) return;  //숫자입력범위를 넘어서는 경우 -> 더이상 숫자를 누적하지 않음
@@ -106,8 +110,9 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		numberBuilder.append("."); 
 	}
 	private String setNumber(String numberToChange) { 
-		if(isDividedByZero()) return expressionDTO.getFirstValue();
+		if(isDividedByZero() || isStackOverflow()) return expressionDTO.getFirstValue();
 		if(isNegateOperation(numberToChange)) return numberToChange;
+		if(isStackOverflow()) return expressionDTO.getResult();
 		
 		BigDecimal number = new BigDecimal(numberToChange);
 		
@@ -128,7 +133,7 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		return result.toString();
 	}
 	private String formatNumber(String number) {
-		if(isDividedByZero()) return expressionDTO.getResult();
+		if(isDividedByZero() || isStackOverflow()) return expressionDTO.getResult();
 		
 		if(number.indexOf(".") == -1) return number.replaceAll(Constants.THOUSAND_SEPARATOR_REGEX, ","); //소수점을 입력하지 않은 경우 -> 1000단위 콤마만 표시
 
@@ -142,9 +147,9 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		String firstValue = expressionDTO.getFirstValue();     //첫 번째 입력값
 		String secondeValue = expressionDTO.getSecondValue();  //두 번째 입력값
 		
-		if (firstValue.equals("")) return "";   //첫번째값 입력중 -> 아직 작성된 계산식 없음(빈 문자열 리턴)
-		if (expressionDTO.getOperator().equals("")) return setNumber(expressionDTO.getFirstValue()) + " = ";  //첫번째값 입력 후 '=' 입력 -> 계산식 : (첫번째값) (=)
-		if (secondeValue.equals("")) return setNumber(firstValue) + expressionDTO.getOperator();              //첫번째값 입력 후 연산자를 입력함 -> 계산식 : (첫번째값) (연산자) 
+		if(firstValue.equals("") || isStackOverflow()) return "";   //첫번째값 입력중 -> 아직 작성된 계산식 없음(빈 문자열 리턴)
+		if(expressionDTO.getOperator().equals("")) return setNumber(expressionDTO.getFirstValue()) + " = ";  //첫번째값 입력 후 '=' 입력 -> 계산식 : (첫번째값) (=)
+		if(secondeValue.equals("")) return setNumber(firstValue) + expressionDTO.getOperator();              //첫번째값 입력 후 연산자를 입력함 -> 계산식 : (첫번째값) (연산자) 
 		if(isCalculationOver()) return setNumber(expressionDTO.getFirstValue()) + " " + expressionDTO.getOperator() + " " + setNumber(expressionDTO.getSecondValue()) + " = "; //모든 값 입력 완료 -> 계산식 : (첫번째값) (연산자) (두번째값)
 		return setNumber(expressionDTO.getFirstValue()) + " " + expressionDTO.getOperator() + " " + setNumber(expressionDTO.getSecondValue()); //두번째값으로 negate입력시
 	}
@@ -188,7 +193,7 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		
 		takeButtonOnCalculator(buttonText);   //버튼기능 수행
 
-		if(isDividedByZero()) calculationButtonPanel.deactivateOperatorButton();  //'÷0'실행시 연산자버튼 비활성화
+		if(isDividedByZero() || isStackOverflow()) calculationButtonPanel.deactivateOperatorButton();  //'÷0'실행시 연산자버튼 비활성화
 		else calculationButtonPanel.activateOperatorButton();
 	}
 	@Override
@@ -196,7 +201,9 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		JButton button = (JButton) event.getSource();
 		String buttonText = button.getText();
 		
-		if(isDividedByZero() && isDeletionButtonPressed(buttonText)) buttonText = "C";   //'÷0'실행 후 '=' or '←'클릭 == 'C'버튼
+		if((isDividedByZero() || isStackOverflow()) && isDeletionButtonPressed(buttonText)) {
+			buttonText = "C";   //'÷0'실행 후 '=' or '←'클릭 == 'C'버튼
+		}
 		
 		setCalculator(buttonText);
 	}
@@ -222,7 +229,9 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		}
 		if(keyChar.equals("*")) keyChar = "×";      //키보드 입력 -> '*'
 		
-		if(isDividedByZero() && isDeletionButtonPressed(keyChar)) keyChar = "C";   //'÷0'실행 후 '='입력 == 'C'버튼
+		if((isDividedByZero() || isStackOverflow()) && isDeletionButtonPressed(keyChar)) {
+			keyChar = "C";   //'÷0'실행 후 '='입력 == 'C'버튼
+		}
 		setCalculator(keyChar);
 	}
 	@Override

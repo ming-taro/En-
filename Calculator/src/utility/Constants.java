@@ -63,4 +63,7 @@ public class Constants {
 
 	public static final boolean IS_NEGATE_OPERATION = true;
 	public static final boolean IS_NOT_NEGATE_OPERATION = false;
+	
+	public static final boolean IS_DELETION_BUTTON_PRESSED = true;
+	public static final boolean IS_NOT_DELETION_BUTTON_PRESSED = false;
 }
