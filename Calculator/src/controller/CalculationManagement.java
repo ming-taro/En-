@@ -92,6 +92,7 @@ public class CalculationManagement implements ActionListener, KeyListener{
 	private void addNumber(String number) {              //숫자입력
 		if(isMaximumInputRangeExceeded(number)) return;  //숫자입력범위를 넘어서는 경우 -> 더이상 숫자를 누적하지 않음
 		
+		if(isNegateOperation(expressionDTO.getSecondValue())) setCalculator("CE");
 		if(isCalculationOver()) setCalculator("C");      //이전 입력까지의 계산이 끝나고 새로운 숫자를 입력하려고 할 때 -> 'C'기능 수행
 		if(isFirstInput()) numberBuilder.setLength(0);   //숫자를 처음 입력할 때 -> stringBuilder를 비움
 		
@@ -99,12 +100,11 @@ public class CalculationManagement implements ActionListener, KeyListener{
 	}
 	private void addPoint() {
 		if(isCalculationOver()) setCalculator("C");     //계산완료 후 첫 입력부터 '.'입력 -> ex)2+3=5 출력 후 '.'입력 => 'C'기능 수행 후 '0.'
-		else if(isPointEntered()) return;               //계산은 아직 끝나지 않았지만 현재 입력중인 숫자가 이미 실수
-
-		if(isNegateOperation(expressionDTO.getSecondValue())) {   //negate연산중에 '.'입력시 negate연산값 초기화 -> '0.'으로 바뀜
+		else if(isNegateOperation(expressionDTO.getSecondValue())) {   //negate연산중에 '.'입력시 negate연산값 초기화 -> '0.'으로 바뀜
 			expressionDTO.setSecondValue("");
 			numberBuilder.setLength(0);
 		}
+		else if(isPointEntered()) return;               //계산은 아직 끝나지 않았지만 현재 입력중인 숫자가 이미 실수
 			
 		if(numberBuilder.length() == 0) numberBuilder.append("0"); 
 		numberBuilder.append("."); 
@@ -147,7 +147,7 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		String firstValue = expressionDTO.getFirstValue();     //첫 번째 입력값
 		String secondeValue = expressionDTO.getSecondValue();  //두 번째 입력값
 		
-		if(firstValue.equals("") || isStackOverflow()) return "";   //첫번째값 입력중 -> 아직 작성된 계산식 없음(빈 문자열 리턴)
+		if(firstValue.equals("") || isNegateOperation(firstValue) || isStackOverflow()) return "";   //첫번째값 입력중 -> 아직 작성된 계산식 없음(빈 문자열 리턴)
 		if(expressionDTO.getOperator().equals("")) return setNumber(expressionDTO.getFirstValue()) + " = ";  //첫번째값 입력 후 '=' 입력 -> 계산식 : (첫번째값) (=)
 		if(secondeValue.equals("")) return setNumber(firstValue) + expressionDTO.getOperator();              //첫번째값 입력 후 연산자를 입력함 -> 계산식 : (첫번째값) (연산자) 
 		if(isCalculationOver()) return setNumber(expressionDTO.getFirstValue()) + " " + expressionDTO.getOperator() + " " + setNumber(expressionDTO.getSecondValue()) + " = "; //모든 값 입력 완료 -> 계산식 : (첫번째값) (연산자) (두번째값)

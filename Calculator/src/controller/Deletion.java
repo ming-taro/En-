@@ -13,6 +13,7 @@ public class Deletion {
 		return Constants.IS_CALCULATION_OVER;
 	}
 	public void manageDeletion(StringBuilder numberBuilder, String buttonClicked) {//CE: 현재 숫자 입력값만 삭제, C: 입력값, 수식 누적값 삭제
+		expressionDTO.setSecondValue("");
 		numberBuilder.setLength(0);            //누적된 입력값 삭제
 		numberBuilder.append("0");
 		

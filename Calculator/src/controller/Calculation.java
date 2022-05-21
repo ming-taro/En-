@@ -16,16 +16,20 @@ public class Calculation {
 		if(value.indexOf("negate") != -1) return Constants.IS_NEGATE_OPERATION;
 		return Constants.IS_NOT_NEGATE_OPERATION;
 	}
+	private boolean isDividedByZero() {
+		if(expressionDTO.getResult().equals("0으로 나눌 수 없습니다.")) return Constants.IS_DIVIDED_BY_ZERO;
+		return Constants.IS_NOT_DIVIDED_BY_ZERO;
+	}
 	private void checkStackOverflow() {
 		String result = expressionDTO.getResult();
 		int beginIndex;
 		
-		if(result.equals("")) return;
+		if(result.equals("") || isDividedByZero()) return;
 		
 		result = String.format("%.15e", new BigDecimal(result));
-		beginIndex = result.indexOf("e");
+		beginIndex = result.indexOf("e") + 1;
 		
-		if(beginIndex != -1 && Integer.parseInt(result.substring(beginIndex + 1)) >= 10000) {
+		if(Integer.parseInt(result.substring(beginIndex)) >= 10000) {
 			expressionDTO.setResult("오버플로");
 		}
 	}
@@ -69,7 +73,7 @@ public class Calculation {
 			expressionDTO.setFirstValue(expressionDTO.getResult());   //현재 결과값에 두번째 숫자를 한번 더 계산한다(첫번째 숫자가 현재의 결과값)
 		}
 		else if(isThereSecondValue(number)) {            //두번째 숫자 입력중 '='을 입력함(ex '2+3'입력 후 '='을 입력함)
-			setSecondValue(number);        //누적된 두번째 숫자값 저장
+			setSecondValue(number);                      //누적된 두번째 숫자값 저장
 		}
 		else if(isThereOperator()) {                     //연산자입력 후 '='을 입력함(ex '2+'입력 후 '='을 입력함)
 			expressionDTO.setSecondValue(expressionDTO.getFirstValue());  
