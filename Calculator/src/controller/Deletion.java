@@ -5,19 +5,18 @@ import utility.Constants;
 
 public class Deletion {
 	private ExpressionDTO expressionDTO;
-	public Deletion(ExpressionDTO expressionDTO) {
+	private ExpressionCheck expressionCheck;
+	
+	public Deletion(ExpressionDTO expressionDTO, ExpressionCheck expressionCheck) {
 		this.expressionDTO = expressionDTO;
-	}
-	public boolean isCalculationOver() {
-		if(expressionDTO.getResult().equals("")) return Constants.IS_NOT_CALCULATION_OVER;  //결과값이 없음 -> 아직 계산이 끝나지 않음
-		return Constants.IS_CALCULATION_OVER;
+		this.expressionCheck = expressionCheck;
 	}
 	public void manageDeletion(StringBuilder numberBuilder, String buttonClicked) {//CE: 현재 숫자 입력값만 삭제, C: 입력값, 수식 누적값 삭제
 		expressionDTO.setSecondValue("");
 		numberBuilder.setLength(0);            //누적된 입력값 삭제
 		numberBuilder.append("0");
 		
-		if(buttonClicked.equals("CE") && isCalculationOver() || buttonClicked.equals("C")) {  //계산결과 후 CE or C클릭  
+		if(buttonClicked.equals("CE") && expressionCheck.isCalculationOver() || buttonClicked.equals("C")) {  //계산결과 후 CE or C클릭  
 			expressionDTO.InitValue();         //계산식, DTO 저장값 초기화                 
 		}
 	}

@@ -9,7 +9,7 @@ public class Negate {
 		this.expressionDTO = expressionDTO;
 	}
 	
-	public void multiplyNegativeNumber(StringBuilder numberBuilder) {
+	private void multiplyNegativeNumber(StringBuilder numberBuilder) {
 		if(numberBuilder.toString().equals("0")) return;  
 		
 		if(numberBuilder.toString().charAt(0) == '-') numberBuilder.replace(0, 1, "");  //현재 입력값이 음수인 경우 -> 음의 부호를 지움
@@ -32,13 +32,15 @@ public class Negate {
 			expressionDTO.setFirstValue(String.format("negate(%s)",firstValue));
 			numberBuilder.setLength(0);
 			numberBuilder.append(firstValue);
+			return;
 		}
-		else if(expressionDTO.getSecondValue().equals("")) {
-			expressionDTO.setSecondValue(String.format("negate(%s)", expressionDTO.getFirstValue()));
+		
+		if(expressionDTO.getSecondValue().equals("")) {
+			expressionDTO.setSecondValue(String.format("negate(%s)", expressionDTO.getFirstValue()));    //두번째값 첫 입력시 'negate(첫번째값)'으로 표기
 			numberBuilder.append(expressionDTO.getFirstValue());
 		}
 		else {
-			expressionDTO.setSecondValue(String.format("negate(%s)", expressionDTO.getSecondValue()));
+			expressionDTO.setSecondValue(String.format("negate(%s)", expressionDTO.getSecondValue()));   //두번째값 입력 중 이미 negate연산을 한 번 이상 한 경우 -> 'negate(두번째값)'으로 표기
 		}
 		
 		multiplyNegativeNumber(numberBuilder);

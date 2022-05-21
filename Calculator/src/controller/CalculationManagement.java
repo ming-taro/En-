@@ -25,10 +25,11 @@ public class CalculationManagement implements ActionListener, KeyListener{
 	private ExpressionDTO expressionDTO;
 	private ArrayList<String> recordList; //계산기록 저장
 	private StringBuilder numberBuilder;             //숫자 입력값 누적
-	private ArithmeticOperation arithmeticOperation; //'+', '-', '×', '÷' -> 사칙연산
-	private Calculation calculation;                 //'=' -> 등호계산
-	private Deletion numberDeletion;                 //'C', 'CE', '←' -> 숫자 or 계산식 삭제
-	private Negate negate;
+	private ExpressionCheck expressionCheck;         //계산식 검사(ex 계산이 끝났는지, 연산자를 입력했는지 ...)
+	private ArithmeticOperation arithmeticOperation; //'+', '-', '×', '÷' 
+	private Calculation calculation;                 //'=' 
+	private Deletion numberDeletion;                 //'C', 'CE', '←'
+	private Negate negate;                           //'±'
 
 	public CalculationManagement() {
 		expressionPanel = new ExpressionPanel();                       //계산식 출력 패널
@@ -38,13 +39,15 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		recordList = new ArrayList<String>();
 		numberBuilder = new StringBuilder();
 		numberBuilder.append("0");
+		expressionCheck = new ExpressionCheck(numberBuilder, expressionDTO);
 		
 		calculatorFrame =  new CalculatorFrame(expressionPanel, calculationButtonPanel, recordList); //프레임에 패널 부착, 계산기록 리스트 연결
 		
-		arithmeticOperation = new ArithmeticOperation(expressionDTO);
-		calculation = new Calculation(expressionDTO, arithmeticOperation);
-		numberDeletion = new Deletion(expressionDTO);
+		arithmeticOperation = new ArithmeticOperation(expressionDTO, expressionCheck);
+		calculation = new Calculation(expressionDTO, arithmeticOperation, expressionCheck);
+		numberDeletion = new Deletion(expressionDTO, expressionCheck);
 		negate = new Negate(expressionDTO);
+		
 		
 		calculatorFrame.addKeyListener(this);
 		calculatorFrame.requestFocus();
@@ -53,66 +56,30 @@ public class CalculationManagement implements ActionListener, KeyListener{
 	public ArrayList<String> getRecordList(){
 		return recordList;
 	}
-	private boolean isFirstInput() {
-		if(numberBuilder.toString().equals("0") || isNegateOperation(numberBuilder.toString())) {
-			return Constants.IS_FIRST_INPUT;
-		}
-		return Constants.IS_NOT_FIRST_INPUT; 
-	}
-	private boolean isCalculationOver() {  //계산식을 모두 입력하고 결과출력까지 끝났는지 확인
-		if(expressionDTO.getResult().equals("")) return Constants.IS_NOT_CALCULATION_OVER; //계산값이 아직 없음 -> 계산이 완료되지 않음
-		return Constants.IS_CALCULATION_OVER;
-	}
-	private boolean isMaximumInputRangeExceeded(String number) {
-		if(numberBuilder.indexOf(".") != -1 && numberBuilder.length() == 17) return Constants.IS_RANGE_EXCEEDED;  //소수입력 -> 소수점 포함 최대길이 17
-		if(numberBuilder.indexOf(".") == -1 && numberBuilder.length() == 16) return Constants.IS_RANGE_EXCEEDED;  //자연수입력 -> 최대길이 16
-		if(numberBuilder.toString().equals("0") && number.equals("0")) return Constants.IS_RANGE_EXCEEDED;
-		return Constants.IS_RANGE_NOT_EXCEEDED;
-	}
-	private boolean isPointEntered() {
-		if(numberBuilder.indexOf(".") != -1) return Constants.IS_POINT_ENTERED;
-		return Constants.IS_POINT_NOT_ENTERED;
-	}
-	private boolean isDividedByZero() {
-		if(expressionDTO.getResult().equals("0으로 나눌 수 없습니다.")) return Constants.IS_DIVIDED_BY_ZERO;
-		return Constants.IS_NOT_DIVIDED_BY_ZERO;
-	}
-	private boolean isDeletionButtonPressed(String buttonText) {
-		if(buttonText.equals("=") || buttonText.equals("←")) return Constants.IS_DELETION_BUTTON_PRESSED;
-		return Constants.IS_NOT_DELETION_BUTTON_PRESSED;
-	}
-	private boolean isNegateOperation(String value) {
-		if(value.indexOf("negate") != -1) return Constants.IS_NEGATE_OPERATION;
-		return Constants.IS_NOT_NEGATE_OPERATION;
-	}
-	private boolean isStackOverflow() {
-		if(expressionDTO.getResult().equals("오버플로")) return true;
-		return false;
-	}
 	private void addNumber(String number) {              //숫자입력
-		if(isMaximumInputRangeExceeded(number)) return;  //숫자입력범위를 넘어서는 경우 -> 더이상 숫자를 누적하지 않음
+		if(expressionCheck.isMaximumInputRangeExceeded(number)) return;  //숫자입력범위를 넘어서는 경우 -> 더이상 숫자를 누적하지 않음
 		
-		if(isNegateOperation(expressionDTO.getSecondValue())) setCalculator("CE");
-		if(isCalculationOver()) setCalculator("C");      //이전 입력까지의 계산이 끝나고 새로운 숫자를 입력하려고 할 때 -> 'C'기능 수행
-		if(isFirstInput()) numberBuilder.setLength(0);   //숫자를 처음 입력할 때 -> stringBuilder를 비움
+		if(expressionCheck.isNegateOperation(expressionDTO.getSecondValue())) setCalculator("CE");
+		if(expressionCheck.isCalculationOver()) setCalculator("C");      //이전 입력까지의 계산이 끝나고 새로운 숫자를 입력하려고 할 때 -> 'C'기능 수행
+		if(expressionCheck.isFirstInput()) numberBuilder.setLength(0);   //숫자를 처음 입력할 때 -> stringBuilder를 비움
 		
 		numberBuilder.append(number);                    //숫자 입력값 누적
 	}
 	private void addPoint() {
-		if(isCalculationOver()) setCalculator("C");     //계산완료 후 첫 입력부터 '.'입력 -> ex)2+3=5 출력 후 '.'입력 => 'C'기능 수행 후 '0.'
-		else if(isNegateOperation(expressionDTO.getSecondValue())) {   //negate연산중에 '.'입력시 negate연산값 초기화 -> '0.'으로 바뀜
+		if(expressionCheck.isCalculationOver()) setCalculator("C");     //계산완료 후 첫 입력부터 '.'입력 -> ex)2+3=5 출력 후 '.'입력 => 'C'기능 수행 후 '0.'
+		else if(expressionCheck.isNegateOperation(expressionDTO.getSecondValue())) {   //negate연산중에 '.'입력시 negate연산값 초기화 -> '0.'으로 바뀜
 			expressionDTO.setSecondValue("");
 			numberBuilder.setLength(0);
 		}
-		else if(isPointEntered()) return;               //계산은 아직 끝나지 않았지만 현재 입력중인 숫자가 이미 실수
+		else if(expressionCheck.isPointEntered()) return;               //계산은 아직 끝나지 않았지만 현재 입력중인 숫자가 이미 실수
 			
 		if(numberBuilder.length() == 0) numberBuilder.append("0"); 
 		numberBuilder.append("."); 
 	}
 	private String setNumber(String numberToChange) { 
-		if(isDividedByZero() || isStackOverflow()) return expressionDTO.getFirstValue();
-		if(isNegateOperation(numberToChange)) return numberToChange;
-		if(isStackOverflow()) return expressionDTO.getResult();
+		if(expressionCheck.isDividedByZero() || expressionCheck.isStackOverflow()) return expressionDTO.getFirstValue();
+		if(expressionCheck.isNegateOperation(numberToChange)) return numberToChange;
+		if(expressionCheck.isStackOverflow()) return expressionDTO.getResult();
 		
 		BigDecimal number = new BigDecimal(numberToChange);
 		
@@ -133,7 +100,7 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		return result.toString();
 	}
 	private String formatNumber(String number) {
-		if(isDividedByZero() || isStackOverflow()) return expressionDTO.getResult();
+		if(expressionCheck.isDividedByZero() || expressionCheck.isStackOverflow()) return expressionDTO.getResult();
 		
 		if(number.indexOf(".") == -1) return number.replaceAll(Constants.THOUSAND_SEPARATOR_REGEX, ","); //소수점을 입력하지 않은 경우 -> 1000단위 콤마만 표시
 
@@ -147,10 +114,10 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		String firstValue = expressionDTO.getFirstValue();     //첫 번째 입력값
 		String secondeValue = expressionDTO.getSecondValue();  //두 번째 입력값
 		
-		if(firstValue.equals("") || isNegateOperation(firstValue) || isStackOverflow()) return "";   //첫번째값 입력중 -> 아직 작성된 계산식 없음(빈 문자열 리턴)
+		if(firstValue.equals("") || expressionCheck.isNegateOperation(firstValue) || expressionCheck.isStackOverflow()) return "";   //첫번째값 입력중 -> 아직 작성된 계산식 없음(빈 문자열 리턴)
 		if(expressionDTO.getOperator().equals("")) return setNumber(expressionDTO.getFirstValue()) + " = ";  //첫번째값 입력 후 '=' 입력 -> 계산식 : (첫번째값) (=)
 		if(secondeValue.equals("")) return setNumber(firstValue) + expressionDTO.getOperator();              //첫번째값 입력 후 연산자를 입력함 -> 계산식 : (첫번째값) (연산자) 
-		if(isCalculationOver()) return setNumber(expressionDTO.getFirstValue()) + " " + expressionDTO.getOperator() + " " + setNumber(expressionDTO.getSecondValue()) + " = "; //모든 값 입력 완료 -> 계산식 : (첫번째값) (연산자) (두번째값)
+		if(expressionCheck.isCalculationOver()) return setNumber(expressionDTO.getFirstValue()) + " " + expressionDTO.getOperator() + " " + setNumber(expressionDTO.getSecondValue()) + " = "; //모든 값 입력 완료 -> 계산식 : (첫번째값) (연산자) (두번째값)
 		return setNumber(expressionDTO.getFirstValue()) + " " + expressionDTO.getOperator() + " " + setNumber(expressionDTO.getSecondValue()); //두번째값으로 negate입력시
 	}
 	private void takeButtonOnCalculator(String buttonText) {
@@ -193,7 +160,9 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		
 		takeButtonOnCalculator(buttonText);   //버튼기능 수행
 
-		if(isDividedByZero() || isStackOverflow()) calculationButtonPanel.deactivateOperatorButton();  //'÷0'실행시 연산자버튼 비활성화
+		if(expressionCheck.isDividedByZero() || expressionCheck.isStackOverflow()) {
+			calculationButtonPanel.deactivateOperatorButton();  //'÷0'실행시 연산자버튼 비활성화
+		}
 		else calculationButtonPanel.activateOperatorButton();
 	}
 	@Override
@@ -201,7 +170,7 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		JButton button = (JButton) event.getSource();
 		String buttonText = button.getText();
 		
-		if((isDividedByZero() || isStackOverflow()) && isDeletionButtonPressed(buttonText)) {
+		if((expressionCheck.isDividedByZero() || expressionCheck.isStackOverflow()) && expressionCheck.isDeletionButtonPressed(buttonText)) {
 			buttonText = "C";   //'÷0'실행 후 '=' or '←'클릭 == 'C'버튼
 		}
 		
@@ -229,7 +198,7 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		}
 		if(keyChar.equals("*")) keyChar = "×";      //키보드 입력 -> '*'
 		
-		if((isDividedByZero() || isStackOverflow()) && isDeletionButtonPressed(keyChar)) {
+		if((expressionCheck.isDividedByZero() || expressionCheck.isStackOverflow()) && expressionCheck.isDeletionButtonPressed(keyChar)) {
 			keyChar = "C";   //'÷0'실행 후 '='입력 == 'C'버튼
 		}
 		setCalculator(keyChar);
