@@ -13,12 +13,13 @@ public class CalculatorFrame extends JFrame implements ActionListener, Component
 	private int panelNumber;  
 	private Dimension frameSize;
 	
-	public CalculatorFrame(ExpressionPanel expressionPanel, CalculatorButtonPanel calculationButtonPanel, ArrayList<String> recordList) {
+	public CalculatorFrame(ExpressionPanel expressionPanel, CalculatorButtonPanel calculationButtonPanel, RecordPanel recordPanel) {
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
 		
 		this.expressionPanel = expressionPanel;
 		this.calculationButtonPanel = calculationButtonPanel;
+		this.recordPanel = recordPanel;
 		
 		expressionPanel.setActionListener(this);          //계산식 출력 패널의 기록보기 버튼에 event연결
 		expressionPanel.setComponentListener(this);
@@ -26,7 +27,6 @@ public class CalculatorFrame extends JFrame implements ActionListener, Component
 		mainPanel.add(expressionPanel, BorderLayout.NORTH);
 		mainPanel.add(calculationButtonPanel, BorderLayout.CENTER);
 
-		recordPanel = new RecordPanel(recordList);
 		panelNumber = Constants.BUTTON_PANEL_MODE;
 		
 		frameSize = new Dimension(Constants.WIDTH, Constants.HEIGHT);

@@ -15,10 +15,12 @@ import utility.Constants;
 import view.CalculatorButtonPanel;
 import view.CalculatorFrame;
 import view.ExpressionPanel;
+import view.RecordPanel;
 
 public class CalculationManagement implements ActionListener, KeyListener{
 	private ExpressionPanel expressionPanel;
 	private CalculatorButtonPanel calculationButtonPanel;
+	private RecordPanel recordPanel;
 	private CalculatorFrame calculatorFrame;
 	private ExpressionDTO expressionDTO;
 	private ArrayList<String> recordList; //계산기록 저장
@@ -30,16 +32,16 @@ public class CalculationManagement implements ActionListener, KeyListener{
 	private Negate negate;                           //'±'
 
 	public CalculationManagement() {
-		expressionPanel = new ExpressionPanel();                       //계산식 출력 패널
-		calculationButtonPanel = new CalculatorButtonPanel(this);   //버튼 클릭 패널
-		
 		expressionDTO = new ExpressionDTO();
 		recordList = new ArrayList<String>();
 		numberBuilder = new StringBuilder();
 		numberBuilder.append("0");
 		expressionCheck = new ExpressionCheck(numberBuilder, expressionDTO);
 		
-		calculatorFrame =  new CalculatorFrame(expressionPanel, calculationButtonPanel, recordList); //프레임에 패널 부착, 계산기록 리스트 연결
+		expressionPanel = new ExpressionPanel();                       //계산식 출력 패널
+		calculationButtonPanel = new CalculatorButtonPanel(this);     //버튼 클릭 패널
+		recordPanel = new RecordPanel(recordList);
+		calculatorFrame =  new CalculatorFrame(expressionPanel, calculationButtonPanel, recordPanel); //프레임에 패널 부착, 계산기록 리스트 연결
 		
 		arithmeticOperation = new ArithmeticOperation(expressionDTO, expressionCheck);
 		calculation = new Calculation(expressionDTO, arithmeticOperation, expressionCheck);
@@ -160,6 +162,11 @@ public class CalculationManagement implements ActionListener, KeyListener{
 			calculationButtonPanel.deactivateOperatorButton();  //'÷0'실행시 연산자버튼 비활성화
 		}
 		else calculationButtonPanel.activateOperatorButton();
+		
+		if(expressionCheck.isCalculationOver()) {
+			System.out.println("오");
+			recordPanel.setRecordPanel();
+		}
 	}
 	@Override
 	public void actionPerformed(ActionEvent event) {  //계산기 버튼 이벤트
