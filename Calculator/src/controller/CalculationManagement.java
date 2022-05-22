@@ -163,10 +163,7 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		}
 		else calculationButtonPanel.activateOperatorButton();
 		
-		if(expressionCheck.isCalculationOver()) {
-			System.out.println("오");
-			recordPanel.setRecordPanel();
-		}
+		recordPanel.setRecordPanel();
 	}
 	@Override
 	public void actionPerformed(ActionEvent event) {  //계산기 버튼 이벤트

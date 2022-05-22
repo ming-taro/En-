@@ -81,7 +81,7 @@ public class CalculatorFrame extends JFrame implements ActionListener, Component
         }
         
         if(frameSize.width >= Constants.MAX_WIDTH) {                 //frame을 옆으로 늘리면 기록창 보이기
-        	recordPanel.setPreferredSize(new Dimension(300, 200));
+        	recordPanel.setPreferredSize(new Dimension(Constants.RECORD_PANEL_WIDTH, frameSize.height));
     		expressionPanel.setInvisibleForRecordButton();
         	getContentPane().add(recordPanel, BorderLayout.EAST);   //계산기 frame에 계산버튼 패널 추가
         }

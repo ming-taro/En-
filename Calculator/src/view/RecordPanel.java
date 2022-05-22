@@ -1,28 +1,21 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.Image;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 
 import utility.Constants;
 
 public class RecordPanel extends JPanel implements ActionListener{
 	private JPanel resultPanel;       //계산기록 출력 패널
 	private JScrollPane recordPanelScroll;    //계산기록 출력 패널 -> 계산수식 출력 패널에 달  스크롤
-	private JTextArea recordTextArea;
+	//private JTextArea recordTextArea;
+	private JButton[] recordButton;
 	private ArrayList<String> recordList;     //계산기록 출력 패널 -> 계산수식 출력 패널 -> 계산기록 리스트
 	private JButton deletionButton;           //계산기록 출력 패널 -> 휴지통 버튼
 	private JPanel deletionButtonPanel;       //휴지통 버튼을 담을 패널
@@ -31,8 +24,7 @@ public class RecordPanel extends JPanel implements ActionListener{
 		this.recordList = recordList;
 
 		resultPanel = new JPanel();
-		recordTextArea = new JTextArea();
-		recordTextArea.setFont(new Font("SansSerif", Font.BOLD, Constants.BUTTON_FONT_SIZE));
+		resultPanel.setBackground(new Color(230, 230, 230));
 		
 		ImageIcon icon = new ImageIcon("image\\wastebasket.png");
 		Image image = icon.getImage();
@@ -41,6 +33,9 @@ public class RecordPanel extends JPanel implements ActionListener{
 
 		deletionButton = new JButton(changeIcon);
 
+		recordPanelScroll = new JScrollPane(resultPanel);
+		setLayout(new BorderLayout());
+		
 		setDeletionButtonPanel();
 		setRecordPanel();
 	}
@@ -62,10 +57,6 @@ public class RecordPanel extends JPanel implements ActionListener{
 	}
 	public void setRecordPanel() {
 		JLabel noRecordLabel = new JLabel("<html><br>아직 기록이 없음</html>");
-		
-		recordPanelScroll = new JScrollPane(resultPanel);
-		resultPanel.setBackground(Color.white);
-		setLayout(new BorderLayout());
 
 		removeAll();
 		if(recordList.size() == 0) {
@@ -81,18 +72,52 @@ public class RecordPanel extends JPanel implements ActionListener{
 		repaint();
 		
 	}
-	public void setRecordList() {
-		recordTextArea.setText("");  //먼저 이전에 저장된 계산기록을 초기화 
-		
-		for(int index = recordList.size() - 1; index >= 0; index--) {
-			recordTextArea.append(recordList.get(index) + "\n\n");
+	public void setExpressionLabel(JLabel expressionLabel, String labelText) {
+		for(int index = 0; index < labelText.length(); index++) {
+			
 		}
+		
+	}
+	public void setRecordList() {
+		int listSize = recordList.size();
+		JLabel expressionLabel, resultLabel;
+		JPanel buttonPanel = new JPanel();
+		
+		buttonPanel.setLayout(new GridLayout(listSize, 0));
+		
+		resultPanel.removeAll();
+		recordButton = new JButton[listSize];
+		
+		for(int index = listSize - 1; index >= 0; index--) {
+			recordButton[index] = new JButton();                          //계산식 버튼
+			expressionLabel = new JLabel(recordList.get(index));
+			expressionLabel.setFont(new Font("SansSerif", Font.PLAIN, 13));  
+			expressionLabel.setPreferredSize(new Dimension(Constants.RECORD_PANEL_WIDTH - 50, 13));
+			expressionLabel.setHorizontalAlignment(JLabel.RIGHT);
+			
+			resultLabel = new JLabel("1111");
+			resultLabel.setFont(new Font("SansSerif", Font.BOLD, 25)); 
+			resultLabel.setPreferredSize(new Dimension(Constants.RECORD_PANEL_WIDTH - 50, 25));
+			resultLabel.setHorizontalAlignment(JLabel.RIGHT);
 
-		resultPanel.add(recordTextArea);
+			recordButton[index].setLayout(new BorderLayout());
+			recordButton[index].add(expressionLabel, BorderLayout.NORTH);
+			recordButton[index].add(resultLabel, BorderLayout.SOUTH);
+			recordButton[index].setBackground(new Color(230, 230, 230));
+
+			recordButton[index].setHorizontalAlignment(SwingConstants.RIGHT);
+			recordButton[index].setBorderPainted(false);
+
+			buttonPanel.add(recordButton[index]);                         //버튼패널에 계산식버튼 부착
+		}
+		
+		resultPanel.add(buttonPanel);
+		resultPanel.revalidate();
+		resultPanel.repaint();
 	}
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent e) {      //휴지통 버튼 클릭 이벤트
 		recordList.clear();
-		recordTextArea.setText("");
+		setRecordPanel();
 	}
 }
