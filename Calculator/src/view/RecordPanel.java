@@ -25,6 +25,7 @@ public class RecordPanel extends JPanel implements ActionListener{
 	private JTextArea recordTextArea;
 	private ArrayList<String> recordList;     //계산기록 출력 패널 -> 계산수식 출력 패널 -> 계산기록 리스트
 	private JButton deletionButton;           //계산기록 출력 패널 -> 휴지통 버튼
+	private JPanel deletionButtonPanel;       //휴지통 버튼을 담을 패널
 	
 	public RecordPanel(ArrayList<String> recordList) {
 		this.recordList = recordList;
@@ -39,33 +40,46 @@ public class RecordPanel extends JPanel implements ActionListener{
 		ImageIcon changeIcon = new ImageIcon(changeImage);
 
 		deletionButton = new JButton(changeIcon);
+
+		setDeletionButtonPanel();
+		setRecordPanel();
+	}
+	private void setDeletionButton() {
+		deletionButton.setPreferredSize(new Dimension(Constants.BUTTON_SIZE,Constants.BUTTON_SIZE));  //계산기록 버튼
 		deletionButton.setBorderPainted(false);
 		deletionButton.setFocusPainted(false);
 		deletionButton.setContentAreaFilled(false);
 		deletionButton.addActionListener(this);
-		
-		setRecordPanel();
 	}
-	
+	private void setDeletionButtonPanel() {
+		deletionButtonPanel = new JPanel();
+		
+		setDeletionButton();
+		
+		deletionButtonPanel.setBackground(Color.white);
+		deletionButtonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		deletionButtonPanel.add(deletionButton);
+	}
 	public void setRecordPanel() {
-		JPanel deletionButtonPanel = new JPanel();
+		JLabel noRecordLabel = new JLabel("<html><br>아직 기록이 없음</html>");
 		
 		recordPanelScroll = new JScrollPane(resultPanel);
-		
 		resultPanel.setBackground(Color.white);
-		deletionButtonPanel.setBackground(Color.white);
-		
-		deletionButtonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		deletionButton.setPreferredSize(new Dimension(Constants.BUTTON_SIZE,Constants.BUTTON_SIZE));  //계산기록 버튼
-		deletionButtonPanel.add(deletionButton);
-		
 		setLayout(new BorderLayout());
-		//add(recordPanelScroll, "Center");
-		//add(deletionButtonPanel, "South");
+
+		removeAll();
+		if(recordList.size() == 0) {
+			noRecordLabel.setFont(new Font("SansSerif", Font.PLAIN, 15));
+			add(noRecordLabel, BorderLayout.NORTH);
+		}
+		else {
+			add(recordPanelScroll, "Center");
+			add(deletionButtonPanel, "South");
+			setRecordList();
+		}
+		revalidate();
+		repaint();
 		
-		JLabel label = new JLabel("<html><br>아직 기록이 없음</html>");
-		label.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		add(label, BorderLayout.NORTH);
 	}
 	public void setRecordList() {
 		recordTextArea.setText("");  //먼저 이전에 저장된 계산기록을 초기화 

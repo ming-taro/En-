@@ -48,7 +48,7 @@ public class CalculatorFrame extends JFrame implements ActionListener, Component
 	}
 	private void switchToRecordPanel() {                     //계산기록보기 패널로 전환
 		mainPanel.add(recordPanel, BorderLayout.CENTER);     
-		recordPanel.setRecordList();
+		recordPanel.setRecordPanel();
 		panelNumber = Constants.RECORD_PANEL_MODE;
 	}
 	private void swtichToCalculationButtonPanel() {          //계산버튼 입력 패널로 전환
@@ -74,12 +74,10 @@ public class CalculatorFrame extends JFrame implements ActionListener, Component
 		frameSize = this.getSize();
 		
         if(frameSize.width < Constants.MIN_WIDTH) {     //frame 최소크기 설정   
-        	frameSize.width = Constants.MIN_WIDTH;
-            setSize(frameSize);
+            setSize(Constants.MIN_WIDTH, frameSize.height);
         }
         if(frameSize.height < Constants.MIN_HEIGHT) {
-        	frameSize.height = Constants.MIN_HEIGHT;
-        	setSize(frameSize);
+        	setSize(frameSize.width, Constants.MIN_HEIGHT);
         }
         
         if(frameSize.width >= Constants.MAX_WIDTH) {                 //frame을 옆으로 늘리면 기록창 보이기
@@ -99,14 +97,11 @@ public class CalculatorFrame extends JFrame implements ActionListener, Component
 	}
 	@Override
 	public void componentMoved(ComponentEvent e) {
-		setSize(frameSize);
 	}
 	@Override
 	public void componentShown(ComponentEvent e) {
-		setSize(frameSize);
 	}
 	@Override
 	public void componentHidden(ComponentEvent e) {
-		setSize(frameSize);
 	}
 }
