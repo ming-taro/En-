@@ -2,10 +2,11 @@ package utility;
 
 public class Constants {
 	public static final int HEIGHT = 600;
-	public static final int WIDTH = 500;
+	public static final int WIDTH = 400;
 	
-	public static final int MIN_HEIGHT = 507;
-	public static final int MIN_WIDTH = 335; 
+	public static final int MIN_HEIGHT = 500;
+	public static final int MIN_WIDTH = 300; 
+	public static final int MAX_WIDTH = 550; 
 
 	public static final int BUTTON_PANEL_MODE = 0;
 	public static final int RECORD_PANEL_MODE = 1;

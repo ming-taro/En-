@@ -21,6 +21,7 @@ public class Deletion {
 		}
 	}
 	public String manageBackSpace(StringBuilder numberBuilder) {  //'←' : 방금 입력한 숫자 하나 지우기	
+		if(expressionCheck.isNegateOperation(expressionDTO.getSecondValue())) return numberBuilder.toString();
 		if(expressionDTO.getResult() != "") return expressionDTO.getResult();          //결과출력 후 backspace클릭할 경우 -> 값을 지울 수 없고, 입력부분에는 현재 결과값이 그대로 보여짐
 		if(numberBuilder.toString().equals("0")) return numberBuilder.toString();
 		if(numberBuilder.toString().equals("")) return expressionDTO.getFirstValue();  //입력값이 없는데도 지우려고 할 경우

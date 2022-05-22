@@ -39,6 +39,12 @@ public class ExpressionPanel extends JPanel{
 		inputLabel.addComponentListener(listener);
 		expressionLabel.addComponentListener(listener);
 	}
+	public void setVisibleForRecordButton() {
+		recordButton.setVisible(true);
+	}
+	public void setInvisibleForRecordButton() {
+		recordButton.setVisible(false);
+	}
 	private void addRecordPanel() {
 		JPanel recordPanel = new JPanel();
 		
@@ -76,13 +82,5 @@ public class ExpressionPanel extends JPanel{
 	public void setExpressionLabel(String expression, String number) {
 		expressionLabel.setText(expression);   //계산식 누적값 출력
 		inputLabel.setText(number); //숫자입력 누적값 출력
-	}
-	public void removeInputLabel(StringBuilder number) {
-		number.setLength(0);
-		inputLabel.setText("0");
-	}
-	public void setZero(StringBuilder number) {
-		number.setLength(0);
-		inputLabel.setText("0");
 	}
 }

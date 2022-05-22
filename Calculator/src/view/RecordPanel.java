@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -49,7 +50,6 @@ public class RecordPanel extends JPanel implements ActionListener{
 	public void setRecordPanel() {
 		JPanel deletionButtonPanel = new JPanel();
 		
-		setRecordList();
 		recordPanelScroll = new JScrollPane(resultPanel);
 		
 		resultPanel.setBackground(Color.white);
@@ -60,8 +60,12 @@ public class RecordPanel extends JPanel implements ActionListener{
 		deletionButtonPanel.add(deletionButton);
 		
 		setLayout(new BorderLayout());
-		add(recordPanelScroll, "Center");
-		add(deletionButtonPanel, "South");
+		//add(recordPanelScroll, "Center");
+		//add(deletionButtonPanel, "South");
+		
+		JLabel label = new JLabel("<html><br>아직 기록이 없음</html>");
+		label.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		add(label, BorderLayout.NORTH);
 	}
 	public void setRecordList() {
 		recordTextArea.setText("");  //먼저 이전에 저장된 계산기록을 초기화 

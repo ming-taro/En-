@@ -26,13 +26,23 @@ public class ArithmeticOperation {
 		if(Double.toString(result).length() <= 16) return Double.toString(result);
 		return firstValue.divide(secondValue, 16, RoundingMode.HALF_EVEN).toString();
 	}
+	private String multiplyNegativeNumber(String number) {
+		StringBuilder numberBuilder = new StringBuilder().append(number);
+		
+		if(numberBuilder.toString().equals("0")) return "0";  
+		
+		if(numberBuilder.toString().charAt(0) == '-') numberBuilder.replace(0, 1, "");  //현재 입력값이 음수인 경우 -> 음의 부호를 지움
+		else numberBuilder.insert(0, "-");   //현재 입력값이 양수인 경우 -> 숫자 앞에 음의 부호를 붙임
+		
+		return numberBuilder.toString();
+	}
 	private String setNegateOperation(String value) {
 		int numberOfNegateOperation = value.length() - value.replace("(", "").length();    //negate연산 횟수
 		int beginIndex = value.lastIndexOf("(") + 1;
 		int endIndex = value.indexOf(")");
 		
 		if(numberOfNegateOperation%2 == 0) value = value.substring(beginIndex, endIndex);  //연산횟수가 짝수 -> '+'
-		else value = '-' + value.substring(beginIndex, endIndex);                          //연산횟수가 홀수 -> '-'
+		else value = multiplyNegativeNumber(value.substring(beginIndex, endIndex));                          //연산횟수가 홀수 -> '-'
 		
 		return value;
 	}
@@ -87,7 +97,10 @@ public class ArithmeticOperation {
 	private String setNumber(String numberToChange) {   //DTO에 숫자 저장시 사용 -> '12.2200'입력시 의미없는 '00'을 없애기 위함
 		double number = Double.parseDouble(numberToChange);
 		
-		if(number%1 == 0) return numberToChange;       //결과값이 정수인 경우
+		if(number%1 == 0) {
+			if(numberToChange.length() <= 15) return Long.toString((long)number);       //결과값이 정수인 경우
+			return numberToChange;
+		}
 		
 		String[] numberArray = numberToChange.split("\\.");
 		String decimal;
@@ -101,7 +114,7 @@ public class ArithmeticOperation {
 		String number = numberBuilder.toString();
 		String firstValue = number;         //첫 연산자 입력시 첫번째값은 현재까지 numberBuilder에 누적된 값
 
-		if(expressionCheck.isOperatorChanged(number)) {               //연산자 변경 발생(ex '2-'입력 후 '+'입력 -> '2+')
+		if(expressionCheck.isOperatorChanged(number)) {          //연산자 변경 발생(ex '2-'입력 후 '+'입력 -> '2+')
 			expressionDTO.setOperator(operator);
 			return;
 		}

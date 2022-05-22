@@ -21,7 +21,7 @@ public class Calculation {
 		if(result.equals("") || expressionCheck.isDividedByZero()) return;
 		
 		result = String.format("%.15e", new BigDecimal(result));
-		beginIndex = result.indexOf("e") + 1;
+		beginIndex = result.indexOf("e") + 2;
 		
 		if(Integer.parseInt(result.substring(beginIndex)) >= 10000) {
 			expressionDTO.setResult("오버플로");
@@ -35,11 +35,24 @@ public class Calculation {
 		if(expressionCheck.isNegateOperation(expressionDTO.getSecondValue())) return;
 		expressionDTO.setSecondValue(setNumber(number));
 	}
+	public void removeZeroAfterValue(StringBuilder numberBuilder) {
+		for(int index = numberBuilder.length() - 1; index >= 0; index--) {
+			if(numberBuilder.charAt(index) == '0') numberBuilder.setCharAt(index, ' ');
+			else break;
+		}
+	}
 	public String setNumber(String numberToChange) {
 		double number = Double.parseDouble(numberToChange);
 		
-		if(number%1 == 0) return numberToChange;   //결과값이 정수인 경우
-		return Double.toString(number); //결과값이 실수
+		if(number%1 == 0) {
+			if(numberToChange.length() <= 15) return Long.toString((long)number);       //결과값이 정수인 경우
+			return numberToChange;
+		}
+		
+		StringBuilder numberBuilder = new StringBuilder().append(numberToChange);
+		removeZeroAfterValue(numberBuilder);
+		
+		return numberBuilder.toString().trim();
 	}
 	public void addToRecordList(ArrayList<String> recordList) {
 		if(expressionDTO.getOperator().equals("÷") && expressionDTO.getSecondValue().equals("")) {

@@ -1,45 +1,54 @@
 package controller;
 
 import Model.ExpressionDTO;
+import utility.Constants;
 
 public class Negate {
 	private ExpressionDTO expressionDTO;
+	private ExpressionCheck expressionCheck;
 	
-	public Negate(ExpressionDTO expressionDTO){
+	public Negate(ExpressionDTO expressionDTO, ExpressionCheck expressionCheck){
 		this.expressionDTO = expressionDTO;
+		this.expressionCheck = expressionCheck;
 	}
-	
 	private void multiplyNegativeNumber(StringBuilder numberBuilder) {
 		if(numberBuilder.toString().equals("0")) return;  
 		
 		if(numberBuilder.toString().charAt(0) == '-') numberBuilder.replace(0, 1, "");  //현재 입력값이 음수인 경우 -> 음의 부호를 지움
 		else numberBuilder.insert(0, "-");   //현재 입력값이 양수인 경우 -> 숫자 앞에 음의 부호를 붙임
 	}
-	
-	public void manageNegate(StringBuilder numberBuilder) {
-		if(numberBuilder.toString().equals("0")) return;  //0은 negative연산 X
+	private void setNegateToFirstValue(StringBuilder numberBuilder) {
+		String result = expressionDTO.getResult();
 		
-		if(expressionDTO.getFirstValue().equals("") || expressionDTO.getSecondValue().equals("") && numberBuilder.toString().equals("") == false) { //첫번째값입력시 or 두번째값 입력시 -> 숫자앞에 '+' or '-'
+		expressionDTO.InitValue();
+		expressionDTO.setFirstValue(String.format("negate(%s)", result));
+		numberBuilder.setLength(0);
+		numberBuilder.append(result);
+		multiplyNegativeNumber(numberBuilder);
+	}
+	public void manageNegate(StringBuilder numberBuilder) {
+		
+		if(expressionCheck.isCalculationOver()) {     //계산이 끝난 후 negate -> negate(결과값)을 첫번째 값으로 저장하면서 새로운 계산 시작
+			setNegateToFirstValue(numberBuilder);
+			return;
+		}
+		else if(numberBuilder.length() == 0) {
+			expressionDTO.setSecondValue(String.format("negate(%s)", expressionDTO.getFirstValue()));    //두번째값 첫 입력시 'negate(첫번째값)'으로 표기
+			numberBuilder.append(expressionDTO.getFirstValue());
 			multiplyNegativeNumber(numberBuilder);
 			return;
 		}
 		
-		String firstValue;
-		
-		if(expressionDTO.getResult().equals("") == false) {   //계산완료 후 negate -> 결과값이 첫번째값이 되고 negate연산 적용(ex '2+3=5'입력 후 negate -> 'negate(5)') 
-			firstValue = expressionDTO.getResult();
-			expressionDTO.InitValue();
-			expressionDTO.setFirstValue(String.format("negate(%s)",firstValue));
-			numberBuilder.setLength(0);
-			numberBuilder.append(firstValue);
+		if(expressionDTO.getFirstValue().equals("") || expressionCheck.isThereOperator() && expressionDTO.getSecondValue().equals("")) {      //첫번째값입력시 or 두번째값 입력시 -> 숫자앞에 '+' or '-'
+			multiplyNegativeNumber(numberBuilder);
+			System.out.println("<3>");
 			return;
 		}
 		
-		if(expressionDTO.getSecondValue().equals("")) {
-			expressionDTO.setSecondValue(String.format("negate(%s)", expressionDTO.getFirstValue()));    //두번째값 첫 입력시 'negate(첫번째값)'으로 표기
-			numberBuilder.append(expressionDTO.getFirstValue());
+		if(expressionDTO.getFirstValue().indexOf("negate") != -1) {
+			expressionDTO.setFirstValue(String.format("negate(%s)", expressionDTO.getFirstValue()));     //첫번째값 입력 중 이미 negate연산을 한 번 이상 한 경우 -> 'negate(첫번째값)'으로 표기
 		}
-		else {
+		if(expressionDTO.getSecondValue().indexOf("negate") != -1) {
 			expressionDTO.setSecondValue(String.format("negate(%s)", expressionDTO.getSecondValue()));   //두번째값 입력 중 이미 negate연산을 한 번 이상 한 경우 -> 'negate(두번째값)'으로 표기
 		}
 		
