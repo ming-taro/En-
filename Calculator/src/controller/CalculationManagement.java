@@ -38,18 +38,18 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		numberBuilder = new StringBuilder();
 		numberBuilder.append("0");
 		expressionCheck = new ExpressionCheck(numberBuilder, expressionDTO);
+		formatOfExpression = new FormatOfExpression(expressionDTO, expressionCheck);
 		
 		expressionPanel = new ExpressionPanel();                       //계산식 출력 패널
 		calculationButtonPanel = new CalculatorButtonPanel(this);     //버튼 클릭 패널
 		recordPanel = new RecordPanel(expressionCheck, recordList);
 		calculatorFrame =  new CalculatorFrame(expressionPanel, calculationButtonPanel, recordPanel); //프레임에 패널 부착, 계산기록 리스트 연결
-		
-		arithmeticOperation = new ArithmeticOperation(expressionDTO, expressionCheck);
+
+		arithmeticOperation = new ArithmeticOperation(expressionDTO, expressionCheck, formatOfExpression);
 		calculation = new Calculation(expressionDTO, arithmeticOperation, expressionCheck);
 		numberDeletion = new Deletion(expressionDTO, expressionCheck);
 		negate = new Negate(expressionDTO, expressionCheck);
 		
-		formatOfExpression = new FormatOfExpression(expressionDTO, expressionCheck);
 		
 		calculatorFrame.addKeyListener(this);
 		calculatorFrame.requestFocus();
@@ -95,7 +95,7 @@ public class CalculationManagement implements ActionListener, KeyListener{
 			break;
 		case '+':case '-':case '×':case '÷':  //사칙연산
 			arithmeticOperation.manageArithmeticOperation(numberBuilder, buttonText, recordList); 
-			number = formatOfExpression.setNumber(expressionDTO.getFirstValue());
+			number = expressionDTO.getFirstValue();
 			break;
 		case '.': 
 			addPoint();

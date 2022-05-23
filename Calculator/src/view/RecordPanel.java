@@ -103,7 +103,11 @@ public class RecordPanel extends JPanel implements ActionListener{
 		firstValue = formatOfExpression.setNumber(expressionDTO.getFirstValue());
 		secondValue = formatOfExpression.setNumber(expressionDTO.getSecondValue());
 		
-		if(expression.length() > 38){
+		expressionLabel = new JLabel(firstValue + " " + expressionDTO.getOperator() + " " + secondValue + " =");
+		expressionLabel.setFont(new Font("SansSerif", Font.PLAIN, 13)); 
+		//System.out.println("<>" + expressionLabel.getPreferredSize().getWidth() + " / " + getPreferredSize().getWidth());
+		
+		if(expressionLabel.getPreferredSize().getWidth() > getPreferredSize().getWidth() - 50){
 			expressionLabel = new JLabel();
 			expressionLabel.setLayout(new GridLayout(2, 0));
 			
@@ -119,11 +123,7 @@ public class RecordPanel extends JPanel implements ActionListener{
 			expressionLabel.add(secondValueLabel);
 			expressionLabel.setPreferredSize(new Dimension((int)getPreferredSize().getWidth() - 50, 40));
 		}
-		else {
-			expressionLabel = new JLabel(firstValue + " " + expressionDTO.getOperator() + " " + secondValue + " =");
-			expressionLabel.setFont(new Font("SansSerif", Font.PLAIN, 13)); 
-			expressionLabel.setPreferredSize(new Dimension((int)getPreferredSize().getWidth() - 50, 20));
-		}
+		else expressionLabel.setPreferredSize(new Dimension((int)getPreferredSize().getWidth() - 50, 20));
 		
 		expressionLabel.setHorizontalAlignment(JLabel.RIGHT);
 		

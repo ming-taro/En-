@@ -17,6 +17,23 @@ public class FormatOfExpression {
 	public void setExpressionDTO(ExpressionDTO expressionDTO) {
 		this.expressionDTO = expressionDTO;
 	}
+	public String removeZeroAfterValue(String number) {
+		StringBuilder numberBuilder = new StringBuilder();
+		numberBuilder.append(number);
+		
+		if(number.indexOf(".") == -1) return number;
+		
+		for(int index = numberBuilder.length() - 1; index >= 0; index--) {
+			if(numberBuilder.charAt(index) == '0') numberBuilder.setCharAt(index, ' ');
+			else if(numberBuilder.charAt(index) == '.'){
+				numberBuilder.setCharAt(index, ' ');
+				break;
+			}
+			else break;
+		}
+		System.out.println(numberBuilder.toString() + "/");
+		return numberBuilder.toString().trim();
+	}
 	public String setNumber(String numberToChange) { 
 		if(expressionCheck.isDividedByZero() || expressionCheck.isStackOverflow()) return expressionDTO.getFirstValue();
 		if(expressionCheck.isNegateOperation(numberToChange)) return numberToChange;
