@@ -41,7 +41,7 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		
 		expressionPanel = new ExpressionPanel();                       //계산식 출력 패널
 		calculationButtonPanel = new CalculatorButtonPanel(this);     //버튼 클릭 패널
-		recordPanel = new RecordPanel(recordList);
+		recordPanel = new RecordPanel(expressionCheck, recordList);
 		calculatorFrame =  new CalculatorFrame(expressionPanel, calculationButtonPanel, recordPanel); //프레임에 패널 부착, 계산기록 리스트 연결
 		
 		arithmeticOperation = new ArithmeticOperation(expressionDTO, expressionCheck);

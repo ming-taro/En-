@@ -10,6 +10,8 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 import Model.ExpressionDTO;
+import controller.ExpressionCheck;
+import controller.FormatOfExpression;
 import utility.Constants;
 
 public class RecordPanel extends JPanel implements ActionListener{
@@ -20,10 +22,12 @@ public class RecordPanel extends JPanel implements ActionListener{
 	private ArrayList<ExpressionDTO> recordList;     //계산기록 출력 패널 -> 계산수식 출력 패널 -> 계산기록 리스트
 	private JButton deletionButton;           //계산기록 출력 패널 -> 휴지통 버튼
 	private JPanel deletionButtonPanel;       //휴지통 버튼을 담을 패널
+	private FormatOfExpression formatOfExpression;
 	
-	public RecordPanel(ArrayList<ExpressionDTO> recordList) {
+	public RecordPanel(ExpressionCheck expressionCheck, ArrayList<ExpressionDTO> recordList) {
 		this.recordList = recordList;
-
+		
+		formatOfExpression = new FormatOfExpression(new ExpressionDTO(), expressionCheck);
 		resultPanel = new JPanel();
 		recordButtonPanel = new JPanel();
 		
@@ -88,34 +92,89 @@ public class RecordPanel extends JPanel implements ActionListener{
 		repaint();
 		
 	}
-	public JLabel getExpressionLabel(int index) {
+	public JLabel getExpressionLabel(ExpressionDTO expressionDTO) {
 		JLabel expressionLabel;
-		expressionLabel = new JLabel(recordList.get(index).toString());
-		expressionLabel.setFont(new Font("SansSerif", Font.PLAIN, 13));  
-		expressionLabel.setPreferredSize(new Dimension((int)getPreferredSize().getWidth() - 50, 13));
+		String expression;
+		String firstValue, secondValue;
+		
+		formatOfExpression.setExpressionDTO(expressionDTO);   //계산식을 출력할 DTO
+		expression = formatOfExpression.getExpression();
+		
+		firstValue = formatOfExpression.setNumber(expressionDTO.getFirstValue());
+		secondValue = formatOfExpression.setNumber(expressionDTO.getSecondValue());
+		
+		if(expression.length() > 38){
+			expressionLabel = new JLabel();
+			expressionLabel.setLayout(new GridLayout(2, 0));
+			
+			JLabel firstValueLabel = new JLabel(firstValue + " " + expressionDTO.getOperator());
+			firstValueLabel.setHorizontalAlignment(JLabel.RIGHT);
+			firstValueLabel.setFont(new Font("SansSerif", Font.PLAIN, 13)); 
+			
+			JLabel secondValueLabel = new JLabel(secondValue + " =");
+			secondValueLabel.setHorizontalAlignment(JLabel.RIGHT);
+			secondValueLabel.setFont(new Font("SansSerif", Font.PLAIN, 13)); 
+			
+			expressionLabel.add(firstValueLabel);
+			expressionLabel.add(secondValueLabel);
+			expressionLabel.setPreferredSize(new Dimension((int)getPreferredSize().getWidth() - 50, 40));
+		}
+		else {
+			expressionLabel = new JLabel(firstValue + " " + expressionDTO.getOperator() + " " + secondValue + " =");
+			expressionLabel.setFont(new Font("SansSerif", Font.PLAIN, 13)); 
+			expressionLabel.setPreferredSize(new Dimension((int)getPreferredSize().getWidth() - 50, 20));
+		}
+		
 		expressionLabel.setHorizontalAlignment(JLabel.RIGHT);
 		
 		return expressionLabel;
+	}
+	public JLabel getResulLabel(ExpressionDTO expressionDTO) {
+		JLabel resultLabel;
+		String result = formatOfExpression.setNumber(expressionDTO.getResult());
+		
+		if(result.length() > 21) {
+			int index = result.indexOf("e") + 2;
+			
+			resultLabel = new JLabel();
+			resultLabel.setLayout(new GridLayout(2, 0));
+			
+			JLabel firstPart = new JLabel(result.substring(0, index));
+			firstPart.setHorizontalAlignment(JLabel.RIGHT);
+			firstPart.setFont(new Font("SansSerif", Font.BOLD, 22)); 
+			
+			JLabel secondPart = new JLabel(result.substring(index));
+			secondPart.setHorizontalAlignment(JLabel.RIGHT);
+			secondPart.setFont(new Font("SansSerif", Font.BOLD, 22)); 
+			
+			resultLabel.add(firstPart);
+			resultLabel.add(secondPart);
+			resultLabel.setPreferredSize(new Dimension((int)getPreferredSize().getWidth() - 50, 60));
+		}
+		else {
+			resultLabel = new JLabel(formatOfExpression.formatNumber(result));
+			resultLabel.setFont(new Font("SansSerif", Font.BOLD, 22)); 
+			resultLabel.setPreferredSize(new Dimension((int)getPreferredSize().getWidth() - 50, 30));
+		}
+		
+		resultLabel.setHorizontalAlignment(JLabel.RIGHT);
+
+		return resultLabel;
 	}
 	public void setRecordList() {
 		int listSize = recordList.size();
 		JLabel expressionLabel, resultLabel;
 		
 		recordButtonPanel.setLayout(new GridLayout(listSize, 0, 0, 40));
-		
 		recordButtonPanel.removeAll();
 		recordButton = new JButton[listSize];
 		
 		for(int index = listSize - 1; index >= 0; index--) {
 			recordButton[index] = new JButton();                          //계산식 버튼
 			
-			expressionLabel = getExpressionLabel(index);
-
-			resultLabel = new JLabel(recordList.get(index).getResult());
-			resultLabel.setFont(new Font("SansSerif", Font.BOLD, 25)); 
-			resultLabel.setPreferredSize(new Dimension((int)getPreferredSize().getWidth() - 50, 25));
-			resultLabel.setHorizontalAlignment(JLabel.RIGHT);
-
+			expressionLabel = getExpressionLabel(recordList.get(index));
+			resultLabel = getResulLabel(recordList.get(index));
+			
 			recordButton[index].setLayout(new BorderLayout());
 			recordButton[index].add(expressionLabel, BorderLayout.NORTH);
 			recordButton[index].add(resultLabel, BorderLayout.SOUTH);

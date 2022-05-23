@@ -14,6 +14,9 @@ public class FormatOfExpression {
 		this.expressionDTO = expressionDTO;
 		this.expressionCheck = expressionCheck;
 	}
+	public void setExpressionDTO(ExpressionDTO expressionDTO) {
+		this.expressionDTO = expressionDTO;
+	}
 	public String setNumber(String numberToChange) { 
 		if(expressionCheck.isDividedByZero() || expressionCheck.isStackOverflow()) return expressionDTO.getFirstValue();
 		if(expressionCheck.isNegateOperation(numberToChange)) return numberToChange;
@@ -50,11 +53,21 @@ public class FormatOfExpression {
 		String firstValue = expressionDTO.getFirstValue();     //첫 번째 입력값
 		String secondeValue = expressionDTO.getSecondValue();  //두 번째 입력값
 		
-		if(firstValue.equals("") || expressionCheck.isNegateOperation(firstValue)) return firstValue;
-		if(expressionCheck.isStackOverflow()) return "";   //첫번째값 입력중 -> 아직 작성된 계산식 없음(빈 문자열 리턴)
-		if(expressionDTO.getOperator().equals("")) return setNumber(expressionDTO.getFirstValue()) + " = ";  //첫번째값 입력 후 '=' 입력 -> 계산식 : (첫번째값) (=)
-		if(secondeValue.equals("")) return setNumber(firstValue) + expressionDTO.getOperator();              //첫번째값 입력 후 연산자를 입력함 -> 계산식 : (첫번째값) (연산자) 
-		if(expressionCheck.isCalculationOver()) return setNumber(expressionDTO.getFirstValue()) + " " + expressionDTO.getOperator() + " " + setNumber(expressionDTO.getSecondValue()) + " = "; //모든 값 입력 완료 -> 계산식 : (첫번째값) (연산자) (두번째값)
+		if(firstValue.equals("") || expressionCheck.isNegateOperation(firstValue)) {
+			return firstValue;
+		}
+		if(expressionCheck.isStackOverflow()) {
+			return "";   //첫번째값 입력중 -> 아직 작성된 계산식 없음(빈 문자열 리턴)
+		}
+		if(expressionDTO.getOperator().equals("")) {
+			return setNumber(expressionDTO.getFirstValue()) + " = ";  //첫번째값 입력 후 '=' 입력 -> 계산식 : (첫번째값) (=)
+		}
+		if(secondeValue.equals("")) {
+			return setNumber(firstValue) + expressionDTO.getOperator();              //첫번째값 입력 후 연산자를 입력함 -> 계산식 : (첫번째값) (연산자) 
+		}
+		if(expressionCheck.isCalculationOver()) {
+			return setNumber(expressionDTO.getFirstValue()) + " " + expressionDTO.getOperator() + " " + setNumber(expressionDTO.getSecondValue()) + " = "; //모든 값 입력 완료 -> 계산식 : (첫번째값) (연산자) (두번째값)
+		}
 		return setNumber(expressionDTO.getFirstValue()) + " " + expressionDTO.getOperator() + " " + setNumber(expressionDTO.getSecondValue()); //두번째값으로 negate입력시
 	}
 }
