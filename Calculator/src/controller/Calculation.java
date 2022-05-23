@@ -72,5 +72,6 @@ public class Calculation {
 		
 		checkStackOverflow();
 		addToRecordList(recordList);
+		System.out.println(expressionDTO.toString());
 	}
 }

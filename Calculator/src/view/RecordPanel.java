@@ -78,7 +78,7 @@ public class RecordPanel extends JPanel implements ActionListener{
 
 		removeAll();
 		if(recordList.size() == 0) {
-			noRecordLabel.setFont(new Font("SansSerif", Font.PLAIN, 15));
+			noRecordLabel.setFont(new Font("돋움", Font.PLAIN, 15));
 			add(noRecordLabel, BorderLayout.NORTH);
 		}
 		else {

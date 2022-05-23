@@ -21,8 +21,8 @@ public class FormatOfExpression {
 		StringBuilder numberBuilder = new StringBuilder();
 		numberBuilder.append(number);
 		
-		if(number.indexOf("E") != -1) return number;
-		if(number.indexOf(".") == -1) return number;
+		if(number.indexOf("E") != -1) return number;    //지수표현식으로 되어 있는 값은 끝자리에 의미없는 0이 없음
+		if(number.indexOf(".") == -1) return number;    //정수일 경우 끝자리에 의미없는 0이 없음
 		
 		for(int index = numberBuilder.length() - 1; index >= 0; index--) {
 			if(numberBuilder.charAt(index) == '0') numberBuilder.setCharAt(index, ' ');
@@ -40,17 +40,18 @@ public class FormatOfExpression {
 		if(expressionCheck.isNegateOperation(numberToChange)) return numberToChange;
 		if(expressionCheck.isStackOverflow()) return expressionDTO.getResult();
 		if(numberToChange.equals("")) return "";
+		
 		numberToChange = removeZeroAfterValue(numberToChange);
 
 		BigDecimal number = new BigDecimal(numberToChange);
 		
 		if(number.remainder(new BigDecimal(1)).compareTo(new BigDecimal(0)) == 0) {     //결과값이 정수인 경우
-			if(number.toString().length() > 16) return String.format("%.15e", number);  //17자리 이상 -> 지수표현방식
+			if(numberToChange.length() > 16) return String.format("%.15e", number);  //17자리 이상 -> 지수표현방식
 			return numberToChange;                 //16자리 이하 -> 정수 그대로 출력
 		}
 		if(numberToChange.indexOf("E") == -1 && number.toString().length() <= 17) {
-			System.out.println("아");
-			return String.format("%.15f", number); //결과값이 실수이면서 숫자의 최대길이인 16(소수점 포함 17)을 초과하지 않은 경우 -> 결과 그대로 저장
+			int length = numberToChange.substring(numberToChange.indexOf(".") + 1).length();//소수부분 길이
+			return String.format("%." + length +"f", number); //결과값이 실수이면서 숫자의 최대길이인 16(소수점 포함 17)을 초과하지 않은 경우 -> 결과 그대로 저장
 		}
 		
 		int cnt = 0;
