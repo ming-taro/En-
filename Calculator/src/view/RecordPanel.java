@@ -35,16 +35,15 @@ public class RecordPanel extends JPanel implements ActionListener{
 		deletionButton = new JButton(changeIcon);
 		recordPanelScroll = new JScrollPane(resultPanel);
 		
-		//recordPanelScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		recordPanelScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		recordPanelScroll.setBorder(new EmptyBorder(0, 0, 0, 0));
 		
 		setLayout(new BorderLayout());
 		setDeletionButtonPanel();
 		setRecordPanel();
 	}
-	public void setBackground() {
+	public void setBackgroundColor(Color color) {
 		int listSize = recordList.size();
-		Color color = new Color(230, 230, 230);
 		
 		setBackground(color);
 		resultPanel.setBackground(color);
@@ -84,7 +83,7 @@ public class RecordPanel extends JPanel implements ActionListener{
 			setRecordList();
 		}
 
-		setBackground();
+		setBackgroundColor(new Color(230, 230, 230));
 		revalidate();
 		repaint();
 		

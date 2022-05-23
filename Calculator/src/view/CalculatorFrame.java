@@ -8,7 +8,7 @@ import utility.*;
 public class CalculatorFrame extends JFrame implements ActionListener, ComponentListener{
 	private JPanel mainPanel;
 	private RecordPanel recordPanel;               //계산기록 출력 패널 -> 계산수식 출력 패널
-	private ExpressionPanel expressionPanel;                   //프레임 -> 계산수식, 현재 입력값 출력 패널
+	private ExpressionPanel expressionPanel;               //프레임 -> 계산수식, 현재 입력값 출력 패널
 	private CalculatorButtonPanel calculationButtonPanel;  //프레임 -> 계산기 버튼 패널
 	private int panelNumber;  
 	private Dimension frameSize;
@@ -49,10 +49,11 @@ public class CalculatorFrame extends JFrame implements ActionListener, Component
 	private void switchToRecordPanel() {                     //계산기록보기 패널로 전환
 		mainPanel.add(recordPanel, BorderLayout.CENTER);     
 		recordPanel.setRecordPanel();
+    	recordPanel.setBackgroundColor(new Color(240, 240, 240));
 		panelNumber = Constants.RECORD_PANEL_MODE;
 	}
 	private void swtichToCalculationButtonPanel() {          //계산버튼 입력 패널로 전환
-		mainPanel.add(calculationButtonPanel, BorderLayout.CENTER);   
+		mainPanel.add(calculationButtonPanel, BorderLayout.CENTER);  
 		panelNumber = Constants.BUTTON_PANEL_MODE;
 	}
 	public void switchPanel() {
@@ -79,13 +80,14 @@ public class CalculatorFrame extends JFrame implements ActionListener, Component
 	}
 	public void setRecordPanel() {
 		if(frameSize.width >= Constants.MAX_WIDTH) {                //frame을 옆으로 늘리면 기록창 보이기
+			recordPanel.setRecordPanel();
         	recordPanel.setPreferredSize(new Dimension(Constants.RECORD_PANEL_WIDTH, frameSize.height));
         	expressionPanel.setInvisibleForRecordButton();
         	getContentPane().add(recordPanel, BorderLayout.EAST);   
         }
 		if(frameSize.width < Constants.MAX_WIDTH) {
         	getContentPane().removeAll();
-        	recordPanel.setPreferredSize(new Dimension(frameSize.width, frameSize.height));
+        	recordPanel.setPreferredSize(new Dimension(frameSize.width - 10, frameSize.height));
         	getContentPane().add(mainPanel, BorderLayout.CENTER);
         	revalidate();
     		repaint();
