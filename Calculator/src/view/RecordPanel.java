@@ -9,22 +9,23 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
+import Model.ExpressionDTO;
 import utility.Constants;
 
 public class RecordPanel extends JPanel implements ActionListener{
-	private JPanel resultPanel;       //계산기록 출력 패널
+	private JPanel resultPanel;               //계산기록 출력 패널
+	private JPanel recordButtonPanel;         //계산식 버튼을 부착할 패널
 	private JScrollPane recordPanelScroll;    //계산기록 출력 패널 -> 계산수식 출력 패널에 달  스크롤
-	//private JTextArea recordTextArea;
 	private JButton[] recordButton;
-	private ArrayList<String> recordList;     //계산기록 출력 패널 -> 계산수식 출력 패널 -> 계산기록 리스트
+	private ArrayList<ExpressionDTO> recordList;     //계산기록 출력 패널 -> 계산수식 출력 패널 -> 계산기록 리스트
 	private JButton deletionButton;           //계산기록 출력 패널 -> 휴지통 버튼
 	private JPanel deletionButtonPanel;       //휴지통 버튼을 담을 패널
 	
-	public RecordPanel(ArrayList<String> recordList) {
+	public RecordPanel(ArrayList<ExpressionDTO> recordList) {
 		this.recordList = recordList;
 
 		resultPanel = new JPanel();
-		resultPanel.setBackground(new Color(230, 230, 230));
+		recordButtonPanel = new JPanel();
 		
 		ImageIcon icon = new ImageIcon("image\\wastebasket.png");
 		Image image = icon.getImage();
@@ -32,12 +33,27 @@ public class RecordPanel extends JPanel implements ActionListener{
 		ImageIcon changeIcon = new ImageIcon(changeImage);
 
 		deletionButton = new JButton(changeIcon);
-
 		recordPanelScroll = new JScrollPane(resultPanel);
-		setLayout(new BorderLayout());
 		
+		//recordPanelScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		recordPanelScroll.setBorder(new EmptyBorder(0, 0, 0, 0));
+		
+		setLayout(new BorderLayout());
 		setDeletionButtonPanel();
 		setRecordPanel();
+	}
+	public void setBackground() {
+		int listSize = recordList.size();
+		Color color = new Color(230, 230, 230);
+		
+		setBackground(color);
+		resultPanel.setBackground(color);
+		deletionButtonPanel.setBackground(color);;
+		recordButtonPanel.setBackground(color);
+		
+		for(int index = 0; index < listSize; index++) {
+			recordButton[index].setBackground(color);
+		}
 	}
 	private void setDeletionButton() {
 		deletionButton.setPreferredSize(new Dimension(Constants.BUTTON_SIZE,Constants.BUTTON_SIZE));  //계산기록 버튼
@@ -51,7 +67,6 @@ public class RecordPanel extends JPanel implements ActionListener{
 		
 		setDeletionButton();
 		
-		deletionButtonPanel.setBackground(Color.white);
 		deletionButtonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		deletionButtonPanel.add(deletionButton);
 	}
@@ -68,50 +83,53 @@ public class RecordPanel extends JPanel implements ActionListener{
 			add(deletionButtonPanel, "South");
 			setRecordList();
 		}
+
+		setBackground();
 		revalidate();
 		repaint();
 		
 	}
-	public void setExpressionLabel(JLabel expressionLabel, String labelText) {
-		for(int index = 0; index < labelText.length(); index++) {
-			
-		}
+	public JLabel getExpressionLabel(int index) {
+		JLabel expressionLabel;
+		expressionLabel = new JLabel(recordList.get(index).toString());
+		expressionLabel.setFont(new Font("SansSerif", Font.PLAIN, 13));  
+		expressionLabel.setPreferredSize(new Dimension((int)getPreferredSize().getWidth() - 50, 13));
+		expressionLabel.setHorizontalAlignment(JLabel.RIGHT);
 		
+		return expressionLabel;
 	}
 	public void setRecordList() {
 		int listSize = recordList.size();
 		JLabel expressionLabel, resultLabel;
-		JPanel buttonPanel = new JPanel();
 		
-		buttonPanel.setLayout(new GridLayout(listSize, 0));
+		recordButtonPanel.setLayout(new GridLayout(listSize, 0, 0, 40));
 		
-		resultPanel.removeAll();
+		recordButtonPanel.removeAll();
 		recordButton = new JButton[listSize];
 		
 		for(int index = listSize - 1; index >= 0; index--) {
 			recordButton[index] = new JButton();                          //계산식 버튼
-			expressionLabel = new JLabel(recordList.get(index));
-			expressionLabel.setFont(new Font("SansSerif", Font.PLAIN, 13));  
-			expressionLabel.setPreferredSize(new Dimension(Constants.RECORD_PANEL_WIDTH - 50, 13));
-			expressionLabel.setHorizontalAlignment(JLabel.RIGHT);
 			
-			resultLabel = new JLabel("1111");
+			expressionLabel = getExpressionLabel(index);
+
+			resultLabel = new JLabel(recordList.get(index).getResult());
 			resultLabel.setFont(new Font("SansSerif", Font.BOLD, 25)); 
-			resultLabel.setPreferredSize(new Dimension(Constants.RECORD_PANEL_WIDTH - 50, 25));
+			resultLabel.setPreferredSize(new Dimension((int)getPreferredSize().getWidth() - 50, 25));
 			resultLabel.setHorizontalAlignment(JLabel.RIGHT);
 
 			recordButton[index].setLayout(new BorderLayout());
 			recordButton[index].add(expressionLabel, BorderLayout.NORTH);
 			recordButton[index].add(resultLabel, BorderLayout.SOUTH);
-			recordButton[index].setBackground(new Color(230, 230, 230));
 
 			recordButton[index].setHorizontalAlignment(SwingConstants.RIGHT);
 			recordButton[index].setBorderPainted(false);
 
-			buttonPanel.add(recordButton[index]);                         //버튼패널에 계산식버튼 부착
+			recordButtonPanel.add(recordButton[index]);                         //버튼패널에 계산식버튼 부착
 		}
+		recordButtonPanel.revalidate();
+		recordButtonPanel.repaint();
 		
-		resultPanel.add(buttonPanel);
+		resultPanel.add(recordButtonPanel);
 		resultPanel.revalidate();
 		resultPanel.repaint();
 	}

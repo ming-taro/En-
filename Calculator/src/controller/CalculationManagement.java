@@ -23,7 +23,7 @@ public class CalculationManagement implements ActionListener, KeyListener{
 	private RecordPanel recordPanel;
 	private CalculatorFrame calculatorFrame;
 	private ExpressionDTO expressionDTO;
-	private ArrayList<String> recordList; //계산기록 저장
+	private ArrayList<ExpressionDTO> recordList; //계산기록 저장
 	private StringBuilder numberBuilder;             //숫자 입력값 누적
 	private ExpressionCheck expressionCheck;         //계산식 검사(ex 계산이 끝났는지, 연산자를 입력했는지 ...)
 	private ArithmeticOperation arithmeticOperation; //'+', '-', '×', '÷' 
@@ -33,7 +33,7 @@ public class CalculationManagement implements ActionListener, KeyListener{
 
 	public CalculationManagement() {
 		expressionDTO = new ExpressionDTO();
-		recordList = new ArrayList<String>();
+		recordList = new ArrayList<ExpressionDTO>();
 		numberBuilder = new StringBuilder();
 		numberBuilder.append("0");
 		expressionCheck = new ExpressionCheck(numberBuilder, expressionDTO);
@@ -52,7 +52,7 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		calculatorFrame.requestFocus();
 		calculatorFrame.setFocusable(true);
 	}
-	public ArrayList<String> getRecordList(){
+	public ArrayList<ExpressionDTO> getRecordList(){
 		return recordList;
 	}
 	private void addNumber(String number) {              //숫자입력

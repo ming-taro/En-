@@ -7,7 +7,7 @@ public class Constants {
 	public static final int MIN_HEIGHT = 500;
 	public static final int MIN_WIDTH = 300; 
 	public static final int MAX_WIDTH = 570; 
-	public static final int RECORD_PANEL_WIDTH = 350;
+	public static final int RECORD_PANEL_WIDTH = 320;
 
 	public static final int BUTTON_PANEL_MODE = 0;
 	public static final int RECORD_PANEL_MODE = 1;

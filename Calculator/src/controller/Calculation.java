@@ -54,13 +54,15 @@ public class Calculation {
 		
 		return numberBuilder.toString().trim();
 	}
-	public void addToRecordList(ArrayList<String> recordList) {
+	public void addToRecordList(ArrayList<ExpressionDTO> recordList) {
 		if(expressionDTO.getOperator().equals("÷") && expressionDTO.getSecondValue().equals("")) {
 			expressionDTO.setResult("0으로 나눌 수 없습니다.");
+			return;
 		}
-		else recordList.add(expressionDTO.toString());
+		
+		recordList.add(new ExpressionDTO(expressionDTO.getFirstValue(), expressionDTO.getOperator(), expressionDTO.getSecondValue(), expressionDTO.getResult()));
 	}
-	public void calculateExpression(String number, ArrayList<String> recordList) { 
+	public void calculateExpression(String number, ArrayList<ExpressionDTO> recordList) { 
 
 		if(expressionCheck.isCalculationOver()) {                     //이전 계산값이 남아있음(ex '2+3='입력 후 '5'라는 결과값이 남아있는 상태에서 '='을 입력함)
 			expressionDTO.setFirstValue(expressionDTO.getResult());   //현재 결과값에 두번째 숫자를 한번 더 계산한다(첫번째 숫자가 현재의 결과값)

@@ -110,7 +110,7 @@ public class ArithmeticOperation {
 		
 		return numberArray[0] + decimal;
 	}
-	public void manageArithmeticOperation(StringBuilder numberBuilder, String operator, ArrayList<String> recordList) {
+	public void manageArithmeticOperation(StringBuilder numberBuilder, String operator, ArrayList<ExpressionDTO> recordList) {
 		String number = numberBuilder.toString();
 		String firstValue = number;         //첫 연산자 입력시 첫번째값은 현재까지 numberBuilder에 누적된 값
 

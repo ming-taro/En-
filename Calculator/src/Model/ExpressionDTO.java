@@ -2,12 +2,18 @@ package Model;
 
 public class ExpressionDTO {
 	private String firstValue;
-	private String secondValue;
 	private String operator;
+	private String secondValue;
 	private String result;
 	
 	public ExpressionDTO() {
 		InitValue();
+	}
+	public ExpressionDTO(String firstValue, String operator, String secondValue, String result) {
+		this.firstValue = firstValue;
+		this.operator = operator;
+		this.secondValue = secondValue;
+		this.result = result;
 	}
 	public void InitValue() {
 		firstValue = "";

@@ -84,13 +84,15 @@ public class ExpressionPanel extends JPanel{
 		expressionLabel.setText(expression);   //계산식 누적값 출력
 		inputLabel.setText(number); //숫자입력 누적값 출력
 		
-		increaseInputLabel(number);
-		if(inputLabel.getPreferredSize().getWidth() >= getSize().getWidth()) decreaseInputLabel(number);
-		setPreferredSize(new Dimension(width, 204));
-		System.out.println(inputLabel.getPreferredSize() + "<>" + getSize());
+		increaseInputLabel();
+		decreaseInputLabel();
 		
+		setPreferredSize(new Dimension(width, 204));
+		//System.out.println(inputLabel.getPreferredSize() + "<>" + getSize());
 	}
-	public void decreaseInputLabel(String number) {
+	public void decreaseInputLabel() {
+		if(inputLabel.getPreferredSize().getWidth() < getSize().getWidth()) return;
+		
 		Font fontBeforeChange = inputLabel.getFont();
 		Font fontAfterChange = new Font(fontBeforeChange.getName(), fontBeforeChange.getStyle(), Constants.INPUT_FONT_SIZE);
 		int fontSize = 0;
@@ -107,7 +109,7 @@ public class ExpressionPanel extends JPanel{
             fontSize++;    
         }
 	}
-	public void increaseInputLabel(String number) {
+	public void increaseInputLabel() {
 		Font fontBeforeChange = inputLabel.getFont();
 		Font fontAfterChange = new Font(fontBeforeChange.getName(), fontBeforeChange.getStyle(), fontBeforeChange.getSize());
 		int fontSize = 0;

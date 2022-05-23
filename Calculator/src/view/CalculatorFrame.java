@@ -69,29 +69,38 @@ public class CalculatorFrame extends JFrame implements ActionListener, Component
 	public void actionPerformed(ActionEvent event) {
 		switchPanel();
 	}
-	@Override
-	public void componentResized(ComponentEvent e) {    
-		frameSize = this.getSize();
-		
-        if(frameSize.width < Constants.MIN_WIDTH) {     //frame 최소크기 설정   
+	public void setFrameSize() {
+		if(frameSize.width < Constants.MIN_WIDTH) {     //frame 최소크기 설정   
             setSize(Constants.MIN_WIDTH, frameSize.height);
         }
-        if(frameSize.height < Constants.MIN_HEIGHT) {
+		if(frameSize.height < Constants.MIN_HEIGHT) {
         	setSize(frameSize.width, Constants.MIN_HEIGHT);
         }
-        
-        if(frameSize.width >= Constants.MAX_WIDTH) {                 //frame을 옆으로 늘리면 기록창 보이기
+	}
+	public void setRecordPanel() {
+		if(frameSize.width >= Constants.MAX_WIDTH) {                //frame을 옆으로 늘리면 기록창 보이기
         	recordPanel.setPreferredSize(new Dimension(Constants.RECORD_PANEL_WIDTH, frameSize.height));
-    		expressionPanel.setInvisibleForRecordButton();
-        	getContentPane().add(recordPanel, BorderLayout.EAST);   //계산기 frame에 계산버튼 패널 추가
+        	expressionPanel.setInvisibleForRecordButton();
+        	getContentPane().add(recordPanel, BorderLayout.EAST);   
         }
-        if(frameSize.width < Constants.MAX_WIDTH) {
+		if(frameSize.width < Constants.MAX_WIDTH) {
         	getContentPane().removeAll();
+        	recordPanel.setPreferredSize(new Dimension(frameSize.width, frameSize.height));
         	getContentPane().add(mainPanel, BorderLayout.CENTER);
         	revalidate();
     		repaint();
         	expressionPanel.setVisibleForRecordButton();
         }
+	}
+	@Override
+	public void componentResized(ComponentEvent e) {    
+		frameSize = this.getSize();
+		
+		expressionPanel.increaseInputLabel();    //창 크기 조절에 따라 입력숫자 크기 조절
+		expressionPanel.decreaseInputLabel();
+		
+		setFrameSize();
+		setRecordPanel();
         
         if(panelNumber == Constants.RECORD_PANEL_MODE) switchPanel();  //기록버튼을 누른 후(기록창 뜸) 창 크기 조절시 다시 계산버튼으로 돌아옴
 	}
