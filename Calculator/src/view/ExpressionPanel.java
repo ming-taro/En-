@@ -80,7 +80,44 @@ public class ExpressionPanel extends JPanel{
 		add(inputPanel);
 	}
 	public void setExpressionLabel(String expression, String number) {
+		int width = (int) getPreferredSize().getWidth();
 		expressionLabel.setText(expression);   //계산식 누적값 출력
 		inputLabel.setText(number); //숫자입력 누적값 출력
+		
+		increaseInputLabel(number);
+		if(inputLabel.getPreferredSize().getWidth() >= getSize().getWidth()) decreaseInputLabel(number);
+		setPreferredSize(new Dimension(width, 204));
+		System.out.println(inputLabel.getPreferredSize() + "<>" + getSize());
+		
+	}
+	public void decreaseInputLabel(String number) {
+		Font fontBeforeChange = inputLabel.getFont();
+		Font fontAfterChange = new Font(fontBeforeChange.getName(), fontBeforeChange.getStyle(), Constants.INPUT_FONT_SIZE);
+		int fontSize = 0;
+		
+		while(true) {
+			fontBeforeChange = inputLabel.getFont();
+			fontAfterChange = new Font(fontBeforeChange.getName(), fontBeforeChange.getStyle(), fontSize);
+            inputLabel.setFont(fontAfterChange);
+            if(inputLabel.getPreferredSize().getWidth() > getSize().getWidth() - 10) {
+            	fontAfterChange = new Font(fontBeforeChange.getName(), fontBeforeChange.getStyle(), --fontSize);
+                inputLabel.setFont(fontAfterChange);
+                break;
+            }
+            fontSize++;    
+        }
+	}
+	public void increaseInputLabel(String number) {
+		Font fontBeforeChange = inputLabel.getFont();
+		Font fontAfterChange = new Font(fontBeforeChange.getName(), fontBeforeChange.getStyle(), fontBeforeChange.getSize());
+		int fontSize = 0;
+		
+		while(true) {
+			fontBeforeChange = inputLabel.getFont();
+			fontAfterChange = new Font(fontBeforeChange.getName(), fontBeforeChange.getStyle(), fontSize);
+            inputLabel.setFont(fontAfterChange);
+            if(inputLabel.getFont().getSize() == Constants.INPUT_FONT_SIZE) break;
+            fontSize++;    
+        }
 	}
 }
