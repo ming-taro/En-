@@ -66,11 +66,10 @@ public class FormatOfExpression {
 			return result.toString();
 		}
 		
+		if(numberToChange.indexOf(".") == -	1) return numberToChange.replace("E", ".e"); 
+		
 		String firstValue = Double.toString(Double.parseDouble(numberToChange));  //지수표현식으로 바꿈
 		return firstValue.replace("E", "e");    
-		
-		//String secondValue = numberToChange.substring(numberToChange.indexOf("E")); //원본값이 이미 지수표현식으로 되어있었다면 원본의 'E-n'표현부분을 뒤에 붙여줌
-		//return (firstValue + secondValue).replace("E", "e");
 	}
 	public String formatNumber(String number) {
 		if(expressionCheck.isDividedByZero() || expressionCheck.isStackOverflow()) return expressionDTO.getResult();
