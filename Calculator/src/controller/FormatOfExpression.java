@@ -36,7 +36,7 @@ public class FormatOfExpression {
 		return numberBuilder.toString().trim();
 	}
 	public String setNumber(String numberToChange) { 
-		if(expressionCheck.isDividedByZero() || expressionCheck.isStackOverflow()) return expressionDTO.getFirstValue();
+		if(expressionCheck.isDividedByZero() || expressionCheck.isResultUndefined() || expressionCheck.isStackOverflow()) return expressionDTO.getFirstValue();
 		if(expressionCheck.isNegateOperation(numberToChange)) return numberToChange;
 		if(expressionCheck.isStackOverflow()) return expressionDTO.getResult();
 		if(numberToChange.equals("")) return "";
@@ -73,7 +73,7 @@ public class FormatOfExpression {
 		return firstValue.replace("E", "e");    
 	}
 	public String formatNumber(String number) {
-		if(expressionCheck.isDividedByZero() || expressionCheck.isStackOverflow()) return expressionDTO.getResult();
+		if(expressionCheck.isDividedByZero() || expressionCheck.isResultUndefined() || expressionCheck.isStackOverflow()) return expressionDTO.getResult();
 		
 		if(number.indexOf(".") == -1) return number.replaceAll(Constants.THOUSAND_SEPARATOR_REGEX, ","); //정수 -> 1000단위 콤마만 표시
 

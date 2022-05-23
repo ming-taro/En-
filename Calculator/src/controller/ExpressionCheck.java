@@ -36,6 +36,10 @@ public class ExpressionCheck {
 		if(expressionDTO.getResult().equals("0으로 나눌 수 없습니다.")) return Constants.IS_DIVIDED_BY_ZERO;
 		return Constants.IS_NOT_DIVIDED_BY_ZERO;
 	}
+	public boolean isResultUndefined() {
+		if(expressionDTO.getResult().equals("정의되지 않은 결과입니다.")) return Constants.IS_DIVIDED_BY_ZERO;
+		return Constants.IS_NOT_DIVIDED_BY_ZERO;
+	}
 	public boolean isDeletionButtonPressed(String buttonText) {
 		if(buttonText.equals("=") || buttonText.equals("←")) return Constants.IS_DELETION_BUTTON_PRESSED;
 		return Constants.IS_NOT_DELETION_BUTTON_PRESSED;

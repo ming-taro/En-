@@ -110,7 +110,7 @@ public class RecordPanel extends JPanel implements ActionListener{
 			expressionLabel = new JLabel();
 			expressionLabel.setLayout(new GridLayout(2, 0));
 			
-			JLabel firstValueLabel = new JLabel(firstValue + " " + expressionDTO.getOperator());
+			JLabel firstValueLabel = new JLabel(firstValue + "    " + expressionDTO.getOperator());
 			firstValueLabel.setHorizontalAlignment(JLabel.RIGHT);
 			firstValueLabel.setFont(new Font("SansSerif", Font.PLAIN, 13)); 
 			

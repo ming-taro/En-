@@ -18,16 +18,16 @@ public class ArithmeticOperation {
 		this.formatOfExpression = formatOfExpression;
 	}
 	private String divideNumber(BigDecimal firstValue, BigDecimal secondValue) {
+		if(firstValue.doubleValue() == 0 && secondValue.doubleValue() == 0) {
+			expressionDTO.setSecondValue("");
+			return "정의되지 않은 결과입니다.";
+		}
 		if(secondValue.doubleValue() == 0) {
 			expressionDTO.setSecondValue("");
 			return "0으로 나눌 수 없습니다.";
 		}
-		//System.out.println(firstValue.toString());
-		return firstValue.divide(secondValue, 1000, RoundingMode.HALF_UP).toString();
-		//double result = firstValue.divide(secondValue, 16, RoundingMode.HALF_EVEN).doubleValue();
 		
-		//if(Double.toString(result).length() <= 16) return Double.toString(result);
-		//return firstValue.divide(secondValue, 16, RoundingMode.HALF_EVEN).toString();
+		return firstValue.divide(secondValue, 1000, RoundingMode.HALF_UP).toString();
 	}
 	private String multiplyNegativeNumber(String number) {
 		StringBuilder numberBuilder = new StringBuilder().append(number);
@@ -80,15 +80,12 @@ public class ArithmeticOperation {
 		}
 		expressionDTO.setResult(result.toString());
 	}
-	public void addToRecordList(StringBuilder numberBuilder, String operator, ArrayList<String> recordList) {
-		String fristValue;
+	public void addToRecordList(ArrayList<ExpressionDTO> recordList) {
+		if(expressionCheck.isDividedByZero() || expressionCheck.isResultUndefined()) return;
+		if(expressionCheck.isStackOverflow()) return;
 		
-		if(expressionDTO.getResult().equals("0으로 나눌 수 없습니다.")) return;    //0으로 나누려고 한 경우 -> 기록을 저장하지 않음
-		
-		recordList.add(expressionDTO.toString());                 //현재까지 완성된 계산식 계산기록리스트에 저장
-		fristValue = expressionDTO.getResult();                   //첫번째값 -> 현재 계산식의 계산결과
-		expressionDTO.InitValue();                                //DTO값 초기화
-		setExpression(numberBuilder, fristValue, operator);     //DTO값 재설정
+		if(recordList.size() == 20) recordList.remove(0);
+		recordList.add(new ExpressionDTO(expressionDTO.getFirstValue(), expressionDTO.getOperator(), expressionDTO.getSecondValue(), expressionDTO.getResult()));
 	}
 	private void setExpression(StringBuilder numberBuilder, String firstValue, String operator) {  //연산자 입력
 		expressionDTO.InitValue();                    //이전 계산결과값이 저장되어있는 DTO정보 초기화
@@ -109,11 +106,14 @@ public class ArithmeticOperation {
 		
 		if(expressionCheck.isThereSecondValue(number)) {         //첫 연산자 입력(=저장된 연산자,두번째값이 없음)시 if문을 실행하지 않고 setExpression만 실행(ex '2'입력 후 '+'입력  => '2+')
 			expressionDTO.setSecondValue(formatOfExpression.removeZeroAfterValue(number));     //두번째값 입력 중 연산자 입력시  누적된 두번째값 DTO에 저장 후 계산
-			calculateExpression();                    
+			calculateExpression();                               //입력된 정보로 계산 수행
 		}	
-		
-		if(expressionCheck.isDividedByZero()) return;
-		if(expressionCheck.isCalculationOver()) firstValue = expressionDTO.getResult();   //계산 결과값이 첫번째 값이 됨 (ex '2+3'입력 후 '-'입력 => '5-' / ex '2+3=5'입력 후 '-'입력 => '5-')
+
+		if(expressionCheck.isDividedByZero() || expressionCheck.isResultUndefined()) return;   //계산수행 중 0으로 나누거나 0을 0으로 나누려 했을 때 -> 계산 종료
+		if(expressionCheck.isCalculationOver()) {
+			addToRecordList(recordList);
+			firstValue = expressionDTO.getResult();   //계산을 정상적으로 완료한 후 -> 계산 결과값이 첫번째 값이 됨 (ex '2+3'입력 후 '-'입력 => '5-' / ex '2+3=5'입력 후 '-'입력 => '5-')
+		}
 			
 		setExpression(numberBuilder, firstValue, operator);                      //계산식(첫번째값,연산자) 저장 및 누적된 입력값 초기화
 	}

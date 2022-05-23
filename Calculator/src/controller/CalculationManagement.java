@@ -120,7 +120,7 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		
 		takeButtonOnCalculator(buttonText);   //버튼기능 수행
 
-		if(expressionCheck.isDividedByZero() || expressionCheck.isStackOverflow()) {
+		if(expressionCheck.isDividedByZero() || expressionCheck.isResultUndefined() || expressionCheck.isStackOverflow()) {
 			calculationButtonPanel.deactivateOperatorButton();  //'÷0'실행시 연산자버튼 비활성화
 		}
 		else {
@@ -134,7 +134,7 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		JButton button = (JButton) event.getSource();
 		String buttonText = button.getText();
 		
-		if((expressionCheck.isDividedByZero() || expressionCheck.isStackOverflow()) && expressionCheck.isDeletionButtonPressed(buttonText)) {
+		if((expressionCheck.isDividedByZero() || expressionCheck.isResultUndefined() || expressionCheck.isStackOverflow()) && expressionCheck.isDeletionButtonPressed(buttonText)) {
 			buttonText = "C";   //'÷0'실행 후 '=' or '←'클릭 == 'C'버튼
 		}
 		
@@ -162,7 +162,7 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		}
 		if(keyChar.equals("*")) keyChar = "×";      //키보드 입력 -> '*'
 		
-		if((expressionCheck.isDividedByZero() || expressionCheck.isStackOverflow()) && expressionCheck.isDeletionButtonPressed(keyChar)) {
+		if((expressionCheck.isDividedByZero() || expressionCheck.isResultUndefined() || expressionCheck.isStackOverflow()) && expressionCheck.isDeletionButtonPressed(keyChar)) {
 			keyChar = "C";   //'÷0'실행 후 '='입력 == 'C'버튼
 		}
 		setCalculator(keyChar);

@@ -20,7 +20,7 @@ public class Calculation {
 		String result = expressionDTO.getResult();
 		int beginIndex;
 		
-		if(result.equals("") || expressionCheck.isDividedByZero()) return;
+		if(result.equals("") || expressionCheck.isDividedByZero() || expressionCheck.isResultUndefined()) return;
 		
 		result = String.format("%.15e", new BigDecimal(result));
 		beginIndex = result.indexOf("e") + 2;
@@ -43,16 +43,6 @@ public class Calculation {
 			else break;
 		}
 	}
-	public void addToRecordList(ArrayList<ExpressionDTO> recordList) {
-		if(expressionDTO.getOperator().equals("÷") && expressionDTO.getSecondValue().equals("")) {
-			expressionDTO.setResult("0으로 나눌 수 없습니다.");
-			return;
-		}
-		
-		if(expressionCheck.isStackOverflow()) return;
-		
-		recordList.add(new ExpressionDTO(expressionDTO.getFirstValue(), expressionDTO.getOperator(), expressionDTO.getSecondValue(), expressionDTO.getResult()));
-	}
 	public void calculateExpression(String number, ArrayList<ExpressionDTO> recordList) { 
 
 		if(expressionCheck.isCalculationOver()) {                     //이전 계산값이 남아있음(ex '2+3='입력 후 '5'라는 결과값이 남아있는 상태에서 '='을 입력함)
@@ -71,7 +61,6 @@ public class Calculation {
 		arithmeticOperation.calculateExpression();        //현재까지 입력한 값 계산 후 DTO에 저장
 		
 		checkStackOverflow();
-		addToRecordList(recordList);
-		System.out.println(expressionDTO.toString());
+		arithmeticOperation.addToRecordList(recordList);
 	}
 }
