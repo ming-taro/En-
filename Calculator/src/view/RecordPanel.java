@@ -105,7 +105,6 @@ public class RecordPanel extends JPanel implements ActionListener{
 		
 		expressionLabel = new JLabel(firstValue + " " + expressionDTO.getOperator() + " " + secondValue + " =");
 		expressionLabel.setFont(new Font("SansSerif", Font.PLAIN, 13)); 
-		//System.out.println("<>" + expressionLabel.getPreferredSize().getWidth() + " / " + getPreferredSize().getWidth());
 		
 		if(expressionLabel.getPreferredSize().getWidth() > getPreferredSize().getWidth() - 50){
 			expressionLabel = new JLabel();

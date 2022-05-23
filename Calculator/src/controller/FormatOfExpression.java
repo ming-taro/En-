@@ -21,6 +21,7 @@ public class FormatOfExpression {
 		StringBuilder numberBuilder = new StringBuilder();
 		numberBuilder.append(number);
 		
+		if(number.indexOf("E") != -1) return number;
 		if(number.indexOf(".") == -1) return number;
 		
 		for(int index = numberBuilder.length() - 1; index >= 0; index--) {
@@ -31,29 +32,45 @@ public class FormatOfExpression {
 			}
 			else break;
 		}
-		System.out.println(numberBuilder.toString() + "/");
+		
 		return numberBuilder.toString().trim();
 	}
 	public String setNumber(String numberToChange) { 
 		if(expressionCheck.isDividedByZero() || expressionCheck.isStackOverflow()) return expressionDTO.getFirstValue();
 		if(expressionCheck.isNegateOperation(numberToChange)) return numberToChange;
 		if(expressionCheck.isStackOverflow()) return expressionDTO.getResult();
-		
+		if(numberToChange.equals("")) return "";
+		numberToChange = removeZeroAfterValue(numberToChange);
+
 		BigDecimal number = new BigDecimal(numberToChange);
 		
-		if(number.remainder(new BigDecimal(1)).compareTo(new BigDecimal(0)) == 0) { //결과값이 정수인 경우
-			if(number.toString().length() > 16) return String.format("%.15e", number);
-			return number.toString();
+		if(number.remainder(new BigDecimal(1)).compareTo(new BigDecimal(0)) == 0) {     //결과값이 정수인 경우
+			if(number.toString().length() > 16) return String.format("%.15e", number);  //17자리 이상 -> 지수표현방식
+			return numberToChange;                 //16자리 이하 -> 정수 그대로 출력
 		}
-		if(number.toString().length() <= 17) {
-			return numberToChange; //결과값이 실수이면서 숫자의 최대길이인 16(소수점 포함 17)을 초과하지 않은 경우 -> 결과 그대로 저장
+		if(numberToChange.indexOf("E") == -1 && number.toString().length() <= 17) {
+			System.out.println("아");
+			return String.format("%.15f", number); //결과값이 실수이면서 숫자의 최대길이인 16(소수점 포함 17)을 초과하지 않은 경우 -> 결과 그대로 저장
 		}
 		
-		String[] numberArray = number.toString().split("\\.");   //소수점 기준 -> 정수부분과 소수부분으로 나눔
-		int length = 16 - numberArray[0].length();
-
-		BigDecimal result = number.setScale(length, RoundingMode.HALF_UP);
-		return result.toString();
+		int cnt = 0;
+		for(int index = 0; index <= 4; index++) {
+			if(index == 1) continue;
+			if(numberToChange.charAt(index) == '0') cnt++;
+		}
+		
+		if(numberToChange.indexOf("E") == -1 && cnt < 4) {
+			String[] numberArray = number.toString().split("\\.");   //소수점 기준 -> 정수부분과 소수부분으로 나눔
+			int length = 16 - numberArray[0].length();
+			BigDecimal result = number.setScale(length, RoundingMode.HALF_UP);
+			return result.toString();
+		}
+		
+		String firstValue = Double.toString(Double.parseDouble(numberToChange));  //지수표현식으로 바꿈
+		return firstValue.replace("E", "e");    
+		
+		//String secondValue = numberToChange.substring(numberToChange.indexOf("E")); //원본값이 이미 지수표현식으로 되어있었다면 원본의 'E-n'표현부분을 뒤에 붙여줌
+		//return (firstValue + secondValue).replace("E", "e");
 	}
 	public String formatNumber(String number) {
 		if(expressionCheck.isDividedByZero() || expressionCheck.isStackOverflow()) return expressionDTO.getResult();

@@ -22,11 +22,12 @@ public class ArithmeticOperation {
 			expressionDTO.setSecondValue("");
 			return "0으로 나눌 수 없습니다.";
 		}
+		//System.out.println(firstValue.toString());
+		return firstValue.divide(secondValue, 1000, RoundingMode.HALF_UP).toString();
+		//double result = firstValue.divide(secondValue, 16, RoundingMode.HALF_EVEN).doubleValue();
 		
-		double result = firstValue.divide(secondValue, 16, RoundingMode.HALF_EVEN).doubleValue();
-		
-		if(Double.toString(result).length() <= 16) return Double.toString(result);
-		return firstValue.divide(secondValue, 16, RoundingMode.HALF_EVEN).toString();
+		//if(Double.toString(result).length() <= 16) return Double.toString(result);
+		//return firstValue.divide(secondValue, 16, RoundingMode.HALF_EVEN).toString();
 	}
 	private String multiplyNegativeNumber(String number) {
 		StringBuilder numberBuilder = new StringBuilder().append(number);

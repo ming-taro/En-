@@ -8,11 +8,13 @@ public class Calculation {
 	private ExpressionDTO expressionDTO;                //현재 입력한 값들
 	private ArithmeticOperation arithmeticOperation;    //사칙연산 계산
 	private ExpressionCheck expressionCheck;
+	private FormatOfExpression formatOfExpression;
 	
-	public Calculation(ExpressionDTO expressionDTO, ArithmeticOperation arithmeticOperation, ExpressionCheck expressionCheck) {
+	public Calculation(ExpressionDTO expressionDTO, ArithmeticOperation arithmeticOperation, ExpressionCheck expressionCheck, FormatOfExpression formatOfExpression) {
 		this.expressionDTO = expressionDTO;
 		this.arithmeticOperation = arithmeticOperation;
 		this.expressionCheck = expressionCheck;
+		this.formatOfExpression = formatOfExpression;
 	}
 	private void checkStackOverflow() {
 		String result = expressionDTO.getResult();
@@ -29,11 +31,11 @@ public class Calculation {
 	}
 	public void setFirstValue(String number) {
 		if(expressionCheck.isNegateOperation(expressionDTO.getFirstValue())) return;
-		expressionDTO.setFirstValue(setNumber(number));
+		expressionDTO.setFirstValue(formatOfExpression.removeZeroAfterValue(number));
 	}
 	public void setSecondValue(String number) {
 		if(expressionCheck.isNegateOperation(expressionDTO.getSecondValue())) return;
-		expressionDTO.setSecondValue(setNumber(number));
+		expressionDTO.setSecondValue(formatOfExpression.removeZeroAfterValue(number));
 	}
 	public void removeZeroAfterValue(StringBuilder numberBuilder) {
 		for(int index = numberBuilder.length() - 1; index >= 0; index--) {
@@ -41,24 +43,13 @@ public class Calculation {
 			else break;
 		}
 	}
-	public String setNumber(String numberToChange) {
-		double number = Double.parseDouble(numberToChange);
-		
-		if(number%1 == 0) {
-			if(numberToChange.length() <= 15) return Long.toString((long)number);       //결과값이 정수인 경우
-			return numberToChange;
-		}
-		
-		StringBuilder numberBuilder = new StringBuilder().append(numberToChange);
-		removeZeroAfterValue(numberBuilder);
-		
-		return numberBuilder.toString().trim();
-	}
 	public void addToRecordList(ArrayList<ExpressionDTO> recordList) {
 		if(expressionDTO.getOperator().equals("÷") && expressionDTO.getSecondValue().equals("")) {
 			expressionDTO.setResult("0으로 나눌 수 없습니다.");
 			return;
 		}
+		
+		if(expressionCheck.isStackOverflow()) return;
 		
 		recordList.add(new ExpressionDTO(expressionDTO.getFirstValue(), expressionDTO.getOperator(), expressionDTO.getSecondValue(), expressionDTO.getResult()));
 	}
@@ -74,7 +65,7 @@ public class Calculation {
 			expressionDTO.setSecondValue(expressionDTO.getFirstValue());  
 		}
 		else {                                           //숫자입력 후 '='을 입력함(ex '2'입력 후 '='을 입력함)
-			expressionDTO.setFirstValue(setNumber(number)); 
+			expressionDTO.setFirstValue(formatOfExpression.removeZeroAfterValue(number)); 
 		}
 		
 		arithmeticOperation.calculateExpression();        //현재까지 입력한 값 계산 후 DTO에 저장

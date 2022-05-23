@@ -46,7 +46,7 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		calculatorFrame =  new CalculatorFrame(expressionPanel, calculationButtonPanel, recordPanel); //프레임에 패널 부착, 계산기록 리스트 연결
 
 		arithmeticOperation = new ArithmeticOperation(expressionDTO, expressionCheck, formatOfExpression);
-		calculation = new Calculation(expressionDTO, arithmeticOperation, expressionCheck);
+		calculation = new Calculation(expressionDTO, arithmeticOperation, expressionCheck, formatOfExpression);
 		numberDeletion = new Deletion(expressionDTO, expressionCheck);
 		negate = new Negate(expressionDTO, expressionCheck);
 		
@@ -95,7 +95,7 @@ public class CalculationManagement implements ActionListener, KeyListener{
 			break;
 		case '+':case '-':case '×':case '÷':  //사칙연산
 			arithmeticOperation.manageArithmeticOperation(numberBuilder, buttonText, recordList); 
-			number = expressionDTO.getFirstValue();
+			number = formatOfExpression.setNumber(expressionDTO.getFirstValue());
 			break;
 		case '.': 
 			addPoint();
@@ -123,8 +123,10 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		if(expressionCheck.isDividedByZero() || expressionCheck.isStackOverflow()) {
 			calculationButtonPanel.deactivateOperatorButton();  //'÷0'실행시 연산자버튼 비활성화
 		}
-		else calculationButtonPanel.activateOperatorButton();
-		
+		else {
+			calculationButtonPanel.activateOperatorButton();
+		}
+
 		recordPanel.setRecordPanel();
 	}
 	@Override
