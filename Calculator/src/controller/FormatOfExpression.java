@@ -17,6 +17,17 @@ public class FormatOfExpression {
 	public void setExpressionDTO(ExpressionDTO expressionDTO) {
 		this.expressionDTO = expressionDTO;
 	}
+	public String removeZeroBeforeE(String number) {
+		StringBuilder numberBuilder = new StringBuilder();
+				
+		numberBuilder.append(number.substring(0, number.indexOf("e")));
+		
+		for(int index = numberBuilder.length() - 1; index >= 0; index--) {
+			if(numberBuilder.charAt(index) == '0') numberBuilder.setCharAt(index, ' ');
+			else break;
+		}
+		return numberBuilder.toString().trim() + number.substring(number.indexOf("e"));    //지수표현식으로 되어 있는 값은 E앞에 있는 의미없는 0을 지워줌
+	}
 	public String removeZeroAfterValue(String number) {
 		StringBuilder numberBuilder = new StringBuilder();
 		numberBuilder.append(number);
@@ -46,7 +57,7 @@ public class FormatOfExpression {
 		BigDecimal number = new BigDecimal(numberToChange);
 
 		if(numberToChange.indexOf("E") == -1 && numberToChange.indexOf(".") == -1) {     //결과값이 정수인 경우
-			if(numberToChange.length() > 16) return String.format("%.15e", number);  //17자리 이상 -> 지수표현방식
+			if(numberToChange.length() > 16) return removeZeroBeforeE(String.format("%.15e", number));  //17자리 이상 -> 지수표현방식
 			return numberToChange;                 //16자리 이하 -> 정수 그대로 출력
 		}
 		if(numberToChange.indexOf("E") == -1 && numberToChange.length() <= 17) {
@@ -68,8 +79,10 @@ public class FormatOfExpression {
 		}
 		if(numberToChange.indexOf(".") == -	1) return numberToChange.replace("E", ".e"); 
 		
-		String firstValue = Double.toString(Double.parseDouble(numberToChange));  //지수표현식으로 바꿈
-		return firstValue.replace("E", "e");    
+		String value = Double.toString(Double.parseDouble(numberToChange)).replace("E", "e");
+		value = removeZeroBeforeE(value);  //지수표현식으로 바꿈
+		
+		return value;    
 	}
 	public String formatNumber(String number) {
 		if(expressionCheck.isDividedByZero() || expressionCheck.isResultUndefined() || expressionCheck.isStackOverflow()) return expressionDTO.getResult();
