@@ -44,13 +44,12 @@ public class FormatOfExpression {
 		numberToChange = removeZeroAfterValue(numberToChange);
 
 		BigDecimal number = new BigDecimal(numberToChange);
-		
-		if(numberToChange.indexOf(".") == -1) {     //결과값이 정수인 경우
+
+		if(numberToChange.indexOf("E") == -1 && numberToChange.indexOf(".") == -1) {     //결과값이 정수인 경우
 			if(numberToChange.length() > 16) return String.format("%.15e", number);  //17자리 이상 -> 지수표현방식
 			return numberToChange;                 //16자리 이하 -> 정수 그대로 출력
 		}
 		if(numberToChange.indexOf("E") == -1 && numberToChange.length() <= 17) {
-			System.out.println(numberToChange);
 			int length = numberToChange.substring(numberToChange.indexOf(".") + 1).length();//소수부분 길이
 			return String.format("%." + length +"f", number); //결과값이 실수이면서 숫자의 최대길이인 16(소수점 포함 17)을 초과하지 않은 경우 -> 결과 그대로 저장
 		}
@@ -67,7 +66,6 @@ public class FormatOfExpression {
 			BigDecimal result = number.setScale(length, RoundingMode.HALF_UP);
 			return result.toString();
 		}
-		
 		if(numberToChange.indexOf(".") == -	1) return numberToChange.replace("E", ".e"); 
 		
 		String firstValue = Double.toString(Double.parseDouble(numberToChange));  //지수표현식으로 바꿈

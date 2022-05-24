@@ -88,7 +88,6 @@ public class ExpressionPanel extends JPanel{
 		decreaseInputLabel();
 		
 		setPreferredSize(new Dimension(width, 204));
-		//System.out.println(inputLabel.getPreferredSize() + "<>" + getSize());
 	}
 	public void decreaseInputLabel() {
 		if(inputLabel.getPreferredSize().getWidth() < getSize().getWidth()) return;

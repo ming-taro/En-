@@ -1,9 +1,12 @@
 package controller;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -31,6 +34,8 @@ public class CalculationManagement implements ActionListener, KeyListener{
 	private Deletion numberDeletion;                 //'C', 'CE', '←'
 	private Negate negate;                           //'±'
 	private FormatOfExpression formatOfExpression;
+	private EventHandlingForMouse mouseListener;
+	private Color buttonColor;
 	
 	public CalculationManagement() {
 		expressionDTO = new ExpressionDTO();
@@ -39,17 +44,17 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		numberBuilder.append("0");
 		expressionCheck = new ExpressionCheck(numberBuilder, expressionDTO);
 		formatOfExpression = new FormatOfExpression(expressionDTO, expressionCheck);
+		mouseListener = new EventHandlingForMouse();
 		
 		expressionPanel = new ExpressionPanel();                       //계산식 출력 패널
-		calculationButtonPanel = new CalculatorButtonPanel(this);      //버튼 클릭 패널
-		recordPanel = new RecordPanel(expressionCheck, recordList, this);
+		calculationButtonPanel = new CalculatorButtonPanel(this, mouseListener);      //버튼 클릭 패널
+		recordPanel = new RecordPanel(expressionCheck, recordList, this, mouseListener);
 		calculatorFrame =  new CalculatorFrame(expressionPanel, calculationButtonPanel, recordPanel); //프레임에 패널 부착, 계산기록 리스트 연결
 
 		arithmeticOperation = new ArithmeticOperation(expressionDTO, expressionCheck, formatOfExpression);
 		calculation = new Calculation(expressionDTO, arithmeticOperation, expressionCheck, formatOfExpression);
 		numberDeletion = new Deletion(expressionDTO, expressionCheck);
 		negate = new Negate(expressionDTO, expressionCheck);
-		
 		
 		calculatorFrame.addKeyListener(this);
 		calculatorFrame.requestFocus();
@@ -145,8 +150,9 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		JButton button = (JButton) event.getSource();
 		String buttonText = button.getText();
 		
-		if(buttonText == "") {
-			setExpressionDTO(button);
+		if(buttonText == "") {         //계산기록창에서 계산기록 중 하나를 클릭한 경우(label로 DTO값을 버튼에 출력했기 때문에 text값이 없음)
+			setExpressionDTO(button);  //클릭한 계산식으로 현재 DTO에 저장된 값 변경
+			if(calculatorFrame.getPanelNumber() == Constants.RECORD_PANEL_MODE) calculatorFrame.switchPanel();   //기록버튼을 누른 후 기록창에서 불러올 계산기록 클릭 -> 화면에 불러온 DTO정보 출력, 버튼패널로 바꿈
 			return;
 		}
 		
@@ -183,9 +189,9 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		setCalculator(keyChar);
 	}
 	@Override
-	public void keyTyped(KeyEvent e) {
+	public void keyTyped(KeyEvent event) {
 	}
 	@Override
-	public void keyReleased(KeyEvent e) {
+	public void keyReleased(KeyEvent event) {
 	}
 }

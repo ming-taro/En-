@@ -10,6 +10,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 import Model.ExpressionDTO;
+import controller.EventHandlingForMouse;
 import controller.ExpressionCheck;
 import controller.FormatOfExpression;
 import utility.Constants;
@@ -24,10 +25,12 @@ public class RecordPanel extends JPanel implements ActionListener{
 	private JPanel deletionButtonPanel;       //휴지통 버튼을 담을 패널
 	private FormatOfExpression formatOfExpression;
 	private ActionListener recordButtonListener;
+	private EventHandlingForMouse mouseListener;
 	
-	public RecordPanel(ExpressionCheck expressionCheck, ArrayList<ExpressionDTO> recordList, ActionListener recordButtonListener) {
+	public RecordPanel(ExpressionCheck expressionCheck, ArrayList<ExpressionDTO> recordList, ActionListener recordButtonListener, EventHandlingForMouse mouseListener) {
 		this.recordList = recordList;
 		this.recordButtonListener = recordButtonListener;
+		this.mouseListener = mouseListener;
 		
 		formatOfExpression = new FormatOfExpression(new ExpressionDTO(), expressionCheck);
 		resultPanel = new JPanel();
@@ -66,6 +69,7 @@ public class RecordPanel extends JPanel implements ActionListener{
 		deletionButton.setFocusPainted(false);
 		deletionButton.setContentAreaFilled(false);
 		deletionButton.addActionListener(this);
+		deletionButton.addMouseListener(mouseListener);
 	}
 	private void setDeletionButtonPanel() {
 		deletionButtonPanel = new JPanel();
@@ -184,6 +188,7 @@ public class RecordPanel extends JPanel implements ActionListener{
 			recordButton[index].setHorizontalAlignment(SwingConstants.RIGHT);
 			recordButton[index].setBorderPainted(false);
 			recordButton[index].addActionListener(recordButtonListener);
+			recordButton[index].addMouseListener(mouseListener);
 
 			recordButtonPanel.add(recordButton[index]);                         //버튼패널에 계산식버튼 부착
 		}

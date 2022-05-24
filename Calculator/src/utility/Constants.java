@@ -71,4 +71,7 @@ public class Constants {
 	
 	public static final boolean IS_DELETION_BUTTON_PRESSED = true;
 	public static final boolean IS_NOT_DELETION_BUTTON_PRESSED = false;
+	
+	public static final boolean IS_CALCULATION_RECORD_LOADED = true;
+	public static final boolean IS_CALCULATION_RECORD_NOT_LOADED = false;
 }

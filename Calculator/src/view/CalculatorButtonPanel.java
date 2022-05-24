@@ -7,16 +7,19 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
+import controller.EventHandlingForMouse;
 import utility.Constants;
 import utility.ButtonOnCalculator.Button;
 
 public class CalculatorButtonPanel extends JPanel{
 	private JButton[] calculationButton;
 	private ActionListener buttonListener;
+	private EventHandlingForMouse mouseListener;
 	
-	public CalculatorButtonPanel(ActionListener buttonListener){
+	public CalculatorButtonPanel(ActionListener buttonListener, EventHandlingForMouse mouseListener){
 		calculationButton = new JButton[20];
 		this.buttonListener = buttonListener;
+		this.mouseListener = mouseListener;
 		setBackground(new Color(230, 230, 230));
 		addButtonPanel();
 	}
@@ -35,7 +38,6 @@ public class CalculatorButtonPanel extends JPanel{
 	private void addButtonPanel() {  //계산버튼패널
 		setLayout(new GridLayout(5, 4, 2, 2));
 		Font font = new Font("SansSerif", Font.BOLD, Constants.BUTTON_FONT_SIZE);
-		LineBorder lineBorder = new LineBorder(Color.white, 0, false);
 
 		int index;
 		
@@ -43,7 +45,10 @@ public class CalculatorButtonPanel extends JPanel{
 			index = button.getIndex();
 			calculationButton[index] = new JButton();
 			add(calculationButton[index]);
-			calculationButton[index].addActionListener(buttonListener);     //버튼클릭이벤트 연결
+			
+			calculationButton[index].addMouseListener(mouseListener);                //마우스 이벤트 연결
+			calculationButton[index].addActionListener(buttonListener);     //버튼클릭 이벤트 연결
+			
 			calculationButton[index].setText(button.getSymbol());   //버튼이름 설정
 			calculationButton[index].setFont(font);  
 			calculationButton[index].setBorderPainted(false);
@@ -55,5 +60,4 @@ public class CalculatorButtonPanel extends JPanel{
 		
 		calculationButton[19].setBackground(new Color(138, 186, 224));
 	}
-
 }
