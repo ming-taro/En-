@@ -15,6 +15,12 @@ public class ExpressionDTO {
 		this.secondValue = secondValue;
 		this.result = result;
 	}
+	public void setExpressionDTO(String firstValue, String operator, String secondValue, String result) {
+		this.firstValue = firstValue;
+		this.operator = operator;
+		this.secondValue = secondValue;
+		this.result = result;
+	}
 	public void InitValue() {
 		firstValue = "";
 		secondValue = "";

@@ -41,8 +41,8 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		formatOfExpression = new FormatOfExpression(expressionDTO, expressionCheck);
 		
 		expressionPanel = new ExpressionPanel();                       //계산식 출력 패널
-		calculationButtonPanel = new CalculatorButtonPanel(this);     //버튼 클릭 패널
-		recordPanel = new RecordPanel(expressionCheck, recordList);
+		calculationButtonPanel = new CalculatorButtonPanel(this);      //버튼 클릭 패널
+		recordPanel = new RecordPanel(expressionCheck, recordList, this);
 		calculatorFrame =  new CalculatorFrame(expressionPanel, calculationButtonPanel, recordPanel); //프레임에 패널 부착, 계산기록 리스트 연결
 
 		arithmeticOperation = new ArithmeticOperation(expressionDTO, expressionCheck, formatOfExpression);
@@ -108,11 +108,12 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		case '0':case '1':case '2':case '3':case '4':case '5':case '6':case '7':case '8':case '9':
 			addNumber(buttonText);
 			number = numberBuilder.toString();
+			break;
+		default:
+			return;
 		}
 		
-		if(number != "") {
-			expressionPanel.setExpressionLabel(formatOfExpression.getExpression(), formatOfExpression.formatNumber(number));   //계산식 패널에 계산식, 입력값 출력
-		}
+		expressionPanel.setExpressionLabel(formatOfExpression.getExpression(), formatOfExpression.formatNumber(number));   //계산식 패널에 계산식, 입력값 출력
 	}
 	private void setCalculator(String buttonText) {
 		calculatorFrame.requestFocus();
@@ -129,15 +130,29 @@ public class CalculationManagement implements ActionListener, KeyListener{
 
 		recordPanel.setRecordPanel();
 	}
+	public void setExpressionDTO(JButton button) {
+		int index = recordPanel.getResultButtonIndex(button);    //기록창에서 클릭한 계산식 버튼의 인덱스값을 가져옴 
+		ExpressionDTO selectedDTO = recordList.get(index);     //계산기록 리스트에서 클릭한 계산식DTO정보를 가져옴
+		
+		expressionDTO.setExpressionDTO(selectedDTO.getFirstValue(), selectedDTO.getOperator(), selectedDTO.getSecondValue(), selectedDTO.getResult());
+		expressionPanel.setExpressionLabel(formatOfExpression.getExpression(), formatOfExpression.formatNumber(expressionDTO.getResult()));   //계산식 패널에 계산식, 입력값 출력
+		
+		calculatorFrame.requestFocus();
+		calculatorFrame.setFocusable(true);   //키보드입력 활성화
+	}
 	@Override
 	public void actionPerformed(ActionEvent event) {  //계산기 버튼 이벤트
 		JButton button = (JButton) event.getSource();
 		String buttonText = button.getText();
 		
+		if(buttonText == "") {
+			setExpressionDTO(button);
+			return;
+		}
+		
 		if((expressionCheck.isDividedByZero() || expressionCheck.isResultUndefined() || expressionCheck.isStackOverflow()) && expressionCheck.isDeletionButtonPressed(buttonText)) {
 			buttonText = "C";   //'÷0'실행 후 '=' or '←'클릭 == 'C'버튼
 		}
-		
 		setCalculator(buttonText);
 	}
 	@Override

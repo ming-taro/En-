@@ -20,12 +20,14 @@ public class RecordPanel extends JPanel implements ActionListener{
 	private JScrollPane recordPanelScroll;    //계산기록 출력 패널 -> 계산수식 출력 패널에 달  스크롤
 	private JButton[] recordButton;
 	private ArrayList<ExpressionDTO> recordList;     //계산기록 출력 패널 -> 계산수식 출력 패널 -> 계산기록 리스트
-	private JButton deletionButton;           //계산기록 출력 패널 -> 휴지통 버튼
+	private JButton deletionButton;           //휴지통 버튼 -> 계산기록 초기화
 	private JPanel deletionButtonPanel;       //휴지통 버튼을 담을 패널
 	private FormatOfExpression formatOfExpression;
+	private ActionListener recordButtonListener;
 	
-	public RecordPanel(ExpressionCheck expressionCheck, ArrayList<ExpressionDTO> recordList) {
+	public RecordPanel(ExpressionCheck expressionCheck, ArrayList<ExpressionDTO> recordList, ActionListener recordButtonListener) {
 		this.recordList = recordList;
+		this.recordButtonListener = recordButtonListener;
 		
 		formatOfExpression = new FormatOfExpression(new ExpressionDTO(), expressionCheck);
 		resultPanel = new JPanel();
@@ -74,7 +76,8 @@ public class RecordPanel extends JPanel implements ActionListener{
 		deletionButtonPanel.add(deletionButton);
 	}
 	public void setRecordPanel() {
-		JLabel noRecordLabel = new JLabel("<html><br>아직 기록이 없음</html>");
+		JLabel noRecordLabel = new JLabel("<html><br>계산 기록이 없습니다.</html>");
+		noRecordLabel.setHorizontalAlignment(JLabel.CENTER);
 
 		removeAll();
 		if(recordList.size() == 0) {
@@ -180,6 +183,7 @@ public class RecordPanel extends JPanel implements ActionListener{
 
 			recordButton[index].setHorizontalAlignment(SwingConstants.RIGHT);
 			recordButton[index].setBorderPainted(false);
+			recordButton[index].addActionListener(recordButtonListener);
 
 			recordButtonPanel.add(recordButton[index]);                         //버튼패널에 계산식버튼 부착
 		}
@@ -190,9 +194,21 @@ public class RecordPanel extends JPanel implements ActionListener{
 		resultPanel.revalidate();
 		resultPanel.repaint();
 	}
+	public int getResultButtonIndex(JButton button) {
+		int index;
+		
+		for(index = 0; index < recordList.size(); index ++) {
+			if(recordButton[index] == button) break;
+		}
+		
+		return index;
+	}
 	@Override
-	public void actionPerformed(ActionEvent e) {      //휴지통 버튼 클릭 이벤트
-		recordList.clear();
-		setRecordPanel();
+	public void actionPerformed(ActionEvent event) {      //휴지통 버튼 클릭 이벤트
+		if(event.getSource() == deletionButton) {
+			recordList.clear();
+			setRecordPanel();
+			return;
+		}
 	}
 }
