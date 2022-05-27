@@ -7,8 +7,14 @@ import utility.Constants;
 public class ChangeDirectory {
 	private String currentPath;
 	
+	public int getNumberOfWord(String sentence, String word) {
+		int lengthOfSentence = sentence.length();
+		int lengthOfWord = sentence.replace(String.valueOf(word), "").length();
+		
+		return (lengthOfSentence - lengthOfWord)/word.length();
+	}
 	public void moveToParentFolder(String command) {
-		int count = (command.length() - command.replace(String.valueOf(".."), "").length())/2;   //".."이 문장에 몇개가 있는지 확인
+		int count = getNumberOfWord(command, "..");
 		
 		if(count != 1) {  //".."을 하나만 포함해야 함
 			return;   

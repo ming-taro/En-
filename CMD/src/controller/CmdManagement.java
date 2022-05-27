@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.UnknownHostException;
 
+import utility.Constants;
 import view.ClearScreen;
 import view.CommandUsage;
 import view.Help;
@@ -47,32 +48,47 @@ public class CmdManagement {
 		
 		return word;
 	}
-	public String getCommand(String command) {
-		command = command.toLowerCase();
+	public boolean isStartWithCorrectCommand(String command, String commandEntered) {
+		int lengthOfCommand = command.length();
+		int lengthOfCommandEntered = commandEntered.length();
 		
-		if(command.contains("cmd")) {
+		if(lengthOfCommandEntered < lengthOfCommand) {
+			return !Constants.IS_START_WIDTH_CORRECT_COMMAND;
+		}
+		if(commandEntered.substring(0, lengthOfCommand).equals(command) 
+				== !Constants.IS_STRING_MATCHED) {
+			return !Constants.IS_START_WIDTH_CORRECT_COMMAND;
+		}
+		
+		return Constants.IS_START_WIDTH_CORRECT_COMMAND;
+	}
+	public String getCommand(String commandEntered) {
+		commandEntered = commandEntered.toLowerCase();
+		
+		if(isStartWithCorrectCommand("cmd", commandEntered)) {
 			return "cmd";
 		}
-		if(command.contains("help")) {
+		if(isStartWithCorrectCommand("help", commandEntered)) {
 			return "help";
 		}
-		if(command.contains("cls")) {
+		if(isStartWithCorrectCommand("cls", commandEntered)) {
 			return "cls";
 		}
-		if(command.contains("cd")) {
+		if(isStartWithCorrectCommand("cd", commandEntered)) {
+			System.out.println("오");
 			return "cd";
 		}
-		if(command.contains("cd")) {
+		if(isStartWithCorrectCommand("move", commandEntered)) {
 			return "move";
 		}
-		if(command.contains("cd")) {
+		if(isStartWithCorrectCommand("copy", commandEntered)) {
 			return "copy";
 		}
 		return "";
 	}
 	public void executeCommand(String commandEntered) {
-		String command = getCommand(commandEntered);  
 		commandEntered = commandEntered.trim();            //입력한 명령어 앞뒤 공백제거
+		String command = getCommand(commandEntered);  
 		
 		switch(command) {
 		case "cmd":
