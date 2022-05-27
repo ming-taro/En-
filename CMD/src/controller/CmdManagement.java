@@ -62,10 +62,17 @@ public class CmdManagement {
 		if(command.contains("cd")) {
 			return "cd";
 		}
+		if(command.contains("cd")) {
+			return "move";
+		}
+		if(command.contains("cd")) {
+			return "copy";
+		}
 		return "";
 	}
 	public void executeCommand(String commandEntered) {
 		String command = getCommand(commandEntered);  
+		commandEntered = commandEntered.trim();            //입력한 명령어 앞뒤 공백제거
 		
 		switch(command) {
 		case "cmd":
@@ -79,6 +86,10 @@ public class CmdManagement {
 			break;
 		case "cd":
 			path = changeDirectory.execute(path, commandEntered);
+			break;
+		case "move":
+			break;
+		case "copy":
 			break;
 		}
 	}
