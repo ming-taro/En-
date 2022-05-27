@@ -25,17 +25,18 @@ public class CalculationManagement implements ActionListener, KeyListener{
 	private CalculatorButtonPanel calculationButtonPanel;
 	private RecordPanel recordPanel;
 	private CalculatorFrame calculatorFrame;
-	private ExpressionDTO expressionDTO;
-	private ArrayList<ExpressionDTO> recordList; //계산기록 저장
+	
+	private ExpressionDTO expressionDTO;             //현재 입력중인 계산식을 담은 DTO
+	private ArrayList<ExpressionDTO> recordList;     //계산기록 저장
 	private StringBuilder numberBuilder;             //숫자 입력값 누적
 	private ExpressionCheck expressionCheck;         //계산식 검사(ex 계산이 끝났는지, 연산자를 입력했는지 ...)
+	private FormatOfExpression formatOfExpression;   //화면에 숫자값 출력시 윈도우 계산기값과 같은 형식으로 다듬음
+	private EventHandlingForMouse mouseListener;
+	
 	private ArithmeticOperation arithmeticOperation; //'+', '-', '×', '÷' 
 	private Calculation calculation;                 //'=' 
 	private Deletion numberDeletion;                 //'C', 'CE', '←'
 	private Negate negate;                           //'±'
-	private FormatOfExpression formatOfExpression;
-	private EventHandlingForMouse mouseListener;
-	private Color buttonColor;
 	
 	public CalculationManagement() {
 		expressionDTO = new ExpressionDTO();
@@ -65,15 +66,22 @@ public class CalculationManagement implements ActionListener, KeyListener{
 	}
 	private void addNumber(String number) {              //숫자입력
 		if(expressionCheck.isMaximumInputRangeExceeded(number)) return;  //숫자입력범위를 넘어서는 경우 -> 더이상 숫자를 누적하지 않음
-		
 		if(expressionCheck.isNegateOperation(expressionDTO.getSecondValue())) setCalculator("CE");
+		if(expressionCheck.isFirstValueResult() && expressionDTO.getResult() != "") {   //'2='입력 후 숫자 입력시 DTO에서 결과값만 삭제
+			numberBuilder.setLength(0);
+			expressionDTO.setResult("");
+		}
 		if(expressionCheck.isCalculationOver()) setCalculator("C");      //이전 입력까지의 계산이 끝나고 새로운 숫자를 입력하려고 할 때 -> 'C'기능 수행
 		if(expressionCheck.isFirstInput()) numberBuilder.setLength(0);   //숫자를 처음 입력할 때 -> stringBuilder를 비움
 		
 		numberBuilder.append(number);                    //숫자 입력값 누적
 	}
 	private void addPoint() {
-		if(expressionCheck.isCalculationOver()) setCalculator("C");     //계산완료 후 첫 입력부터 '.'입력 -> ex)2+3=5 출력 후 '.'입력 => 'C'기능 수행 후 '0.'
+		if(expressionCheck.isFirstValueResult() && expressionDTO.getResult() != "") {   //'2='입력 후 숫자 입력시 DTO에서 결과값만 삭제
+			numberBuilder.setLength(0);
+			expressionDTO.setResult("");
+		}
+		else if(expressionCheck.isCalculationOver()) setCalculator("C");     //계산완료 후 첫 입력부터 '.'입력 -> ex)2+3=5 출력 후 '.'입력 => 'C'기능 수행 후 '0.'
 		else if(expressionCheck.isNegateOperation(expressionDTO.getSecondValue())) {   //negate연산중에 '.'입력시 negate연산값 초기화 -> '0.'으로 바뀜
 			expressionDTO.setSecondValue("");
 			numberBuilder.setLength(0);
@@ -84,41 +92,41 @@ public class CalculationManagement implements ActionListener, KeyListener{
 		numberBuilder.append("."); 
 	}
 	private void takeButtonOnCalculator(String buttonText) {
-		String number = "";    //계산식 패널에 출력할 입력중인 숫자값
+		String inputNumber = "";    //계산식 패널에 출력할 입력중인 숫자값
 		
 		switch(buttonText.charAt(0)) {
 		case 'C':
 			numberDeletion.manageDeletion(numberBuilder, buttonText);
-			number = "0";  //입력값을 지움 -> 입력칸에는 항상 기본값으로 '0'표기
+			inputNumber = "0";  //입력값을 지움 -> 입력칸에는 항상 기본값으로 '0'표기
 			break;
 		case '←':
-			number = numberDeletion.manageBackSpace(numberBuilder);
+			inputNumber = formatOfExpression.setNumber(numberDeletion.manageBackSpace(numberBuilder));
 			break;
 		case '=':
 			calculation.calculateExpression(numberBuilder.toString(), recordList);  //등호 계산
-			number = formatOfExpression.setNumber(expressionDTO.getResult());
+			inputNumber = formatOfExpression.setNumber(expressionDTO.getResult());
 			break;
 		case '+':case '-':case '×':case '÷':  //사칙연산
 			arithmeticOperation.manageArithmeticOperation(numberBuilder, buttonText, recordList); 
-			number = formatOfExpression.setNumber(expressionDTO.getFirstValue());
+			inputNumber = formatOfExpression.setNumber(expressionDTO.getFirstValue());
 			break;
 		case '.': 
 			addPoint();
-			number = numberBuilder.toString();
+			inputNumber = numberBuilder.toString();
 			break;
 		case '±':  
 			negate.manageNegate(numberBuilder);
-			number = numberBuilder.toString();
+			inputNumber = numberBuilder.toString();
 			break;
 		case '0':case '1':case '2':case '3':case '4':case '5':case '6':case '7':case '8':case '9':
 			addNumber(buttonText);
-			number = numberBuilder.toString();
+			inputNumber = numberBuilder.toString();
 			break;
 		default:
 			return;
 		}
 		
-		expressionPanel.setExpressionLabel(formatOfExpression.getExpression(), formatOfExpression.formatNumber(number));   //계산식 패널에 계산식, 입력값 출력
+		expressionPanel.setExpressionLabel(formatOfExpression.getExpression(), formatOfExpression.formatNumber(inputNumber));   //계산식 패널에 계산식, 입력값 출력
 	}
 	private void setCalculator(String buttonText) {
 		calculatorFrame.requestFocus();
@@ -137,10 +145,11 @@ public class CalculationManagement implements ActionListener, KeyListener{
 	}
 	public void setExpressionDTO(JButton button) {
 		int index = recordPanel.getResultButtonIndex(button);    //기록창에서 클릭한 계산식 버튼의 인덱스값을 가져옴 
-		ExpressionDTO selectedDTO = recordList.get(index);     //계산기록 리스트에서 클릭한 계산식DTO정보를 가져옴
-		
+		ExpressionDTO selectedDTO = recordList.get(index);       //계산기록 리스트에서 클릭한 계산식DTO정보를 가져옴
+		String result = formatOfExpression.setNumber(selectedDTO.getResult());  //화면에 출력할 결과값
+				
 		expressionDTO.setExpressionDTO(selectedDTO.getFirstValue(), selectedDTO.getOperator(), selectedDTO.getSecondValue(), selectedDTO.getResult());
-		expressionPanel.setExpressionLabel(formatOfExpression.getExpression(), formatOfExpression.formatNumber(expressionDTO.getResult()));   //계산식 패널에 계산식, 입력값 출력
+		expressionPanel.setExpressionLabel(formatOfExpression.getExpression(), formatOfExpression.formatNumber(result));   //계산식 패널에 계산식, 입력값 출력
 		
 		calculatorFrame.requestFocus();
 		calculatorFrame.setFocusable(true);   //키보드입력 활성화

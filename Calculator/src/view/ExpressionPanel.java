@@ -89,6 +89,15 @@ public class ExpressionPanel extends JPanel{
 		
 		setPreferredSize(new Dimension(width, 204));
 	}
+	public void setInputLabel(String number) {
+		int width = (int) getPreferredSize().getWidth();
+		inputLabel.setText(number); //숫자입력 누적값 출력
+		
+		increaseInputLabel();
+		decreaseInputLabel();
+		
+		setPreferredSize(new Dimension(width, 204));
+	}
 	public void decreaseInputLabel() {
 		if(inputLabel.getPreferredSize().getWidth() < getSize().getWidth()) return;
 		

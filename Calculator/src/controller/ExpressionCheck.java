@@ -19,7 +19,7 @@ public class ExpressionCheck {
 		return Constants.IS_NOT_FIRST_INPUT; 
 	}
 	public boolean isCalculationOver() {  //계산식을 모두 입력하고 결과출력까지 끝났는지 확인
-		if(expressionDTO.getResult().equals("")) return Constants.IS_NOT_CALCULATION_OVER; //계산값이 아직 없음 -> 계산이 완료되지 않음
+		if(expressionDTO.getResult().equals("") || expressionDTO.getOperator().equals("")) return Constants.IS_NOT_CALCULATION_OVER; //계산값이 아직 없음 -> 계산이 완료되지 않음
 		return Constants.IS_CALCULATION_OVER;
 	}
 	public boolean isMaximumInputRangeExceeded(String number) {
@@ -67,5 +67,12 @@ public class ExpressionCheck {
 			return Constants.IS_OPERATOR_CHANGED; //결과값이 없고, 연산자 변경은 두번째값 입력 전(numberBuilder에 누적된 값이 없음)에만 가능
 		}
 		return Constants.IS_OPERATOR_NOT_CHANGED;
+	}
+	public boolean isFirstValueResult() {
+		if(expressionDTO.getFirstValue().equals("")) return Constants.IS_NOT_FIRST_VALUE_RESULT;
+		if(expressionDTO.getFirstValue().equals(expressionDTO.getResult()) && isThereOperator() == Constants.IS_THERE_NO_OPERATOR) {
+			return Constants.IS_FIRST_VALUE_RESULT;   //ex) '2 = 2'
+		}
+		return Constants.IS_NOT_FIRST_VALUE_RESULT;
 	}
 }

@@ -74,4 +74,7 @@ public class Constants {
 	
 	public static final boolean IS_CALCULATION_RECORD_LOADED = true;
 	public static final boolean IS_CALCULATION_RECORD_NOT_LOADED = false;
+	
+	public static final boolean IS_FIRST_VALUE_RESULT = true;
+	public static final boolean IS_NOT_FIRST_VALUE_RESULT = false;
 }
