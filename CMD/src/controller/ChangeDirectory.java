@@ -14,14 +14,20 @@ public class ChangeDirectory {
 		return (lengthOfSentence - lengthOfWord)/word.length();
 	}
 	public void moveToParentFolder(String command) {
-		int endIndex;
+		int endIndex = currentPath.lastIndexOf("\\");
 		
-		if(command.equals("..")) {                      //"cd.." -> 상위 폴더로 이동
-			endIndex = currentPath.lastIndexOf("\\");   //경로에서 현재 위치한 폴더를 지움(상위폴더까지만 표시)
-			currentPath = currentPath.substring(0, endIndex);
+		if(command.equals("..")) {           //"cd.." -> 상위 폴더로 이동
+			currentPath = currentPath.substring(0, endIndex);  //경로에서 현재 위치한 폴더를 지움(상위폴더까지만 표시)
+			if(currentPath.indexOf("\\") == -1) currentPath += "\\";
+			return;
+		}
+		if(getNumberOfWord(command, ".") + getNumberOfWord(command, " ")
+				== command.length()) {       //(ex: cd....... or cd. . . . . . . .)
+			System.out.println("오");
+			return;
 		}
 		
-		if(currentPath.indexOf("\\") == -1) currentPath += "\\";
+		System.out.println("지정된 경로를 찾을 수 없습니다.");
 	}
 	public boolean isSlashCommand(String command) {
 		if(command.equals("")) {   
@@ -33,13 +39,13 @@ public class ChangeDirectory {
 		return false;
 	}
 	public void moveToRootFolder(String commandEntered) {
-		int index = currentPath.indexOf("\\") + 1;
+		int endIndex = currentPath.indexOf("\\") + 1;
 		String command;
 		
 		command = commandEntered.substring(1);   //cd/(or \)명령어 뒤에 이어지는 문자열에 따라 유효한 명령어인지 검사
 		
 		if(isSlashCommand(command)) {
-			currentPath = currentPath.substring(0, index);
+			currentPath = currentPath.substring(0, endIndex);
 			return;
 		}
 		if(getNumberOfWord(command, "\\") > 0) {              //(ex: cd \\\\))
