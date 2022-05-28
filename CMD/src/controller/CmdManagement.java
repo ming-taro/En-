@@ -34,7 +34,7 @@ public class CmdManagement {
 		clearScreen = new ClearScreen();
 	}
 	public String inputWord(){
-		System.out.print(path + ">");
+		System.out.print(String.format("\n%s>", path));
 		
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		String word = "";
@@ -75,7 +75,6 @@ public class CmdManagement {
 			return "cls";
 		}
 		if(isStartWithCorrectCommand("cd", commandEntered)) {
-			System.out.println("오");
 			return "cd";
 		}
 		if(isStartWithCorrectCommand("move", commandEntered)) {
@@ -107,6 +106,9 @@ public class CmdManagement {
 			break;
 		case "copy":
 			break;
+		default:
+			System.out.println("'" + commandEntered + "'은(는) 내부 또는 외부 명령, 실행할 수 있는 프로그램, 또는\r\n" + 
+					"배치 파일이 아닙니다.\n");
 		}
 	}
 	public void start(){
