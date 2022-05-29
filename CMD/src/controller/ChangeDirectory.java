@@ -7,29 +7,41 @@ import utility.Constants;
 public class ChangeDirectory {
 	private String currentPath;
 	
-	public int getNumberOfWord(String sentence, String word) {
+	private int getNumberOfWord(String sentence, String word) {
 		int lengthOfSentence = sentence.length();
 		int lengthOfWord = sentence.replace(String.valueOf(word), "").length();
 		
 		return (lengthOfSentence - lengthOfWord)/word.length();
 	}
-	public void moveToParentFolder(String command) {
+	private void moveToParentFolder(String command) {
+		int endIndex = currentPath.lastIndexOf("\\");
+		int level = getNumberOfWord(command, "../");
+		
+		for(int i = 0; i < level; i++) {
+			currentPath = currentPath.substring(0, endIndex);
+			if(currentPath.indexOf("\\") == -1) {
+				currentPath += "\\";
+				break;
+			}
+		}
+		
+	}
+	private void moveOneLevelToParentFolder(String command) {
 		int endIndex = currentPath.lastIndexOf("\\");
 		
 		if(command.equals("..")) {           //"cd.." -> 상위 폴더로 이동
-			currentPath = currentPath.substring(0, endIndex);  //경로에서 현재 위치한 폴더를 지움(상위폴더까지만 표시)
-			if(currentPath.indexOf("\\") == -1) currentPath += "\\";
+			currentPath = currentPath.substring(0, endIndex);         //경로에서 현재 위치한 폴더를 지움(상위폴더까지만 표시)
+			if(currentPath.indexOf("\\") == -1) currentPath += "\\";  //현재 경로가 루트경로일 경우 지워진 '\'표시를 다시 붙임
 			return;
 		}
 		if(getNumberOfWord(command, ".") + getNumberOfWord(command, " ")
 				== command.length()) {       //(ex: cd....... or cd. . . . . . . .)
-			System.out.println("오");
 			return;
 		}
 		
 		System.out.println("지정된 경로를 찾을 수 없습니다.");
 	}
-	public boolean isSlashCommand(String command) {
+	private boolean isSlashCommand(String command) {
 		if(command.equals("")) {   
 			return true;           //(ex: cd\ or cd/)
 		}
@@ -38,7 +50,7 @@ public class ChangeDirectory {
 		}
 		return false;
 	}
-	public void moveToRootFolder(String commandEntered) {
+	private void moveToRootFolder(String commandEntered) {
 		int endIndex = currentPath.indexOf("\\") + 1;
 		String command;
 		
@@ -56,7 +68,7 @@ public class ChangeDirectory {
 		
 		System.out.println("지정된 경로를 찾을 수 없습니다.");
 	}
-	public String getCommand(String command) {
+	private String getCommand(String command) {
 		command = command.toLowerCase();
 		
 		if(command.contains("../")) {
@@ -73,13 +85,18 @@ public class ChangeDirectory {
 		}
 		return command;
 	}
-	public void executeCommand(String command) {
+	private void executeCommand(String command) {
+		if(command.charAt(command.length() - 1) == '?') {
+			System.out.println("파일 이름, 디렉터리 이름 또는 볼륨 레이블 구문이 잘못되었습니다.");
+			return;
+		}
 		
 		switch(getCommand(command)) {
 		case "../":              //상위폴더로 이동(ex cd ../)
+			moveToParentFolder(command);
 			break;
 		case "..":               //상위폴더로 이동(한 단계)(ex cd..)
-			moveToParentFolder(command);
+			moveOneLevelToParentFolder(command);
 			break;
 		case "\\": case "/":     //루트폴더로 이동(ex cd\ or cd/)
 			moveToRootFolder(command);
@@ -94,8 +111,20 @@ public class ChangeDirectory {
 		int beginIndex = command.indexOf("cd") + 2;
 		
 		command = command.substring(beginIndex).trim();   //cd다음에 이어지는 명령어로 구별해서 기능을 수행함
+		String dirPath = currentPath + command;
+		
 		executeCommand(command);
 		
+		/*File dir = new File(dirPath);
+		File[] files = dir.listFiles();
+		if(files==null) System.out.println(dirPath + "/" +"아오");
+		else{
+			for(File f : files) {
+				if(f.isFile()) {
+					System.out.println(f.getName());
+				}
+			}
+		}*/
 		return this.currentPath;
 	}
 }

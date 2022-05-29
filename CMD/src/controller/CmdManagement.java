@@ -18,6 +18,7 @@ public class CmdManagement {
 	
 	private CommandUsage commandUsage;
 	private ChangeDirectory changeDirectory;
+	private Copy copy;
 	
 	private Start start;
 	private Help helpCommand;
@@ -28,6 +29,7 @@ public class CmdManagement {
 		
 		commandUsage = new CommandUsage();
 		changeDirectory = new ChangeDirectory();
+		copy = new Copy();
 		
 		start = new Start();
 		helpCommand = new Help();
@@ -105,6 +107,7 @@ public class CmdManagement {
 		case "move":
 			break;
 		case "copy":
+			copy.execute(path, commandEntered);
 			break;
 		default:
 			System.out.println("'" + commandEntered + "'은(는) 내부 또는 외부 명령, 실행할 수 있는 프로그램, 또는\r\n" + 
