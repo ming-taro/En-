@@ -30,13 +30,13 @@ public class Copy {
 		
 		for(int index = currentPosition; index < command.length(); index++) {
 			if(command.charAt(index) == '"' 
-				&& (command.charAt(index + 1) == '\\' 
-					|| command.charAt(index + 1) == '.')) {
-				command.deleteCharAt(index);    //두 번째 큰따옴표 삭제
+				&& ((index + 1) < command.length()
+				&& command.charAt(index + 1) == '\\')
+				|| (index + 1) == command.length()) {
+				command.deleteCharAt(index);       //두 번째 큰따옴표 삭제
 				return command.toString();
 			}
 		}
-		System.out.println("<>" + commandToChange);
 		return commandToChange;
 	}
 	private int getIndexOfPointThatSeparatesFilePath(String command) {
@@ -132,7 +132,7 @@ public class Copy {
 		while(Constants.IS_ENTERING_VALUE) {        //기존 파일에 덮어쓴느 경우 -> 덮어쓸지 여부를 선택함
 			System.out.print(secondFile + "을(를) 덮어쓰시겠습니까? (Yes/No/All): ");
 			whetherToCopy = inputWord();
-			if(isChoosenToCopy(whetherToCopy)) {    
+			if(isChoosenToCopy(whetherToCopy)) {     
 				break;
 			}
 		}
@@ -142,10 +142,30 @@ public class Copy {
 		}
 		
 	}
+	private String getPathOfSecondFile(String filePath) {
+		if(firstFile.indexOf("\\") == -	1) {          //첫번째 파일이 a.txt, 두번째파일에 폴더경로만 있는 경우
+			secondFile = filePath + "\\" + firstFile; //ex: C:\Users\sec -> C:\Users\sec\a.txt     
+		}
+		else {
+			/*첫번째 파일이 파일경로로 주어진  경우
+			  ex: 첫번째파일: C:\Users\sec\a.txt
+			           두번째파일: C:\Users\sec\Onedrive\"바탕 화면" -> C:\Users\sec\Onedrive\"바탕 화면"\a.txt*/
+			secondFile = filePath + 
+						 firstFile.substring(firstFile.lastIndexOf("\\"));
+		}
+		return secondFile;
+	}	
 	private String getPathOfFile(String filePath) {
+		int lastIndex = filePath.length() - 1;
+		
 		if(filePath.indexOf("\\") == -1) {         //파일이름만 입력한 경우 파일의 경로는 현재경로가 됨
 			return currentPath + "\\" + filePath;  //ex: a.txt -> C:\Users\sec\a.txt
 		}
+		if(filePath.indexOf(".") == -1
+			&& filePath.equals(secondFile)) {      //두번째 파일 입력시 폴더경로만 입력한 경우
+			return getPathOfSecondFile(filePath);
+		}
+		System.out.println('왜');
 		return filePath;
 	}
 	private boolean isValidPath(String filePath) {
