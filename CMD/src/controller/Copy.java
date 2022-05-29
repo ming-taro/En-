@@ -1,7 +1,9 @@
 package controller;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
@@ -71,10 +73,8 @@ public class Copy {
 		File file = new File(filePath);
 		
 		if(file.exists()) {
-			System.out.println("I find the existFile.txt");
 			return Constants.IS_FILE_EXISTING;
 		}
-		System.out.println("No, there is not a no file.");
 		return !Constants.IS_FILE_EXISTING;
 	}
 	private boolean isValidPath() {
@@ -94,9 +94,60 @@ public class Copy {
 			Files.copy(fileToCopy.toPath(), fileToSave.toPath(), 
 					StandardCopyOption.REPLACE_EXISTING);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
+	}
+	private boolean isChoosenToCopy(String whetherToCopy) {
+		if(whetherToCopy == null || whetherToCopy.equals("")) {
+			return !Constants.IS_CHOOSEN_TO_COPY;
+		}
+		
+		switch(whetherToCopy.toLowerCase().charAt(0)) {
+		case 'y': case 'a':
+			System.out.println("        1개 파일이 복사되었습니다.");
+			break;
+		case 'n':
+			System.out.println("        0개 파일이 복사되었습니다.");
+			break;
+		default:
+			return !Constants.IS_CHOOSEN_TO_COPY;
+		}
+		return Constants.IS_CHOOSEN_TO_COPY;
+	}
+	private String inputWord() {
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		String word = "";
+		
+		try {
+			word = reader.readLine();
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		
+		return word;
+	}
+	private void manageFileCopy() {
+		String whetherToCopy = "";
+		
+		if(isFileExisting(secondFilePath) 
+				== !Constants.IS_FILE_EXISTING) {   //새로운 파일을 생성해 복사할 경우
+			System.out.println("        1개 파일이 복사되었습니다.");
+			return;
+		}
+		
+		while(Constants.IS_ENTERING_VALUE) {        //기존 파일에 덮어쓴느 경우 -> 덮어쓸지 여부를 선택함
+			System.out.print(secondFilePath + "을(를) 덮어쓰시겠습니까? (Yes/No/All): ");
+			whetherToCopy = inputWord();
+			if(isChoosenToCopy(whetherToCopy)) {    
+				break;
+			}
+		}
+		
+		if(whetherToCopy.charAt(0) != 'n') {        //yes or all을 선택한 경우 -> 파일복사
+			copyfile();
+		}
+		
 	}
 	public void execute(String path, String command) {
 		int beginIndex = command.indexOf(' ') + 1;
@@ -111,8 +162,10 @@ public class Copy {
 			System.out.println("지정된 파일을 찾을 수 없습니다.");
 			return;
 		}
+		
 		System.out.println(firstFilePath);
 		System.out.println(secondFilePath);
-		copyfile();
+		
+		manageFileCopy();
 	}
 }
