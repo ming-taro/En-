@@ -5,93 +5,21 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
-import java.nio.file.LinkOption;
-import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
+
+import model.FilePath;
 import utility.Constants;
 
 public class Copy {
-	private String currentPath;
-	private String firstFile;
-	private String secondFile;
+	protected FilePath filePath;
 	private FilePathSetting filePathSetting;
 	
 	public Copy() {
 		filePathSetting = new FilePathSetting();
+		filePath = new FilePath();
 	}
-	
-	private String RemoveQuotationMark(String commandToChange, int currentPosition) { //큰따옴표 삭제
-		StringBuilder command = new StringBuilder();
-		
-		command.append(commandToChange);
-		
-		if(command.charAt(currentPosition - 1) == '\\') {
-			command.deleteCharAt(currentPosition);  //첫 번째 큰따옴표 삭제
-		}
-		else {
-			return commandToChange;
-		}
-		
-		for(int index = currentPosition; index < command.length(); index++) {
-			if(command.charAt(index) == '"' 
-				&& ((index + 1) < command.length()
-				&& command.charAt(index + 1) == '\\')
-				|| (index + 1) == command.length()) {
-				command.deleteCharAt(index);       //두 번째 큰따옴표 삭제
-				return command.toString();
-			}
-		}
-		return commandToChange;
-	}
-	private int getIndexOfPointThatSeparatesFileName(String command) {
-		int indexOfDot = command.indexOf('.');
-		int index = command.indexOf(' ', indexOfDot);   //첫번재 파일의 '.'이후로 빈칸이 나오는 지점이 두 파일을 구분하는 지점
-		
-		if(index == -1) {  //파일을 하나만 입력한 경우 -> ex: copy a.txt -> index = 5
-			return command.length();
-		}
-		
-		return index;      //ex: copy a.txt b.txt -> index = 5
-	}
-	private int getIndexOfPointThatSeparatesFilePath(String command) {
-		if(command.indexOf("C:") == -1                //ex: copy a.txt b.txt or copy a.txt
-				|| command.indexOf("C:", 2) == -1){   //ex: copy C:\\users\\a.txt b.txt or copy C:\\users\\a.txt
-			return getIndexOfPointThatSeparatesFileName(command);
-		}
-		if(command.indexOf("C:", 2) != -1) {          //ex: copy C:\\users\\a.txt C:\\users\\b.txt
-			return command.indexOf("C:", 2) - 1;      //ex: copy a.txt c:\\users\\b.txt
-		}
-		return -1;
-	}
-	private void setFilePath(String command) {
-		int index = 0;
-		int beginIndex = -1, endIndex = -1;
-		
-		while(index < command.length()) {
-			if(command.charAt(index) == '"') {                
-				command = RemoveQuotationMark(command, index);     //자바의 files.copy()는 빈칸이 있더라도 큰따옴표가 없어야 올바르게 인식 -> copy를 실행하기 위해 큰따옴표를 지워줌
-			}
-			index++;
-		}
-		
-		endIndex = getIndexOfPointThatSeparatesFilePath(command);  //첫 번째 파일의 경로정보가 끝나는 지점의 인덱스 값 
-		beginIndex = endIndex + 1;         	                       //두 번째 파일의 경로정보가 시작되는 지점의 인덱스 값
-	     
-		if(endIndex == command.length() && command.indexOf("\\") == -1) {  //ex: copy a.txt
-			firstFile = currentPath + "\\" + command;                      //-> 현재경로\a.txt
-			secondFile = firstFile;
-		}
-		else if(endIndex == command.length()) {//ex: copy C:\Users\sec\OneDrive\"바탕 화면"\a.txt
-			firstFile = command;               //-> 두번재 파일: 현재경로
-			secondFile = currentPath;           
-		}
-		else {                                                      //두번째 파일을 입력한 경우
-			firstFile = command.substring(0, endIndex).trim();
-			secondFile = command.substring(beginIndex).trim();
-		}
-	}
-	private boolean isFileExisting(String filePath) {
+	protected boolean isFileExisting(String filePath) {
 		File file = new File(filePath);
 		
 		if(file.exists()) {
@@ -124,7 +52,7 @@ public class Copy {
 		
 		return word;
 	}
-	private void copyfile(String firstFilePath, String secondFilePath) {
+	private void copyFile(String firstFilePath, String secondFilePath) {
 		 File fileToCopy = new File(firstFilePath);       
 		 File fileToSave = new File(secondFilePath);   
 		  
@@ -142,17 +70,14 @@ public class Copy {
 		 
 		System.out.println("        1개 파일이 복사되었습니다.");
 	}
-	private void manageFileCopy(String firstFilePath, String secondFilePath) {
+	protected void manageFileCopy(String firstFilePath, String secondFilePath) {
 		String whetherToCopy = "";
-		
-		if(firstFile.equals(secondFile)) {  //같은 파일에 덮어쓰려는 경우 -> ex: copy a.txt
-			copyfile(firstFilePath, secondFilePath);
-			return;
-		}
-		
-		if(isFileExisting(secondFilePath) 
-				== !Constants.IS_FILE_EXISTING) {   //새로운 파일을 생성해 복사할 경우
-			copyfile(firstFilePath, secondFilePath);
+		String firstFile = filePath.getFirstFile();
+		String secondFile = filePath.getSecondFile();
+
+		if(firstFile.equals(secondFile)
+			|| isFileExisting(secondFilePath) == !Constants.IS_FILE_EXISTING) {  
+			copyFile(firstFilePath, secondFilePath); //같은 파일에 덮어쓰려는 경우 (ex: copy a.txt) or 새로운 파일을 생성해 복사할 경우
 			return;
 		}
 		
@@ -170,7 +95,7 @@ public class Copy {
 		}
 		
 		if(whetherToCopy.charAt(0) != 'n') {        //yes or all을 선택한 경우 -> 파일복사
-			copyfile(firstFilePath, secondFilePath);
+			copyFile(firstFilePath, secondFilePath);
 		}
 		else {
 			System.out.println("        0개 파일이 복사되었습니다.");
@@ -178,11 +103,8 @@ public class Copy {
 		
 	}
 	private void executeCommand() {
-		String firstFilePath;     //입력받은 파일 경로 구하기
-		String secondFilePath;
-
-		firstFilePath = filePathSetting.getPathOfFirstFile(firstFile, currentPath);
-		secondFilePath = filePathSetting.getPathOfSecondFile(firstFile, secondFile, currentPath);
+		String firstFilePath = filePathSetting.getPathOfFirstFile(filePath);     //입력받은 파일 경로 구하기
+		String secondFilePath = filePathSetting.getPathOfSecondFile(filePath);
 		
 		if(filePathSetting.isValidPath(firstFilePath) == !Constants.IS_VALID_PATH
 			|| filePathSetting.isValidPath(secondFilePath) == !Constants.IS_VALID_PATH) {  
@@ -196,12 +118,10 @@ public class Copy {
 		}
 		
 		manageFileCopy(firstFilePath, secondFilePath);      //파일 복사
-
-		firstFile = "";
-		secondFile = "";
+		filePath.init();
 	}
 	public void execute(String path, String command) {
-		this.currentPath = path;  //현재 경로
+		filePath.setCurrentPath(path);  //현재 경로
 		
 		int beginIndex = command.indexOf(' ') + 1;
 		
@@ -211,7 +131,7 @@ public class Copy {
 			return;                
 		}
 		
-		setFilePath(command);                              //파일경로 구하기
+		filePathSetting.setFilePath(command, filePath);    //파일경로 구하기
 		executeCommand();
 	}
 }

@@ -19,6 +19,7 @@ public class CmdManagement {
 	private CommandUsage commandUsage;
 	private ChangeDirectory changeDirectory;
 	private Copy copy;
+	private Move move;
 	
 	private Start start;
 	private Help helpCommand;
@@ -30,6 +31,7 @@ public class CmdManagement {
 		commandUsage = new CommandUsage();
 		changeDirectory = new ChangeDirectory();
 		copy = new Copy();
+		move = new Move();
 		
 		start = new Start();
 		helpCommand = new Help();
@@ -90,8 +92,12 @@ public class CmdManagement {
 	public void executeCommand(String commandEntered) {
 		commandEntered = commandEntered.trim();            //입력한 명령어 앞뒤 공백제거
 		
-		int endIndex = commandEntered.indexOf(' ');        //'abc ddd'입력시 'abc'를 명령어로 인식
 		String command = getCommand(commandEntered);  
+		int endIndex = commandEntered.indexOf(' ');        //'abc ddd'입력시 'abc'를 명령어로 인식
+		
+		if(endIndex == -1) {
+			endIndex = commandEntered.length();
+		}
 		
 		switch(command) {
 		case "cmd":
@@ -107,6 +113,7 @@ public class CmdManagement {
 			path = changeDirectory.execute(path, commandEntered);
 			break;
 		case "move":
+			move.execute(path, commandEntered);
 			break;
 		case "copy":
 			copy.execute(path, commandEntered);
