@@ -16,7 +16,7 @@ public class Copy {
 	private String firstFile;
 	private String secondFile;
 	
-	public String RemoveQuotationMark(String commandToChange, int currentPosition) { //큰따옴표 삭제
+	private String RemoveQuotationMark(String commandToChange, int currentPosition) { //큰따옴표 삭제
 		StringBuilder command = new StringBuilder();
 		
 		command.append(commandToChange);
@@ -39,9 +39,19 @@ public class Copy {
 		}
 		return commandToChange;
 	}
+	private int getIndexOfPointThatSeparatesFileName(String command) {
+		int indexOfDot = command.indexOf('.');
+		int index = command.indexOf(' ', indexOfDot);   //첫번재 파일의 '.'이후로 빈칸이 나오는 지점이 두 파일을 구분하는 지점
+		
+		if(index == -1) {  //파일을 하나만 입력한 경우 -> ex: copy a.txt -> index = 5
+			return command.length();
+		}
+		
+		return index;      //ex: copy a.txt b.txt -> index = 5
+	}
 	private int getIndexOfPointThatSeparatesFilePath(String command) {
-		if(command.indexOf("C:") == -1){              //ex: copy a.txt b.txt
-			return command.indexOf(" ");
+		if(command.indexOf("C:") == -1){              //ex: copy a.txt b.txt or copy a.txt
+			return getIndexOfPointThatSeparatesFileName(command);
 		}
 		if(command.indexOf("C:", 2) != -1) {          //ex: copy c:\\users\\a.txt c:\\users\\b.txt
 			return command.indexOf("C:", 2) - 1;      //ex: copy a.txt c:\\users\\b.txt
@@ -64,11 +74,15 @@ public class Copy {
 		
 		endIndex = getIndexOfPointThatSeparatesFilePath(command);  //첫 번째 파일의 경로정보가 끝나는 지점의 인덱스 값 
 		beginIndex = endIndex + 1;         	                       //두 번째 파일의 경로정보가 시작되는 지점의 인덱스 값
-		
-		if(endIndex == -1) return;
-		
-		firstFile = command.substring(0, endIndex).trim();
-		secondFile = command.substring(beginIndex).trim();
+
+		if(endIndex == command.length()) {   //ex: copy a.txt
+			firstFile = command;
+			secondFile = command;
+		}
+		else {
+			firstFile = command.substring(0, endIndex).trim();
+			secondFile = command.substring(beginIndex).trim();
+		}
 	}
 	private boolean isFileExisting(String filePath) {
 		File file = new File(filePath);
@@ -122,6 +136,12 @@ public class Copy {
 	private void manageFileCopy(String firstFilePath, String secondFilePath) {
 		String whetherToCopy = "";
 		
+		if(firstFilePath.equals(secondFilePath)) {  //같은 파일에 덮어쓰려는 경우 -> ex: copy a.txt
+			System.out.println("같은 파일로 복사할 수 없습니다.\r\n" + 
+					"        0개 파일이 복사되었습니다.");
+			return;
+		}
+		
 		if(isFileExisting(secondFilePath) 
 				== !Constants.IS_FILE_EXISTING) {   //새로운 파일을 생성해 복사할 경우
 			System.out.println("        1개 파일이 복사되었습니다.");
@@ -165,7 +185,6 @@ public class Copy {
 			&& filePath.equals(secondFile)) {      //두번째 파일 입력시 폴더경로만 입력한 경우
 			return getPathOfSecondFile(filePath);
 		}
-		System.out.println('왜');
 		return filePath;
 	}
 	private boolean isValidPath(String filePath) {
@@ -203,17 +222,18 @@ public class Copy {
 		int beginIndex = command.indexOf(' ') + 1;
 		
 		command = command.substring(beginIndex).trim();    //copy 다음에 이어지는 명령문
-		
-		setFilePath(command);                              //파일경로 구하기
-		
-		if(firstFile == null) {  //copy만 입력하는 경우
+		if(command.equals("copy")) {  //copy만 입력하는 경우
 			System.out.println("명령 구문이 올바르지 않습니다.");
 			return;                
 		}
-
-		System.out.println(firstFile);
-		System.out.println(secondFile);
+		
+		setFilePath(command);                              //파일경로 구하기
+		
+		System.out.println(">" + firstFile);
+		System.out.println(">" + secondFile);
 		 
 		executeCommand();
+		firstFile = "";
+		secondFile = "";
 	}
 }

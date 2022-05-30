@@ -65,30 +65,32 @@ public class CmdManagement {
 		return Constants.IS_START_WIDTH_CORRECT_COMMAND;
 	}
 	public String getCommand(String commandEntered) {
-		commandEntered = commandEntered.toLowerCase();
+		String command = commandEntered.toLowerCase();
 		
-		if(isStartWithCorrectCommand("cmd", commandEntered)) {
+		if(isStartWithCorrectCommand("cmd", command)) {
 			return "cmd";
 		}
-		if(isStartWithCorrectCommand("help", commandEntered)) {
+		if(isStartWithCorrectCommand("help", command)) {
 			return "help";
 		}
-		if(isStartWithCorrectCommand("cls", commandEntered)) {
+		if(isStartWithCorrectCommand("cls", command)) {
 			return "cls";
 		}
-		if(isStartWithCorrectCommand("cd", commandEntered)) {
+		if(isStartWithCorrectCommand("cd", command)) {
 			return "cd";
 		}
-		if(isStartWithCorrectCommand("move", commandEntered)) {
+		if(isStartWithCorrectCommand("move", command)) {
 			return "move";
 		}
-		if(isStartWithCorrectCommand("copy", commandEntered)) {
+		if(isStartWithCorrectCommand("copy", command)) {
 			return "copy";
 		}
-		return "";
+		return commandEntered;
 	}
 	public void executeCommand(String commandEntered) {
 		commandEntered = commandEntered.trim();            //입력한 명령어 앞뒤 공백제거
+		
+		int endIndex = commandEntered.indexOf(' ');        //'abc ddd'입력시 'abc'를 명령어로 인식
 		String command = getCommand(commandEntered);  
 		
 		switch(command) {
@@ -112,8 +114,8 @@ public class CmdManagement {
 		case "":
 			break;
 		default:
-			System.out.println("'" + commandEntered + "'은(는) 내부 또는 외부 명령, 실행할 수 있는 프로그램, 또는\r\n" + 
-					"배치 파일이 아닙니다.\n");
+			System.out.println("'" + commandEntered.substring(0, endIndex) 
+			+ "'은(는) 내부 또는 외부 명령, 실행할 수 있는 프로그램, 또는\r\n" + "배치 파일이 아닙니다.");
 		}
 	}
 	public void start(){
