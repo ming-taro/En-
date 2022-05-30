@@ -1,3 +1,4 @@
+package main;
 import controller.CmdManagement;
 
 public class Cmd {

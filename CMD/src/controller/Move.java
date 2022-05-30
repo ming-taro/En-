@@ -115,7 +115,7 @@ public class Move {
 		int beginIndex = command.indexOf(' ') + 1;
 		
 		command = command.substring(beginIndex).trim();    //copy 다음에 이어지는 명령문
-		if(command.equals("move")) {  //copy만 입력하는 경우
+		if(command.equals("move")) {  //move만 입력하는 경우
 			System.out.println("명령 구문이 올바르지 않습니다.");
 			return;                
 		}

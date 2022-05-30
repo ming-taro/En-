@@ -20,6 +20,7 @@ public class CmdManagement {
 	private ChangeDirectory changeDirectory;
 	private Copy copy;
 	private Move move;
+	private Directory directory;
 	
 	private Start start;
 	private Help helpCommand;
@@ -32,6 +33,7 @@ public class CmdManagement {
 		changeDirectory = new ChangeDirectory();
 		copy = new Copy();
 		move = new Move();
+		directory = new Directory();
 		
 		start = new Start();
 		helpCommand = new Help();
@@ -118,6 +120,8 @@ public class CmdManagement {
 		case "copy":
 			copy.execute(path, commandEntered);
 			break;
+		case "dir":
+			directory.execute(path, commandEntered);
 		case "":
 			break;
 		default:
