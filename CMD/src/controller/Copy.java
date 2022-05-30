@@ -75,13 +75,16 @@ public class Copy {
 		
 		endIndex = getIndexOfPointThatSeparatesFilePath(command);  //첫 번째 파일의 경로정보가 끝나는 지점의 인덱스 값 
 		beginIndex = endIndex + 1;         	                       //두 번째 파일의 경로정보가 시작되는 지점의 인덱스 값
-		
-		if(endIndex == command.length()) {   //ex: copy a.txt or copy C:\Users\sec\OneDrive\"바탕 화면"\a.txt
-			firstFile = (command.indexOf("\\") == -1)
-						? (currentPath + "\\" + command) : command;
-			secondFile = currentPath;        //두번째 파일을 입력하지 않은 경우 -> 두번재 파일: 현재경로
-		}                                 
-		else {
+	     
+		if(endIndex == command.length() && command.indexOf("\\") == -1) {  //ex: copy a.txt
+			firstFile = currentPath + "\\" + command;                      //-> 현재경로\a.txt
+			secondFile = firstFile;
+		}
+		else if(endIndex == command.length()) {//ex: copy C:\Users\sec\OneDrive\"바탕 화면"\a.txt
+			firstFile = command;               //-> 두번재 파일: 현재경로
+			secondFile = currentPath;           
+		}
+		else {                                                      //두번째 파일을 입력한 경우
 			firstFile = command.substring(0, endIndex).trim();
 			secondFile = command.substring(beginIndex).trim();
 		}
@@ -124,8 +127,7 @@ public class Copy {
 		 File fileToSave = new File(secondFilePath);   
 		  
 		 if(firstFilePath.equals(secondFilePath)) {  //같은 파일에 덮어쓰려는 경우
-				System.out.println("같은 파일로 복사할 수 없습니다.\r\n" + 
-								   "        0개 파일이 복사되었습니다.");
+				System.out.println("같은 파일로 복사할 수 없습니다.\r\n" +  "        0개 파일이 복사되었습니다.");
 				return;
 		}
 		 
@@ -140,9 +142,6 @@ public class Copy {
 	}
 	private void manageFileCopy(String firstFilePath, String secondFilePath) {
 		String whetherToCopy = "";
-		
-		System.out.println("\n>" + firstFilePath);
-		System.out.println(">" + secondFilePath);
 		
 		if(firstFile.equals(secondFile)) {  //같은 파일에 덮어쓰려는 경우 -> ex: copy a.txt
 			copyfile(firstFilePath, secondFilePath);
@@ -177,23 +176,22 @@ public class Copy {
 		
 	}
 	private String getPathOfSecondFile() {
-		String secondFilePath;
-		
 		if(secondFile.indexOf("\\") == -1) {         //파일이름만 입력한 경우 파일의 경로는 현재경로가 됨
 			return currentPath + "\\" + secondFile;  //ex: a.txt -> C:\Users\sec\a.txt
-		}    
+		}
+		else if(secondFile.indexOf(".") != -1) {     //파일경로를 입력한 경우
+			return secondFile;
+		}
 		
 		if(firstFile.indexOf("\\") == -1) {          //첫번째 파일이 a.txt, 두번째파일에 폴더경로만 있는 경우
-			secondFilePath = secondFile + "\\" + firstFile; //ex: C:\Users\sec -> C:\Users\sec\a.txt     
+			return secondFile + "\\" + firstFile; //ex: C:\Users\sec -> C:\Users\sec\a.txt     
 		}
 		else {
-			secondFilePath = secondFile + firstFile.substring(firstFile.lastIndexOf("\\"));
+			return secondFile + firstFile.substring(firstFile.lastIndexOf("\\"));
 		}
 		/*첫번째 파일이 파일경로로 주어지고, 두번째 파일에 폴더경로만 있는 경우
 		  ex: 첫번째파일: C:\Users\sec\a.txt
 		           두번째파일: C:\Users\sec\Onedrive\"바탕 화면" -> C:\Users\sec\Onedrive\"바탕 화면"\a.txt*/
-		
-		return secondFilePath;
 	}	
 	private String getPathOfFirstFile() {
 		if(firstFile.indexOf("\\") == -1) {         //파일이름만 입력한 경우 파일의 경로는 현재경로가 됨
@@ -216,6 +214,10 @@ public class Copy {
 	private void executeCommand() {
 		String firstFilePath = getPathOfFirstFile();     //입력받은 파일 경로 구하기
 		String secondFilePath = getPathOfSecondFile();
+		
+		System.out.println("\n>" + firstFilePath);
+		System.out.println(">" + secondFilePath);
+		
 		
 		if(isValidPath(firstFilePath) == !Constants.IS_VALID_PATH
 			|| isValidPath(secondFilePath) == !Constants.IS_VALID_PATH) {  
