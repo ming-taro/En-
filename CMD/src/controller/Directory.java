@@ -41,34 +41,58 @@ public class Directory {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return String.format("%10s", fileSize);
+		return String.format("%15s", fileSize);
 	}
 	public String getCategory(File file) {
 		if (file.isDirectory()) {
-			return "  <DIR>   ";
+			return "    <DIR>      ";
         }
 		return "";
+	}
+	public DirectoryInformation getDirectoryInformation(File file) {
+		DirectoryInformation directoryInformation = new DirectoryInformation();
+		String lastModifiedDate = getLastModifiedDate(file);;
+		String category = getCategory(file);
+		String fileSize = getFileSize(file);
+		String fileName = file.getName();
+		
+    	directoryInformation.setDirectoryInformation(
+    			lastModifiedDate, category, fileSize, fileName);
+    	return directoryInformation;
 	}
 	public void printDirectory(String path) {
 		File file = new File(path); 
         File[] fileList = file.listFiles(); 
-		DirectoryInformation directoryInformation;
-		ArrayList<DirectoryInformation> directory = new ArrayList<DirectoryInformation>();
+        ArrayList<DirectoryInformation> directory =
+        		new ArrayList<DirectoryInformation>();
 
-		
         Arrays.sort(fileList);
 		System.out.println(cmdConnector.getCmdExecutionResult("vol c:"));  //디스크 일련번호
-
-        for( int i = 0; i < fileList.length; i++ ) { 
-        	directoryInformation = new DirectoryInformation();
-        	
-        	directoryInformation.setLastModifiedDate(getLastModifiedDate(fileList[i]));  //마지막 수정일
-        	directoryInformation.setCategory(getCategory(fileList[i]));
-            directoryInformation.setFileSize(getFileSize(fileList[i]));
-            directoryInformation.setFileName(fileList[i].getName());
-            
-    		System.out.print(directoryInformation);
-        } 
+		
+        for(int i = 0; i < fileList.length; i++) { 
+        	if(fileList[i].isHidden()) continue;
+        	directory.add(getDirectoryInformation(fileList[i]));
+        	System.out.print(getDirectoryInformation(fileList[i]));
+        }
+        
+        long directorySize = 0;
+        long fileSize = 0; 
+        int numberoOfDirectory = 0;
+        int numberoOfFile = 0;
+        
+        for(int index = 0; index < directory.size(); index++) {
+        	if(directory.get(index).getCategory().contains("DIR")) {
+        		//directorySize += Long.parseLong(directory.get(index).getFileSize().trim());
+        		numberoOfDirectory++;
+        	}
+        	else {
+        		fileSize += Long.parseLong(directory.get(index).getFileSize().trim());
+        		numberoOfFile++;
+        	}
+        }
+        
+        System.out.println(String.format("%30s", numberoOfFile + "개 파일    ") + String.format("%30s", fileSize + "바이트    "));
+        System.out.println(String.format("%30s", numberoOfDirectory + "개 디렉터리  "));
 	}
 	public void executeCommand(String command) {
 		command = command.toLowerCase();
