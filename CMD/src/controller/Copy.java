@@ -15,6 +15,11 @@ public class Copy {
 	private String currentPath;
 	private String firstFile;
 	private String secondFile;
+	private FilePathSetting filePathSetting;
+	
+	public Copy() {
+		filePathSetting = new FilePathSetting();
+	}
 	
 	private String RemoveQuotationMark(String commandToChange, int currentPosition) { //큰따옴표 삭제
 		StringBuilder command = new StringBuilder();
@@ -50,16 +55,13 @@ public class Copy {
 		return index;      //ex: copy a.txt b.txt -> index = 5
 	}
 	private int getIndexOfPointThatSeparatesFilePath(String command) {
-		if(command.indexOf("C:") == -1
-				|| command.indexOf("C:", 2) == -1){   //ex: copy a.txt b.txt or copy a.txt
+		if(command.indexOf("C:") == -1                //ex: copy a.txt b.txt or copy a.txt
+				|| command.indexOf("C:", 2) == -1){   //ex: copy C:\\users\\a.txt b.txt or copy C:\\users\\a.txt
 			return getIndexOfPointThatSeparatesFileName(command);
 		}
 		if(command.indexOf("C:", 2) != -1) {          //ex: copy C:\\users\\a.txt C:\\users\\b.txt
 			return command.indexOf("C:", 2) - 1;      //ex: copy a.txt c:\\users\\b.txt
 		}
-		/*if(command.indexOf("C:", 2) == -1) {        //ex: copy C:\\users\\a.txt b.txt
-			return command.lastIndexOf(" ");          //ex: copy C:\\users\\a.txt
-		}*/
 		return -1;
 	}
 	private void setFilePath(String command) {
@@ -175,52 +177,15 @@ public class Copy {
 		}
 		
 	}
-	private String getPathOfSecondFile() {
-		if(secondFile.indexOf("\\") == -1) {         //파일이름만 입력한 경우 파일의 경로는 현재경로가 됨
-			return currentPath + "\\" + secondFile;  //ex: a.txt -> C:\Users\sec\a.txt
-		}
-		else if(secondFile.indexOf(".") != -1) {     //파일경로를 입력한 경우
-			return secondFile;
-		}
-		
-		if(firstFile.indexOf("\\") == -1) {          //첫번째 파일이 a.txt, 두번째파일에 폴더경로만 있는 경우
-			return secondFile + "\\" + firstFile; //ex: C:\Users\sec -> C:\Users\sec\a.txt     
-		}
-		else {
-			return secondFile + firstFile.substring(firstFile.lastIndexOf("\\"));
-		}
-		/*첫번째 파일이 파일경로로 주어지고, 두번째 파일에 폴더경로만 있는 경우
-		  ex: 첫번째파일: C:\Users\sec\a.txt
-		           두번째파일: C:\Users\sec\Onedrive\"바탕 화면" -> C:\Users\sec\Onedrive\"바탕 화면"\a.txt*/
-	}	
-	private String getPathOfFirstFile() {
-		if(firstFile.indexOf("\\") == -1) {         //파일이름만 입력한 경우 파일의 경로는 현재경로가 됨
-			return currentPath + "\\" + firstFile;  //ex: a.txt -> C:\Users\sec\a.txt
-		}
-		return firstFile;
-	}
-	private boolean isValidPath(String filePath) {
-		int endIndex = filePath.lastIndexOf("\\");
-		File file;
-		
-		filePath = filePath.substring(0, endIndex);       //파일이 위치한 폴더의 경로
-		file = new File(filePath);
-		
-		if (file.isDirectory()) {                         //폴더가 존재하는지 검사
-			 return Constants.IS_VALID_PATH;
-		}
-		return !Constants.IS_VALID_PATH;
-	}
 	private void executeCommand() {
-		String firstFilePath = getPathOfFirstFile();     //입력받은 파일 경로 구하기
-		String secondFilePath = getPathOfSecondFile();
+		String firstFilePath;     //입력받은 파일 경로 구하기
+		String secondFilePath;
+
+		firstFilePath = filePathSetting.getPathOfFirstFile(firstFile, currentPath);
+		secondFilePath = filePathSetting.getPathOfSecondFile(firstFile, secondFile, currentPath);
 		
-		System.out.println("\n>" + firstFilePath);
-		System.out.println(">" + secondFilePath);
-		
-		
-		if(isValidPath(firstFilePath) == !Constants.IS_VALID_PATH
-			|| isValidPath(secondFilePath) == !Constants.IS_VALID_PATH) {  
+		if(filePathSetting.isValidPath(firstFilePath) == !Constants.IS_VALID_PATH
+			|| filePathSetting.isValidPath(secondFilePath) == !Constants.IS_VALID_PATH) {  
 			System.out.println("지정된 경로를 찾을 수 없습니다.");   //폴더경로가 잘못된 경우
 			return;
 		}
@@ -231,6 +196,9 @@ public class Copy {
 		}
 		
 		manageFileCopy(firstFilePath, secondFilePath);      //파일 복사
+
+		firstFile = "";
+		secondFile = "";
 	}
 	public void execute(String path, String command) {
 		this.currentPath = path;  //현재 경로
@@ -244,12 +212,6 @@ public class Copy {
 		}
 		
 		setFilePath(command);                              //파일경로 구하기
-		
-		System.out.println(">" + firstFile);
-		System.out.println(">" + secondFile);
-		 
 		executeCommand();
-		firstFile = "";
-		secondFile = "";
 	}
 }
