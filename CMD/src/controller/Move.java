@@ -66,22 +66,16 @@ public class Move {
 	}
 	protected void manageFileMove(String firstFilePath, String secondFilePath) {
 		String whetherToCopy = "";
-		String firstFile = filePath.getFirstFile();
-		String secondFile = filePath.getSecondFile();
 		
-		if(firstFile.equals(secondFile)
+		if(firstFilePath.equals(secondFilePath)
 			|| isFileExisting(secondFilePath) == !Constants.IS_FILE_EXISTING) {  
 			moveFile(firstFilePath, secondFilePath); //같은 파일에 덮어쓰려는 경우 (ex: copy a.txt) or 새로운 파일을 생성해 복사할 경우
 			return;
 		}
 		
 		while(Constants.IS_ENTERING_VALUE) {        //기존 파일에 덮어쓰는 경우 -> 덮어쓸지 여부를 선택함
-			if(secondFile.indexOf('\\') == -1) {    //두번째 파일입력시 파일명을 입력한 경우(ex: copy a.txt b.txt)
-				System.out.print(secondFile + "을(를) 덮어쓰시겠습니까? (Yes/No/All): ");  //-> 'b.txt'를 덮어쓰시겠습니
-			}
-			else {                                  //두번째 파일입력시 파일경로를 입력한 경우(ex: copy a.txt C:\Users\sec)
-				System.out.print(secondFilePath + "을(를) 덮어쓰시겠습니까? (Yes/No/All): ");  //->'C:\Users\sec\a.txt'를 덮어쓰시겠습니까?
-			}
+			System.out.print(secondFilePath + "을(를) 덮어쓰시겠습니까? (Yes/No/All): ");
+
 			whetherToCopy = inputWord();
 			if(isChoosenToCopy(whetherToCopy)) {     
 				break;
@@ -102,7 +96,8 @@ public class Move {
 		
 		if(filePathSetting.isValidPath(firstFilePath) == !Constants.IS_VALID_PATH
 			|| filePathSetting.isValidPath(secondFilePath) == !Constants.IS_VALID_PATH) {  
-			System.out.println("지정된 경로를 찾을 수 없습니다.");   //폴더경로가 잘못된 경우
+			System.out.println("지정된 경로를 찾을 수 없습니다.\r\n" + 
+					"     0개 파일을 이동했습니다.");   //폴더경로가 잘못된 경우
 			return;
 		}
 	
