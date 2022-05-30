@@ -98,16 +98,11 @@ public class Copy {
 		}
 		
 		switch(whetherToCopy.toLowerCase().charAt(0)) {
-		case 'y': case 'a':
-			System.out.println("        1개 파일이 복사되었습니다.");
-			break;
-		case 'n':
-			System.out.println("        0개 파일이 복사되었습니다.");
-			break;
+		case 'y': case 'a': case 'n':
+			return Constants.IS_CHOOSEN_TO_COPY;
 		default:
 			return !Constants.IS_CHOOSEN_TO_COPY;
 		}
-		return Constants.IS_CHOOSEN_TO_COPY;
 	}
 	private String inputWord() {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -126,17 +121,26 @@ public class Copy {
 		 File fileToCopy = new File(firstFilePath);       
 		 File fileToSave = new File(secondFilePath);   
 		  
+		 if(firstFilePath.equals(secondFilePath)) {  //같은 파일에 덮어쓰려는 경우
+				System.out.println("같은 파일로 복사할 수 없습니다.\r\n" + 
+								   "        0개 파일이 복사되었습니다.");
+				return;
+		}
+		 
 		 try {
 			Files.copy(fileToCopy.toPath(), fileToSave.toPath(), 
 					StandardCopyOption.REPLACE_EXISTING);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} 
+		 
+		System.out.println("        1개 파일이 복사되었습니다.");
 	}
 	private void manageFileCopy(String firstFilePath, String secondFilePath) {
 		String whetherToCopy = "";
 		
-		if(firstFilePath.equals(secondFilePath)) {  //같은 파일에 덮어쓰려는 경우 -> ex: copy a.txt
+		System.out.println("{}" + firstFilePath + "/" + secondFilePath);
+		if(firstFile.equals(secondFile)) {  //같은 파일에 덮어쓰려는 경우 -> ex: copy a.txt
 			System.out.println("같은 파일로 복사할 수 없습니다.\r\n" + 
 					"        0개 파일이 복사되었습니다.");
 			return;
@@ -149,8 +153,13 @@ public class Copy {
 			return;
 		}
 		
-		while(Constants.IS_ENTERING_VALUE) {        //기존 파일에 덮어쓴느 경우 -> 덮어쓸지 여부를 선택함
-			System.out.print(secondFile + "을(를) 덮어쓰시겠습니까? (Yes/No/All): ");
+		while(Constants.IS_ENTERING_VALUE) {        //기존 파일에 덮어쓰는 경우 -> 덮어쓸지 여부를 선택함
+			if(secondFile.indexOf('\\') == -1) {    //두번째 파일입력시 파일명을 입력한 경우(ex: copy a.txt b.txt)
+				System.out.print(secondFile + "을(를) 덮어쓰시겠습니까? (Yes/No/All): ");  //-> 'b.txt'를 덮어쓰시겠습니
+			}
+			else {                                  //두번째 파일입력시 파일경로를 입력한 경우(ex: copy a.txt C:\Users\sec)
+				System.out.print(secondFilePath + "을(를) 덮어쓰시겠습니까? (Yes/No/All): ");  //->'C:\Users\sec\a.txt'를 덮어쓰시겠습니까?
+			}
 			whetherToCopy = inputWord();
 			if(isChoosenToCopy(whetherToCopy)) {     
 				break;
@@ -163,17 +172,19 @@ public class Copy {
 		
 	}
 	private String getPathOfSecondFile(String filePath) {
+		String secondFilePath;
+		
 		if(firstFile.indexOf("\\") == -	1) {          //첫번째 파일이 a.txt, 두번째파일에 폴더경로만 있는 경우
-			secondFile = filePath + "\\" + firstFile; //ex: C:\Users\sec -> C:\Users\sec\a.txt     
+			secondFilePath = filePath + "\\" + firstFile; //ex: C:\Users\sec -> C:\Users\sec\a.txt     
 		}
 		else {
 			/*첫번째 파일이 파일경로로 주어진  경우
 			  ex: 첫번째파일: C:\Users\sec\a.txt
 			           두번째파일: C:\Users\sec\Onedrive\"바탕 화면" -> C:\Users\sec\Onedrive\"바탕 화면"\a.txt*/
-			secondFile = filePath + 
+			secondFilePath = filePath + 
 						 firstFile.substring(firstFile.lastIndexOf("\\"));
 		}
-		return secondFile;
+		return secondFilePath;
 	}	
 	private String getPathOfFile(String filePath) {
 		int lastIndex = filePath.length() - 1;
