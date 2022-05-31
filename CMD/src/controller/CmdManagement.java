@@ -11,7 +11,6 @@ import utility.Constants;
 import view.ClearScreen;
 import view.CommandUsage;
 import view.Help;
-import view.Start;
 
 public class CmdManagement {
 	private String path;
@@ -22,7 +21,7 @@ public class CmdManagement {
 	private Move move;
 	private Directory directory;
 	
-	private Start start;
+	private CmdConnector cmdConnector;
 	private Help helpCommand;
 	private ClearScreen clearScreen;
 	
@@ -35,7 +34,7 @@ public class CmdManagement {
 		move = new Move();
 		directory = new Directory();
 		
-		start = new Start();
+		cmdConnector = new CmdConnector();
 		helpCommand = new Help();
 		clearScreen = new ClearScreen();
 	}
@@ -103,7 +102,7 @@ public class CmdManagement {
 		
 		switch(command) {
 		case "cmd":
-			start.printWindowVersion();
+			printWindowVersion();
 			break;
 		case "help":
 			helpCommand.execute();
@@ -129,10 +128,14 @@ public class CmdManagement {
 			+ "'은(는) 내부 또는 외부 명령, 실행할 수 있는 프로그램, 또는\r\n" + "배치 파일이 아닙니다.");
 		}
 	}
+	private void printWindowVersion() {
+		System.out.print(cmdConnector.getCmdExecutionResult("ver").substring(1));  //처음 입력된 줄바꿈을 지움 
+		System.out.println("(c) Microsoft Corporation. All rights reserved.");
+	}
 	public void start(){
 		String command;
 	
-		start.printWindowVersion();
+		printWindowVersion();
 		
 		while(true) {
 			command = inputWord();

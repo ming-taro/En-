@@ -91,8 +91,8 @@ public class Directory {
         	}
         }
         
-        System.out.println(String.format("%30s", numberoOfFile + "개 파일    ") + String.format("%30s", fileSize + "바이트    "));
-        System.out.println(String.format("%30s", numberoOfDirectory + "개 디렉터리  "));
+        System.out.println(String.format("%25s", numberoOfFile + "개 파일    ") + String.format("%30s", fileSize + "바이트    "));
+        System.out.println(String.format("%25s", numberoOfDirectory + "개 디렉터리  "));
 	}
 	public void executeCommand(String command) {
 		command = command.toLowerCase();
