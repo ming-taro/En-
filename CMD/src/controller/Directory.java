@@ -1,16 +1,11 @@
 package controller;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 
 import model.DirectoryInformation;
@@ -130,8 +125,6 @@ public class Directory {
 		else {
 			printDirectory(currentPath, pathEntered);
 		}
-		
-		
 	}
 	public void execute(String currentPath, String command) {
 

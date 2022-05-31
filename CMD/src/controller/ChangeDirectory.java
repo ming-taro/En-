@@ -24,7 +24,6 @@ public class ChangeDirectory {
 				break;
 			}
 		}
-		
 	}
 	private void moveOneLevelToParentFolder(String command) {
 		int endIndex = currentPath.lastIndexOf("\\");
@@ -68,6 +67,21 @@ public class ChangeDirectory {
 		
 		System.out.println("지정된 경로를 찾을 수 없습니다.");
 	}
+	private void moveToPathEntered(String pathEntered) {
+		File file = new File(pathEntered);
+		
+		if(pathEntered.indexOf("C:") == -1) {   //'\\users'만 입력한 경우 -> C:\\users
+			pathEntered = "C:" + pathEntered; 
+		}
+		
+		if(file.isDirectory()) {                //존재하는 경로인지 확인
+			currentPath = pathEntered;
+		}
+		else {
+			System.out.println("지정된 경로를 찾을 수 없습니다.");
+		}
+		
+	}
 	private String getCommand(String command) {
 		command = command.toLowerCase();
 		
@@ -77,7 +91,8 @@ public class ChangeDirectory {
 		if(command.charAt(0) == ('.')) {
 			return "..";
 		}
-		if(command.charAt(0) == '\\') {
+		if(command.charAt(0) == '\\' 
+			&& getNumberOfWord(command, "\\") == command.length()) {
 			return "\\";
 		}
 		if(command.charAt(0) == '/') {
@@ -104,6 +119,8 @@ public class ChangeDirectory {
 		case "":                 //cd만 입력 -> 현재경로 출력
 			System.out.println(currentPath + "\n");
 			break;
+		default:                 //cd뒤에 이동할 경로 입력(ex cd C:\\users)
+			moveToPathEntered(command);
 		}
 	}
 	public String execute(String pathBeforeChange, String command) {
@@ -115,16 +132,6 @@ public class ChangeDirectory {
 		
 		executeCommand(command);
 		
-		/*File dir = new File(dirPath);
-		File[] files = dir.listFiles();
-		if(files==null) System.out.println(dirPath + "/" +"아오");
-		else{
-			for(File f : files) {
-				if(f.isFile()) {
-					System.out.println(f.getName());
-				}
-			}
-		}*/
 		return this.currentPath;
 	}
 }
