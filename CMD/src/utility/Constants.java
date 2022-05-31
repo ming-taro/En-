@@ -9,4 +9,6 @@ public class Constants {
 	public static final boolean IS_VALID_PATH = true;
 	public static final boolean IS_CHOOSEN_TO_COPY = true;
 	public static final boolean IS_ENTERING_VALUE = true;
+	
+	public static final String THOUSAND_SEPARATOR_REGEX = "\\B(?=(\\d{3})+(?!\\d))";
 }

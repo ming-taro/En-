@@ -13,7 +13,7 @@ import view.CommandUsage;
 import view.Help;
 
 public class CmdManagement {
-	private String path;
+	private String currentPath;
 	
 	private CommandUsage commandUsage;
 	private ChangeDirectory changeDirectory;
@@ -26,7 +26,7 @@ public class CmdManagement {
 	private ClearScreen clearScreen;
 	
 	public CmdManagement() {
-		path = "C:\\Users\\" + System.getProperty("user.name");
+		currentPath = "C:\\Users\\" + System.getProperty("user.name");
 		
 		commandUsage = new CommandUsage();
 		changeDirectory = new ChangeDirectory();
@@ -39,7 +39,7 @@ public class CmdManagement {
 		clearScreen = new ClearScreen();
 	}
 	public String inputWord(){
-		System.out.print(String.format("\n%s>", path));
+		System.out.print(String.format("\n%s>", currentPath));
 		
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		String word = "";
@@ -88,16 +88,19 @@ public class CmdManagement {
 		if(isStartWithCorrectCommand("copy", command)) {
 			return "copy";
 		}
+		if(isStartWithCorrectCommand("dir", command)) {
+			return "dir";
+		}
 		return commandEntered;
 	}
 	public void executeCommand(String commandEntered) {
 		commandEntered = commandEntered.trim();            //입력한 명령어 앞뒤 공백제거
 		
 		String command = getCommand(commandEntered);  
-		int endIndex = commandEntered.indexOf(' ');        //'abc ddd'입력시 'abc'를 명령어로 인식
+		int endIndex = commandEntered.indexOf(' ');        //'abc ddd'입력시 공백 전까지의 문자인 'abc'를 명령어로 인식
 		
 		if(endIndex == -1) {
-			endIndex = commandEntered.length();
+			endIndex = commandEntered.length();            //공백이 없는 문자 입력시
 		}
 		
 		switch(command) {
@@ -111,16 +114,16 @@ public class CmdManagement {
 			clearScreen.execut();
 			break;
 		case "cd":
-			path = changeDirectory.execute(path, commandEntered);
+			currentPath = changeDirectory.execute(currentPath, commandEntered);
 			break;
 		case "move":
-			move.execute(path, commandEntered);
+			move.execute(currentPath, commandEntered);
 			break;
 		case "copy":
-			copy.execute(path, commandEntered);
+			copy.execute(currentPath, commandEntered);
 			break;
 		case "dir":
-			directory.execute(path, commandEntered);
+			directory.execute(currentPath, commandEntered);
 		case "":
 			break;
 		default:

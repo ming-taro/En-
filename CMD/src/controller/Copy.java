@@ -53,15 +53,15 @@ public class Copy {
 		return word;
 	}
 	private void copyFile(String firstFilePath, String secondFilePath) {
-		 File fileToCopy = new File(firstFilePath);       
-		 File fileToSave = new File(secondFilePath);   
+		File fileToCopy = new File(firstFilePath);       
+		File fileToSave = new File(secondFilePath);   
 		  
-		 if(firstFilePath.equals(secondFilePath)) {  //같은 파일에 덮어쓰려는 경우
+		if(firstFilePath.equals(secondFilePath)) {  //같은 파일에 덮어쓰려는 경우
 				System.out.println("같은 파일로 복사할 수 없습니다.\r\n" +  "        0개 파일이 복사되었습니다.");
 				return;
 		}
 		 
-		 try {
+		try {
 			Files.copy(fileToCopy.toPath(), fileToSave.toPath(), 
 					StandardCopyOption.REPLACE_EXISTING);
 		} catch (IOException e) {
