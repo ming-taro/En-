@@ -3,16 +3,21 @@ package ui;
 import java.awt.BorderLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import utility.Constants;
 
-public class PanelSwitcher extends JFrame {
-	private LogInPanel logInPanel;
+public class PanelSwitcher extends JFrame implements ActionListener{
+	private MainPanel mainPanel;
+	private SignUpPanel signUpPanel;
 	
 	public PanelSwitcher() {
-		logInPanel = new LogInPanel();
+		mainPanel = new MainPanel(this);
+		signUpPanel = new SignUpPanel(this);
 		
 		setComponent();
 	}
@@ -27,7 +32,21 @@ public class PanelSwitcher extends JFrame {
 		setIconImage(img);
 		setVisible(true);
 		
-		getContentPane().add(logInPanel, BorderLayout.CENTER);
+		getContentPane().add(mainPanel, BorderLayout.CENTER);
+	}
+	public void switchPanel(JPanel panel) {
+		getContentPane().removeAll();
+		getContentPane().add(panel, BorderLayout.NORTH);
+		getContentPane().revalidate();
+		getContentPane().repaint();
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent event) {
+		if(event.getSource() == mainPanel.getSignUpButton()) {
+			switchPanel(signUpPanel);
+		}
+		
 	}
 	
 }
