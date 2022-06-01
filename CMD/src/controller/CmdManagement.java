@@ -53,42 +53,61 @@ public class CmdManagement {
 		
 		return word;
 	}
-	public boolean isStartWithCorrectCommand(String command, String commandEntered) {
-		int lengthOfCommand = command.length();
-		int lengthOfCommandEntered = commandEntered.length();
-		
-		if(lengthOfCommandEntered < lengthOfCommand) {
-			return !Constants.IS_START_WIDTH_CORRECT_COMMAND;
+	public boolean isCdCommand(String commandEntered) {
+		if(commandEntered.equals("cd")) {
+			return Constants.IS_CD_COMMAND;
 		}
-		if(commandEntered.substring(0, lengthOfCommand).equals(command) 
-				== !Constants.IS_STRING_MATCHED) {
-			return !Constants.IS_START_WIDTH_CORRECT_COMMAND;
+		if(commandEntered.indexOf("cd") != 0) {
+			return !Constants.IS_CD_COMMAND;
 		}
 		
-		return Constants.IS_START_WIDTH_CORRECT_COMMAND;
+		int beginIndex = commandEntered.indexOf("cd") + "cd".length();
+		commandEntered = commandEntered.substring(beginIndex);       //cd뒤에 이어지는 명령어
+
+		switch(commandEntered.charAt(0)){
+		case '.': case '/': case '\\': case ' ':       //ex: cd.. or cd\
+			return Constants.IS_CD_COMMAND;
+		}
+		return !Constants.IS_CD_COMMAND;               //ex: cdffff
+	}
+	public boolean isCorrectCommandEntered(String command, String commandEntered) {
+		if(commandEntered.equals(command)) {
+			return Constants.IS_CORRECT_COMMAND_ENTERED;
+		}
+		if(commandEntered.indexOf(command) != 0) {            //명령어로 시작하지 않음
+			return !Constants.IS_CORRECT_COMMAND_ENTERED;
+		}
+		
+		int beginIndex = command.indexOf(command) + command.length();
+		commandEntered = commandEntered.substring(beginIndex);       //명령어뒤에 이어지는 문장
+		
+		if(commandEntered.charAt(0) == ' '){     //명령어 뒤에 실행할 문장은 명령어와 최소 한칸 이상 구별해서 작성해야 함 
+			return Constants.IS_CORRECT_COMMAND_ENTERED;
+		}
+		return !Constants.IS_CORRECT_COMMAND_ENTERED;
 	}
 	public String getCommand(String commandEntered) {
 		String command = commandEntered.toLowerCase();
 		
-		if(isStartWithCorrectCommand("cmd", command)) {
+		if(command.equals("cmd")) {
 			return "cmd";
 		}
-		if(isStartWithCorrectCommand("help", command)) {
+		if(command.equals("help")) {
 			return "help";
 		}
-		if(isStartWithCorrectCommand("cls", command)) {
+		if(command.equals("cls")) {
 			return "cls";
 		}
-		if(isStartWithCorrectCommand("cd", command)) {
+		if(isCdCommand(command)) {
 			return "cd";
 		}
-		if(isStartWithCorrectCommand("move", command)) {
+		if(isCorrectCommandEntered("move", command)) {
 			return "move";
 		}
-		if(isStartWithCorrectCommand("copy", command)) {
+		if(isCorrectCommandEntered("copy", command)) {
 			return "copy";
 		}
-		if(isStartWithCorrectCommand("dir", command)) {
+		if(isCorrectCommandEntered("dir", command)) {
 			return "dir";
 		}
 		return commandEntered;
@@ -124,6 +143,7 @@ public class CmdManagement {
 			break;
 		case "dir":
 			directory.execute(currentPath, commandEntered);
+			break;
 		case "":
 			break;
 		default:

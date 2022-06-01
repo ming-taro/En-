@@ -1,4 +1,4 @@
-package model;
+package dto;
 
 public class FilePath {
 	private String currentPath;

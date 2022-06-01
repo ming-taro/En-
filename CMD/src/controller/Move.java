@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
-import model.FilePath;
+import dto.FilePath;
 import utility.Constants;
 
 public class Move {

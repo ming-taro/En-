@@ -2,7 +2,7 @@ package controller;
 
 import java.io.File;
 
-import model.FilePath;
+import dto.FilePath;
 import utility.Constants;
 
 public class FilePathSetting {

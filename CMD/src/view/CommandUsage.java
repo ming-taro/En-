@@ -42,7 +42,7 @@ public class CommandUsage {
 				"  /4          4자릿수 연도를 표시합니다.\r\n" + 
 				"\r\n" + 
 				"스위치를 DIRCMD 환경 변수로 미리 설정할 수 있습니다. 하이픈(-)을\r\n" + 
-				"스위치 앞에 접두사로 붙이면 미리 설정된 스위치를 재정의합니다(예, /-W)." + "\n");
+				"스위치 앞에 접두사로 붙이면 미리 설정된 스위치를 재정의합니다(예, /-W).");
 	}
 	public void printCopyUsage() {
 		System.out.println("하나 이상의 파일을 다른 위치로 복사합니다.\r\n" + 
@@ -72,7 +72,7 @@ public class CommandUsage {
 				"덮어쓸지를 묻습니다.\r\n" + 
 				"\r\n" + 
 				"파일을 한 파일에 붙여 넣으려면 원본에 여러 파일을 지정하고\r\n" + 
-				"(대표 문자 또는 파일1+파일2+파일3 포맷을 사용하여) 대상에는 한 파일을 지정합니다." + "\n");
+				"(대표 문자 또는 파일1+파일2+파일3 포맷을 사용하여) 대상에는 한 파일을 지정합니다.");
 	}
 	public void printCdUsage() {
 		System.out.println("현재 디렉터리 이름을 보여주거나 바꿉니다.\r\n" + 
@@ -102,19 +102,18 @@ public class CommandUsage {
 				"\r\n" + 
 				"    cd \\winnt\\profiles\\username\\programs\\start menu\r\n" + 
 				"\r\n" + 
-				"    cd \"\\winnt\\profiles\\username\\programs\\start menu\"" + "\n");
+				"    cd \"\\winnt\\profiles\\username\\programs\\start menu\"");
 	}
 	public void printHelpUsage() {
 		System.out.println("Windows 명령어에 관한 도움말을 제공합니다.\r\n" + 
 				"\r\n" + 
 				"HELP [명령어]\r\n" + 
 				"\r\n" + 
-				"    명령어 - 해당 명령어에 대한 도움말 정보를 표시합니다." + "\n");
+				"    명령어 - 해당 명령어에 대한 도움말 정보를 표시합니다.");
 	}
 	public void printClsUsage() {
 		System.out.println("화면을 지웁니다.\r\n" + 
-				"\r\n" + 
-				"CLS" + "\n");
+				"\r\n" + "CLS");
 	}
 	public void printMoveUsage() {
 		System.out.println("파일을 옮기고 파일과 디렉터리 이름을 바꿉니다.\r\n" + 
@@ -143,6 +142,6 @@ public class CommandUsage {
 				"COPYCMD 환경 변수에 /Y 스위치가 나타날 수도 있습니다.\r\n" + 
 				"명령줄에 있는 /-Y를 사용하여 무시될 수도 있습니다.\r\n" + 
 				"일괄 처리 스크립트 내에서 MOVE 명령어를 실행하지 않으면 기본적으로\r\n" + 
-				"덮어쓸지를 묻습니다." + "\n");
+				"덮어쓸지를 묻습니다.");
 	}
 }
