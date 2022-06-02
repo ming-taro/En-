@@ -3,12 +3,14 @@ package ui;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.ImageObserver;
 import java.text.AttributedCharacterIterator;
 
 import javax.swing.*;
 
-public class SignUpPanel extends JPanel implements UICreator{
+public class SignUpPanel extends JPanel implements UICreator, ActionListener, MouseListener{
 	private JButton backButton;
 	private JTextField idTextField;
 	private JTextField passwordTextField, confirmPasswordTextField;
@@ -22,7 +24,6 @@ public class SignUpPanel extends JPanel implements UICreator{
 	
 	public SignUpPanel(ActionListener actionListener) {
 		setComponent();
-		
 		backButton.addActionListener(actionListener);
 	}
 	
@@ -108,6 +109,8 @@ public class SignUpPanel extends JPanel implements UICreator{
 		monthcomboBox = new JComboBox(month);
 		monthcomboBox.setFont(font);
 		monthcomboBox.setPreferredSize(new Dimension(50, 40));
+		monthcomboBox.addMouseListener(this);
+		monthcomboBox.addActionListener(this);
 		
 		dayTextField = new JTextField();
 		dayTextField.setFont(font);
@@ -119,6 +122,8 @@ public class SignUpPanel extends JPanel implements UICreator{
 		sexComboBox = new JComboBox(sex);
 		sexComboBox.setFont(font);
 		sexComboBox.setPreferredSize(new Dimension(70, 40));
+		sexComboBox.addMouseListener(this);
+		sexComboBox.addActionListener(this);
 		
 		inputFieldPanel.add(yearTextField);
 		inputFieldPanel.add(monthcomboBox);
@@ -157,5 +162,35 @@ public class SignUpPanel extends JPanel implements UICreator{
 	    g.drawImage(icon.getImage(), 0, 0, width, height, null);
 	    setOpaque(false);
 	    super.paintComponent(g);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		repaint();
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		repaint();
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		repaint();
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		repaint();
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		repaint();
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		repaint();
 	}
 }
