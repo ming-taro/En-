@@ -16,11 +16,13 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 	private JTextField passwordTextField, confirmPasswordTextField;
 	private JTextField nameTextField;
 	private JTextField yearTextField, dayTextField;
-	private JComboBox monthcomboBox, sexComboBox;
-	
+	private JTextField zipCodeTextField;
 	private JTextField roadNameAddressTextField, detailAddressTextField;
-	private JTextField phoneNumberTextField;
+	private JTextField middleNumberTextField, lastFourDigitsTextField;
 	private JTextField emailTextField;
+	private JComboBox monthcomboBox, sexComboBox;
+	private JComboBox phoneNumberComboBox;
+	private JButton zipCodeButton;
 	
 	public SignUpPanel(ActionListener actionListener) {
 		setComponent();
@@ -51,7 +53,7 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 		backButtonPanel.setPreferredSize(new Dimension(50, 70));
 		backButtonPanel.setBackground(new Color(255, 0, 0, 0));
 		
-		add(backButtonPanel, BorderLayout.NORTH);
+		add(backButtonPanel, BorderLayout.SOUTH);
 	}
 	
 	private ImageIcon getLabelIcon(String imagePath) {
@@ -77,15 +79,38 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 		return inputFieldPanel;
 	}
 	
+	private JTextField getInputField(int width) {
+		JTextField textField;
+		Font font = new Font("고딕", Font.BOLD, 15);
+		
+		textField = new JTextField();
+		textField.setFont(font);
+		textField.setPreferredSize(new Dimension(width, 40));
+		
+		return textField;
+	}
+	
+	private JComboBox getComboBox(String[] text) {
+		JComboBox comboBox;
+		Font font = new Font("고딕", Font.BOLD, 15);
+		
+		comboBox = new JComboBox(text);
+		comboBox.setFont(font);
+		comboBox.setBackground(Color.white);
+		comboBox.setPreferredSize(new Dimension(60, 40));
+		comboBox.addMouseListener(this);
+		comboBox.addActionListener(this);
+		
+		return comboBox;
+	}
+	
 	private void setInputFiled(JPanel inputPanel, JTextField inputField, String imagePath, String regexText) {	
 		Font font = new Font("고딕", Font.BOLD, 15);
 		JLabel inputTypeLabel = new JLabel(getLabelIcon(imagePath));
 		JLabel regexLabel;
 		JPanel inputFieldPanel = getInputFieldPanel(inputTypeLabel);
 		
-		inputField = new JTextField();
-		inputField.setFont(font);
-		inputField.setPreferredSize(new Dimension(250, 40));
+		inputField = getInputField(250);
 		inputFieldPanel.add(inputField);
 		
 		regexLabel = new JLabel(regexText);
@@ -98,32 +123,19 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 	private void setBirthFiled(JPanel inputPanel) {
 		JLabel inputTypeLabel = new JLabel(getLabelIcon("image\\password.png"));
 		JPanel inputFieldPanel = getInputFieldPanel(inputTypeLabel);
-		Font font = new Font("고딕", Font.BOLD, 15);
 		String[] month = {"월", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
 		String[] sex = {"성별", "여", "남"};
 		
-		yearTextField = new JTextField();
-		yearTextField.setFont(font);
-		yearTextField.setPreferredSize(new Dimension(50, 40));
+		yearTextField = getInputField(60);
 		
-		monthcomboBox = new JComboBox(month);
-		monthcomboBox.setFont(font);
-		monthcomboBox.setPreferredSize(new Dimension(50, 40));
-		monthcomboBox.addMouseListener(this);
-		monthcomboBox.addActionListener(this);
+		monthcomboBox = getComboBox(month);
 		
-		dayTextField = new JTextField();
-		dayTextField.setFont(font);
-		dayTextField.setPreferredSize(new Dimension(50, 40));
+		dayTextField = getInputField(60);
 		
 		JLabel blankLabel = new JLabel("");
 		blankLabel.setPreferredSize(new Dimension(50, 40));
 		
-		sexComboBox = new JComboBox(sex);
-		sexComboBox.setFont(font);
-		sexComboBox.setPreferredSize(new Dimension(70, 40));
-		sexComboBox.addMouseListener(this);
-		sexComboBox.addActionListener(this);
+		sexComboBox = getComboBox(sex);
 		
 		inputFieldPanel.add(yearTextField);
 		inputFieldPanel.add(monthcomboBox);
@@ -131,6 +143,55 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 		inputFieldPanel.add(blankLabel);
 		inputFieldPanel.add(sexComboBox);
 	
+		inputPanel.add(inputFieldPanel);
+	}
+	
+	private void setZipCodeFiled(JPanel inputPanel) {
+		JLabel inputTypeLabel = new JLabel(getLabelIcon("image\\blank.png"));
+		JPanel inputFieldPanel = getInputFieldPanel(inputTypeLabel);
+	
+		zipCodeTextField = getInputField(100);             //우편번호
+		
+		zipCodeButton = new JButton("우편번호");            //우편번호 찾기 버튼
+		zipCodeButton.setPreferredSize(new Dimension(100, 40));
+		
+		inputFieldPanel.add(zipCodeTextField);
+		inputFieldPanel.add(zipCodeButton);
+		
+		inputPanel.add(inputFieldPanel);
+	}
+	
+	private void setAddressFiled(JPanel inputPanel) {
+		JLabel inputTypeLabel = new JLabel(getLabelIcon("image\\blank.png"));
+		JPanel inputFieldPanel = getInputFieldPanel(inputTypeLabel);
+	
+		roadNameAddressTextField = getInputField(250);
+		
+		JLabel blankLabel = new JLabel("");
+		blankLabel.setPreferredSize(new Dimension(20, 40));
+		
+		detailAddressTextField = getInputField(250);
+		
+		inputFieldPanel.add(roadNameAddressTextField);
+		inputFieldPanel.add(blankLabel);
+		inputFieldPanel.add(detailAddressTextField);
+		
+		inputPanel.add(inputFieldPanel);
+	}
+	
+	private void setPhoneNumberField(JPanel inputPanel) {
+		JLabel inputTypeLabel = new JLabel(getLabelIcon("image\\blank.png"));
+		JPanel inputFieldPanel = getInputFieldPanel(inputTypeLabel);
+		String[] phoneNumber = {"010", "011", "016", "017", "018", "019"};
+		
+		phoneNumberComboBox = getComboBox(phoneNumber);
+		middleNumberTextField = getInputField(50);
+		lastFourDigitsTextField = getInputField(50);
+		
+		inputFieldPanel.add(phoneNumberComboBox);
+		inputFieldPanel.add(middleNumberTextField);
+		inputFieldPanel.add(lastFourDigitsTextField);
+		
 		inputPanel.add(inputFieldPanel);
 	}
 	
@@ -144,9 +205,10 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 		setInputFiled(inputPanel, confirmPasswordTextField, "image\\blank.png", "(비밀번호를 한번 더 입력해주세요)");
 		setInputFiled(inputPanel, nameTextField, "image\\name.png", "(한글/영문 대소문자, 40자 이내)");
 		setBirthFiled(inputPanel);
-		setInputFiled(inputPanel, roadNameAddressTextField, "image\\password.png", "기본주소");
-		setInputFiled(inputPanel, detailAddressTextField, "image\\password.png", "상세 주소");
-		setInputFiled(inputPanel, phoneNumberTextField, "image\\password.png", "");
+		setZipCodeFiled(inputPanel);
+		setAddressFiled(inputPanel);
+		setPhoneNumberField(inputPanel);
+		
 		setInputFiled(inputPanel, emailTextField, "image\\password.png", "");
 		
 		add(inputPanel, BorderLayout.CENTER);
