@@ -1,6 +1,7 @@
 package ui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -36,7 +37,7 @@ public class PanelSwitcher extends JFrame implements ActionListener{
 	}
 	public void switchPanel(JPanel panel) {
 		getContentPane().removeAll();
-		getContentPane().add(panel, BorderLayout.NORTH);
+		getContentPane().add(panel, BorderLayout.CENTER);
 		getContentPane().revalidate();
 		getContentPane().repaint();
 	}
@@ -46,7 +47,9 @@ public class PanelSwitcher extends JFrame implements ActionListener{
 		if(event.getSource() == mainPanel.getSignUpButton()) {
 			switchPanel(signUpPanel);
 		}
-		
+		else if(event.getSource() == signUpPanel.getBackButton()) {
+			switchPanel(mainPanel);
+		}
 	}
 	
 }
