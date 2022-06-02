@@ -10,6 +10,8 @@ import java.text.AttributedCharacterIterator;
 
 import javax.swing.*;
 
+import ui.search_box.SearchFrame;
+
 public class SignUpPanel extends JPanel implements UICreator, ActionListener, MouseListener{
 	private JButton backButton;
 	private JTextField idTextField;
@@ -24,7 +26,11 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 	private JComboBox phoneNumberComboBox;
 	private JButton zipCodeButton;
 	
+	private SearchFrame searchFrame;
+	
 	public SignUpPanel(ActionListener actionListener) {
+		searchFrame = new SearchFrame();
+		
 		setComponent();
 		backButton.addActionListener(actionListener);
 	}
@@ -154,6 +160,7 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 		
 		zipCodeButton = new JButton("우편번호");            //우편번호 찾기 버튼
 		zipCodeButton.setPreferredSize(new Dimension(100, 40));
+		zipCodeButton.addActionListener(this);
 		
 		inputFieldPanel.add(zipCodeTextField);
 		inputFieldPanel.add(zipCodeButton);
@@ -227,7 +234,11 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent event) {
+		if(event.getSource() == zipCodeButton) {
+			searchFrame.setVisible();
+		}
+		
 		repaint();
 	}
 
