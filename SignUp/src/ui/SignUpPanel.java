@@ -29,10 +29,9 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 	private SearchFrame searchFrame;
 	
 	public SignUpPanel(ActionListener actionListener) {
-		searchFrame = new SearchFrame();
+		searchFrame = new SearchFrame(this);
 		
 		setComponent();
-		backButton.addActionListener(actionListener);
 	}
 	
 	public JButton getBackButton() {
@@ -157,6 +156,7 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 		JPanel inputFieldPanel = getInputFieldPanel(inputTypeLabel);
 	
 		zipCodeTextField = getInputField(100);             //우편번호
+		zipCodeTextField.setEditable(false);
 		
 		zipCodeButton = new JButton("우편번호");            //우편번호 찾기 버튼
 		zipCodeButton.setPreferredSize(new Dimension(100, 40));
@@ -172,12 +172,13 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 		JLabel inputTypeLabel = new JLabel(getLabelIcon("image\\blank.png"));
 		JPanel inputFieldPanel = getInputFieldPanel(inputTypeLabel);
 	
-		roadNameAddressTextField = getInputField(250);
+		roadNameAddressTextField = getInputField(350);
+		roadNameAddressTextField.setEditable(false);
 		
 		JLabel blankLabel = new JLabel("");
 		blankLabel.setPreferredSize(new Dimension(20, 40));
 		
-		detailAddressTextField = getInputField(250);
+		detailAddressTextField = getInputField(200);
 		
 		inputFieldPanel.add(roadNameAddressTextField);
 		inputFieldPanel.add(blankLabel);
@@ -233,10 +234,27 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 	    super.paintComponent(g);
 	}
 
+	public void setRoadAddress(String roadAddress) {
+		int beginIndex = roadAddress.indexOf("[") + 1;   //우편번호 정보가 '[]'로 묶여있음
+		int endIndex =  roadAddress.indexOf("]");
+		
+		String zipCode = roadAddress.substring(beginIndex, endIndex);
+		roadAddress = roadAddress.substring(endIndex + 	1);   //우편정보 다음에 이어지는 정보 -> 도로명 주소
+		
+		zipCodeTextField.setText(zipCode);
+		roadNameAddressTextField.setText(roadAddress);
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		if(event.getSource() == zipCodeButton) {
+		JButton button = (JButton) event.getSource();
+		
+		if(button == zipCodeButton) {              //우편번호 -> 주소검색 프레임이 열림
 			searchFrame.setVisible();
+		}
+		else {
+			setRoadAddress(button.getText());
+			searchFrame.closeFrame();              //주소검색 후 -> 검색한 주소값 중 하나를 선택한 경우
 		}
 		
 		repaint();

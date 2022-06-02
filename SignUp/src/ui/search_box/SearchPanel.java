@@ -12,8 +12,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.*;
-
-import org.json.simple.JSONArray;
+import javax.swing.border.EmptyBorder;
 
 import api.RoadAddress;
 import ui.UICreator;
@@ -27,8 +26,11 @@ public class SearchPanel extends JPanel implements UICreator, ActionListener{
 	private JButton searchButton;
 	private RoadAddress roadAddress;
 	private JButton[] roadAddressButton;
+	private JScrollPane searchResultPanelScroll;
+	private ActionListener actionListener;
 	
-	public SearchPanel() {
+	public SearchPanel(ActionListener actionListener) {
+		this.actionListener = actionListener;
 		roadAddress = new RoadAddress();
 		
 		setComponent();
@@ -48,7 +50,7 @@ public class SearchPanel extends JPanel implements UICreator, ActionListener{
 		
 		guidePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 		guidePanel.add(guideLabel);
-		guidePanel.setPreferredSize(new Dimension(Constants.SEARCH_FRAME_WIDTH, 100));
+		guidePanel.setPreferredSize(new Dimension(Constants.SEARCH_PANEL_WIDTH, 100));
 		guidePanel.setBackground(new Color(255, 0, 0, 0));
 		
 		inputTextField = new JTextField();
@@ -57,13 +59,14 @@ public class SearchPanel extends JPanel implements UICreator, ActionListener{
 		
 		searchButton = new JButton("검색");
 		searchButton.setPreferredSize(new Dimension(70, 50));
-		searchButton.addActionListener(this);
 		
 		inputPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 		inputPanel.add(inputTextField);
 		inputPanel.add(searchButton);
-		inputPanel.setPreferredSize(new Dimension(Constants.SEARCH_FRAME_WIDTH, 60));
+		inputPanel.setPreferredSize(new Dimension(Constants.SEARCH_PANEL_WIDTH, 60));
 		inputPanel.setBackground(new Color(255, 0, 0, 0));
+		
+		setActionListener();
 		
 		add(guidePanel, BorderLayout.NORTH);
 		add(inputPanel, BorderLayout.CENTER);
@@ -77,26 +80,45 @@ public class SearchPanel extends JPanel implements UICreator, ActionListener{
 	}
 	
 	private void setSearchResultPanel() {
+		searchResultPanelScroll = new JScrollPane();
+		searchResultPanelScroll.setPreferredSize(new Dimension(Constants.SEARCH_PANEL_WIDTH + 50, 300));
+		searchResultPanelScroll.setViewportView(searchResultPanel);
+		searchResultPanelScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		searchResultPanelScroll.setBorder(new EmptyBorder(0, 0, 0, 0));
+		
 		removeAll();
 		add(guidePanel, BorderLayout.NORTH);
 		add(inputPanel, BorderLayout.CENTER);
-		add(searchResultPanel, BorderLayout.SOUTH);
+		add(searchResultPanelScroll, "South");
 		revalidate();
 		repaint();
+	}
+	
+	private JPanel setRoadAddressButton(JButton roadAddressButton) {
+		JPanel buttonPanel = new JPanel();    //레이아웃에 따라 버튼크기가 달라지지 않도록 패널에 버튼을 한번 넣어 크기를 고정시킨 후, 
+										      //결과패널에 버튼을 직접 넣지 않고 크기가 고정된 패널을 넣는다
+		roadAddressButton.setPreferredSize(new Dimension(Constants.SEARCH_PANEL_WIDTH, 60));
+		roadAddressButton.setHorizontalAlignment(SwingConstants.LEFT);
+		roadAddressButton.setBorderPainted(false);
+		buttonPanel.setBackground(new Color(255, 0, 0, 0));
+		buttonPanel.setPreferredSize(new Dimension(Constants.SEARCH_PANEL_WIDTH, 70));
+		buttonPanel.add(roadAddressButton);
+		
+		return buttonPanel;
 	}
 	
 	private void setRoadAddress() {
 		ArrayList<String> searchResult = roadAddress.getSearchResult(inputTextField.getText());  //도로명 주소 검색결과
 		String roadAddress;
 		int searchNumber = searchResult.size();
-
+ 
 		searchResultPanel = new JPanel();
+		searchResultPanel.setBackground(new Color(255, 0, 0, 0));
 		
 		if(searchNumber == 0) {
 			setNoResult(searchResultPanel);
 			return;
 		}
-		System.out.println(inputTextField.getText());
 		
 		roadAddressButton = new JButton[searchNumber];
 		searchResultPanel.setLayout(new GridLayout(searchNumber, 0));
@@ -104,13 +126,8 @@ public class SearchPanel extends JPanel implements UICreator, ActionListener{
 		for(int index = 0; index < searchNumber; index++) {
 			roadAddress = searchResult.get(index);
 			roadAddressButton[index] = new JButton(roadAddress);   //버튼에 검색결과값을 텍스트로 추가
-			JPanel panel = new JPanel();
-			roadAddressButton[index].setPreferredSize(new Dimension(Constants.SEARCH_FRAME_WIDTH, 60));
-			panel.setPreferredSize(new Dimension(Constants.SEARCH_FRAME_WIDTH, 70));
-			panel.add(roadAddressButton[index]);
-			searchResultPanel.add(panel);
-			
-			System.out.println(roadAddressButton[index].getText());
+			roadAddressButton[index].addActionListener(actionListener);            //도로명 주소 클릭시 회원가입 화면의 주소칸에 자동 입력
+			searchResultPanel.add(setRoadAddressButton(roadAddressButton[index])); //결과패널에 버튼 추가
 		}
 		setSearchResultPanel();
 	}
@@ -125,10 +142,14 @@ public class SearchPanel extends JPanel implements UICreator, ActionListener{
 	    setOpaque(false);
 	    super.paintComponent(g);
 	}
-
+	
+	private void setActionListener() {
+		inputTextField.addActionListener(this);
+		searchButton.addActionListener(this);
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("오");
 		setRoadAddress();
 	}
 }

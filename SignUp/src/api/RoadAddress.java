@@ -28,17 +28,17 @@ public class RoadAddress {
             
             obj = new URL(url + address);
 			
-            HttpURLConnection con = (HttpURLConnection)obj.openConnection();
+            HttpURLConnection connection = (HttpURLConnection)obj.openConnection();
             
-            con.setRequestMethod("GET");
-            con.setRequestProperty("Authorization",userInformation);
-            con.setRequestProperty("content-type", "application/json");
-            con.setDoOutput(true);
-            con.setUseCaches(false);
-            con.setDefaultUseCaches(false);
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("Authorization",userInformation);
+            connection.setRequestProperty("content-type", "application/json");
+            connection.setDoOutput(true);
+            connection.setUseCaches(false);
+            connection.setDefaultUseCaches(false);
 			
             Charset charset = Charset.forName("UTF-8");
-            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream(), charset));
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream(), charset));
             
             while ((inputLine = in.readLine()) != null) {
                 response.append(inputLine);
@@ -56,6 +56,10 @@ public class RoadAddress {
         StringBuilder roadAdrress = new StringBuilder();
 		JSONObject addressObject = (JSONObject) searchObject.get("road_address");    //도로명 주소 정보
     	
+		if(addressObject == null) {   //도로명 주소가 아닐 경우(ex: 검색어 -> 전북 익산시)
+			return "";
+		}
+		
     	roadAdrress.append(String.format("[%s] ", addressObject.get("zone_no")));    //우편번호
     	roadAdrress.append(addressObject.get("address_name"));                       //도로명 주소
     	roadAdrress.append("(" + addressObject.get("region_3depth_name"));           //읍/면/동
@@ -85,7 +89,7 @@ public class RoadAddress {
 			e.printStackTrace();
 		}
         
-        
+        System.out.println(searchReulst.size());
         for(int i=0; i<searchReulst.size(); i++){
         	searchObject = (JSONObject) searchReulst.get(i);
         	roadAdrress.add(getRoadAddress(searchObject));
