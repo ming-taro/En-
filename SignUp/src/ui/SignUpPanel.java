@@ -3,6 +3,8 @@ package ui;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.ImageObserver;
@@ -12,7 +14,7 @@ import javax.swing.*;
 
 import ui.search_box.SearchFrame;
 
-public class SignUpPanel extends JPanel implements UICreator, ActionListener, MouseListener{
+public class SignUpPanel extends JPanel implements UICreator, ActionListener, MouseListener, FocusListener{
 	private JButton backButton;
 	private JTextField idTextField;
 	private JTextField passwordTextField, confirmPasswordTextField;
@@ -32,6 +34,9 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 		searchFrame = new SearchFrame(this);
 		
 		setComponent();
+		setFocusListener();
+		
+		backButton.addActionListener(actionListener);
 	}
 	
 	public JButton getBackButton() {
@@ -115,7 +120,6 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 		JLabel regexLabel;
 		JPanel inputFieldPanel = getInputFieldPanel(inputTypeLabel);
 		
-		inputField = getInputField(250);
 		inputFieldPanel.add(inputField);
 		
 		regexLabel = new JLabel(regexText);
@@ -207,16 +211,28 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 		JPanel inputPanel = new JPanel();
 		inputPanel.setLayout(new GridLayout(9, 0, 0, 0));
 		inputPanel.setBackground(new Color(255, 0, 0, 0));
-
-		setInputFiled(inputPanel, idTextField, "image\\id.png", "(영문 대소문자/숫자, 5~20자)");
-		setInputFiled(inputPanel, passwordTextField, "image\\password.png", "(영문 대소문자/숫자, 8~16자)");
-		setInputFiled(inputPanel, confirmPasswordTextField, "image\\blank.png", "(비밀번호를 한번 더 입력해주세요)");
-		setInputFiled(inputPanel, nameTextField, "image\\name.png", "(한글/영문 대소문자, 40자 이내)");
-		setBirthFiled(inputPanel);
-		setZipCodeFiled(inputPanel);
-		setAddressFiled(inputPanel);
-		setPhoneNumberField(inputPanel);
 		
+		idTextField = getInputField(250);
+		setInputFiled(inputPanel, idTextField, "image\\id.png", "(영문 대소문자/숫자, 5~20자)");
+
+		passwordTextField = getInputField(250);
+		setInputFiled(inputPanel, passwordTextField, "image\\password.png", "(영문 대소문자/숫자, 8~16자)");
+		
+		confirmPasswordTextField = getInputField(250);
+		setInputFiled(inputPanel, confirmPasswordTextField, "image\\blank.png", "(비밀번호를 한번 더 입력해주세요)");
+		
+		nameTextField = getInputField(250);
+		setInputFiled(inputPanel, nameTextField, "image\\name.png", "(한글/영문 대소문자, 40자 이내)");
+		
+		setBirthFiled(inputPanel);
+		
+		setZipCodeFiled(inputPanel);
+		
+		setAddressFiled(inputPanel);
+		
+		setPhoneNumberField(inputPanel);
+
+		emailTextField = getInputField(250);
 		setInputFiled(inputPanel, emailTextField, "image\\password.png", "");
 		
 		add(inputPanel, BorderLayout.CENTER);
@@ -283,5 +299,26 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 	@Override
 	public void mouseExited(MouseEvent e) {
 		repaint();
+	}
+	
+	private void setFocusListener() {
+		idTextField.addFocusListener(this);
+		passwordTextField.addFocusListener(this);
+		confirmPasswordTextField.addFocusListener(this);
+		nameTextField.addFocusListener(this);
+	}
+	
+	@Override
+	public void focusGained(FocusEvent event) {
+		if(event.getSource() == idTextField) {
+			System.out.println("오");
+		}
+	}
+
+	@Override
+	public void focusLost(FocusEvent event) {
+		if(event.getSource() == idTextField) {
+			System.out.println("아");
+		}
 	}
 }
