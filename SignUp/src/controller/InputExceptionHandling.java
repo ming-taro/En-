@@ -5,6 +5,8 @@ import java.util.regex.Pattern;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import model.Profile;
 import utility.Constants;
 
 public class InputExceptionHandling {
@@ -123,5 +125,48 @@ public class InputExceptionHandling {
 			emailRegexLabel.setText("(이메일 주소를 다시 확인해주세요.)");//이메일 양식에 맞지 않음
 			emailRegexLabel.setForeground(Color.red);
 		}
+	}
+	
+	public boolean isProfileEnteredCorrectly(Profile profile) {
+		if(Pattern.matches(Constants.ID_REGEX, profile.getId())
+				== !Constants.IS_MATCH){
+			return !Constants.IS_MATCH;
+		}
+		
+		if(Pattern.matches(Constants.PASSWORD_REGEX, profile.getPassword())
+				== !Constants.IS_MATCH){
+			return !Constants.IS_MATCH;
+		}
+		
+		if(Pattern.matches(Constants.NAME_REGEX, profile.getName())
+				== !Constants.IS_MATCH){
+			return !Constants.IS_MATCH;
+		}
+		
+		if(Pattern.matches(Constants.BIRTH_REGEX, profile.getBirth())
+				== !Constants.IS_MATCH){
+			return !Constants.IS_MATCH;
+		}
+		
+		if(profile.getSex().equals("성별")) {
+			return !Constants.IS_MATCH;
+		}
+
+		if(profile.getRoadNameAddress().equals("")
+				|| profile.getDetailAddress().equals("")) {
+			return !Constants.IS_MATCH;
+		}
+		
+		if(Pattern.matches(Constants.PHONE_NUMBER_REGEX, profile.getPhoneNumber())
+				== !Constants.IS_MATCH){
+			return !Constants.IS_MATCH;
+		}
+		
+		if(Pattern.matches(Constants.EMAIL_REGEX, profile.getEmail())
+				== !Constants.IS_MATCH){
+			return !Constants.IS_MATCH;
+		}
+		
+		return Constants.IS_MATCH;
 	}
 }

@@ -9,9 +9,11 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import controller.ProfileDAO;
+import model.Profile;
 import utility.Constants;
 
 public class PanelSwitcher extends JFrame implements ActionListener{
@@ -46,6 +48,25 @@ public class PanelSwitcher extends JFrame implements ActionListener{
 		getContentPane().repaint();
 	}
 	
+	private void manageSignUp() {
+		Profile profile = signUpPanel.getProfile();
+
+		if(signUpPanel.isProfileEnteredCorrectly(profile) 
+				== !Constants.IS_MATCH) {
+			JOptionPane.showMessageDialog(null, "아직 입력하지 않은 항목이 있습니다. 양식에 맞게 정보를 다시 입력해주세요.",
+					"입력 오류", JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+		
+		try {
+			profileDAO.connectionDB();
+			profileDAO.AddToMemberList(profile);  //회원정보 저장
+			System.out.println("성공");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		if(event.getSource() == mainPanel.getSignUpButton()) {  //메인화면에서 회원가입버튼 클릭 -> 회원가입 창으로 이동
@@ -57,13 +78,7 @@ public class PanelSwitcher extends JFrame implements ActionListener{
 		}
 		
 		if(event.getSource() == signUpPanel.getSignUpButton()) {//회원가입화면에서 '회원가입'버튼클릭
-			try {
-				profileDAO.connectionDB();
-				profileDAO.AddToMemberList(signUpPanel.getProfile());  //회원정보 저장
-				System.out.println("성공");
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			manageSignUp();
 		}
 	}
 	

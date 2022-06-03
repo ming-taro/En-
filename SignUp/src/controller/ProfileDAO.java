@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import model.Profile;
+import utility.Constants;
 
 public class ProfileDAO {
 	private static ProfileDAO profileDAO;
@@ -50,7 +51,7 @@ public class ProfileDAO {
 		String 	query; 
 		
 		setConnection();
-		query = String.format("select * from memberList where id=%s", id);
+		query = String.format(Constants.QUERY_FOR_MEMBER_PROFILE, id);
 		statement = connection.createStatement();
 		ResultSet result = statement.executeQuery(query); //SQL쿼리문
 
@@ -66,14 +67,12 @@ public class ProfileDAO {
 		return profile;
 	}
 	
-	public void AddToMemberList(Profile profile) throws SQLException {
+	public void AddToMemberList(Profile profile) throws SQLException {   //DB에 회원가입한 회원의 정보 저장
 		String query; 
 		
 		setConnection();
 		
-		query = String.format("insert into memberlist(id, password, name, birth, sex, "
-				+ "zipCode, roadNameAddress, detailAddress, phoneNumber, email) "
-				+ "values('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');",
+		query = String.format(Constants.QUERY_TO_ADD_MEMBER,
 				profile.getId(), profile.getPassword(), profile.getName(), profile.getBirth(),
 				profile.getSex(), profile.getZipCode(), profile.getRoadNameAddress(),
 				profile.getDetailAddress(), profile.getPhoneNumber(), profile.getEmail());

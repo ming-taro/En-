@@ -50,10 +50,10 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 		String id = idTextField.getText();
 		String password = ((JTextField)passwordTextField).getText();
 		String name = nameTextField.getText();
-		String birth = String.format("%04d.%02d.%02d", 
-				Integer.parseInt(yearTextField.getText()),
-				Integer.parseInt(monthcomboBox.getSelectedItem().toString()), 
-				Integer.parseInt(dayTextField.getText()));
+		String birth = String.format("%s.%s.%s",
+				yearTextField.getText(), 
+				monthcomboBox.getSelectedItem().toString(), 
+				dayTextField.getText());
 		String sex = sexComboBox.getSelectedItem().toString();
 		String zipCode = zipCodeTextField.getText();
 		String roadNameAddress = roadNameAddressTextField.getText();
@@ -68,6 +68,10 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 						roadNameAddress, detailAddress, phoneNumber, email);
 		
 		return profile;
+	}
+	
+	public boolean isProfileEnteredCorrectly(Profile profile) {
+		return inputException.isProfileEnteredCorrectly(profile);
 	}
 
 	@Override
@@ -315,6 +319,7 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 	
 	@Override
 	public void focusGained(FocusEvent event) {
+		repaint();
 	}
 
 	@Override
