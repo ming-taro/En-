@@ -1,4 +1,4 @@
-package ui;
+package ui.panel;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -14,18 +14,19 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import controller.ProfileDAO;
+import ui.UICreator;
 import utility.Constants;
 
 public class MainPanel extends JPanel implements UICreator {
 	private JTextField idTextField;          //아이디 입력 필드
 	private JPasswordField paswwordTextField;    //비밀번호 입력 필드
-	private JButton logInButton;             //로그인 버튼
+	private JButton loginButton;             //로그인 버튼
 	private JButton signUpButton;            //회원가입버튼
 	
 	public MainPanel() {
 		idTextField = new JTextField();            
 		paswwordTextField = new JPasswordField();
-		logInButton = new JButton("LogIn");
+		loginButton = new JButton("LogIn");
 		signUpButton = new JButton("SignUp");
 		
 		setComponent();
@@ -35,8 +36,8 @@ public class MainPanel extends JPanel implements UICreator {
 		return signUpButton;
 	}
 	
-	public JButton getLogInButton() {
-		return logInButton;
+	public JButton getLoginButton() {
+		return loginButton;
 	}
 	
 	public JTextField getIdTextField() {
@@ -51,7 +52,7 @@ public class MainPanel extends JPanel implements UICreator {
 	public void setActionListener(ActionListener actionListener) {
 		idTextField.addActionListener(actionListener);
 		paswwordTextField.addActionListener(actionListener);
-		logInButton.addActionListener(actionListener);
+		loginButton.addActionListener(actionListener);
 		signUpButton.addActionListener(actionListener);
 	}
 	
@@ -88,24 +89,24 @@ public class MainPanel extends JPanel implements UICreator {
 	}
 	
 	private void setLogInPanel(JPanel centerPanel) {
-		JPanel logInPanel = new JPanel();
+		JPanel loginPanel = new JPanel();
 		Font font = new Font("돋움", Font.PLAIN, 20);
 		
-		logInPanel.setLayout(new GridLayout(4, 0, 0, 20));
+		loginPanel.setLayout(new GridLayout(4, 0, 0, 20));
 		
 		idTextField.setFont(font);        //아이디, 비밀번호 입력필드 크기 조절
  		paswwordTextField.setFont(font);
 		
- 		logInPanel.add(idTextField);    
- 		logInPanel.add(paswwordTextField);
- 		logInPanel.add(logInButton);
- 		logInPanel.add(signUpButton);
+ 		loginPanel.add(idTextField);    
+ 		loginPanel.add(paswwordTextField);
+ 		loginPanel.add(loginButton);
+ 		loginPanel.add(signUpButton);
 		
- 		logInPanel.setPreferredSize(new Dimension(250, 250));
- 		logInPanel.setBackground(new Color(255, 0, 0, 0));
+ 		loginPanel.setPreferredSize(new Dimension(250, 250));
+ 		loginPanel.setBackground(new Color(255, 0, 0, 0));
 		
 		centerPanel.setBackground(new Color(255, 0, 0, 0));
-		centerPanel.add(logInPanel, CENTER_ALIGNMENT);
+		centerPanel.add(loginPanel, CENTER_ALIGNMENT);
 		
 		add(centerPanel, BorderLayout.CENTER);
 	}

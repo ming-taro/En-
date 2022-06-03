@@ -2,6 +2,7 @@ package ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -15,14 +16,16 @@ import javax.swing.JPanel;
 import controller.PanelFactory;
 import controller.ProfileDAO;
 import model.Profile;
+import ui.panel.MainPanel;
+import ui.panel.SignUpCompletionPanel;
+import ui.panel.SignUpPanel;
+import ui.panel.UserModePanel;
 import utility.Constants;
 
 public class PanelSwitcher extends JFrame implements ActionListener{
-	private PanelFactory panelFactory;
-	private MainPanel mainPanel;
-	private SignUpPanel signUpPanel;
-	private SignUpCompletionPanel signUpCompletionPanel;
 	private ProfileDAO profileDAO;
+	private PanelFactory panelFactory;
+	private UICreator panel;
 	
 	public PanelSwitcher() {
 		panelFactory = new PanelFactory();
@@ -43,9 +46,7 @@ public class PanelSwitcher extends JFrame implements ActionListener{
 		setIconImage(img);
 		setVisible(true);
 		
-		mainPanel = (MainPanel) panelFactory.getPanel("MainPanel");
-		mainPanel.setActionListener(this);
-		switchPanel(mainPanel);
+		addPanel(Constants.MAIN_PANEL);  //frame 첫 실행시 메인화면으로 시작
 	}
 	private void switchPanel(JPanel panel) {
 		getContentPane().removeAll();
@@ -54,47 +55,39 @@ public class PanelSwitcher extends JFrame implements ActionListener{
 		getContentPane().repaint();
 	}
 	
-	private void addSignUpPanel() {
-		signUpPanel = (SignUpPanel) panelFactory.getPanel("SignUpPanel");
-		signUpPanel.setActionListener(this);
-		switchPanel(signUpPanel);
+	private void addPanel(String panelName) {
+		panel = panelFactory.getPanel(panelName);
+		panel.setActionListener(this);
+		
+		getContentPane().removeAll();
+		getContentPane().add((Component) panel, BorderLayout.CENTER);
+		getContentPane().revalidate();
+		getContentPane().repaint();
 	}
-	
-	private void addMainPanel() {
-		mainPanel = (MainPanel) panelFactory.getPanel("MainPanel");
-		mainPanel.setActionListener(this);
-		switchPanel(mainPanel);
-	}
-	
-	private void AddsignUpCompletionPanel() {
-		signUpCompletionPanel = (SignUpCompletionPanel) panelFactory.getPanel("SignUpCompletionPanel");
-		signUpCompletionPanel.setActionListener(this);
-		switchPanel(signUpCompletionPanel);
-	}
-	
+
 	private void setSignUp() {
-		Profile profile = signUpPanel.getProfile();   //회원가입 화면에서 입력한 회원정보를 가져옴
-		String errorMessage = signUpPanel.isProfileEnteredCorrectly(profile) ;   //가져온 데이터 중 비어있거나 양식에 맞지 않은 입력 검사
+		Profile profile = 
+				((SignUpPanel) panel).getProfile();   //회원가입 화면에서 입력한 회원정보를 가져옴
+		String errorMessage = 
+				((SignUpPanel) panel).isProfileEnteredCorrectly(profile) ;   //가져온 데이터 중 비어있거나 양식에 맞지 않은 입력 검사
 																			     //해당 항목에 대한 오류 메세지를 리턴받음
 		if(errorMessage.equals("") == !Constants.IS_MATCH) {
-			JOptionPane.showMessageDialog(null, errorMessage + "\n양식에 맞게 정보를 다시 입력해주세요.",
-					"입력 오류", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null, errorMessage, "입력 오류", JOptionPane.WARNING_MESSAGE);
 			return;
 		}
 		
 		try {
 			profileDAO.AddToMemberList(profile);  //회원정보 저장
-			System.out.println("성공");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		AddsignUpCompletionPanel();
+		addPanel(Constants.SIGN_UP_COMPLETION_PANEL);
 	}
 	
 	private void setLogIn() {
-		String id = mainPanel.getIdTextField().getText();
-		String password = mainPanel.getPaswwordTextField().getText();
+		String id = ((MainPanel) panel).getIdTextField().getText();
+		String password = ((MainPanel) panel).getPaswwordTextField().getText();
 		
 		if(id.equals("")) {
 			JOptionPane.showMessageDialog(null, "아이디를 입력해주세요",  //아이디를 입력하지 않은 경우 -> 팝업 메세지
@@ -108,7 +101,7 @@ public class PanelSwitcher extends JFrame implements ActionListener{
 		}
 		
 		if(profileDAO.isMemberInList(id, password)) {  //입력한 회원정보가 존재하는 경우
-			System.out.println("오예아");
+			addPanel(Constants.USER_MODE_PANEL);
 		}
 		else {										   //입력한 회원정보가 존재하지 않음 -> 팝업 메세지
 			JOptionPane.showMessageDialog(null, "아이디 또는 비밀번호를 잘못 입력했습니다.\n입력하신 내용을 다시 확인해주세요.",  
@@ -117,27 +110,46 @@ public class PanelSwitcher extends JFrame implements ActionListener{
 		
 	}
 	
-	@Override
-	public void actionPerformed(ActionEvent event) {
-		if(event.getSource() == mainPanel.getSignUpButton()) {        //메인화면에서 회원가입버튼 클릭 -> 회원가입 창으로 이동
-			addSignUpPanel();
+	private void manageMainPanel(ActionEvent event) {
+		
+		if(event.getSource() == ((MainPanel) panel).getSignUpButton()) {        //메인화면에서 회원가입버튼 클릭 -> 회원가입 창으로 이동
+			addPanel(Constants.SIGN_UP_PANEL);
 		}
-		else if(event.getSource() == mainPanel.getIdTextField()       //메인화면에서 로그인/비밀번호 필드에서 엔터 or 로그인 버튼 클릭
-				|| event.getSource() == mainPanel.getPaswwordTextField()
-				|| event.getSource() == mainPanel.getLogInButton()){
-			setLogIn();
+		else {
+			setLogIn();        //메인화면에서 로그인/비밀번호 필드에서 엔터 or 로그인 버튼 클릭
+		} 
+	}
+	
+	private void manageSignUpPanel(ActionEvent event) {
+		
+		if(event.getSource() == ((SignUpPanel) panel).getBackButton()){    //회원가입화면에서 뒤로가기 버튼 클릭 -> 메인화면으로 이동 
+			addPanel(Constants.MAIN_PANEL);
 		}
-		else if(event.getSource() == signUpPanel.getBackButton()){    //회원가입화면에서 뒤로가기 버튼 클릭 -> 메인화면으로 이동 
-			addMainPanel();
-		}
-		else if(event.getSource() == signUpCompletionPanel.getLogInButton()) {	//회원가입 완료화면에서 로그인 버튼 클릭 -> 메인화면으로 이동
-			addMainPanel();
-		}
-		else if(event.getSource() == signUpPanel.getSignUpButton()) {//회원가입화면에서 '회원가입'버튼클릭
+		else { //회원가입화면에서 '회원가입'버튼클릭
 			setSignUp();
 		}
-
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent event) {
+		String className = panel.getClass().getName();
+		className = className.substring(className.lastIndexOf(".") + 1);
 		
+		switch(className) {
+		
+		case Constants.MAIN_PANEL:
+			manageMainPanel(event);
+			break;
+		case Constants.SIGN_UP_COMPLETION_PANEL:  //회원가입 완료화면에서 로그인 버튼 클릭 -> 메인화면으로 이동
+			addPanel(Constants.MAIN_PANEL);
+			break;
+		case Constants.USER_MODE_PANEL:           //회원모드에서 로그아웃 버튼 클릭 -> 메인화면으로
+			addPanel(Constants.MAIN_PANEL);
+			break;
+		case Constants.SIGN_UP_PANEL:
+			manageSignUpPanel(event);
+			break;
+		}
 	}
 	
 }

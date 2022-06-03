@@ -1,4 +1,4 @@
-package ui;
+package ui.panel;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -6,6 +6,8 @@ import javax.swing.*;
 
 import controller.InputExceptionHandling;
 import model.Profile;
+import ui.UIComponent;
+import ui.UICreator;
 import ui.search_box.SearchFrame;
 
 public class SignUpPanel extends JPanel implements UICreator, ActionListener, MouseListener, FocusListener{

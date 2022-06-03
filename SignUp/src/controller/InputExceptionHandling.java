@@ -128,6 +128,7 @@ public class InputExceptionHandling {
 	}
 	
 	public String isProfileEnteredCorrectly(Profile profile) {
+		
 		if(Pattern.matches(Constants.ID_REGEX, profile.getId())
 				== !Constants.IS_MATCH){
 			return "아이디를 입력해주세요.";
@@ -136,6 +137,10 @@ public class InputExceptionHandling {
 		if(Pattern.matches(Constants.PASSWORD_REGEX, profile.getPassword())
 				== !Constants.IS_MATCH){
 			return "비밀번호를 입력해주세요.";
+		}
+		
+		if(passwordRegexLabel.getText().equals("(비밀번호가 일치하지 않습니다.)")) {
+			return "비밀번호가 일치하지 않습니다.";
 		}
 		
 		if(Pattern.matches(Constants.NAME_REGEX, profile.getName())
