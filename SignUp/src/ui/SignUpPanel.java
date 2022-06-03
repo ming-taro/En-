@@ -1,15 +1,7 @@
 package ui;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.image.ImageObserver;
-import java.text.AttributedCharacterIterator;
-
+import java.awt.event.*;
 import javax.swing.*;
 
 import controller.InputExceptionHandling;
@@ -17,6 +9,7 @@ import ui.search_box.SearchFrame;
 
 public class SignUpPanel extends JPanel implements UICreator, ActionListener, MouseListener, FocusListener{
 	private JButton backButton;
+	private JButton signUpButton;
 	private JTextField idTextField;
 	private JPasswordField passwordTextField, confirmPasswordTextField;
 	private JTextField nameTextField;
@@ -30,6 +23,7 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 	private JButton zipCodeButton;
 	
 	private SearchFrame searchFrame;
+	private UIComponent uiComponent = new UIComponent();
 	private InputExceptionHandling inputException = new InputExceptionHandling();
 	
 	public SignUpPanel(ActionListener actionListener) {
@@ -39,6 +33,7 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 		setFocusListener();
 		
 		backButton.addActionListener(actionListener);
+		signUpButton.addActionListener(actionListener);
 	}
 	
 	public JButton getBackButton() {
@@ -49,100 +44,48 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 	public void setComponent() {
 		setLayout(new BorderLayout());
 		
-		setBackButtonPanel();
+		setButtonPanel();
 		setProfileInputPanel();
 	}
 	
-	private void setBackButtonPanel() {
-		JPanel backButtonPanel = new JPanel();
+	private void setButtonPanel() {
+		JPanel buttonPanel = new JPanel();
 		
-		backButtonPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 		
-		backButton = new JButton();
-		backButton.setPreferredSize(new Dimension(50, 50));
+		backButton = new JButton("뒤로가기");
+		backButton.setPreferredSize(new Dimension(100, 50));
 		
-		backButtonPanel.add(backButton);
-		backButtonPanel.setPreferredSize(new Dimension(50, 70));
-		backButtonPanel.setBackground(new Color(255, 0, 0, 0));
+		signUpButton = new JButton("회원가입");
+		signUpButton.setPreferredSize(new Dimension(100, 50));
 		
-		add(backButtonPanel, BorderLayout.SOUTH);
+		buttonPanel.add(backButton);
+		buttonPanel.add(signUpButton);
+		buttonPanel.setPreferredSize(new Dimension(300, 70));
+		buttonPanel.setBackground(new Color(255, 0, 0, 0));
+		
+		add(buttonPanel, BorderLayout.SOUTH);
 	}
 	
-	private ImageIcon getLabelIcon(String imagePath) {
-		ImageIcon icon = new ImageIcon(imagePath);
-		Image image = icon.getImage();
-		int width = icon.getIconWidth()/13;
-		int hegith = icon.getIconHeight()/13;
-		
-		Image changeImage = image.getScaledInstance(width, hegith, Image.SCALE_SMOOTH);
-		ImageIcon changeIcon = new ImageIcon(changeImage);
-
-		return changeIcon;
-	}
-
-	private JPanel getInputFieldPanel(JLabel inputTypeLabel) {
-		JPanel inputFieldPanel = new JPanel();
-		
-		inputFieldPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		inputFieldPanel.add(inputTypeLabel);
-		inputFieldPanel.setBackground(new Color(255, 0, 0, 0));
-		inputFieldPanel.setPreferredSize(new Dimension(100, 70));
-		
-		return inputFieldPanel;
-	}
-	
-	private JTextField getInputField(int width) {
-		JTextField textField;
-		Font font = new Font("고딕", Font.BOLD, 15);
-		
-		textField = new JTextField();
-		textField.setFont(font);
-		textField.setPreferredSize(new Dimension(width, 40));
-		
-		return textField;
-	}
-	
-	private JPasswordField getPasswordField(int width) {
-		JPasswordField textField;
-		Font font = new Font("고딕", Font.BOLD, 15);
-		
-		textField = new JPasswordField();
-		textField.setFont(font);
-		textField.setPreferredSize(new Dimension(width, 40));
-		
-		return textField;
-	}
-	
-	private JComboBox getComboBox(String[] text) {
-		JComboBox comboBox;
-		Font font = new Font("고딕", Font.BOLD, 15);
-		
-		comboBox = new JComboBox(text);
-		comboBox.setFont(font);
-		comboBox.setBackground(Color.white);
-		comboBox.setPreferredSize(new Dimension(60, 40));
-		comboBox.addMouseListener(this);
-		comboBox.addActionListener(this);
-		
-		return comboBox;
-	}
 	
 	private void setBirthFiled(JPanel inputPanel) {
-		JLabel inputTypeLabel = new JLabel(getLabelIcon("image\\password.png"));
-		JPanel inputFieldPanel = getInputFieldPanel(inputTypeLabel);
+		JLabel inputTypeLabel =
+				new JLabel(uiComponent.getLabelIcon("image\\password.png"));
+		JPanel inputFieldPanel = 
+				uiComponent.getInputFieldPanel(inputTypeLabel);
 		String[] month = {"월", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
 		String[] sex = {"성별", "여", "남"};
 		
-		yearTextField = getInputField(60);
+		yearTextField = uiComponent.getInputField(60);
 		
-		monthcomboBox = getComboBox(month);
+		monthcomboBox = uiComponent.getComboBox(month, this, this);
 		
-		dayTextField = getInputField(60);
+		dayTextField = uiComponent.getInputField(60);
 		
 		JLabel blankLabel = new JLabel("");
 		blankLabel.setPreferredSize(new Dimension(50, 40));
 		
-		sexComboBox = getComboBox(sex);
+		sexComboBox = uiComponent.getComboBox(sex, this, this);
 		
 		inputFieldPanel.add(yearTextField);
 		inputFieldPanel.add(monthcomboBox);
@@ -154,10 +97,12 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 	}
 	
 	private void setZipCodeFiled(JPanel inputPanel) {
-		JLabel inputTypeLabel = new JLabel(getLabelIcon("image\\blank.png"));
-		JPanel inputFieldPanel = getInputFieldPanel(inputTypeLabel);
+		JLabel inputTypeLabel = 
+				new JLabel(uiComponent.getLabelIcon("image\\blank.png"));
+		JPanel inputFieldPanel =
+				uiComponent.getInputFieldPanel(inputTypeLabel);
 	
-		zipCodeTextField = getInputField(100);             //우편번호
+		zipCodeTextField = uiComponent.getInputField(100);             //우편번호
 		zipCodeTextField.setEditable(false);
 		
 		zipCodeButton = new JButton("우편번호");            //우편번호 찾기 버튼
@@ -171,16 +116,18 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 	}
 	
 	private void setAddressFiled(JPanel inputPanel) {
-		JLabel inputTypeLabel = new JLabel(getLabelIcon("image\\blank.png"));
-		JPanel inputFieldPanel = getInputFieldPanel(inputTypeLabel);
+		JLabel inputTypeLabel =
+				new JLabel(uiComponent.getLabelIcon("image\\blank.png"));
+		JPanel inputFieldPanel = 
+				uiComponent.getInputFieldPanel(inputTypeLabel);
 	
-		roadNameAddressTextField = getInputField(350);
+		roadNameAddressTextField = uiComponent.getInputField(350);
 		roadNameAddressTextField.setEditable(false);
 		
 		JLabel blankLabel = new JLabel("");
 		blankLabel.setPreferredSize(new Dimension(20, 40));
 		
-		detailAddressTextField = getInputField(200);
+		detailAddressTextField = uiComponent.getInputField(200);
 		
 		inputFieldPanel.add(roadNameAddressTextField);
 		inputFieldPanel.add(blankLabel);
@@ -190,13 +137,15 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 	}
 	
 	private void setPhoneNumberField(JPanel inputPanel) {
-		JLabel inputTypeLabel = new JLabel(getLabelIcon("image\\blank.png"));
-		JPanel inputFieldPanel = getInputFieldPanel(inputTypeLabel);
+		JLabel inputTypeLabel = 
+				new JLabel(uiComponent.getLabelIcon("image\\blank.png"));
+		JPanel inputFieldPanel = 
+				uiComponent.getInputFieldPanel(inputTypeLabel);
 		String[] phoneNumber = {"010", "011", "016", "017", "018", "019"};
 		
-		phoneNumberComboBox = getComboBox(phoneNumber);
-		middleNumberTextField = getInputField(50);
-		lastFourDigitsTextField = getInputField(50);
+		phoneNumberComboBox = uiComponent.getComboBox(phoneNumber, this, this);
+		middleNumberTextField = uiComponent.getInputField(50);
+		lastFourDigitsTextField = uiComponent.getInputField(50);
 		
 		inputFieldPanel.add(phoneNumberComboBox);
 		inputFieldPanel.add(middleNumberTextField);
@@ -207,8 +156,10 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 	
 	private void setInputFiled(JPanel inputPanel, JTextField inputField, String imagePath, JLabel regexLabel) {	
 		Font font = new Font("고딕", Font.BOLD, 17);
-		JLabel inputTypeLabel = new JLabel(getLabelIcon(imagePath));
-		JPanel inputFieldPanel = getInputFieldPanel(inputTypeLabel);
+		JLabel inputTypeLabel = 
+				new JLabel(uiComponent.getLabelIcon(imagePath));
+		JPanel inputFieldPanel = 
+				uiComponent.getInputFieldPanel(inputTypeLabel);
 		
 		inputFieldPanel.add(inputField);    //입력필드
 		
@@ -224,19 +175,19 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 		inputPanel.setLayout(new GridLayout(9, 0, 0, 0));
 		inputPanel.setBackground(new Color(255, 0, 0, 0));
 		
-		idTextField = getInputField(250);
+		idTextField = uiComponent.getInputField(250);
 		setInputFiled(inputPanel, idTextField, 
 				"image\\id.png", inputException.getIdRegexLabel());
 
-		passwordTextField = getPasswordField(250);
+		passwordTextField = uiComponent.getPasswordField(250);
 		setInputFiled(inputPanel, passwordTextField, 
 				"image\\password.png", inputException.getPasswordRegexLabel());
 		
-		confirmPasswordTextField = getPasswordField(250);
+		confirmPasswordTextField = uiComponent.getPasswordField(250);
 		setInputFiled(inputPanel, confirmPasswordTextField, 
 				"image\\blank.png", inputException.getConfirmPasswordTLabel());
 		
-		nameTextField = getInputField(250);
+		nameTextField = uiComponent.getInputField(250);
 		setInputFiled(inputPanel, nameTextField, 
 				"image\\name.png", inputException.getNameRegexLabel());
 		
@@ -248,7 +199,7 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 		
 		setPhoneNumberField(inputPanel);
 
-		emailTextField = getInputField(250);
+		emailTextField = uiComponent.getInputField(250);
 		setInputFiled(inputPanel, emailTextField, 
 				"image\\password.png", inputException.getEmailRegexLabel());
 		
@@ -280,6 +231,13 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 	
 	@Override
 	public void actionPerformed(ActionEvent event) {
+		if(event.getSource() == monthcomboBox            //comboBox클릭 후 배경이 지워지는 오류가 생겨서 추가한 코드
+			|| event.getSource() == sexComboBox          //->이벤트 후 패널의 배경을 다시 그려줌
+			|| event.getSource() == phoneNumberComboBox) {
+			repaint();
+			return;
+		}
+		
 		JButton button = (JButton) event.getSource();
 		
 		if(button == zipCodeButton) {              //우편번호 -> 주소검색 프레임이 열림
@@ -290,7 +248,6 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 			searchFrame.closeFrame();              //주소검색 후 -> 검색한 주소값 중 하나를 선택한 경우
 		}
 		
-		repaint();
 	}
 
 	@Override
