@@ -17,11 +17,6 @@ public class SignUp {
 
 	public static void main(String[] args) {
 		PanelSwitcher panelSwitcher = new PanelSwitcher();
-		/*Scanner s = new Scanner(System.in);
-		while(true) {
-			System.out.println(Pattern.matches(Constants.PHONE_NUMBER_REGEX, s.next()));
-		}
-		*/
 	}
 
 }

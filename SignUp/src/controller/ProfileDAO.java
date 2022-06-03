@@ -12,7 +12,7 @@ public class ProfileDAO {
 	private static ProfileDAO profileDAO;
 	private Connection connection; 
 	private Statement statement; 
-	private ResultSet rs;
+	private ResultSet result;
 	private String Driver = "";
 	private String url = "jdbc:mysql://localhost:3306/parkminji?&serverTimezone=Asia/Seoul&useSSL=false";
 	private String userid = "root";
@@ -53,14 +53,14 @@ public class ProfileDAO {
 		setConnection();
 		query = String.format(Constants.QUERY_FOR_MEMBER_PROFILE, id);
 		statement = connection.createStatement();
-		ResultSet result = statement.executeQuery(query); //SQL쿼리문
+		result = statement.executeQuery(query); //SQL쿼리문
 
-		profile = new Profile(rs.getString("id"), rs.getString("password"), rs.getString("name"),
-				rs.getString("birth"), rs.getString("sex"), rs.getString("zipCode"),
-				rs.getString("roadNameAddress"), rs.getString("detailAddress"),
-				rs.getString("phoneNumber"), rs.getString("email"));
+		profile = new Profile(result.getString("id"), result.getString("password"), result.getString("name"),
+				result.getString("birth"), result.getString("sex"), result.getString("zipCode"),
+				result.getString("roadNameAddress"), result.getString("detailAddress"),
+				result.getString("phoneNumber"), result.getString("email"));
 		
-		rs.close();
+		result.close();
 		statement.close();
 		connection.close();
 		
@@ -82,5 +82,32 @@ public class ProfileDAO {
 
 		statement.close();
 		connection.close();
+	}
+	
+	public boolean isMemberInList(String id, String password) {  //로그인시 회원의 정보가 존재하는지 검사
+		String query; 
+		boolean isMemberInList = !Constants.IS_MEMBER_IN_LIST;  
+		
+		setConnection();
+		
+		query = String.format(Constants.QUERY_TO_CHECK_IF_MEMBER_IS_IN_LIST, id, password);
+		
+		try {
+			statement = connection.createStatement();
+			result = statement.executeQuery(query); //SQL쿼리문
+			
+			if(result.next()) {
+				isMemberInList = Constants.IS_MEMBER_IN_LIST;   //입력한 아이디와 비밀번호와 일치하는 회원정보가 있음
+			}
+			
+			result.close();
+			statement.close();
+			connection.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return isMemberInList;
 	}
 }

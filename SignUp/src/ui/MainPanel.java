@@ -13,26 +13,46 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import controller.ProfileDAO;
 import utility.Constants;
 
-public class MainPanel extends JPanel implements UICreator{
+public class MainPanel extends JPanel implements UICreator {
 	private JTextField idTextField;          //아이디 입력 필드
-	private JTextField paswwordTextField;    //비밀번호 입력 필드
+	private JPasswordField paswwordTextField;    //비밀번호 입력 필드
 	private JButton logInButton;             //로그인 버튼
 	private JButton signUpButton;            //회원가입버튼
 	
-	public MainPanel(ActionListener actionListener) {
+	public MainPanel() {
 		idTextField = new JTextField();            
-		paswwordTextField = new JTextField();
+		paswwordTextField = new JPasswordField();
 		logInButton = new JButton("LogIn");
 		signUpButton = new JButton("SignUp");
 		
 		setComponent();
-		setActionListener(actionListener);
 	}
 	
 	public JButton getSignUpButton() {
 		return signUpButton;
+	}
+	
+	public JButton getLogInButton() {
+		return logInButton;
+	}
+	
+	public JTextField getIdTextField() {
+		return idTextField;
+	}
+	
+	public JTextField getPaswwordTextField() {
+		return paswwordTextField;
+	}
+	
+	@Override
+	public void setActionListener(ActionListener actionListener) {
+		idTextField.addActionListener(actionListener);
+		paswwordTextField.addActionListener(actionListener);
+		logInButton.addActionListener(actionListener);
+		signUpButton.addActionListener(actionListener);
 	}
 	
 	@Override
@@ -90,13 +110,7 @@ public class MainPanel extends JPanel implements UICreator{
 		add(centerPanel, BorderLayout.CENTER);
 	}
 	
-	private void setActionListener(ActionListener actionListener) {
-		idTextField.addActionListener(actionListener);
-		paswwordTextField.addActionListener(actionListener);
-		logInButton.addActionListener(actionListener);
-		signUpButton.addActionListener(actionListener);
-	}
-	
+	@Override
 	public void paintComponent(Graphics g) {
 		Dimension panelSize = getSize();
 		int width = panelSize.width;

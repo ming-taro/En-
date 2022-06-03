@@ -9,6 +9,7 @@ public class Constants {
 	public static final int SEARCH_PANEL_WIDTH = 400;
 	
 	public static final boolean IS_MATCH = true;
+	public static final boolean IS_MEMBER_IN_LIST = true;
 	
 	public static final String ID_REGEX = "^[a-z0-9]{5,20}$";
 	public static final String PASSWORD_REGEX = "^[a-zA-Z0-9]{8,16}$";
@@ -18,9 +19,11 @@ public class Constants {
 	public static final String PHONE_NUMBER_REGEX = "^((01)(0|1|6|9){1}-[0-9]{4}-[0-9]{4})||^((01)(1|6|7|8|9|){1}-[0-9]{3}-[0-9]{4})";
 	public static final String EMAIL_REGEX = "\\w+@\\w.\\w+(\\w.\\w+)?$";
 	
-	public static final String QUERY_FOR_MEMBER_PROFILE = "select * from memberList where id = %s";
+	public static final String QUERY_FOR_MEMBER_PROFILE = "select * from memberList where id = '%s';";
 	public static final String QUERY_TO_ADD_MEMBER =
 			"insert into memberlist(id, password, name, birth, sex, "
 		  + "zipCode, roadNameAddress, detailAddress, phoneNumber, email) "
 		  + "values('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');";
+	public static final String QUERY_TO_CHECK_IF_MEMBER_IS_IN_LIST =
+			"select id from memberList where id = '%s' and password = '%s';";
 }

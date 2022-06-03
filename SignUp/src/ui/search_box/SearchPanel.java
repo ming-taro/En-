@@ -29,8 +29,7 @@ public class SearchPanel extends JPanel implements UICreator, ActionListener{
 	private JScrollPane searchResultPanelScroll;
 	private ActionListener actionListener;
 	
-	public SearchPanel(ActionListener actionListener) {
-		this.actionListener = actionListener;
+	public SearchPanel() {
 		roadAddress = new RoadAddress();
 		
 		setComponent();
@@ -66,7 +65,8 @@ public class SearchPanel extends JPanel implements UICreator, ActionListener{
 		inputPanel.setPreferredSize(new Dimension(Constants.SEARCH_PANEL_WIDTH, 60));
 		inputPanel.setBackground(new Color(255, 0, 0, 0));
 		
-		setActionListener();
+		inputTextField.addActionListener(this);
+		searchButton.addActionListener(this);
 		
 		add(guidePanel, BorderLayout.NORTH);
 		add(inputPanel, BorderLayout.CENTER);
@@ -143,13 +143,13 @@ public class SearchPanel extends JPanel implements UICreator, ActionListener{
 	    super.paintComponent(g);
 	}
 	
-	private void setActionListener() {
-		inputTextField.addActionListener(this);
-		searchButton.addActionListener(this);
-	}
-	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		setRoadAddress();
+	}
+
+	@Override
+	public void setActionListener(ActionListener actionListener) {
+		this.actionListener = actionListener;
 	}
 }

@@ -26,14 +26,17 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 	private UIComponent uiComponent;
 	private InputExceptionHandling inputException;
 	
-	public SignUpPanel(ActionListener actionListener) {
+	public SignUpPanel() {
 		searchFrame = new SearchFrame(this);
 		uiComponent = new UIComponent();
 		inputException = new InputExceptionHandling();
 		
 		setComponent();
 		setFocusListener();
-		
+	}
+	
+	@Override
+	public void setActionListener(ActionListener actionListener) {
 		backButton.addActionListener(actionListener);
 		signUpButton.addActionListener(actionListener);
 	}

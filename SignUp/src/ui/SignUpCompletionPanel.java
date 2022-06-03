@@ -15,14 +15,16 @@ import javax.swing.JPanel;
 public class SignUpCompletionPanel extends JPanel implements UICreator{
 	private JButton logInButton;
 
-	public SignUpCompletionPanel(ActionListener actionListener) {
+	public SignUpCompletionPanel() {
 		setComponent();
-		
-		logInButton.addActionListener(actionListener);   //회원가입완료 후 로그인 버튼을 누르면 로그인화면으로 돌아가도록 연결
 	}
 	
 	public JButton getLogInButton() {
 		return logInButton;
+	}
+	
+	public void setActionListener(ActionListener actionListener) {
+		logInButton.addActionListener(actionListener);   //회원가입완료 후 로그인 버튼을 누르면 로그인화면으로 돌아가도록 연결
 	}
 	
 	@Override

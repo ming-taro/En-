@@ -38,7 +38,8 @@ public class SearchFrame extends JFrame {
 	}
 	
 	public void setComponent() {
-		searchPanel = new SearchPanel(actionListener);
+		searchPanel = new SearchPanel();
+		searchPanel.setActionListener(actionListener);
 		
 		getContentPane().removeAll();
 		getContentPane().add(searchPanel);
