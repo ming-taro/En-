@@ -19,12 +19,14 @@ import utility.Constants;
 public class PanelSwitcher extends JFrame implements ActionListener{
 	private MainPanel mainPanel;
 	private SignUpPanel signUpPanel;
+	private SignUpCompletionPanel signUpCompletionPanel;
 	private ProfileDAO profileDAO = ProfileDAO.GetInstance();
 	
 	public PanelSwitcher() {
 		profileDAO.connectionDB();
 		mainPanel = new MainPanel(this);
 		signUpPanel = new SignUpPanel(this);
+		signUpCompletionPanel = new SignUpCompletionPanel(this);
 		
 		setComponent();
 	}
@@ -53,7 +55,7 @@ public class PanelSwitcher extends JFrame implements ActionListener{
 
 		if(signUpPanel.isProfileEnteredCorrectly(profile) 
 				== !Constants.IS_MATCH) {
-			JOptionPane.showMessageDialog(null, "아직 입력하지 않은 항목이 있습니다. 양식에 맞게 정보를 다시 입력해주세요.",
+			JOptionPane.showMessageDialog(null, "아직 입력하지 않은 항목이 있습니다.\n양식에 맞게 정보를 다시 입력해주세요.",
 					"입력 오류", JOptionPane.WARNING_MESSAGE);
 			return;
 		}
@@ -65,12 +67,14 @@ public class PanelSwitcher extends JFrame implements ActionListener{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+		switchPanel(signUpCompletionPanel);
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		if(event.getSource() == mainPanel.getSignUpButton()) {  //메인화면에서 회원가입버튼 클릭 -> 회원가입 창으로 이동
-			switchPanel(signUpPanel);
+			switchPanel(signUpCompletionPanel);//switchPanel(signUpPanel);
 		}
 		
 		if(event.getSource() == signUpPanel.getBackButton()) {  //회원가입화면에서 뒤로가기 버튼 클릭 -> 메인화면으로 이동 
