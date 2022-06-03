@@ -20,7 +20,7 @@ public class InputExceptionHandling {
 		passwordRegexLabel = new JLabel("(영문 대소문자/숫자, 8~16자)");
 		confirmPasswordTLabel = new JLabel("(비밀번호를 한번 더 입력해주세요)");
 		nameRegexLabel = new JLabel("(한글/영문 대소문자, 40자 이내)");
-		emailRegexLabel = new JLabel("(이메일 주소를 다시 확인해주세요.)");
+		emailRegexLabel = new JLabel("");
 	}
 	
 	public JLabel getIdRegexLabel() {
@@ -82,6 +82,7 @@ public class InputExceptionHandling {
 		
 		if(confirmPassword.equals("")) {             //비밀번호 재확인란을 입력하지 않은 경우
 			confirmPasswordTLabel.setText("(필수 입력 항목입니다.)");
+			confirmPasswordTLabel.setForeground(Color.red);
 		}
 		else if(confirmPassword.equals(password)) {  //비밀번호와 일치함
 			confirmPasswordTLabel.setText("");
@@ -113,6 +114,14 @@ public class InputExceptionHandling {
 		
 		if(email.equals("")) {
 			return;
+		}
+		
+		if(Pattern.matches(Constants.EMAIL_REGEX, email)) {//이메일 입력 양식에 맞음
+			emailRegexLabel.setText("");
+		}
+		else {
+			emailRegexLabel.setText("(이메일 주소를 다시 확인해주세요.)");//이메일 양식에 맞지 않음
+			emailRegexLabel.setForeground(Color.red);
 		}
 	}
 }

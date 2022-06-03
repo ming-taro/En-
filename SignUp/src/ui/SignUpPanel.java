@@ -18,7 +18,7 @@ import ui.search_box.SearchFrame;
 public class SignUpPanel extends JPanel implements UICreator, ActionListener, MouseListener, FocusListener{
 	private JButton backButton;
 	private JTextField idTextField;
-	private JTextField passwordTextField, confirmPasswordTextField;
+	private JPasswordField passwordTextField, confirmPasswordTextField;
 	private JTextField nameTextField;
 	private JTextField yearTextField, dayTextField;
 	private JTextField zipCodeTextField;
@@ -96,6 +96,17 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 		Font font = new Font("고딕", Font.BOLD, 15);
 		
 		textField = new JTextField();
+		textField.setFont(font);
+		textField.setPreferredSize(new Dimension(width, 40));
+		
+		return textField;
+	}
+	
+	private JPasswordField getPasswordField(int width) {
+		JPasswordField textField;
+		Font font = new Font("고딕", Font.BOLD, 15);
+		
+		textField = new JPasswordField();
 		textField.setFont(font);
 		textField.setPreferredSize(new Dimension(width, 40));
 		
@@ -217,11 +228,11 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 		setInputFiled(inputPanel, idTextField, 
 				"image\\id.png", inputException.getIdRegexLabel());
 
-		passwordTextField = getInputField(250);
+		passwordTextField = getPasswordField(250);
 		setInputFiled(inputPanel, passwordTextField, 
 				"image\\password.png", inputException.getPasswordRegexLabel());
 		
-		confirmPasswordTextField = getInputField(250);
+		confirmPasswordTextField = getPasswordField(250);
 		setInputFiled(inputPanel, confirmPasswordTextField, 
 				"image\\blank.png", inputException.getConfirmPasswordTLabel());
 		
@@ -250,7 +261,7 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 		int width = panelSize.width;
 		int height = panelSize.height;
 		
-		ImageIcon icon = new ImageIcon("image\\farm.jpg");
+		ImageIcon icon = new ImageIcon("image\\sky.jpg");
 	    g.drawImage(icon.getImage(), 0, 0, width, height, null);
 	    setOpaque(false);
 	    super.paintComponent(g);

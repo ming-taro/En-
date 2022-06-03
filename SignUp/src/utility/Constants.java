@@ -10,5 +10,6 @@ public class Constants {
 	
 	public static final String ID_REGEX = "^[a-z0-9]{5,20}$";
 	public static final String PASSWORD_REGEX = "^[a-zA-Z0-9]{8,16}$";
-	public static final String NAME_REGEX = "^[a-zA-Z가-힣]{1, 40}$";
+	public static final String NAME_REGEX = "^[a-zA-Z가-힣]{1,40}$";
+	public static final String EMAIL_REGEX = "\\w+@\\w.\\w+(\\w.\\w+)?$";
 }
