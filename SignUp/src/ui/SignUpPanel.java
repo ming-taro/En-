@@ -12,6 +12,7 @@ import java.text.AttributedCharacterIterator;
 
 import javax.swing.*;
 
+import controller.InputExceptionHandling;
 import ui.search_box.SearchFrame;
 
 public class SignUpPanel extends JPanel implements UICreator, ActionListener, MouseListener, FocusListener{
@@ -29,6 +30,7 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 	private JButton zipCodeButton;
 	
 	private SearchFrame searchFrame;
+	private InputExceptionHandling inputException = new InputExceptionHandling();
 	
 	public SignUpPanel(ActionListener actionListener) {
 		searchFrame = new SearchFrame(this);
@@ -114,21 +116,6 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 		return comboBox;
 	}
 	
-	private void setInputFiled(JPanel inputPanel, JTextField inputField, String imagePath, String regexText) {	
-		Font font = new Font("고딕", Font.BOLD, 15);
-		JLabel inputTypeLabel = new JLabel(getLabelIcon(imagePath));
-		JLabel regexLabel;
-		JPanel inputFieldPanel = getInputFieldPanel(inputTypeLabel);
-		
-		inputFieldPanel.add(inputField);
-		
-		regexLabel = new JLabel(regexText);
-		regexLabel.setFont(font);
-		inputFieldPanel.add(regexLabel);
-		
-		inputPanel.add(inputFieldPanel);
-	}
-	
 	private void setBirthFiled(JPanel inputPanel) {
 		JLabel inputTypeLabel = new JLabel(getLabelIcon("image\\password.png"));
 		JPanel inputFieldPanel = getInputFieldPanel(inputTypeLabel);
@@ -207,22 +194,40 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 		inputPanel.add(inputFieldPanel);
 	}
 	
+	private void setInputFiled(JPanel inputPanel, JTextField inputField, String imagePath, JLabel regexLabel) {	
+		Font font = new Font("고딕", Font.BOLD, 17);
+		JLabel inputTypeLabel = new JLabel(getLabelIcon(imagePath));
+		JPanel inputFieldPanel = getInputFieldPanel(inputTypeLabel);
+		
+		inputFieldPanel.add(inputField);    //입력필드
+		
+		regexLabel.setFont(font);        
+		inputFieldPanel.add(regexLabel);    //입력양식 안내 문구
+		
+		inputPanel.add(inputFieldPanel);
+	}
+	
+	
 	private void setProfileInputPanel() {
 		JPanel inputPanel = new JPanel();
 		inputPanel.setLayout(new GridLayout(9, 0, 0, 0));
 		inputPanel.setBackground(new Color(255, 0, 0, 0));
 		
 		idTextField = getInputField(250);
-		setInputFiled(inputPanel, idTextField, "image\\id.png", "(영문 대소문자/숫자, 5~20자)");
+		setInputFiled(inputPanel, idTextField, 
+				"image\\id.png", inputException.getIdRegexLabel());
 
 		passwordTextField = getInputField(250);
-		setInputFiled(inputPanel, passwordTextField, "image\\password.png", "(영문 대소문자/숫자, 8~16자)");
+		setInputFiled(inputPanel, passwordTextField, 
+				"image\\password.png", inputException.getPasswordRegexLabel());
 		
 		confirmPasswordTextField = getInputField(250);
-		setInputFiled(inputPanel, confirmPasswordTextField, "image\\blank.png", "(비밀번호를 한번 더 입력해주세요)");
+		setInputFiled(inputPanel, confirmPasswordTextField, 
+				"image\\blank.png", inputException.getConfirmPasswordTLabel());
 		
 		nameTextField = getInputField(250);
-		setInputFiled(inputPanel, nameTextField, "image\\name.png", "(한글/영문 대소문자, 40자 이내)");
+		setInputFiled(inputPanel, nameTextField, 
+				"image\\name.png", inputException.getNameRegexLabel());
 		
 		setBirthFiled(inputPanel);
 		
@@ -233,7 +238,8 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 		setPhoneNumberField(inputPanel);
 
 		emailTextField = getInputField(250);
-		setInputFiled(inputPanel, emailTextField, "image\\password.png", "");
+		setInputFiled(inputPanel, emailTextField, 
+				"image\\password.png", inputException.getEmailRegexLabel());
 		
 		add(inputPanel, BorderLayout.CENTER);
 	}
@@ -306,19 +312,36 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 		passwordTextField.addFocusListener(this);
 		confirmPasswordTextField.addFocusListener(this);
 		nameTextField.addFocusListener(this);
+		emailTextField.addFocusListener(this);
 	}
 	
 	@Override
 	public void focusGained(FocusEvent event) {
-		if(event.getSource() == idTextField) {
-			System.out.println("오");
-		}
 	}
 
 	@Override
 	public void focusLost(FocusEvent event) {
-		if(event.getSource() == idTextField) {
-			System.out.println("아");
+		if(event.getSource() == idTextField) {            //아이디 입력 필드 검사
+			inputException.setIdTextField(idTextField);
 		}
+		
+		if(event.getSource() == passwordTextField) {      //비밀번호 입력 필드 검사
+			inputException.setPasswordTextField(passwordTextField);
+		}
+		
+		if(event.getSource() == confirmPasswordTextField) {//비밀번호 재입력 입력 필드 검사
+			inputException.setConfirmPasswordTextField(
+					passwordTextField, confirmPasswordTextField);
+		}
+		
+		if(event.getSource() == nameTextField) {      //비밀번호 입력 필드 검사
+			inputException.setNameTextField(nameTextField);
+		}
+		
+		if(event.getSource() == emailTextField) {      //비밀번호 입력 필드 검사
+			inputException.setEmailTextField(emailTextField);
+		}
+		
+		repaint();
 	}
 }
