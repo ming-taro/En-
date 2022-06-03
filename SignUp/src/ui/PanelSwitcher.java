@@ -6,17 +6,21 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import controller.ProfileDAO;
 import utility.Constants;
 
 public class PanelSwitcher extends JFrame implements ActionListener{
 	private MainPanel mainPanel;
 	private SignUpPanel signUpPanel;
+	private ProfileDAO profileDAO = ProfileDAO.GetInstance();
 	
 	public PanelSwitcher() {
+		profileDAO.connectionDB();
 		mainPanel = new MainPanel(this);
 		signUpPanel = new SignUpPanel(this);
 		
@@ -44,11 +48,22 @@ public class PanelSwitcher extends JFrame implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		if(event.getSource() == mainPanel.getSignUpButton()) {
+		if(event.getSource() == mainPanel.getSignUpButton()) {  //메인화면에서 회원가입버튼 클릭 -> 회원가입 창으로 이동
 			switchPanel(signUpPanel);
 		}
-		else if(event.getSource() == signUpPanel.getBackButton()) {
+		
+		if(event.getSource() == signUpPanel.getBackButton()) {  //회원가입화면에서 뒤로가기 버튼 클릭 -> 메인화면으로 이동 
 			switchPanel(mainPanel);
+		}
+		
+		if(event.getSource() == signUpPanel.getSignUpButton()) {//회원가입화면에서 '회원가입'버튼클릭
+			try {
+				profileDAO.connectionDB();
+				profileDAO.AddToMemberList(signUpPanel.getProfile());  //회원정보 저장
+				System.out.println("성공");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	

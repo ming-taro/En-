@@ -5,11 +5,11 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import controller.InputExceptionHandling;
+import model.Profile;
 import ui.search_box.SearchFrame;
 
 public class SignUpPanel extends JPanel implements UICreator, ActionListener, MouseListener, FocusListener{
-	private JButton backButton;
-	private JButton signUpButton;
+	private JButton backButton, signUpButton;
 	private JTextField idTextField;
 	private JPasswordField passwordTextField, confirmPasswordTextField;
 	private JTextField nameTextField;
@@ -23,11 +23,13 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 	private JButton zipCodeButton;
 	
 	private SearchFrame searchFrame;
-	private UIComponent uiComponent = new UIComponent();
-	private InputExceptionHandling inputException = new InputExceptionHandling();
+	private UIComponent uiComponent;
+	private InputExceptionHandling inputException;
 	
 	public SignUpPanel(ActionListener actionListener) {
 		searchFrame = new SearchFrame(this);
+		uiComponent = new UIComponent();
+		inputException = new InputExceptionHandling();
 		
 		setComponent();
 		setFocusListener();
@@ -38,6 +40,34 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 	
 	public JButton getBackButton() {
 		return backButton;
+	}
+	
+	public JButton getSignUpButton() {
+		return signUpButton;
+	}
+	
+	public Profile getProfile() {
+		String id = idTextField.getText();
+		String password = ((JTextField)passwordTextField).getText();
+		String name = nameTextField.getText();
+		String birth = String.format("%04d.%02d.%02d", 
+				Integer.parseInt(yearTextField.getText()),
+				Integer.parseInt(monthcomboBox.getSelectedItem().toString()), 
+				Integer.parseInt(dayTextField.getText()));
+		String sex = sexComboBox.getSelectedItem().toString();
+		String zipCode = zipCodeTextField.getText();
+		String roadNameAddress = roadNameAddressTextField.getText();
+		String detailAddress = detailAddressTextField.getText();
+		String phoneNumber = 
+				String.format("%s-%s-%s", phoneNumberComboBox.getSelectedItem().toString(),
+				middleNumberTextField.getText(), lastFourDigitsTextField.getText());
+		String email = emailTextField.getText();
+		
+		Profile profile =
+				new Profile(id, password, name, birth, sex, zipCode,
+						roadNameAddress, detailAddress, phoneNumber, email);
+		
+		return profile;
 	}
 
 	@Override
