@@ -70,7 +70,7 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 		return profile;
 	}
 	
-	public boolean isProfileEnteredCorrectly(Profile profile) {
+	public String isProfileEnteredCorrectly(Profile profile) {
 		return inputException.isProfileEnteredCorrectly(profile);
 	}
 

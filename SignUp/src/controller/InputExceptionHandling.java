@@ -127,46 +127,46 @@ public class InputExceptionHandling {
 		}
 	}
 	
-	public boolean isProfileEnteredCorrectly(Profile profile) {
+	public String isProfileEnteredCorrectly(Profile profile) {
 		if(Pattern.matches(Constants.ID_REGEX, profile.getId())
 				== !Constants.IS_MATCH){
-			return !Constants.IS_MATCH;
+			return "아이디를 입력해주세요.";
 		}
 		
 		if(Pattern.matches(Constants.PASSWORD_REGEX, profile.getPassword())
 				== !Constants.IS_MATCH){
-			return !Constants.IS_MATCH;
+			return "비밀번호를 입력해주세요.";
 		}
 		
 		if(Pattern.matches(Constants.NAME_REGEX, profile.getName())
 				== !Constants.IS_MATCH){
-			return !Constants.IS_MATCH;
+			return "이름을 입력해주세요.";
 		}
-		
+		System.out.println(profile.getBirth());
 		if(Pattern.matches(Constants.BIRTH_REGEX, profile.getBirth())
 				== !Constants.IS_MATCH){
-			return !Constants.IS_MATCH;
+			return "생년월일을 입력해주세요.";
 		}
 		
 		if(profile.getSex().equals("성별")) {
-			return !Constants.IS_MATCH;
+			return "성별을 선택해주세요.";
 		}
 
 		if(profile.getRoadNameAddress().equals("")
 				|| profile.getDetailAddress().equals("")) {
-			return !Constants.IS_MATCH;
+			return "주소를 입력해주세요.";
 		}
 		
 		if(Pattern.matches(Constants.PHONE_NUMBER_REGEX, profile.getPhoneNumber())
 				== !Constants.IS_MATCH){
-			return !Constants.IS_MATCH;
+			return "전화번호를 입력해주세요.";
 		}
 		
 		if(Pattern.matches(Constants.EMAIL_REGEX, profile.getEmail())
 				== !Constants.IS_MATCH){
-			return !Constants.IS_MATCH;
+			return "이메일을 입력해주세요.";
 		}
 		
-		return Constants.IS_MATCH;
+		return "";
 	}
 }
