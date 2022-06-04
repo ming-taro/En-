@@ -1,4 +1,4 @@
-package ui;
+package controller;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -13,9 +13,9 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import controller.PanelFactory;
-import controller.ProfileDAO;
 import model.Profile;
+import ui.UICreator;
+import ui.panel.EditionPanel;
 import ui.panel.MainPanel;
 import ui.panel.SignUpCompletionPanel;
 import ui.panel.SignUpPanel;
@@ -26,6 +26,7 @@ public class PanelSwitcher extends JFrame implements ActionListener{
 	private ProfileDAO profileDAO;
 	private PanelFactory panelFactory;
 	private UICreator panelCurrentlyInUse;
+	private String userId;
 	
 	public PanelSwitcher() {
 		panelFactory = new PanelFactory();
@@ -48,13 +49,6 @@ public class PanelSwitcher extends JFrame implements ActionListener{
 		setVisible(true);
 		
 		addPanel(Constants.MAIN_PANEL);  //frame 첫 실행시 메인화면으로 시작
-	}
-	
-	private void switchPanel(JPanel panel) {
-		getContentPane().removeAll();
-		getContentPane().add(panel, BorderLayout.CENTER);
-		getContentPane().revalidate();
-		getContentPane().repaint();
 	}
 	
 	private void addPanel(String panelName) {
@@ -106,6 +100,7 @@ public class PanelSwitcher extends JFrame implements ActionListener{
 		}
 		
 		if(profileDAO.isMemberInList(id, password)) {  //입력한 회원정보가 존재하는 경우
+			userId = id;                               //아이디 정보 저장 -> 정보수정 기능 사용시 회원 아이디로 DB에서 정보를 불러오기 위함
 			addPanel(Constants.USER_MODE_PANEL);
 		}
 		else {										   //입력한 회원정보가 존재하지 않음 -> 팝업 메세지
@@ -135,13 +130,27 @@ public class PanelSwitcher extends JFrame implements ActionListener{
 	}
 	
 	private void manageUserModePanel(ActionEvent event) {
+		if(event.getSource() == 
+				((UserModePanel) panelCurrentlyInUse).getEditionButton()) {   //회원모드에서 '정보수정' 클릭
+			addPanel(Constants.EDITION_PANEL);
+			((EditionPanel) panelCurrentlyInUse).setMemberInformation(userId);//로그인시 저장한 회원 아이디로 DB에서 정보를 불러옴
+			return;
+		}
+		
 		int logout = JOptionPane.showConfirmDialog(null, "로그아웃 하시겠습니까?", 
 				"로그아웃", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		
 		if(logout == Constants.YES_OPTION) {   //회원모드에서 로그아웃 클릭 -> 팝업창에서 yes or no 선택
 			addPanel(Constants.MAIN_PANEL);
 		}
-		
+	}
+	
+	private void manageEditionPanel(ActionEvent event) {
+		if(event.getSource() ==
+				((EditionPanel) panelCurrentlyInUse).getBackButton()) {    //회원정보 수정 화면에서 뒤로가기 클릭 -> 사용자 모드로 돌아옴
+			addPanel(Constants.USER_MODE_PANEL);
+			System.out.println("정보수정에서 뒤로가기");
+		}
 	}
 	
 	@Override
@@ -162,6 +171,9 @@ public class PanelSwitcher extends JFrame implements ActionListener{
 			break;
 		case Constants.USER_MODE_PANEL:           //회원모드에서 로그아웃 버튼 클릭 -> 메인화면으로
 			manageUserModePanel(event);
+			break;
+		case Constants.EDITION_PANEL:
+			manageEditionPanel(event);
 			break;
 		}
 	}

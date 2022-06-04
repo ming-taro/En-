@@ -8,10 +8,13 @@ public class Constants {
 	public static final int SEARCH_FRAME_HEIGHT = 600;
 	public static final int SEARCH_PANEL_WIDTH = 400;
 	
+	public static final int YES_OPTION = 0;
+	
 	public static final String SIGN_UP_PANEL = "SignUpPanel";
 	public static final String MAIN_PANEL = "MainPanel";
 	public static final String SIGN_UP_COMPLETION_PANEL = "SignUpCompletionPanel";
 	public static final String USER_MODE_PANEL = "UserModePanel";
+	public static final String EDITION_PANEL = "EditionPanel";
 	
 	public static final boolean IS_MATCH = true;
 	public static final boolean IS_MEMBER_IN_LIST = true;

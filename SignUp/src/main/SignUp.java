@@ -10,7 +10,8 @@ import java.util.regex.Pattern;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import ui.PanelSwitcher;
+
+import controller.PanelSwitcher;
 import utility.Constants;
 
 public class SignUp {

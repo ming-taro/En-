@@ -8,6 +8,7 @@ import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -19,6 +20,7 @@ public class UserModePanel extends JPanel implements UICreator{
 	private JButton memberWithdrawalButton;
 	
 	public UserModePanel() {
+		setLayout(new BorderLayout());
 		setComponent();
 	}
 	
@@ -26,12 +28,16 @@ public class UserModePanel extends JPanel implements UICreator{
 		return logoutButton;
 	}
 	
-	private JPanel getJPanel(int width) {
+	public JButton getEditionButton() {
+		return editionButton;
+	}
+	
+	private JPanel getJPanel(int width, int height) {
 		JPanel panel = new JPanel();
 		
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER));    //버튼을 담을 패널(버튼의 크기 변경을 방지하기 위함)
 		panel.setOpaque(false);
-		panel.setPreferredSize(new Dimension(width, 70));
+		panel.setPreferredSize(new Dimension(width, height));
 		
 		return panel;
 	}
@@ -51,7 +57,6 @@ public class UserModePanel extends JPanel implements UICreator{
 		Dimension panelSize = getSize();
 		int width = panelSize.width;
 		JPanel buttonPanel;
-		JPanel blankPanel = new JPanel();
 		JPanel centerPanel = new JPanel();
 		
 		centerPanel.setLayout(new GridLayout(3, 0));
@@ -59,36 +64,42 @@ public class UserModePanel extends JPanel implements UICreator{
 		centerPanel.setOpaque(false);
 		
 		editionButton = getJButton("정보 수정");
-		buttonPanel = getJPanel(width);
+		buttonPanel = getJPanel(width, 70);
 		buttonPanel.add(editionButton);
 		centerPanel.add(buttonPanel);
 		
 		logoutButton = getJButton("로그아웃");
-		buttonPanel = getJPanel(width);
+		buttonPanel = getJPanel(width, 70);
 		buttonPanel.add(logoutButton);
 		centerPanel.add(buttonPanel);
 		
 		memberWithdrawalButton = getJButton("회원탈퇴");
-		buttonPanel = getJPanel(width);
+		buttonPanel = getJPanel(width, 70);
 		buttonPanel.add(memberWithdrawalButton);
 		centerPanel.add(buttonPanel);
-		
-		blankPanel.setPreferredSize(new Dimension(width, 70));
-		blankPanel.setOpaque(false);
 
-		add(blankPanel, BorderLayout.NORTH);
 		add(centerPanel, BorderLayout.CENTER);
-		add(blankPanel, BorderLayout.SOUTH);
+		add(getJPanel(width, 250), BorderLayout.NORTH);
+		add(getJPanel(width, 100), BorderLayout.SOUTH);
 		
 	}
 
 	@Override
 	public void setActionListener(ActionListener actionListener) {
 		logoutButton.addActionListener(actionListener);
+		editionButton.addActionListener(actionListener);
+		memberWithdrawalButton.addActionListener(actionListener);
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
+		Dimension panelSize = getSize();
+		int width = panelSize.width;
+		int height = panelSize.height;
 		
+		ImageIcon icon = new ImageIcon("image\\userMode.jpg");
+	    g.drawImage(icon.getImage(), 0, 0, width, height, null);
+	    setOpaque(false);
+	    super.paintComponent(g);
 	}
 }

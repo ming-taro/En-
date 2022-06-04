@@ -1,7 +1,6 @@
 package controller;
 
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -49,12 +48,14 @@ public class ProfileDAO {
 	public Profile getMemberProfile(String id) throws SQLException {
 		Profile profile;
 		String 	query; 
+
+		query = String.format(Constants.QUERY_FOR_MEMBER_PROFILE, id);
 		
 		setConnection();
-		query = String.format(Constants.QUERY_FOR_MEMBER_PROFILE, id);
 		statement = connection.createStatement();
 		result = statement.executeQuery(query); //SQL쿼리문
-
+		result.next();
+		
 		profile = new Profile(result.getString("id"), result.getString("password"), result.getString("name"),
 				result.getString("birth"), result.getString("sex"), result.getString("zipCode"),
 				result.getString("roadNameAddress"), result.getString("detailAddress"),

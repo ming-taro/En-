@@ -11,22 +11,22 @@ import ui.UICreator;
 import ui.search_box.SearchFrame;
 
 public class SignUpPanel extends JPanel implements UICreator, ActionListener, MouseListener, FocusListener{
-	private JButton backButton, signUpButton;
-	private JTextField idTextField;
-	private JPasswordField passwordTextField, confirmPasswordTextField;
-	private JTextField nameTextField;
-	private JTextField yearTextField, dayTextField;
-	private JTextField zipCodeTextField;
-	private JTextField roadNameAddressTextField, detailAddressTextField;
-	private JTextField middleNumberTextField, lastFourDigitsTextField;
-	private JTextField emailTextField;
-	private JComboBox monthcomboBox, sexComboBox;
-	private JComboBox phoneNumberComboBox;
-	private JButton zipCodeButton;
+	protected JButton backButton, signUpButton;
+	protected JTextField idTextField;
+	protected JPasswordField passwordTextField, confirmPasswordTextField;
+	protected JTextField nameTextField;
+	protected JTextField yearTextField, dayTextField;
+	protected JTextField zipCodeTextField;
+	protected JTextField roadNameAddressTextField, detailAddressTextField;
+	protected JTextField middleNumberTextField, lastFourDigitsTextField;
+	protected JTextField emailTextField;
+	protected JComboBox monthcomboBox, sexComboBox;
+	protected JComboBox phoneNumberComboBox;
+	protected JButton zipCodeButton;
 	
-	private SearchFrame searchFrame;
-	private UIComponent uiComponent;
-	private InputExceptionHandling inputException;
+	protected SearchFrame searchFrame;
+	protected UIComponent uiComponent;
+	protected InputExceptionHandling inputException;
 	
 	public SignUpPanel() {
 		searchFrame = new SearchFrame(this);
@@ -38,11 +38,11 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 	}
 	
 	@Override
-	public void setActionListener(ActionListener actionListener) {
+	public void setActionListener(ActionListener actionListener) {   //메인 프레임인 PanelSwitcher에서 가져온 이벤트 리스너
 		backButton.addActionListener(actionListener);
 		signUpButton.addActionListener(actionListener);
 	}
-	
+	 
 	public JButton getBackButton() {
 		return backButton;
 	}
@@ -51,11 +51,11 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 		return signUpButton;
 	}
 	
-	public Profile getProfile() {
-		String id = idTextField.getText();
+	public Profile getProfile() {   //DB에 저장하기 위해 Profile에 정보를 담아 반환 -> DAO에서 사용할 데이터
+		String id = idTextField.getText();  
 		String password = ((JTextField)passwordTextField).getText();
 		String name = nameTextField.getText();
-		String birth = String.format("%s.%s.%s",
+		String birth = String.format("%s.%s.%s",    //출생일 : ex 2000.1.1
 				yearTextField.getText(), 
 				monthcomboBox.getSelectedItem().toString(), 
 				dayTextField.getText());
@@ -63,7 +63,7 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 		String zipCode = zipCodeTextField.getText();
 		String roadNameAddress = roadNameAddressTextField.getText();
 		String detailAddress = detailAddressTextField.getText();
-		String phoneNumber = 
+		String phoneNumber =                        //휴대폰 번호 : ex 010-1234-5678
 				String.format("%s-%s-%s", phoneNumberComboBox.getSelectedItem().toString(),
 				middleNumberTextField.getText(), lastFourDigitsTextField.getText());
 		String email = emailTextField.getText();
@@ -245,13 +245,12 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 		add(inputPanel, BorderLayout.CENTER);
 	}
 	
-	@Override
-	public void paintComponent(Graphics g) {
+	protected void paintComponent(Graphics g) {
 		Dimension panelSize = getSize();
 		int width = panelSize.width;
 		int height = panelSize.height;
 		
-		ImageIcon icon = new ImageIcon("image\\sky.jpg");
+		ImageIcon icon = new ImageIcon("image\\pinkSky.png");
 	    g.drawImage(icon.getImage(), 0, 0, width, height, null);
 	    setOpaque(false);
 	    super.paintComponent(g);
