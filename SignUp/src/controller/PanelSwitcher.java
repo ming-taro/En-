@@ -73,11 +73,7 @@ public class PanelSwitcher extends JFrame implements ActionListener{
 			return;
 		}
 		
-		try {
-			profileDAO.AddToMemberList(profile);  //회원정보 저장
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		profileDAO.addToMemberList(profile);  //회원정보 저장
 		
 		addPanel(Constants.SIGN_UP_COMPLETION_PANEL);
 	}
@@ -129,14 +125,19 @@ public class PanelSwitcher extends JFrame implements ActionListener{
 		}
 	}
 	
-	private void manageUserModePanel(ActionEvent event) {
-		if(event.getSource() == 
-				((UserModePanel) panelCurrentlyInUse).getEditionButton()) {   //회원모드에서 '정보수정' 클릭
-			addPanel(Constants.EDITION_PANEL);
-			((EditionPanel) panelCurrentlyInUse).setMemberInformation(userId);//로그인시 저장한 회원 아이디로 DB에서 정보를 불러옴
-			return;
-		}
+	private void manageMemberWithdrawal() {
+		int memberWithdrawal = JOptionPane.showConfirmDialog(null, "회원탈퇴를 진행하시겠습니까?", 
+				"회원탈퇴", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		
+		if(memberWithdrawal == Constants.YES_OPTION) {   //회원모드에서 회원탈퇴 클릭 -> 팝업창에서 yes or no 선택
+			JOptionPane.showMessageDialog(null, "회원탈퇴가 완료되었습니다.\n"
+					+ "그동안 스타듀밸리를 이용해주셔서 감사합니다.", "회원탈퇴 완료", JOptionPane.WARNING_MESSAGE);
+			profileDAO.removeFromMemberList(userId);
+			addPanel(Constants.MAIN_PANEL);
+		}
+	}
+	
+	private void manageLogout() {
 		int logout = JOptionPane.showConfirmDialog(null, "로그아웃 하시겠습니까?", 
 				"로그아웃", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		
@@ -145,11 +146,25 @@ public class PanelSwitcher extends JFrame implements ActionListener{
 		}
 	}
 	
+	private void manageUserModePanel(ActionEvent event) {
+		if(event.getSource() == 
+				((UserModePanel) panelCurrentlyInUse).getEditionButton()) {   //회원모드에서 '정보수정' 클릭
+			addPanel(Constants.EDITION_PANEL);
+			((EditionPanel) panelCurrentlyInUse).start(userId);//로그인시 저장한 회원 아이디로 DB에서 정보를 불러옴
+		}
+		else if(event.getSource() == 
+				((UserModePanel) panelCurrentlyInUse).getMemberWithdrawalButton()) {  //회원모드에서 '회원탈퇴' 클릭
+			manageMemberWithdrawal();
+		}
+		else {
+			manageLogout();
+		}	
+	}
+	
 	private void manageEditionPanel(ActionEvent event) {
 		if(event.getSource() ==
 				((EditionPanel) panelCurrentlyInUse).getBackButton()) {    //회원정보 수정 화면에서 뒤로가기 클릭 -> 사용자 모드로 돌아옴
 			addPanel(Constants.USER_MODE_PANEL);
-			System.out.println("정보수정에서 뒤로가기");
 		}
 	}
 	

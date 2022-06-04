@@ -69,8 +69,20 @@ public class EditionPanel extends SignUpPanel {
 		middleNumberTextField.setText(getSecondValue(phoneNumber, "-"));;
 		lastFourDigitsTextField.setText(getThirdValue(phoneNumber, "-"));
 		
-		emailTextField.setText(profile.getEmail());
-		
+		emailTextField.setText(profile.getEmail());                            //이메일
 	}
 	
+	public void setEditable() {
+		idTextField.setEditable(false);
+		nameTextField.setEditable(false);
+		yearTextField.setEditable(false);
+		monthcomboBox.setEnabled(false);
+		dayTextField.setEditable(false);
+		sexComboBox.setEnabled(false);
+	}
+	
+	public void start(String memberId) {
+		setMemberInformation(memberId);
+		setEditable();
+	}
 }

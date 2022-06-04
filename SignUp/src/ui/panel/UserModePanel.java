@@ -32,6 +32,10 @@ public class UserModePanel extends JPanel implements UICreator{
 		return editionButton;
 	}
 	
+	public JButton getMemberWithdrawalButton() {
+		return memberWithdrawalButton;
+	}
+	
 	private JPanel getJPanel(int width, int height) {
 		JPanel panel = new JPanel();
 		

@@ -25,7 +25,7 @@ public class Constants {
 	public static final String BIRTH_REGEX = "^(1|2)[0-9]{3}\\.([1-9]|1[0-2])\\.([1-9]|(1|2)[0-9]|3[0-1])$";
 	public static final String SEX_REGEX = "(여|남)"; 
 	public static final String PHONE_NUMBER_REGEX = "^((01)(0|1|6|9){1}-[0-9]{4}-[0-9]{4})||^((01)(1|6|7|8|9|){1}-[0-9]{3}-[0-9]{4})";
-	public static final String EMAIL_REGEX = "\\w+@\\w.\\w+(\\w.\\w+)?$";
+	public static final String EMAIL_REGEX = "\\w+@\\w.\\w$";
 	
 	public static final String QUERY_FOR_MEMBER_PROFILE = "select * from memberList where id = '%s';";
 	public static final String QUERY_TO_ADD_MEMBER =
@@ -34,4 +34,5 @@ public class Constants {
 		  + "values('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');";
 	public static final String QUERY_TO_CHECK_IF_MEMBER_IS_IN_LIST =
 			"select id from memberList where id = '%s' and password = '%s';";
+	public static final String QUERY_TO_DELETE_MEMBER = "delete from memberList where id = '%s';";
 }

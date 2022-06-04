@@ -29,7 +29,6 @@ public class ProfileDAO {
 	public void connectionDB() {
 		try {
 	         Class.forName("com.mysql.cj.jdbc.Driver");
-	         System.out.println("드라이브 연결 성공...");
 	      	} catch (ClassNotFoundException e) {
 	         e.printStackTrace();
 	      	}
@@ -39,9 +38,8 @@ public class ProfileDAO {
 	public void setConnection() {
 		try { 
 	          connection = DriverManager.getConnection(url, userid, pwd);
-	          System.out.println("데이터 베이스 연결 성공...");
-	    } catch (SQLException e1) {
-	          e1.printStackTrace();
+	    } catch (SQLException e) {
+	          e.printStackTrace();
 	    }
 	}
 
@@ -68,7 +66,7 @@ public class ProfileDAO {
 		return profile;
 	}
 	
-	public void AddToMemberList(Profile profile) throws SQLException {   //DB에 회원가입한 회원의 정보 저장
+	public void addToMemberList(Profile profile) {   //DB에 회원가입한 회원의 정보 저장
 		String query; 
 		
 		setConnection();
@@ -78,11 +76,16 @@ public class ProfileDAO {
 				profile.getSex(), profile.getZipCode(), profile.getRoadNameAddress(),
 				profile.getDetailAddress(), profile.getPhoneNumber(), profile.getEmail());
 				
-		statement = connection.createStatement();
-		statement.execute(query);
+		try {
+			statement = connection.createStatement();
+			statement.execute(query);
 
-		statement.close();
-		connection.close();
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public boolean isMemberInList(String id, String password) {  //로그인시 회원의 정보가 존재하는지 검사
@@ -110,5 +113,23 @@ public class ProfileDAO {
 		}
 		
 		return isMemberInList;
+	}
+	
+	public void removeFromMemberList(String userId) {   //DB에 회원가입한 회원의 정보 저장
+		String query; 
+		
+		setConnection();
+		
+		query = String.format(Constants.QUERY_TO_DELETE_MEMBER, userId);
+		
+		try {
+			statement = connection.createStatement();
+			statement.execute(query);
+
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

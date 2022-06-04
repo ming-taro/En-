@@ -8,7 +8,7 @@ import controller.InputExceptionHandling;
 import model.Profile;
 import ui.UIComponent;
 import ui.UICreator;
-import ui.search_box.SearchFrame;
+import ui.address_search.SearchFrame;
 
 public class SignUpPanel extends JPanel implements UICreator, ActionListener, MouseListener, FocusListener{
 	protected JButton backButton, signUpButton;
@@ -109,7 +109,7 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 	
 	private void setBirthFiled(JPanel inputPanel) {
 		JLabel inputTypeLabel =
-				new JLabel(uiComponent.getLabelIcon("image\\password.png"));
+				new JLabel(uiComponent.getLabelIcon("image\\birth.png"));
 		JPanel inputFieldPanel = 
 				uiComponent.getInputFieldPanel(inputTypeLabel);
 		String[] month = {"월", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
@@ -137,7 +137,7 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 	
 	private void setZipCodeFiled(JPanel inputPanel) {
 		JLabel inputTypeLabel = 
-				new JLabel(uiComponent.getLabelIcon("image\\blank.png"));
+				new JLabel(uiComponent.getLabelIcon("image\\address.png"));
 		JPanel inputFieldPanel =
 				uiComponent.getInputFieldPanel(inputTypeLabel);
 	
@@ -177,7 +177,7 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 	
 	private void setPhoneNumberField(JPanel inputPanel) {
 		JLabel inputTypeLabel = 
-				new JLabel(uiComponent.getLabelIcon("image\\blank.png"));
+				new JLabel(uiComponent.getLabelIcon("image\\phoneNumber.png"));
 		JPanel inputFieldPanel = 
 				uiComponent.getInputFieldPanel(inputTypeLabel);
 		String[] phoneNumber = {"010", "011", "016", "017", "018", "019"};
@@ -240,7 +240,7 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 
 		emailTextField = uiComponent.getInputField(250);
 		setInputFiled(inputPanel, emailTextField, 
-				"image\\password.png", inputException.getEmailRegexLabel());
+				"image\\email.png", inputException.getEmailRegexLabel());
 		
 		add(inputPanel, BorderLayout.CENTER);
 	}

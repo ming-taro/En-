@@ -24,7 +24,7 @@ public class RoadAddress {
 	    URL obj;
 		
         try{
-            String address = URLEncoder.encode(roadAddress, "UTF-8");//"판교역로 235", "UTF-8");
+            String address = URLEncoder.encode(roadAddress, "UTF-8");     //ex: "판교역로 235"
             
             obj = new URL(url + address);
 			
@@ -38,15 +38,15 @@ public class RoadAddress {
             connection.setDefaultUseCaches(false);
 			
             Charset charset = Charset.forName("UTF-8");
-            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream(), charset));
+            BufferedReader reader = new BufferedReader
+            		(new InputStreamReader(connection.getInputStream(), charset));
             
-            while ((inputLine = in.readLine()) != null) {
+            while ((inputLine = reader.readLine()) != null) {
                 response.append(inputLine);
             }
             
             
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         return response.toString();
@@ -83,16 +83,15 @@ public class RoadAddress {
         String result = searchRoadAddress(searchInput);   //도로명 주소 검색결과
         
 		try {
-			jsonObject = (JSONObject) jsonParser.parse(result);
-	        searchReulst = (JSONArray) jsonObject.get("documents");
+			jsonObject = (JSONObject) jsonParser.parse(result);       //검색 결과값을 json으로 받음
+	        searchReulst = (JSONArray) jsonObject.get("documents");   //'documents'로 묶여있는 결과값을 가져옴
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
         
-        System.out.println(searchReulst.size());
-        for(int i=0; i<searchReulst.size(); i++){
-        	searchObject = (JSONObject) searchReulst.get(i);
-        	roadAdrress.add(getRoadAddress(searchObject));
+        for(int i=0; i<searchReulst.size(); i++){            
+        	searchObject = (JSONObject) searchReulst.get(i);   
+        	roadAdrress.add(getRoadAddress(searchObject));     //jsonObject에 있는 주소값을 가공해 주소 검색 결과 리스트에 추가
         }
         
 		return roadAdrress;

@@ -1,4 +1,4 @@
-package ui.search_box;
+package ui.address_search;
 
 import java.awt.BorderLayout;
 import java.awt.Image;
