@@ -168,7 +168,10 @@ public class InputExceptionHandling {
 			return "주소를 입력해주세요.";
 		}
 		
-		if(Pattern.matches(Constants.PHONE_NUMBER_REGEX, profile.getPhoneNumber())
+		if(profileDAO.isDuplicatePhoneNumber(profile.getPhoneNumber())) {
+			return "이미 사용중인 전화번호입니다.";
+		}
+		else if(Pattern.matches(Constants.PHONE_NUMBER_REGEX, profile.getPhoneNumber())
 				== !Constants.IS_MATCH){
 			return "전화번호를 입력해주세요.";
 		}

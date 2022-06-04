@@ -19,6 +19,7 @@ public class Constants {
 	public static final boolean IS_MATCH = true;
 	public static final boolean IS_MEMBER_IN_LIST = true;
 	public static final boolean IS_DUPLICATE_ID = true;
+	public static final boolean IS_DUPLICATE_PHONE_NUMBER = true;
 	
 	public static final String ID_REGEX = "^[a-z0-9]{5,20}$";
 	public static final String PASSWORD_REGEX = "^[a-zA-Z0-9]{8,16}$";
@@ -42,4 +43,6 @@ public class Constants {
 			"delete from memberList where id = '%s';";
 	public static final String QUERY_TO_CHECK_IF_DUPLICATE_ID = 
 			"select id from memberList where id = '%s';";
+	public static final String QUERY_TO_CHECK_IF_DUPLICATE_PHONE_NUMBER = 
+			"select phoneNumber from memberList where phoneNumber = '%s';";
 }

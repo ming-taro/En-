@@ -115,6 +115,33 @@ public class ProfileDAO {
 		return isDuplicateId;
 	}
 	
+	public boolean isDuplicatePhoneNumber(String phoneNumber) {
+		String query; 
+		boolean isDuplicatePhoneNumber = !Constants.IS_DUPLICATE_PHONE_NUMBER;
+		
+		query = String.format(Constants.QUERY_TO_CHECK_IF_DUPLICATE_PHONE_NUMBER, phoneNumber);
+
+		setConnection();
+		
+		try {
+			statement = connection.createStatement();
+			result = statement.executeQuery(query); //SQL쿼리문
+			
+			if(result.next()) {  //입력한 전화번호와 일치하는 회원정보가 있음
+				isDuplicatePhoneNumber = Constants.IS_DUPLICATE_PHONE_NUMBER;   
+			}
+			
+			result.close();
+			statement.close();
+			connection.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return isDuplicatePhoneNumber;
+	}
+	
 	public boolean isMemberInList(String id, String password) {  //로그인시 회원의 정보가 존재하는지 검사
 		String query; 
 		boolean isMemberInList = !Constants.IS_MEMBER_IN_LIST;  
