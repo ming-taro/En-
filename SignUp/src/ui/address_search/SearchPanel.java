@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import api.RoadAddress;
+import controller.api.RoadAddress;
 import ui.UICreator;
 import utility.Constants;
 
@@ -43,8 +43,8 @@ public class SearchPanel extends JPanel implements UICreator, ActionListener{
 		JLabel guideLabel = new JLabel();
 		Font font = new Font("고딕", Font.BOLD, 15);
 		
-		guideLabel = new JLabel("<html><br><br>찾으시려는 도로명주소+건물번호/건물명을<br>입력해주세요. "
-				+ "(예: 여의나루로 4길)<br><br><br><br></html>");
+		guideLabel = new JLabel("<html><br><br>찾으시려는 도로명주소+건물번호/건물명을<br>입력해주세요."
+				+ "(예: 여의나루로 4길 18)<br><br><br><br></html>");
 		guideLabel.setFont(font);
 		
 		guidePanel.setLayout(new FlowLayout(FlowLayout.CENTER));

@@ -10,6 +10,7 @@ import model.Profile;
 import utility.Constants;
 
 public class InputExceptionHandling {
+	private ProfileDAO profileDAO;
 	private JLabel idRegexLabel;
 	private JLabel passwordRegexLabel;
 	private JLabel confirmPasswordTLabel;
@@ -17,8 +18,9 @@ public class InputExceptionHandling {
 	private JLabel emailRegexLabel;
 	
 	public InputExceptionHandling() {
+		profileDAO = ProfileDAO.GetInstance();
+		
 		idRegexLabel = new JLabel("(영문 소문자/숫자, 5~20자)");
-		idRegexLabel.setBackground(Color.white);
 		passwordRegexLabel = new JLabel("(영문 대소문자/숫자, 8~16자)");
 		confirmPasswordTLabel = new JLabel("(비밀번호를 한번 더 입력해주세요)");
 		nameRegexLabel = new JLabel("(한글/영문 대소문자, 40자 이내)");
@@ -52,7 +54,11 @@ public class InputExceptionHandling {
 			return;
 		}
 		
-		if(Pattern.matches(Constants.ID_REGEX, id)) {           //아이디 입력 양식에 맞음
+		if(profileDAO.isDuplicateId(id)) {
+			idRegexLabel.setText("(이미 사용중인 아이디 입니다.)");
+			idRegexLabel.setForeground(Color.red);
+		}
+		else if(Pattern.matches(Constants.ID_REGEX, id)) {           //아이디 입력 양식에 맞음
 			idRegexLabel.setText("(사용 가능한 아이디 입니다.)");
 			idRegexLabel.setForeground(Color.green);
 		}
@@ -129,7 +135,7 @@ public class InputExceptionHandling {
 	
 	public String isProfileEnteredCorrectly(Profile profile) {
 		
-		if(Pattern.matches(Constants.ID_REGEX, profile.getId())
+		if(idRegexLabel.getText().equals("(사용 가능한 아이디 입니다.)")
 				== !Constants.IS_MATCH){
 			return "아이디를 입력해주세요.";
 		}
@@ -139,7 +145,7 @@ public class InputExceptionHandling {
 			return "비밀번호를 입력해주세요.";
 		}
 		
-		if(passwordRegexLabel.getText().equals("(비밀번호가 일치하지 않습니다.)")) {
+		if(confirmPasswordTLabel.getText().equals("(비밀번호가 일치하지 않습니다.)")) {
 			return "비밀번호가 일치하지 않습니다.";
 		}
 		
@@ -147,7 +153,7 @@ public class InputExceptionHandling {
 				== !Constants.IS_MATCH){
 			return "이름을 입력해주세요.";
 		}
-		System.out.println(profile.getBirth());
+		
 		if(Pattern.matches(Constants.BIRTH_REGEX, profile.getBirth())
 				== !Constants.IS_MATCH){
 			return "생년월일을 입력해주세요.";

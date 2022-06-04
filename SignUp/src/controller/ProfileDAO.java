@@ -88,6 +88,33 @@ public class ProfileDAO {
 		}
 	}
 	
+	public boolean isDuplicateId(String id) {
+		String query; 
+		boolean isDuplicateId = !Constants.IS_DUPLICATE_ID;
+		
+		query = String.format(Constants.QUERY_TO_CHECK_IF_DUPLICATE_ID, id);
+
+		setConnection();
+		
+		try {
+			statement = connection.createStatement();
+			result = statement.executeQuery(query); //SQL쿼리문
+			
+			if(result.next()) {
+				isDuplicateId = Constants.IS_DUPLICATE_ID;   //입력한 아이디와 일치하는 회원정보가 있음
+			}
+			
+			result.close();
+			statement.close();
+			connection.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return isDuplicateId;
+	}
+	
 	public boolean isMemberInList(String id, String password) {  //로그인시 회원의 정보가 존재하는지 검사
 		String query; 
 		boolean isMemberInList = !Constants.IS_MEMBER_IN_LIST;  

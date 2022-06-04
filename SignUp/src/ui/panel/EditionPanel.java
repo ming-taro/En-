@@ -2,6 +2,8 @@ package ui.panel;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.FocusEvent;
 import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
@@ -18,6 +20,16 @@ public class EditionPanel extends SignUpPanel {
 	
 	public EditionPanel() {
 		profileDAO = ProfileDAO.GetInstance();
+	}
+	
+	private String getPassword(String password) {
+		StringBuilder passwordBuilder = new StringBuilder();
+		
+		for(int count = 0; count < password.length(); count++) {
+			passwordBuilder.append("*");
+		}
+		
+		return passwordBuilder.toString();
 	}
 	
 	private String getFirstValue(String profile, String delimiter) { 
@@ -48,10 +60,13 @@ public class EditionPanel extends SignUpPanel {
 			e.printStackTrace();
 		}
 		
+		String password = getPassword(profile.getPassword());
 		String birth = profile.getBirth();
 		String phoneNumber = profile.getPhoneNumber();
 		
 		idTextField.setText(profile.getId());                                  //아이디
+		passwordTextField.setText(password);                                   //비밀번호 -> "*"표시
+		confirmPasswordTextField.setText(password);
 		
 		nameTextField.setText(profile.getName());                              //이름
 		
@@ -74,15 +89,34 @@ public class EditionPanel extends SignUpPanel {
 	
 	public void setEditable() {
 		idTextField.setEditable(false);
+		passwordTextField.setEditable(false);
+		confirmPasswordTextField.setEditable(false);
+		
 		nameTextField.setEditable(false);
+		
 		yearTextField.setEditable(false);
 		monthcomboBox.setEnabled(false);
 		dayTextField.setEditable(false);
 		sexComboBox.setEnabled(false);
+		
+		zipCodeButton.setEnabled(false);
+		detailAddressTextField.setEditable(false);
+		
+		phoneNumberComboBox.setEnabled(false);
+		middleNumberTextField.setEditable(false);
+		lastFourDigitsTextField.setEditable(false);
+		
+		emailTextField.setEditable(false);
+		
+		signUpButton.setVisible(false);
 	}
 	
 	public void start(String memberId) {
 		setMemberInformation(memberId);
 		setEditable();
+	}
+	
+	public void focusLost(FocusEvent event) {
+		
 	}
 }
