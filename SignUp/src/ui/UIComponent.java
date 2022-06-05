@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -35,6 +36,16 @@ public class UIComponent {
 		inputFieldPanel.add(inputTypeLabel);
 		inputFieldPanel.setBackground(new Color(255, 0, 0, 0));
 		inputFieldPanel.setPreferredSize(new Dimension(100, 70));
+		
+		return inputFieldPanel;
+	}
+	
+	public JPanel getInputFieldPanel(int width) {
+		JPanel inputFieldPanel = new JPanel();
+		
+		inputFieldPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+		inputFieldPanel.setBackground(new Color(255, 0, 0, 0));
+		inputFieldPanel.setPreferredSize(new Dimension(width, 50));
 		
 		return inputFieldPanel;
 	}
@@ -75,4 +86,9 @@ public class UIComponent {
 		return comboBox;
 	}
 	
+	public JButton getJButton(String inputType, int width, int height) {
+		JButton button = new JButton(inputType);           
+		button.setPreferredSize(new Dimension(width, height));
+		return button;
+	}
 }

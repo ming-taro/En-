@@ -22,13 +22,13 @@ import ui.panel.SignUpPanel;
 import ui.panel.UserModePanel;
 import utility.Constants;
 
-public class PanelSwitcher extends JFrame implements ActionListener{
+public class MainPanelSwitcher extends JFrame implements ActionListener{
 	private ProfileDAO profileDAO;
 	private PanelFactory panelFactory;
 	private UICreator panelCurrentlyInUse;
 	private String userId;
 	
-	public PanelSwitcher() {
+	public MainPanelSwitcher() {
 		panelFactory = new PanelFactory();
 		
 		profileDAO = ProfileDAO.GetInstance();
@@ -102,6 +102,7 @@ public class PanelSwitcher extends JFrame implements ActionListener{
 		else {										   //입력한 회원정보가 존재하지 않음 -> 팝업 메세지
 			JOptionPane.showMessageDialog(null, "아이디 또는 비밀번호를 잘못 입력했습니다.\n입력하신 내용을 다시 확인해주세요.",  
 					"로그인 오류", JOptionPane.WARNING_MESSAGE);
+			((MainPanel) panelCurrentlyInUse).resetPaswwordTextField();
 		}
 	}
 	

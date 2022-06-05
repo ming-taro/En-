@@ -33,6 +33,7 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 		uiComponent = new UIComponent();
 		inputException = new InputExceptionHandling();
 		
+		this.addMouseListener(this);
 		setComponent();
 		setFocusListener();
 	}
@@ -341,11 +342,11 @@ public class SignUpPanel extends JPanel implements UICreator, ActionListener, Mo
 					passwordTextField, confirmPasswordTextField);
 		}
 		
-		if(event.getSource() == nameTextField) {      //비밀번호 입력 필드 검사
+		if(event.getSource() == nameTextField) {      //이름 입력 필드 검사
 			inputException.setNameTextField(nameTextField);
 		}
 		
-		if(event.getSource() == emailTextField) {      //비밀번호 입력 필드 검사
+		if(event.getSource() == emailTextField) {      //이메일 입력 필드 검사
 			inputException.setEmailTextField(emailTextField);
 		}
 		

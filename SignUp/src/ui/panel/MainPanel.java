@@ -48,6 +48,10 @@ public class MainPanel extends JPanel implements UICreator {
 		return paswwordTextField;
 	}
 	
+	public void resetPaswwordTextField() {
+		paswwordTextField.setText("");
+	}
+	
 	@Override
 	public void setActionListener(ActionListener actionListener) {
 		idTextField.addActionListener(actionListener);

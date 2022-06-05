@@ -88,6 +88,27 @@ public class ProfileDAO {
 		}
 	}
 	
+	public void updateMemberInformation(Profile profile) {   //DB에서 회원의 정보 수정
+		String query; 
+		
+		setConnection();
+		
+		query = String.format(Constants.QUERY_TO_UPDATE_MEMBER_INFORMATION,
+				profile.getPassword(), profile.getZipCode(), profile.getRoadNameAddress(),
+				profile.getDetailAddress(), profile.getPhoneNumber(), profile.getEmail(), 
+				profile.getId());
+				
+		try {
+			statement = connection.createStatement();
+			statement.execute(query);
+
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public boolean isDuplicateId(String id) {
 		String query; 
 		boolean isDuplicateId = !Constants.IS_DUPLICATE_ID;

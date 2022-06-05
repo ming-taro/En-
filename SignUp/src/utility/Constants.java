@@ -15,6 +15,7 @@ public class Constants {
 	public static final String SIGN_UP_COMPLETION_PANEL = "SignUpCompletionPanel";
 	public static final String USER_MODE_PANEL = "UserModePanel";
 	public static final String EDITION_PANEL = "EditionPanel";
+	public static final String EDITION_MODE_PANEL = "EditionModePanel";
 	
 	public static final boolean IS_MATCH = true;
 	public static final boolean IS_MEMBER_IN_LIST = true;
@@ -37,6 +38,9 @@ public class Constants {
 			"insert into memberlist(id, password, name, birth, sex, "
 		  + "zipCode, roadNameAddress, detailAddress, phoneNumber, email) "
 		  + "values('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');";
+	public static final String QUERY_TO_UPDATE_MEMBER_INFORMATION =
+			"update memberlist set password='%s', zipCode='%s', roadNameAddress='%s',"
+			+ " detailAddress='%s', phoneNumber='%s', email='%s' where id='%s'";
 	public static final String QUERY_TO_CHECK_IF_MEMBER_IS_IN_LIST =
 			"select id from memberList where id = '%s' and password = '%s';";
 	public static final String QUERY_TO_DELETE_MEMBER =

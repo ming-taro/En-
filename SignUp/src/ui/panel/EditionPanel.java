@@ -3,19 +3,24 @@ package ui.panel;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import controller.ProfileDAO;
 import model.Profile;
 import ui.UICreator;
+import utility.Constants;
 
 public class EditionPanel extends SignUpPanel {
+	private Profile profile;
 	private ProfileDAO profileDAO;
 	
 	public EditionPanel() {
@@ -52,8 +57,6 @@ public class EditionPanel extends SignUpPanel {
 	}
 	
 	public void setMemberInformation(String memberId) {    //DB에 저장되어 있는 사용자의 정보를 불러옴
-		Profile profile = null;
-		
 		try {
 			profile = profileDAO.getMemberProfile(memberId);
 		} catch (SQLException e) {
@@ -89,8 +92,6 @@ public class EditionPanel extends SignUpPanel {
 	
 	public void setEditable() {
 		idTextField.setEditable(false);
-		passwordTextField.setEditable(false);
-		confirmPasswordTextField.setEditable(false);
 		
 		nameTextField.setEditable(false);
 		
@@ -99,16 +100,8 @@ public class EditionPanel extends SignUpPanel {
 		dayTextField.setEditable(false);
 		sexComboBox.setEnabled(false);
 		
-		zipCodeButton.setEnabled(false);
-		detailAddressTextField.setEditable(false);
-		
-		phoneNumberComboBox.setEnabled(false);
-		middleNumberTextField.setEditable(false);
-		lastFourDigitsTextField.setEditable(false);
-		
-		emailTextField.setEditable(false);
-		
-		signUpButton.setVisible(false);
+		signUpButton.setText("정보수정");
+		signUpButton.addActionListener(this);
 	}
 	
 	public void start(String memberId) {
@@ -116,7 +109,89 @@ public class EditionPanel extends SignUpPanel {
 		setEditable();
 	}
 	
-	public void focusLost(FocusEvent event) {
+	private void setEditionChanged() {
+		String password = ((JTextField)passwordTextField).getText();
+		String zipCode = zipCodeTextField.getText();
+		String roadNameaddress = roadNameAddressTextField.getText();
+		String detailAddress = detailAddressTextField.getText();
+		String phoneNumber = 
+				String.format("%s-%s-%s", phoneNumberComboBox.getSelectedItem().toString(),
+				middleNumberTextField.getText(), lastFourDigitsTextField.getText());;
+		String email = emailTextField.getText();;
 		
+		if(inputException.isPasswordEnteredCorrectly(password)
+				&& inputException.isConfirmPasswordEnteredCorrectly()) {
+			
+			profile.setPassword(password);
+		}
+		
+		if(inputException.isAddressEnteredCorrectly(roadNameaddress, detailAddress)) {
+			
+			profile.setZipCode(zipCode);
+			profile.setRoadNameAddress(roadNameaddress);
+			profile.setDetailAddress(detailAddress);
+		}
+		
+		if(inputException.isPhoneNumberEnteredCorrectly(phoneNumber)) {
+			profile.setPhoneNumber(phoneNumber);
+		}
+		
+		if(inputException.isEmailEnteredCorrectly(email)) {
+			profile.setEmail(email);
+		}
+	}
+	
+	private void manageEditionChange() {
+		setEditionChanged();
+		
+		int memberWithdrawal = JOptionPane.showConfirmDialog(null, "입력하신 내용으로 회원정보를 수정하시겠습니까?", 
+				"회원정보 수정", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		
+		if(memberWithdrawal == Constants.YES_OPTION) {   //회원 수정 버튼 클릭 -> 팝업창에서 yes or no 선택
+			JOptionPane.showMessageDialog(null, "회원정보가 수정되었습니다.\n"
+					+ "변경된 정보를 확인하세요.", "회원정보 수정 완료", JOptionPane.INFORMATION_MESSAGE);
+			profileDAO.updateMemberInformation(profile);
+			setMemberInformation(profile.getId());  //회원정보창 업데이트
+		}
+	}
+	
+	public void actionPerformed(ActionEvent event) {
+		if(event.getSource() == monthcomboBox            //comboBox클릭 후 배경이 지워지는 오류가 생겨서 추가한 코드
+				|| event.getSource() == sexComboBox          //->이벤트 후 패널의 배경을 다시 그려줌
+				|| event.getSource() == phoneNumberComboBox) {
+				repaint();
+				return;
+			}
+		
+		JButton button = (JButton) event.getSource();
+		
+		if(button == signUpButton) {                    //정보 수정
+			manageEditionChange();
+		}
+		else if(button == zipCodeButton) {              //우편번호 -> 주소검색 프레임이 열림
+			searchFrame.setVisible();
+		}
+		else {
+			setRoadAddress(button.getText());
+			searchFrame.closeFrame();              //주소검색 후 -> 검색한 주소값 중 하나를 선택한 경우
+		}
+		
+	}
+	
+	public void focusLost(FocusEvent event) {
+		if(event.getSource() == passwordTextField) {      //비밀번호 입력 필드 검사
+			inputException.setPasswordTextField(passwordTextField);
+		}
+		
+		if(event.getSource() == confirmPasswordTextField) {//비밀번호 재입력 입력 필드 검사
+			inputException.setConfirmPasswordTextField(
+					passwordTextField, confirmPasswordTextField);
+		}
+		
+		if(event.getSource() == emailTextField) {      //이메일 입력 필드 검사
+			inputException.setEmailTextField(emailTextField);
+		}
+		
+		repaint();
 	}
 }

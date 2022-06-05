@@ -11,13 +11,13 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import controller.PanelSwitcher;
+import controller.MainPanelSwitcher;
 import utility.Constants;
 
 public class SignUp {
 
 	public static void main(String[] args) {
-		PanelSwitcher panelSwitcher = new PanelSwitcher();
+		MainPanelSwitcher mainPanelSwitcher = new MainPanelSwitcher();
 	}
 
 }

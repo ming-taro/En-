@@ -133,6 +133,42 @@ public class InputExceptionHandling {
 		}
 	}
 	
+	public boolean isPasswordEnteredCorrectly(String password) {
+		if(Pattern.matches(Constants.PASSWORD_REGEX, password)) {
+			return Constants.IS_MATCH;
+		}
+		return !Constants.IS_MATCH;
+	}
+	
+	public boolean isConfirmPasswordEnteredCorrectly() {
+		if(confirmPasswordTLabel.getText().equals("(비밀번호가 일치하지 않습니다.)")) {
+			return !Constants.IS_MATCH;
+		}
+		return Constants.IS_MATCH;
+	}
+	
+	public boolean isAddressEnteredCorrectly(String roadNameAddress, String detailAddress) {
+		if(roadNameAddress.equals("")
+				|| detailAddress.equals("")) {
+			return !Constants.IS_MATCH;
+		}
+		return Constants.IS_MATCH;
+	}
+	
+	public boolean isPhoneNumberEnteredCorrectly(String phoneNumber) {
+		if(Pattern.matches(Constants.PHONE_NUMBER_REGEX, phoneNumber)) {
+			return Constants.IS_MATCH;
+		}
+		return !Constants.IS_MATCH;
+	}
+	
+	public boolean isEmailEnteredCorrectly(String email) {
+		if(Pattern.matches(Constants.EMAIL_REGEX, email)) {
+			return Constants.IS_MATCH;
+		}
+		return !Constants.IS_MATCH;
+	}
+	
 	public String isProfileEnteredCorrectly(Profile profile) {
 		
 		if(idRegexLabel.getText().equals("(사용 가능한 아이디 입니다.)")
@@ -140,12 +176,13 @@ public class InputExceptionHandling {
 			return "아이디를 입력해주세요.";
 		}
 		
-		if(Pattern.matches(Constants.PASSWORD_REGEX, profile.getPassword())
+		if(isPasswordEnteredCorrectly(profile.getPassword())
 				== !Constants.IS_MATCH){
 			return "비밀번호를 입력해주세요.";
 		}
 		
-		if(confirmPasswordTLabel.getText().equals("(비밀번호가 일치하지 않습니다.)")) {
+		if(isConfirmPasswordEnteredCorrectly()
+				== !Constants.IS_MATCH) {
 			return "비밀번호가 일치하지 않습니다.";
 		}
 		
@@ -163,21 +200,21 @@ public class InputExceptionHandling {
 			return "성별을 선택해주세요.";
 		}
 
-		if(profile.getRoadNameAddress().equals("")
-				|| profile.getDetailAddress().equals("")) {
+		if(isAddressEnteredCorrectly(profile.getRoadNameAddress(), 
+				profile.getDetailAddress()) == !Constants.IS_MATCH) {
 			return "주소를 입력해주세요.";
 		}
 		
 		if(profileDAO.isDuplicatePhoneNumber(profile.getPhoneNumber())) {
 			return "이미 사용중인 전화번호입니다.";
 		}
-		else if(Pattern.matches(Constants.PHONE_NUMBER_REGEX, profile.getPhoneNumber())
+		else if(isPhoneNumberEnteredCorrectly(profile.getPhoneNumber()) 
 				== !Constants.IS_MATCH){
 			return "전화번호를 입력해주세요.";
 		}
 		
-		if(Pattern.matches(Constants.EMAIL_REGEX, profile.getEmail())
-				== !Constants.IS_MATCH){
+		if(isEmailEnteredCorrectly(profile.getEmail())
+				== !Constants.IS_MATCH) {
 			return "이메일을 입력해주세요.";
 		}
 		
